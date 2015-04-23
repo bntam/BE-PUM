@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/lib/antlr.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/google-collect-1.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/javabdd-1.0b2.jar!/" />
+    <libelement value="file://D:\WORKSPACE\Java\BE-PUMv2\lib" />
+    <libelement value="jar://$MODULE_DIR$/lib/jdom-2.0.5.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/capstone.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/platform.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jna.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library name="antlr.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/antlr.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="google-collect-1.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/google-collect-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="javabdd-1.0b2.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/javabdd-1.0b2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="lib">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jdom-2.0.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jdom-2.0.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="capstone.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/capstone.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="platform.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/platform.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jna.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jna.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="jna-4.1.0" level="project" />
+  </component>
+</module>
