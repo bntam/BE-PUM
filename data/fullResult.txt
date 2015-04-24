@@ -734,3 +734,11 @@
    Instructions:                             130
    Nodes:                             132
    Edges:                             141
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Aztec.01
+   Runtime:                       113182ms
+   Instructions:                             250
+   Nodes:                             265
+   Edges:                             281

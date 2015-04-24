@@ -3,7 +3,8 @@
  */
 package v2.org.analysis.transition_rule;
 
-import v2.org.analysis.apihandle.be_pum.winapi.APIHandle;
+import v2.org.analysis.apihandle.winapi.APIHandle;
+
 //import v2.org.analysis.apihandle.APIHandle;
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
@@ -11,6 +12,7 @@ import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.*;
+
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
 import v2.org.analysis.cfg.BPVertex;

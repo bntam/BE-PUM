@@ -19,8 +19,11 @@
 package v2.org.analysis;
 
 import antlr.ANTLRException;
+
 import com.sun.jna.WString;
-import v2.org.analysis.apihandle.be_pum.winapi.kernel32.Kernel32DLL;
+
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+
 import org.jakstab.Algorithm;
 import org.jakstab.Options;
 import org.jakstab.Program;
@@ -31,6 +34,7 @@ import org.jakstab.loader.HeuristicHarness;
 import org.jakstab.ssl.Architecture;
 import org.jakstab.util.Characters;
 import org.jakstab.util.Logger;
+
 import v2.org.analysis.algorithm.OTFModelGeneration;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.statistics.FileProcess;
@@ -79,7 +83,7 @@ public class Main {
 		pathVirus = "asm/api/";
 		//pathVirus = "asm/APLAS14/";
 		//pathVirus = "asm/virus/";
-		pathVirus = "asm/packer/";
+		//pathVirus = "asm/packer/";
 		//pathVirus = "D:/Temp/Test_week_6/";
 		//pathVirus = "asm/mcvecto/";
 		//pathVirus = "asm/vx.netlux.org/";
@@ -333,7 +337,8 @@ public class Main {
 //		in = "api_test_pecompact.exe";
 		
 		//pathVirus = "asm/api/";
-		//in = "Virus.Win32.Aztec.01"; // 265 280 0.1s => 324 files
+		pathVirus = "asm/virus/";
+		in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
 
 		System.out.println(pathVirus + in);
 		analyzeFile(pathVirus + in);		
