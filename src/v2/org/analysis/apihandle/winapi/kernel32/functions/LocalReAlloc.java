@@ -51,8 +51,7 @@ public class LocalReAlloc extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Register register = env.getRegister();
@@ -62,8 +61,7 @@ public class LocalReAlloc extends Kernel32API {
 		Value x3 = stack.pop();
 		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue
-				&& x3 instanceof LongValue) {
+		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
@@ -71,8 +69,7 @@ public class LocalReAlloc extends Kernel32API {
 			HANDLE hMem = new HANDLE(new Pointer(t1));
 			SIZE_T uBytes = new SIZE_T(t2);
 			UINT uFlags = new UINT(t3);
-			HANDLE ret = Kernel32DLL.INSTANCE
-					.LocalReAlloc(hMem, uBytes, uFlags);
+			HANDLE ret = Kernel32DLL.INSTANCE.LocalReAlloc(hMem, uBytes, uFlags);
 
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 			register.mov("eax", new LongValue(value));

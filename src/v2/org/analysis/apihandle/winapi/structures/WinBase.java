@@ -188,11 +188,9 @@ public interface WinBase extends StdCallLibrary, WinDef, BaseTSD {
 		public HANDLE hStdError;
 
 		protected List<String> getFieldOrder() {
-			return Arrays.asList(new String[] { "cb", "lpReserved",
-					"lpDesktop", "lpTitle", "dwX", "dwY", "dwXSize", "dwYSize",
-					"dwXCountChars", "dwYCountChars", "dwFillAttribute",
-					"dwFlags", "wShowWindow", "cbReserved2", "lpReserved2",
-					"hStdInput", "hStdOutput", "hStdError" });
+			return Arrays.asList(new String[] { "cb", "lpReserved", "lpDesktop", "lpTitle", "dwX", "dwY", "dwXSize",
+					"dwYSize", "dwXCountChars", "dwYCountChars", "dwFillAttribute", "dwFlags", "wShowWindow",
+					"cbReserved2", "lpReserved2", "hStdInput", "hStdOutput", "hStdError" });
 		}
 
 		public STARTUPINFO() {
@@ -214,10 +212,9 @@ public interface WinBase extends StdCallLibrary, WinDef, BaseTSD {
 		public char cAlternateFileName[] = new char[14];
 
 		protected List<String> getFieldOrder() {
-			return Arrays.asList(new String[] { "dwFileAttributes",
-					"ftCreationTime", "ftLastAccessTime", "ftLastWriteTime",
-					"nFileSizeHigh", "nFileSizeLow", "dwReserved0",
-					"dwReserved1", "cFileName", "cAlternateFileName" });
+			return Arrays.asList(new String[] { "dwFileAttributes", "ftCreationTime", "ftLastAccessTime",
+					"ftLastWriteTime", "nFileSizeHigh", "nFileSizeLow", "dwReserved0", "dwReserved1", "cFileName",
+					"cAlternateFileName" });
 		}
 	}
 
@@ -237,17 +234,15 @@ public interface WinBase extends StdCallLibrary, WinDef, BaseTSD {
 		public SIZE_T dwAvailVirtual;
 
 		protected List<String> getFieldOrder() {
-			return Arrays.asList(new String[] { "dwLength", "dwMemoryLoad",
-					"dwTotalPhys", "dwAvailPhys", "dwTotalPageFile",
-					"dwAvailPageFile", "dwTotalVirtual", "dwAvailVirtual" });
+			return Arrays.asList(new String[] { "dwLength", "dwMemoryLoad", "dwTotalPhys", "dwAvailPhys",
+					"dwTotalPageFile", "dwAvailPageFile", "dwTotalVirtual", "dwAvailVirtual" });
 		}
 
 		public MEMORYSTATUS() {
 			dwLength = new DWORD(size());
 		}
 
-		public static class ByReference extends MEMORYSTATUS implements
-				Structure.ByReference {
+		public static class ByReference extends MEMORYSTATUS implements Structure.ByReference {
 			public ByReference() {
 			}
 
@@ -271,15 +266,14 @@ public interface WinBase extends StdCallLibrary, WinDef, BaseTSD {
 		public char szPathName[] = new char[128];
 
 		protected List<String> getFieldOrder() {
-			return Arrays.asList(new String[] { "cBytes", "fFixedDisk",
-					"nErrCode", "Reserved1", "Reserved2", "szPathName" });
+			return Arrays.asList(new String[] { "cBytes", "fFixedDisk", "nErrCode", "Reserved1", "Reserved2",
+					"szPathName" });
 		}
 
 		public OFSTRUCT() {
 		}
 
-		public static class ByReference extends OFSTRUCT implements
-				Structure.ByReference {
+		public static class ByReference extends OFSTRUCT implements Structure.ByReference {
 			public ByReference() {
 			}
 
@@ -289,6 +283,38 @@ public interface WinBase extends StdCallLibrary, WinDef, BaseTSD {
 		}
 
 		public OFSTRUCT(Pointer memory) {
+			super(memory);
+			read();
+		}
+	}
+
+	public static class THREADENTRY32 extends Structure {
+		public DWORD dwSize;
+		public DWORD cntUsage;
+		public DWORD th32ThreadID;
+		public DWORD th32OwnerProcessID;
+		public LONG tpBasePri;
+		public LONG tpDeltaPri;
+		public DWORD dwFlags;
+
+		protected List<String> getFieldOrder() {
+			return Arrays.asList(new String[] { "dwSize", "cntUsage", "th32ThreadID", "th32OwnerProcessID",
+					"tpBasePri", "tpDeltaPri", "dwFlags" });
+		}
+
+		public THREADENTRY32() {
+		}
+
+		public static class ByReference extends THREADENTRY32 implements Structure.ByReference {
+			public ByReference() {
+			}
+
+			public ByReference(Pointer memory) {
+				super(memory);
+			}
+		}
+
+		public THREADENTRY32(Pointer memory) {
 			super(memory);
 			read();
 		}

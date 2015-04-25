@@ -6,6 +6,7 @@ import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
@@ -85,4 +86,91 @@ public interface Advapi32DLL extends StdCallLibrary {
 	 */
 	BOOL CryptHashData(/* _In_ *//* HCRYPTHASH */ULONG_PTR hHash, /* _In_ */ByteByReference pbData, /* _In_ */
 			DWORD dwDataLen, /* _In_ */DWORD dwFlags);
+
+	/**
+	 * The CryptDeriveKey function generates cryptographic session keys derived
+	 * from a base data value. This function guarantees that when the same
+	 * cryptographic service provider (CSP) and algorithms are used, the keys
+	 * generated from the same base data are identical. The base data can be a
+	 * password or any other user data.
+	 * 
+	 * @param hProv
+	 *            A HCRYPTPROV handle of a CSP created by a call to
+	 *            CryptAcquireContext.
+	 * 
+	 * @param Algid
+	 *            An ALG_ID structure that identifies the symmetric encryption
+	 *            algorithm for which the key is to be generated. The algorithms
+	 *            available will most likely be different for each CSP. For more
+	 *            information about which algorithm identifier is used by the
+	 *            different providers for the key specs AT_KEYEXCHANGE and
+	 *            AT_SIGNATURE, see ALG_ID.
+	 * 
+	 * @param hBaseData
+	 *            A handle to a hash object that has been fed the exact base
+	 *            data.
+	 * 
+	 * @param dwFlags
+	 *            Specifies the type of key generated.
+	 * 
+	 * @param phKey
+	 *            A pointer to a HCRYPTKEY variable to receive the address of
+	 *            the handle of the newly generated key. When you have finished
+	 *            using the key, release the handle by calling the
+	 *            CryptDestroyKey function.
+	 * 
+	 * @return If the function succeeds, the function returns nonzero (TRUE). If
+	 *         the function fails, it returns zero (FALSE). For extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL CryptDeriveKey(/* _In_ *//* HCRYPTPROV */ULONG_PTR hProv, /* _In_ *//* ALG_ID */UINT Algid, /* _In_ *//* HCRYPTHASH */
+			ULONG_PTR hBaseData, /* _In_ */DWORD dwFlags, /* _Inout_ *//* HCRYPTKEY */ULONG_PTRByReference phKey);
+
+	/**
+	 * The CryptDestroyHash function destroys the hash object referenced by the
+	 * hHash parameter. After a hash object has been destroyed, it can no longer
+	 * be used.
+	 * 
+	 * @param hHash
+	 *            The handle of the hash object to be destroyed.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. For extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL CryptDestroyHash(/* _In_ *//* HCRYPTHASH */ULONG_PTR hHash);
+
+	/**
+	 * The CryptCreateHash function initiates the hashing of a stream of data.
+	 * It creates and returns to the calling application a handle to a
+	 * cryptographic service provider (CSP) hash object. This handle is used in
+	 * subsequent calls to CryptHashData and CryptHashSessionKey to hash session
+	 * keys and other streams of data.
+	 * 
+	 * @param hProv
+	 *            A handle to a CSP created by a call to CryptAcquireContext.
+	 * 
+	 * @param Algid
+	 *            An ALG_ID value that identifies the hash algorithm to use.
+	 * 
+	 * @param hKey
+	 *            If the type of hash algorithm is a keyed hash, such as the
+	 *            Hash-Based Message Authentication Code (HMAC) or Message
+	 *            Authentication Code (MAC) algorithm, the key for the hash is
+	 *            passed in this parameter. For nonkeyed algorithms, this
+	 *            parameter must be set to zero.
+	 * 
+	 * @param dwFlags
+	 * 
+	 * @param phHash
+	 *            The address to which the function copies a handle to the new
+	 *            hash object. When you have finished using the hash object,
+	 *            release the handle by calling the CryptDestroyHash function.
+	 * 
+	 * @return If the function succeeds, the function returns TRUE. If the
+	 *         function fails, it returns FALSE. For extended error information,
+	 *         call GetLastError.
+	 */
+	BOOL CryptCreateHash(/* _In_ *//* HCRYPTPROV */ULONG_PTR hProv, /* _In_ *//* ALG_ID */UINT Algid, /* _In_ *//* HCRYPTKEY */
+			ULONG_PTR hKey, /* _In_ */DWORD dwFlags, /* _Out_ *//* HCRYPTHASH */ULONG_PTRByReference phHash);
 }

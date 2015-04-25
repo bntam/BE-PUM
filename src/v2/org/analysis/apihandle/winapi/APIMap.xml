@@ -4,6 +4,15 @@
 		<API funcName="cryptacquirecontext" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptAcquireContext" />
 		<API funcName="cryptacquirecontexta" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptAcquireContext" />
 		<API funcName="cryptacquirecontextw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptAcquireContext" />
+		<API funcName="cryptcreatehash" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
+		<API funcName="cryptcreatehasha" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
+		<API funcName="cryptcreatehashw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
+		<API funcName="cryptderivekey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
+		<API funcName="cryptderivekeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
+		<API funcName="cryptderivekeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
+		<API funcName="cryptdestroyhash" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
+		<API funcName="cryptdestroyhasha" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
+		<API funcName="cryptdestroyhashw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
 		<API funcName="crypthashdata" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
 		<API funcName="crypthashdataa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
 		<API funcName="crypthashdataw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
@@ -81,6 +90,9 @@
 		<API funcName="exitprocess" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitProcess" />
 		<API funcName="exitprocessa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitProcess" />
 		<API funcName="exitprocessw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitProcess" />
+		<API funcName="exitthread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitThread" />
+		<API funcName="exitthreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitThread" />
+		<API funcName="exitthreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitThread" />
 		<API funcName="filetimetosystemtime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FileTimeToSystemTime" />
 		<API funcName="filetimetosystemtimea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FileTimeToSystemTime" />
 		<API funcName="filetimetosystemtimew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FileTimeToSystemTime" />
@@ -348,6 +360,9 @@
 		<API funcName="openprocess" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenProcess" />
 		<API funcName="openprocessa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenProcess" />
 		<API funcName="openprocessw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenProcess" />
+		<API funcName="openthread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenThread" />
+		<API funcName="openthreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenThread" />
+		<API funcName="openthreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenThread" />
 		<API funcName="outputdebugstring" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OutputDebugString" />
 		<API funcName="outputdebugstringa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OutputDebugString" />
 		<API funcName="outputdebugstringw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OutputDebugString" />
@@ -420,6 +435,9 @@
 		<API funcName="sleep" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Sleep" />
 		<API funcName="sleepa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Sleep" />
 		<API funcName="sleepw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Sleep" />
+		<API funcName="suspendthread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SuspendThread" />
+		<API funcName="suspendthreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SuspendThread" />
+		<API funcName="suspendthreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SuspendThread" />
 		<API funcName="systemtimetofiletime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SystemTimeToFileTime" />
 		<API funcName="systemtimetofiletimea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SystemTimeToFileTime" />
 		<API funcName="systemtimetofiletimew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SystemTimeToFileTime" />
@@ -429,6 +447,12 @@
 		<API funcName="terminatethread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TerminateThread" />
 		<API funcName="terminatethreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TerminateThread" />
 		<API funcName="terminatethreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TerminateThread" />
+		<API funcName="thread32first" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Thread32First" />
+		<API funcName="thread32firsta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Thread32First" />
+		<API funcName="thread32firstw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Thread32First" />
+		<API funcName="thread32next" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Thread32Next" />
+		<API funcName="thread32nexta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Thread32Next" />
+		<API funcName="thread32nextw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Thread32Next" />
 		<API funcName="tlsalloc" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TlsAlloc" />
 		<API funcName="tlsalloca" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TlsAlloc" />
 		<API funcName="tlsallocw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TlsAlloc" />
@@ -575,6 +599,9 @@
 		<API funcName="gettopwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.GetTopWindow" />
 		<API funcName="gettopwindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.GetTopWindow" />
 		<API funcName="gettopwindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.GetTopWindow" />
+		<API funcName="getwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
+		<API funcName="getwindowlonga" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
+		<API funcName="getwindowlongw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
 		<API funcName="getwindowthreadprocessid" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
 		<API funcName="getwindowthreadprocessida" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
 		<API funcName="getwindowthreadprocessidw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
@@ -623,6 +650,9 @@
 		<API funcName="setcursor" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setcursora" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setcursorw" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
+		<API funcName="setwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
+		<API funcName="setwindowlonga" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
+		<API funcName="setwindowlongw" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
 		<API funcName="showwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.ShowWindow" />
 		<API funcName="showwindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.ShowWindow" />
 		<API funcName="showwindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.ShowWindow" />

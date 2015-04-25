@@ -27,6 +27,7 @@ import com.sun.jna.win32.W32APIOptions;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.MEMORYSTATUS;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.OFSTRUCT;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
+import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.CPINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.MEMORY_BASIC_INFORMATION;
@@ -2821,4 +2822,83 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         information, call GetLastError.
 	 */
 	BOOL SetPriorityClass(/* _In_ */HANDLE hProcess, /* _In_ */DWORD dwPriorityClass);
+
+	/**
+	 * Retrieves information about the first thread of any process encountered
+	 * in a system snapshot.
+	 * 
+	 * @param hSnapshot
+	 *            A handle to the snapshot returned from a previous call to the
+	 *            CreateToolhelp32Snapshot function.
+	 * 
+	 * @param lpte
+	 *            A pointer to a THREADENTRY32 structure.
+	 * 
+	 * @return Returns TRUE if the first entry of the thread list has been
+	 *         copied to the buffer or FALSE otherwise. The ERROR_NO_MORE_FILES
+	 *         error value is returned by the GetLastError function if no
+	 *         threads exist or the snapshot does not contain thread
+	 *         information.
+	 */
+	BOOL Thread32First(/* _In_ */HANDLE hSnapshot, /* _Inout_ */THREADENTRY32 lpte);
+
+	/**
+	 * Retrieves information about the next thread of any process encountered in
+	 * the system memory snapshot.
+	 * 
+	 * @param hSnapshot
+	 *            A handle to the snapshot returned from a previous call to the
+	 *            CreateToolhelp32Snapshot function.
+	 * 
+	 * @param lpte
+	 *            A pointer to a THREADENTRY32 structure.
+	 * 
+	 * @return Returns TRUE if the next entry of the thread list has been copied
+	 *         to the buffer or FALSE otherwise. The ERROR_NO_MORE_FILES error
+	 *         value is returned by the GetLastError function if no threads
+	 *         exist or the snapshot does not contain thread information.
+	 */
+	BOOL Thread32Next(/* _In_ */HANDLE hSnapshot, /* _Out_ */THREADENTRY32 lpte);
+
+	/**
+	 * Opens an existing thread object.
+	 * 
+	 * @param dwDesiredAccess
+	 *            The access to the thread object. This access right is checked
+	 *            against the security descriptor for the thread. This parameter
+	 *            can be one or more of the thread access rights.
+	 * 
+	 * @param bInheritHandle
+	 *            If this value is TRUE, processes created by this process will
+	 *            inherit the handle. Otherwise, the processes do not inherit
+	 *            this handle.
+	 * 
+	 * @param dwThreadId
+	 *            The identifier of the thread to be opened.
+	 * 
+	 * @return If the function succeeds, the return value is an open handle to
+	 *         the specified thread. If the function fails, the return value is
+	 *         NULL. To get extended error information, call GetLastError.
+	 */
+	HANDLE OpenThread(/* _In_ */DWORD dwDesiredAccess, /* _In_ */BOOL bInheritHandle, /* _In_ */DWORD dwThreadId);
+
+	/**
+	 * Suspends the specified thread.
+	 * 
+	 * @param hThread
+	 *            A handle to the thread that is to be suspended.
+	 * 
+	 * @return If the function succeeds, the return value is the thread's
+	 *         previous suspend count; otherwise, it is (DWORD) -1. To get
+	 *         extended error information, use the GetLastError function.
+	 */
+	DWORD SuspendThread(/* _In_ */HANDLE hThread);
+
+	/**
+	 * Ends the calling thread.
+	 * 
+	 * @param dwExitCode
+	 *            The exit code for the thread.
+	 */
+	void ExitThread(/* _In_ */DWORD dwExitCode);
 }

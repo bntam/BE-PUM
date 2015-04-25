@@ -12,7 +12,6 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.*;
-import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
 import com.sun.jna.platform.win32.WinUser.MSG;
 import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
 import com.sun.jna.win32.StdCallLibrary;
@@ -656,4 +655,50 @@ public interface User32DLL extends StdCallLibrary {
 	 */
 	BOOL BlockInput(/* _In_ */BOOL fBlockIt);
 
+	/**
+	 * Retrieves information about the specified window. The function also
+	 * retrieves the 32-bit (DWORD) value at the specified offset into the extra
+	 * window memory.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window and, indirectly, the class to which the
+	 *            window belongs.
+	 * 
+	 * @param nIndex
+	 *            The zero-based offset to the value to be retrieved. Valid
+	 *            values are in the range zero through the number of bytes of
+	 *            extra window memory, minus four; for example, if you specified
+	 *            12 or more bytes of extra memory, a value of 8 would be an
+	 *            index to the third 32-bit integer. To retrieve any other
+	 *            value, specify one of the following values.
+	 * 
+	 * @return If the function succeeds, the return value is the requested
+	 *         value. If the function fails, the return value is zero. To get
+	 *         extended error information, call GetLastError.
+	 */
+	LONG GetWindowLong(/* _In_ */HWND hWnd, /* _In_ */int nIndex);
+
+	/**
+	 * Changes an attribute of the specified window. The function also sets the
+	 * 32-bit (long) value at the specified offset into the extra window memory.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window and, indirectly, the class to which the
+	 *            window belongs.
+	 * 
+	 * @param nIndex
+	 *            The zero-based offset to the value to be set. Valid values are
+	 *            in the range zero through the number of bytes of extra window
+	 *            memory, minus the size of an integer. To set any other value,
+	 *            specify one of the following values.
+	 * 
+	 * @param dwNewLong
+	 *            The replacement value.
+	 * 
+	 * @return If the function succeeds, the return value is the previous value
+	 *         of the specified 32-bit integer. If the function fails, the
+	 *         return value is zero. To get extended error information, call
+	 *         GetLastError.
+	 */
+	LONG SetWindowLong(/* _In_ */HWND hWnd,/* _In_ */int nIndex,/* _In_ */LONG dwNewLong);
 }
