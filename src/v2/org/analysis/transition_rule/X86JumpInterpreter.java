@@ -35,7 +35,7 @@ public class X86JumpInterpreter {
 		Operand dest = inst.getOperand1();
 		Value r = null;
 		AbsoluteAddress targetTemp = curState.getLocation();
-
+		
 		// call structure: push call next eip to stack, jump to call address
 		// first operand
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
@@ -57,7 +57,13 @@ public class X86JumpInterpreter {
 			}
 			r = env.getMemory().getMemoryValue((X86MemoryOperand) dest, inst);
 		}
-
+		
+		// PHONG: 20150502 -----------------------------------------------------
+		if (!rule.checkAddressValidJump(env, ((LongValue)r).getValue())) {
+			return rule.processSEH(curState);
+		}
+		//-----------------------------------------------------------------------
+		
 		if (r != null && r instanceof LongValue) {
 			AbsoluteAddress r1 = new AbsoluteAddress(((LongValue) r).getValue());
 			Program.getProgram()

@@ -370,7 +370,8 @@ public class PEModule extends AbstractCOFFModule {
 	public boolean insideFileArea(AbsoluteAddress va) {
 		// TODO Auto-generated method stub
 		long t = va.getValue() - getBaseAddress();
-		return t >= 0 && t < pe_header.getSizeOfImage();
+		//return t >= 0 && t < pe_header.getSizeOfImage();
+		return t > 0 && t < pe_header.getSizeOfImage();
 	}
 
 }

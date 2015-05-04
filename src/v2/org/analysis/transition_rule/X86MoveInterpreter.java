@@ -69,18 +69,23 @@ public class X86MoveInterpreter {
 
 				if (y.getSegmentRegister() != null
 						&& y.getSegmentRegister().toString() == "%fs" && b) {
-					System.out.println("SEH Exploit:"
-							+ curState.getLocation().toString());
+					//System.out.println("SEH Exploit:"
+					//		+ curState.getLocation().toString());
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						if (((X86Register) src).toString().equals("%esp")) {
 							rule.setSEH(curState);
 						}
+						// PHONG: 20150501:-------------------------------------------------
+						else {
+							rule.setSEHOther(curState, ((X86Register) src).toString());
+						}
+						// -----------------------------------------------------------------
 					}
 				} else {
-					X86MemoryOperand t = env.getMemory().evaluateAddress(
-							(X86MemoryOperand) dest, env);
+					//X86MemoryOperand t = env.getMemory().evaluateAddress(
+					//		(X86MemoryOperand) dest, env);
 
-					if (!rule.checkAddressValid(env, t)) {
+					if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 						// SEH Exploit
 						return rule.processSEH(curState);
 					}
@@ -89,10 +94,7 @@ public class X86MoveInterpreter {
 				}
 			} else {
 				// PHONG - 20150422
-				if (source instanceof LongValue)
-					rule.setValueOperand(dest, source, env, inst);
-				else
-					rule.setValueOperand(dest, new LongValue(0), env, inst);
+				rule.setValueOperand(dest, source, env, inst);
 			}
 
 		} else if (inst.getName().startsWith("xchg")) {
@@ -100,10 +102,10 @@ public class X86MoveInterpreter {
 			Value temp = rule.getValueOperand(dest, env, inst);
 			Value source = rule.getValueOperand(src, env, inst);
 			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
 
-				if (!rule.checkAddressValid(env, t)) {
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					return rule.processSEH(curState);
 				}

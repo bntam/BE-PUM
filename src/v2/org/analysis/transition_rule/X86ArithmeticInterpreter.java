@@ -296,10 +296,10 @@ public class X86ArithmeticInterpreter {
 						}
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest))  {
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -354,10 +354,10 @@ public class X86ArithmeticInterpreter {
 						env.getRegister().add(dest.toString(), new LongValue(1));
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -382,10 +382,10 @@ public class X86ArithmeticInterpreter {
 					
 					if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -393,10 +393,10 @@ public class X86ArithmeticInterpreter {
 						}
 					} else if (src.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) src, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) src, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -478,10 +478,10 @@ public class X86ArithmeticInterpreter {
 						}
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -555,10 +555,10 @@ public class X86ArithmeticInterpreter {
 						env.getFlag().changeFlagWithINC(d, env, rule.getBitCount(ins));
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)){
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -615,10 +615,10 @@ public class X86ArithmeticInterpreter {
 						}
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -718,10 +718,10 @@ public class X86ArithmeticInterpreter {
 						}
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -815,9 +815,9 @@ public class X86ArithmeticInterpreter {
 						}
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
-						if (!rule.checkAddressValid(env, t)) {
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 							// SEH Exploit
 						/*System.out.println("SEH:"
 								+ path.getCurrentState().getLocation()
@@ -868,9 +868,9 @@ public class X86ArithmeticInterpreter {
 						env.getRegister().sub(dest.toString(), new LongValue(1));
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
-						if (!rule.checkAddressValid(env, t)) {
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest))  {
 							// SEH Exploit
 							return rule.processSEH(path.getCurrentState());
 						}
@@ -926,10 +926,10 @@ public class X86ArithmeticInterpreter {
 						}
 					} else if (dest.getClass().getSimpleName()
 							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = env.getMemory().evaluateAddress(
-								(X86MemoryOperand) dest, env);
+						//X86MemoryOperand t = env.getMemory().evaluateAddress(
+						//		(X86MemoryOperand) dest, env);
 
-						if (!rule.checkAddressValid(env, t)) {
+						if (!rule.checkAddressValid(env, (X86MemoryOperand) dest))  {
 							System.out.println("Process SEH at:"
 									+ path.getCurrentState().getLocation()
 									.toString());
@@ -1627,8 +1627,10 @@ public class X86ArithmeticInterpreter {
 	}
 
 	private long calculateRotateOperator(long dest, long count, Environment env, X86TransitionRule rule, X86ArithmeticInstruction inst) {
+		int size = rule.getBitCount(inst);
+		//dest = BitVector.normalizeNumber(dest, size);
+		dest = Convert.convetUnsignedValue(dest, size);
 		if (inst.getName().startsWith("ror") || inst.getName().startsWith("rol")) {
-			int size = rule.getBitCount(inst);
 			int tempCount = 0;
 			switch (size) {
 				case 8:
@@ -1647,10 +1649,12 @@ public class X86ArithmeticInterpreter {
 			if (inst.getName().startsWith("rol")) {
 				while (tempCount != 0) {
 					byte tempCF = BitVector.getMSB(dest, size);
-					dest = (dest << 1) + tempCF;
-					dest = BitVector.normalizeNumber(dest, size);
+					dest = Convert.convetUnsignedValue(dest << 1, size) + tempCF;
+					//dest = BitVector.normalizeNumber(dest, size);
 					tempCount --;
 				}
+
+				dest = Convert.convertSignedValue(dest, size);
 				env.getFlag().setCFlag(new BooleanValue(BitVector.getLSB(dest, size)));
 				if (count == 1) {
 					BooleanValue temp = new BooleanValue(BitVector.getMSB(dest, size));
@@ -1660,12 +1664,21 @@ public class X86ArithmeticInterpreter {
 				}
 			} else {
 				//ROR
+				//long tempDest = dest;
+				//tempDest = Long.rotateRight(tempDest, tempCount);
+				//tempDest = BitVector.normalizeNumber(tempDest, size);
+
 				while (tempCount != 0) {
 					byte tempCF = BitVector.getLSB(dest, size);
-					dest = (dest >> 1) + (tempCF << (size - 1));
-					dest = BitVector.normalizeNumber(dest, size);
+					long x = Convert.convetUnsignedValue(dest>> 1, size);
+					long y = Convert.convetUnsignedValue(tempCF << (size - 1), size);
+					dest = x + y;
+					//dest = (dest >> 1) + (tempCF << size);
 					tempCount --;
 				}
+
+				//dest = BitVector.normalizeNumber(dest, size);
+				dest = Convert.convertSignedValue(dest, size);
 				env.getFlag().setCFlag(new BooleanValue(BitVector.getMSB(dest, size)));
 				if (count == 1) {
 					BooleanValue msb = new BooleanValue(BitVector.getMSB(dest, size));
@@ -1677,7 +1690,7 @@ public class X86ArithmeticInterpreter {
 			}
 
 		} else if (inst.getName().startsWith("rcr") || inst.getName().startsWith("rcl")) {
-			int size = rule.getBitCount(inst);
+			//int size = rule.getBitCount(inst);
 			int tempCount = 0;
 			switch (size) {
 				case 8:
@@ -1701,11 +1714,11 @@ public class X86ArithmeticInterpreter {
 				}
 				while (tempCount != 0) {
 					byte tempCF = BitVector.getMSB(dest, size);
-					dest = (dest << 1 )+ t;
+					dest = Convert.convetUnsignedValue(dest << 1, size)+ t;
 					t = tempCF;
 					tempCount --;
 				}
-
+				dest = Convert.convertSignedValue(dest, size);
 				env.getFlag().setCFlag(new BooleanValue(t == 1));
 				if (count == 1) {
 					BooleanValue temp = new BooleanValue(BitVector.getMSB(dest, size));
@@ -1730,10 +1743,11 @@ public class X86ArithmeticInterpreter {
 
 				while (tempCount != 0) {
 					byte tempCF = BitVector.getLSB(dest, size);
-					dest = (dest >> 1) + (t << (size - 1));
+					dest = Convert.convetUnsignedValue(dest >> 1, size) + Convert.convetUnsignedValue(t << (size - 1), size);
 					t = tempCF;
 					tempCount --;
 				}
+				dest = Convert.convertSignedValue(dest, size);
 				env.getFlag().setCFlag(new BooleanValue(t == 1));
 			}
 		}

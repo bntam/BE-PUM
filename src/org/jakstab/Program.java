@@ -775,6 +775,12 @@ public final class Program {
 				//logger.error("No module for address " + address
 				//		+ ". Cannot disassemble instruction!")
 				;
+				// PHONG: 20150501 ------------------------------------------
+				if (mainModule instanceof PEModule) {
+					if (((PEModule)mainModule).isInside(address.getValue()))
+						result = (int) ((PEModule)mainModule).getByteValue(address.getValue());
+				}
+				//------------------------------------------------------------
 			} else {
 				fp = module.getFilePointer(address);
 				// Also check whether fp is out of the int range, since the

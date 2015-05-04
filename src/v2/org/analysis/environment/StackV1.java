@@ -72,6 +72,11 @@ public class StackV1 extends Stack {
 		return result;
 	}
 
+	@Override
+	public Value getValueStackFromIndex(long desp, int num) {
+		return null;
+	}
+
 	public void printElements() {
 		if (top >= 0) {
 			System.out.println("Elements in stack :");
@@ -81,7 +86,7 @@ public class StackV1 extends Stack {
 		}
 	}
 
-	@Override
+
 	// Truy cap cac thanh phan trong stack [esp + desp]
 	public Value getValueStackFromIndex(long desp) {
 		// TODO Auto-generated method stub

@@ -1,7 +1,6 @@
 package v2.org.analysis.system;
 
 import org.jakstab.asm.AbsoluteAddress;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,8 @@ public class LibraryHandle {
 
 		libraryName.add(new Library("mapistub.dll"));
 		libraryName.add(new Library("msvcrt.dll"));
-		libraryName.add(new Library("user32.dll"));
+		//libraryName.add(new Library("user32.dll"));
+		//libraryName.add(new Library("kernel32.dll"));
 	}
 
 	public Library getLibrary(long libraryHandle) {

@@ -17,6 +17,7 @@ import v2.org.analysis.value.Value;
  */
 public class StackV2 extends Stack {
 	private long baseAddr, topAddr;
+	private long scale = 0x23;
 	private Environment env;
 
 	@Override
@@ -75,22 +76,53 @@ public class StackV2 extends Stack {
 	}
 
 	@Override
-	public Value getValueStackFromIndex(long desp) {
+	public Value getValueStackFromIndex(long desp, int num) {
 		// TODO Auto-generated method stub
 		Value esp = env.getRegister().getRegisterValue("esp");
-		if (esp instanceof LongValue)
+		if (esp instanceof LongValue) {
+			if (num == 32)
 			return env.getMemory().getDoubleWordMemoryValue(
 					desp + ((LongValue) esp).getValue());
+
+			if (num == 8)
+				return env.getMemory().getByteMemoryValue(
+						desp + ((LongValue) esp).getValue());
+
+			if (num == 16)
+				return env.getMemory().getWordMemoryValue(
+						desp + ((LongValue) esp).getValue());
+		}
 
 		return null;
 	}
 
-	public void setValueStackFromIndex(long desp, Value v) {
+	@Override
+	public Value getValueStackFromIndex(long desp) {
+		Value esp = env.getRegister().getRegisterValue("esp");
+		if (esp instanceof LongValue) {
+			return env.getMemory().getDoubleWordMemoryValue(
+					desp + ((LongValue) esp).getValue());
+		}
+
+		return null;
+	}
+
+	public void setValueStackFromIndex(long desp, Value v, int num) {
 		// TODO Auto-generated method stub
 		Value esp = env.getRegister().getRegisterValue("esp");
-		if (esp instanceof LongValue)
-			env.getMemory().setDoubleWordMemoryValue(
+		if (esp instanceof LongValue) {
+			if (num == 32)
+				env.getMemory().setDoubleWordMemoryValue(
 					desp + ((LongValue) esp).getValue(), v);
+
+			if (num == 16)
+				env.getMemory().setWordMemoryValue(
+						desp + ((LongValue) esp).getValue(), v);
+
+			if (num == 8)
+				env.getMemory().setByteMemoryValue(
+						desp + ((LongValue) esp).getValue(), v);
+		}
 	}
 
 	@Override
@@ -108,82 +140,82 @@ public class StackV2 extends Stack {
 	@Override
 	public void sub(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.subFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
 	public void add(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.addFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
 	public void mul(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.unsignedMulFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
 	public void xor(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.xorFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
 	public void or(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.orFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
 	public void and(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.andFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
 	public void div(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.unsignedDivFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
 	public void rr(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.rrFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
 	public void rl(long desp, Value v, Instruction inst) {
 		// TODO Auto-generated method stub
-		Value r = this.getValueStackFromIndex(desp);
+		Value r = this.getValueStackFromIndex(desp, Convert.getBitCount(inst));
 		r = r.rlFunction(v);
 		r = normalizeValue(r, inst);
-		setValueStackFromIndex(desp, r);
+		setValueStackFromIndex(desp, r, Convert.getBitCount(inst));
 	}
 
 	@Override
@@ -211,8 +243,9 @@ public class StackV2 extends Stack {
 		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));		
 		
 		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		push(new LongValue(1));
-		push(new LongValue((long) (Math.random() * Math.pow(10, 7))));
+		push(new LongValue(0xFFFFFFFF));
+		//push(new LongValue((long) (Math.random() * Math.pow(10, 7))));
+		push(new LongValue(0x7C910208));
 		push(longValue);
 	}
 
@@ -274,7 +307,7 @@ public class StackV2 extends Stack {
 	@Override
 	public String toString() {
 		String result = "";
-		long index = baseAddr;
+		//long index = baseAddr;
 		/*while (index >= topAddr) {
 			result += env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + ",";
 			index -= 4;
@@ -283,16 +316,17 @@ public class StackV2 extends Stack {
 		Value esp = env.getRegister().getRegisterValue("esp");
 		Value ebp = env.getRegister().getRegisterValue("ebp");
 		if (esp != null && esp instanceof LongValue) {
-			long top = ((LongValue)esp).getValue();
-			while (index >= top) {
+			long index = ((LongValue)esp).getValue();
+			for (int i=0; i<=scale; i++) {
 				result += new AbsoluteAddress(index) + " : " + env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + ", ";
-				index -= 4;
+				index += 4;
 			}
 
 			if (ebp != null && ebp instanceof LongValue)
 				result += "EBP: " + env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, ((LongValue)ebp).getValue()));
 			//return result + " " + (topAddr == ((LongValue) esp).getValue());
 		}
+
 		if (result == "")
 			return "Stack is undefined";
 		
@@ -329,7 +363,13 @@ public class StackV2 extends Stack {
 	@Override
 	public boolean isInsideStack(AbsoluteAddress addr) {
 		// TODO Auto-generated method stub
-		return addr.getValue() > baseAddr - 1048576 && addr.getValue() < topAddr + 1048576;
+		Value esp = env.getRegister().getRegisterValue("esp");
+		if (esp != null && esp instanceof LongValue) {
+			long t = ((LongValue)esp).getValue();
+			return addr.getValue() > t - 65536 && addr.getValue() < t + 65536;
+		}
+
+		return false;
 	}
 
 	@Override

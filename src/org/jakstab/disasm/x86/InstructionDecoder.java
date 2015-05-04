@@ -56,9 +56,10 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 			ret = bytesArray.getByteAt(index);
 			ret = ret & 0xff;
 		} else {
-			throw new ArrayIndexOutOfBoundsException(
-					"Disassembler requested byte outside of file area: 0x"
-							+ Long.toHexString(index));
+			return 0;
+			//throw new ArrayIndexOutOfBoundsException(
+			//		"Disassembler requested byte outside of file area: 0x"
+			//				+ Long.toHexString(index));
 		}
 		return ret;
 	}

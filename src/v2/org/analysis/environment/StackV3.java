@@ -76,6 +76,11 @@ public class StackV3 extends Stack {
 	}
 
 	@Override
+	public Value getValueStackFromIndex(long desp, int num) {
+		return null;
+	}
+
+	@Override
 	public Value getValueStackFromIndex(long desp) {
 		// TODO Auto-generated method stub
 		Value esp = env.getRegister().getRegisterValue("esp");

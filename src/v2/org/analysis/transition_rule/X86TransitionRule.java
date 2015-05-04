@@ -45,14 +45,42 @@ public class X86TransitionRule extends TransitionRule {
 	private boolean setCFG = false;
 	private List<String> checkedFormulasTrue = new ArrayList<String>();
 	private List<String> checkedFormulasFalse = new ArrayList<String>();
-
-	boolean checkAddressValid(Environment env, X86MemoryOperand t) {
+	
+	// PHONG: 20150502 --------------------------------------------------------
+	boolean checkAddressValidJump(Environment env, long t) {
 		// TODO Auto-generated method stub
-		if (Program.getProgram().getFileName().equals("hostname.exe")
-				|| Program.getProgram().getFileName().equals("diskcopy.com"))
+		if (!env.getSystem().getSEHHandler().isSet())
 			return true;
 
-		if (t == null || t.getBase() != null)
+		AbsoluteAddress addr = new AbsoluteAddress(t);
+
+		if (addr.getValue() == 0)
+			return false;
+		boolean c1 = Program.getProgram().checkAddress(addr);
+		boolean c2 = env.getStack().isInsideStack(addr);
+		boolean c3 = env.getMemory().contains(addr);
+		boolean c4 = env.getSystem().getKernel().isInside(addr);
+		boolean c5 = env.getSystem().getUser32().isInsideKernel32(addr);
+		boolean c6 = env
+				.getSystem().getFileHandle().isInsideFIle(addr);
+		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
+
+		return (c1 || c2 || c3 || c4 || c5 || c6 || c7);
+	}
+	// ------------------------------------------------------------------------
+	
+	boolean checkAddressValid(Environment env, X86MemoryOperand d) {
+		// TODO Auto-generated method stub
+		/*if (Program.getProgram().getFileName().equals("hostname.exe")
+				|| Program.getProgram().getFileName().equals("diskcopy.com"))
+			return true;*/
+		if (d != null && d.getBase() != null && d.getBase() instanceof X86Register
+				&& d.getBase().toString().contains("esp"))
+			return true;
+
+		X86MemoryOperand t = env.getMemory().evaluateAddress(d, env);
+
+		if (t == null || t.getBase() != null || t.getSegmentRegister() != null || t.getIndex() != null)
 			return true;
 
 		if (!env.getSystem().getSEHHandler().isSet())
@@ -63,14 +91,16 @@ public class X86TransitionRule extends TransitionRule {
 		if (addr.getValue() == 0)
 			return false;
 
-		return (Program.getProgram().checkAddress(addr)
-				|| env.getStack().isInsideStack(addr)
-				|| env.getMemory().contains(addr)
-				|| env.getSystem().getKernel().isInside(addr)
-				|| env.getSystem().getUser32().isInsideKernel32(addr)
-				|| env
-				.getSystem().getFileHandle().isInsideFIle(addr))
-				|| env.getSystem().getLibraryHandle().isInside(addr);
+		boolean c1 = Program.getProgram().checkAddress(addr);
+		boolean c2 = env.getStack().isInsideStack(addr);
+		boolean c3 = env.getMemory().contains(addr);
+		boolean c4 = env.getSystem().getKernel().isInside(addr);
+		boolean c5 = env.getSystem().getUser32().isInsideKernel32(addr);
+		boolean c6 = env
+				.getSystem().getFileHandle().isInsideFIle(addr);
+		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
+
+		return (c1 || c2 || c3 || c4 || c5 || c6 || c7);
 	}
 
 	public String checkAPICall(Value r, BPState curState) {
@@ -617,19 +647,45 @@ public class X86TransitionRule extends TransitionRule {
 		return curState;
 	}
 	*/
+	// PHONG: 20150105 -------------------------------------------------------
+	void setSystemSEH(BPState curState) {
+		// TODO Auto-generated method stub
+		//Program.getProgram().setTechnique("SetUpException");
+		//Program.getProgram().setDetailTechnique(
+		//		"SetUpException:" + curState.getLocation() + " ");
+		System.out.println("Set Up System Exception: " + curState.getLocation());
+		Environment env = curState.getEnvironement();
+
+		env.getSystem()
+				.getSEHHandler()
+				.getStart()
+				.setNextSEHRecord(
+						((LongValue) env.getStack().getValueStackFromIndex(0))
+								.getValue(),
+						((LongValue) env.getRegister().getRegisterValue("esp"))
+								.getValue());
+		env.getSystem()
+				.getSEHHandler()
+				.getStart()
+				.setSEHHandler(
+						((LongValue) env.getStack().getValueStackFromIndex(4))
+								.getValue(),
+						((LongValue) env.getRegister().getRegisterValue("esp"))
+								.getValue() + 4);
+		//env.getSystem().getSEHHandler().setSEHReady(true);
+	}
+	// ---------------------------------------------------------------------------
 
 	// PHONG - 20150422
 	public BPState processSEH(BPState curState){
 		Program.getProgram().setTechnique("SEH");
 		Program.getProgram().setDetailTechnique(
 				"SEH:" + curState.getLocation() + " ");
+		Program.getProgram().getLog().infoString("Process SEH at:" + curState.getLocation() + "\n");
 		AbsoluteAddress addr = new AbsoluteAddress(curState.getEnvironement()
 				.getSystem().getSEHHandler().getStart().getSehHandler());
 		Instruction inst = Program.getProgram().getInstruction(addr,
 				curState.getEnvironement());
-
-		// Set False for SEH
-		curState.getEnvironement().getSystem().getSEHHandler().setSEHReady(false);
 
 		// Context changing ---------------------------------------------------------------
 		long err_ptr = curState.getEnvironement().getSystem().getSEHHandler().getStart().getAddrSEHRecord();
@@ -646,7 +702,11 @@ public class X86TransitionRule extends TransitionRule {
 		exception_record.toStack(curState);
 		long exception_record_ptr = exception_record.getException_record_ptr();
 
-		// Push the return value for ntdll
+		// Push the return value for system
+		curState.getEnvironement().getStack().push(new LongValue(err_ptr));
+		curState.getEnvironement().getStack().push(new LongValue(0x7C));
+		curState.getEnvironement().getStack().push(new LongValue(err_ptr));
+		this.setSystemSEH(curState);
 		curState.getEnvironement().getStack().push(new LongValue(context_record_ptr));
 		curState.getEnvironement().getStack().push(new LongValue(err_ptr));
 		curState.getEnvironement().getStack().push(new LongValue(exception_record_ptr));
@@ -658,7 +718,8 @@ public class X86TransitionRule extends TransitionRule {
 		curState.getEnvironement().getRegister().setRegisterValue("eax", new LongValue(0));
 		curState.getEnvironement().getRegister().setRegisterValue("ebx", new LongValue(0));
 		curState.getEnvironement().getRegister().setRegisterValue("ecx", new LongValue(addr.getValue()));
-
+		// Set False for SEH
+		curState.getEnvironement().getSystem().getSEHHandler().setSEHReady(false);
 		// ---------------------------------------------------------------------------------
 
 		BPCFG cfg = Program.getProgram().getBPCFG();
@@ -755,6 +816,33 @@ public class X86TransitionRule extends TransitionRule {
 	public void setCFG(boolean b) {
 		this.setCFG = b;
 	}
+
+	// PHONG: 20150501 ------------------------------------------------------------------
+	void setSEHOther(BPState curState, String register) {
+		// TODO Auto-generated method stub
+		Program.getProgram().setTechnique("SetUpException");
+		Program.getProgram().setDetailTechnique(
+				"SetUpException:" + curState.getLocation() + " ");
+		System.out.println("Set Up Other Exception: " + curState.getLocation());
+		Environment env = curState.getEnvironement();
+
+		long register_value = ((LongValue)env.getRegister().getRegisterValue(register)).getValue();
+		env.getSystem()
+				.getSEHHandler()
+				.getStart()
+				.setNextSEHRecord(
+						((LongValue) env.getMemory().getDoubleWordMemoryValue(register_value)).getValue(),
+						register_value);
+		env.getSystem()
+				.getSEHHandler()
+				.getStart()
+				.setSEHHandler(
+						((LongValue) env.getMemory().getDoubleWordMemoryValue(register_value+4))
+								.getValue(),
+						register_value+4);
+		env.getSystem().getSEHHandler().setSEHReady(true);
+	}
+	// -----------------------------------------------------------------------------------------
 
 	void setSEH(BPState curState) {
 		// TODO Auto-generated method stub

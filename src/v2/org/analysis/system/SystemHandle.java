@@ -258,4 +258,18 @@ public class SystemHandle {
 		return 0;
 	}
 
+	public long getProcAddress(String libraryName, String functionName) {
+		if (libraryName.toLowerCase().contains("kernel32.dll"))
+			return getKernel().getProcAddress(functionName);
+
+		if (libraryName.toLowerCase().contains("user32.dll"))
+			return getUser32().getProcAddress(functionName);
+
+		Library l = this.libraryHandle.getLibrary(libraryName);
+
+		if (l != null)
+			return l.getAPIAddr(functionName);
+
+		return 0;
+	}
 }

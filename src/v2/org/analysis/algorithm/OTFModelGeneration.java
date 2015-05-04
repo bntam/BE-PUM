@@ -15,6 +15,7 @@ import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86CondJmpInstruction;
+
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPVertex;
 import v2.org.analysis.environment.Environment;
@@ -26,6 +27,8 @@ import v2.org.analysis.path.PathList;
 import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.Formulas;
+import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,27 +50,22 @@ public class OTFModelGeneration implements Algorithm {
 
 	@Override
 	public void run() {
-		// FOR DEBUGGING
-		/*
-		 * int number_loop = 100; long startAddr = 0x0018fe94; long endaddr =
-		 * 0x0018ff90; OllyCompare ollyc = new OllyCompare("asm/packer/out.txt",
-		 * startAddr, number_loop); OllyLoop[] ollyloop = ollyc.get_ollyloop();
-		 * ;
-		 */
 		// FOR DEBUG ONLY
-		/*boolean debug = false;
+		/*
+		boolean debug = true;
 		FileProcess file = new FileProcess("data/compareWithOlly.txt");
 		file.clearContentFile();
-		long memoryStartAddr = 0x12F660;
-		long memoryEndAddr = 0x403100;
-		long stackIndex = 0x12F724;
-		// int numChecked = ;
-		AbsoluteAddress checkedAddr = new AbsoluteAddress(0x4B9DA5);
-		AbsoluteAddress endAddr = new AbsoluteAddress(0x4C1843);
+		long memoryStartAddr = 0x406000;
+		long memoryEndAddr = 0x406004;
+		long stackIndex = 0x4;
+		int numChecked = 112;
+		AbsoluteAddress checkedAddr = new AbsoluteAddress(0x404920);
+		AbsoluteAddress endAddr = new AbsoluteAddress(0x40522E);
 		boolean check = false;
-		OllyCompare ollyCompare = new OllyCompare("asm/olly/out_vmprotect_3.txt",
+		OllyCompare ollyCompare = new OllyCompare("asm/olly/out.txt",
 				memoryStartAddr, memoryEndAddr, stackIndex);
-		ollyCompare.read_olly();*/
+		ollyCompare.read_olly();
+		*/
 		// --------------------------
 		int count = 1;
 		long overallStartTime = System.currentTimeMillis();
@@ -111,7 +109,7 @@ public class OTFModelGeneration implements Algorithm {
 
 					// Stop running one paths after maxTimePath
 					if (overallEndTimeTemp - overallStartTimePath > maxTimePath) {
-						System.out.println("Stop Path after " + maxTimePath
+						Program.getProgram().getLog().info("Stop Path after " + maxTimePath
 								+ " at " + curState.getLocation());
 						// break;
 					}
@@ -132,22 +130,15 @@ public class OTFModelGeneration implements Algorithm {
 
 				inst = curState.getInstruction();
 				location = curState.getLocation();
-				//debugProgram(location, curState);
-				/*
-				 * if (location.toString().contains("40100c")){ count = 2; }
-				 * 
-				 * if (location.toString().contains("40100e")){ count = 2; }
-				 */
-
+				debugProgram(location, curState);
+				// -------------------------------------------------------------------
 				// OLLY DEBUG HERE
-				/*if (debug) {
+				/*
+				if (debug) {
 					if (location != null
-							&& location.getValue() == checkedAddr.getValue() && count == 0x67F1)
+							&& location.getValue() == checkedAddr.getValue())
 						check = true;
 					
-					if (count == 1697)
-						System.out.println("Stop");
-
 					if (check & location != null
 							&& location.getValue() != endAddr.getValue()) {
 						System.out.println("Loop = " + count + " , Address = "
@@ -173,7 +164,34 @@ public class OTFModelGeneration implements Algorithm {
 						System.out.println("Stop Check");
 						check = false;
 					}
-				}*/
+				}
+				*/
+				/*
+				if (debug) {
+					if (location != null && location.getValue() == checkedAddr.getValue()){
+						System.out.println("Loop = " + count + " , Address = "
+								+ location.toString() + ":");
+						file.appendFile("Loop = " + count + " , Address = "
+								+ location.toString() + ":");
+						// COMPARE HERE
+						String result = ollyCompare.compareBEPUM(env, count,
+								location);
+						count = ollyCompare.getNextCheck();
+						if (result.contains("Unequal")) {
+							System.out.println("Bug");
+						}
+						file.appendFile(result);
+						System.out
+								.println("*************************************************************");
+						file.appendFile("*************************************************************");
+					}
+
+					if (location != null && count == numChecked && check) {
+						System.out.println("Stop Check");
+						check = false;
+					}
+				}
+				*/
 				// ----------------------------------------------------------
 
 				if (inst == null || location == null)
@@ -192,7 +210,6 @@ public class OTFModelGeneration implements Algorithm {
 				}
 			}
 		}
-
 	}
 
 	private void debugProgram(AbsoluteAddress location, BPState curState) {
@@ -227,21 +244,9 @@ public class OTFModelGeneration implements Algorithm {
 						location.toString().contains("4b9da5")))
 						// ******************************************
 						// api_test_yc1.2.exe
-						|| (fileName.equals("api_test_yc1.2.exe") && (
-						location.toString().contains("40473d") // done
-						//|| location.toString().contains("404278") // done
-						//|| location.toString().contains("404300")
-						//|| location.toString().contains("404442")
-						//|| location.toString().contains("40432e")
-						//|| location.toString().contains("404325")
-						//|| location.toString().contains("4042ef")
-						//|| location.toString().contains("4042f5")
-						//|| location.toString().contains("404318")
-						//|| location.toString().contains("4042d6")// done
-						//|| location.toString().contains("4042c9")// done
-						//|| location.toString().contains("4042b5")// done
-						//|| location.toString().contains("40429c")// done
-						//|| location.toString().contains("40415b")//done
+						|| (fileName.equals("api_test_v2.3_lvl1.exe") && (
+						location.toString().contains("4085b8")
+						|| location.toString().contains("408184")
 						))
 				// ******************************************
 				// Virus.Win32.Aztec.01

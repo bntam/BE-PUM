@@ -37,18 +37,13 @@ public class Options {
 	public static final String jakstabHome;
 	static {
 		// Get path of Jakstab's directory from VM
-//		String classFileName = Options.class.getResource(
-//				"/org/jakstab/Options.class").getPath();
-//		System.out.println(classFileName);
-//		if (classFileName.startsWith("file:"))
-//			classFileName = classFileName.substring(5);
-//		classFileName = classFileName.replace("%20", " ");
-//		
-//		jakstabHome = (new File(classFileName)).getParentFile().getParentFile()
-//				.getParentFile().getParent();
-		
-		// YenNguyen: Simple way to get jakstab's home
-		jakstabHome = System.getProperty("user.dir");
+		String classFileName = Options.class.getResource(
+				"/org/jakstab/Options.class").getPath();
+		if (classFileName.startsWith("file:"))
+			classFileName = classFileName.substring(5);
+		classFileName = classFileName.replace("%20", " ");
+		jakstabHome = (new File(classFileName)).getParentFile().getParentFile()
+				.getParentFile().getParent();
 	}
 
 	private static Map<String, JOption<?>> options = new TreeMap<String, JOption<?>>(

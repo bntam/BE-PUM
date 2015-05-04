@@ -226,13 +226,13 @@ public class X86InstructionInterpreter {
 				s = env.getRegister().getRegisterValue(src.toString());
 			} else if (src.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) src, env);
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) src, env);
 
-				if (!rule.checkAddressValid(env, t)) {
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
-					System.out.println("SEH:"
-							+ path.getCurrentState().getLocation().toString());
+					//System.out.println("SEH:"
+					//		+ path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
 				}
 
@@ -261,8 +261,8 @@ public class X86InstructionInterpreter {
 							((isSet) ? new LongValue(1) : new LongValue(0)));
 				} else if (dest.getClass().getSimpleName()
 						.equals("X86MemoryOperand")) {
-					X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
-					if (!rule.checkAddressValid(env, t)) {
+					//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+					if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 						// SEH Exploit
 						System.out.println("SEH:"
 								+ path.getCurrentState().getLocation()
@@ -296,9 +296,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -329,9 +329,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -362,9 +362,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -396,9 +396,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -437,9 +437,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -483,9 +483,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -529,9 +529,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -570,9 +570,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -602,9 +602,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -634,9 +634,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -666,9 +666,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -696,9 +696,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -726,9 +726,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -756,9 +756,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -786,9 +786,9 @@ public class X86InstructionInterpreter {
 
 			} else if (dest.getClass().getSimpleName()
 					.equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation().toString());
@@ -1411,11 +1411,11 @@ public class X86InstructionInterpreter {
 				// ((LongValue)d).getValueOperand()==23117)
 				// System.out.println("Debug");
 
-				X86MemoryOperand t = env.getMemory().evaluateAddress(
-						(X86MemoryOperand) dest, env);
+				//X86MemoryOperand t = env.getMemory().evaluateAddress(
+				//		(X86MemoryOperand) dest, env);
 
 				//Cau lenh CMP khong lam thay doi Memory nen se khong the xay ra truong hop SEH
-				/*if (!rule.checkAddressValid(env, t)) {
+				/*if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					System.out.println("Process SEH at: "
 							+ path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -1616,9 +1616,9 @@ public class X86InstructionInterpreter {
 							((isSet) ? new LongValue(1) : new LongValue(0)));
 				} else if (dest.getClass().getSimpleName()
 						.equals("X86MemoryOperand")) {
-					X86MemoryOperand t = env.getMemory().evaluateAddress(
-							(X86MemoryOperand) dest, env);
-					if (!rule.checkAddressValid(env, t)) {
+					//X86MemoryOperand t = env.getMemory().evaluateAddress(
+					//		(X86MemoryOperand) dest, env);
+					if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 						// SEH Exploit
 						/*
 						 * System.out.println("SEH:" +
@@ -1813,8 +1813,8 @@ public class X86InstructionInterpreter {
 				s = env.getRegister().getRegisterValue(src.toString());
 			}
 			else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) src, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) src, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -2076,8 +2076,8 @@ public class X86InstructionInterpreter {
 
 
 			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation()
@@ -2136,9 +2136,9 @@ public class X86InstructionInterpreter {
 				d = env.getRegister().getRegisterValue(dest.toString());
 			}
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
 
-				if (!rule.checkAddressValid(env, t)) {
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:"
 							+ path.getCurrentState().getLocation()
@@ -2276,8 +2276,8 @@ public class X86InstructionInterpreter {
 				d = env.getRegister().getRegisterValue(dest.toString());
 			}
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -2355,8 +2355,8 @@ public class X86InstructionInterpreter {
 				d = env.getRegister().getRegisterValue(dest.toString());
 			}
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -2440,8 +2440,8 @@ public class X86InstructionInterpreter {
 				d = env.getRegister().getRegisterValue(dest.toString());
 			}
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -2487,8 +2487,8 @@ public class X86InstructionInterpreter {
 				d = env.getRegister().getRegisterValue(dest.toString());
 			}
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -2535,8 +2535,8 @@ public class X86InstructionInterpreter {
 				d = env.getRegister().getRegisterValue(dest.toString());
 			}
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -2583,8 +2583,8 @@ public class X86InstructionInterpreter {
 				d = env.getRegister().getRegisterValue(dest.toString());
 			}
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -2622,8 +2622,8 @@ public class X86InstructionInterpreter {
 			s = rule.getValueOperand(src, env, inst);	
 			
 			if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) src, env);
-				if (!rule.checkAddressValid(env, t)) {
+				//X86MemoryOperand t = env.getMemory().evaluateAddress((X86MemoryOperand) src, env);
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 					return rule.processSEH(path.getCurrentState());
@@ -2692,7 +2692,8 @@ public class X86InstructionInterpreter {
 		Operand src = inst.getOperand2();
 
 		if (dest != null && src != null && dest instanceof X86MemoryOperand && src instanceof X86MemoryOperand) {
-			env.getMemory().setMemoryValue((X86MemoryOperand)dest, env.getMemory().getMemoryValue((X86MemoryOperand)src, inst), inst);
+			Value temp = env.getMemory().getMemoryValue((X86MemoryOperand) src, inst);
+			env.getMemory().setMemoryValue((X86MemoryOperand)dest, temp, inst);
 			Value df = env.getFlag().getDFlag();
 
 			if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue() == true) {

@@ -66,7 +66,15 @@ public class GetModuleHandle extends Kernel32API {
 				String libraryName = env.getMemory().getText(((LongValue) lpModuleName).getValue());
 				System.out.println("Library Name: " + libraryName);
 
-				ret = Kernel32.INSTANCE.GetModuleHandle(libraryName);
+				// Hai: use kernel32 and user32 of Win32 bit
+				if (libraryName.equals("kernel32.dll")) {
+					ret = new HMODULE();
+					ret.setPointer(new Pointer(env.getSystem().getKernel().getBaseAddress()));
+				} else if (libraryName.equals("user32.dll")) {
+					ret = new HMODULE();
+					ret.setPointer(new Pointer(env.getSystem().getUser32().getBaseAddress()));
+				} else
+					ret = Kernel32.INSTANCE.GetModuleHandle(libraryName);
 			}
 
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());

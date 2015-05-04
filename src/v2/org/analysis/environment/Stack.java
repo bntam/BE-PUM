@@ -22,6 +22,7 @@ public abstract class Stack {
 	public abstract Value pop();
 
 	// Truy cap cac thanh phan trong stack [esp + desp]
+	public abstract Value getValueStackFromIndex(long desp, int num);
 	public abstract Value getValueStackFromIndex(long desp);
 
 	public abstract Value getIndex(int index);

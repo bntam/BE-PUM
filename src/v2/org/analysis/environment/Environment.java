@@ -50,6 +50,7 @@ public class Environment {
 		flag.init();
 		memory = new Memory();
 		memory.setEnvironment(this);
+		memory.resetImportTable(Program.getProgram());
 
 		register = new Register();
 		//register.mov("edx", new LongValue(Program.getProgram().getEntryPoint()
@@ -66,8 +67,9 @@ public class Environment {
 
 		if (stack instanceof StackV2) {
 			((StackV2) stack).setEnvironment(this);
-			((StackV2) stack).init(new LongValue(system.getKernel()
-					.getReturnRandomValue()));
+			//((StackV2) stack).init(new LongValue(system.getKernel()
+			//		.getReturnRandomValue()));
+			((StackV2) stack).init(new LongValue(0x7C817067));
 		} else if (stack instanceof StackV1)
 			stack.push((new LongValue(system.getKernel().getReturnRandomValue())));
 	}

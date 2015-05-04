@@ -203,11 +203,8 @@ public class LoopAlgorithm {
 
 	public long normalizeLoop(long t) {
 		// TODO Auto-generated method stub
-		if (t > getMaxLoop())
-			//t = (long)(t % Math.po w(2, 16));
-			t = getMaxLoop();
-		
-		//return Convert.convertSignedValue(t, 16);
+		//if (t > getMaxLoop())		
+		//	t = getMaxLoop();		
 		return t;
 	}
 }

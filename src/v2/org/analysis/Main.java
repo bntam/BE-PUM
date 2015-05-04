@@ -83,7 +83,7 @@ public class Main {
 		pathVirus = "asm/api/";
 		//pathVirus = "asm/APLAS14/";
 		//pathVirus = "asm/virus/";
-		//pathVirus = "asm/packer/";
+		pathVirus = "asm/packer/";
 		//pathVirus = "D:/Temp/Test_week_6/";
 		//pathVirus = "asm/mcvecto/";
 		//pathVirus = "asm/vx.netlux.org/";
@@ -261,14 +261,13 @@ public class Main {
 		//Undone
 		in = "api_test_pelock.exe";
 		in = "api_test_pespin.exe";
-		in = "api_test_aspack.exe"; // PathCondition
 		in = "api_test_upack.exe"; // Header
 		in = "api_test_mew.exe"; // Header
 		in = "api_test_mpess.exe";
 		//in = "demo1_fastpack.exe"; // 47 49 98s
 		//in = "api_test_armadillo.exe";
 		//in = "api_test_asprotect.exe";
-		in = "api_test_thermida.exe";
+		//in = "api_test_thermida.exe";
 		//in = "api_test_vmprotect.exe"; // 488 532 456s
 		//466 504 
 		
@@ -276,12 +275,15 @@ public class Main {
 		//in = "api_test.exe"; // 158 160 0.1s x
 		//in = "api_test_upx.exe"; // 320 348 10s x
 		//in = "api_test_fsg.exe"; // 244 268 5s x
-		//in = "api_test_pecompact.exe"; // 1141 1194 18s x
+		//in = "api_test_pecompact.exe"; // 1126 1176 18s x
 		//in = "api_test_npack.exe"; // 602 639 5s x
-		//in = "api_test_yoda.1.2.exe"; // 622 659 80s
-		//in = "api_test_yoda.1.3.exe"; // 906 945 54s
-		//in = "api_test_yoda.exe"; // 956 1026 257s
-		//in = "api_test_petite.exe"; // GlobalAlloc
+		//in = "api_test_yoda.1.2.exe"; // 622 659 80s x
+		//in = "api_test_yoda.1.3.exe"; // 906 945 54s x
+		//in = "api_test_petite_2.3.exe"; //1569 1637 115s x
+
+		//in = "api_test_aspack.exe"; // 1046 1111
+		//in = "api_test_yoda.exe"; // 962 1038 257s
+		in = "api_test_v2.3_lvl1.exe"; // 879 887 165
 
 		//in = "Virus.Win32.Aztec.01"; // 312 330 Done
 
@@ -333,12 +335,15 @@ public class Main {
 		//in = "memory.exe";
 		//in = args[0];
 		//System.out.println(in);
-//		pathVirus = "asm/packer/";
-//		in = "api_test_pecompact.exe";
+		//pathVirus = "asm/packer/";
+		//in = "api_test_pecompact.exe";
 		
 		//pathVirus = "asm/api/";
-		pathVirus = "asm/virus/";
-		in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
+		//pathVirus = "asm/virus/";
+		//in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
+
+//		pathVirus = "asm/virus/";
+//		in = "ror.exe";
 
 		System.out.println(pathVirus + in);
 		analyzeFile(pathVirus + in);		
