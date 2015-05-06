@@ -32,12 +32,15 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import v2.org.analysis.apihandle.be_pum.winapi.kernel32.Kernel32Stub;
 
 public class APIHandle {
 	private static HashMap<String, HashMap<String, String>> libMapping = new HashMap<String, HashMap<String, String>>();
 	private static boolean init = false;
+	public static Map<Long, String> libraryHandle = new HashMap<Long, String>();
+	public static Map<Long, String> processAddressHandle = new HashMap<Long, String>();
 
 	private static void init() {
 		if (init)
@@ -485,5 +488,10 @@ public class APIHandle {
 					.getMemory().getByteMemoryValue(virtualAdrr)).getValue();
 		}
 		return opcodes;
+	}
+	
+	public static String checkAPI(long address) {
+		String api = APIHandle.processAddressHandle.get(address);
+		return api;
 	}
 }

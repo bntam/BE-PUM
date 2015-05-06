@@ -15,6 +15,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
 import v2.org.analysis.environment.Environment;
@@ -63,6 +64,10 @@ public class GetProcAddress extends Kernel32API {
 			long ret = Kernel32DLLwithoutOption.INSTANCE.GetProcAddress(hModule, lpProcName);
 			register.mov("eax", new LongValue(ret));
 			System.out.println("Return Value: " + ret);
+			
+			String libName = APIHandle.libraryHandle.get(t1);
+			ret = ((LongValue) register.getRegisterValue("eax")).getValue();
+			APIHandle.processAddressHandle.put(ret, lpProcName + '@' + libName);
 		}
 		return false;
 	}

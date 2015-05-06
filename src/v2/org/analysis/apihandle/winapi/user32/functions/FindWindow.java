@@ -85,7 +85,9 @@ public class FindWindow extends User32API {
 
 			HWND ret = User32.INSTANCE.FindWindow(className, windowName);
 
-			register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
+			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+			register.mov("eax", new LongValue(value));
+			System.out.println("Return Value: " + value);
 
 		}
 		return false;

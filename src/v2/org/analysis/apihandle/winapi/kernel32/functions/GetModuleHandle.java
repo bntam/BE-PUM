@@ -7,6 +7,7 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
 import org.jakstab.Program;
@@ -58,28 +59,26 @@ public class GetModuleHandle extends Kernel32API {
 		if (lpModuleName instanceof LongValue) {
 
 			HMODULE ret;
+			String libraryName = null;
 			if (((LongValue) lpModuleName).getValue() == 0) {
 				ret = new HMODULE();
 				ret.setPointer(new Pointer(Program.getProgram().getImageBase()));
 				// returnValue = Kernel32.INSTANCE.GetModuleHandle(null);
 			} else {
-				String libraryName = env.getMemory().getText(((LongValue) lpModuleName).getValue());
+				libraryName = env.getMemory().getText(((LongValue) lpModuleName).getValue());
 				System.out.println("Library Name: " + libraryName);
 
-				// Hai: use kernel32 and user32 of Win32 bit
-				if (libraryName.equals("kernel32.dll")) {
-					ret = new HMODULE();
-					ret.setPointer(new Pointer(env.getSystem().getKernel().getBaseAddress()));
-				} else if (libraryName.equals("user32.dll")) {
-					ret = new HMODULE();
-					ret.setPointer(new Pointer(env.getSystem().getUser32().getBaseAddress()));
-				} else
-					ret = Kernel32.INSTANCE.GetModuleHandle(libraryName);
+				ret = Kernel32.INSTANCE.GetModuleHandle(libraryName);
 			}
 
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 			register.mov("eax", new LongValue(value));
 			System.out.println("Return Value:" + value);
+
+			if (libraryName != null) {
+				value = ((LongValue) register.getRegisterValue("eax")).getValue();
+				APIHandle.libraryHandle.put(value, libraryName);
+			}
 		}
 		return false;
 	}

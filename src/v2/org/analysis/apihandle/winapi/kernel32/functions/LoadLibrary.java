@@ -10,6 +10,7 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
@@ -68,10 +69,14 @@ public class LoadLibrary extends Kernel32API {
 			String libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
 			System.out.println(" Library Name:" + libraryName);
 
-			HMODULE rett = Kernel32DLL.INSTANCE.LoadLibrary(libraryName);
-			long ret = (rett == null) ? 0 : Pointer.nativeValue(rett.getPointer());
-			register.mov("eax", new LongValue(ret));
-			System.out.println("Return value: " + ret);
+			HMODULE ret = Kernel32DLL.INSTANCE.LoadLibrary(libraryName);
+
+			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+			register.mov("eax", new LongValue(value));
+			System.out.println("Return Value: " + value);
+			
+			value = ((LongValue) register.getRegisterValue("eax")).getValue();
+			APIHandle.libraryHandle.put(value, libraryName);
 		}
 		return false;
 	}

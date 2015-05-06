@@ -15,6 +15,7 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.system.Storage;
 
 //import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
@@ -204,11 +205,7 @@ public class Test {
 		// }
 		// }
 		
-
-		char[] lpBuffer = new char[127];
-		DWORD retzzz = Kernel32DLL.INSTANCE.GetCurrentDirectory(new DWORD(127), lpBuffer);
-		String retttt = new String(lpBuffer);
-		System.out.println("Char: " + retttt);
+		System.out.println(Storage.getMappingPath("\\\\.\\SICE"));
 		
 //		String pMessage = new String("%1!*.*s! %4 %5!*s!");
 //		String pArgs[] = { "4", "2", "Bill",  // %1!*.*s! refers back to the first insertion string in pMessage

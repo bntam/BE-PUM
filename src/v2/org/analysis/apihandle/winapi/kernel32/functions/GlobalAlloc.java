@@ -68,10 +68,9 @@ public class GlobalAlloc extends Kernel32API {
 
 			HANDLE ret = Kernel32DLL.INSTANCE.GlobalAlloc(uFlags, dwBytes);
 
-			register.mov(
-					"eax",
-					new LongValue(ret == null ? 0 : Pointer.nativeValue(ret
-							.getPointer())));
+			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+			register.mov("eax", new LongValue(value));
+			System.out.println("Return Value: " + value);
 		}
 		return false;
 	}
