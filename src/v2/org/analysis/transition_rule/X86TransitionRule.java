@@ -5,6 +5,7 @@ package v2.org.analysis.transition_rule;
 
 import v2.org.analysis.apihandle.winapi.APIHandle;
 
+
 //import v2.org.analysis.apihandle.APIHandle;
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
@@ -104,9 +105,14 @@ public class X86TransitionRule extends TransitionRule {
 	}
 
 	public String checkAPICall(Value r, BPState curState) {
-		// TODO Auto-generated method stub
-		return Program.getProgram().checkAPI(((LongValue) r).getValue(),
-				curState.getEnvironement());
+		// YenNguyen: Check address in JNA memory
+		String api = APIHandle.checkAPI(((LongValue) r).getValue());
+		if (api == null) {
+			api = Program.getProgram().checkAPI(((LongValue) r).getValue(), curState.getEnvironement());
+			if (api != null && api.equals(""))
+				api = null;
+		}
+		return api;
 	}
 
 	boolean checkZ3(Formulas formulas) {
@@ -280,7 +286,7 @@ public class X86TransitionRule extends TransitionRule {
 							.setProperty(r1.toString());
 
 					String api = checkAPICall(r, curState);
-					if (!api.equals("")) {
+					if (api != null/*!api.equals("")*/) {
 						apiHandle.executeAPI(new AbsoluteAddress(
 								((LongValue) r).getValue()), api, ins, path,
 								pathList);

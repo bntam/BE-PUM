@@ -73,7 +73,7 @@ public class X86JumpInterpreter {
 					.setProperty(r1.toString());
 
 			String api = rule.checkAPICall(r, curState);
-			if (!api.equals("")) {
+			if (api != null/*!api.equals("")*/) {
 				apiHandle.executeAPI(
 						new AbsoluteAddress(((LongValue) r).getValue()), api,
 						inst, path, pathList);

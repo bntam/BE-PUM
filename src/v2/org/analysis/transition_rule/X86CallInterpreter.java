@@ -68,7 +68,7 @@ public class X86CallInterpreter {
 
 			String api = rule.checkAPICall(r, curState);
 			// String t[] = api.split("@");
-			if (!api.equals("")) {
+			if (api != null/*!api.equals("")*/) {
 				rule.getAPIHandle().executeAPI(
 						new AbsoluteAddress(((LongValue) r).getValue()), api,
 						inst, path, pathList);

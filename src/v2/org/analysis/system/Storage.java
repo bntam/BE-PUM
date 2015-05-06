@@ -18,9 +18,8 @@ import com.sun.jna.platform.win32.Kernel32;
  */
 public class Storage {
 	private static boolean init = false;
-	public static final StringBuilder workingDirectory = (new StringBuilder(
-			System.getProperty("user.dir"))).append('\\').append("Storage")
-			.append('\\');
+	public static final StringBuilder workingDirectory = (new StringBuilder(System.getProperty("user.dir")))
+			.append('\\').append("Storage").append('\\');
 	public static String CurrentDirectory = "";
 	private static HashSet<String> createdPaths = new HashSet<String>();
 
@@ -107,44 +106,49 @@ public class Storage {
 		if (path == null || path.length() == 0)
 			return path;
 
+		String originalPath = path;
 		init();
-		String mappingPath = null;
-		File pathFile = new File(path);
-		if (!pathFile.isAbsolute()) {
-			if (CurrentDirectory.length() > 1
-					&& (CurrentDirectory.charAt(CurrentDirectory.length() - 1) != '\\' || CurrentDirectory
-							.charAt(CurrentDirectory.length() - 1) != '/'))
-				CurrentDirectory += '\\';
-			pathFile = new File(CurrentDirectory + path);
-		}
-		path = pathFile.getAbsolutePath();
 
-		mappingPath = (new StringBuilder(Storage.workingDirectory))
-				.append(path.substring(0, path.indexOf(':'))).append('\\')
-				.append(path.substring(path.indexOf('\\') + 1)).toString();
-
-		File mappingPathFile = new File(mappingPath);
-		if (mappingPathFile.exists())
-			return mappingPath;
-
-		// Preparing parent folder for create file/folder command case
-		if (pathFile.getParentFile() != null
-				&& pathFile.getParentFile().exists()
-				&& !mappingPathFile.getParentFile().exists()) {
-			String parentDir = mappingPathFile.getParent();
-			createMappingDir(parentDir);
-		}
-
-		// If path exists and the virtual storage has not process it
-		if (pathFile.exists() && !createdPaths.contains(path)) {
-
-			if (mappingPathFile.isDirectory()) {
-				createMappingDir(mappingPath);
-			} else {
-				Kernel32.INSTANCE.CopyFile(path, mappingPath, false);
+		try {
+			String mappingPath = null;
+			File pathFile = new File(path);
+			if (!pathFile.isAbsolute()) {
+				if (CurrentDirectory.length() > 1
+						&& (CurrentDirectory.charAt(CurrentDirectory.length() - 1) != '\\' || CurrentDirectory
+								.charAt(CurrentDirectory.length() - 1) != '/'))
+					CurrentDirectory += '\\';
+				pathFile = new File(CurrentDirectory + path);
 			}
-			createdPaths.add(path);
+			path = pathFile.getAbsolutePath();
+
+			mappingPath = (new StringBuilder(Storage.workingDirectory)).append(path.substring(0, path.indexOf(':')))
+					.append('\\').append(path.substring(path.indexOf('\\') + 1)).toString();
+
+			File mappingPathFile = new File(mappingPath);
+			if (mappingPathFile.exists())
+				return mappingPath;
+
+			// Preparing parent folder for create file/folder command case
+			if (pathFile.getParentFile() != null && pathFile.getParentFile().exists()
+					&& !mappingPathFile.getParentFile().exists()) {
+				String parentDir = mappingPathFile.getParent();
+				createMappingDir(parentDir);
+			}
+
+			// If path exists and the virtual storage has not process it
+			if (pathFile.exists() && !createdPaths.contains(path)) {
+
+				if (mappingPathFile.isDirectory()) {
+					createMappingDir(mappingPath);
+				} else {
+					Kernel32.INSTANCE.CopyFile(path, mappingPath, false);
+				}
+				createdPaths.add(path);
+			}
+			return mappingPath;
+		} catch (Exception ex) {
+			// Return original path if it is unvalid
+			return originalPath;
 		}
-		return mappingPath;
 	}
 }
