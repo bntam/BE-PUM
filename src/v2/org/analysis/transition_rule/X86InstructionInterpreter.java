@@ -1755,7 +1755,10 @@ public class X86InstructionInterpreter {
 
 		// NEG : bu 2 cua bit
 		else if (inst.getName().startsWith("neg")) {
-			Value temp = env.getRegister().getRegisterValue(dest.toString());
+			Value temp = rule.getValueOperand(inst.getOperand1(), env, inst);
+			temp = temp.notFunction();
+			temp = temp.addFunction(new LongValue(1));
+			rule.setValueOperand(inst.getOperand1(), temp, env, inst);/*
 
 			if (temp instanceof LongValue) {
 				// long t = ((LongValue) temp).getValueOperand();
@@ -1774,9 +1777,10 @@ public class X86InstructionInterpreter {
 						rule.getBitCount(inst));
 			} else // bo sung sau : truong hop khong thoa man
 			{
-			}
-
-		}
+			}*/
+		} // STC cau lenh set CF = 1 bat ky truong hop nao
+		
+		
 
 		// STC cau lenh set CF = 1 bat ky truong hop nao
 		else if (inst.getName().startsWith("stc")) {

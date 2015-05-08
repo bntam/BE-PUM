@@ -24,8 +24,11 @@ public class X86ArithmeticInterpreter {
 			case NOT:
 				if (ins.getName().startsWith("not")) {
 					Operand dest = ins.getOperand1();
-					Value d = null;
+					Value d = rule.getValueOperand(dest, env, ins);
+					d = d.notFunction();
+					rule.setValueOperand(dest, d, env, ins);
 
+					/*
 					if (dest.getClass().getSimpleName().equals("X86Register")
 							|| dest.getClass().getSimpleName()
 							.equals("X86RegisterPart")
@@ -36,6 +39,7 @@ public class X86ArithmeticInterpreter {
 
 						env.getRegister().setRegisterValue(dest.toString(), d);
 					}
+					*/
 				} else {
 					System.out.println("Instruction not supported: "
 							+ ins.getName());

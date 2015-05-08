@@ -12,14 +12,12 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import org.jakstab.disasm.x86.X86Disassembler;
 import org.jakstab.loader.ExecutableImage;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Kernel32;
-
 import org.jakstab.loader.pe.PEModule;
 import org.jakstab.util.Pair;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
+import v2.org.analysis.environment.processthread.TIB;
 import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
@@ -407,6 +405,12 @@ public class Memory {
 	public Value getByteMemoryValue(X86MemoryOperand dest) {
 		long d = evaluateAddress(dest);
 
+		// PHONG: 20150605 -----------------------------------------------------------------------
+		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"){
+			d = TIB.getTIB_Base_Address() + d;
+		}
+		// ---------------------------------------------------------------------------------------
+
 		if (d == UNKNOWN)
 			return new SymbolValue(Convert.generateString(dest));
 
@@ -533,6 +537,11 @@ public class Memory {
 	public Value getDoubleWordMemoryValue(X86MemoryOperand dest) {
 		long d = evaluateAddress(dest);
 
+		// PHONG: 20150506 If segment is FS ------------------------------------------------------
+		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"){
+			d = TIB.getTIB_Base_Address() + d;
+		}
+		// ---------------------------------------------------------------------------------------
 		if (d == UNKNOWN) {
 			return new SymbolValue(Convert.generateString(dest));
 		}
@@ -560,14 +569,12 @@ public class Memory {
 		 * System.out.println("Access the value of Stack"); return
 		 * env.getStack().getValueStackFromIndex(dest.getDisplacement()); }
 		 */
-		// PHONG: 20150501 -------------------------------------------
-		// Check again: FS[REG] with REG = 0 or FS[0]
-		if (dest.getSegmentRegister() != null
-				&& dest.getSegmentRegister().toString() == "%fs"
-				&& dest.getBase() != null) {
+		// PHONG: 20150507 ---------------------------------------------------------------------
+		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"
+				&& dest.getDisplacement() == 0){
 			return new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
 		}
-		// ------------------------------------------------------------
+		// --------------------------------------------------------------------------------------
 		
 		/*
 		 * if ((dest.getDataType() != DataType.INT32 &&
@@ -766,6 +773,12 @@ public class Memory {
 
 	public Value getWordMemoryValue(X86MemoryOperand dest) {
 		long d = evaluateAddress(dest);
+
+		// PHONG: 20150605 -----------------------------------------------------------------------
+		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"){
+			d = TIB.getTIB_Base_Address() + d;
+		}
+		// ---------------------------------------------------------------------------------------
 
 		if (d == UNKNOWN)
 			return new SymbolValue(Convert.generateString(dest));

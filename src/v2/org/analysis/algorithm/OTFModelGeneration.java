@@ -19,16 +19,12 @@ import org.jakstab.asm.x86.X86CondJmpInstruction;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPVertex;
 import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.StackV2;
-import v2.org.analysis.olly.OllyCompare;
+import v2.org.analysis.environment.processthread.TIB;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.path.PathList;
-import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.Formulas;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,8 +83,6 @@ public class OTFModelGeneration implements Algorithm {
 		BPState curState = new BPState(env, location, inst);
 		BPPath path = new BPPath(curState, new PathList(), new Formulas());
 		path.setCurrentState(curState);
-		// path.addTrace(curState.getLocation());
-		// List<BPPath> processedPathList = new ArrayList<BPPath>();
 		List<BPPath> pathList = new ArrayList<BPPath>();
 		pathList.add(path);
 
@@ -101,6 +95,9 @@ public class OTFModelGeneration implements Algorithm {
 
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
+			// PHONG: 20150506 - Update TIB --------------------------------------
+			TIB.updateTIB(curState);
+			// --------------------------------------------------------------------
 			long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
 				long overallEndTimeTemp = System.currentTimeMillis();
