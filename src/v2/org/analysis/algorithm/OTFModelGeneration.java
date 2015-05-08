@@ -20,9 +20,11 @@ import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPVertex;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.processthread.TIB;
+import v2.org.analysis.olly.OllyCompare;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.path.PathList;
+import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.Formulas;
 
@@ -47,21 +49,21 @@ public class OTFModelGeneration implements Algorithm {
 	@Override
 	public void run() {
 		// FOR DEBUG ONLY
-		/*
-		boolean debug = true;
-		FileProcess file = new FileProcess("data/compareWithOlly.txt");
+		
+		/*boolean debug = true;
+		String fileName = "out_themida_5";
+		FileProcess file = new FileProcess("data/compareWithOlly_" + fileName + ".txt");
 		file.clearContentFile();
-		long memoryStartAddr = 0x406000;
-		long memoryEndAddr = 0x406004;
-		long stackIndex = 0x4;
-		int numChecked = 112;
-		AbsoluteAddress checkedAddr = new AbsoluteAddress(0x404920);
-		AbsoluteAddress endAddr = new AbsoluteAddress(0x40522E);
+		long memoryStartAddr = 0x401000;
+		long memoryEndAddr = 0x401210;
+		long stackIndex = 0x8c;
+		//int numChecked = 112;
+		AbsoluteAddress checkedAddr = new AbsoluteAddress(0x40818C);
+		AbsoluteAddress endAddr = new AbsoluteAddress(0x4085B2);
 		boolean check = false;
-		OllyCompare ollyCompare = new OllyCompare("asm/olly/out.txt",
+		OllyCompare ollyCompare = new OllyCompare("asm/olly/" + fileName + ".txt",
 				memoryStartAddr, memoryEndAddr, stackIndex);
-		ollyCompare.read_olly();
-		*/
+		ollyCompare.read_olly();*/		
 		// --------------------------
 		int count = 1;
 		long overallStartTime = System.currentTimeMillis();
@@ -127,11 +129,10 @@ public class OTFModelGeneration implements Algorithm {
 
 				inst = curState.getInstruction();
 				location = curState.getLocation();
-				debugProgram(location, curState);
+				//debugProgram(location, curState);
 				// -------------------------------------------------------------------
-				// OLLY DEBUG HERE
-				/*
-				if (debug) {
+				// OLLY DEBUG HERE				
+				/*if (debug) {
 					if (location != null
 							&& location.getValue() == checkedAddr.getValue())
 						check = true;
@@ -161,8 +162,8 @@ public class OTFModelGeneration implements Algorithm {
 						System.out.println("Stop Check");
 						check = false;
 					}
-				}
-				*/
+				}*/
+				
 				/*
 				if (debug) {
 					if (location != null && location.getValue() == checkedAddr.getValue()){

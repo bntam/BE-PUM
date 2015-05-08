@@ -1758,8 +1758,10 @@ public class X86InstructionInterpreter {
 			Value temp = rule.getValueOperand(inst.getOperand1(), env, inst);
 			temp = temp.notFunction();
 			temp = temp.addFunction(new LongValue(1));
-			rule.setValueOperand(inst.getOperand1(), temp, env, inst);/*
-
+			rule.setValueOperand(inst.getOperand1(), temp, env, inst);
+			
+			env.getFlag().changeFlagWithNEG(temp, env, opSize);
+			/*
 			if (temp instanceof LongValue) {
 				// long t = ((LongValue) temp).getValueOperand();
 				Value temp2 = ((LongValue) temp).notFunction(); // ~ value of
@@ -1778,9 +1780,7 @@ public class X86InstructionInterpreter {
 			} else // bo sung sau : truong hop khong thoa man
 			{
 			}*/
-		} // STC cau lenh set CF = 1 bat ky truong hop nao
-		
-		
+		} // STC cau lenh set CF = 1 bat ky truong hop nao		
 
 		// STC cau lenh set CF = 1 bat ky truong hop nao
 		else if (inst.getName().startsWith("stc")) {

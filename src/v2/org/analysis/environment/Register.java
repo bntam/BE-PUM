@@ -14,7 +14,7 @@ import v2.org.analysis.value.Value;
  */
 public class Register {
 	private Value eax, ebx, ecx, edx, esi, edi, esp, ebp, eip, ax, ah, al, bx,
-			bh, bl, cx, ch, cl, dx, dh, dl, si, di, sp, bp;
+			bh, bl, cx, ch, cl, dx, dh, dl, si, di, sp, bp, ds;
 
 	public Register clone() {			
 		Register ret = new Register();
@@ -57,6 +57,7 @@ public class Register {
 		ret.setRegisterValue("bp", bp.clone());
 
 		ret.setRegisterValue("eip", eip.clone());
+		ret.setRegisterValue("ds", ds.clone());
 
 		return ret;
 	}
@@ -95,6 +96,7 @@ public class Register {
 		bp = new SymbolValue("bp");
 
 		eip = new SymbolValue("eip");
+		ds  = new SymbolValue("ds");
 	}
 
 	public Value getRegisterValue(String registerName) {
@@ -158,6 +160,9 @@ public class Register {
 
 		if (reg.equals("eip"))
 			return eip;
+		
+		if (reg.equals("ds"))
+			return ds;
 
 		return null;
 	}
@@ -519,6 +524,9 @@ public class Register {
 
 		else if (reg.equals("eip"))
 			eip = v;
+		
+		else if (reg.equals("ds"))
+			ds = v;
 		}
 	}
 

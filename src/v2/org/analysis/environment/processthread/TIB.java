@@ -5,7 +5,6 @@ import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 public class TIB {
-
     private static final long TIB_Base_Address = 0x7EFDD000;
     private static long FS_0; //SEH frame *
     private static long FS_4; //EBP *

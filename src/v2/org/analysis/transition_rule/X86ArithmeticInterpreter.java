@@ -1764,14 +1764,16 @@ public class X86ArithmeticInterpreter {
 			//All flag unchanged
 			return dest;
 		}
-
+		
+		int size = rule.getBitCount(inst);
+		dest = Convert.convetUnsignedValue(dest, size);
 		long tempCount = (long)count & 0x1F;
 		long tempDest = dest;
 		byte bits = (byte) rule.getBitCount(inst);
 		while (tempCount != 0) {
 			if (inst.getName().startsWith("sal") || inst.getName().startsWith("shl")) {
 				env.getFlag().setCFlag(new BooleanValue(BitVector.getMSB(dest, bits)));
-				dest = dest << 1;
+				dest = Convert.convetUnsignedValue(dest << 1, size);
 			} else {
 				env.getFlag().setCFlag(new BooleanValue(BitVector.getLSB(dest, bits)));
 
