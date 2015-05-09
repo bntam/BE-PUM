@@ -1075,6 +1075,110 @@ public class X86ConditionalJumpInterpreter {
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			}
+		} else if (inst.getName().equals("loope") || inst.getName().equals("loopz")) {
+			// Dang xu li, chua hoan hao
+			// Se check sau voi 1 so truong hop cu the
+			Program.getProgram().setTechnique("Encrypt/Decrypt-May");
+			Program.getProgram().setDetailTechnique(
+					"Encrypt/Decrypt-May:" + curState.getLocation() + " ");
+
+			Value ecx = env.getRegister().getRegisterValue("%ecx");
+			Value zf = env.getFlag().getZFlag();
+			if (reverseCond) {
+				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
+					long e = ((LongValue) ecx).getValue();
+					boolean z = ((BooleanValue)zf).getValue();
+
+					if (e == 0 || !z)
+						// System.out.println("Loop Right")
+						;
+					else {
+						curState.setFeasiblePath(false);
+						isFeasible = false;
+					}
+				} else {
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
+							"==")).evaluate();
+					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false),
+							"==")).evaluate();
+					formulas.add((new Formula(l1, l2, "or"))
+							.evaluate());
+				}
+			} else {
+				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
+					long e = ((LongValue) ecx).getValue();
+					boolean z = ((BooleanValue)zf).getValue();
+
+					if (e != 0 && z) {
+						// System.out.println("Loop Right")
+						// curState.setFeasiblePath(true);
+						// return
+						;
+					} else {
+						// System.out.println("Debug Loop");
+						curState.setFeasiblePath(false);
+						isFeasible = false;
+					}
+				} else {
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
+							"!=")).evaluate();
+					//Value l2 = new HybridBooleanValue(l1, "not", null);
+					formulas.add((new Formula(l1, zf, "and")).evaluate());
+				}
+			}
+
+		} else if (inst.getName().equals("loopne") || inst.getName().equals("loopnz")) {
+			// Dang xu li, chua hoan hao
+			// Se check sau voi 1 so truong hop cu the
+			Program.getProgram().setTechnique("Encrypt/Decrypt-May");
+			Program.getProgram().setDetailTechnique(
+					"Encrypt/Decrypt-May:" + curState.getLocation() + " ");
+
+			Value ecx = env.getRegister().getRegisterValue("%ecx");
+			Value zf = env.getFlag().getZFlag();
+			if (reverseCond) {
+				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
+					long e = ((LongValue) ecx).getValue();
+					boolean z = ((BooleanValue)zf).getValue();
+
+					if (e == 0 || z)
+						// System.out.println("Loop Right")
+						;
+					else {
+						curState.setFeasiblePath(false);
+						isFeasible = false;
+					}
+				} else {
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
+							"==")).evaluate();
+
+					formulas.add((new Formula(l1, zf, "or"))
+							.evaluate());
+				}
+			} else {
+				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
+					long e = ((LongValue) ecx).getValue();
+					boolean z = ((BooleanValue)zf).getValue();
+
+					if (e != 0 && !z) {
+						// System.out.println("Loop Right")
+						// curState.setFeasiblePath(true);
+						// return
+						;
+					} else {
+						// System.out.println("Debug Loop");
+						curState.setFeasiblePath(false);
+						isFeasible = false;
+					}
+				} else {
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
+							"!=")).evaluate();
+					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false),
+							"==")).evaluate();
+					formulas.add((new Formula(l1, l2, "and")).evaluate());
+				}
+			}
+
 		} else if (instName.equals("ja") || instName.equals("jnbe")) {
 			// if
 			// ((CF) = 0) or ((ZF) = 0)

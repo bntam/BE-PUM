@@ -24,6 +24,7 @@ import v2.org.analysis.olly.OllyCompare;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.path.PathList;
+import v2.org.analysis.environment.StackV2;
 import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.Formulas;
@@ -65,7 +66,9 @@ public class OTFModelGeneration implements Algorithm {
 				memoryStartAddr, memoryEndAddr, stackIndex);
 		ollyCompare.read_olly();*/		
 		// --------------------------
-		int count = 1;
+		//int count = 1;
+		FileProcess file = new FileProcess("data/stateValue.txt");
+		file.clearContentFile();
 		long overallStartTime = System.currentTimeMillis();
 		long overallStartTemp = overallStartTime;
 		// BE-PUM algorithm
@@ -104,7 +107,7 @@ public class OTFModelGeneration implements Algorithm {
 			while (true) {
 				long overallEndTimeTemp = System.currentTimeMillis();
 				// Output file each 60s
-				if (overallEndTimeTemp - overallStartTemp > 30000) {
+				if (overallEndTimeTemp - overallStartTemp > 1200000) {
 
 					// Stop running one paths after maxTimePath
 					if (overallEndTimeTemp - overallStartTimePath > maxTimePath) {
@@ -112,6 +115,20 @@ public class OTFModelGeneration implements Algorithm {
 								+ " at " + curState.getLocation());
 						// break;
 					}
+					
+					file.appendFile("Address = "
+							+ location.toString() + ":");
+					// COMPARE HERE
+					String result = " Register: "
+							+ curState.getEnvironement().getRegister() + "\n";
+					result += " Flag: "
+							+ curState.getEnvironement().getFlag() + "\n";
+					result += " Stack: "
+							+ ((StackV2) curState.getEnvironement().getStack()).getString() + "\n"; 
+					file.appendFile(result);
+					//System.out
+					//		.println("*************************************************************");
+					file.appendFile("*************************************************************");
 
 					program.generageCFG("asm/cfg/" + program.getFileName()
 							+ "_test");
@@ -129,7 +146,7 @@ public class OTFModelGeneration implements Algorithm {
 
 				inst = curState.getInstruction();
 				location = curState.getLocation();
-				//debugProgram(location, curState);
+				debugProgram(location, curState);
 				// -------------------------------------------------------------------
 				// OLLY DEBUG HERE				
 				/*if (debug) {
@@ -243,8 +260,14 @@ public class OTFModelGeneration implements Algorithm {
 						// ******************************************
 						// api_test_yc1.2.exe
 						|| (fileName.equals("api_test_v2.3_lvl1.exe") && (
-						location.toString().contains("4085b8")
-						|| location.toString().contains("408184")
+						location.toString().contains("4329b0")
+						//|| location.toString().contains("408184")
+						))
+						// ******************************************
+						// api_test_aspack.exe
+						|| (fileName.equals("api_test_aspack.exe") && (
+						location.toString().contains("4043c2")
+						//|| location.toString().contains("408184")
 						))
 				// ******************************************
 				// Virus.Win32.Aztec.01

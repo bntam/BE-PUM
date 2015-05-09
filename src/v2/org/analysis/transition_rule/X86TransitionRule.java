@@ -1044,7 +1044,7 @@ public class X86TransitionRule extends TransitionRule {
 		Formulas p2 = path.getPathCondition().clone();
 		
 		//Special Case
-		if (inst.getName().equals("loop")) {
+		if (inst.getName().startsWith("loop")) {
 			path.getCurrentState().getEnvironement().getRegister().sub("%ecx", new LongValue(1));
 		}
 		
