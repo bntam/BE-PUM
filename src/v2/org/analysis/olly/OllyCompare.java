@@ -8,8 +8,8 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class OllyCompare {
-	private int nextCheck = 0;
-    private String ollyFileName;
+	private long nextCheck = 0;
+	private String ollyFileName;
     private List<OllyLoop> ollyLoop;
 
     public long getMemoryStartAddr() {
@@ -131,45 +131,90 @@ public class OllyCompare {
         return reg_compare && flag_compare && mem_compare && stack_compare;
     }*/
 
-    public String compareBEPUM(Environment env, int id, AbsoluteAddress addr){
+    public String compareBEPUM(Environment env, long count, AbsoluteAddress addr){
         String ret = "";
-        OllyLoop l = get(id);        
-        nextCheck = id + 1;
+        OllyLoop l = get(count);        
+        nextCheck = count + 1;
+        if (l == null) {
+        	l = getAddr(addr.getValue(), count);
+        	
+        	if (l != null) {
+        		nextCheck = l.getLoopID() + 1;        		
+        	} else 
+        		return "Olly does not contain loop " + count;
+        }
+        
         if (l.getAddress().getValue() != addr.getValue()) {
             ret += "Address is not right " + addr + " vs " + l.getAddress() + " Bug \n";
-            l = getAddr(addr.getValue(), id);
+            l = getAddr(addr.getValue(), count);
             
             if (l != null)
             	nextCheck = (int) (l.getLoopID() + 1);
-        }
-        
-        if (l == null)
-            return "Olly does not contain loop " + id;        
-        
-        if (id == 1)
-            ret += l.compareBEPUM(env, get(id), memoryStartAddr, memoryEndAddr, stackIndex);
+        } 
+                
+        if (count == 1)
+            ret += l.compareBEPUM(env, l, memoryStartAddr, memoryEndAddr, stackIndex);
         else
-            ret += l.compareBEPUM(env, get(id-1), memoryStartAddr, memoryEndAddr, stackIndex);
+            ret += l.compareBEPUM(env, get(count-1), memoryStartAddr, memoryEndAddr, stackIndex);
         return ret;
     }
 
-    private OllyLoop getAddr(long value, int id) {
+    private OllyLoop getAddr(long value, long count) {
 		// TODO Auto-generated method stub
     	for (OllyLoop l: ollyLoop)
-            if (l.getAddress().getValue() == value && l.getLoopID() >= id)
+            if (l.getAddress().getValue() == value && l.getLoopID() >= count)
                 return l;
         return null;
 	}
 
-	private OllyLoop get(int num) {
+	private OllyLoop get(long count) {
         for (OllyLoop l: ollyLoop)
-            if (l.getLoopID() == num)
+            if (l.getLoopID() == count)
                 return l;
         return null;
     }
 
-	public int getNextCheck() {
+	public long getNextCheck() {
 		// TODO Auto-generated method stub
 		return nextCheck;
+	}
+
+	public void importOllyData(AbsoluteAddress checkedAddr, AbsoluteAddress endAddr) {
+		// TODO Auto-generated method stub
+		File olly = new File(this.ollyFileName);
+        try {
+            Scanner sc = new Scanner(olly);
+            //int i = 0;
+            while (sc.hasNextLine()) {
+                String loop = sc.nextLine();
+                if (loop.contains("loop")) {
+                    String register_line = sc.nextLine();
+                    String flag_line = sc.nextLine();
+                    String memory_line = sc.nextLine();
+                    String stack_line = sc.nextLine();
+                    // Get value
+                    long id = getLoopIdentifer(loop);
+                    long addr = getAddress(loop);
+                    OllyRegister olly_register = new OllyRegister(getRegister(register_line));
+                    long esp = olly_register.getRegisterValue("esp");
+                    OllyFlag olly_flag = new OllyFlag(getFlag(flag_line));
+                    OllyMemory olly_memory = new OllyMemory(this.getMemory(memory_line));
+                    OllyMemory olly_stack = new OllyMemory(this.getStack(stack_line, esp));
+                    OllyLoop olly_loop = new OllyLoop(id, addr, olly_register, olly_flag, olly_memory, olly_stack);
+                    this.ollyLoop.add(olly_loop);
+                    //i++;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        checkedAddr.setValue(this.ollyLoop.get(0).getAddress().getValue());
+        endAddr.setValue(this.ollyLoop.get(this.ollyLoop.size() - 1).getAddress().getValue());
+	}
+
+	public int getLoopCount() {
+		// TODO Auto-generated method stub
+		return ollyLoop.size();
 	}
 }

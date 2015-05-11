@@ -263,8 +263,8 @@ public class Main {
 		in = "api_test_pespin.exe";
 		in = "api_test_upack.exe"; // Header
 		in = "api_test_mew.exe"; // Header
-		in = "api_test_mpess.exe";
-		//in = "demo1_fastpack.exe"; // 47 49 98s
+		in = "api_test_mpess.exe"; // 149 166 50
+		in = "demo1_fastpack.exe"; // 47 49 98s
 		//in = "api_test_armadillo.exe";
 		//in = "api_test_asprotect.exe";
 		//in = "api_test_thermida.exe";
@@ -283,7 +283,7 @@ public class Main {
 		//in = "api_test_aspack.exe"; // 1047 1112 101s x
 		
 		//in = "api_test_yoda.exe"; // 962 1038 257s
-		//in = "api_test_v2.3_lvl1.exe"; // 879 887 165
+		in = "api_test_v2.3_lvl1.exe"; // 879 887 165
 
 		//in = "Virus.Win32.Aztec.01"; // 312 330 Done
 

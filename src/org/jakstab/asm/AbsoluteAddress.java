@@ -24,7 +24,7 @@ import org.jakstab.rtl.expressions.RTLNumber;
 public class AbsoluteAddress extends Address implements
 		Comparable<AbsoluteAddress> {
 
-	protected final long value;
+	protected long value;
 
 	public AbsoluteAddress(long value) {
 		this.value = value;
@@ -99,5 +99,10 @@ public class AbsoluteAddress extends Address implements
 		if (value != other.value)
 			return false;
 		return true;
+	}
+
+	public void setValue(long v) {
+		// TODO Auto-generated method stub
+		value = v;
 	}
 }

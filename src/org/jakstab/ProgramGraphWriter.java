@@ -163,7 +163,7 @@ public class ProgramGraphWriter {
 
 	// Does not write a real graph, but still fits best into this class
 	public void writeDisassembly(BPCFG l, String filename) {
-		System.out.println("Writing assembly file to " + filename);
+		//System.out.println("Writing assembly file to " + filename);
 		try {
 			FileWriter out = new FileWriter(filename);
 			for (BPVertex vertex : l.getVertecesList()) {
@@ -797,7 +797,7 @@ public class ProgramGraphWriter {
 		if (gwriter == null)
 			return;
 
-		System.out.println("Writing assembly CFG to " + gwriter.getFilename());
+		//System.out.println("Writing assembly CFG to " + gwriter.getFilename());
 		try {
 			for (BPVertex node : verteces) {
 				//if (node.getType() != 4) {

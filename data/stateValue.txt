@@ -1,0 +1,89 @@
+Address = 0x00407934:
+ Register: eax=80, ebx=7ffdf000, ecx=408e, edx=12ffc4, esp=12ffa4, ebp=f74a6014, esi=ffffffff, edi=40a8ac
+ Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+ Stack: 0x0012ffa4 : 7c910208
+0x0012ffa8 : ffffffffffffffff
+0x0012ffac : 12fff0
+0x0012ffb0 : 12ffc4
+0x0012ffb4 : 7ffdf000
+0x0012ffb8 : 12ffc4
+0x0012ffbc : 12ffb0
+0x0012ffc0 : 12fff0
+0x0012ffc4 : 7c817067
+0x0012ffc8 : 7c910208
+0x0012ffcc : ffffffffffffffff
+0x0012ffd0 : 0
+0x0012ffd4 : 0
+0x0012ffd8 : 0
+0x0012ffdc : 0
+0x0012ffe0 : 0
+0x0012ffe4 : 0
+0x0012ffe8 : 0
+0x0012ffec : 0
+0x0012fff0 : 0
+EBP: 0
+
+*************************************************************
+Address = 0x00408265:
+ Register: eax=91fa156c, ebx=40ef22, ecx=12ffb0, edx=12ffc4, esp=12ff8c, ebp=f74a6014, esi=ffffffff, edi=12ff94
+ Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+ Stack: 0x0012ff8c : 19ee
+0x0012ff90 : ffffffff91fa156c
+0x0012ff94 : ffffffff91fa156c
+0x0012ff98 : ffffffff91fa156c
+0x0012ff9c : 7c910208
+0x0012ffa0 : ffffffffffffffff
+0x0012ffa4 : 12fff0
+0x0012ffa8 : 12ffbc
+0x0012ffac : 7ffdf000
+0x0012ffb0 : 12ffc4
+0x0012ffb4 : 12ffb0
+0x0012ffb8 : 12fff0
+0x0012ffbc : 18ffe4
+0x0012ffc0 : 407c64
+0x0012ffc4 : 7c817067
+0x0012ffc8 : 7c910208
+0x0012ffcc : ffffffffffffffff
+0x0012ffd0 : 0
+0x0012ffd4 : 0
+0x0012ffd8 : 0
+0x0012ffdc : 0
+0x0012ffe0 : 0
+0x0012ffe4 : 0
+0x0012ffe8 : 0
+0x0012ffec : 0
+0x0012fff0 : 0
+EBP: 0
+
+*************************************************************
+Address = 0x00408323:
+ Register: eax=169e0693, ebx=40ea8a, ecx=8259de5f, edx=12ffc4, esp=12ff90, ebp=634e2e85, esi=ffffffff, edi=18c8
+ Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+ Stack: 0x0012ff90 : 12ff90
+0x0012ff94 : fffffffff74a6014
+0x0012ff98 : 12ffb0
+0x0012ff9c : 7c910208
+0x0012ffa0 : ffffffffffffffff
+0x0012ffa4 : 12fff0
+0x0012ffa8 : 12ffbc
+0x0012ffac : 7ffdf000
+0x0012ffb0 : 12ffc4
+0x0012ffb4 : 12ffb0
+0x0012ffb8 : 12fff0
+0x0012ffbc : 18ffe4
+0x0012ffc0 : 407c64
+0x0012ffc4 : 7c817067
+0x0012ffc8 : 7c910208
+0x0012ffcc : ffffffffffffffff
+0x0012ffd0 : 0
+0x0012ffd4 : 0
+0x0012ffd8 : 0
+0x0012ffdc : 0
+0x0012ffe0 : 0
+0x0012ffe4 : 0
+0x0012ffe8 : 0
+0x0012ffec : 0
+0x0012fff0 : 0
+EBP: 0
+
+*************************************************************
