@@ -7,15 +7,24 @@
 		<API funcName="cryptcreatehash" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
 		<API funcName="cryptcreatehasha" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
 		<API funcName="cryptcreatehashw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
+		<API funcName="cryptdecrypt" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDecrypt" />
+		<API funcName="cryptdecrypta" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDecrypt" />
+		<API funcName="cryptdecryptw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDecrypt" />
 		<API funcName="cryptderivekey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
 		<API funcName="cryptderivekeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
 		<API funcName="cryptderivekeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
 		<API funcName="cryptdestroyhash" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
 		<API funcName="cryptdestroyhasha" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
 		<API funcName="cryptdestroyhashw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
+		<API funcName="cryptdestroykey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyKey" />
+		<API funcName="cryptdestroykeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyKey" />
+		<API funcName="cryptdestroykeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyKey" />
 		<API funcName="crypthashdata" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
 		<API funcName="crypthashdataa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
 		<API funcName="crypthashdataw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
+		<API funcName="cryptreleasecontext" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
+		<API funcName="cryptreleasecontexta" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
+		<API funcName="cryptreleasecontextw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
 		<API funcName="regclosekey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
 		<API funcName="regclosekeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
 		<API funcName="regclosekeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />

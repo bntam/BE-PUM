@@ -81,7 +81,7 @@ public class LoadString extends User32API {
 			long t4 = ((LongValue) x4).getValue();
 
 			HINSTANCE hInstance = null;
-			if (t1 != 0) {
+			if (t1 != 0L) {
 				hInstance = new HINSTANCE();
 				hInstance.setPointer(new Pointer(t1));
 			}
@@ -93,7 +93,7 @@ public class LoadString extends User32API {
 
 			register.mov("eax", new LongValue(ret));
 
-			if (ret != 0)
+			if (ret != 0L)
 				memory.setText(new X86MemoryOperand(DataType.INT32, t3),
 						new String(lpBuffer));
 		}

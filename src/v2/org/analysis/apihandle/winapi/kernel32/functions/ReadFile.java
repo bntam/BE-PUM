@@ -117,7 +117,7 @@ public class ReadFile extends Kernel32API {
 			System.out.println("Handle File:" + t1 + ", Address of Buffer:" + t2 + ", Number of Byte:" + t3
 					+ ", Number of Actual Read Bytes:" + t4 + ", Overlapped:" + t5);
 
-			HANDLE hFile = new HANDLE(t1 != 0 ? new Pointer(t1) : Pointer.NULL);
+			HANDLE hFile = new HANDLE(t1 != 0L ? new Pointer(t1) : Pointer.NULL);
 			// Pointer lpBuffer = new Pointer(t2);
 			int nNumberOfBytesToRead = (int) t3;
 			ByteBuffer lpBuffer = ByteBuffer.allocate(nNumberOfBytesToRead + 1);
@@ -125,7 +125,7 @@ public class ReadFile extends Kernel32API {
 
 			OVERLAPPED lpOverlapped = null;
 
-			if (t5 != 0) {
+			if (t5 != 0L) {
 				lpOverlapped = new OVERLAPPED();
 				lpOverlapped.Internal = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t5)).getValue());
 				lpOverlapped.InternalHigh = new ULONG_PTR(
@@ -155,12 +155,12 @@ public class ReadFile extends Kernel32API {
 
 			System.out.println("ReadFile is done");
 			
-			if (t4 != 0) {
+			if (t4 != 0L) {
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
 						lpNumberOfBytesRead.getValue()));
 			}
 
-			if (t5 != 0) {
+			if (t5 != 0L) {
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(
 						lpOverlapped.Internal.longValue()));
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5 += 4), new LongValue(

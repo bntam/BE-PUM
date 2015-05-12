@@ -104,7 +104,7 @@ public class CreateFileMapping extends Kernel32API {
 			int flProtect = (int) t3;
 			int dwMaximumSizeHigh = (int) t4;
 			int dwMaximumSizeLow = (int) t5;
-			String lpName = (t6 != 0) ? memory.getText(new X86MemoryOperand(DataType.INT32, t6)) : null;
+			String lpName = (t6 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t6)) : null;
 
 			System.out.println("Handle File:" + t1 + ", Security Attribute:" + t2 + ", Object Protection:" + t3
 					+ ", Maximum Size High:" + t4 + ", Maximum Size Low:" + t5 + ", File Mapping Name Address:" + lpName);

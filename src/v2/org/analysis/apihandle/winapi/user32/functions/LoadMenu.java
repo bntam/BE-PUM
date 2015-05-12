@@ -66,7 +66,7 @@ public class LoadMenu extends User32API {
 			long t2 = ((LongValue) x2).getValue();
 
 			HINSTANCE hInstance = null;
-			if (t1 != 0) {
+			if (t1 != 0L) {
 				hInstance = new HINSTANCE();
 				hInstance.setPointer(new Pointer(t1));
 			}

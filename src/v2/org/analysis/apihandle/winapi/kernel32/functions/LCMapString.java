@@ -120,7 +120,7 @@ public class LCMapString extends Kernel32API {
 			WString lpSrcStr = new WString(memory.getText(new X86MemoryOperand(
 					DataType.INT32, t3)));
 			int cchSrc = (int) t4;
-			char[] lpDestStr = (t5 != 0 && t6 != 0) ? new char[(int) t6] : null;
+			char[] lpDestStr = (t5 != 0L && t6 != 0L) ? new char[(int) t6] : null;
 			int cchDest = (int) t6;
 			int ret = Kernel32DLL.INSTANCE.LCMapString(Locale, dwMapFlags,
 					lpSrcStr, cchSrc, lpDestStr, cchDest);

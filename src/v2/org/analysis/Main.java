@@ -264,7 +264,7 @@ public class Main {
 		in = "api_test_upack.exe"; // Header
 		in = "api_test_mew.exe"; // Header
 		in = "api_test_mpess.exe"; // 149 166 50
-		in = "demo1_fastpack.exe"; // 47 49 98s
+		//in = "demo1_fastpack.exe"; // 47 49 98s
 		//in = "api_test_armadillo.exe";
 		//in = "api_test_asprotect.exe";
 		//in = "api_test_thermida.exe";

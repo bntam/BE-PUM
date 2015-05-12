@@ -80,7 +80,7 @@ public class CreateMutex extends Kernel32API {
 
 			SECURITY_ATTRIBUTES lpMutexAttributes = null;
 			BOOL bInitialOwner = new BOOL(t2);
-			String lpName = (t3 != 0) ? memory.getText(new X86MemoryOperand(DataType.INT32, t3)) : null;
+			String lpName = (t3 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t3)) : null;
 			HANDLE ret = Kernel32DLL.INSTANCE.CreateMutex(lpMutexAttributes, bInitialOwner, lpName);
 
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());

@@ -16,6 +16,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
@@ -64,12 +65,16 @@ public class Thread32Next extends Kernel32API {
 
 			HANDLE hSnapshot = new HANDLE(new Pointer(t1));
 			THREADENTRY32 lpte = new THREADENTRY32();
+			lpte.dwSize.setValue(lpte.size());
 
 			BOOL ret = Kernel32DLL.INSTANCE.Thread32Next(hSnapshot, lpte);
 
 			long value = ret.longValue();
 			register.mov("eax", new LongValue(value));
 			System.out.println("Return Value: " + value);
+			if (APIHandle.isDebug) {
+				System.out.println(lpte.toString(false));
+			}
 
 			// public DWORD dwSize;
 			// public DWORD cntUsage;

@@ -73,7 +73,7 @@ public class UnregisterClass extends User32API {
 
 			String lpClassName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
 			HINSTANCE hInstance = null;
-			if (t2 != 0) {
+			if (t2 != 0L) {
 				hInstance = new HINSTANCE();
 				hInstance.setPointer(new Pointer(t2));
 			}

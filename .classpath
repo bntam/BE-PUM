@@ -8,7 +8,7 @@
 	<classpathentry kind="lib" path="lib"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/capstone.jar"/>
-	<classpathentry kind="lib" path="lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/jna-4.1.0.jar" sourcepath="/jna-master"/>
 	<classpathentry kind="lib" path="lib/jna-platform-4.1.0.jar" sourcepath="/jna-master"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

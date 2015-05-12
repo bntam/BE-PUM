@@ -63,7 +63,7 @@ public class LoadResource extends Kernel32API {
 			long t2 = ((LongValue) x2).getValue();
 
 			HMODULE hModule = null;
-			if (t1 != 0) {
+			if (t1 != 0L) {
 				hModule = new HMODULE();
 				hModule.setPointer(new Pointer(t1));
 			}

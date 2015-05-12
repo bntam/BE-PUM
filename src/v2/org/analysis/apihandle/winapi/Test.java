@@ -6,16 +6,32 @@
  */
 package v2.org.analysis.apihandle.winapi;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinDef.DWORD;
-import com.sun.jna.platform.win32.WinDef.LONG;
+import org.jakstab.asm.DataType;
+import org.jakstab.asm.x86.X86MemoryOperand;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.WString;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.Tlhelp32.PROCESSENTRY32;
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
+import com.sun.jna.platform.win32.WinDef.BOOL;
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.platform.win32.WinDef.LONG;
+import com.sun.jna.platform.win32.WinNT.HANDLE;
+
+import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
+import v2.org.analysis.complement.BitVector;
+import v2.org.analysis.complement.Convert;
+import v2.org.analysis.environment.Memory;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.Storage;
+import v2.org.analysis.value.LongValue;
 
 //import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
@@ -204,36 +220,45 @@ public class Test {
 		// e.printStackTrace();
 		// }
 		// }
-		
-		System.out.println(Storage.getMappingPath("\\\\.\\SICE"));
-		
-//		String pMessage = new String("%1!*.*s! %4 %5!*s!");
-//		String pArgs[] = { "4", "2", "Bill",  // %1!*.*s! refers back to the first insertion string in pMessage
-//			"Bob",                                                // %4 refers back to the second insertion string in pMessage
-//			"6", "Bill" };                               // %5!*s! refers back to the third insertion string in pMessage
-//		char buffer[] = new char[101];
-//
-//
-//		Kernel32DLL.INSTANCE.FormatMessageW(new DWORD(9216),
-//			pMessage, 
-//			null,
-//			null,
-//			buffer, 
-//			new DWORD(101), 
-//			pArgs);
-//
-//		System.out.println(new String(buffer));
-//		
-//		char[] buf = new char[100];
-//		long[] ar = {10, 20};
-//		Kernel32DLL.INSTANCE.wsprintf(buf, "%s", ar);
 
-		char[] input = new char[] { 'A', '\0' };
-		Pointer abc = User32DLL.INSTANCE.CharLower(input);
-		x = abc.getShort(0);
-		byte t1 = (byte) (x & 0xFF);
-		char ret = (char) t1;
-		System.out.println("Char: " + ret);
+//		HANDLE hSnapshot = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new DWORD(2), new DWORD(0));
+//		PROCESSENTRY32 lppe = new PROCESSENTRY32();
+//		BOOL ret = Kernel32DLL.INSTANCE.Process32First(hSnapshot, lppe );
+//		if (ret.booleanValue()) {
+//			System.out.println(lppe.toString(false));
+//			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+//		}
+//		while (Kernel32DLL.INSTANCE.Process32Next(hSnapshot, lppe).booleanValue()) {
+//			System.out.println(lppe.toString(false));
+//			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+//		}
+		
+		System.out.println((int)Convert.convertSignedValue(0xfffffff0, 32));
+		System.out.println(User32DLL.INSTANCE.GetWindowLong(new HWND(new Pointer(0x901f4L)), (int) Convert.convertSignedValue(0xfffffff0, 32)));
+
+
+		// String pMessage = new String("%1!*.*s! %4 %5!*s!");
+		// String pArgs[] = { "4", "2", "Bill", // %1!*.*s! refers back to the
+		// first insertion string in pMessage
+		// "Bob", // %4 refers back to the second insertion string in pMessage
+		// "6", "Bill" }; // %5!*s! refers back to the third insertion string in
+		// pMessage
+		// char buffer[] = new char[101];
+		//
+		//
+		// Kernel32DLL.INSTANCE.FormatMessageW(new DWORD(9216),
+		// pMessage,
+		// null,
+		// null,
+		// buffer,
+		// new DWORD(101),
+		// pArgs);
+		//
+		// System.out.println(new String(buffer));
+		//
+		// char[] buf = new char[100];
+		// long[] ar = {10, 20};
+		// Kernel32DLL.INSTANCE.wsprintf(buf, "%s", ar);
 
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
@@ -261,7 +286,7 @@ class A {
 
 class NewThread1 extends Thread {
 	private RTL_CRITICAL_SECTION _lpCriticalSection;
-	
+
 	public NewThread1(RTL_CRITICAL_SECTION lpCriticalSection) {
 		this._lpCriticalSection = lpCriticalSection;
 		start(); // bắt đầu thread
@@ -269,7 +294,7 @@ class NewThread1 extends Thread {
 
 	// This is the entry point for the Thread.
 	public void run() {
-        try {
+		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -282,7 +307,7 @@ class NewThread1 extends Thread {
 
 class NewThread2 extends Thread {
 	private RTL_CRITICAL_SECTION _lpCriticalSection;
-	
+
 	public NewThread2(RTL_CRITICAL_SECTION lpCriticalSection) {
 		this._lpCriticalSection = lpCriticalSection;
 		start(); // bắt đầu thread
@@ -290,7 +315,7 @@ class NewThread2 extends Thread {
 
 	// This is the entry point for the Thread.
 	public void run() {
-        try {
+		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

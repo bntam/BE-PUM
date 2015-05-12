@@ -103,7 +103,7 @@ public class GetDateFormat extends Kernel32API {
 			LCID Locale = new LCID(t1);
 			DWORD dwFlags = new DWORD(t2);
 			SYSTEMTIME lpDate = null;
-			if (t3 != 0) {
+			if (t3 != 0L) {
 				lpDate = new SYSTEMTIME();
 				lpDate.wYear = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3)))
 						.getValue();
@@ -122,15 +122,15 @@ public class GetDateFormat extends Kernel32API {
 				lpDate.wMilliseconds = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(
 						DataType.INT32, t3 += 2))).getValue();
 			}
-			WString lpFormat = (t4 == 0) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t4)));
-			char[] lpDateStr = (t5 == 0) ? null : new char[(int) t6 + 1];
+			WString lpFormat = (t4 == 0L) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t4)));
+			char[] lpDateStr = (t5 == 0L) ? null : new char[(int) t6 + 1];
 			int cchDate = (int) t6;
 			
 			int ret = Kernel32DLL.INSTANCE.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, lpDateStr, cchDate);
 
 			register.mov("eax", new LongValue(ret));
 			
-			if (t5 != 0 && cchDate != 0) {
+			if (t5 != 0L && cchDate != 0) {
 				memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpDateStr), ret);
 			}
 		}

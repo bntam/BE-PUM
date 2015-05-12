@@ -19,5 +19,5 @@ public interface Kernel32DLLwithoutOption extends StdCallLibrary {
 
 	Kernel32DLLwithoutOption INSTANCE = (Kernel32DLLwithoutOption) Native.loadLibrary("kernel32", Kernel32DLLwithoutOption.class);
 	Kernel32DLLwithoutOption SYNC_INSTANCE = (Kernel32DLLwithoutOption) Native.synchronizedLibrary(INSTANCE);
-	long GetProcAddress(HMODULE hM, String lpProcName);
+	int GetProcAddress(HMODULE hM, String lpProcName);
 }

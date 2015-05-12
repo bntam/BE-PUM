@@ -89,7 +89,7 @@ public class GetLocaleInfo extends Kernel32API {
 
 			LCID Locale = new LCID(t1);
 			DWORD LCType = new DWORD(t2);
-			char[] lpLCData = (t4 == 0) ? null : new char[(int) t4];
+			char[] lpLCData = (t4 == 0L) ? null : new char[(int) t4];
 			int cchData = (int) t4;
 			int ret = Kernel32DLL.INSTANCE.GetLocaleInfo(Locale, LCType, lpLCData, cchData);
 

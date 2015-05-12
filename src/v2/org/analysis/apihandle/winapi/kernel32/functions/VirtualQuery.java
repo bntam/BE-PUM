@@ -76,7 +76,7 @@ public class VirtualQuery extends Kernel32API {
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
 
-			LPVOID lpAddress = (t1 != 0) ? new LPVOID(t1) : null;
+			LPVOID lpAddress = (t1 != 0L) ? new LPVOID(t1) : null;
 			MEMORY_BASIC_INFORMATION lpBuffer = new MEMORY_BASIC_INFORMATION();
 			SIZE_T dwLength = new SIZE_T(t3);
 			SIZE_T ret = Kernel32DLL.INSTANCE.VirtualQuery(lpAddress, lpBuffer, dwLength);

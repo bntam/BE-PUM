@@ -18,6 +18,7 @@ import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
@@ -98,11 +99,16 @@ public class Thread32First extends Kernel32API {
 			lpte.dwFlags = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
 					index += 4))).getValue());
 
+			System.out.println(lpte.toString(false));
+			
 			BOOL ret = Kernel32DLL.INSTANCE.Thread32First(hSnapshot, lpte);
 
 			long value = ret.longValue();
 			register.mov("eax", new LongValue(value));
 			System.out.println("Return Value: " + value);
+			if (APIHandle.isDebug) {
+				System.out.println(lpte.toString(false));
+			}
 
 			index = t2;
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index),

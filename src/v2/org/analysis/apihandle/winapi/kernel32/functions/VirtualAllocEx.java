@@ -95,7 +95,7 @@ public class VirtualAllocEx extends Kernel32API {
 			long t5 = ((LongValue) x5).getValue();
 
 			HANDLE hProcess = new HANDLE(new Pointer(t1));
-			LPVOID lpAddress = (t2 != 0) ? new LPVOID(t2) : null;
+			LPVOID lpAddress = (t2 != 0L) ? new LPVOID(t2) : null;
 			SIZE_T dwSize = new SIZE_T(t3);
 			DWORD flAllocationType = new DWORD(t4);
 			DWORD flProtect = new DWORD(t5);

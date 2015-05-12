@@ -77,8 +77,10 @@ public class FindWindow extends User32API {
 			 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
 			 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
 			 */
-			String className = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
-			String windowName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()));
+			String className = (((LongValue) x1).getValue() == 0L) ? null : memory.getText(new X86MemoryOperand(
+					DataType.INT32, ((LongValue) x1).getValue()));
+			String windowName = (((LongValue) x2).getValue() == 0L) ? null : memory.getText(new X86MemoryOperand(
+					DataType.INT32, ((LongValue) x2).getValue()));
 
 			System.out.println("Class Name:" + className + ", Window Name Address:" + ((LongValue) x2).getValue()
 					+ ", Window Name:" + windowName);

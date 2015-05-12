@@ -91,7 +91,7 @@ public class CopyFile extends Kernel32API {
 			fileNameNew = Storage.getMappingPath(fileNameNew);
 			System.out.println("Old File:" + fileNameOld + ", New File:" + fileNameNew + ", Flag:" + t3);
 
-			boolean ret = Kernel32.INSTANCE.CopyFile(fileNameOld, fileNameNew, (t3 != 0));
+			boolean ret = Kernel32.INSTANCE.CopyFile(fileNameOld, fileNameNew, (t3 != 0L));
 			register.mov("eax", new LongValue(ret ? 1 : 0));
 		}
 		return false;

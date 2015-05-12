@@ -1,24 +1,40 @@
 package v2.org.analysis.complement;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
 
 public class BitVector {
 	public static final int MAX_NUM_BIT = 32;
 
-	public static void main(String [] args) {
+	public static void main(String[] args) {
 		long t = -2004820559;
 		int[] x = BitVector.longToBytes(t, 4);
-		for (int i=0; i<x.length; i++)
+		for (int i = 0; i < x.length; i++)
 			System.out.print(x[i] + ", ");
 
 		System.out.println(t + " = " + BitVector.bytesToLong(x, 4));
 	}
 
-	public static int[] longToBytes(long l, int num) {
-		long t = Convert.convetUnsignedValue(l, num);
+	/**
+	 * Check if the caller is APIHandle
+	 * 
+	 * @author Yen Nguyen
+	 * 
+	 * @return TRUE if the caller is APIHandle, otherwise return FALSE
+	 */
+	private static boolean isAPIHandle() {
+		String className = APIHandle.class.getName();
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		for (StackTraceElement element : stackTraceElements) {
+			if (element.getClassName().equals(className))
+				return true;
+		}
+		return false;
+	}
 
+	public static int[] longToBytes(long l, int num) {
 		int[] result = new int[num];
-		for (int i = num-1; i >= 0; i--) {
-			int x = (byte)(l & 0x0FF);
+		for (int i = num - 1; i >= 0; i--) {
+			int x = (byte) (l & 0x0FF);
 			if (x < 0)
 				x += 256;
 			result[i] = x;
@@ -34,7 +50,10 @@ public class BitVector {
 			result |= (b[i] & 0xFF);
 		}
 
-		result = Convert.convertSignedValue(result, num * 8);
+		// YenNguyen: API Simulator just use unsigned long value
+		result = (BitVector.isAPIHandle()) 
+				? Convert.convetUnsignedValue(result, num * 8) 
+						: Convert.convertSignedValue(result, num * 8);
 
 		return result;
 	}
@@ -50,7 +69,10 @@ public class BitVector {
 		result <<= 8;
 		result |= (b1 & 0xFF);
 
-		result = Convert.convertSignedValue(result, 32);
+		// YenNguyen: API Simulator just use unsigned long value
+		result = (BitVector.isAPIHandle()) 
+				? Convert.convetUnsignedValue(result, 32) 
+						: Convert.convertSignedValue(result, 32);
 
 		return result;
 	}
@@ -62,8 +84,10 @@ public class BitVector {
 		result <<= 8;
 		result |= (b1 & 0xFF);
 
-		result = Convert.convertSignedValue(result, 16);
-
+		// YenNguyen: API Simulator just uses unsigned long value
+		result = (BitVector.isAPIHandle()) 
+				? Convert.convetUnsignedValue(result, 16) 
+						: Convert.convertSignedValue(result, 16);
 		return result;
 	}
 
@@ -310,7 +334,7 @@ public class BitVector {
 	}
 
 	public static byte getLSB(long val, long bits) {
-		return (byte)(val & 1);
+		return (byte) (val & 1);
 	}
 
 	public static boolean getParityBit(long t) {
@@ -398,10 +422,10 @@ public class BitVector {
 			return t;
 		else if (i == 1) {
 			switch (opSize) {
-				case 16:
-					return (long) (t + 255 * Math.pow(2, 8));
-				case 32:
-					return (long)(t + 65535 * Math.pow(2, 16));
+			case 16:
+				return (long) (t + 255 * Math.pow(2, 8));
+			case 32:
+				return (long) (t + 65535 * Math.pow(2, 16));
 			}
 		}
 

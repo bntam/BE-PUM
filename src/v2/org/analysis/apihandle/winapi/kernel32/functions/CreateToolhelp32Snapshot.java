@@ -78,8 +78,11 @@ public class CreateToolhelp32Snapshot extends Kernel32API {
 			DWORD th32ProcessID = new DWORD(t2);
 			HANDLE ret = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(dwFlags, th32ProcessID);
 
-			register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
-			System.out.println("Return value:" + Pointer.nativeValue(ret.getPointer()));
+			LongValue storeValue = new LongValue(Pointer.nativeValue(ret.getPointer()));
+			register.mov("eax", storeValue);
+			System.out.println("Return value:" + Pointer.nativeValue(ret.getPointer()) + " " + storeValue + " "
+					+ storeValue.getValue());
+			System.out.println("Stored return value:" + register.getRegisterValue("eax"));
 		}
 
 		return false;

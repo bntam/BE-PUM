@@ -17,6 +17,7 @@ import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 
@@ -84,9 +85,10 @@ public class GetModuleFileName extends Kernel32API {
 			String output = null;
 			DWORD ret = null;
 
-			if (((LongValue) hModule).getValue() == 0) {
+			if (((LongValue) hModule).getValue() == 0L) {
 				output = Program.getProgram().getAbsolutePathFile();
 				ret = new DWORD(output.length());
+				Kernel32.INSTANCE.SetLastError(0);
 			} else {
 				ret = Kernel32DLL.INSTANCE.GetModuleFileName(module, Filename,
 						new DWORD(((LongValue) nSize).getValue()));

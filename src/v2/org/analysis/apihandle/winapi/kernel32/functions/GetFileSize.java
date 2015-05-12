@@ -69,11 +69,12 @@ public class GetFileSize extends Kernel32API {
 			long t2 = ((LongValue) x2).getValue();
 
 			HANDLE hFile = new HANDLE(new Pointer(t1));
-			DWORDByReference lpFileSizeHigh = (t2 == 0) ? null : new DWORDByReference();
+			DWORDByReference lpFileSizeHigh = (t2 == 0L) ? null : new DWORDByReference();
 
 			DWORD ret = Kernel32DLL.INSTANCE.GetFileSize(hFile, lpFileSizeHigh);
 
 			register.mov("eax", new LongValue(ret.longValue()));
+			System.out.println("Return Value: " + ret.intValue());
 
 			if (t2 != 0)
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(lpFileSizeHigh

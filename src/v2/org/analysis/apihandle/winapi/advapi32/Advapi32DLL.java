@@ -6,6 +6,7 @@ import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.DWORDByReference;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.win32.StdCallLibrary;
@@ -173,4 +174,87 @@ public interface Advapi32DLL extends StdCallLibrary {
 	 */
 	BOOL CryptCreateHash(/* _In_ *//* HCRYPTPROV */ULONG_PTR hProv, /* _In_ *//* ALG_ID */UINT Algid, /* _In_ *//* HCRYPTKEY */
 			ULONG_PTR hKey, /* _In_ */DWORD dwFlags, /* _Out_ *//* HCRYPTHASH */ULONG_PTRByReference phHash);
+
+	/**
+	 * The CryptDecrypt function decrypts data previously encrypted by using the
+	 * CryptEncrypt function.
+	 * 
+	 * @param hKey
+	 *            A handle to the key to use for the decryption. An application
+	 *            obtains this handle by using either the CryptGenKey or
+	 *            CryptImportKey function.
+	 * 
+	 * @param hHash
+	 *            A handle to a hash object. If data is to be decrypted and
+	 *            hashed simultaneously, a handle to a hash object is passed in
+	 *            this parameter. The hash value is updated with the decrypted
+	 *            plaintext. This option is useful when simultaneously
+	 *            decrypting and verifying a signature.
+	 * 
+	 * @param Final
+	 *            A Boolean value that specifies whether this is the last
+	 *            section in a series being decrypted. This value is TRUE if
+	 *            this is the last or only block. If this is not the last block,
+	 *            this value is FALSE. For more information, see Remarks.
+	 * 
+	 * @param dwFlags
+	 *            The following flag values are defined. CRYPT_OAEP 0x00000040
+	 *            || CRYPT_DECRYPT_RSA_NO_PADDING_CHECK 0x00000020
+	 * 
+	 * @param pbData
+	 *            A pointer to a buffer that contains the data to be decrypted.
+	 *            After the decryption has been performed, the plaintext is
+	 *            placed back into this same buffer.
+	 * 
+	 * @param pdwDataLen
+	 *            A pointer to a DWORD value that indicates the length of the
+	 *            pbData buffer. Before calling this function, the calling
+	 *            application sets the DWORD value to the number of bytes to be
+	 *            decrypted. Upon return, the DWORD value contains the number of
+	 *            bytes of the decrypted plaintext.
+	 * 
+	 * @return If the function succeeds, the function returns nonzero (TRUE). If
+	 *         the function fails, it returns zero (FALSE). For extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL CryptDecrypt(/* _In_ *//* HCRYPTKEY */ULONG_PTR hKey, /* _In_ *//* HCRYPTHASH */ULONG_PTR hHash, /* _In_ */
+			BOOL Final, /* _In_ */DWORD dwFlags, /* _Inout_ */ByteByReference pbData, /* _Inout_ */
+			DWORDByReference pdwDataLen);
+
+	/**
+	 * The CryptDestroyKey function releases the handle referenced by the hKey
+	 * parameter. After a key handle has been released, it is no longer valid
+	 * and cannot be used again.
+	 * 
+	 * @param hKey
+	 *            The handle of the key to be destroyed.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. For extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL CryptDestroyKey(/* _In_ *//* HCRYPTKEY */ULONG_PTR hKey);
+
+	/**
+	 * The CryptReleaseContext function releases the handle of a cryptographic
+	 * service provider (CSP) and a key container. At each call to this
+	 * function, the reference count on the CSP is reduced by one. When the
+	 * reference count reaches zero, the context is fully released and it can no
+	 * longer be used by any function in the application.
+	 * 
+	 * @param hProv
+	 *            Handle of a cryptographic service provider (CSP) created by a
+	 *            call to CryptAcquireContext.
+	 * 
+	 * @param dwFlags
+	 *            Reserved for future use and must be zero. If dwFlags is not
+	 *            set to zero, this function returns FALSE but the CSP is
+	 *            released.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero (TRUE). If
+	 *         the function fails, the return value is zero (FALSE). For
+	 *         extended error information, call GetLastError.
+	 */
+	BOOL CryptReleaseContext(/* _In_ *//* HCRYPTPROV */ULONG_PTR hProv, /* _In_ */DWORD dwFlags);
+
 }

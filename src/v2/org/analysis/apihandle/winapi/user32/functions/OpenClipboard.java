@@ -52,7 +52,7 @@ public class OpenClipboard extends User32API {
 		if (x1 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 
-			HWND hWndNewOwner = (t1 != 0) ? new HWND(new Pointer(t1)) : null;
+			HWND hWndNewOwner = (t1 != 0L) ? new HWND(new Pointer(t1)) : null;
 			BOOL ret = User32DLL.INSTANCE.OpenClipboard(hWndNewOwner);
 
 			register.mov("eax", new LongValue(ret.longValue()));

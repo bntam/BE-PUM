@@ -51,6 +51,7 @@ public class GetCurrentProcess extends Kernel32API {
 		HANDLE handle = Kernel32.INSTANCE.GetCurrentProcess();
 		long value = Pointer.nativeValue(handle.getPointer());
 
+		System.out.println("Return Value: " + value);
 		System.out.println("Argument: No");
 		program.generageCFG(program.getAbsolutePathFile() + "_test");
 

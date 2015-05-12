@@ -3,6 +3,7 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
@@ -50,8 +51,7 @@ public class Process32Next extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -68,9 +68,15 @@ public class Process32Next extends Kernel32API {
 			HANDLE hSnapshot = new HANDLE(new Pointer(t1));
 			PROCESSENTRY32 lppe = new PROCESSENTRY32();
 
-			BOOL ret = Kernel32DLL.INSTANCE.Process32First(hSnapshot, lppe);
+			BOOL ret = Kernel32DLL.INSTANCE.Process32Next(hSnapshot, lppe);
 
 			register.mov("eax", new LongValue(ret.longValue()));
+
+			System.out.println("Return value: " + ret.booleanValue());
+			if (APIHandle.isDebug && ret.booleanValue()) {
+				System.out.println(lppe.toString(false));
+				System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+			}
 
 			// DWORD dwSize;
 			// DWORD cntUsage;
@@ -82,34 +88,27 @@ public class Process32Next extends Kernel32API {
 			// LONG pcPriClassBase;
 			// DWORD dwFlags;
 			// TCHAR szExeFile[MAX_PATH];
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2), new LongValue(lppe.dwSize.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2 += 4),
+			// memory.setDoubleWordMemoryValue(new X86MemoryOperand(
+			// DataType.INT32, t2), new LongValue(lppe.dwSize.longValue()));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
 					new LongValue(lppe.cntUsage.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2 += 4),
-					new LongValue(lppe.th32ProcessID.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2 += 4), new LongValue(
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
+					lppe.th32ProcessID.longValue()));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
 					lppe.th32DefaultHeapID.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2 += 4),
-					new LongValue(lppe.th32ModuleID.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2 += 4),
-					new LongValue(lppe.cntThreads.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2 += 4), new LongValue(
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
+					lppe.th32ModuleID.longValue()));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
+					lppe.cntThreads.longValue()));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
 					lppe.th32ParentProcessID.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2 += 4),
-					new LongValue(lppe.pcPriClassBase.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t2 += 4),
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
+					lppe.pcPriClassBase.longValue()));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
 					new LongValue(lppe.dwFlags.longValue()));
-			memory.setText(new X86MemoryOperand(DataType.INT32, t2 += 4),
-					new String(lppe.szExeFile));
+			for (int i = 0; i < lppe.szExeFile.length; i++) {
+				memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t2 + i), new LongValue(lppe.szExeFile[i]));
+			}
 		}
 		return false;
 	}

@@ -13,6 +13,7 @@ import org.jakstab.asm.Instruction;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.LONG;
+
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 import v2.org.analysis.environment.Environment;
@@ -67,7 +68,7 @@ public class SetWindowLong extends User32API {
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
 
-			HWND hWnd = new HWND(new Pointer(t1));
+			HWND hWnd = (t1 == 0L) ? null : new HWND(new Pointer(t1));
 			int nIndex = (int) t2;
 			LONG dwNewLong = new LONG(t3);
 			LONG ret = User32DLL.INSTANCE.SetWindowLong(hWnd, nIndex, dwNewLong);

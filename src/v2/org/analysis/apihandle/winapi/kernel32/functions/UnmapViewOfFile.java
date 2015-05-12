@@ -57,7 +57,7 @@ public class UnmapViewOfFile extends Kernel32API {
 		long t1 = ((LongValue) x1).getValue();
 		System.out.println("Argument:" + t1);
 
-		Pointer lpBaseAddress = t1 != 0 ? new Pointer(t1) : Pointer.NULL;
+		Pointer lpBaseAddress = t1 != 0L ? new Pointer(t1) : Pointer.NULL;
 		boolean ret = Kernel32.INSTANCE.UnmapViewOfFile(lpBaseAddress);
 
 		register.mov("eax", new LongValue(ret ? 1 : 0));

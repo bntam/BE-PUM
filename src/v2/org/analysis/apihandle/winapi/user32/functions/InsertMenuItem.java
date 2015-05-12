@@ -137,7 +137,7 @@ public class InsertMenuItem extends User32API {
 					.getDoubleWordMemoryValue(new X86MemoryOperand(
 							DataType.INT32, t4 += 40))).getValue();
 			lpmii.dwTypeData = new WString(
-					(strPtr != 0) ? memory.getText(new X86MemoryOperand(
+					(strPtr != 0L) ? memory.getText(new X86MemoryOperand(
 							DataType.INT32, strPtr)) : null);
 			lpmii.cch = new UINT(
 					((LongValue) memory

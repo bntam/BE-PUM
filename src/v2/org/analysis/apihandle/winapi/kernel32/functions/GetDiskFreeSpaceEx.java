@@ -85,12 +85,12 @@ public class GetDiskFreeSpaceEx extends Kernel32API {
 			long t3 = ((LongValue) x3).getValue();
 			long t4 = ((LongValue) x4).getValue();
 
-			String lpDirectoryName = (t1 == 0) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			LongByReference lpFreeBytesAvailable = (t2 == 0) ? null : new LongByReference(
+			String lpDirectoryName = (t1 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+			LongByReference lpFreeBytesAvailable = (t2 == 0L) ? null : new LongByReference(
 					((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2))).getValue());
-			LongByReference lpTotalNumberOfBytes = (t3 == 0) ? null : new LongByReference(
+			LongByReference lpTotalNumberOfBytes = (t3 == 0L) ? null : new LongByReference(
 					((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3))).getValue());
-			LongByReference lpTotalNumberOfFreeBytes = (t4 == 0) ? null : new LongByReference(
+			LongByReference lpTotalNumberOfFreeBytes = (t4 == 0L) ? null : new LongByReference(
 					((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4))).getValue());
 
 			boolean ret = Kernel32.INSTANCE.GetDiskFreeSpaceEx(lpDirectoryName, lpFreeBytesAvailable,
@@ -98,13 +98,13 @@ public class GetDiskFreeSpaceEx extends Kernel32API {
 
 			register.mov("eax", new LongValue((ret) ? 1 : 0));
 
-			if (t2 != 0)
+			if (t2 != 0L)
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(
 						lpFreeBytesAvailable.getValue()));
-			if (t3 != 0)
+			if (t3 != 0L)
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
 						lpTotalNumberOfBytes.getValue()));
-			if (t4 != 0)
+			if (t4 != 0L)
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
 						lpTotalNumberOfFreeBytes.getValue()));
 		}

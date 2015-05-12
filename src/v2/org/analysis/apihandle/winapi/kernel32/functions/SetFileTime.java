@@ -88,7 +88,7 @@ public class SetFileTime extends Kernel32API {
 			long t4 = ((LongValue) x4).getValue();
 
 			HANDLE hFile = new HANDLE(new Pointer(t1));
-			FILETIME lpCreationTime = (t2 != 0) ? new FILETIME() : null;
+			FILETIME lpCreationTime = (t2 != 0L) ? new FILETIME() : null;
 			if (lpCreationTime != null) {
 				lpCreationTime.dwLowDateTime = (int) ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
 						DataType.INT32, t2))).getValue();
@@ -96,7 +96,7 @@ public class SetFileTime extends Kernel32API {
 						.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 4))).getValue();
 			}
 
-			FILETIME lpLastAccessTime = (t3 != 0) ? new FILETIME() : null;
+			FILETIME lpLastAccessTime = (t3 != 0L) ? new FILETIME() : null;
 			if (lpLastAccessTime != null) {
 				lpLastAccessTime.dwLowDateTime = (int) ((LongValue) memory
 						.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2))).getValue();
@@ -104,7 +104,7 @@ public class SetFileTime extends Kernel32API {
 						.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 4))).getValue();
 			}
 
-			FILETIME lpLastWriteTime = (t4 != 0) ? new FILETIME() : null;
+			FILETIME lpLastWriteTime = (t4 != 0L) ? new FILETIME() : null;
 			if (lpLastWriteTime != null) {
 				lpLastWriteTime.dwLowDateTime = (int) ((LongValue) memory
 						.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2))).getValue();

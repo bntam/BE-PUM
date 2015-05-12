@@ -110,7 +110,7 @@ public class CreateFile extends Kernel32API {
 					+ ", Mode:" + t5 + ", Attributes:" + t6 + ", hTemplate:" + t7);
 
 			// SECURITY_ATTRIBUTES lpSecurityAttributes = null;
-			// if (t4 != 0) {
+			// if (t4 != 0L) {
 			// lpSecurityAttributes = new SECURITY_ATTRIBUTES();
 			//
 			// LongValue nLength = (LongValue)
@@ -123,7 +123,7 @@ public class CreateFile extends Kernel32API {
 			// // lpSecurityDescriptor is the address of SECURITY_DESCRIPTOR
 			// // structure pointer
 			// SECURITY_DESCRIPTOR lpSecurityDescriptor = Pointer.NULL;
-			// if (lpSecurityDescriptor.getValue() != 0) {
+			// if (lpSecurityDescriptor.getValue() != 0L) {
 			//
 			// long pSecurity = t4;
 			//
@@ -150,7 +150,7 @@ public class CreateFile extends Kernel32API {
 			// memory.getDoubleWordMemoryValue(pSecurity += 4);
 			//
 			// ACL vSacl = null;
-			// if (Sacl.getValue() != 0) {
+			// if (Sacl.getValue() != 0L) {
 			// long pSacl = Sacl.getValue();
 			//
 			// }

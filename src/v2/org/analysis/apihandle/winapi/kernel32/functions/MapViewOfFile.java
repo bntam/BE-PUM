@@ -84,7 +84,7 @@ public class MapViewOfFile extends Kernel32API {
 				&& x5 instanceof LongValue) {
 
 			long t1 = ((LongValue) x1).getValue();
-			HANDLE hFileMappingObject = new HANDLE(t1 != 0 ? new Pointer(t1) : Pointer.NULL);
+			HANDLE hFileMappingObject = new HANDLE(t1 != 0L ? new Pointer(t1) : Pointer.NULL);
 			int dwDesiredAccess = (int) ((LongValue) x2).getValue();
 			int dwFileOffsetHigh = (int) ((LongValue) x3).getValue();
 			int dwFileOffsetLow = (int) ((LongValue) x4).getValue();

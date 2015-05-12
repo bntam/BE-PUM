@@ -94,7 +94,7 @@ public class VirtualAlloc extends Kernel32API {
 
 			System.out.println("Address:" + t1 + ", Size:" + t2 + ", Allocation Type:" + t3 + ", Protection Type:" + t4);
 
-			LPVOID lpAddress = (t1 != 0) ? new LPVOID(t1) : null;
+			LPVOID lpAddress = (t1 != 0L) ? new LPVOID(t1) : null;
 			SIZE_T dwSize = new SIZE_T(t2);
 			DWORD flAllocationType = new DWORD(t3);
 			DWORD flProtect = new DWORD(t4);

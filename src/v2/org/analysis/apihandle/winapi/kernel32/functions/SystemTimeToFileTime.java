@@ -67,7 +67,7 @@ public class SystemTimeToFileTime extends Kernel32API {
 			long t2 = ((LongValue) x2).getValue();
 
 			SYSTEMTIME lpSystemTime = null;
-			if (t1 != 0) {
+			if (t1 != 0L) {
 				lpSystemTime = new SYSTEMTIME();
 				lpSystemTime.wYear = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(
 						DataType.INT32, t1))).getValue();

@@ -132,8 +132,8 @@ public class WideCharToMultiByte extends Kernel32API {
 			int cchWideChar = (int) t4;
 			char[] lpMultiByteStr = (t6 > 0) ? new char[(int) t6] : null;
 			int cbMultiByte = (int) t6;
-			String lpDefaultChar = (t7 != 0) ? memory.getText(new X86MemoryOperand(DataType.INT32, t7)) : null;
-			BOOLByReference lpUsedDefaultChar = (t8 != 0) ? new BOOLByReference() : null;
+			String lpDefaultChar = (t7 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t7)) : null;
+			BOOLByReference lpUsedDefaultChar = (t8 != 0L) ? new BOOLByReference() : null;
 			int ret = Kernel32DLL.INSTANCE.WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar,
 					lpMultiByteStr, cbMultiByte, lpDefaultChar, lpUsedDefaultChar);
 

@@ -105,7 +105,7 @@ public class MultiByteToWideChar extends Kernel32API {
 			String lpMultiByteStr = memory.getText(new X86MemoryOperand(
 					DataType.INT32, t3));
 			int cbMultiByte = (int) t4;
-			char[] lpWideCharStr = (t5 != 0 && t6 > 0) ? new char[(int) t6]
+			char[] lpWideCharStr = (t5 != 0L && t6 > 0) ? new char[(int) t6]
 					: null;
 			int cchWideChar = (int) t6;
 

@@ -33,7 +33,7 @@ import v2.org.analysis.value.Value;
 public class GetProcAddress extends Kernel32API {
 
 	public GetProcAddress() {
-		
+
 	}
 
 	@Override
@@ -57,17 +57,18 @@ public class GetProcAddress extends Kernel32API {
 			long t2 = ((LongValue) x2).getValue();
 			String lpProcName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
 			System.out.println("Function Name:" + lpProcName + ", Library Handle:" + x1);
-			
+
 			HMODULE hModule = new HMODULE();
 			hModule.setPointer(new Pointer(t1));
-			
-			long ret = Kernel32DLLwithoutOption.INSTANCE.GetProcAddress(hModule, lpProcName);
+
+			int ret = Kernel32DLLwithoutOption.INSTANCE.GetProcAddress(hModule, lpProcName);
 			register.mov("eax", new LongValue(ret));
 			System.out.println("Return Value: " + ret);
-			
-			String libName = APIHandle.libraryHandle.get(t1);
-			ret = ((LongValue) register.getRegisterValue("eax")).getValue();
-			APIHandle.processAddressHandle.put(ret, lpProcName + '@' + libName);
+
+			if (ret != 0) {
+				String libName = APIHandle.libraryHandle.get(t1);
+				APIHandle.processAddressHandle.put((long) ret, lpProcName + '@' + libName);
+			}
 		}
 		return false;
 	}

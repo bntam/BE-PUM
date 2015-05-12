@@ -64,7 +64,7 @@ public class TlsSetValue extends Kernel32API {
 			long t2 = ((LongValue) x2).getValue();
 
 			DWORD dwTlsIndex = new DWORD(t1);
-			LPVOID lpTlsValue = (t2 != 0) ? new LPVOID(t2) : null;
+			LPVOID lpTlsValue = (t2 != 0L) ? new LPVOID(t2) : null;
 			BOOL ret = Kernel32DLL.INSTANCE.TlsSetValue(dwTlsIndex, lpTlsValue);
 
 			register.mov("eax", new LongValue(ret.longValue()));

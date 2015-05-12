@@ -134,14 +134,14 @@ public class CreateProcess extends Kernel32API {
 
 			SECURITY_ATTRIBUTES lpProcessAttributes = null;
 			SECURITY_ATTRIBUTES lpThreadAttributes = null;
-			boolean bInheritHandles = (t5 != 0) ? true : false;
+			boolean bInheritHandles = (t5 != 0L) ? true : false;
 			DWORD dwCreationFlags = new DWORD(t6);
 			Pointer lpEnvironment = Pointer.NULL;
 			STARTUPINFO lpStartupInfo = null;
 			PROCESS_INFORMATION lpProcessInformation = null;
 
 			// TODO: t3 is the address of lpProcessAttributes structure pointer
-			if (t3 != 0) {
+			if (t3 != 0L) {
 				lpProcessAttributes = new SECURITY_ATTRIBUTES();
 
 				LongValue nLength = (LongValue) memory.getDoubleWordMemoryValue(t3);
@@ -182,13 +182,13 @@ public class CreateProcess extends Kernel32API {
 				// }
 				// }
 
-				lpProcessAttributes.bInheritHandle = (bInheritHandle.getValue() != 0) ? true : false;
+				lpProcessAttributes.bInheritHandle = (bInheritHandle.getValue() != 0L) ? true : false;
 				lpProcessAttributes.lpSecurityDescriptor = Pointer.NULL;
 				lpProcessAttributes.dwLength = new DWORD(nLength.getValue());
 			}
 
 			// TODO: t4 is the address of lpThreadAttributes structure pointer
-			if (t4 != 0) {
+			if (t4 != 0L) {
 				lpThreadAttributes = new SECURITY_ATTRIBUTES();
 
 				LongValue bInheritHandle = (LongValue) memory.getWordMemoryValue(t4);
@@ -198,14 +198,14 @@ public class CreateProcess extends Kernel32API {
 				// TODO: lpSecurityDescriptor is the address of
 				// SECURITY_DESCRIPTOR structure pointer
 
-				lpThreadAttributes.bInheritHandle = (bInheritHandle.getValue() != 0) ? true : false;
-				lpThreadAttributes.lpSecurityDescriptor = (lpSecurityDescriptor.getValue() != 0) ? new Pointer(
+				lpThreadAttributes.bInheritHandle = (bInheritHandle.getValue() != 0L) ? true : false;
+				lpThreadAttributes.lpSecurityDescriptor = (lpSecurityDescriptor.getValue() != 0L) ? new Pointer(
 						lpSecurityDescriptor.getValue()) : Pointer.NULL;
 				lpThreadAttributes.dwLength = new DWORD(nLength.getValue());
 			}
 
 			// t9 is the address of lpStartupInfo structure pointer
-			if (t9 != 0) {
+			if (t9 != 0L) {
 				lpStartupInfo = new STARTUPINFO();
 
 				DWORD cb = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t9)).getValue());
@@ -252,7 +252,7 @@ public class CreateProcess extends Kernel32API {
 			}
 
 			// t10 is the address of lpProcessInformation structure pointer
-			if (t10 != 0) {
+			if (t10 != 0L) {
 				lpProcessInformation = new PROCESS_INFORMATION();
 
 				HANDLE hProcess = new HANDLE(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t10)).getValue()));

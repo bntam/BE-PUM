@@ -109,13 +109,13 @@ public class WriteFile extends Kernel32API {
 			System.out.println("Handle File:" + t1 + ", String written:" + str + ", Number of Byte:" + t3
 					+ ", Pointer:" + t4 + ", Overlapped:" + t5);
 
-			HANDLE hFile = new HANDLE(t1 != 0 ? new Pointer(t1) : Pointer.NULL);
+			HANDLE hFile = new HANDLE(t1 != 0L ? new Pointer(t1) : Pointer.NULL);
 			byte[] lpBuffer = str.getBytes();
 			int nNumberOfBytesToWrite = (int) t3;
 			IntByReference lpNumberOfBytesWritten = new IntByReference((int) t4);
 			
 			OVERLAPPED lpOverlapped = new OVERLAPPED();
-			if (t5 != 0) {
+			if (t5 != 0L) {
 				lpOverlapped.Internal = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t5)).getValue());
 				lpOverlapped.InternalHigh = new ULONG_PTR(
 						((LongValue) memory.getDoubleWordMemoryValue(t5 + 4)).getValue());

@@ -59,7 +59,7 @@ public class FindClose extends Kernel32API {
 
 		if (x1 instanceof LongValue) {
 			long t = ((LongValue) x1).getValue();
-			HANDLE in_output = new HANDLE((t != 0) ? new Pointer(t) : Pointer.NULL);
+			HANDLE in_output = new HANDLE((t != 0L) ? new Pointer(t) : Pointer.NULL);
 			BOOL ret = Kernel32DLL.INSTANCE.FindClose(in_output);
 
 			//memory.setDoubleWordMemoryValue(t, new LongValue(Pointer.nativeValue(in_output.getPointer())));

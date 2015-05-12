@@ -101,20 +101,20 @@ public class SearchPath extends Kernel32API {
 			long t5 = ((LongValue) x5).getValue();
 			long t6 = ((LongValue) x6).getValue();
 
-			String lpPath = (t1 != 0) ? memory.getText(new X86MemoryOperand(DataType.INT32, t1)) : null;
-			String lpFileName = (t2 != 0) ? memory.getText(new X86MemoryOperand(DataType.INT32, t2)) : null;
-			String lpExtension = (t3 != 0) ? memory.getText(new X86MemoryOperand(DataType.INT32, t3)) : null;
+			String lpPath = (t1 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t1)) : null;
+			String lpFileName = (t2 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t2)) : null;
+			String lpExtension = (t3 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t3)) : null;
 			DWORD nBufferLength = new DWORD(t4);
 			char[] lpBuffer = new char[(int) t4];
-			Pointer lpFilePart = (t6 != 0) ? new Pointer(0) : null;
+			Pointer lpFilePart = (t6 != 0L) ? new Pointer(0) : null;
 
 			DWORD ret = null;
-			if (t1 != 0 && lpPath.length() > 0) {
+			if (t1 != 0L && lpPath.length() > 0) {
 				String lpMPath = Storage.getMappingPath(lpPath);
 				ret = Kernel32DLL.INSTANCE.SearchPath(lpMPath, lpFileName, lpExtension, nBufferLength, lpBuffer,
 						lpFilePart);
 			}
-			if (ret == null || (ret != null && ret.longValue() == 0)) {
+			if (ret == null || (ret != null && ret.longValue() == 0L)) {
 				ret = Kernel32DLL.INSTANCE.SearchPath(lpPath, lpFileName, lpExtension, nBufferLength, lpBuffer,
 						lpFilePart);
 			}

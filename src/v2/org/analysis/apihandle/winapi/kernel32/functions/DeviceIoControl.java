@@ -129,9 +129,9 @@ public class DeviceIoControl extends Kernel32API {
 
 			HANDLE hDevice = new HANDLE(new Pointer(t1));
 			DWORD dwIoControlCode = new DWORD(t2);
-			ByteBuffer lpInBuffer = (t4 == 0) ? null : ByteBuffer.allocate((int) t4 + 1);
+			ByteBuffer lpInBuffer = (t4 == 0L) ? null : ByteBuffer.allocate((int) t4 + 1);
 			int nInBufferSize = (int) t4;
-			ByteBuffer lpOutBuffer = (t6 == 0) ? null : ByteBuffer.allocate((int) t6 + 1);
+			ByteBuffer lpOutBuffer = (t6 == 0L) ? null : ByteBuffer.allocate((int) t6 + 1);
 			int nOutBufferSize = (int) t6;
 			DWORDByReference lpBytesReturned = new DWORDByReference();
 			OVERLAPPED lpOverlapped = null;
@@ -139,7 +139,7 @@ public class DeviceIoControl extends Kernel32API {
 			BOOL ret = Kernel32DLL.INSTANCE.DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer, nInBufferSize,
 					lpOutBuffer, nOutBufferSize, lpBytesReturned, lpOverlapped);
 
-			if (t8 != 0) {
+			if (t8 != 0L) {
 				lpOverlapped = new OVERLAPPED();
 				lpOverlapped.Internal = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t8)).getValue());
 				lpOverlapped.InternalHigh = new ULONG_PTR(
@@ -170,12 +170,12 @@ public class DeviceIoControl extends Kernel32API {
 				e.printStackTrace();
 			}
 			
-			if (t7 != 0) {
+			if (t7 != 0L) {
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t7), new LongValue(
 						lpBytesReturned.getValue().longValue()));
 			}
 
-			if (t8 != 0) {
+			if (t8 != 0L) {
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8), new LongValue(
 						lpOverlapped.Internal.longValue()));
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8 += 4), new LongValue(

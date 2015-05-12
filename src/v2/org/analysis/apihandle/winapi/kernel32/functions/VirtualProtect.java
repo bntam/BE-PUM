@@ -95,6 +95,7 @@ public class VirtualProtect extends Kernel32API {
 			BOOL ret = Kernel32DLL.INSTANCE.VirtualProtect(lpAddress, dwSize, flNewProtect, lpflOldProtect);
 
 			register.mov("eax", new LongValue(ret.longValue()));
+			System.out.println("Return Value: " + ret.longValue());
 
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(lpflOldProtect
 					.getValue().longValue()));

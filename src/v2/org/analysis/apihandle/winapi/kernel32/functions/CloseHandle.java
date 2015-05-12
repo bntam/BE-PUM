@@ -55,7 +55,7 @@ public class CloseHandle extends Kernel32API {
 			long x = ((LongValue) x1).getValue();
 			System.out.println("Object Handle:" + x);
 
-			boolean ret = Kernel32.INSTANCE.CloseHandle(new HANDLE(x != 0 ? new Pointer(x) : Pointer.NULL));
+			boolean ret = Kernel32.INSTANCE.CloseHandle(new HANDLE(x != 0L ? new Pointer(x) : Pointer.NULL));
 			register.mov("eax", new LongValue(ret ? 1 : 0));
 
 			System.out.println("Return Value:" + ret);
