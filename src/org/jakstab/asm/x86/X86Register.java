@@ -63,5 +63,5 @@ public class X86Register extends Register {
 
 	public boolean isSegmentPointer() {
 		return false;
-	}
+	}	
 }

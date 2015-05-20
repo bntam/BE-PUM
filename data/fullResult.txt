@@ -862,3 +862,19 @@
    Instructions:                             856
    Nodes:                             881
    Edges:                             956
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     api_test_aspack.exe
+   Runtime:                          571ms
+   Instructions:                              44
+   Nodes:                              46
+   Edges:                              47
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     api_test_upx.exe
+   Runtime:                        11793ms
+   Instructions:                             133
+   Nodes:                             135
+   Edges:                             154

@@ -33,7 +33,8 @@ public class X86MoveInterpreter {
 			Value source = rule.getValueOperand(src, env, inst);
 			if (source != null && source instanceof LongValue) {
 				long t = ((LongValue) source).getValue();
-				LongValue temp = new LongValue(BitVector.extend(t, 0, ((X86MemoryOperand)src).getDataType().bits(), opSize));
+				int opSize1 = rule.getBitCountOprand(src);
+				LongValue temp = new LongValue(BitVector.extend(t, 0, opSize1, opSize));
 				//System.out.println();
 				rule.setValueOperand(dest, temp , env, inst);
 			} else

@@ -1018,4 +1018,19 @@ public class X86TransitionRule extends TransitionRule {
 		}
 
 	}
+
+	public int getBitCountOprand(Operand op) {
+		// TODO Auto-generated method stub
+		if (op instanceof X86MemoryOperand) 
+			return ((X86MemoryOperand)op).getDataType().bits();
+		else if (op instanceof X86RegisterPart) {			
+			return ((X86RegisterPart)op).getLength();
+		} else if (op instanceof X86SegmentRegister) {			
+			return 32;
+		} else if (op instanceof X86Register) {			
+			return 32;
+		}
+		
+		return 0;
+	}
 }
