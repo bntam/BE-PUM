@@ -27,8 +27,7 @@ import org.jakstab.analysis.location.LocationAnalysis;
  */
 public class DualCompositeAnalysis extends CompositeProgramAnalysis {
 
-	public DualCompositeAnalysis(LocationAnalysis locationAnalysis,
-			ConfigurableProgramAnalysis... otherCPAs) {
+	public DualCompositeAnalysis(LocationAnalysis locationAnalysis, ConfigurableProgramAnalysis... otherCPAs) {
 		super(locationAnalysis, otherCPAs);
 	}
 

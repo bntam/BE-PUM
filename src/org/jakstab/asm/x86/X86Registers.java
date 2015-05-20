@@ -97,8 +97,7 @@ public class X86Registers {
 		DH = new X86RegisterPart(2, "%dh", 8, 8);
 		BH = new X86RegisterPart(3, "%bh", 8, 8);
 
-		registers32 = (new X86Register[] { EAX, ECX, EDX, EBX, ESP, EBP, ESI,
-				EDI });
+		registers32 = (new X86Register[] { EAX, ECX, EDX, EBX, ESP, EBP, ESI, EDI });
 		registers16 = (new X86Register[] { AX, CX, DX, BX, SP, BP, SI, DI });
 		registers8 = (new X86Register[] { AL, CL, DL, BL, AH, CH, DH, BH });
 	}

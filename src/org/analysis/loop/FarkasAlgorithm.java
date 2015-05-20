@@ -13,8 +13,8 @@ public class FarkasAlgorithm implements LoopInvariantSolver {
 	Map<AbsoluteAddress, Instruction> assemblyMap;
 	AddressList traceList;
 
-	public FarkasAlgorithm(AbsoluteAddress loopInst,
-			Map<AbsoluteAddress, Instruction> assemblyMap, AddressList traceList) {
+	public FarkasAlgorithm(AbsoluteAddress loopInst, Map<AbsoluteAddress, Instruction> assemblyMap,
+			AddressList traceList) {
 		// TODO Auto-generated constructor stub
 		this.target = loopInst;
 		this.assemblyMap = assemblyMap;
@@ -26,18 +26,15 @@ public class FarkasAlgorithm implements LoopInvariantSolver {
 		FormulaSet result = new FormulaSet();
 		AddressList first = new AddressList(), second = new AddressList();
 		Instruction inst = assemblyMap.get(target);
-		Long temp = ((X86PCRelativeAddress) inst.getOperand(0))
-				.getEffectiveValue(target.getValue());
+		Long temp = ((X86PCRelativeAddress) inst.getOperand(0)).getEffectiveValue(target.getValue());
 		AbsoluteAddress cutPoint = new AbsoluteAddress(temp);
 		// inst.
 		if (cut(first, second, cutPoint)) {
 			first.printInfo();
 			second.printInfo();
 			System.out.print("Invariant of this loop:");
-			SymbolicExecutionFarkas sf = new SymbolicExecutionFarkas(first,
-					assemblyMap);
-			SymbolicExecutionFarkas ss = new SymbolicExecutionFarkas(second,
-					assemblyMap);
+			SymbolicExecutionFarkas sf = new SymbolicExecutionFarkas(first, assemblyMap);
+			SymbolicExecutionFarkas ss = new SymbolicExecutionFarkas(second, assemblyMap);
 			result = resolveFarkasAlgo(sf.getFormulas(), ss.getFormulas());
 			result.printInfo();
 		}
@@ -45,14 +42,12 @@ public class FarkasAlgorithm implements LoopInvariantSolver {
 
 	}
 
-	private FormulaSet resolveFarkasAlgo(FormulaSet formulas,
-			FormulaSet formulas2) {
+	private FormulaSet resolveFarkasAlgo(FormulaSet formulas, FormulaSet formulas2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private boolean cut(AddressList first, AddressList second,
-			AbsoluteAddress cutPoint) {
+	private boolean cut(AddressList first, AddressList second, AbsoluteAddress cutPoint) {
 		// TODO Auto-generated method stub
 		if (!(traceList.contain(target) || traceList.contain(cutPoint)))
 			return false;

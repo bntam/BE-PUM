@@ -22,11 +22,9 @@ import java.util.Set;
  * Template for a reaching definitions analysis based on the CPA framework. All
  * methods that need to be implemented are marked with TODO.
  */
-public class ReachingDefinitionsAnalysis extends SimpleCPA implements
-		ConfigurableProgramAnalysis {
+public class ReachingDefinitionsAnalysis extends SimpleCPA implements ConfigurableProgramAnalysis {
 
-	private static final Logger logger = Logger
-			.getLogger(ReachingDefinitionsAnalysis.class);
+	private static final Logger logger = Logger.getLogger(ReachingDefinitionsAnalysis.class);
 
 	public static void register(AnalysisProperties p) {
 		// This registers the analysis with the framework
@@ -61,33 +59,30 @@ public class ReachingDefinitionsAnalysis extends SimpleCPA implements
 		// Calculate the set of abstract successors using a visitor pattern
 		// The DefaultStatementVisitor throws exceptions on every not overridden
 		// visit method
-		Set<AbstractState> abstractSuccessors = statement
-				.accept(new DefaultStatementVisitor<Set<AbstractState>>() {
+		Set<AbstractState> abstractSuccessors = statement.accept(new DefaultStatementVisitor<Set<AbstractState>>() {
 
-					@Override
-					protected Set<AbstractState> visitDefault(RTLStatement stmt) {
-						// Just return the same state for unsupported
-						// statements.
-						return Collections.singleton((AbstractState) curState);
-					}
+			@Override
+			protected Set<AbstractState> visitDefault(RTLStatement stmt) {
+				// Just return the same state for unsupported
+				// statements.
+				return Collections.singleton((AbstractState) curState);
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLVariableAssignment stmt) {
-						// TODO Implement transfer function for assignments
-						logger.info("Processing assignment at "
-								+ stmt.getLabel() + ": " + stmt.toString());
-						return Collections.singleton((AbstractState) curState); // Dummy
-					}
+			@Override
+			public Set<AbstractState> visit(RTLVariableAssignment stmt) {
+				// TODO Implement transfer function for assignments
+				logger.info("Processing assignment at " + stmt.getLabel() + ": " + stmt.toString());
+				return Collections.singleton((AbstractState) curState); // Dummy
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLAssume stmt) {
-						// TODO Implement transfer function for assume
-						logger.info("Processing assume at " + stmt.getLabel()
-								+ ": " + stmt.toString());
-						return Collections.singleton((AbstractState) curState); // Dummy
-					}
+			@Override
+			public Set<AbstractState> visit(RTLAssume stmt) {
+				// TODO Implement transfer function for assume
+				logger.info("Processing assume at " + stmt.getLabel() + ": " + stmt.toString());
+				return Collections.singleton((AbstractState) curState); // Dummy
+			}
 
-				});
+		});
 
 		return abstractSuccessors;
 	}

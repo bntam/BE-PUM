@@ -23,6 +23,7 @@ public abstract class Stack {
 
 	// Truy cap cac thanh phan trong stack [esp + desp]
 	public abstract Value getValueStackFromIndex(long desp, int num);
+
 	public abstract Value getValueStackFromIndex(long desp);
 
 	public abstract Value getIndex(int index);
@@ -51,7 +52,7 @@ public abstract class Stack {
 
 	public abstract boolean isInsideStack(AbsoluteAddress addr);
 
-	public abstract boolean isEmpty() ;
+	public abstract boolean isEmpty();
 
-	public abstract void push16(Value pushedElement); 
+	public abstract void push16(Value pushedElement);
 }

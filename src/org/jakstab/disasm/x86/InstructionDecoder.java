@@ -41,8 +41,7 @@ import org.jakstab.util.Logger;
 import java.io.IOException;
 
 public class InstructionDecoder implements /* imports */X86Opcodes {
-	private final static Logger logger = Logger
-			.getLogger(InstructionDecoder.class);
+	private final static Logger logger = Logger.getLogger(InstructionDecoder.class);
 
 	/*
 	 * The three read methods are now changed to call into BinaryInputBuffer to
@@ -57,9 +56,9 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 			ret = ret & 0xff;
 		} else {
 			return 0;
-			//throw new ArrayIndexOutOfBoundsException(
-			//		"Disassembler requested byte outside of file area: 0x"
-			//				+ Long.toHexString(index));
+			// throw new ArrayIndexOutOfBoundsException(
+			// "Disassembler requested byte outside of file area: 0x"
+			// + Long.toHexString(index));
 		}
 		return ret;
 	}
@@ -104,18 +103,15 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 	}
 
 	public InstructionDecoder(String name, int addrMode1, int operandType1) {
-		this(name, addrMode1, operandType1, INVALID_ADDRMODE,
-				INVALID_OPERANDTYPE);
+		this(name, addrMode1, operandType1, INVALID_ADDRMODE, INVALID_OPERANDTYPE);
 	}
 
-	public InstructionDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2) {
-		this(name, addrMode1, operandType1, addrMode2, operandType2,
-				INVALID_ADDRMODE, INVALID_OPERANDTYPE);
+	public InstructionDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2) {
+		this(name, addrMode1, operandType1, addrMode2, operandType2, INVALID_ADDRMODE, INVALID_OPERANDTYPE);
 	}
 
-	public InstructionDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2, int addrMode3, int operandType3) {
+	public InstructionDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2,
+			int addrMode3, int operandType3) {
 		this.nameTemplate = name;
 		this.operandType1 = operandType1;
 		this.operandType2 = operandType2;
@@ -125,9 +121,8 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 		this.addrMode3 = addrMode3;
 	}
 
-	public Instruction decode(BinaryInputBuffer bytesArray, int index,
-			int instrStartIndex, int segmentOverride, int prefixes,
-			X86InstructionFactory factory) {
+	public Instruction decode(BinaryInputBuffer bytesArray, int index, int instrStartIndex, int segmentOverride,
+			int prefixes, X86InstructionFactory factory) {
 		this.byteIndex = index;
 		this.instrStartIndex = instrStartIndex;
 		this.prefixes = prefixes;
@@ -143,12 +138,10 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 			addrSize = true;
 		else
 			addrSize = false;
-		this.name = getCorrectOpcodeName(nameTemplate, prefixes, operandSize,
-				addrSize);
+		this.name = getCorrectOpcodeName(nameTemplate, prefixes, operandSize, addrSize);
 
 		// Fetch the mod/reg/rm byte only if it is present.
-		if (isModRMPresent(addrMode1) || isModRMPresent(addrMode2)
-				|| isModRMPresent(addrMode3)) {
+		if (isModRMPresent(addrMode1) || isModRMPresent(addrMode2) || isModRMPresent(addrMode3)) {
 
 			int ModRM = readByte(bytesArray, byteIndex);
 			byteIndex++;
@@ -181,42 +174,32 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 	 * @return A new object representing the instruction at the current
 	 *         byteIndex.
 	 */
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand op1 = getOperand1(bytesArray, operandSize, addrSize);
 		Operand op2 = getOperand2(bytesArray, operandSize, addrSize);
 		Operand op3 = getOperand3(bytesArray, operandSize, addrSize);
 		int size = byteIndex - instrStartIndex;
-		return factory.newGeneralInstruction(name, op1, op2, op3, size,
-				prefixes);
+		return factory.newGeneralInstruction(name, op1, op2, op3, size, prefixes);
 	}
 
-	protected Operand getOperand1(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize) {
-		if ((addrMode1 != INVALID_ADDRMODE)
-				&& (operandType1 != INVALID_OPERANDTYPE))
-			return getOperand(bytesArray, addrMode1, operandType1, operandSize,
-					addrSize);
+	protected Operand getOperand1(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize) {
+		if ((addrMode1 != INVALID_ADDRMODE) && (operandType1 != INVALID_OPERANDTYPE))
+			return getOperand(bytesArray, addrMode1, operandType1, operandSize, addrSize);
 		else
 			return null;
 	}
 
-	protected Operand getOperand2(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize) {
-		if ((addrMode2 != INVALID_ADDRMODE)
-				&& (operandType2 != INVALID_OPERANDTYPE))
-			return getOperand(bytesArray, addrMode2, operandType2, operandSize,
-					addrSize);
+	protected Operand getOperand2(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize) {
+		if ((addrMode2 != INVALID_ADDRMODE) && (operandType2 != INVALID_OPERANDTYPE))
+			return getOperand(bytesArray, addrMode2, operandType2, operandSize, addrSize);
 		else
 			return null;
 	}
 
-	protected Operand getOperand3(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize) {
-		if ((addrMode3 != INVALID_ADDRMODE)
-				&& (operandType3 != INVALID_OPERANDTYPE))
-			return getOperand(bytesArray, addrMode3, operandType3, operandSize,
-					addrSize);
+	protected Operand getOperand3(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize) {
+		if ((addrMode3 != INVALID_ADDRMODE) && (operandType3 != INVALID_OPERANDTYPE))
+			return getOperand(bytesArray, addrMode3, operandType3, operandSize, addrSize);
 		else
 			return null;
 	}
@@ -236,8 +219,7 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 	 *            true for 32bit addressing, false for 16bit.
 	 * @return a new string with the correct AT&T name.
 	 */
-	private String getCorrectOpcodeName(String oldName, int prefixes,
-			boolean operandSize, boolean addrSize) {
+	private String getCorrectOpcodeName(String oldName, int prefixes, boolean operandSize, boolean addrSize) {
 		StringBuffer newName = new StringBuffer(oldName.length());
 		int index = 0;
 		for (index = 0; index < oldName.length(); index++) {
@@ -298,8 +280,7 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 		default:
 			// This should only be the case for SSA-instructions and maybe
 			// segment-load instructions?
-			logger.error("Unknown data type for operand type: " + operandType
-					+ "!");
+			logger.error("Unknown data type for operand type: " + operandType + "!");
 			throw new RuntimeException();
 			// return DataType.UNKNOWN;
 		}
@@ -320,8 +301,8 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 	 *            true for 32bit, false for 16bit addresses
 	 * @return a new operand object
 	 */
-	private Operand getOperand(BinaryInputBuffer bytesArray, int addrMode,
-			int operandType, boolean operandSize, boolean addrSize) {
+	private Operand getOperand(BinaryInputBuffer bytesArray, int addrMode, int operandType, boolean operandSize,
+			boolean addrSize) {
 		Operand op = null;
 		X86SegmentRegister segReg = getSegmentRegisterFromPrefix(prefixes);
 		switch (addrMode) {
@@ -357,8 +338,7 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 						else
 							reg = X86Registers.getRegister16(rm);
 
-						op = new X86MemoryOperand(getDataType(operandType,
-								operandSize), segReg, reg, null, 0);
+						op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg, reg, null, 0);
 						break;
 					case d_mode:
 						op = X86Registers.getRegister32(rm);
@@ -398,28 +378,19 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 							disp = readInt32(bytesArray, byteIndex);
 							byteIndex += 4;
 							if (index != 4) {
-								op = new X86MemoryOperand(getDataType(
-										operandType, operandSize), segReg,
-										null,
-										X86Registers.getRegister32(index),
-										disp, scale);
+								op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg, null,
+										X86Registers.getRegister32(index), disp, scale);
 							} else {
-								op = new X86MemoryOperand(getDataType(
-										operandType, operandSize), segReg,
-										null, null, disp, scale);
+								op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg, null, null,
+										disp, scale);
 							}
 						} else {
 							if (index != 4) {
-								op = new X86MemoryOperand(getDataType(
-										operandType, operandSize), segReg,
-										X86Registers.getRegister32(base),
-										X86Registers.getRegister32(index), 0,
-										scale);
+								op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
+										X86Registers.getRegister32(base), X86Registers.getRegister32(index), 0, scale);
 							} else {
-								op = new X86MemoryOperand(getDataType(
-										operandType, operandSize), segReg,
-										X86Registers.getRegister32(base), null,
-										0, scale);
+								op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
+										X86Registers.getRegister32(base), null, 0, scale);
 							}
 						}
 						break;
@@ -427,14 +398,12 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 						disp = readInt32(bytesArray, byteIndex);
 						byteIndex += 4;
 						// Create an Address object only with displacement
-						op = new X86MemoryOperand(getDataType(operandType,
-								operandSize), segReg, null, null, disp);
+						op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg, null, null, disp);
 						break;
 					default:
 						base = rm;
 						// Create an Address object only with base
-						op = new X86MemoryOperand(getDataType(operandType,
-								operandSize), segReg,
+						op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
 								X86Registers.getRegister32(base), null, 0);
 						break;
 					}
@@ -445,21 +414,15 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 					if (rm != 4) {
 						base = rm;
 						// Address with base and disp only
-						op = new X86MemoryOperand(getDataType(operandType,
-								operandSize), segReg,
+						op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
 								X86Registers.getRegister32(base), null, disp);
 					} else {
 						if (index != 4) {
-							op = new X86MemoryOperand(getDataType(operandType,
-									operandSize), segReg,
-									X86Registers.getRegister32(base),
-									X86Registers.getRegister32(index), disp,
-									scale);
+							op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
+									X86Registers.getRegister32(base), X86Registers.getRegister32(index), disp, scale);
 						} else {
-							op = new X86MemoryOperand(getDataType(operandType,
-									operandSize), segReg,
-									X86Registers.getRegister32(base), null,
-									disp, scale);
+							op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
+									X86Registers.getRegister32(base), null, disp, scale);
 						}
 					}
 					break;
@@ -469,19 +432,14 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 					if (rm != 4) {
 						base = rm;
 						// Address with base and disp
-						op = new X86MemoryOperand(getDataType(operandType,
-								operandSize), segReg,
+						op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
 								X86Registers.getRegister32(base), null, disp);
 					} else if (index != 4) {
-						op = new X86MemoryOperand(getDataType(operandType,
-								operandSize), segReg,
-								X86Registers.getRegister32(base),
-								X86Registers.getRegister32(index), disp, scale);
+						op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
+								X86Registers.getRegister32(base), X86Registers.getRegister32(index), disp, scale);
 					} else {
-						op = new X86MemoryOperand(getDataType(operandType,
-								operandSize), segReg,
-								X86Registers.getRegister32(base), null, disp,
-								scale);
+						op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg,
+								X86Registers.getRegister32(base), null, disp, scale);
 					}
 					break;
 				}
@@ -491,23 +449,19 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 		case ADDR_I:
 			switch (operandType) {
 			case b_mode:
-				op = new Immediate(new Byte((byte) readByte(bytesArray,
-						byteIndex)), DataType.UINT8);
+				op = new Immediate(new Byte((byte) readByte(bytesArray, byteIndex)), DataType.UINT8);
 				byteIndex++;
 				break;
 			case w_mode:
-				op = new Immediate(new Short((short) readInt16(bytesArray,
-						byteIndex)), DataType.UINT16);
+				op = new Immediate(new Short((short) readInt16(bytesArray, byteIndex)), DataType.UINT16);
 				byteIndex += 2;
 				break;
 			case v_mode:
 				if (operandSize == true) { // Operand size prefix is present
-					op = new Immediate(new Integer(readInt32(bytesArray,
-							byteIndex)), DataType.UINT32);
+					op = new Immediate(new Integer(readInt32(bytesArray, byteIndex)), DataType.UINT32);
 					byteIndex += 4;
 				} else {
-					op = new Immediate(new Short((short) readInt16(bytesArray,
-							byteIndex)), DataType.UINT16);
+					op = new Immediate(new Short((short) readInt16(bytesArray, byteIndex)), DataType.UINT16);
 					byteIndex += 2;
 				}
 				break;
@@ -630,8 +584,13 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 			// --JK: This is actually a memory operand with constant address
 			// used by MOV.
 			// Absolute Addresses are now used only for far calls and far jumps.
-			op = new X86MemoryOperand(getDataType(operandType, operandSize),
-					segReg, off); // JK- Added segReg for mov fs:0, ecx
+			op = new X86MemoryOperand(getDataType(operandType, operandSize), segReg, off); // JK-
+																							// Added
+																							// segReg
+																							// for
+																							// mov
+																							// fs:0,
+																							// ecx
 			break;
 		case ADDR_J:
 			long disp = 0;
@@ -655,12 +614,10 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 			op = new X86PCRelativeAddress(disp);
 			break;
 		case ADDR_ESDI:
-			op = new X86MemoryOperand(getDataType(operandType, operandSize),
-					X86SegmentRegisters.ES, X86Registers.EDI);
+			op = new X86MemoryOperand(getDataType(operandType, operandSize), X86SegmentRegisters.ES, X86Registers.EDI);
 			break;
 		case ADDR_DSSI:
-			op = new X86MemoryOperand(getDataType(operandType, operandSize),
-					X86SegmentRegisters.DS, X86Registers.ESI);
+			op = new X86MemoryOperand(getDataType(operandType, operandSize), X86SegmentRegisters.DS, X86Registers.ESI);
 			break;
 		case ADDR_R:
 			switch (operandType) {
@@ -717,14 +674,12 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 			op = X86Registers.DX;
 			break;
 		default:
-			logger.error("Error decoding operand: Unsupported addressing mode: "
-					+ addrMode + "\n Register code: " + regOrOpcode);
+			logger.error("Error decoding operand: Unsupported addressing mode: " + addrMode + "\n Register code: "
+					+ regOrOpcode);
 		}
 		if (op == null)
-			throw new RuntimeException(
-					"Unable to decode instruction operand for addressing mode "
-							+ addrMode + ", operand type " + operandType
-							+ ", and operand size " + operandSize);
+			throw new RuntimeException("Unable to decode instruction operand for addressing mode " + addrMode
+					+ ", operand type " + operandType + ", and operand size " + operandSize);
 		return op;
 	}
 
@@ -748,10 +703,8 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 	}
 
 	private boolean isModRMPresent(int addrMode) {
-		if ((addrMode == ADDR_E) || (addrMode == ADDR_G)
-				|| (addrMode == ADDR_FPREG) || (addrMode == ADDR_Q)
-				|| (addrMode == ADDR_W) || (addrMode == ADDR_C)
-				|| (addrMode == ADDR_D))
+		if ((addrMode == ADDR_E) || (addrMode == ADDR_G) || (addrMode == ADDR_FPREG) || (addrMode == ADDR_Q)
+				|| (addrMode == ADDR_W) || (addrMode == ADDR_C) || (addrMode == ADDR_D))
 			return true;
 		else
 			return false;
@@ -766,9 +719,8 @@ public class InstructionDecoder implements /* imports */X86Opcodes {
 				e.printStackTrace();
 			}
 		} else {
-			throw new ArrayIndexOutOfBoundsException(
-					"Disassembler requested byte outside of file area: 0x"
-							+ Long.toHexString(index));
+			throw new ArrayIndexOutOfBoundsException("Disassembler requested byte outside of file area: 0x"
+					+ Long.toHexString(index));
 		}
 	}
 }

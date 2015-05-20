@@ -42,9 +42,10 @@ public class Immediate extends ImmediateOrRegister {
 		this.dataType = dataType;
 	}
 
-	public Number getNumber() {		
-		//if (value.intValue() == 2011693056 && Program.getProgram().getFileName().equals("Virus.Win32.Seppuku.1606"))
-		//	return new Integer(2088763392);
+	public Number getNumber() {
+		// if (value.intValue() == 2011693056 &&
+		// Program.getProgram().getFileName().equals("Virus.Win32.Seppuku.1606"))
+		// return new Integer(2088763392);
 		return value;
 	}
 
@@ -53,8 +54,7 @@ public class Immediate extends ImmediateOrRegister {
 	}
 
 	public String toString() {
-		return "$0x" + Integer.toHexString(value.intValue()) + "<" + dataType
-				+ ">";
+		return "$0x" + Integer.toHexString(value.intValue()) + "<" + dataType + ">";
 	}
 
 	public int hashCode() {

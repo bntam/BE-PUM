@@ -9,11 +9,11 @@ public class SYSTEM_TIME {
 	private int minute;
 	private int second;
 	private int milisecond;
-	
+
 	public SYSTEM_TIME() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public SYSTEM_TIME(int year, int month, int dayOfMonth, int dayOfWeek, int hour, int minute, int second,
 			int milisecond) {
 		this.setYear(year);

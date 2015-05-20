@@ -40,24 +40,20 @@ public class DefaultHarness implements Harness {
 	private AbsoluteAddress prologueAddress = new AbsoluteAddress(PROLOGUE_BASE);
 	private AbsoluteAddress epilogueAddress = new AbsoluteAddress(EPILOGUE_BASE);
 
-	private RTLVariable esp = Program.getProgram().getArchitecture()
-			.stackPointer();
+	private RTLVariable esp = Program.getProgram().getArchitecture().stackPointer();
 
 	@Override
 	public void install(Program program) {
 
 		StatementSequence seq = new StatementSequence();
-		seq.addLast(new RTLVariableAssignment(1, ExpressionFactory
-				.createVariable("%DF", 1), ExpressionFactory.FALSE));
+		seq.addLast(new RTLVariableAssignment(1, ExpressionFactory.createVariable("%DF", 1), ExpressionFactory.FALSE));
 		seq.addLast(new RTLAlloc(esp, MemoryRegion.STACK.toString()));
 
 		// Allocate TLS depending on OS type
 		if (program.getTargetOS() == Program.TargetOS.WINDOWS)
-			seq.addLast(new RTLAlloc(ExpressionFactory
-					.createVariable("%fs", 16), "FS"));
+			seq.addLast(new RTLAlloc(ExpressionFactory.createVariable("%fs", 16), "FS"));
 		else if (program.getTargetOS() == Program.TargetOS.LINUX)
-			seq.addLast(new RTLAlloc(ExpressionFactory
-					.createVariable("%gs", 16), "GS"));
+			seq.addLast(new RTLAlloc(ExpressionFactory.createVariable("%gs", 16), "GS"));
 
 		// Pseudo-stackframe for in-procedure entry points during debugging
 		// seq.addLast(new RTLVariableAssignment(32,
@@ -67,10 +63,9 @@ public class DefaultHarness implements Harness {
 		// ExpressionFactory.createVariable("%ebx"),
 		// program.getArchitecture().stackPointer()));
 
-		push32(seq,
-				ExpressionFactory.createNumber(epilogueAddress.getValue(), 32));
-		seq.addLast(new RTLGoto(ExpressionFactory.createNumber(program
-				.getStart().getAddress().getValue(), 32), RTLGoto.Type.CALL));
+		push32(seq, ExpressionFactory.createNumber(epilogueAddress.getValue(), 32));
+		seq.addLast(new RTLGoto(ExpressionFactory.createNumber(program.getStart().getAddress().getValue(), 32),
+				RTLGoto.Type.CALL));
 		putSequence(program, seq, prologueAddress);
 
 		program.setEntryAddress(prologueAddress);
@@ -83,17 +78,14 @@ public class DefaultHarness implements Harness {
 	}
 
 	private void push32(StatementSequence seq, RTLExpression value) {
-		seq.addLast(new RTLVariableAssignment(esp.getBitWidth(), esp,
-				ExpressionFactory.createPlus(esp,
-						ExpressionFactory.createNumber(-4, esp.getBitWidth()))));
+		seq.addLast(new RTLVariableAssignment(esp.getBitWidth(), esp, ExpressionFactory.createPlus(esp,
+				ExpressionFactory.createNumber(-4, esp.getBitWidth()))));
 		if (value != null) {
-			seq.addLast(new RTLMemoryAssignment(ExpressionFactory
-					.createMemoryLocation(esp, 32), value));
+			seq.addLast(new RTLMemoryAssignment(ExpressionFactory.createMemoryLocation(esp, 32), value));
 		}
 	}
 
-	private void putSequence(Program program, StatementSequence seq,
-			AbsoluteAddress address) {
+	private void putSequence(Program program, StatementSequence seq, AbsoluteAddress address) {
 		int rtlId = 0;
 		for (RTLStatement stmt : seq) {
 			stmt.setLabel(address, rtlId++);

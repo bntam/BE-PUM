@@ -22,11 +22,11 @@ import v2.org.analysis.value.Value;
 
 public class User32Stub extends APIStub {
 	private String libraryName = "user32.dll";
-	//private List<String> processedAPI = new ArrayList<String>();
+
+	// private List<String> processedAPI = new ArrayList<String>();
 
 	@Override
-	public boolean executeAPI(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst, int cond) {
+	public boolean executeAPI(AbsoluteAddress address, String funcName, BPState curState, Instruction inst, int cond) {
 		// TODO Auto-generated method stub
 		// long returnValue;
 		boolean ret = true;
@@ -42,12 +42,11 @@ public class User32Stub extends APIStub {
 		// System.out.println("Debug");
 		if (inst.getName().toString().equals("jmp")) {
 			System.out.println("JMP of API User32.dll:" + funcName);
-			BPVertex v1 = cfg.getVertex(curState.getLocation(),
-					curState.getInstruction());
+			BPVertex v1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 			v1.setProperty(getFullName(funcName));
 			BPVertex v2 = new BPVertex();
 			// v2.setAddress(address);
-			v2.setProperty(getFullName(funcName));			
+			v2.setProperty(getFullName(funcName));
 
 			if (funcName.equals("ExitProcess") || funcName.equals("exit")) {
 				v2.setType(BPVertex.ExitNode);
@@ -58,8 +57,8 @@ public class User32Stub extends APIStub {
 				curState.setInstruction(null);
 				return true;
 			}
-			
-			v2.setType(BPVertex.APINode);			
+
+			v2.setType(BPVertex.APINode);
 			v2 = cfg.insertVertex(v2);
 			cfg.insertEdge(new BPEdge(v1, v2));
 			Value returnAddr = stack.pop();
@@ -67,8 +66,7 @@ public class User32Stub extends APIStub {
 			if (returnAddr instanceof LongValue) {
 				r = ((LongValue) returnAddr).getValue();
 			} else
-				r = curState.getLocation().getValue()
-						+ curState.getInstruction().getSize();
+				r = curState.getLocation().getValue() + curState.getInstruction().getSize();
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			Instruction newInst = program.getInstruction(addr, env);
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
@@ -79,12 +77,11 @@ public class User32Stub extends APIStub {
 		} else if (inst.getName().toString().equals("call")) {
 			System.out.println("Call of API User32.dll:" + funcName);
 
-			BPVertex v1 = cfg.getVertex(curState.getLocation(),
-					curState.getInstruction());
+			BPVertex v1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 			v1.setProperty(getFullName(funcName));
 			BPVertex v2 = new BPVertex();
 			// v2.setAddress(address);
-			v2.setProperty(getFullName(funcName));			
+			v2.setProperty(getFullName(funcName));
 
 			if (funcName.equals("ExitProcess") || funcName.equals("exit")) {
 				v2.setType(BPVertex.ExitNode);
@@ -95,12 +92,11 @@ public class User32Stub extends APIStub {
 				curState.setInstruction(null);
 				return true;
 			}
-			
-			v2.setType(BPVertex.APINode);			
+
+			v2.setType(BPVertex.APINode);
 			v2 = cfg.insertVertex(v2);
 			cfg.insertEdge(new BPEdge(v1, v2));
-			long r = curState.getLocation().getValue()
-					+ curState.getInstruction().getSize();
+			long r = curState.getLocation().getValue() + curState.getInstruction().getSize();
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			Instruction newInst = program.getInstruction(addr, env);
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
@@ -120,23 +116,16 @@ public class User32Stub extends APIStub {
 			Value x2 = stack.pop();
 			Value x3 = stack.pop();
 			Value x4 = stack.pop();
-			System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-					+ x4);
+			System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 			System.out.print("Handle:" + x1.toString());
 			if (x2 instanceof LongValue) {
-				System.out.print(", Address of Text:"
-						+ x2.toString()
-						+ ", Text:"
-						+ memory.getText(new X86MemoryOperand(DataType.INT32,
-								((LongValue) x2).getValue())));
+				System.out.print(", Address of Text:" + x2.toString() + ", Text:"
+						+ memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue())));
 			}
 
 			if (x3 instanceof LongValue) {
-				System.out.print(", Address of Title Text:"
-						+ x3.toString()
-						+ ", Title Text:"
-						+ memory.getText(new X86MemoryOperand(DataType.INT32,
-								((LongValue) x3).getValue())));
+				System.out.print(", Address of Title Text:" + x3.toString() + ", Title Text:"
+						+ memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x3).getValue())));
 			}
 
 			System.out.println(", Style:" + x4.toString());
@@ -149,33 +138,32 @@ public class User32Stub extends APIStub {
 			Value x1 = stack.pop();
 			Value x2 = stack.pop();
 			Value x3 = stack.pop();
-			
+
 			System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
-			//System.out.print("Handle:" + x1.toString());
-			if (x1 instanceof LongValue && x2 instanceof LongValue
-					&& x3 instanceof LongValue) {
+			// System.out.print("Handle:" + x1.toString());
+			if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 				/*
 				 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-				 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+				 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(),
+				 * program);
 				 */
 				long t1 = ((LongValue) x1).getValue();
 				long t2 = ((LongValue) x2).getValue();
 				long t3 = ((LongValue) x3).getValue();
-								
+
 				// String str = symbolValueMemoryOperand.getText(new
 				// X86MemoryOperand(DataType.INT32, t2));
-				System.out.println("Pointer:" + t1 + ", Pointer:"
-						+ t2 + ", Length:" + t3);
-				
+				System.out.println("Pointer:" + t1 + ", Pointer:" + t2 + ", Length:" + t3);
+
 				env.getRegister().mov("eax", new LongValue(1));
 			}
 		} else {
-/*			if (!this.processedAPI.contains(funcName)) {
-				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
-				processedAPI.add(funcName);
-			} else {
-				env.getRegister().setRegisterValue("eax", new LongValue(1));
-			}*/
+			/*
+			 * if (!this.processedAPI.contains(funcName)) {
+			 * env.getRegister().setRegisterValue("eax", new
+			 * SymbolValue("api_eax")); processedAPI.add(funcName); } else {
+			 * env.getRegister().setRegisterValue("eax", new LongValue(1)); }
+			 */
 			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
 		}
 

@@ -14,8 +14,7 @@ import v2.org.analysis.file.FileImage;
 public class File {
 	final static int MAX_FILE_CONTENT = 100;
 	private String fileName = "";
-	private long access, shareMode, pSecurity, mode, attribute, hTemplateFile,
-			fileHandle;
+	private long access, shareMode, pSecurity, mode, attribute, hTemplateFile, fileHandle;
 	private boolean open = true;
 	private long searchHandle = 0;
 	private String path = "";
@@ -80,8 +79,8 @@ public class File {
 		return open;
 	}
 
-	public File(String fileName, long access, long shareMode, long pSecurity,
-			long mode, long attribute, long hTemplateFile, long fHandle) {
+	public File(String fileName, long access, long shareMode, long pSecurity, long mode, long attribute,
+			long hTemplateFile, long fHandle) {
 		super();
 		this.fileName = fileName;
 		this.access = access;
@@ -97,9 +96,8 @@ public class File {
 		readFile();
 	}
 
-	public File(String fileName, long access, long shareMode, long pSecurity,
-			long mode, long attribute, long hTemplateFile, long fHandle,
-			String path) {
+	public File(String fileName, long access, long shareMode, long pSecurity, long mode, long attribute,
+			long hTemplateFile, long fHandle, String path) {
 		super();
 		this.fileName = fileName;
 		this.access = access;

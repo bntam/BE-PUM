@@ -66,8 +66,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithCMP(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -80,10 +80,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -102,8 +100,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithLEA(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -111,8 +109,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithEXCHG(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -120,8 +118,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithMOVSB(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -135,10 +133,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -157,8 +153,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithROR(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -172,10 +168,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -194,8 +188,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithROL(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -209,10 +203,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -231,8 +223,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithADC(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -246,10 +238,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -268,8 +258,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithSHR(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -283,10 +273,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -305,8 +293,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithSHL(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -320,10 +308,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -342,8 +328,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithXOR(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 
 		long result = OldBitVector.xor(dest, source);
 
@@ -360,8 +346,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithOR(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		long result = OldBitVector.or(dest, source);
 
 		// CF := 0
@@ -392,8 +378,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithAND(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 
 		long result = OldBitVector.and(dest, source);
 
@@ -410,8 +396,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithIMUL(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -425,10 +411,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -447,8 +431,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithDEC(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -462,10 +446,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -484,8 +466,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithSUB(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -499,10 +481,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -521,8 +501,8 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithINC(ConcreteValueRegister symbolValueRegister,
-			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister,
-			ConcreteStack symbolStack, long dest, long source) {
+			ConcreteValueMemoryOperand symbolMemoryOperandValueRegister, ConcreteStack symbolStack, long dest,
+			long source) {
 		// TODO Auto-generated method stub
 		// T_t_84:u32 = R_EBX:u32 - R_EAX:u32
 		// long result = subtractBitVec(dest, source);
@@ -536,10 +516,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -573,15 +551,12 @@ public class ConcreteFlag {
 		// *1* %CF := ((op1 < 0) & (op2 < 0))
 		// | ((result >= 0) & ((op1 < 0) | (op2 < 0)))
 		cFlag = (OldBitVector.lt(dest, 0) & OldBitVector.lt(source, 0))
-				| ((OldBitVector.ge(result, 0)) & ((OldBitVector.lt(dest, 0)) | (OldBitVector
-						.lt(source, 0))));
+				| ((OldBitVector.ge(result, 0)) & ((OldBitVector.lt(dest, 0)) | (OldBitVector.lt(source, 0))));
 
 		// *1* %OF := ((op1 < 0) & (op2 < 0) & (result >= 0))
 		// | ((op1 >= 0) & (op2 >= 0) & (result < 0))
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-				.ge(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.ge(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));
@@ -673,8 +648,7 @@ public class ConcreteFlag {
 	}
 
 	public void changeFlagWithTEST(ConcreteValueRegister concreteValueRegister,
-			ConcreteValueMemoryOperand concreteValueMemoryOperand,
-			ConcreteStack concreteStack, long dest, long source) {
+			ConcreteValueMemoryOperand concreteValueMemoryOperand, ConcreteStack concreteStack, long dest, long source) {
 		// TODO Auto-generated method stub
 		long result = OldBitVector.and(dest, source);
 		// R_CF:bool = R_EBX:u32 < R_EAX:u32
@@ -685,10 +659,8 @@ public class ConcreteFlag {
 
 		// oFlag = (dest < 0 & source >= 0 & result > 0) | (dest >= 0 & source <
 		// 0 & result < 0);
-		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector
-				.gt(result, 0))
-				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector
-						.lt(result, 0));
+		oFlag = (OldBitVector.lt(dest, 0) & OldBitVector.ge(source, 0) & OldBitVector.gt(result, 0))
+				| (OldBitVector.ge(dest, 0) & OldBitVector.lt(source, 0) & OldBitVector.lt(result, 0));
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
 		// R_EAX:u32))
 		// aFlag = (10 == (10 & (t ^ d ^ s)));

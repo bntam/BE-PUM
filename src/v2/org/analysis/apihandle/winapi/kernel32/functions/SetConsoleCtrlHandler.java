@@ -66,11 +66,11 @@ public class SetConsoleCtrlHandler extends Kernel32API {
 		if (x1 instanceof LongValue && x2 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
-			
+
 			Callback HandlerRoutine = null;
 			BOOL Add = new BOOL(t2);
 			BOOL ret = Kernel32DLL.INSTANCE.SetConsoleCtrlHandler(HandlerRoutine, Add);
-			
+
 			register.mov("eax", new LongValue(ret.longValue()));
 		}
 		return false;

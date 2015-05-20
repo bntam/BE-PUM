@@ -1,6 +1,5 @@
 package v2.org.phong.structure;
 
-
 import v2.org.phong.macro.CreationDistribution;
 import v2.org.phong.macro.DesiredAccess;
 import v2.org.phong.macro.FlagsAndAttributes;
@@ -8,7 +7,7 @@ import v2.org.phong.macro.ShareMode;
 import v2.org.phong.structure.ex.SECURITY_ATTRIBUTES;
 
 public class FileHandle extends Handle {
-	
+
 	private String fileName;
 	private DesiredAccess desiredAccess;
 	private ShareMode shareMode;
@@ -16,14 +15,13 @@ public class FileHandle extends Handle {
 	private CreationDistribution creationDistribution;
 	private FlagsAndAttributes flagsAndAttributes;
 	private FileHandle templateFile;
-	
+
 	public FileHandle() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public FileHandle(String fName, DesiredAccess dAccess, ShareMode sMode, 
-			SECURITY_ATTRIBUTES sAttr, CreationDistribution cDistribution, 
-			FlagsAndAttributes flagAndAttr, FileHandle tFile) {
+
+	public FileHandle(String fName, DesiredAccess dAccess, ShareMode sMode, SECURITY_ATTRIBUTES sAttr,
+			CreationDistribution cDistribution, FlagsAndAttributes flagAndAttr, FileHandle tFile) {
 		this.setFileName(fName);
 		this.setDesiredAccess(dAccess);
 		this.setShareMode(sMode);

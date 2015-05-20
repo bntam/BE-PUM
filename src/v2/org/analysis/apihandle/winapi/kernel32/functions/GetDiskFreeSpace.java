@@ -109,10 +109,10 @@ public class GetDiskFreeSpace extends Kernel32API {
 					.getValue().longValue()));
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(lpBytesPerSector
 					.getValue().longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(lpNumberOfFreeClusters
-					.getValue().longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(lpTotalNumberOfClusters
-					.getValue().longValue()));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
+					lpNumberOfFreeClusters.getValue().longValue()));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(
+					lpTotalNumberOfClusters.getValue().longValue()));
 		}
 		return false;
 	}

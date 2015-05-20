@@ -22,30 +22,33 @@ public class BPPath {
 	private LoopHandle l;
 	private List<ProcessedAPI> processedAPI;
 	private boolean isStop = false;
-		
+
 	private class ProcessedAPI {
-		private String apiName; 
+		private String apiName;
 		private byte processedWay;
-		
+
 		public ProcessedAPI(String api, byte way) {
 			this.apiName = api;
 			this.processedWay = way;
 		}
+
 		/**
 		 * @return the apiName
 		 */
 		public String getApiName() {
 			return apiName;
 		}
-		
+
 		/**
 		 * @return the processedWay
 		 */
 		public byte getProcessedWay() {
 			return processedWay;
 		}
+
 		/**
-		 * @param processedWay the processedWay to set
+		 * @param processedWay
+		 *            the processedWay to set
 		 */
 		public void setProcessedWay(byte processedWay) {
 			this.processedWay = processedWay;
@@ -61,7 +64,7 @@ public class BPPath {
 		super();
 		this.curState = state;
 		this.trace = trace;
-		this.pathCondition = pathCondition;		
+		this.pathCondition = pathCondition;
 		processedAPI = new ArrayList<ProcessedAPI>();
 		l = new LoopHandle();
 	}
@@ -70,8 +73,8 @@ public class BPPath {
 		return curState;
 	}
 
-	public void setCurrentState(BPState curState) {	
-		this.curState = curState;		
+	public void setCurrentState(BPState curState) {
+		this.curState = curState;
 	}
 
 	public PathList getTrace() {
@@ -84,51 +87,51 @@ public class BPPath {
 
 	public Formulas getPathCondition() {
 		return pathCondition;
-	}	
-	
+	}
+
 	public void setPathCondition(Formulas pathCondition) {
 		this.pathCondition = pathCondition;
 	}
 
 	public BPPath clone() {
 		BPPath ret = new BPPath(curState.clone(), trace.clone(), pathCondition.clone());
-		
+
 		List<ProcessedAPI> p = new ArrayList<ProcessedAPI>();
-		for (ProcessedAPI t: this.processedAPI) {
+		for (ProcessedAPI t : this.processedAPI) {
 			p.add(new ProcessedAPI(t.getApiName(), t.getProcessedWay()));
 		}
 		ret.setLoopHandle(l.clone());
 		ret.setProcessedAPI(p);
-		
+
 		return ret;
 	}
-	
+
 	public void insertProcessedAPI(String name, byte way) {
-		for (ProcessedAPI t: this.processedAPI) {
+		for (ProcessedAPI t : this.processedAPI) {
 			if (t.getApiName().equals(name)) {
 				t.setProcessedWay(way);
 				return;
 			}
 		}
-		
+
 		this.processedAPI.add(new ProcessedAPI(name, way));
 	}
-	
+
 	public boolean containAPI(String name) {
-		for (ProcessedAPI t: this.processedAPI) {
+		for (ProcessedAPI t : this.processedAPI) {
 			if (t.getApiName().equals(name))
 				return true;
 		}
-		
-		return false;	
+
+		return false;
 	}
-	
+
 	public byte getAPIWay(String name) {
-		for (ProcessedAPI t: this.processedAPI) {
+		for (ProcessedAPI t : this.processedAPI) {
 			if (t.getApiName().equals(name))
 				return t.getProcessedWay();
 		}
-		
+
 		return 0;
 	}
 
@@ -148,8 +151,8 @@ public class BPPath {
 
 	public int lengthTrace() {
 		return trace.length();
-	}	
-	
+	}
+
 	public void destroy() {
 		// TODO Auto-generated method stub
 		// curState.
@@ -159,7 +162,7 @@ public class BPPath {
 		// TODO Auto-generated method stub
 		return isStop;
 	}
-	
+
 	public void setStop(boolean b) {
 		isStop = b;
 	}
@@ -168,7 +171,7 @@ public class BPPath {
 		// TODO Auto-generated method stub
 		return l;
 	}
-	
+
 	public void setLoopHandle(LoopHandle t) {
 		l = t;
 	}

@@ -46,8 +46,8 @@ public class RetDecoder extends InstructionDecoder {
 		super(name, addrMode1, operandType1);
 	}
 
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand op1 = getOperand1(bytesArray, operandSize, addrSize);
 		assert (op1 == null || op1 instanceof Immediate) : "Operand should be immediate Value!";
 		int size = byteIndex - instrStartIndex;

@@ -10,8 +10,7 @@ import java.io.Reader;
 import java.util.Hashtable;
 
 @SuppressWarnings("all")
-public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
-		TokenStream {
+public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes, TokenStream {
 	public SSLLexer(InputStream in) {
 		this(new ByteBuffer(in));
 	}
@@ -215,44 +214,34 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 						if ((LA(1) == '<') && (LA(2) == '=') && (LA(3) == 'u')) {
 							mLEU(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '>') && (LA(2) == '=')
-								&& (LA(3) == 'u')) {
+						} else if ((LA(1) == '>') && (LA(2) == '=') && (LA(3) == 'u')) {
 							mGEU(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '>') && (LA(2) == '>')
-								&& (LA(3) == 'A')) {
+						} else if ((LA(1) == '>') && (LA(2) == '>') && (LA(3) == 'A')) {
 							mRSHIFTA(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '/') && (LA(2) == 'f')
-								&& (LA(3) == 'd')) {
+						} else if ((LA(1) == '/') && (LA(2) == 'f') && (LA(3) == 'd')) {
 							mDIV_FD(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '/') && (LA(2) == 'f')
-								&& (LA(3) == 'q')) {
+						} else if ((LA(1) == '/') && (LA(2) == 'f') && (LA(3) == 'q')) {
 							mDIV_FQ(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '+') && (LA(2) == 'f')
-								&& (LA(3) == 'd')) {
+						} else if ((LA(1) == '+') && (LA(2) == 'f') && (LA(3) == 'd')) {
 							mPLUS_FD(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '+') && (LA(2) == 'f')
-								&& (LA(3) == 'q')) {
+						} else if ((LA(1) == '+') && (LA(2) == 'f') && (LA(3) == 'q')) {
 							mPLUS_FQ(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '-') && (LA(2) == 'f')
-								&& (LA(3) == 'd')) {
+						} else if ((LA(1) == '-') && (LA(2) == 'f') && (LA(3) == 'd')) {
 							mMINUS_FD(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '-') && (LA(2) == 'f')
-								&& (LA(3) == 'q')) {
+						} else if ((LA(1) == '-') && (LA(2) == 'f') && (LA(3) == 'q')) {
 							mMINUS_FQ(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '%')
-								&& (_tokenSet_0.member(LA(2)))) {
+						} else if ((LA(1) == '%') && (_tokenSet_0.member(LA(2)))) {
 							mREG_ID(true);
 							theRetToken = _returnToken;
-						} else if ((LA(1) == '.')
-								&& (_tokenSet_0.member(LA(2)))) {
+						} else if ((LA(1) == '.') && (_tokenSet_0.member(LA(2)))) {
 							mDECOR(true);
 							theRetToken = _returnToken;
 						} else if ((LA(1) == ':') && (LA(2) == '=')) {
@@ -365,8 +354,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 								uponEOF();
 								_returnToken = makeToken(Token.EOF_TYPE);
 							} else {
-								throw new NoViableAltForCharException(
-										(char) LA(1), getFilename(), getLine(),
+								throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(),
 										getColumn());
 							}
 						}
@@ -382,8 +370,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				}
 			} catch (CharStreamException cse) {
 				if (cse instanceof CharStreamIOException) {
-					throw new TokenStreamIOException(
-							((CharStreamIOException) cse).io);
+					throw new TokenStreamIOException(((CharStreamIOException) cse).io);
 				} else {
 					throw new TokenStreamException(cse.getMessage());
 				}
@@ -391,8 +378,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 	}
 
-	public final void mWS(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mWS(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -423,8 +409,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 						if (_cnt3194 >= 1) {
 							break _loop3194;
 						} else {
-							throw new NoViableAltForCharException((char) LA(1),
-									getFilename(), getLine(), getColumn());
+							throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 						}
 					}
 					}
@@ -456,8 +441,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 					break;
 				}
 				default: {
-					throw new NoViableAltForCharException((char) LA(1),
-							getFilename(), getLine(), getColumn());
+					throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 				}
 				}
 			}
@@ -468,20 +452,17 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 			break;
 		}
 		default: {
-			throw new NoViableAltForCharException((char) LA(1), getFilename(),
-					getLine(), getColumn());
+			throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 		}
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mCOMMENT(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mCOMMENT(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -529,14 +510,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mDIGITS(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mDIGITS(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -553,8 +532,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 					if (_cnt3205 >= 1) {
 						break _loop3205;
 					} else {
-						throw new NoViableAltForCharException((char) LA(1),
-								getFilename(), getLine(), getColumn());
+						throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 					}
 				}
 
@@ -563,14 +541,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mHEXDIGITS(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mHEXDIGITS(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -617,8 +593,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 					if (_cnt3208 >= 1) {
 						break _loop3208;
 					} else {
-						throw new NoViableAltForCharException((char) LA(1),
-								getFilename(), getLine(), getColumn());
+						throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 					}
 				}
 				}
@@ -627,14 +602,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mNUM(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mNUM(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -668,8 +641,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				break;
 			}
 			default: {
-				throw new NoViableAltForCharException((char) LA(1),
-						getFilename(), getLine(), getColumn());
+				throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 			}
 			}
 		}
@@ -680,8 +652,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				text.setLength(_saveIndex);
 				mHEXDIGITS(false);
 				if (inputState.guessing == 0) {
-					v = new java.math.BigInteger(new String(text.getBuffer(),
-							_begin, text.length() - _begin), 16);
+					v = new java.math.BigInteger(new String(text.getBuffer(), _begin, text.length() - _begin), 16);
 				}
 			} else if ((LA(1) == '2') && (LA(2) == '*')) {
 				_saveIndex = text.length();
@@ -689,19 +660,16 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				text.setLength(_saveIndex);
 				mDIGITS(false);
 				if (inputState.guessing == 0) {
-					v = (java.math.BigInteger.valueOf(2)).pow(Integer
-							.parseInt(new String(text.getBuffer(), _begin, text
-									.length() - _begin)));
+					v = (java.math.BigInteger.valueOf(2)).pow(Integer.parseInt(new String(text.getBuffer(), _begin,
+							text.length() - _begin)));
 				}
 			} else if (((LA(1) >= '0' && LA(1) <= '9')) && (true)) {
 				mDIGITS(false);
 				if (inputState.guessing == 0) {
-					v = new java.math.BigInteger(new String(text.getBuffer(),
-							_begin, text.length() - _begin));
+					v = new java.math.BigInteger(new String(text.getBuffer(), _begin, text.length() - _begin));
 				}
 			} else {
-				throw new NoViableAltForCharException((char) LA(1),
-						getFilename(), getLine(), getColumn());
+				throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 			}
 
 		}
@@ -710,14 +678,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mFLOATNUM(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mFLOATNUM(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -744,8 +710,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				break;
 			}
 			default: {
-				throw new NoViableAltForCharException((char) LA(1),
-						getFilename(), getLine(), getColumn());
+				throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 			}
 			}
 		}
@@ -758,8 +723,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 					if (_cnt3215 >= 1) {
 						break _loop3215;
 					} else {
-						throw new NoViableAltForCharException((char) LA(1),
-								getFilename(), getLine(), getColumn());
+						throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 					}
 				}
 
@@ -776,8 +740,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 					if (_cnt3217 >= 1) {
 						break _loop3217;
 					} else {
-						throw new NoViableAltForCharException((char) LA(1),
-								getFilename(), getLine(), getColumn());
+						throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 					}
 				}
 
@@ -797,8 +760,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 						break;
 					}
 					default: {
-						throw new NoViableAltForCharException((char) LA(1),
-								getFilename(), getLine(), getColumn());
+						throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 					}
 					}
 				}
@@ -809,14 +771,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mFLOAT_OR_NUM(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mFLOAT_OR_NUM(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -825,8 +785,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		int _saveIndex;
 
 		boolean synPredMatched3222 = false;
-		if (((_tokenSet_1.member(LA(1))) && (_tokenSet_3.member(LA(2)))
-				&& (_tokenSet_3.member(LA(3))) && (true))) {
+		if (((_tokenSet_1.member(LA(1))) && (_tokenSet_3.member(LA(2))) && (_tokenSet_3.member(LA(3))) && (true))) {
 			int _m3222 = mark();
 			synPredMatched3222 = true;
 			inputState.guessing++;
@@ -888,21 +847,18 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 						_ttype = MINUS;
 					}
 				} else {
-					throw new NoViableAltForCharException((char) LA(1),
-							getFilename(), getLine(), getColumn());
+					throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 				}
 			}
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mMINUS(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mMINUS(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -913,14 +869,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('-');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mNAME(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mNAME(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -988,8 +943,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				break;
 			}
 			default: {
-				throw new NoViableAltForCharException((char) LA(1),
-						getFilename(), getLine(), getColumn());
+				throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 			}
 			}
 		}
@@ -1079,14 +1033,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mREG_ID(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mREG_ID(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1156,8 +1108,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				break;
 			}
 			default: {
-				throw new NoViableAltForCharException((char) LA(1),
-						getFilename(), getLine(), getColumn());
+				throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 			}
 			}
 		}
@@ -1243,14 +1194,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mDECOR(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mDECOR(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1319,8 +1269,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				break;
 			}
 			default: {
-				throw new NoViableAltForCharException((char) LA(1),
-						getFilename(), getLine(), getColumn());
+				throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 			}
 			}
 		}
@@ -1410,14 +1359,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mCOLON(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mCOLON(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1427,14 +1375,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(':');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mEQUATE(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mEQUATE(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1445,14 +1391,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(":=");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mASSIGN(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mASSIGN(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1463,14 +1407,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("::=");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mSEMI(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mSEMI(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1480,14 +1423,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(';');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mCOMMA(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mCOMMA(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1497,14 +1439,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(',');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLPAREN(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mLPAREN(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1515,14 +1455,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('(');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mRPAREN(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mRPAREN(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1533,14 +1471,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(')');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLSQUARE(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mLSQUARE(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1551,14 +1487,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('[');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mRSQUARE(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mRSQUARE(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1569,14 +1503,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(']');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLCURLY(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mLCURLY(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1587,14 +1519,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('{');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mRCURLY(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mRCURLY(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1605,14 +1535,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('}');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mINDEX(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mINDEX(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1622,14 +1551,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("->");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mTHEN(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mTHEN(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1639,14 +1567,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("=>");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mTO(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mTO(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1656,14 +1582,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("..");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mAT(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mAT(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1673,14 +1597,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('@');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mASSIGNTYPE(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mASSIGNTYPE(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1734,8 +1656,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 				break;
 			}
 			default: {
-				throw new NoViableAltForCharException((char) LA(1),
-						getFilename(), getLine(), getColumn());
+				throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 			}
 			}
 		}
@@ -1752,14 +1673,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('*');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mASSIGNTYPE_OR_MUL(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mASSIGNTYPE_OR_MUL(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1767,8 +1686,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		_ttype = ASSIGNTYPE_OR_MUL;
 		int _saveIndex;
 
-		if ((LA(1) == '*') && (LA(2) == 'f') && (LA(3) == 'd')
-				&& (LA(4) == 'q')) {
+		if ((LA(1) == '*') && (LA(2) == 'f') && (LA(3) == 'd') && (LA(4) == 'q')) {
 			mMUL_FDQ(false);
 			if (inputState.guessing == 0) {
 				_ttype = MUL_FDQ;
@@ -1825,20 +1743,17 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 					_ttype = MUL;
 				}
 			} else {
-				throw new NoViableAltForCharException((char) LA(1),
-						getFilename(), getLine(), getColumn());
+				throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 			}
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mMUL(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mMUL(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1849,14 +1764,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('*');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mSMUL(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mSMUL(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1867,14 +1780,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("*!");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mMUL_F(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mMUL_F(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1885,14 +1796,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("*f");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mMUL_FD(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mMUL_FD(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1903,14 +1812,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("*fd");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mMUL_FQ(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mMUL_FQ(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1921,14 +1828,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("*fq");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mMUL_FSD(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mMUL_FSD(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1939,14 +1844,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("*fsd");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	protected final void mMUL_FDQ(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	protected final void mMUL_FDQ(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -1957,14 +1860,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("*fdq");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mPRIME(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mPRIME(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1974,14 +1876,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('\'');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mNOT(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mNOT(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -1991,14 +1891,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('~');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mOR(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mOR(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2008,14 +1906,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('|');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mAND(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mAND(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2025,14 +1921,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('&');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mXOR(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mXOR(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2110,8 +2004,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 								break;
 							}
 							default: {
-								throw new NoViableAltForCharException(
-										(char) LA(1), getFilename(), getLine(),
+								throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(),
 										getColumn());
 							}
 							}
@@ -2256,8 +2149,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 						break;
 					}
 					default: {
-						throw new NoViableAltForCharException((char) LA(1),
-								getFilename(), getLine(), getColumn());
+						throw new NoViableAltForCharException((char) LA(1), getFilename(), getLine(), getColumn());
 					}
 					}
 				}
@@ -2340,14 +2232,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		}
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mORNOT(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mORNOT(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2357,14 +2248,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("|~");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mANDNOT(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mANDNOT(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2375,14 +2264,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("&~");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mXORNOT(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mXORNOT(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2393,14 +2280,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("^~");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mPLUS(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mPLUS(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2410,14 +2296,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('+');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mDIV(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mDIV(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2427,14 +2311,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('/');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mMOD(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mMOD(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2444,14 +2326,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('%');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mSDIV(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mSDIV(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2461,14 +2342,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("/!");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mSMOD(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mSMOD(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2478,14 +2358,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("%!");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mEQ(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mEQ(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2495,14 +2373,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('=');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mNE(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mNE(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2512,14 +2388,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("~=");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLT(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mLT(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2529,14 +2403,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('<');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mGT(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mGT(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2546,14 +2418,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('>');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLE(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mLE(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2563,14 +2433,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("<=");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mGE(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mGE(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2580,14 +2448,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(">=");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLTU(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mLTU(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2597,14 +2463,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("<u");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mGTU(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mGTU(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2614,14 +2478,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(">u");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLEU(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mLEU(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2631,14 +2493,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("<=u");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mGEU(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mGEU(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2648,14 +2508,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(">=u");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLSHIFT(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mLSHIFT(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2666,14 +2524,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("<<");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mRSHIFTA(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mRSHIFTA(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2684,14 +2540,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(">>A");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mRSHIFT(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mRSHIFT(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2702,14 +2556,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match(">>");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mDIV_F(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mDIV_F(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2719,14 +2572,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("/f");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mDIV_FD(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mDIV_FD(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2737,14 +2588,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("/fd");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mDIV_FQ(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mDIV_FQ(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2755,14 +2604,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("/fq");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mPLUS_F(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mPLUS_F(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2773,14 +2620,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("+f");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mPLUS_FD(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mPLUS_FD(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2791,14 +2636,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("+fd");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mPLUS_FQ(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mPLUS_FQ(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2809,14 +2652,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("+fq");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mMINUS_F(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mMINUS_F(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2827,14 +2668,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("-f");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mMINUS_FD(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mMINUS_FD(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2845,14 +2684,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("-fd");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mMINUS_FQ(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mMINUS_FQ(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2863,14 +2700,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("-fq");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mQUEST(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mQUEST(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2880,14 +2716,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('?');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mS_E(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mS_E(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2897,14 +2731,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('!');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mDOT(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mDOT(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2914,14 +2746,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('.');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mQUOTE(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mQUOTE(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2931,14 +2762,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('"');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mDOLLAR(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mDOLLAR(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2949,14 +2778,12 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('$');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mUNDERSCORE(boolean _createToken)
-			throws RecognitionException, CharStreamException,
+	public final void mUNDERSCORE(boolean _createToken) throws RecognitionException, CharStreamException,
 			TokenStreamException {
 		int _ttype;
 		Token _token = null;
@@ -2967,14 +2794,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match('_');
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mFNEG(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mFNEG(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -2984,14 +2810,13 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("~f");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}
 
-	public final void mLNOT(boolean _createToken) throws RecognitionException,
-			CharStreamException, TokenStreamException {
+	public final void mLNOT(boolean _createToken) throws RecognitionException, CharStreamException,
+			TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
@@ -3001,8 +2826,7 @@ public class SSLLexer extends antlr.CharScanner implements SSLParserTokenTypes,
 		match("~L");
 		if (_createToken && _token == null && _ttype != Token.SKIP) {
 			_token = makeToken(_ttype);
-			_token.setText(new String(text.getBuffer(), _begin, text.length()
-					- _begin));
+			_token.setText(new String(text.getBuffer(), _begin, text.length() - _begin));
 		}
 		_returnToken = _token;
 	}

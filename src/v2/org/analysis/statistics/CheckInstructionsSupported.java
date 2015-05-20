@@ -113,8 +113,7 @@ public class CheckInstructionsSupported {
 		// TODO Auto-generated method stub
 		try {
 			// clearContentFile(unprocessedFile);
-			BufferedReader br = new BufferedReader(new FileReader(pathTarget
-					+ "/" + file));
+			BufferedReader br = new BufferedReader(new FileReader(pathTarget + "/" + file));
 			// StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			while (line != null) {

@@ -102,7 +102,7 @@ public class RegOpenKeyEx extends Advapi32API {
 			HKEY result = phkResult.getValue();
 			long value = (result == null) ? 0 : Pointer.nativeValue(result.getPointer());
 			System.out.println("Return: " + value);
-			
+
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(value));
 		}
 		return false;

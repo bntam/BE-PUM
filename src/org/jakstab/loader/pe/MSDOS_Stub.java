@@ -49,12 +49,10 @@ public class MSDOS_Stub {
 	/**
 	 * Parses an MSDOS_Stub from an input stream
 	 */
-	public MSDOS_Stub(BinaryInputBuffer in) throws java.io.IOException,
-			BinaryParseException {
+	public MSDOS_Stub(BinaryInputBuffer in) throws java.io.IOException, BinaryParseException {
 		Magic = in.readWORD();
 		if (Magic != MAGIC)
-			throw new BinaryParseException(
-					"MSDOS_Stub: File does not start with magic number 0x4D5A");
+			throw new BinaryParseException("MSDOS_Stub: File does not start with magic number 0x4D5A");
 
 		data1 = new byte[58];
 		in.read(data1);
@@ -64,8 +62,7 @@ public class MSDOS_Stub {
 			in.read(data2);
 			// output();
 		} catch (Exception e) {
-			throw new BinaryParseException(
-					"No PE header found. MS-DOS executables are not supported.");
+			throw new BinaryParseException("No PE header found. MS-DOS executables are not supported.");
 		}
 	}
 
@@ -80,8 +77,7 @@ public class MSDOS_Stub {
 		System.out.print("MSDOS_Stub:{");
 		System.out.print("\n  Magic = 0x" + Integer.toHexString(Magic));
 		System.out.print("\n  <data1>");
-		System.out.print("\n  NewFileHeaderAddress = 0x"
-				+ Long.toHexString(NewFileHeaderAddress));
+		System.out.print("\n  NewFileHeaderAddress = 0x" + Long.toHexString(NewFileHeaderAddress));
 		System.out.print("\n  <data2>");
 		System.out.print("\n}\n");
 	}

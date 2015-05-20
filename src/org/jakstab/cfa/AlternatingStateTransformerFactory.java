@@ -49,11 +49,9 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class AlternatingStateTransformerFactory extends
-		ResolvingTransformerFactory {
+public class AlternatingStateTransformerFactory extends ResolvingTransformerFactory {
 
-	private static final Logger logger = Logger
-			.getLogger(AlternatingStateTransformerFactory.class);
+	private static final Logger logger = Logger.getLogger(AlternatingStateTransformerFactory.class);
 
 	private Map<RTLNumber, RTLNumber> realToStub = new HashMap<RTLNumber, RTLNumber>();
 	private Map<RTLNumber, RTLNumber> stubToReal = new HashMap<RTLNumber, RTLNumber>();
@@ -63,261 +61,211 @@ public class AlternatingStateTransformerFactory extends
 	public Set<CFAEdge> getTransformers(final AbstractState a) {
 		RTLStatement stmt = Program.getProgram().getStatement(a.getLocation());
 
-		Set<CFAEdge> transformers = stmt
-				.accept(new DefaultStatementVisitor<Set<CFAEdge>>() {
+		Set<CFAEdge> transformers = stmt.accept(new DefaultStatementVisitor<Set<CFAEdge>>() {
 
-					@Override
-					protected Set<CFAEdge> visitDefault(RTLStatement stmt) {
+			@Override
+			protected Set<CFAEdge> visitDefault(RTLStatement stmt) {
 
-						CFAEdge.Kind edgeKind = Kind.MAY;
+				CFAEdge.Kind edgeKind = Kind.MAY;
 
-						// If any under-approximate component is not BOT, then
-						// we have a witness
-						// and this is a MUST edge.
-						DualCompositeState dcs = (DualCompositeState) a;
-						for (int i = 0; i < dcs.numComponents(); i++) {
-							AbstractState componentState = dcs.getComponent(i);
-							if (componentState instanceof UnderApproximateState
-									&& !componentState.isBot()) {
-								edgeKind = Kind.MUST;
-								break;
-							}
-						}
-
-						return Collections.singleton(new CFAEdge(stmt
-								.getLabel(), stmt.getNextLabel(), stmt,
-								edgeKind));
+				// If any under-approximate component is not BOT, then
+				// we have a witness
+				// and this is a MUST edge.
+				DualCompositeState dcs = (DualCompositeState) a;
+				for (int i = 0; i < dcs.numComponents(); i++) {
+					AbstractState componentState = dcs.getComponent(i);
+					if (componentState instanceof UnderApproximateState && !componentState.isBot()) {
+						edgeKind = Kind.MUST;
+						break;
 					}
+				}
 
-					@Override
-					public Set<CFAEdge> visit(RTLGoto stmt) {
-						assert stmt.getCondition() != null;
-						Set<CFAEdge> results = new FastSet<CFAEdge>();
+				return Collections.singleton(new CFAEdge(stmt.getLabel(), stmt.getNextLabel(), stmt, edgeKind));
+			}
 
-						if (Options.procedureAbstraction.getValue() == 2) {
-							// Calls always get a fallthrough edge in optimistic
-							// mode
-							if (stmt.getType() == RTLGoto.Type.CALL) {
-								Location nextLabel = stmt.getNextLabel();
+			@Override
+			public Set<CFAEdge> visit(RTLGoto stmt) {
+				assert stmt.getCondition() != null;
+				Set<CFAEdge> results = new FastSet<CFAEdge>();
 
-								if (Program.getProgram().getHarness()
-										.contains(stmt.getAddress())) {
-									nextLabel = new Location(Program
-											.getProgram()
-											.getHarness()
-											.getFallthroughAddress(
-													stmt.getAddress()));
-								}
+				if (Options.procedureAbstraction.getValue() == 2) {
+					// Calls always get a fallthrough edge in optimistic
+					// mode
+					if (stmt.getType() == RTLGoto.Type.CALL) {
+						Location nextLabel = stmt.getNextLabel();
 
-								if (nextLabel != null) {
-									RTLUnknownProcedureCall unknownCallEdge = new RTLUnknownProcedureCall(
-											stmt);
-									unknownCallEdge.setLabel(stmt.getLabel());
-									unknownCallEdge.setNextLabel(nextLabel);
-									results.add(new CFAEdge(stmt.getLabel(),
-											nextLabel, unknownCallEdge));
-									sound = false;
-								}
-							}
-							// Replace return with halt, since control flow
-							// passes over calls anyway
-							else if (stmt.getType() == RTLGoto.Type.RETURN) {
-								sound = false;
-								return Collections.emptySet();
-							}
+						if (Program.getProgram().getHarness().contains(stmt.getAddress())) {
+							nextLabel = new Location(Program.getProgram().getHarness()
+									.getFallthroughAddress(stmt.getAddress()));
 						}
 
-						DualCompositeState dcs = (DualCompositeState) a;
-
-						// Add all edges from over-approximation
-						for (Tuple<RTLNumber> pair : dcs
-								.projectionFromConcretization(
-										stmt.getCondition(),
-										stmt.getTargetExpression())) {
-							RTLNumber conditionValue = pair.get(0);
-							RTLNumber targetValue = pair.get(1);
-							Location nextLabel;
-							// Start building the assume expression: assume
-							// correct condition case
-							assert conditionValue != null;
-							RTLExpression assumption = ExpressionFactory
-									.createEqual(stmt.getCondition(),
-											conditionValue);
-							if (conditionValue.equals(ExpressionFactory.FALSE)) {
-								// assume (condition = false), and set next
-								// statement to fallthrough
-								nextLabel = stmt.getNextLabel();
-							} else {
-								if (targetValue == null) {
-									logger.debug("No value from MAY-analysis at "
-											+ stmt.getLabel());
-									sound = false;
-									unresolvedBranches.add(stmt.getLabel());
-									continue;
-								}
-								// assume (condition = true AND targetExpression
-								// = targetValue)
-								assumption = ExpressionFactory.createAnd(
-										assumption, ExpressionFactory
-												.createEqual(stmt
-														.getTargetExpression(),
-														targetValue));
-								// set next label to jump target
-								nextLabel = new Location(new AbsoluteAddress(
-										targetValue));
-							}
-							assumption = assumption.evaluate(new Context());
-							RTLAssume assume = new RTLAssume(assumption, stmt);
-							assume.setLabel(stmt.getLabel());
-							assume.setNextLabel(nextLabel);
-							// Target address sanity check
-							if (nextLabel.getAddress().getValue() < 10L) {
-								logger.warn("Control flow from "
-										+ stmt.getLabel() + " reaches address "
-										+ nextLabel.getAddress() + "!");
-							}
-
-							results.add(new CFAEdge(assume.getLabel(), assume
-									.getNextLabel(), assume, Kind.MAY));
+						if (nextLabel != null) {
+							RTLUnknownProcedureCall unknownCallEdge = new RTLUnknownProcedureCall(stmt);
+							unknownCallEdge.setLabel(stmt.getLabel());
+							unknownCallEdge.setNextLabel(nextLabel);
+							results.add(new CFAEdge(stmt.getLabel(), nextLabel, unknownCallEdge));
+							sound = false;
 						}
-
-						// Add all edges from under-approximation
-
-						for (Tuple<RTLNumber> pair : dcs.projection(
-								stmt.getCondition(), stmt.getTargetExpression())) {
-							RTLNumber conditionValue = pair.get(0);
-							RTLNumber targetValue = pair.get(1);
-							Location nextLabel;
-							// Start building the assume expression: assume
-							// correct condition case
-							assert conditionValue != null;
-							RTLExpression assumption = ExpressionFactory
-									.createEqual(stmt.getCondition(),
-											conditionValue);
-							if (conditionValue.equals(ExpressionFactory.FALSE)) {
-								// assume (condition = false), and set next
-								// statement to fallthrough
-								nextLabel = stmt.getNextLabel();
-							} else {
-								assert targetValue != null;
-
-								// Translate real library addresses into stub
-								// addresses. Necessary because the static
-								// analysis component
-								// does not know about concrete import
-								// addresses, so it uses a stub system.
-								if (!isProgramAddress(targetValue)) {
-									logger.debug(dcs.getLocation()
-											+ ": Jumping out of module to "
-											+ targetValue.toHexString());
-
-									// Attempt to map this out-of-module
-									// location to a stub
-									if (realToStub.containsKey(targetValue)) {
-										// If we saw this concrete address
-										// before, replace it by the known stub
-										logger.debug("Replacing concrete target "
-												+ targetValue.toHexString()
-												+ " with stub to "
-												+ program
-														.getSymbolFor(new AbsoluteAddress(
-																realToStub
-																		.get(targetValue))));
-										targetValue = realToStub
-												.get(targetValue);
-									} else {
-
-										// Check the statically produced edges
-										// for one that is not yet mapped to a
-										// concrete address.
-										// If the over-approximation resolved an
-										// import to a stub, it's going to be
-										// contained.
-										boolean foundStub = false;
-										for (CFAEdge e : results) {
-											RTLNumber staticTarget = e
-													.getTarget().getAddress()
-													.toNumericConstant();
-											if (!isProgramAddress(staticTarget)
-													&& !stubToReal
-															.containsKey(staticTarget)) {
-												// Take the first one that's
-												// neither taken nor in the
-												// program
-												// TODO: This could map the
-												// wrong addresses in some
-												// (hopefully) rare cases
-												// depending on analysis order
-												stubToReal.put(staticTarget,
-														targetValue);
-												realToStub.put(targetValue,
-														staticTarget);
-												targetValue = staticTarget;
-												foundStub = true;
-												break;
-											}
-										}
-
-										if (!foundStub) {
-											// If we have not found anything
-											// suitable, we need to create a new
-											// stub
-											// FIXME: The new stub will likely
-											// have incorrect stack height
-											// adjustment.
-											// We should extract that
-											// information from the trace.
-
-											logger.info(dcs.getLocation()
-													+ ": Creating new stub for unknown function at "
-													+ targetValue.toHexString());
-											RTLNumber stubTarget = Program
-													.getProgram()
-													.getProcAddress(
-															"JAK_UNKNOWN",
-															"proc"
-																	+ targetValue
-																			.toHexString())
-													.toNumericConstant();
-											stubToReal.put(stubTarget,
-													targetValue);
-											realToStub.put(targetValue,
-													stubTarget);
-											targetValue = stubTarget;
-										}
-									}
-
-								}
-
-								// assume (condition = true AND targetExpression
-								// = targetValue)
-								assumption = ExpressionFactory.createAnd(
-										assumption, ExpressionFactory
-												.createEqual(stmt
-														.getTargetExpression(),
-														targetValue));
-								// set next label to jump target
-								nextLabel = new Location(new AbsoluteAddress(
-										targetValue));
-							}
-							assumption = assumption.evaluate(new Context());
-							RTLAssume assume = new RTLAssume(assumption, stmt);
-							assume.setLabel(stmt.getLabel());
-							assume.setNextLabel(nextLabel);
-
-							results.add(new CFAEdge(assume.getLabel(), assume
-									.getNextLabel(), assume, Kind.MUST));
-						}
-
-						return results;
 					}
-
-					@Override
-					public Set<CFAEdge> visit(RTLHalt stmt) {
+					// Replace return with halt, since control flow
+					// passes over calls anyway
+					else if (stmt.getType() == RTLGoto.Type.RETURN) {
+						sound = false;
 						return Collections.emptySet();
 					}
+				}
 
-				});
+				DualCompositeState dcs = (DualCompositeState) a;
+
+				// Add all edges from over-approximation
+				for (Tuple<RTLNumber> pair : dcs.projectionFromConcretization(stmt.getCondition(),
+						stmt.getTargetExpression())) {
+					RTLNumber conditionValue = pair.get(0);
+					RTLNumber targetValue = pair.get(1);
+					Location nextLabel;
+					// Start building the assume expression: assume
+					// correct condition case
+					assert conditionValue != null;
+					RTLExpression assumption = ExpressionFactory.createEqual(stmt.getCondition(), conditionValue);
+					if (conditionValue.equals(ExpressionFactory.FALSE)) {
+						// assume (condition = false), and set next
+						// statement to fallthrough
+						nextLabel = stmt.getNextLabel();
+					} else {
+						if (targetValue == null) {
+							logger.debug("No value from MAY-analysis at " + stmt.getLabel());
+							sound = false;
+							unresolvedBranches.add(stmt.getLabel());
+							continue;
+						}
+						// assume (condition = true AND targetExpression
+						// = targetValue)
+						assumption = ExpressionFactory.createAnd(assumption,
+								ExpressionFactory.createEqual(stmt.getTargetExpression(), targetValue));
+						// set next label to jump target
+						nextLabel = new Location(new AbsoluteAddress(targetValue));
+					}
+					assumption = assumption.evaluate(new Context());
+					RTLAssume assume = new RTLAssume(assumption, stmt);
+					assume.setLabel(stmt.getLabel());
+					assume.setNextLabel(nextLabel);
+					// Target address sanity check
+					if (nextLabel.getAddress().getValue() < 10L) {
+						logger.warn("Control flow from " + stmt.getLabel() + " reaches address "
+								+ nextLabel.getAddress() + "!");
+					}
+
+					results.add(new CFAEdge(assume.getLabel(), assume.getNextLabel(), assume, Kind.MAY));
+				}
+
+				// Add all edges from under-approximation
+
+				for (Tuple<RTLNumber> pair : dcs.projection(stmt.getCondition(), stmt.getTargetExpression())) {
+					RTLNumber conditionValue = pair.get(0);
+					RTLNumber targetValue = pair.get(1);
+					Location nextLabel;
+					// Start building the assume expression: assume
+					// correct condition case
+					assert conditionValue != null;
+					RTLExpression assumption = ExpressionFactory.createEqual(stmt.getCondition(), conditionValue);
+					if (conditionValue.equals(ExpressionFactory.FALSE)) {
+						// assume (condition = false), and set next
+						// statement to fallthrough
+						nextLabel = stmt.getNextLabel();
+					} else {
+						assert targetValue != null;
+
+						// Translate real library addresses into stub
+						// addresses. Necessary because the static
+						// analysis component
+						// does not know about concrete import
+						// addresses, so it uses a stub system.
+						if (!isProgramAddress(targetValue)) {
+							logger.debug(dcs.getLocation() + ": Jumping out of module to " + targetValue.toHexString());
+
+							// Attempt to map this out-of-module
+							// location to a stub
+							if (realToStub.containsKey(targetValue)) {
+								// If we saw this concrete address
+								// before, replace it by the known stub
+								logger.debug("Replacing concrete target " + targetValue.toHexString()
+										+ " with stub to "
+										+ program.getSymbolFor(new AbsoluteAddress(realToStub.get(targetValue))));
+								targetValue = realToStub.get(targetValue);
+							} else {
+
+								// Check the statically produced edges
+								// for one that is not yet mapped to a
+								// concrete address.
+								// If the over-approximation resolved an
+								// import to a stub, it's going to be
+								// contained.
+								boolean foundStub = false;
+								for (CFAEdge e : results) {
+									RTLNumber staticTarget = e.getTarget().getAddress().toNumericConstant();
+									if (!isProgramAddress(staticTarget) && !stubToReal.containsKey(staticTarget)) {
+										// Take the first one that's
+										// neither taken nor in the
+										// program
+										// TODO: This could map the
+										// wrong addresses in some
+										// (hopefully) rare cases
+										// depending on analysis order
+										stubToReal.put(staticTarget, targetValue);
+										realToStub.put(targetValue, staticTarget);
+										targetValue = staticTarget;
+										foundStub = true;
+										break;
+									}
+								}
+
+								if (!foundStub) {
+									// If we have not found anything
+									// suitable, we need to create a new
+									// stub
+									// FIXME: The new stub will likely
+									// have incorrect stack height
+									// adjustment.
+									// We should extract that
+									// information from the trace.
+
+									logger.info(dcs.getLocation() + ": Creating new stub for unknown function at "
+											+ targetValue.toHexString());
+									RTLNumber stubTarget = Program.getProgram()
+											.getProcAddress("JAK_UNKNOWN", "proc" + targetValue.toHexString())
+											.toNumericConstant();
+									stubToReal.put(stubTarget, targetValue);
+									realToStub.put(targetValue, stubTarget);
+									targetValue = stubTarget;
+								}
+							}
+
+						}
+
+						// assume (condition = true AND targetExpression
+						// = targetValue)
+						assumption = ExpressionFactory.createAnd(assumption,
+								ExpressionFactory.createEqual(stmt.getTargetExpression(), targetValue));
+						// set next label to jump target
+						nextLabel = new Location(new AbsoluteAddress(targetValue));
+					}
+					assumption = assumption.evaluate(new Context());
+					RTLAssume assume = new RTLAssume(assumption, stmt);
+					assume.setLabel(stmt.getLabel());
+					assume.setNextLabel(nextLabel);
+
+					results.add(new CFAEdge(assume.getLabel(), assume.getNextLabel(), assume, Kind.MUST));
+				}
+
+				return results;
+			}
+
+			@Override
+			public Set<CFAEdge> visit(RTLHalt stmt) {
+				return Collections.emptySet();
+			}
+
+		});
 
 		saveNewEdges(transformers, a.getLocation());
 
@@ -345,8 +293,7 @@ public class AlternatingStateTransformerFactory extends
 						// Different kinds of edges
 						if (!existingEdge.getKind().equals(edge.getKind())) {
 
-							if (existingEdge.getKind().lessOrEqual(
-									edge.getKind())) {
+							if (existingEdge.getKind().lessOrEqual(edge.getKind())) {
 								// If the new kind is greater than the existing,
 								// upgrade to new kind
 								// logger.debug("Upgrading existing edge " +
@@ -354,8 +301,7 @@ public class AlternatingStateTransformerFactory extends
 								// existingEdge.getKind() + " to " +
 								// edge.getKind());
 								existingEdge.setKind(edge.getKind());
-							} else if (edge.getKind().lessOrEqual(
-									existingEdge.getKind())) {
+							} else if (edge.getKind().lessOrEqual(existingEdge.getKind())) {
 								// If the existing kind is greater than the new
 								// one, upgrade new one
 								// logger.debug("Upgrading new edge " + edge +

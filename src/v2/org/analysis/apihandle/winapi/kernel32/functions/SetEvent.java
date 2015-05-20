@@ -59,7 +59,7 @@ public class SetEvent extends Kernel32API {
 			long t1 = ((LongValue) x1).getValue();
 
 			HANDLE hEvent = new HANDLE(new Pointer(t1));
-			BOOL ret = Kernel32DLL.INSTANCE.SetEvent(hEvent );
+			BOOL ret = Kernel32DLL.INSTANCE.SetEvent(hEvent);
 
 			register.mov("eax", new LongValue(ret.longValue()));
 		}

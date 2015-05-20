@@ -368,8 +368,7 @@ public class SymbolRegisterPartList {
 		if (value == null)
 			value = new LongValue(0);
 		Value x = value;
-		if (dest.contains("si") || dest.contains("di") || dest.contains("sp")
-				|| dest.contains("bp")) {
+		if (dest.contains("si") || dest.contains("di") || dest.contains("sp") || dest.contains("bp")) {
 			if (value instanceof LongValue) {
 				long y = ((LongValue) value).getValue();
 				x = new LongValue((long) (y % Math.pow(2, 16)));

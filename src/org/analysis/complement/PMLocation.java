@@ -57,8 +57,7 @@ public class PMLocation implements Comparable<PMLocation> {
 	@Override
 	public String toString() {
 		if (instruction != null)
-			return address.toString() + '_' + index + "_"
-					+ instruction.getName();
+			return address.toString() + '_' + index + "_" + instruction.getName();
 
 		return address.toString() + '_' + index;
 	}

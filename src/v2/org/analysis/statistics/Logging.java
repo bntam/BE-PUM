@@ -1,4 +1,5 @@
 package v2.org.analysis.statistics;
+
 import java.io.PrintStream;
 
 public class Logging {
@@ -26,7 +27,7 @@ public class Logging {
 		this.out = outStream;
 		this.prefix = (showClass ? (clazz.getSimpleName() + ":\t") : "");
 	}
-	
+
 	public void setDebugLevel(int level) {
 		debugLevel = level;
 	}

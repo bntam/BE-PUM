@@ -34,15 +34,13 @@ import java.util.Set;
  */
 public class AssignmentTemplate extends AbstractRTLStatement {
 
-	private static final Logger logger = Logger
-			.getLogger(AssignmentTemplate.class);
+	private static final Logger logger = Logger.getLogger(AssignmentTemplate.class);
 
 	private int bitWidth;
 	private Writable leftHandSide;
 	private RTLExpression rightHandSide;
 
-	public AssignmentTemplate(int bitWidth, Writable leftHandSide,
-			RTLExpression rightHandSide) {
+	public AssignmentTemplate(int bitWidth, Writable leftHandSide, RTLExpression rightHandSide) {
 		super();
 		this.bitWidth = bitWidth;
 		this.leftHandSide = leftHandSide;
@@ -110,9 +108,7 @@ public class AssignmentTemplate extends AbstractRTLStatement {
 			leftHandSide = (Writable) evaldLHS;
 		} else {
 			logger.error("Error: LHS of assignment no longer writable after evaluation: "
-					+ this.leftHandSide.toString()
-					+ " = "
-					+ evaldLHS.toString());
+					+ this.leftHandSide.toString() + " = " + evaldLHS.toString());
 		}
 		return this;
 		// }
@@ -140,14 +136,11 @@ public class AssignmentTemplate extends AbstractRTLStatement {
 
 		// Now make this a proper assignment to either variable or memory
 		if (evaldLHS instanceof RTLVariable) {
-			newStmt = new RTLVariableAssignment(bitWidth,
-					(RTLVariable) evaldLHS, evaldRHS);
+			newStmt = new RTLVariableAssignment(bitWidth, (RTLVariable) evaldLHS, evaldRHS);
 		} else if (evaldLHS instanceof RTLMemoryLocation) {
-			newStmt = new RTLMemoryAssignment((RTLMemoryLocation) evaldLHS,
-					evaldRHS);
+			newStmt = new RTLMemoryAssignment((RTLMemoryLocation) evaldLHS, evaldRHS);
 		} else {
-			throw new RuntimeException(
-					"Lefthandside of assignment is neither variable nor memory after instantiation.");
+			throw new RuntimeException("Lefthandside of assignment is neither variable nor memory after instantiation.");
 		}
 
 		// Make sure the statement is labeled
@@ -207,8 +200,7 @@ public class AssignmentTemplate extends AbstractRTLStatement {
 
 	@Override
 	public <T> T accept(StatementVisitor<T> visitor) {
-		throw new UnsupportedOperationException(
-				"Assignment templates do not support visitors");
+		throw new UnsupportedOperationException("Assignment templates do not support visitors");
 	}
 
 	@Override
@@ -216,10 +208,8 @@ public class AssignmentTemplate extends AbstractRTLStatement {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + bitWidth;
-		result = prime * result
-				+ ((leftHandSide == null) ? 0 : leftHandSide.hashCode());
-		result = prime * result
-				+ ((rightHandSide == null) ? 0 : rightHandSide.hashCode());
+		result = prime * result + ((leftHandSide == null) ? 0 : leftHandSide.hashCode());
+		result = prime * result + ((rightHandSide == null) ? 0 : rightHandSide.hashCode());
 		return result;
 	}
 

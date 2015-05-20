@@ -40,8 +40,7 @@ public class LinearInvariantSolver {
 	 * @param pathConstraint
 	 *            path condition for the loop
 	 */
-	public LinearInvariantSolver(ArrayList<String> variableSet,
-			SymbolicCondition initialConstraint,
+	public LinearInvariantSolver(ArrayList<String> variableSet, SymbolicCondition initialConstraint,
 			SymbolicCondition pathConstraint) {
 		initCondition = initialConstraint;
 		pathCondition = pathConstraint;
@@ -61,8 +60,7 @@ public class LinearInvariantSolver {
 		SymbolicValue tmpExpr = null;
 		for (int i = 0; i < variableSet.size(); i++) {
 			tmpExpr = pathCondition.getConditionSet().get(i).getRHS();
-			if (tmpExpr.getType() == SymbolicValue.SYMBOL
-					&& tmpExpr.getSymbolValue().equals(variableSet.get(i))) {
+			if (tmpExpr.getType() == SymbolicValue.SYMBOL && tmpExpr.getSymbolValue().equals(variableSet.get(i))) {
 				result.add(variableSet.get(i));
 			} else if (tmpExpr.getType() == SymbolicValue.SYMBOLIC_EXPRESSION) {
 				ArrayList<SymbolicValue> exprList = tmpExpr.getExprValue();
@@ -70,8 +68,7 @@ public class LinearInvariantSolver {
 				int isSat = 0;
 				for (int j = 0; j < exprList.size(); j++) {
 					if (exprList.get(j).getType() == SymbolicValue.SYMBOL) {
-						if (exprList.get(j).getSymbolValue()
-								.equals(variableSet.get(i))) {
+						if (exprList.get(j).getSymbolValue().equals(variableSet.get(i))) {
 							if (isSat >= 0) {
 								isSat = 1;
 							}
@@ -123,12 +120,10 @@ public class LinearInvariantSolver {
 		for (int i = 0; i < variableSet.size(); i++) {
 			condSatisfied = 0;
 			tmpExpr = pathCondition.getConditionSet().get(i).getRHS();
-			if (tmpExpr.getType() == SymbolicValue.SYMBOL
-					&& tmpExpr.getSymbolValue().equals(variableSet.get(i))) {
+			if (tmpExpr.getType() == SymbolicValue.SYMBOL && tmpExpr.getSymbolValue().equals(variableSet.get(i))) {
 				dArray.add(null);
 				condSatisfied = 1;
-			} else if (tmpExpr.getType() == SymbolicValue.INTEGER
-					|| tmpExpr.getType() == SymbolicValue.FLOAT) {
+			} else if (tmpExpr.getType() == SymbolicValue.INTEGER || tmpExpr.getType() == SymbolicValue.FLOAT) {
 				lastIndex = i;
 				dArray.add(null);
 				condSatisfied = 1;
@@ -138,8 +133,7 @@ public class LinearInvariantSolver {
 				Long di = new Long(0);
 				for (int j = 0; j < exprList.size(); j++) {
 					if (exprList.get(j).getType() == SymbolicValue.SYMBOL) {
-						if (exprList.get(j).getSymbolValue()
-								.equals(variableSet.get(i))) {
+						if (exprList.get(j).getSymbolValue().equals(variableSet.get(i))) {
 							if (condSatisfied >= 0) {
 								condSatisfied = 1;
 							}
@@ -182,12 +176,10 @@ public class LinearInvariantSolver {
 		// last one: -1/(other di)
 		for (int i = 0; i < variableSet.size(); i++) {
 			if (i == lastIndex) {
-				if (dArray.get(i) == null || dArray.get(i).longValue() == 0
-						|| tmpValue == 0) {
+				if (dArray.get(i) == null || dArray.get(i).longValue() == 0 || tmpValue == 0) {
 					result.set(i, null);
 				} else {
-					result.set(i, new SymbolicValue(-tmpValue
-							/ dArray.get(i).longValue()));
+					result.set(i, new SymbolicValue(-tmpValue / dArray.get(i).longValue()));
 				}
 				break;
 			}
@@ -203,8 +195,7 @@ public class LinearInvariantSolver {
 			if (dArray.get(i) != null && dArray.get(i).longValue() != 0) {
 				tmpExpr = initCondition.getConditionSet().get(i).getRHS();
 				if (tmpExpr.calculateExprIntVal() != null) {
-					tmpValue += tmpExpr.calculateExprIntVal()
-							* result.get(i).calculateExprIntVal();
+					tmpValue += tmpExpr.calculateExprIntVal() * result.get(i).calculateExprIntVal();
 				} else {
 					SymbolicValue tmp = result.get(i);
 					if (tmp.calculateExprIntVal() == 1) {
@@ -224,8 +215,7 @@ public class LinearInvariantSolver {
 			if (res == null) {
 				res = new SymbolicValue(tmpValue);
 			} else {
-				res.addExprValue(SymbolicValue.ADD_EXPR, new SymbolicValue(
-						tmpValue));
+				res.addExprValue(SymbolicValue.ADD_EXPR, new SymbolicValue(tmpValue));
 			}
 		}
 		result.add(res);

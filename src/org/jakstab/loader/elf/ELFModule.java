@@ -65,8 +65,7 @@ public class ELFModule implements ExecutableImage {
 	private Map<AbsoluteAddress, String> symbolMap;
 	private Set<ExportedSymbol> functionSymbols;
 
-	public ELFModule(File moduleFile, Architecture architecture)
-			throws IOException, BinaryParseException {
+	public ELFModule(File moduleFile, Architecture architecture) throws IOException, BinaryParseException {
 
 		inBuf = new BinaryFileInputBuffer(new FileInputStream(moduleFile));
 		byte[] data = inBuf.getByteArray();
@@ -74,8 +73,7 @@ public class ELFModule implements ExecutableImage {
 		elf.loadSymbols();
 
 		requiredLibraries = new FastSet<String>();
-		Elf.Dynamic[] dynamics = elf.getDynamicSections(elf
-				.getSectionByName(".dynamic"));
+		Elf.Dynamic[] dynamics = elf.getDynamicSections(elf.getSectionByName(".dynamic"));
 		for (Elf.Dynamic dyn : dynamics) {
 			if (dyn.d_tag == Dynamic.DT_NEEDED) {
 				requiredLibraries.add(dyn.toString());
@@ -97,11 +95,9 @@ public class ELFModule implements ExecutableImage {
 					// logger.info(s + " " + "\t Addr: " +
 					// s.st_value.toHexAddressString() + "\t to " +
 					// s.st_value.add(s.st_size).toHexAddressString());
-					AbsoluteAddress fAddr = new AbsoluteAddress(s.st_value
-							.getValue().longValue());
+					AbsoluteAddress fAddr = new AbsoluteAddress(s.st_value.getValue().longValue());
 					symbolMap.put(fAddr, s.toString());
-					functionSymbols.add(new ExportedSymbol(this, s.toString(),
-							fAddr));
+					functionSymbols.add(new ExportedSymbol(this, s.toString(), fAddr));
 				}
 			}
 		}
@@ -117,8 +113,7 @@ public class ELFModule implements ExecutableImage {
 
 		byte[] pltRelocs = null;
 		for (Elf.Section section : elf.getSections()) {
-			if (section.sh_type == Elf.Section.SHT_REL
-					|| section.sh_type == Elf.Section.SHT_RELA) {
+			if (section.sh_type == Elf.Section.SHT_REL || section.sh_type == Elf.Section.SHT_RELA) {
 				// sh_info holds the section number to which the relocation
 				// info applies
 				if (pltSection == elf.getSections()[(int) section.sh_info])
@@ -159,15 +154,13 @@ public class ELFModule implements ExecutableImage {
 
 			// Where the function pointer is to be stored
 			AbsoluteAddress pltSlot = new AbsoluteAddress(
-					(((X86MemoryOperand) jmpToFunction.getBranchDestination()))
-							.getDisplacement());
+					(((X86MemoryOperand) jmpToFunction.getBranchDestination())).getDisplacement());
 			// logger.debug("Address of memory trampoline is " + pltSlot +
 			// ", file offset 0x" + Long.toHexString(getFilePointer(pltSlot)));
 			// Before loading, there's a trampoline pointer back to the
 			// following push instruction stored in this slot
 			inBuf.seek(getFilePointer(pltSlot));
-			AbsoluteAddress trampolineDest = new AbsoluteAddress(
-					inBuf.readDWORD());
+			AbsoluteAddress trampolineDest = new AbsoluteAddress(inBuf.readDWORD());
 			// logger.debug("Trampoline destination is " + trampolineDest);
 			pltIdx = (int) getFilePointer(trampolineDest);
 			// Read the push instruction
@@ -175,8 +168,7 @@ public class ELFModule implements ExecutableImage {
 			X86Instruction pushSTOff = (X86Instruction) instr;
 			// The push instruction's parameter is an index into the symbol
 			// table
-			int symbolTableOff = ((Immediate) pushSTOff.getOperand1())
-					.getNumber().intValue();
+			int symbolTableOff = ((Immediate) pushSTOff.getOperand1()).getNumber().intValue();
 			// Read function name from symbol table
 			// String functionName =
 			// elf.getSymbols()[symbolTableOff].toString();
@@ -185,8 +177,7 @@ public class ELFModule implements ExecutableImage {
 			// the symbol index
 			int ri = symbolTableOff + 4;
 			// little endian only
-			int r_info = ((pltRelocs[ri + 3] << 24) + (pltRelocs[ri + 2] << 16)
-					+ (pltRelocs[ri + 1] << 8) + pltRelocs[ri]);
+			int r_info = ((pltRelocs[ri + 3] << 24) + (pltRelocs[ri + 2] << 16) + (pltRelocs[ri + 1] << 8) + pltRelocs[ri]);
 			int type = (byte) r_info;
 			int symIdx = r_info >> 8;
 			// type must be R_386_JMP_SLOT
@@ -196,9 +187,8 @@ public class ELFModule implements ExecutableImage {
 			// 8)].toString();
 			String functionName = elf.getDynamicSymbols()[symIdx].toString();
 
-			UnresolvedSymbol importSymbol = new UnresolvedSymbol(this, "ELF",
-					functionName, (int) getFilePointer(pltSlot),
-					AddressingType.ABSOLUTE);
+			UnresolvedSymbol importSymbol = new UnresolvedSymbol(this, "ELF", functionName,
+					(int) getFilePointer(pltSlot), AddressingType.ABSOLUTE);
 			imports.add(importSymbol);
 			symbolMap.put(jmpLocation, functionName);
 			symbolMap.put(pltSlot, "__imp_" + functionName);
@@ -247,8 +237,7 @@ public class ELFModule implements ExecutableImage {
 	@Override
 	public AbsoluteAddress getEntryPoint() {
 		try {
-			return new AbsoluteAddress(elf.getELFhdr().e_entry.getValue()
-					.longValue());
+			return new AbsoluteAddress(elf.getELFhdr().e_entry.getValue().longValue());
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Cannot read entry point from elf");
@@ -259,8 +248,7 @@ public class ELFModule implements ExecutableImage {
 	public AbsoluteAddress getMaxAddress() {
 		long highAddress = Long.MIN_VALUE;
 		for (Elf.Section section : elf.sections) {
-			highAddress = Math.max(section.sh_addr.getValue().longValue()
-					+ section.sh_size, highAddress);
+			highAddress = Math.max(section.sh_addr.getValue().longValue() + section.sh_size, highAddress);
 		}
 		// highAddress += getBaseAddress();
 		return new AbsoluteAddress(highAddress);
@@ -270,8 +258,7 @@ public class ELFModule implements ExecutableImage {
 	public AbsoluteAddress getMinAddress() {
 		long lowAddress = Long.MAX_VALUE;
 		for (Elf.Section section : elf.sections) {
-			lowAddress = Math.min(section.sh_addr.getValue().longValue(),
-					lowAddress);
+			lowAddress = Math.min(section.sh_addr.getValue().longValue(), lowAddress);
 		}
 		// highAddress += getBaseAddress();
 		return new AbsoluteAddress(lowAddress);
@@ -294,16 +281,14 @@ public class ELFModule implements ExecutableImage {
 		long a = va.getValue();
 		for (Elf.Section section : elf.sections) {
 			if (a >= section.sh_addr.getValue().longValue()
-					&& a <= section.sh_addr.getValue().longValue()
-							+ section.sh_size) {
+					&& a <= section.sh_addr.getValue().longValue() + section.sh_size) {
 
 				if (section.sh_type == Elf.Section.SHT_NOBITS) {
 					// || (section.toString().equals(".bss"))) {
 					// logger.info("Getting file pointer for uninitialized section?");
 					return -1;
 				}
-				return a - section.sh_addr.getValue().longValue()
-						+ section.sh_offset;
+				return a - section.sh_addr.getValue().longValue() + section.sh_offset;
 			}
 		}
 		return -1;
@@ -333,10 +318,8 @@ public class ELFModule implements ExecutableImage {
 	@Override
 	public AbsoluteAddress getVirtualAddress(long fp) {
 		for (Elf.Section section : elf.sections) {
-			if (fp >= section.sh_offset
-					&& fp <= section.sh_offset + section.sh_size) {
-				return new AbsoluteAddress(fp - section.sh_offset
-						+ section.sh_addr.getValue().longValue());
+			if (fp >= section.sh_offset && fp <= section.sh_offset + section.sh_size) {
+				return new AbsoluteAddress(fp - section.sh_offset + section.sh_addr.getValue().longValue());
 			}
 		}
 		throw new RuntimeException("Filepointer " + fp + " matches no section?");
@@ -352,8 +335,7 @@ public class ELFModule implements ExecutableImage {
 		long a = va.getValue();
 		for (Elf.Section section : elf.sections) {
 			if (a >= section.sh_addr.getValue().longValue()
-					&& a <= section.sh_addr.getValue().longValue()
-							+ section.sh_size) {
+					&& a <= section.sh_addr.getValue().longValue() + section.sh_size) {
 				return (section.sh_type == Elf.Section.SHT_PROGBITS);
 			}
 		}
@@ -404,9 +386,8 @@ public class ELFModule implements ExecutableImage {
 
 	@Override
 	public Iterator<AbsoluteAddress> codeBytesIterator() {
-		throw new UnsupportedOperationException(
-				"Code iteration not yet implemented for "
-						+ this.getClass().getSimpleName() + "!");
+		throw new UnsupportedOperationException("Code iteration not yet implemented for "
+				+ this.getClass().getSimpleName() + "!");
 	}
 
 	@Override
@@ -414,7 +395,7 @@ public class ELFModule implements ExecutableImage {
 		return inBuf.getByteArray();
 	}
 
-	//Provide later
+	// Provide later
 	@Override
 	public boolean insideFileArea(AbsoluteAddress va) {
 		// TODO Auto-generated method stub

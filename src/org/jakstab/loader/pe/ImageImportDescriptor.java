@@ -36,8 +36,7 @@ public class ImageImportDescriptor {
 	 * @param in
 	 * @throws java.io.IOException
 	 */
-	public ImageImportDescriptor(BinaryInputBuffer in)
-			throws java.io.IOException {
+	public ImageImportDescriptor(BinaryInputBuffer in) throws java.io.IOException {
 		OriginalFirstThunk = in.readDWORD(); // RVA of the Import Name Table
 												// (INT)
 		TimeDateStamp = in.readDWORD();
@@ -59,12 +58,9 @@ public class ImageImportDescriptor {
 	}
 
 	public void output() {
-		System.out.println("OriginalFirstThunk: 0x"
-				+ Long.toHexString(OriginalFirstThunk));
-		System.out.println("TimeDateStamp: 0x"
-				+ Long.toHexString(TimeDateStamp));
-		System.out.println("ForwarderChain: 0x"
-				+ Long.toHexString(ForwarderChain));
+		System.out.println("OriginalFirstThunk: 0x" + Long.toHexString(OriginalFirstThunk));
+		System.out.println("TimeDateStamp: 0x" + Long.toHexString(TimeDateStamp));
+		System.out.println("ForwarderChain: 0x" + Long.toHexString(ForwarderChain));
 		System.out.println("Name: 0x" + Long.toHexString(Name));
 		System.out.println("FirstThunk: 0x" + Long.toHexString(FirstThunk));
 	}

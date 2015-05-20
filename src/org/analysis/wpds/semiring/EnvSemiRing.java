@@ -40,8 +40,8 @@ public class EnvSemiRing extends SemiRing {
 	public Weight compose(Weight left, Weight right) {
 		// TODO Auto-generated method stub
 		if (left instanceof EnvWeight && right instanceof EnvWeight) {
-			//EnvWeight l = (EnvWeight) left;
-			//EnvWeight r = (EnvWeight) right;
+			// EnvWeight l = (EnvWeight) left;
+			// EnvWeight r = (EnvWeight) right;
 			EnvWeight ret = new EnvWeight();
 			/*
 			 * int l1 = l.getNumber(); int r1 = r.getNumber();
@@ -55,7 +55,7 @@ public class EnvSemiRing extends SemiRing {
 
 		if (left instanceof WeightZero && right instanceof EnvWeight) {
 			// EnvWeight l = (EnvWeight)left;
-			//EnvWeight r = (EnvWeight) right;
+			// EnvWeight r = (EnvWeight) right;
 			EnvWeight ret = new EnvWeight();
 			// int l1 = l.getNumber();
 			/*
@@ -69,7 +69,7 @@ public class EnvSemiRing extends SemiRing {
 
 		if (right instanceof WeightZero && left instanceof EnvWeight) {
 			// EnvWeight l = (EnvWeight)left;
-			//EnvWeight l = (EnvWeight) right;
+			// EnvWeight l = (EnvWeight) right;
 			EnvWeight ret = new EnvWeight();
 			// int l1 = l.getNumber();
 			/*

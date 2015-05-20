@@ -67,8 +67,7 @@ public final class BasedNumberValuation implements AbstractState {
 			private final Location location;
 			private final AllocationTreeNode parent;
 
-			public AllocationTreeNode(Location location,
-					AllocationTreeNode parent) {
+			public AllocationTreeNode(Location location, AllocationTreeNode parent) {
 				this.location = location;
 				this.parent = parent;
 			}
@@ -140,27 +139,22 @@ public final class BasedNumberValuation implements AbstractState {
 	 * }
 	 */
 
-	private static final Logger logger = Logger
-			.getLogger(BasedNumberValuation.class);
+	private static final Logger logger = Logger.getLogger(BasedNumberValuation.class);
 
 	private final VariableValuation<BasedNumberElement> aVarVal;
 	private final PartitionedMemory<BasedNumberElement> aStore;
 	private final AllocationCounter allocCounters;
 
 	private BasedNumberValuation(VariableValuation<BasedNumberElement> aVarVal,
-			PartitionedMemory<BasedNumberElement> aStore,
-			AllocationCounter allocCounters) {
+			PartitionedMemory<BasedNumberElement> aStore, AllocationCounter allocCounters) {
 		this.aVarVal = aVarVal;
 		this.aStore = aStore;
 		this.allocCounters = allocCounters;
 	}
 
 	private BasedNumberValuation() {
-		this(new VariableValuation<BasedNumberElement>(
-				new BasedNumberElementFactory()),
-				new PartitionedMemory<BasedNumberElement>(
-						new BasedNumberElementFactory()), AllocationCounter
-						.create());
+		this(new VariableValuation<BasedNumberElement>(new BasedNumberElementFactory()),
+				new PartitionedMemory<BasedNumberElement>(new BasedNumberElementFactory()), AllocationCounter.create());
 	}
 
 	/**
@@ -169,9 +163,8 @@ public final class BasedNumberValuation implements AbstractState {
 	 * @param proto
 	 */
 	protected BasedNumberValuation(BasedNumberValuation proto) {
-		this(new VariableValuation<BasedNumberElement>(proto.aVarVal),
-				new PartitionedMemory<BasedNumberElement>(proto.aStore),
-				AllocationCounter.create(proto.allocCounters));
+		this(new VariableValuation<BasedNumberElement>(proto.aVarVal), new PartitionedMemory<BasedNumberElement>(
+				proto.aStore), AllocationCounter.create(proto.allocCounters));
 	}
 
 	private BasedNumberElement abstractEvalAddress(RTLMemoryLocation m) {
@@ -179,12 +172,10 @@ public final class BasedNumberValuation implements AbstractState {
 		if (m.getSegmentRegister() != null) {
 			if (abstractAddress.getRegion() != MemoryRegion.GLOBAL)
 				return BasedNumberElement.getTop(m.getBitWidth());
-			BasedNumberElement segmentValue = abstractEval(m
-					.getSegmentRegister());
-			assert segmentValue.getNumber().intValue() == 0 : "Segment "
-					+ m.getSegmentRegister() + " has been assigned a value!";
-			abstractAddress = new BasedNumberElement(segmentValue.getRegion(),
-					abstractAddress.getNumber());
+			BasedNumberElement segmentValue = abstractEval(m.getSegmentRegister());
+			assert segmentValue.getNumber().intValue() == 0 : "Segment " + m.getSegmentRegister()
+					+ " has been assigned a value!";
+			abstractAddress = new BasedNumberElement(segmentValue.getRegion(), abstractAddress.getNumber());
 		}
 		return abstractAddress;
 	}
@@ -202,19 +193,16 @@ public final class BasedNumberValuation implements AbstractState {
 
 			@Override
 			public BasedNumberElement visit(RTLBitRange e) {
-				BasedNumberElement aFirstBit = e.getFirstBitIndex()
-						.accept(this);
+				BasedNumberElement aFirstBit = e.getFirstBitIndex().accept(this);
 				BasedNumberElement aLastBit = e.getLastBitIndex().accept(this);
 				BasedNumberElement aOperand = e.getOperand().accept(this);
 
-				if (!(aFirstBit.hasUniqueConcretization()
-						&& aLastBit.hasUniqueConcretization() && aOperand
+				if (!(aFirstBit.hasUniqueConcretization() && aLastBit.hasUniqueConcretization() && aOperand
 						.hasUniqueConcretization())) {
 					return BasedNumberElement.getTop(e.getBitWidth());
 				}
 
-				return new BasedNumberElement(RTLBitRange.calculate(
-						aFirstBit.getNumber(), aLastBit.getNumber(),
+				return new BasedNumberElement(RTLBitRange.calculate(aFirstBit.getNumber(), aLastBit.getNumber(),
 						aOperand.getNumber()));
 			}
 
@@ -226,8 +214,7 @@ public final class BasedNumberValuation implements AbstractState {
 				if (BasedNumberElement.TRUE.lessOrEqual(aCondition))
 					result = e.getTrueExpression().accept(this);
 				if (BasedNumberElement.FALSE.lessOrEqual(aCondition)) {
-					BasedNumberElement falseVal = e.getFalseExpression()
-							.accept(this);
+					BasedNumberElement falseVal = e.getFalseExpression().accept(this);
 					result = result == null ? falseVal : result.join(falseVal);
 				}
 				// logger.info("Cond result: " + result);
@@ -251,8 +238,7 @@ public final class BasedNumberValuation implements AbstractState {
 
 			@Override
 			public BasedNumberElement visit(RTLOperation e) {
-				BasedNumberElement[] aOperands = new BasedNumberElement[e
-						.getOperandCount()];
+				BasedNumberElement[] aOperands = new BasedNumberElement[e.getOperandCount()];
 
 				for (int i = 0; i < e.getOperandCount(); i++) {
 					aOperands[i] = e.getOperands()[i].accept(this);
@@ -262,13 +248,11 @@ public final class BasedNumberValuation implements AbstractState {
 				switch (e.getOperator()) {
 				case EQUAL:
 					// v == 0: If v is a valid pointer, return false.
-					if (!aOperands[0].isTop() && !aOperands[0].isUnbased()
-							&& aOperands[1].hasUniqueConcretization()
+					if (!aOperands[0].isTop() && !aOperands[0].isUnbased() && aOperands[1].hasUniqueConcretization()
 							&& aOperands[1].getNumber().intValue() == 0)
 						return BasedNumberElement.FALSE;
 					// Same for 0 == v
-					if (!aOperands[1].isTop() && !aOperands[1].isUnbased()
-							&& aOperands[0].hasUniqueConcretization()
+					if (!aOperands[1].isTop() && !aOperands[1].isUnbased() && aOperands[0].hasUniqueConcretization()
 							&& aOperands[0].getNumber().intValue() == 0)
 						return BasedNumberElement.FALSE;
 
@@ -279,16 +263,11 @@ public final class BasedNumberValuation implements AbstractState {
 				case LESS:
 				case LESS_OR_EQUAL:
 					// Check whether both operands have same region
-					if (!aOperands[0].isTop()
-							&& aOperands[0].getRegion() == aOperands[1]
-									.getRegion() && !aOperands[0].isNumberTop()
-							&& !aOperands[1].isNumberTop()) {
+					if (!aOperands[0].isTop() && aOperands[0].getRegion() == aOperands[1].getRegion()
+							&& !aOperands[0].isNumberTop() && !aOperands[1].isNumberTop()) {
 						// Same region, now compare offsets
-						RTLExpression result = ExpressionFactory
-								.createOperation(e.getOperator(),
-										aOperands[0].getNumber(),
-										aOperands[1].getNumber()).evaluate(
-										new Context());
+						RTLExpression result = ExpressionFactory.createOperation(e.getOperator(),
+								aOperands[0].getNumber(), aOperands[1].getNumber()).evaluate(new Context());
 
 						if (result.equals(ExpressionFactory.TRUE))
 							return BasedNumberElement.TRUE;
@@ -301,8 +280,7 @@ public final class BasedNumberValuation implements AbstractState {
 
 				}
 
-				RTLExpression[] cOperands = new RTLExpression[e
-						.getOperandCount()];
+				RTLExpression[] cOperands = new RTLExpression[e.getOperandCount()];
 				MemoryRegion region = MemoryRegion.GLOBAL;
 
 				// Handle arithmetic operations
@@ -325,19 +303,16 @@ public final class BasedNumberValuation implements AbstractState {
 							if (region == MemoryRegion.GLOBAL) {
 								region = aOperand.getRegion();
 								if (aOperand.isNumberTop())
-									cOperands[i] = ExpressionFactory.nondet(e
-											.getOperands()[i].getBitWidth());
+									cOperands[i] = ExpressionFactory.nondet(e.getOperands()[i].getBitWidth());
 								else
 									cOperands[i] = aOperand.getNumber();
 							} else {
 								// we already have a region
-								return BasedNumberElement.getTop(e
-										.getBitWidth());
+								return BasedNumberElement.getTop(e.getBitWidth());
 							}
 						} else {
 							// No addition, just return nondet
-							cOperands[i] = ExpressionFactory.nondet(e
-									.getOperands()[i].getBitWidth());
+							cOperands[i] = ExpressionFactory.nondet(e.getOperands()[i].getBitWidth());
 						}
 					} else /* operand has no base */{
 						if (!aOperand.isNumberTop()) {
@@ -346,15 +321,13 @@ public final class BasedNumberValuation implements AbstractState {
 							// Check if this was a negation, to support
 							// subtraction of two pointers of same base
 							RTLExpression eOperand = e.getOperands()[i];
-							if (e.getOperator() == Operator.PLUS
-									&& eOperand instanceof RTLOperation
+							if (e.getOperator() == Operator.PLUS && eOperand instanceof RTLOperation
 									&& ((RTLOperation) eOperand).getOperator() == Operator.NEG) {
-								RTLExpression negOp = ((RTLOperation) eOperand)
-										.getOperands()[0];
+								RTLExpression negOp = ((RTLOperation) eOperand).getOperands()[0];
 								BasedNumberElement aNegOp = negOp.accept(this);
 								if (aNegOp.getRegion() == region) {
-									logger.debug("Subtracting pointer from another one to the same region ("
-											+ region + ").");
+									logger.debug("Subtracting pointer from another one to the same region (" + region
+											+ ").");
 									// We are subtracting the same region, so
 									// reset region to global
 									// since just the offset difference remains
@@ -366,99 +339,71 @@ public final class BasedNumberValuation implements AbstractState {
 									// TOP) unless there are more terms in the
 									// addition
 									if (aNegOp.isNumberTop())
-										cOperands[i] = ExpressionFactory
-												.nondet(e.getOperands()[i]
-														.getBitWidth());
+										cOperands[i] = ExpressionFactory.nondet(e.getOperands()[i].getBitWidth());
 									else
 										cOperands[i] = aNegOp.getNumber();
 								} else {
 									// This will also trigger when the negation
 									// is processed before the other term (e.g.,
 									// (-x) + y)
-									cOperands[i] = ExpressionFactory.nondet(e
-											.getOperands()[i].getBitWidth());
+									cOperands[i] = ExpressionFactory.nondet(e.getOperands()[i].getBitWidth());
 								}
 							} else {
-								cOperands[i] = ExpressionFactory.nondet(e
-										.getOperands()[i].getBitWidth());
+								cOperands[i] = ExpressionFactory.nondet(e.getOperands()[i].getBitWidth());
 							}
 						}
 
 					}
 				}
-				RTLExpression result = ExpressionFactory.createOperation(
-						e.getOperator(), cOperands).evaluate(new Context());
+				RTLExpression result = ExpressionFactory.createOperation(e.getOperator(), cOperands).evaluate(
+						new Context());
 				if (result instanceof RTLNumber) {
-					return new BasedNumberElement(region, new NumberElement(
-							(RTLNumber) result));
+					return new BasedNumberElement(region, new NumberElement((RTLNumber) result));
 				} else
-					return new BasedNumberElement(region,
-							NumberElement.getTop(e.getBitWidth()));
+					return new BasedNumberElement(region, NumberElement.getTop(e.getBitWidth()));
 			}
 
 			@Override
 			public BasedNumberElement visit(RTLSpecialExpression e) {
 				if (e.getOperator().equals(RTLSpecialExpression.GETPROCADDRESS)) {
-					BasedNumberElement aLibNameAddr = e.getOperands()[0]
-							.accept(this);
-					BasedNumberElement aProcNameAddr = e.getOperands()[1]
-							.accept(this);
-					if (aLibNameAddr.hasUniqueConcretization()
-							&& aProcNameAddr.hasUniqueConcretization()) {
+					BasedNumberElement aLibNameAddr = e.getOperands()[0].accept(this);
+					BasedNumberElement aProcNameAddr = e.getOperands()[1].accept(this);
+					if (aLibNameAddr.hasUniqueConcretization() && aProcNameAddr.hasUniqueConcretization()) {
 						long libNameAddr = aLibNameAddr.getNumber().longValue();
-						long procNameAddr = aProcNameAddr.getNumber()
-								.longValue();
-						String libName = getCString(MemoryRegion.GLOBAL,
-								libNameAddr);
+						long procNameAddr = aProcNameAddr.getNumber().longValue();
+						String libName = getCString(MemoryRegion.GLOBAL, libNameAddr);
 						// If it's length 1, it's most probably a unicode
 						// string:
 						if (libName.length() <= 1) {
-							libName = getWString(MemoryRegion.GLOBAL,
-									libNameAddr);
+							libName = getWString(MemoryRegion.GLOBAL, libNameAddr);
 						}
-						String procName = getCString(MemoryRegion.GLOBAL,
-								procNameAddr);
-						logger.info("GetProcAddress for " + procName
-								+ " from module " + libName);
-						long procAddress = Program.getProgram()
-								.getProcAddress(libName, procName).getValue();
-						return new BasedNumberElement(
-								ExpressionFactory.createNumber(procAddress, 32));
+						String procName = getCString(MemoryRegion.GLOBAL, procNameAddr);
+						logger.info("GetProcAddress for " + procName + " from module " + libName);
+						long procAddress = Program.getProgram().getProcAddress(libName, procName).getValue();
+						return new BasedNumberElement(ExpressionFactory.createNumber(procAddress, 32));
 
 					} else {
 						logger.info("Could not determine parameters of GetProcAddress!");
 					}
-				} else if (e.getOperator().equals(
-						RTLSpecialExpression.DBG_PRINTF)) {
-					BasedNumberElement firstArg = e.getOperands()[0]
-							.accept(this);
+				} else if (e.getOperator().equals(RTLSpecialExpression.DBG_PRINTF)) {
+					BasedNumberElement firstArg = e.getOperands()[0].accept(this);
 					// Dereference
-					BasedNumberElement stringAddress = getMemoryValue(firstArg,
-							32);
-					if (!stringAddress.getRegion().equals(MemoryRegion.TOP)
-							&& !stringAddress.isNumberTop()) {
-						String formatString = getCString(
-								stringAddress.getRegion(), stringAddress
-										.getNumber().longValue());
-						logger.debug("printf called with format string "
-								+ formatString.trim());
+					BasedNumberElement stringAddress = getMemoryValue(firstArg, 32);
+					if (!stringAddress.getRegion().equals(MemoryRegion.TOP) && !stringAddress.isNumberTop()) {
+						String formatString = getCString(stringAddress.getRegion(), stringAddress.getNumber()
+								.longValue());
+						logger.debug("printf called with format string " + formatString.trim());
 						StringBuilder sb = new StringBuilder();
 						int varArgCount = 0;
 						int lastMatch = 0;
-						for (int i = formatString.indexOf('%'); i >= 0; i = formatString
-								.indexOf('%', i + 1)) {
+						for (int i = formatString.indexOf('%'); i >= 0; i = formatString.indexOf('%', i + 1)) {
 							sb.append(formatString.substring(lastMatch, i));
 							lastMatch = i + 2; // skip %i (works only for simple
 												// %i, %s...)
 							varArgCount++;
 							BasedNumberElement curVarArg = getMemoryValue(
-									new BasedNumberElement(
-											firstArg.getRegion(),
-											ExpressionFactory.createNumber(
-													firstArg.getNumber()
-															.intValue()
-															+ varArgCount * 4,
-													32)), 32);
+									new BasedNumberElement(firstArg.getRegion(), ExpressionFactory.createNumber(
+											firstArg.getNumber().intValue() + varArgCount * 4, 32)), 32);
 
 							// Very basic support for printf
 							switch (formatString.charAt(i + 1)) {
@@ -473,11 +418,9 @@ public final class BasedNumberValuation implements AbstractState {
 								}
 								break;
 							case 's':
-								BasedNumberElement argStrAddr = getMemoryValue(
-										curVarArg, 32);
+								BasedNumberElement argStrAddr = getMemoryValue(curVarArg, 32);
 								logger.debug("  String argument: " + argStrAddr);
-								sb.append(getCString(argStrAddr.getRegion(),
-										argStrAddr.getNumber().longValue()));
+								sb.append(getCString(argStrAddr.getRegion(), argStrAddr.getNumber().longValue()));
 							}
 						}
 						sb.append(formatString.substring(lastMatch));
@@ -498,539 +441,425 @@ public final class BasedNumberValuation implements AbstractState {
 
 		BasedNumberElement result = e.accept(visitor);
 
-		assert result.getBitWidth() == e.getBitWidth() : "Bitwidth changed during evaluation of "
-				+ e + " to " + result;
+		assert result.getBitWidth() == e.getBitWidth() : "Bitwidth changed during evaluation of " + e + " to " + result;
 
 		return result;
 	}
 
-	public Set<AbstractState> abstractPost(final RTLStatement statement,
-			final Precision precision) {
+	public Set<AbstractState> abstractPost(final RTLStatement statement, final Precision precision) {
 		final ExplicitPrecision eprec = (ExplicitPrecision) precision;
 
-		return statement
-				.accept(new DefaultStatementVisitor<Set<AbstractState>>() {
+		return statement.accept(new DefaultStatementVisitor<Set<AbstractState>>() {
 
-					private final Set<AbstractState> thisState() {
-						if (statement.getLabel() == null)
-							logger.warn("No label: " + statement);
-						if (!statement.getLabel().getAddress()
-								.equals(statement.getNextLabel().getAddress())) {
-							BasedNumberValuation post = new BasedNumberValuation(
-									BasedNumberValuation.this);
-							post.clearTemporaryVariables();
-							return Collections.singleton((AbstractState) post);
-						} else {
-							return Collections
-									.singleton((AbstractState) BasedNumberValuation.this);
+			private final Set<AbstractState> thisState() {
+				if (statement.getLabel() == null)
+					logger.warn("No label: " + statement);
+				if (!statement.getLabel().getAddress().equals(statement.getNextLabel().getAddress())) {
+					BasedNumberValuation post = new BasedNumberValuation(BasedNumberValuation.this);
+					post.clearTemporaryVariables();
+					return Collections.singleton((AbstractState) post);
+				} else {
+					return Collections.singleton((AbstractState) BasedNumberValuation.this);
+				}
+			}
+
+			private final BasedNumberValuation copyThisState() {
+				BasedNumberValuation post = new BasedNumberValuation(BasedNumberValuation.this);
+				if (statement.getNextLabel() == null
+						|| !statement.getAddress().equals(statement.getNextLabel().getAddress())) {
+					// New instruction
+					post.clearTemporaryVariables();
+				}
+				return post;
+			}
+
+			@Override
+			public Set<AbstractState> visit(RTLVariableAssignment stmt) {
+				BasedNumberValuation post = copyThisState();
+
+				RTLVariable lhs = stmt.getLeftHandSide();
+				RTLExpression rhs = stmt.getRightHandSide();
+				BasedNumberElement evaledRhs = abstractEval(rhs);
+
+				// Check for stackpointer alignment assignments
+				// (workaround for gcc compiled files)
+				RTLVariable sp = Program.getProgram().getArchitecture().stackPointer();
+				if (lhs.equals(sp) && rhs instanceof RTLOperation) {
+					RTLOperation op = (RTLOperation) rhs;
+					if (op.getOperator().equals(Operator.AND) && op.getOperands()[0].equals(sp)
+							&& op.getOperands()[1] instanceof RTLNumber) {
+						evaledRhs = getValue(sp);
+						logger.warn("Ignoring stackpointer alignment at " + stmt.getAddress());
+					}
+				}
+
+				post.setValue(lhs, evaledRhs, eprec);
+
+				if (!BoundedAddressTracking.keepDeadStack.getValue()) {
+					// If the stack pointer was increased, forget stack
+					// below to save state space
+					if (lhs.equals(Program.getProgram().getArchitecture().stackPointer())) {
+						if (!evaledRhs.isTop() && !evaledRhs.isNumberTop()) {
+							post.aStore.forgetStackBelow(evaledRhs.getNumber().longValue());
 						}
 					}
+				}
 
-					private final BasedNumberValuation copyThisState() {
-						BasedNumberValuation post = new BasedNumberValuation(
-								BasedNumberValuation.this);
-						if (statement.getNextLabel() == null
-								|| !statement.getAddress().equals(
-										statement.getNextLabel().getAddress())) {
-							// New instruction
-							post.clearTemporaryVariables();
-						}
-						return post;
-					}
+				return Collections.singleton((AbstractState) post);
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLVariableAssignment stmt) {
+			@Override
+			public Set<AbstractState> visit(RTLMemoryAssignment stmt) {
+				BasedNumberValuation post = copyThisState();
+				BasedNumberElement evaledRhs = abstractEval(stmt.getRightHandSide());
+
+				RTLMemoryLocation m = stmt.getLeftHandSide();
+				BasedNumberElement abstractAddress = abstractEvalAddress(m);
+
+				// if the address cannot be determined, set all store
+				// memory to TOP
+				if (!post.setMemoryValue(abstractAddress, m.getBitWidth(), evaledRhs, eprec)) {
+					logger.verbose(stmt.getLabel() + ": Cannot resolve memory write to " + m + ".");
+					logger.debug("State: " + BasedNumberValuation.this);
+				}
+
+				return Collections.singleton((AbstractState) post);
+			}
+
+			@Override
+			public Set<AbstractState> visit(RTLAssume stmt) {
+
+				Architecture arch = Program.getProgram().getArchitecture();
+				// ///////
+				// Special case for non-exit edges of x86 REP/REPNZ
+				// prefixes (for loops using ecx)
+				if (stmt.getSource().getType() == RTLGoto.Type.STRING_LENGTH_CHECK) {
+					BasedNumberElement loopCounter = getValue(arch.loopCounter());
+					if (loopCounter.isTop() || loopCounter.isNumberTop()) {
+						X86Instruction instr = (X86Instruction) Program.getProgram().getInstruction(stmt.getAddress());
 						BasedNumberValuation post = copyThisState();
-
-						RTLVariable lhs = stmt.getLeftHandSide();
-						RTLExpression rhs = stmt.getRightHandSide();
-						BasedNumberElement evaledRhs = abstractEval(rhs);
-
-						// Check for stackpointer alignment assignments
-						// (workaround for gcc compiled files)
-						RTLVariable sp = Program.getProgram().getArchitecture()
-								.stackPointer();
-						if (lhs.equals(sp) && rhs instanceof RTLOperation) {
-							RTLOperation op = (RTLOperation) rhs;
-							if (op.getOperator().equals(Operator.AND)
-									&& op.getOperands()[0].equals(sp)
-									&& op.getOperands()[1] instanceof RTLNumber) {
-								evaledRhs = getValue(sp);
-								logger.warn("Ignoring stackpointer alignment at "
-										+ stmt.getAddress());
-							}
+						if (instr.hasEsiBasedMemorySource()) {
+							logger.debug(stmt.getLabel() + ": ecx is unknown in REP/REPNZ, widening esi");
+							post.setValue(arch.stringSource(), new BasedNumberElement(getValue(arch.stringSource())
+									.getRegion(), NumberElement.getTop(arch.getAddressBitWidth())));
+						}
+						if (instr.hasEdiBasedMemoryTarget()) {
+							logger.debug(stmt.getLabel() + ": ecx is unknown in REP/REPNZ, widening edi");
+							post.setValue(arch.stringTarget(), new BasedNumberElement(getValue(arch.stringTarget())
+									.getRegion(), NumberElement.getTop(arch.getAddressBitWidth())));
+						}
+						// STRING_LENGTH_CHECK assumptions are ecx == 0
+						// or !(ecx == 0)
+						RTLOperation operation = (RTLOperation) stmt.getAssumption();
+						if (operation.getOperator() == Operator.EQUAL) {
+							assert operation.getOperands()[0] == arch.loopCounter();
+							assert ((RTLNumber) operation.getOperands()[1]).longValue() == 0;
+							post.setValue(arch.loopCounter(), abstractEval(operation.getOperands()[1]));
 						}
 
-						post.setValue(lhs, evaledRhs, eprec);
+						return Collections.singleton((AbstractState) post);
+					}
+				}
+				// // End special case for REP/REPNZ
 
-						if (!BoundedAddressTracking.keepDeadStack.getValue()) {
-							// If the stack pointer was increased, forget stack
-							// below to save state space
-							if (lhs.equals(Program.getProgram()
-									.getArchitecture().stackPointer())) {
-								if (!evaledRhs.isTop()
-										&& !evaledRhs.isNumberTop()) {
-									post.aStore.forgetStackBelow(evaledRhs
-											.getNumber().longValue());
+				AbstractValue truthValue = abstractEval(stmt.getAssumption());
+
+				if (truthValue.equals(BasedNumberElement.FALSE)) {
+					logger.info(stmt.getLabel() + ", state ID " + getIdentifier() + ": Transformer " + stmt
+							+ " is infeasible.");
+					System.out.println(stmt.getLabel() + ", state ID " + getIdentifier() + ": Transformer " + stmt
+							+ " is infeasible.");
+
+					return Collections.emptySet();
+				} else if (truthValue.equals(BasedNumberElement.TRUE)) {
+					return thisState();
+				} else {
+					// first evaluate the assumption, maybe we can
+					// simplify it due to assignments in this state
+					RTLExpression assumption = stmt.getAssumption();
+					assumption = assumption.evaluate(getContext());
+
+					// Modify state so that it respects the assumption
+					// We should really enumerate all solutions and
+					// create the corresponding states (requires
+					// different return type)
+					// Currently works only for simple assumptions
+
+					if (assumption instanceof RTLOperation) {
+						RTLOperation operation = (RTLOperation) assumption;
+						switch (operation.getOperator()) {
+						case EQUAL:
+							// assume(var = value)
+							if (operation.getOperands()[0] instanceof RTLVariable) {
+								RTLVariable var = (RTLVariable) operation.getOperands()[0];
+
+								if (operation.getOperands()[1] instanceof RTLNumber) {
+									RTLNumber value = (RTLNumber) operation.getOperands()[1];
+									// logger.debug("Restricting state to "
+									// + var + " = " + value);
+									BasedNumberValuation post = copyThisState();
+									post.setValue(var, new BasedNumberElement(value), eprec);
+									return Collections.singleton((AbstractState) post);
 								}
 							}
-						}
-
-						return Collections.singleton((AbstractState) post);
-					}
-
-					@Override
-					public Set<AbstractState> visit(RTLMemoryAssignment stmt) {
-						BasedNumberValuation post = copyThisState();
-						BasedNumberElement evaledRhs = abstractEval(stmt
-								.getRightHandSide());
-
-						RTLMemoryLocation m = stmt.getLeftHandSide();
-						BasedNumberElement abstractAddress = abstractEvalAddress(m);
-
-						// if the address cannot be determined, set all store
-						// memory to TOP
-						if (!post.setMemoryValue(abstractAddress,
-								m.getBitWidth(), evaledRhs, eprec)) {
-							logger.verbose(stmt.getLabel()
-									+ ": Cannot resolve memory write to " + m
-									+ ".");
-							logger.debug("State: " + BasedNumberValuation.this);
-						}
-
-						return Collections.singleton((AbstractState) post);
-					}
-
-					@Override
-					public Set<AbstractState> visit(RTLAssume stmt) {
-
-						Architecture arch = Program.getProgram()
-								.getArchitecture();
-						// ///////
-						// Special case for non-exit edges of x86 REP/REPNZ
-						// prefixes (for loops using ecx)
-						if (stmt.getSource().getType() == RTLGoto.Type.STRING_LENGTH_CHECK) {
-							BasedNumberElement loopCounter = getValue(arch
-									.loopCounter());
-							if (loopCounter.isTop()
-									|| loopCounter.isNumberTop()) {
-								X86Instruction instr = (X86Instruction) Program
-										.getProgram().getInstruction(
-												stmt.getAddress());
+							break;
+						case NOT:
+							// assume(!x)
+							if (operation.getOperands()[0] instanceof RTLVariable) {
+								RTLVariable var = (RTLVariable) operation.getOperands()[0];
+								// logger.debug("Restricting state to "
+								// + var + " = false");
 								BasedNumberValuation post = copyThisState();
-								if (instr.hasEsiBasedMemorySource()) {
-									logger.debug(stmt.getLabel()
-											+ ": ecx is unknown in REP/REPNZ, widening esi");
-									post.setValue(
-											arch.stringSource(),
-											new BasedNumberElement(
-													getValue(
-															arch.stringSource())
-															.getRegion(),
-													NumberElement.getTop(arch
-															.getAddressBitWidth())));
-								}
-								if (instr.hasEdiBasedMemoryTarget()) {
-									logger.debug(stmt.getLabel()
-											+ ": ecx is unknown in REP/REPNZ, widening edi");
-									post.setValue(
-											arch.stringTarget(),
-											new BasedNumberElement(
-													getValue(
-															arch.stringTarget())
-															.getRegion(),
-													NumberElement.getTop(arch
-															.getAddressBitWidth())));
-								}
-								// STRING_LENGTH_CHECK assumptions are ecx == 0
-								// or !(ecx == 0)
-								RTLOperation operation = (RTLOperation) stmt
-										.getAssumption();
-								if (operation.getOperator() == Operator.EQUAL) {
-									assert operation.getOperands()[0] == arch
-											.loopCounter();
-									assert ((RTLNumber) operation.getOperands()[1])
-											.longValue() == 0;
-									post.setValue(arch.loopCounter(),
-											abstractEval(operation
-													.getOperands()[1]));
-								}
-
-								return Collections
-										.singleton((AbstractState) post);
+								post.setValue(var, BasedNumberElement.FALSE, eprec);
+								return Collections.singleton((AbstractState) post);
 							}
+							break;
+						case UNSIGNED_LESS_OR_EQUAL:
+							// assume (x u<= n)
+							/*
+							 * Currently commented out - we do not really know
+							 * when we want to do this - in jumptables yes
+							 * (first default-check generates all possible
+							 * cases), but in simple input u<= n checks, we do
+							 * not. if (operation.getOperands()[0] instanceof
+							 * Writable && operation.getOperands()[1] instanceof
+							 * RTLNumber) {
+							 * 
+							 * long max = ((RTLNumber)operation.getOperands
+							 * ()[1]).longValue(); if (max <=
+							 * Options.explicitThreshold) { Writable lhs =
+							 * (Writable)operation.getOperands()[0];
+							 * Set<AbstractState> postSet = new
+							 * FastSet<AbstractState>(); ExpressionFactory
+							 * factory = ExpressionFactory.getInstance();
+							 * 
+							 * BasedNumberElement aAddr = null; if (lhs
+							 * instanceof RTLMemoryLocation) aAddr =
+							 * abstractEvalAddress ((RTLMemoryLocation)lhs);
+							 * 
+							 * for (int val = 0; val <= max; val++) {
+							 * BasedNumberValuation post = copyThisState();
+							 * BasedNumberElement value = new
+							 * BasedNumberElement(factory.createNumber (val,
+							 * lhs.getBitWidth())); if (lhs instanceof
+							 * RTLMemoryLocation) post.setMemoryValue(aAddr,
+							 * lhs.getBitWidth(), value, eprec); else
+							 * post.setValue((RTLVariable)lhs, value); if
+							 * (postSet.contains(post)) { logger.debug(
+							 * "Post states already contain enumerated state - reduced precision for "
+							 * + lhs + "?"); break; }
+							 * postSet.add((AbstractState)post); }
+							 * logger.debug(stmt.getLabel() +
+							 * ": Assume created " + postSet.size() +
+							 * " new states!"); return postSet; } else {
+							 * logger.debug(stmt +
+							 * " enumeration would exceed threshold!"); } }
+							 */
 						}
-						// // End special case for REP/REPNZ
 
-						AbstractValue truthValue = abstractEval(stmt
-								.getAssumption());
-
-						if (truthValue.equals(BasedNumberElement.FALSE)) {
-							logger.info(stmt.getLabel() + ", state ID "
-									+ getIdentifier() + ": Transformer " + stmt
-									+ " is infeasible.");
-							System.out.println(stmt.getLabel() + ", state ID "
-									+ getIdentifier() + ": Transformer " + stmt
-									+ " is infeasible.");
-
-							return Collections.emptySet();
-						} else if (truthValue.equals(BasedNumberElement.TRUE)) {
-							return thisState();
-						} else {
-							// first evaluate the assumption, maybe we can
-							// simplify it due to assignments in this state
-							RTLExpression assumption = stmt.getAssumption();
-							assumption = assumption.evaluate(getContext());
-
-							// Modify state so that it respects the assumption
-							// We should really enumerate all solutions and
-							// create the corresponding states (requires
-							// different return type)
-							// Currently works only for simple assumptions
-
-							if (assumption instanceof RTLOperation) {
-								RTLOperation operation = (RTLOperation) assumption;
-								switch (operation.getOperator()) {
-								case EQUAL:
-									// assume(var = value)
-									if (operation.getOperands()[0] instanceof RTLVariable) {
-										RTLVariable var = (RTLVariable) operation
-												.getOperands()[0];
-
-										if (operation.getOperands()[1] instanceof RTLNumber) {
-											RTLNumber value = (RTLNumber) operation
-													.getOperands()[1];
-											// logger.debug("Restricting state to "
-											// + var + " = " + value);
-											BasedNumberValuation post = copyThisState();
-											post.setValue(var,
-													new BasedNumberElement(
-															value), eprec);
-											return Collections
-													.singleton((AbstractState) post);
-										}
-									}
-									break;
-								case NOT:
-									// assume(!x)
-									if (operation.getOperands()[0] instanceof RTLVariable) {
-										RTLVariable var = (RTLVariable) operation
-												.getOperands()[0];
-										// logger.debug("Restricting state to "
-										// + var + " = false");
-										BasedNumberValuation post = copyThisState();
-										post.setValue(var,
-												BasedNumberElement.FALSE, eprec);
-										return Collections
-												.singleton((AbstractState) post);
-									}
-									break;
-								case UNSIGNED_LESS_OR_EQUAL:
-									// assume (x u<= n)
-									/*
-									 * Currently commented out - we do not
-									 * really know when we want to do this - in
-									 * jumptables yes (first default-check
-									 * generates all possible cases), but in
-									 * simple input u<= n checks, we do not. if
-									 * (operation.getOperands()[0] instanceof
-									 * Writable && operation.getOperands()[1]
-									 * instanceof RTLNumber) {
-									 * 
-									 * long max =
-									 * ((RTLNumber)operation.getOperands
-									 * ()[1]).longValue(); if (max <=
-									 * Options.explicitThreshold) { Writable lhs
-									 * = (Writable)operation.getOperands()[0];
-									 * Set<AbstractState> postSet = new
-									 * FastSet<AbstractState>();
-									 * ExpressionFactory factory =
-									 * ExpressionFactory.getInstance();
-									 * 
-									 * BasedNumberElement aAddr = null; if (lhs
-									 * instanceof RTLMemoryLocation) aAddr =
-									 * abstractEvalAddress
-									 * ((RTLMemoryLocation)lhs);
-									 * 
-									 * for (int val = 0; val <= max; val++) {
-									 * BasedNumberValuation post =
-									 * copyThisState(); BasedNumberElement value
-									 * = new
-									 * BasedNumberElement(factory.createNumber
-									 * (val, lhs.getBitWidth())); if (lhs
-									 * instanceof RTLMemoryLocation)
-									 * post.setMemoryValue(aAddr,
-									 * lhs.getBitWidth(), value, eprec); else
-									 * post.setValue((RTLVariable)lhs, value);
-									 * if (postSet.contains(post)) {
-									 * logger.debug(
-									 * "Post states already contain enumerated state - reduced precision for "
-									 * + lhs + "?"); break; }
-									 * postSet.add((AbstractState)post); }
-									 * logger.debug(stmt.getLabel() +
-									 * ": Assume created " + postSet.size() +
-									 * " new states!"); return postSet; } else {
-									 * logger.debug(stmt +
-									 * " enumeration would exceed threshold!");
-									 * } }
-									 */
-								}
-
-							} else if (assumption instanceof RTLVariable) {
-								// assume(x)
-								RTLVariable var = (RTLVariable) assumption;
-								// logger.debug("Restricting state to " + var +
-								// " = true");
-								BasedNumberValuation post = copyThisState();
-								post.setValue(var, BasedNumberElement.TRUE,
-										eprec);
-								return Collections
-										.singleton((AbstractState) post);
-							}
-							return thisState();
-						}
-					}
-
-					@Override
-					public Set<AbstractState> visit(RTLAlloc stmt) {
+					} else if (assumption instanceof RTLVariable) {
+						// assume(x)
+						RTLVariable var = (RTLVariable) assumption;
+						// logger.debug("Restricting state to " + var +
+						// " = true");
 						BasedNumberValuation post = copyThisState();
-						Writable lhs = stmt.getPointer();
-						// Note: We never need to create heap regions as summary
-						// regions. Either the threshold
-						// is high enough to precisely track all executions of
-						// an allocation explicitly,
-						// or the number of different pointers/regions also
-						// exceeds the threshold and
-						// will be widened to T.
-						// TODO: How can we create regions to allow exchange of
-						// information between analyses?
-						// MemoryRegion newRegion = MemoryRegion.create("alloc"
-						// + stmt.getLabel() + "_" + getIdentifier());
-
-						MemoryRegion newRegion;
-
-						// Check for hardcoded allocation names (i.e., stack or
-						// FS)
-						if (stmt.getAllocationName() != null) {
-							newRegion = MemoryRegion.create(stmt
-									.getAllocationName());
-						} else {
-							newRegion = MemoryRegion.create("alloc"
-									+ stmt.getLabel()
-									+ "#"
-									+ post.allocCounters.countAllocation(stmt
-											.getLabel()));
-						}
-
-						// We also allow pointers of less than the actual
-						// address size, to emulate the 16 bit segment registers
-						// FS/GS
-						// FS gets a value of (FS, 0) in the prologue.
-
-						if (lhs instanceof RTLVariable) {
-							post.setValue(
-									(RTLVariable) lhs,
-									new BasedNumberElement(newRegion,
-											ExpressionFactory.createNumber(0,
-													lhs.getBitWidth())), eprec);
-						} else {
-							RTLMemoryLocation m = (RTLMemoryLocation) lhs;
-							BasedNumberElement abstractAddress = abstractEvalAddress(m);
-							if (!post.setMemoryValue(
-									abstractAddress,
-									m.getBitWidth(),
-									new BasedNumberElement(newRegion,
-											ExpressionFactory.createNumber(0,
-													lhs.getBitWidth())), eprec))
-								logger.verbose(stmt.getLabel()
-										+ ": Cannot resolve memory write from alloc to "
-										+ m + ".");
-						}
-
+						post.setValue(var, BasedNumberElement.TRUE, eprec);
 						return Collections.singleton((AbstractState) post);
 					}
+					return thisState();
+				}
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLDealloc stmt) {
+			@Override
+			public Set<AbstractState> visit(RTLAlloc stmt) {
+				BasedNumberValuation post = copyThisState();
+				Writable lhs = stmt.getPointer();
+				// Note: We never need to create heap regions as summary
+				// regions. Either the threshold
+				// is high enough to precisely track all executions of
+				// an allocation explicitly,
+				// or the number of different pointers/regions also
+				// exceeds the threshold and
+				// will be widened to T.
+				// TODO: How can we create regions to allow exchange of
+				// information between analyses?
+				// MemoryRegion newRegion = MemoryRegion.create("alloc"
+				// + stmt.getLabel() + "_" + getIdentifier());
+
+				MemoryRegion newRegion;
+
+				// Check for hardcoded allocation names (i.e., stack or
+				// FS)
+				if (stmt.getAllocationName() != null) {
+					newRegion = MemoryRegion.create(stmt.getAllocationName());
+				} else {
+					newRegion = MemoryRegion.create("alloc" + stmt.getLabel() + "#"
+							+ post.allocCounters.countAllocation(stmt.getLabel()));
+				}
+
+				// We also allow pointers of less than the actual
+				// address size, to emulate the 16 bit segment registers
+				// FS/GS
+				// FS gets a value of (FS, 0) in the prologue.
+
+				if (lhs instanceof RTLVariable) {
+					post.setValue((RTLVariable) lhs,
+							new BasedNumberElement(newRegion, ExpressionFactory.createNumber(0, lhs.getBitWidth())),
+							eprec);
+				} else {
+					RTLMemoryLocation m = (RTLMemoryLocation) lhs;
+					BasedNumberElement abstractAddress = abstractEvalAddress(m);
+					if (!post.setMemoryValue(abstractAddress, m.getBitWidth(), new BasedNumberElement(newRegion,
+							ExpressionFactory.createNumber(0, lhs.getBitWidth())), eprec))
+						logger.verbose(stmt.getLabel() + ": Cannot resolve memory write from alloc to " + m + ".");
+				}
+
+				return Collections.singleton((AbstractState) post);
+			}
+
+			@Override
+			public Set<AbstractState> visit(RTLDealloc stmt) {
+				BasedNumberValuation post = copyThisState();
+				BasedNumberElement abstractAddress = abstractEval(stmt.getPointer());
+				// if the address cannot be determined, set all store
+				// memory to TOP
+				if (abstractAddress.isTop()) {
+					logger.info(getIdentifier() + ": Cannot resolve location of deallocated memory pointer "
+							+ stmt.getPointer() + ". Might miss use after free bugs!");
+					// logger.info(getIdentifier() +
+					// ": Cannot resolve location of deallocated memory pointer "
+					// + stmt.getPointer() +
+					// ". Defaulting ALL memory to " + Characters.TOP);
+					// logger.info(BasedNumberValuation.this);
+					// post.aStore.setTop();
+				} else {
+					if (abstractAddress.getRegion() == MemoryRegion.GLOBAL
+							|| abstractAddress.getRegion() == MemoryRegion.STACK)
+						throw new UnknownPointerAccessException("Cannot deallocate " + abstractAddress.getRegion()
+								+ "!");
+					logger.debug(stmt.getLabel() + ": Dealloc on " + abstractAddress.getRegion());
+					post.aStore.setTop(abstractAddress.getRegion());
+				}
+				return Collections.singleton((AbstractState) post);
+			}
+
+			@Override
+			public Set<AbstractState> visit(RTLUnknownProcedureCall stmt) {
+				BasedNumberValuation post = copyThisState();
+				for (RTLVariable var : stmt.getDefinedVariables()) {
+					post.setValue(var, BasedNumberElement.getTop(var.getBitWidth()), eprec);
+				}
+				post.aStore.setTop();
+				return Collections.singleton((AbstractState) post);
+			}
+
+			@Override
+			public Set<AbstractState> visit(RTLHavoc stmt) {
+				assert (stmt.getMaximum() instanceof RTLNumber);
+
+				long max = ((RTLNumber) stmt.getMaximum()).longValue();
+				// Convert max from unsigned to signed
+				if (max < 0) {
+					max = (1 << stmt.getMaximum().getBitWidth()) + max;
+				}
+				RTLVariable var = stmt.getVariable();
+				if (max > eprec.getThreshold(var)) {
+					logger.debug(stmt.getLabel() + ": Havoc bound exceeds variable precision! Setting " + var + " to $"
+							+ Characters.TOP);
+					BasedNumberValuation post = copyThisState();
+					post.setValue(var,
+							new BasedNumberElement(MemoryRegion.GLOBAL, NumberElement.getTop(var.getBitWidth())), eprec);
+					return Collections.singleton((AbstractState) post);
+				} else {
+					Set<AbstractState> postSet = new FastSet<AbstractState>();
+					for (int val = 0; val <= max; val++) {
 						BasedNumberValuation post = copyThisState();
-						BasedNumberElement abstractAddress = abstractEval(stmt
-								.getPointer());
-						// if the address cannot be determined, set all store
-						// memory to TOP
-						if (abstractAddress.isTop()) {
-							logger.info(getIdentifier()
-									+ ": Cannot resolve location of deallocated memory pointer "
-									+ stmt.getPointer()
-									+ ". Might miss use after free bugs!");
-							// logger.info(getIdentifier() +
-							// ": Cannot resolve location of deallocated memory pointer "
-							// + stmt.getPointer() +
-							// ". Defaulting ALL memory to " + Characters.TOP);
-							// logger.info(BasedNumberValuation.this);
-							// post.aStore.setTop();
-						} else {
-							if (abstractAddress.getRegion() == MemoryRegion.GLOBAL
-									|| abstractAddress.getRegion() == MemoryRegion.STACK)
-								throw new UnknownPointerAccessException(
-										"Cannot deallocate "
-												+ abstractAddress.getRegion()
-												+ "!");
-							logger.debug(stmt.getLabel() + ": Dealloc on "
-									+ abstractAddress.getRegion());
-							post.aStore.setTop(abstractAddress.getRegion());
-						}
-						return Collections.singleton((AbstractState) post);
+						post.setValue(var,
+								new BasedNumberElement(ExpressionFactory.createNumber(val, var.getBitWidth())), eprec);
+						postSet.add(post);
+					}
+					logger.debug(stmt.getLabel() + ": Havoc created " + postSet.size() + " new states!");
+					// logger.debug("State was: " +
+					// BasedNumberValuation.this);
+					return postSet;
+				}
+			}
+
+			@Override
+			public Set<AbstractState> visit(RTLMemset stmt) {
+
+				BasedNumberValuation post = copyThisState();
+
+				BasedNumberElement aDest = abstractEval(stmt.getDestination());
+				BasedNumberElement aVal = abstractEval(stmt.getValue());
+				BasedNumberElement aCount = abstractEval(stmt.getCount());
+
+				logger.debug(stmt.getLabel() + ": memset( " + aDest + ", " + aVal + ", " + aCount + ")");
+
+				if (aCount.hasUniqueConcretization() && !aDest.isTop() && !aDest.isNumberTop()) {
+					long count = aCount.getNumber().longValue();
+					int step = aVal.getBitWidth() / 8;
+					long base = aDest.getNumber().longValue();
+					for (long i = base; i < base + (count * step); i += step) {
+						BasedNumberElement pointer = new BasedNumberElement(aDest.getRegion(), new NumberElement(
+								ExpressionFactory.createNumber(i, aDest.getBitWidth())));
+						post.setMemoryValue(pointer, aVal.getBitWidth(), aVal, eprec);
 					}
 
-					@Override
-					public Set<AbstractState> visit(RTLUnknownProcedureCall stmt) {
-						BasedNumberValuation post = copyThisState();
-						for (RTLVariable var : stmt.getDefinedVariables()) {
-							post.setValue(var, BasedNumberElement.getTop(var
-									.getBitWidth()), eprec);
-						}
-						post.aStore.setTop();
-						return Collections.singleton((AbstractState) post);
-					}
+				} else {
+					logger.debug(stmt.getLabel() + ": Overapproximating memset( " + aDest + ", " + aVal + ", " + aCount
+							+ ")");
+					post.aStore.setTop(aDest.getRegion());
+				}
 
-					@Override
-					public Set<AbstractState> visit(RTLHavoc stmt) {
-						assert (stmt.getMaximum() instanceof RTLNumber);
+				return Collections.singleton((AbstractState) post);
+			}
 
-						long max = ((RTLNumber) stmt.getMaximum()).longValue();
-						// Convert max from unsigned to signed
-						if (max < 0) {
-							max = (1 << stmt.getMaximum().getBitWidth()) + max;
-						}
-						RTLVariable var = stmt.getVariable();
-						if (max > eprec.getThreshold(var)) {
-							logger.debug(stmt.getLabel()
-									+ ": Havoc bound exceeds variable precision! Setting "
-									+ var + " to $" + Characters.TOP);
-							BasedNumberValuation post = copyThisState();
-							post.setValue(
-									var,
-									new BasedNumberElement(MemoryRegion.GLOBAL,
-											NumberElement.getTop(var
-													.getBitWidth())), eprec);
-							return Collections.singleton((AbstractState) post);
-						} else {
-							Set<AbstractState> postSet = new FastSet<AbstractState>();
-							for (int val = 0; val <= max; val++) {
-								BasedNumberValuation post = copyThisState();
-								post.setValue(
-										var,
-										new BasedNumberElement(
-												ExpressionFactory.createNumber(
-														val, var.getBitWidth())),
-										eprec);
-								postSet.add(post);
-							}
-							logger.debug(stmt.getLabel() + ": Havoc created "
-									+ postSet.size() + " new states!");
-							// logger.debug("State was: " +
-							// BasedNumberValuation.this);
-							return postSet;
-						}
-					}
+			@Override
+			public Set<AbstractState> visit(RTLMemcpy stmt) {
+				BasedNumberValuation post = copyThisState();
 
-					@Override
-					public Set<AbstractState> visit(RTLMemset stmt) {
+				BasedNumberElement aSrc = abstractEval(stmt.getSource());
+				BasedNumberElement aDest = abstractEval(stmt.getDestination());
+				BasedNumberElement aSize = abstractEval(stmt.getSize());
 
-						BasedNumberValuation post = copyThisState();
+				logger.debug(stmt.getLabel() + ": memcpy( " + aSrc + ", " + aDest + ", " + aSize + ")");
 
-						BasedNumberElement aDest = abstractEval(stmt
-								.getDestination());
-						BasedNumberElement aVal = abstractEval(stmt.getValue());
-						BasedNumberElement aCount = abstractEval(stmt
-								.getCount());
+				if (aSize.hasUniqueConcretization() && !aDest.isTop() && !aDest.isNumberTop()) {
 
-						logger.debug(stmt.getLabel() + ": memset( " + aDest
-								+ ", " + aVal + ", " + aCount + ")");
+					long size = aSize.getNumber().longValue();
 
-						if (aCount.hasUniqueConcretization() && !aDest.isTop()
-								&& !aDest.isNumberTop()) {
-							long count = aCount.getNumber().longValue();
-							int step = aVal.getBitWidth() / 8;
-							long base = aDest.getNumber().longValue();
-							for (long i = base; i < base + (count * step); i += step) {
-								BasedNumberElement pointer = new BasedNumberElement(
-										aDest.getRegion(),
-										new NumberElement(ExpressionFactory
-												.createNumber(i,
-														aDest.getBitWidth())));
-								post.setMemoryValue(pointer,
-										aVal.getBitWidth(), aVal, eprec);
-							}
+					// Source is unknown
+					if (aSrc.isTop() || aSrc.isNumberTop()) {
 
-						} else {
-							logger.debug(stmt.getLabel()
-									+ ": Overapproximating memset( " + aDest
-									+ ", " + aVal + ", " + aCount + ")");
-							post.aStore.setTop(aDest.getRegion());
+						logger.debug(stmt.getLabel() + ": memcpy( " + aSrc + ", " + aDest + ", " + aSize
+								+ ") with unknown source.");
+						long base = aDest.getNumber().longValue();
+						for (long i = base; i < base + size; i++) {
+							BasedNumberElement pointer = new BasedNumberElement(aDest.getRegion(), new NumberElement(
+									ExpressionFactory.createNumber(i, aDest.getBitWidth())));
+							post.setMemoryValue(pointer, 8, BasedNumberElement.getTop(8), eprec);
 						}
 
-						return Collections.singleton((AbstractState) post);
+					} else {
+						post.aStore.memcpy(aSrc.getRegion(), aSrc.getNumber().longValue(), aDest.getRegion(), aDest
+								.getNumber().longValue(), size);
 					}
+				} else {
+					logger.debug(stmt.getLabel() + ": Overapproximating memcpy( " + aSrc + ", " + aDest + ", " + aSize
+							+ ")");
+					post.aStore.setTop(aDest.getRegion());
+				}
 
-					@Override
-					public Set<AbstractState> visit(RTLMemcpy stmt) {
-						BasedNumberValuation post = copyThisState();
+				return Collections.singleton((AbstractState) post);
+			}
 
-						BasedNumberElement aSrc = abstractEval(stmt.getSource());
-						BasedNumberElement aDest = abstractEval(stmt
-								.getDestination());
-						BasedNumberElement aSize = abstractEval(stmt.getSize());
+			@Override
+			public Set<AbstractState> visitDefault(RTLStatement stmt) {
+				return thisState();
+			}
 
-						logger.debug(stmt.getLabel() + ": memcpy( " + aSrc
-								+ ", " + aDest + ", " + aSize + ")");
-
-						if (aSize.hasUniqueConcretization() && !aDest.isTop()
-								&& !aDest.isNumberTop()) {
-
-							long size = aSize.getNumber().longValue();
-
-							// Source is unknown
-							if (aSrc.isTop() || aSrc.isNumberTop()) {
-
-								logger.debug(stmt.getLabel() + ": memcpy( "
-										+ aSrc + ", " + aDest + ", " + aSize
-										+ ") with unknown source.");
-								long base = aDest.getNumber().longValue();
-								for (long i = base; i < base + size; i++) {
-									BasedNumberElement pointer = new BasedNumberElement(
-											aDest.getRegion(),
-											new NumberElement(
-													ExpressionFactory
-															.createNumber(
-																	i,
-																	aDest.getBitWidth())));
-									post.setMemoryValue(pointer, 8,
-											BasedNumberElement.getTop(8), eprec);
-								}
-
-							} else {
-								post.aStore.memcpy(aSrc.getRegion(), aSrc
-										.getNumber().longValue(), aDest
-										.getRegion(), aDest.getNumber()
-										.longValue(), size);
-							}
-						} else {
-							logger.debug(stmt.getLabel()
-									+ ": Overapproximating memcpy( " + aSrc
-									+ ", " + aDest + ", " + aSize + ")");
-							post.aStore.setTop(aDest.getRegion());
-						}
-
-						return Collections.singleton((AbstractState) post);
-					}
-
-					@Override
-					public Set<AbstractState> visitDefault(RTLStatement stmt) {
-						return thisState();
-					}
-
-				});
+		});
 	}
 
 	public BasedNumberElement getValue(RTLVariable var) {
@@ -1041,18 +870,15 @@ public final class BasedNumberValuation implements AbstractState {
 		aVarVal.set(var, value);
 	}
 
-	void setValue(RTLVariable var, BasedNumberElement value,
-			ExplicitPrecision precision) {
+	void setValue(RTLVariable var, BasedNumberElement value, ExplicitPrecision precision) {
 		BasedNumberElement valueToSet;
 		switch (precision.getTrackingLevel(var)) {
 		case NONE:
-			logger.debug("Precision prevents value " + value
-					+ " to be set for " + var);
+			logger.debug("Precision prevents value " + value + " to be set for " + var);
 			valueToSet = BasedNumberElement.getTop(var.getBitWidth());
 			break;
 		case REGION:
-			valueToSet = new BasedNumberElement(value.getRegion(),
-					NumberElement.getTop(var.getBitWidth()));
+			valueToSet = new BasedNumberElement(value.getRegion(), NumberElement.getTop(var.getBitWidth()));
 			break;
 		default:
 			valueToSet = value;
@@ -1060,8 +886,7 @@ public final class BasedNumberValuation implements AbstractState {
 		aVarVal.set(var, valueToSet);
 	}
 
-	private BasedNumberElement getMemoryValue(BasedNumberElement pointer,
-			int bitWidth) {
+	private BasedNumberElement getMemoryValue(BasedNumberElement pointer, int bitWidth) {
 		if (pointer.isTop() || pointer.isNumberTop())
 			return BasedNumberElement.getTop(bitWidth);
 		long offset = pointer.getNumber().longValue();
@@ -1069,8 +894,8 @@ public final class BasedNumberValuation implements AbstractState {
 	}
 
 	// Returns true if set was successful, false if memory was overapproximated
-	private boolean setMemoryValue(BasedNumberElement pointer, int bitWidth,
-			BasedNumberElement value, ExplicitPrecision precision) {
+	private boolean setMemoryValue(BasedNumberElement pointer, int bitWidth, BasedNumberElement value,
+			ExplicitPrecision precision) {
 		if (pointer.isTop()) {
 			aStore.setTop();
 			return false;
@@ -1083,13 +908,11 @@ public final class BasedNumberValuation implements AbstractState {
 			BasedNumberElement valueToSet;
 			switch (precision.getTrackingLevel(pointer.getRegion(), offset)) {
 			case NONE:
-				logger.debug("Precision prevents value " + value
-						+ " to be set for " + pointer);
+				logger.debug("Precision prevents value " + value + " to be set for " + pointer);
 				valueToSet = BasedNumberElement.getTop(bitWidth);
 				break;
 			case REGION:
-				valueToSet = new BasedNumberElement(value.getRegion(),
-						NumberElement.getTop(bitWidth));
+				valueToSet = new BasedNumberElement(value.getRegion(), NumberElement.getTop(bitWidth));
 				break;
 			default:
 				valueToSet = value;
@@ -1152,8 +975,7 @@ public final class BasedNumberValuation implements AbstractState {
 	}
 
 	private void clearTemporaryVariables() {
-		for (RTLVariable tmp : Program.getProgram().getArchitecture()
-				.getTemporaryVariables()) {
+		for (RTLVariable tmp : Program.getProgram().getArchitecture().getTemporaryVariables()) {
 			aVarVal.setTop(tmp);
 		}
 	}
@@ -1172,12 +994,9 @@ public final class BasedNumberValuation implements AbstractState {
 		if (isBot() || other.isTop())
 			return other;
 
-		VariableValuation<BasedNumberElement> newVarVal = aVarVal
-				.join(other.aVarVal);
-		PartitionedMemory<BasedNumberElement> newStore = aStore
-				.join(other.aStore);
-		AllocationCounter newAllocCounters = allocCounters
-				.join(other.allocCounters);
+		VariableValuation<BasedNumberElement> newVarVal = aVarVal.join(other.aVarVal);
+		PartitionedMemory<BasedNumberElement> newStore = aStore.join(other.aStore);
+		AllocationCounter newAllocCounters = allocCounters.join(other.allocCounters);
 
 		return new BasedNumberValuation(newVarVal, newStore, newAllocCounters);
 	}
@@ -1192,8 +1011,7 @@ public final class BasedNumberValuation implements AbstractState {
 		if (isTop() || other.isBot())
 			return false;
 
-		return aVarVal.lessOrEqual(other.aVarVal)
-				&& aStore.lessOrEqual(other.aStore);
+		return aVarVal.lessOrEqual(other.aVarVal) && aStore.lessOrEqual(other.aStore);
 	}
 
 	@Override
@@ -1229,11 +1047,9 @@ public final class BasedNumberValuation implements AbstractState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 
-		Tuple<Set<RTLNumber>> cValues = new Tuple<Set<RTLNumber>>(
-				expressions.length);
+		Tuple<Set<RTLNumber>> cValues = new Tuple<Set<RTLNumber>>(expressions.length);
 		for (int i = 0; i < expressions.length; i++) {
 			BasedNumberElement aValue = abstractEval(expressions[i]);
 			cValues.set(i, aValue.concretize());

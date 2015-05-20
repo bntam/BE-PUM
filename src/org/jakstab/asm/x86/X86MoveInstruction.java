@@ -38,11 +38,9 @@ import org.jakstab.asm.DataType;
 import org.jakstab.asm.MoveInstruction;
 import org.jakstab.asm.Operand;
 
-public class X86MoveInstruction extends X86Instruction implements
-		MoveInstruction {
+public class X86MoveInstruction extends X86Instruction implements MoveInstruction {
 
-	public X86MoveInstruction(String name, Operand op1, Operand op2,
-			DataType dataType, int size, int prefixes) {
+	public X86MoveInstruction(String name, Operand op1, Operand op2, DataType dataType, int size, int prefixes) {
 		super(name, op1, op2, dataType, size, prefixes);
 		if (SymbolicExecution.INSTRUCTION_DEBUG_MODE) {
 			System.out.print("MoveInstruction<" + name);
@@ -61,8 +59,7 @@ public class X86MoveInstruction extends X86Instruction implements
 		}
 	}
 
-	public X86MoveInstruction(String name, Operand op1, Operand op2, int size,
-			int prefixes) {
+	public X86MoveInstruction(String name, Operand op1, Operand op2, int size, int prefixes) {
 		super(name, op1, op2, size, prefixes);
 		if (SymbolicExecution.INSTRUCTION_DEBUG_MODE) {
 			System.out.print("MoveInstruction<" + name);

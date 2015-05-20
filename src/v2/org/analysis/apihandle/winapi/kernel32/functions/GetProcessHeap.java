@@ -22,11 +22,11 @@ import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 /**
- * Retrieves a handle to the default heap of the calling process. This
- * handle can then be used in subsequent calls to the heap functions.
+ * Retrieves a handle to the default heap of the calling process. This handle
+ * can then be used in subsequent calls to the heap functions.
  * 
- * @return If the function succeeds, the return value is a handle to the
- *         calling process's heap.
+ * @return If the function succeeds, the return value is a handle to the calling
+ *         process's heap.
  * 
  * @author Yen Nguyen
  *
@@ -34,7 +34,7 @@ import v2.org.analysis.value.LongValue;
 public class GetProcessHeap extends Kernel32API {
 
 	public GetProcessHeap() {
-		
+
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class GetProcessHeap extends Kernel32API {
 
 		// This function has no parameters.
 		HANDLE ret = Kernel32DLL.INSTANCE.GetProcessHeap();
-		//System.out.println("Last Error:" + verNum);
+		// System.out.println("Last Error:" + verNum);
 
 		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
 

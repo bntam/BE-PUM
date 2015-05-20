@@ -249,8 +249,7 @@ public class SymbolicValue {
 	 *            expression value
 	 */
 	public void addExprValue(int exprType, SymbolicValue value) {
-		if (exprType == ADD_EXPR || exprType == SUB_EXPR
-				|| exprType == DIV_EXPR || exprType == MUL_EXPR) {
+		if (exprType == ADD_EXPR || exprType == SUB_EXPR || exprType == DIV_EXPR || exprType == MUL_EXPR) {
 			if (type == INTEGER) {
 				exprValue.add(new SymbolicValue(intValue));
 			} else if (type == SYMBOL) {
@@ -373,8 +372,7 @@ public class SymbolicValue {
 			String ret = "";
 			if (exprValue != null) {
 				for (int i = 0; i < exprValue.size(); i++) {
-					if (exprValue.get(i).type == SYMBOLIC_EXPRESSION
-							&& exprValue.get(i).exprValue.size() > 1
+					if (exprValue.get(i).type == SYMBOLIC_EXPRESSION && exprValue.get(i).exprValue.size() > 1
 							&& exprValue.get(i).exprType / 10 < exprType / 10) {
 						ret += "(" + exprValue.get(i).toString() + ")";
 					} else {
@@ -396,13 +394,10 @@ public class SymbolicValue {
 							}
 							if (firstNonSpace != -1) {
 								// exchange signs between '+' and '-'
-								if ((ret.charAt(lastNonSpace) == '+' || ret
-										.charAt(lastNonSpace) == '-')
-										&& (toAppend.charAt(firstNonSpace) == '-' || toAppend
-												.charAt(firstNonSpace) == '+')) {
+								if ((ret.charAt(lastNonSpace) == '+' || ret.charAt(lastNonSpace) == '-')
+										&& (toAppend.charAt(firstNonSpace) == '-' || toAppend.charAt(firstNonSpace) == '+')) {
 									ret = ret.substring(0, lastNonSpace);
-									toAppend = toAppend
-											.substring(firstNonSpace);
+									toAppend = toAppend.substring(firstNonSpace);
 								}
 							}
 						}

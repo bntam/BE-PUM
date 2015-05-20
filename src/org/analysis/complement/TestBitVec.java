@@ -24,8 +24,7 @@ public class TestBitVec {
 		System.out.println("Div: " + OldBitVector.unsignedDiv(4294965296l, 100));
 		System.out.println("Greater Than: " + OldBitVector.gt(100, -2000));
 		System.out.println("Less Than: " + OldBitVector.lt(100, -2000));
-		System.out
-				.println("Greater Than or Equal: " + OldBitVector.ge(100, -2000));
+		System.out.println("Greater Than or Equal: " + OldBitVector.ge(100, -2000));
 		System.out.println("Less Than or Equal: " + OldBitVector.le(100, -2000));
 
 		long x = 8519680;

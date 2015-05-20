@@ -49,8 +49,7 @@ public class StackV2 extends Stack {
 	public boolean equals(Stack s) {
 		// TODO Auto-generated method stub
 		if (s instanceof StackV2)
-			return baseAddr == ((StackV2) s).getBaseAddress()
-					&& topAddr == ((StackV2) s).getTopAddress();
+			return baseAddr == ((StackV2) s).getBaseAddress() && topAddr == ((StackV2) s).getTopAddress();
 		return false;
 	}
 
@@ -81,16 +80,13 @@ public class StackV2 extends Stack {
 		Value esp = env.getRegister().getRegisterValue("esp");
 		if (esp instanceof LongValue) {
 			if (num == 32)
-			return env.getMemory().getDoubleWordMemoryValue(
-					desp + ((LongValue) esp).getValue());
+				return env.getMemory().getDoubleWordMemoryValue(desp + ((LongValue) esp).getValue());
 
 			if (num == 8)
-				return env.getMemory().getByteMemoryValue(
-						desp + ((LongValue) esp).getValue());
+				return env.getMemory().getByteMemoryValue(desp + ((LongValue) esp).getValue());
 
 			if (num == 16)
-				return env.getMemory().getWordMemoryValue(
-						desp + ((LongValue) esp).getValue());
+				return env.getMemory().getWordMemoryValue(desp + ((LongValue) esp).getValue());
 		}
 
 		return null;
@@ -100,8 +96,7 @@ public class StackV2 extends Stack {
 	public Value getValueStackFromIndex(long desp) {
 		Value esp = env.getRegister().getRegisterValue("esp");
 		if (esp instanceof LongValue) {
-			return env.getMemory().getDoubleWordMemoryValue(
-					desp + ((LongValue) esp).getValue());
+			return env.getMemory().getDoubleWordMemoryValue(desp + ((LongValue) esp).getValue());
 		}
 
 		return null;
@@ -112,16 +107,13 @@ public class StackV2 extends Stack {
 		Value esp = env.getRegister().getRegisterValue("esp");
 		if (esp instanceof LongValue) {
 			if (num == 32)
-				env.getMemory().setDoubleWordMemoryValue(
-					desp + ((LongValue) esp).getValue(), v);
+				env.getMemory().setDoubleWordMemoryValue(desp + ((LongValue) esp).getValue(), v);
 
 			if (num == 16)
-				env.getMemory().setWordMemoryValue(
-						desp + ((LongValue) esp).getValue(), v);
+				env.getMemory().setWordMemoryValue(desp + ((LongValue) esp).getValue(), v);
 
 			if (num == 8)
-				env.getMemory().setByteMemoryValue(
-						desp + ((LongValue) esp).getValue(), v);
+				env.getMemory().setByteMemoryValue(desp + ((LongValue) esp).getValue(), v);
 		}
 	}
 
@@ -228,23 +220,23 @@ public class StackV2 extends Stack {
 	public void init(LongValue longValue) {
 		// TODO Auto-generated method stub
 		baseAddr = Convert.hexToLong("12FFF0");
-		//baseAddr = Convert.hexToLong("18FF90");
+		// baseAddr = Convert.hexToLong("18FF90");
 		topAddr = Convert.hexToLong("12FFD0");
-		//topAddr = Convert.hexToLong("18FF94");
-		//oldBaseAddr = Convert.hexToLong("12FFD0");
+		// topAddr = Convert.hexToLong("18FF94");
+		// oldBaseAddr = Convert.hexToLong("12FFD0");
 
 		env.getRegister().mov("esp", new LongValue(getTopAddress()));
 		env.getRegister().mov("ebp", new LongValue(getBaseAddress()));
 
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));		
-		
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
 		push(new LongValue(0xFFFFFFFF));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 7))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 7))));
 		push(new LongValue(0x7C910208));
 		push(longValue);
 	}
@@ -297,62 +289,69 @@ public class StackV2 extends Stack {
 	private Value normalizeValue(Value v, Instruction inst) {
 		if (v instanceof LongValue) {
 			long t = ((LongValue) v).getValue();
-			return new LongValue((long)Convert.convetUnsignedValue(t,
-					Convert.getBitCount(inst)));
+			return new LongValue((long) Convert.convetUnsignedValue(t, Convert.getBitCount(inst)));
 		}
 
 		return v;
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "";
-		//long index = baseAddr;
-		/*while (index >= topAddr) {
-			result += env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + ",";
-			index -= 4;
-		}*/
-		
+		// long index = baseAddr;
+		/*
+		 * while (index >= topAddr) { result +=
+		 * env.getMemory().getDoubleWordMemoryValue(new
+		 * X86MemoryOperand(DataType.INT32, index)) + ","; index -= 4; }
+		 */
+
 		Value esp = env.getRegister().getRegisterValue("esp");
 		Value ebp = env.getRegister().getRegisterValue("ebp");
 		if (esp != null && esp instanceof LongValue) {
-			long index = ((LongValue)esp).getValue();
-			for (int i=0; i<=scale; i++) {
-				result += new AbsoluteAddress(index) + " : " + env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + ", ";
+			long index = ((LongValue) esp).getValue();
+			for (int i = 0; i <= scale; i++) {
+				result += new AbsoluteAddress(index) + " : "
+						+ env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + ", ";
 				index += 4;
 			}
 
 			if (ebp != null && ebp instanceof LongValue)
-				result += "EBP: " + env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, ((LongValue)ebp).getValue()));
-			//return result + " " + (topAddr == ((LongValue) esp).getValue());
+				result += "EBP: "
+						+ env.getMemory().getDoubleWordMemoryValue(
+								new X86MemoryOperand(DataType.INT32, ((LongValue) ebp).getValue()));
+			// return result + " " + (topAddr == ((LongValue) esp).getValue());
 		}
 
 		if (result == "")
 			return "Stack is undefined";
-		
+
 		return result;
 	}
 
 	public String getString() {
 		String result = "";
 
-		/*while (index >= topAddr) {
-			result += env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + ",";
-			index -= 4;
-		}*/
+		/*
+		 * while (index >= topAddr) { result +=
+		 * env.getMemory().getDoubleWordMemoryValue(new
+		 * X86MemoryOperand(DataType.INT32, index)) + ","; index -= 4; }
+		 */
 
 		Value esp = env.getRegister().getRegisterValue("esp");
 		Value ebp = env.getRegister().getRegisterValue("ebp");
 		if (esp != null && esp instanceof LongValue) {
-			long index = ((LongValue)esp).getValue();
+			long index = ((LongValue) esp).getValue();
 			while (index <= baseAddr) {
-				result += new AbsoluteAddress(index) + " : " + env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + "\n";
+				result += new AbsoluteAddress(index) + " : "
+						+ env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + "\n";
 				index += 4;
 			}
 
 			if (ebp != null && ebp instanceof LongValue)
-				result += "EBP: " + env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, ((LongValue)ebp).getValue()));
-			//return result + " " + (topAddr == ((LongValue) esp).getValue());
+				result += "EBP: "
+						+ env.getMemory().getDoubleWordMemoryValue(
+								new X86MemoryOperand(DataType.INT32, ((LongValue) ebp).getValue()));
+			// return result + " " + (topAddr == ((LongValue) esp).getValue());
 		}
 		if (result == "")
 			return "Stack is undefined";
@@ -365,7 +364,7 @@ public class StackV2 extends Stack {
 		// TODO Auto-generated method stub
 		Value esp = env.getRegister().getRegisterValue("esp");
 		if (esp != null && esp instanceof LongValue) {
-			long t = ((LongValue)esp).getValue();
+			long t = ((LongValue) esp).getValue();
 			return addr.getValue() > t - 65536 && addr.getValue() < t + 65536;
 		}
 
@@ -377,7 +376,7 @@ public class StackV2 extends Stack {
 		// TODO Auto-generated method stub
 		return topAddr > baseAddr;
 	}
-	
+
 	@Override
 	public void push16(Value pushedElement) {
 		// TODO Auto-generated method stub

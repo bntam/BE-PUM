@@ -11,8 +11,7 @@ public class FlagRelationship {
 
 	// This function is about to change the Register due to the change of
 	// Register Part
-	public static void partChangeTotal(ConcreteValueRegisterPart part,
-			ConcreteValueRegister total, String registerPart) {
+	public static void partChangeTotal(ConcreteValueRegisterPart part, ConcreteValueRegister total, String registerPart) {
 		long p = part.getRegVal(registerPart);
 
 		if (registerPart.equals("%bp")) {
@@ -40,8 +39,7 @@ public class FlagRelationship {
 			long t1 = (long) (t / Math.pow(2, 16));
 			long t2 = (long) (t % (long) Math.pow(2, 16));
 			long t3 = (long) (t2 % (long) Math.pow(2, 8));
-			total.movS("%eax",
-					(long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
+			total.movS("%eax", (long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
 		} else if (registerPart.equals("%al")) {
 			long t = total.getRegVal("%eax");
 			long t1 = (long) (t / Math.pow(2, 8));
@@ -55,8 +53,7 @@ public class FlagRelationship {
 			long t1 = (long) (t / Math.pow(2, 16));
 			long t2 = (long) (t % (long) Math.pow(2, 16));
 			long t3 = (long) (t2 % (long) Math.pow(2, 8));
-			total.movS("%ebx",
-					(long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
+			total.movS("%ebx", (long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
 		} else if (registerPart.equals("%bl")) {
 			long t = total.getRegVal("%ebx");
 			long t1 = (long) (t / Math.pow(2, 8));
@@ -70,8 +67,7 @@ public class FlagRelationship {
 			long t1 = (long) (t / Math.pow(2, 16));
 			long t2 = (long) (t % (long) Math.pow(2, 16));
 			long t3 = (long) (t2 % (long) Math.pow(2, 8));
-			total.movS("%ecx",
-					(long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
+			total.movS("%ecx", (long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
 		} else if (registerPart.equals("%cl")) {
 			long t = total.getRegVal("%ecx");
 			long t1 = (long) (t / Math.pow(2, 8));
@@ -85,8 +81,7 @@ public class FlagRelationship {
 			long t1 = (long) (t / Math.pow(2, 16));
 			long t2 = (long) (t % (long) Math.pow(2, 16));
 			long t3 = (long) (t2 % (long) Math.pow(2, 8));
-			total.movS("%edx",
-					(long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
+			total.movS("%edx", (long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
 		} else if (registerPart.equals("%dl")) {
 			long t = total.getRegVal("%edx");
 			long t1 = (long) (t / Math.pow(2, 8));
@@ -96,8 +91,7 @@ public class FlagRelationship {
 
 	// This function is about to change the Register due to the change of
 	// Register Part
-	public static void totalChangePart(ConcreteValueRegisterPart part,
-			ConcreteValueRegister total, String register) {
+	public static void totalChangePart(ConcreteValueRegisterPart part, ConcreteValueRegister total, String register) {
 		long t = total.getRegVal(register);
 
 		if (register.equals("%esi")) {
@@ -151,8 +145,7 @@ public class FlagRelationship {
 		}
 	}
 
-	public static void partChangeTotal(SymbolValueRegisterPart part,
-			SymbolValueRegister total, String registerPart) {
+	public static void partChangeTotal(SymbolValueRegisterPart part, SymbolValueRegister total, String registerPart) {
 		Value x = part.getRegVal(registerPart);
 		// Exp t = total.getRegVal(registerPart);
 
@@ -210,8 +203,7 @@ public class FlagRelationship {
 			long t1 = (long) (t / Math.pow(2, 16));
 			long t2 = (long) (t % (long) Math.pow(2, 16));
 			long t3 = (long) (t2 % (long) Math.pow(2, 8));
-			total.mov("%eax", new LongValue((long) (t1 * Math.pow(2, 16) + p
-					* Math.pow(2, 8) + t3)));
+			total.mov("%eax", new LongValue((long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3)));
 		} else if (registerPart.equals("%al")) {
 			Value y = total.getRegVal("%eax");
 			if (!(y instanceof LongValue))
@@ -237,8 +229,7 @@ public class FlagRelationship {
 			long t1 = (long) (t / Math.pow(2, 16));
 			long t2 = (long) (t % (long) Math.pow(2, 16));
 			long t3 = (long) (t2 % (long) Math.pow(2, 8));
-			total.mov("%ebx", new LongValue((long) (t1 * Math.pow(2, 16) + p
-					* Math.pow(2, 8) + t3)));
+			total.mov("%ebx", new LongValue((long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3)));
 		} else if (registerPart.equals("%bl")) {
 			Value y = total.getRegVal("%ebx");
 			if (!(y instanceof LongValue))
@@ -264,8 +255,7 @@ public class FlagRelationship {
 			long t1 = (long) (t / Math.pow(2, 16));
 			long t2 = (long) (t % (long) Math.pow(2, 16));
 			long t3 = (long) (t2 % (long) Math.pow(2, 8));
-			total.mov("%ecx", new LongValue((long) (t1 * Math.pow(2, 16) + p
-					* Math.pow(2, 8) + t3)));
+			total.mov("%ecx", new LongValue((long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3)));
 		} else if (registerPart.equals("%cl")) {
 			Value y = total.getRegVal("%ecx");
 			if (!(y instanceof LongValue))
@@ -291,8 +281,7 @@ public class FlagRelationship {
 			long t1 = (long) (t / Math.pow(2, 16));
 			long t2 = (long) (t % (long) Math.pow(2, 16));
 			long t3 = (long) (t2 % (long) Math.pow(2, 8));
-			total.mov("%edx", new LongValue((long) (t1 * Math.pow(2, 16) + p
-					* Math.pow(2, 8) + t3)));
+			total.mov("%edx", new LongValue((long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3)));
 		} else if (registerPart.equals("%dl")) {
 			Value y = total.getRegVal("%edx");
 			if (!(y instanceof LongValue))
@@ -305,8 +294,7 @@ public class FlagRelationship {
 
 	}
 
-	public static void totalChangePart(SymbolValueRegisterPart part,
-			SymbolValueRegister total, String register) {
+	public static void totalChangePart(SymbolValueRegisterPart part, SymbolValueRegister total, String register) {
 		// TODO Auto-generated method stub
 		Value x = total.getRegVal(register);
 		// Exp t = total.getRegVal(registerPart);

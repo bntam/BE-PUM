@@ -36,12 +36,11 @@ public class GetCurrentProcess extends Kernel32API {
 	 * Constructor
 	 */
 	public GetCurrentProcess() {
-		
+
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		// Prepare environment
 		Environment env = curState.getEnvironement();
 		Register register = env.getRegister();

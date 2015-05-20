@@ -100,7 +100,7 @@ public interface ExecutableImage {
 	 * @return True if the address points to a code area, false otherwise.
 	 */
 	public boolean isCodeArea(AbsoluteAddress va);
-	
+
 	public boolean insideFileArea(AbsoluteAddress va);
 
 	/**
@@ -166,5 +166,5 @@ public interface ExecutableImage {
 	 * @return the byte array.
 	 */
 	public byte[] getByteArray();
-	
+
 }

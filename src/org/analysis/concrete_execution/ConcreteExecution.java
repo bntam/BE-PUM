@@ -44,8 +44,7 @@ public class ConcreteExecution {
 	private FormulaSet formulaList;
 	private Map<AbsoluteAddress, AbsoluteAddress> neg;
 	private boolean run = false;
-	private AbsoluteAddress targetTemp, targetIndirect,
-			retAPIAddr = new AbsoluteAddress(0);
+	private AbsoluteAddress targetTemp, targetIndirect, retAPIAddr = new AbsoluteAddress(0);
 	private TestCaseValue var;
 	private StubProvider stubLibrary;
 	private String funcName = "";
@@ -75,8 +74,7 @@ public class ConcreteExecution {
 		return concreteValueMemoryOperand;
 	}
 
-	public void setConcreteValueMemoryOperand(
-			ConcreteValueMemoryOperand concreteValueMemoryOperand) {
+	public void setConcreteValueMemoryOperand(ConcreteValueMemoryOperand concreteValueMemoryOperand) {
 		this.concreteValueMemoryOperand = concreteValueMemoryOperand;
 	}
 
@@ -92,8 +90,7 @@ public class ConcreteExecution {
 		return concreteValueRegister;
 	}
 
-	public void setConcreteValueRegister(
-			ConcreteValueRegister concreteValueRegister) {
+	public void setConcreteValueRegister(ConcreteValueRegister concreteValueRegister) {
 		this.concreteValueRegister = concreteValueRegister;
 	}
 
@@ -101,8 +98,7 @@ public class ConcreteExecution {
 		return concreteValueRegisterPart;
 	}
 
-	public void setConcreteValueRegisterPart(
-			ConcreteValueRegisterPart concreteValueRegisterPart) {
+	public void setConcreteValueRegisterPart(ConcreteValueRegisterPart concreteValueRegisterPart) {
 		this.concreteValueRegisterPart = concreteValueRegisterPart;
 	}
 
@@ -110,8 +106,7 @@ public class ConcreteExecution {
 		return concreteValueSegment;
 	}
 
-	public void setConcreteValueSegment(
-			ConcreteValueSegment concreteValueSegment) {
+	public void setConcreteValueSegment(ConcreteValueSegment concreteValueSegment) {
 		this.concreteValueSegment = concreteValueSegment;
 	}
 
@@ -140,8 +135,7 @@ public class ConcreteExecution {
 	}
 
 	public ConcreteExecution(AbsoluteAddress target, AddressList addrTraceList,
-			Map<AbsoluteAddress, AbsoluteAddress> neg,
-			Map<AbsoluteAddress, Instruction> assemblyMap, TestCaseValue var) {
+			Map<AbsoluteAddress, AbsoluteAddress> neg, Map<AbsoluteAddress, Instruction> assemblyMap, TestCaseValue var) {
 		super();
 		this.targetTemp = target;
 		this.targetIndirect = target;
@@ -152,13 +146,10 @@ public class ConcreteExecution {
 		formulaList = new FormulaSet();
 		concreteValueRegister = new ConcreteValueRegister(var);
 		concreteValueRegisterPart = new ConcreteValueRegisterPart(var);
-		this.concreteValueRegister
-				.setConcreteValueRegisterPart(this.concreteValueRegisterPart);
-		this.concreteValueRegisterPart
-				.setConcreteValueRegister(this.concreteValueRegister);
+		this.concreteValueRegister.setConcreteValueRegisterPart(this.concreteValueRegisterPart);
+		this.concreteValueRegisterPart.setConcreteValueRegister(this.concreteValueRegister);
 		concreteValueSegment = new ConcreteValueSegment(var);
-		concreteValueMemoryOperand = new ConcreteValueMemoryOperand(var,
-				Program.getProgram(), concreteValueRegister,
+		concreteValueMemoryOperand = new ConcreteValueMemoryOperand(var, Program.getProgram(), concreteValueRegister,
 				concreteValueRegisterPart, concreteValueSegment, var);
 		this.neg = neg;
 		this.var = var;
@@ -169,26 +160,24 @@ public class ConcreteExecution {
 	}
 
 	public ConcreteExecution(AbsoluteAddress indirectTarget, AddressList trace,
-			Map<AbsoluteAddress, AbsoluteAddress> negConditionList,
-			Map<AbsoluteAddress, Instruction> assemblyMap2, TestCaseValue sv,
-			StubProvider stubLibrary2) {
+			Map<AbsoluteAddress, AbsoluteAddress> negConditionList, Map<AbsoluteAddress, Instruction> assemblyMap2,
+			TestCaseValue sv, StubProvider stubLibrary2) {
 		// TODO Auto-generated constructor stub
 		this(indirectTarget, trace, negConditionList, assemblyMap2, sv);
 		stubLibrary = stubLibrary2;
 	}
 
-	private boolean contain(Map<AbsoluteAddress, String> stub,
-			AbsoluteAddress address) {
+	private boolean contain(Map<AbsoluteAddress, String> stub, AbsoluteAddress address) {
 		// TODO Auto-generated method stub
 		if (address == null || stub == null)
 			return false;
-		Iterator<Entry<AbsoluteAddress, String>> it = stub.entrySet()
-				.iterator();
+		Iterator<Entry<AbsoluteAddress, String>> it = stub.entrySet().iterator();
 		long t = 0xFFFFFFFFL & address.getValue();
 		while (it.hasNext()) {
 			@SuppressWarnings("rawtypes")
 			Map.Entry pairs = (Map.Entry) it.next();
-			// if (((String)pairs.getValueOperand()).contains("GetModuleHandleA"))
+			// if
+			// (((String)pairs.getValueOperand()).contains("GetModuleHandleA"))
 			// System.out.println("Debug");
 			AbsoluteAddress addr = ((AbsoluteAddress) pairs.getKey());
 			if (addr.getValue() == t) {
@@ -211,10 +200,8 @@ public class ConcreteExecution {
 		formulaList = new FormulaSet();
 		concreteValueRegister = new ConcreteValueRegister();
 		concreteValueRegisterPart = new ConcreteValueRegisterPart();
-		this.concreteValueRegister
-				.setConcreteValueRegisterPart(this.concreteValueRegisterPart);
-		this.concreteValueRegisterPart
-				.setConcreteValueRegister(this.concreteValueRegister);
+		this.concreteValueRegister.setConcreteValueRegisterPart(this.concreteValueRegisterPart);
+		this.concreteValueRegisterPart.setConcreteValueRegister(this.concreteValueRegister);
 		concreteValueSegment = new ConcreteValueSegment();
 		concreteValueMemoryOperand = new ConcreteValueMemoryOperand();
 		neg = new TreeMap<AbsoluteAddress, AbsoluteAddress>();
@@ -225,33 +212,27 @@ public class ConcreteExecution {
 		this.concreteValueRegister.setConcreteFlag(concreteFlag);
 	}
 
-	public ConcreteExecution(AbsoluteAddress indirectTarget,
-			AddressList concreteTrace,
-			Map<AbsoluteAddress, AbsoluteAddress> negConditionList,
-			TestCaseValue sv, Program program) {
+	public ConcreteExecution(AbsoluteAddress indirectTarget, AddressList concreteTrace,
+			Map<AbsoluteAddress, AbsoluteAddress> negConditionList, TestCaseValue sv, Program program) {
 		// TODO Auto-generated constructor stub
-		this(indirectTarget, concreteTrace, negConditionList, program
-				.getAssemblyMap(), sv, program.getStubLibrary());
+		this(indirectTarget, concreteTrace, negConditionList, program.getAssemblyMap(), sv, program.getStubLibrary());
 		this.program = program;
 	}
 
-	public ConcreteExecution(AbsoluteAddress indirectTarget,
-			AddressList concreteTrace,
-			Map<AbsoluteAddress, AbsoluteAddress> negConditionList,
-			TestCaseValue sv, Program program, SystemHandle system) {
+	public ConcreteExecution(AbsoluteAddress indirectTarget, AddressList concreteTrace,
+			Map<AbsoluteAddress, AbsoluteAddress> negConditionList, TestCaseValue sv, Program program,
+			SystemHandle system) {
 		// TODO Auto-generated constructor stub
-		this(indirectTarget, concreteTrace, negConditionList, program
-				.getAssemblyMap(), sv, program.getStubLibrary());
+		this(indirectTarget, concreteTrace, negConditionList, program.getAssemblyMap(), sv, program.getStubLibrary());
 		this.program = program;
 		this.system = system;
 	}
 
-	public ConcreteExecution(AbsoluteAddress indirectTarget,
-			AddressList concreteTrace, IntraCFG cfg, TestCaseValue sv,
+	public ConcreteExecution(AbsoluteAddress indirectTarget, AddressList concreteTrace, IntraCFG cfg, TestCaseValue sv,
 			Program program2, SystemHandle system2) {
 		// TODO Auto-generated constructor stub
-		this(indirectTarget, concreteTrace, cfg.getNegConditionList(), program2
-				.getAssemblyMap(), sv, program2.getStubLibrary());
+		this(indirectTarget, concreteTrace, cfg.getNegConditionList(), program2.getAssemblyMap(), sv, program2
+				.getStubLibrary());
 		this.program = program2;
 		this.system = system2;
 		this.cfg = cfg;
@@ -266,8 +247,7 @@ public class ConcreteExecution {
 	private boolean checkSatPC() {
 		this.writeZ3Input("z3Input.smt");
 		try {
-			Process p = Runtime.getRuntime().exec(
-					"cmd /c start /wait run_z3.bat");
+			Process p = Runtime.getRuntime().exec("cmd /c start /wait run_z3.bat");
 			System.out.println("Running script Z3...");
 			int exitCode = p.waitFor();
 
@@ -286,9 +266,8 @@ public class ConcreteExecution {
 		try {
 
 			fis = new FileInputStream("z3Output.txt");
-			br = new BufferedReader(new InputStreamReader(fis,
-					Charset.forName("UTF-8")));
-			//String line = "";
+			br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
+			// String line = "";
 			if (br.readLine().equals("sat"))
 				return true;
 			br.close();
@@ -307,8 +286,7 @@ public class ConcreteExecution {
 		// boolean result = false;
 		Instruction ins = assemblyMap.get(targetIndirect);
 		String type = "", destName = "";
-		if (ins.getOperand(0).getClass().getSimpleName()
-				.equals("X86MemoryOperand")) {
+		if (ins.getOperand(0).getClass().getSimpleName().equals("X86MemoryOperand")) {
 			type = "X86MemoryOperand";
 			destName = ins.getOperand(0).toString();
 		}
@@ -318,14 +296,12 @@ public class ConcreteExecution {
 			destName = ins.getOperand(0).toString();
 		}
 
-		if (ins.getOperand(0).getClass().getSimpleName()
-				.equals("X86RegisterPart")) {
+		if (ins.getOperand(0).getClass().getSimpleName().equals("X86RegisterPart")) {
 			type = "X86RegisterPart";
 			destName = ins.getOperand(0).toString();
 		}
 
-		if (ins.getOperand(0).getClass().getSimpleName()
-				.equals("X86SegmentRegister")) {
+		if (ins.getOperand(0).getClass().getSimpleName().equals("X86SegmentRegister")) {
 			type = "X86SegmentRegister";
 			destName = ins.getOperand(0).toString();
 		}
@@ -352,19 +328,14 @@ public class ConcreteExecution {
 
 					ins = assemblyMap.get(targetTemp);
 					for (int i = 0; i < ins.getOperandCount(); i++)
-						if (ins.getOperand(i).getClass().getSimpleName()
-								.equals("X86Register"))
+						if (ins.getOperand(i).getClass().getSimpleName().equals("X86Register"))
 							var.add(ins.getOperand(i).toString(), 0);
-						else if (ins.getOperand(i).getClass().getSimpleName()
-								.equals("X86RegisterPart"))
+						else if (ins.getOperand(i).getClass().getSimpleName().equals("X86RegisterPart"))
 							var.add(ins.getOperand(i).toString(), 0);
-						else if (ins.getOperand(i).getClass().getSimpleName()
-								.equals("X86SegmentRegister"))
+						else if (ins.getOperand(i).getClass().getSimpleName().equals("X86SegmentRegister"))
 							var.add(ins.getOperand(i).toString(), 0);
-						else if (ins.getOperand(i).getClass().getSimpleName()
-								.equals("X86MemoryOperand"))
-							var.add(((X86MemoryOperand) ins.getOperand(i))
-									.toString(), 0);
+						else if (ins.getOperand(i).getClass().getSimpleName().equals("X86MemoryOperand"))
+							var.add(((X86MemoryOperand) ins.getOperand(i)).toString(), 0);
 
 					if (ins instanceof X86ArithmeticInstruction)
 						this.X86ArithmeticInterprete((X86ArithmeticInstruction) ins);
@@ -421,20 +392,15 @@ public class ConcreteExecution {
 				break;
 			Instruction ins = assemblyMap.get(targetTemp);
 
-			if (targetTemp.getValue() == this.targetIndirect.getValue()
-					&& addrTraceList.isEmpty()) {
+			if (targetTemp.getValue() == this.targetIndirect.getValue() && addrTraceList.isEmpty()) {
 				// System.out.println("End of Symbolic Execution");
 				// formulas.printInfo();
 				if (ins.getName().equals("jmp")) {
 					if (stubLibrary != null
-							&& contain(
-									((Win32StubLibrary) stubLibrary)
-											.getAddressStubMap(),
-									targetTemp)) {
+							&& contain(((Win32StubLibrary) stubLibrary).getAddressStubMap(), targetTemp)) {
 						// result = new AbsoluteAddress
 						System.out.println("Address:" + targetTemp.toString());
-						if (APIStub.executeConcrete(funcName, this,
-								assemblyMap.get(targetTemp)))
+						if (APIStub.executeConcrete(funcName, this, assemblyMap.get(targetTemp)))
 							funcName = "";
 
 						result = retAPIAddr;
@@ -500,8 +466,7 @@ public class ConcreteExecution {
 	public boolean executeZ3() {
 		this.writeZ3Input("z3Input.smt");
 		try {
-			Process p = Runtime.getRuntime().exec(
-					"cmd /c start /wait run_z3.bat");
+			Process p = Runtime.getRuntime().exec("cmd /c start /wait run_z3.bat");
 			System.out.println("Running script Z3...");
 			int exitCode = p.waitFor();
 
@@ -576,9 +541,9 @@ public class ConcreteExecution {
 	 * System.out.println("Process Loop with Destination:" + dest.toString());
 	 * return; } // SymbolicCondition positiveCond = new SymbolicCondition(); //
 	 * SymbolicCondition negativeCond = new SymbolicCondition(); // int
-	 * positiveConnector, negativeConnector; if (neg.get(targetTemp).getValueOperand()
-	 * == this.addrTraceList.get(0) .getValueOperand())
-	 * this.formulas.getTop().setOperator(
+	 * positiveConnector, negativeConnector; if
+	 * (neg.get(targetTemp).getValueOperand() == this.addrTraceList.get(0)
+	 * .getValueOperand()) this.formulas.getTop().setOperator(
 	 * CondJump.getReserCondJump((inst.getName()))); else
 	 * this.formulas.getTop().setOperator(
 	 * CondJump.getCondJump((inst.getName()))); // // if
@@ -588,37 +553,41 @@ public class ConcreteExecution {
 	 * else if (inst.getName().equals("jae") || // inst.getName().equals("jge"))
 	 * { // // // positiveConnector = SymbolicCondition.B_OP_NOT_LESS; // // //
 	 * negativeConnector = SymbolicCondition.B_OP_LESS; // // if
-	 * (neg.get(target).getValueOperand() == // this.addrTraceList.get(0).getValueOperand())
-	 * // // this.formulas.getTop().setOperator(3); // // else // //
+	 * (neg.get(target).getValueOperand() == //
+	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * this.formulas.getTop().setOperator(3); // // else // //
 	 * this.formulas.getTop().setOperator(6); // // } else if
 	 * (inst.getName().equals("jb") || // inst.getName().equals("jl")) { // //
 	 * // positiveConnector = SymbolicCondition.B_OP_LESS; // // //
 	 * negativeConnector = SymbolicCondition.B_OP_NOT_LESS; // // if
-	 * (neg.get(target).getValueOperand() == // this.addrTraceList.get(0).getValueOperand())
-	 * // // this.formulas.getTop().setOperator(6); // // else // //
+	 * (neg.get(target).getValueOperand() == //
+	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * this.formulas.getTop().setOperator(6); // // else // //
 	 * this.formulas.getTop().setOperator(3); // // } else if
 	 * (inst.getName().equals("jbe") || // inst.getName().equals("jle")) { // //
 	 * // positiveConnector = SymbolicCondition.B_OP_NOT_GREATER; // // //
 	 * negativeConnector = SymbolicCondition.B_OP_GREATER; // // if
-	 * (neg.get(target).getValueOperand() == // this.addrTraceList.get(0).getValueOperand())
-	 * // // this.formulas.getTop().setOperator(3); // // else // //
+	 * (neg.get(target).getValueOperand() == //
+	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * this.formulas.getTop().setOperator(3); // // else // //
 	 * this.formulas.getTop().setOperator(5); // // } else if
 	 * (inst.getName().equals("je")) { // // // positiveConnector =
 	 * SymbolicCondition.B_OP_EQUAL; // // // negativeConnector =
-	 * SymbolicCondition.B_OP_NOT_EQUAL; // // if (neg.get(target).getValueOperand() ==
-	 * // this.addrTraceList.get(0).getValueOperand()) // //
+	 * SymbolicCondition.B_OP_NOT_EQUAL; // // if
+	 * (neg.get(target).getValueOperand() == //
+	 * this.addrTraceList.get(0).getValueOperand()) // //
 	 * this.formulas.getTop().setOperator(4); // // else // //
 	 * this.formulas.getTop().setOperator(1); // // } else if
 	 * (inst.getName().equals("jne")) { // // // positiveConnector =
 	 * SymbolicCondition.B_OP_NOT_EQUAL; // // // negativeConnector =
-	 * SymbolicCondition.B_OP_EQUAL; // // if (neg.get(target).getValueOperand() == //
-	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * SymbolicCondition.B_OP_EQUAL; // // if (neg.get(target).getValueOperand()
+	 * == // this.addrTraceList.get(0).getValueOperand()) // //
 	 * this.formulas.getTop().setOperator(1); // // else // //
 	 * this.formulas.getTop().setOperator(4); // // } else if
 	 * (inst.getName().equals("jnl")) { // // // positiveConnector =
 	 * SymbolicCondition.B_OP_NOT_LESS; // // // negativeConnector =
-	 * SymbolicCondition.B_OP_LESS; // // if (neg.get(target).getValueOperand() == //
-	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * SymbolicCondition.B_OP_LESS; // // if (neg.get(target).getValueOperand()
+	 * == // this.addrTraceList.get(0).getValueOperand()) // //
 	 * this.formulas.getTop().setOperator(3); // // else // //
 	 * this.formulas.getTop().setOperator(6); // } else if
 	 * (inst.getName().equals("loop")) { // // decrease ecx, check if it is
@@ -668,40 +637,27 @@ public class ConcreteExecution {
 		if (ins.getName().startsWith("ret")) {
 			a = concreteStack.pop();
 		} else if (ins.getName().startsWith("call")) {
-			AbsoluteAddress returnAddress = new AbsoluteAddress(
-					targetTemp.getValue() + ins.getSize());
+			AbsoluteAddress returnAddress = new AbsoluteAddress(targetTemp.getValue() + ins.getSize());
 
-			if (ins.getOperand(0).getClass().getSimpleName()
-					.equals("X86Register"))
-				a = concreteValueRegister.getRegVal(ins.getOperand(0)
-						.toString());
-			else if (ins.getOperand(0).getClass().getSimpleName()
-					.equals("X86RegisterPart"))
-				a = concreteValueRegisterPart.getRegVal(ins.getOperand(0)
-						.toString());
-			else if (ins.getOperand(0).getClass().getSimpleName()
-					.equals("X86SegmentRegister"))
-				a = concreteValueSegment
-						.getRegVal(ins.getOperand(0).toString());
-			else if (ins.getOperand(0).getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+			if (ins.getOperand(0).getClass().getSimpleName().equals("X86Register"))
+				a = concreteValueRegister.getRegVal(ins.getOperand(0).toString());
+			else if (ins.getOperand(0).getClass().getSimpleName().equals("X86RegisterPart"))
+				a = concreteValueRegisterPart.getRegVal(ins.getOperand(0).toString());
+			else if (ins.getOperand(0).getClass().getSimpleName().equals("X86SegmentRegister"))
+				a = concreteValueSegment.getRegVal(ins.getOperand(0).toString());
+			else if (ins.getOperand(0).getClass().getSimpleName().equals("X86MemoryOperand")) {
 				// a =
 				// this.calculateValueMemoryOperand((X86MemoryOperand)ins.getOperand(i),
 				// ins);
 				// a = concreteValueMemoryOperand
 				// .getMemoryOperandVal(((X86MemoryOperand)
 				// ins.getOperand(0)).toString());
-				a = this.calculateValueMemoryOperand(
-						((X86MemoryOperand) ins.getOperand(0)), ins);
+				a = this.calculateValueMemoryOperand(((X86MemoryOperand) ins.getOperand(0)), ins);
 				if (stubLibrary != null
-						&& contain(
-								((Win32StubLibrary) stubLibrary)
-										.getAddressStubMap(),
-								new AbsoluteAddress(a))) {
+						&& contain(((Win32StubLibrary) stubLibrary).getAddressStubMap(), new AbsoluteAddress(a))) {
 					// result = new AbsoluteAddress
 					System.out.println("Address:" + targetTemp.toString());
-					if (APIStub.executeConcrete(funcName, this,
-							assemblyMap.get(targetTemp)))
+					if (APIStub.executeConcrete(funcName, this, assemblyMap.get(targetTemp)))
 						funcName = "";
 
 					a = returnAddress.getValue();
@@ -717,26 +673,18 @@ public class ConcreteExecution {
 
 		} else {
 			for (int i = 0; i < ins.getOperandCount(); i++)
-				if (ins.getOperand(i).getClass().getSimpleName()
-						.equals("X86Register"))
-					a = concreteValueRegister.getRegVal(ins.getOperand(i)
-							.toString());
-				else if (ins.getOperand(i).getClass().getSimpleName()
-						.equals("X86RegisterPart"))
-					a = concreteValueRegisterPart.getRegVal(ins.getOperand(i)
-							.toString());
-				else if (ins.getOperand(i).getClass().getSimpleName()
-						.equals("X86SegmentRegister"))
-					a = concreteValueSegment.getRegVal(ins.getOperand(i)
-							.toString());
-				else if (ins.getOperand(i).getClass().getSimpleName()
-						.equals("X86MemoryOperand"))
+				if (ins.getOperand(i).getClass().getSimpleName().equals("X86Register"))
+					a = concreteValueRegister.getRegVal(ins.getOperand(i).toString());
+				else if (ins.getOperand(i).getClass().getSimpleName().equals("X86RegisterPart"))
+					a = concreteValueRegisterPart.getRegVal(ins.getOperand(i).toString());
+				else if (ins.getOperand(i).getClass().getSimpleName().equals("X86SegmentRegister"))
+					a = concreteValueSegment.getRegVal(ins.getOperand(i).toString());
+				else if (ins.getOperand(i).getClass().getSimpleName().equals("X86MemoryOperand"))
 					// a =
 					// this.calculateValueMemoryOperand((X86MemoryOperand)ins.getOperand(i),
 					// ins);
-					a = concreteValueMemoryOperand
-							.getMemoryOperandVal(((X86MemoryOperand) ins
-									.getOperand(i)).toString());
+					a = concreteValueMemoryOperand.getMemoryOperandVal(((X86MemoryOperand) ins.getOperand(i))
+							.toString());
 		}
 		if (a != Long.MIN_VALUE)
 			return new AbsoluteAddress(a);
@@ -749,8 +697,7 @@ public class ConcreteExecution {
 		long val = 0;
 		String result[] = line.split(" ");
 		if (result[2].startsWith("(")) {
-			val = Long
-					.parseLong(result[3].substring(0, result[3].length() - 1));
+			val = Long.parseLong(result[3].substring(0, result[3].length() - 1));
 			// if (val > 100000) val = 0;
 			if (result[2].substring(1).equals("-"))
 				val = -val;
@@ -761,8 +708,7 @@ public class ConcreteExecution {
 
 	public void printInfor() {
 		System.out.println();
-		System.out
-				.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println("Apply the method of Symbolic Execution:");
 		System.out.print("Trace List of Address: ");
 		this.addrTraceList.printInfo();
@@ -775,8 +721,7 @@ public class ConcreteExecution {
 		// printResult();
 		this.formulaList.printInfo();
 		this.concreteValueRegister.printInfo();
-		System.out
-				.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println();
 
 	}
@@ -788,8 +733,7 @@ public class ConcreteExecution {
 		String line;
 		try {
 			fis = new FileInputStream(fileName);
-			br = new BufferedReader(new InputStreamReader(fis,
-					Charset.forName("UTF-8")));
+			br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
 
 			if ((line = br.readLine()).equals("sat")) {
 				while ((line = br.readLine()) != null) {
@@ -956,20 +900,16 @@ public class ConcreteExecution {
 					// symbolValueRegister.setSymbolRegisterValue(dest.toString(),
 					// new ValueLongExp(0));
 					// symbolValueRegister.set
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 					op = concreteValueRegisterPart.getRegVal(src.toString());
 					// symbolValueRegisterPart.setSymbolRegisterPartValue(
 					// src.toString(), new ValueLongExp(0));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					op = concreteValueSegment.getRegVal(src.toString());
 					// symbolValueSegment.setSymbolSegmentValue(src.toString(),
 					// new ValueLongExp(0));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
-					op = concreteValueMemoryOperand.getMemoryOperandVal(src
-							.toString());
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+					op = concreteValueMemoryOperand.getMemoryOperandVal(src.toString());
 					// symbolValueMemoryOperand.setSymbolMemoryOperandValue(
 					// (X86MemoryOperand) src, new ValueLongExp(0));
 				}
@@ -977,14 +917,11 @@ public class ConcreteExecution {
 				// Exp eax = symbolValueRegister.getRegVal(src.toString());
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					concreteValueRegister.mul(dest.toString(), op);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					concreteValueRegisterPart.mul(dest.toString(), op);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					concreteValueSegment.mul(dest.toString(), op);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					concreteValueMemoryOperand.mul((X86MemoryOperand) dest, op);
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -999,142 +936,95 @@ public class ConcreteExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegister
-								.add(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegister.add(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueRegister.add(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueRegister.add(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegister.add(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegister.add(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegister.add(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegister.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						long t = calculateValueMemoryOperand(
-								(X86MemoryOperand) src, ins);
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+						long t = calculateValueMemoryOperand((X86MemoryOperand) src, ins);
 						concreteValueRegister.add(dest.toString(), t);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegisterPart
-								.add(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegisterPart.add(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						concreteValueRegisterPart.add(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+								concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegisterPart.add(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+						// RegisterRelationship.partChangeTotal(
+						// concreteValueRegisterPart,
+						// concreteValueRegister, dest.toString());
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegisterPart.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
+						// RegisterRelationship.partChangeTotal(
+						// concreteValueRegisterPart,
+						// concreteValueRegister, dest.toString());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						concreteValueRegisterPart.add(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
-						// RegisterRelationship.partChangeTotal(
-						// concreteValueRegisterPart,
-						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegisterPart.add(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
-						// RegisterRelationship.partChangeTotal(
-						// concreteValueRegisterPart,
-						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						concreteValueRegisterPart
-								.add(dest.toString(),
-										concreteValueMemoryOperand
-												.getMemoryOperandVal((X86MemoryOperand) src));
+								concreteValueMemoryOperand.getMemoryOperandVal((X86MemoryOperand) src));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueSegment
-								.add(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+						concreteValueSegment.add(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueSegment.add(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueSegment.add(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueSegment.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						concreteValueSegment.add(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueSegment.add(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueSegment.add(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						concreteValueSegment
-								.add(dest.toString(),
-										concreteValueMemoryOperand
-												.getMemoryOperandVal((X86MemoryOperand) src));
+								concreteValueMemoryOperand.getMemoryOperandVal((X86MemoryOperand) src));
 					}
 				}
 				// X86MemoryOperand
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueMemoryOperand
-								.add((X86MemoryOperand) dest,
-										concreteValueRegister.getRegVal(src
-												.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
 						concreteValueMemoryOperand.add((X86MemoryOperand) dest,
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+								concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.add((X86MemoryOperand) dest,
+								concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						concreteValueMemoryOperand.add((X86MemoryOperand) dest,
 								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueMemoryOperand.add((X86MemoryOperand) dest, getBitVecValue(((Immediate) src)
+								.getNumber().intValue()));
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						concreteValueMemoryOperand.add((X86MemoryOperand) dest,
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						concreteValueMemoryOperand
-								.add((X86MemoryOperand) dest,
-										concreteValueMemoryOperand
-												.getMemoryOperandVal((X86MemoryOperand) src));
+								concreteValueMemoryOperand.getMemoryOperandVal((X86MemoryOperand) src));
 					}
 				}
 
@@ -1145,30 +1035,25 @@ public class ConcreteExecution {
 					concreteValueRegister.add(dest.toString(), 1);
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					concreteValueRegisterPart.add(dest.toString(), 1);
 					// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister"))
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 					concreteValueSegment.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					// System.out.println("Information of this X86MemoryOperand");
 					// System.out.println(((X86MemoryOperand)dest).toString());
 					// System.out.println(((X86MemoryOperand)dest).getDisplacement());
 					// System.out.println(((X86MemoryOperand)dest).getScale());
 					// System.out.println(((X86MemoryOperand)dest).);
-					this.concreteValueMemoryOperand.add(
-							(X86MemoryOperand) dest, 1);
+					this.concreteValueMemoryOperand.add((X86MemoryOperand) dest, 1);
 				}
 
 				// result = new SymbolicValue(1);
 				// newDest.addExprValue(SymbolicValue.ADD_EXPR, result);
 			} else {
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 				// halt_status = FAILED;
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
@@ -1185,212 +1070,152 @@ public class ConcreteExecution {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						if (concreteFlag.getcFlag())
 							concreteValueRegister.add(dest.toString(),
-									concreteValueRegister.getRegVal(src
-											.toString()) + 1);
+									concreteValueRegister.getRegVal(src.toString()) + 1);
 						else
-							concreteValueRegister.add(dest.toString(),
-									concreteValueRegister.getRegVal(src
-											.toString()));
+							concreteValueRegister.add(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						if (concreteFlag.getcFlag())
 							concreteValueRegister.add(dest.toString(),
-									concreteValueRegisterPart.getRegVal(src
-											.toString()) + 1);
+									concreteValueRegisterPart.getRegVal(src.toString()) + 1);
 						else
 							concreteValueRegister.add(dest.toString(),
-									concreteValueRegisterPart.getRegVal(src
-											.toString()));
+									concreteValueRegisterPart.getRegVal(src.toString()));
 
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						if (concreteFlag.getcFlag())
 							concreteValueRegister.add(dest.toString(),
-									concreteValueSegment.getRegVal(src
-											.toString()) + 1);
+									concreteValueSegment.getRegVal(src.toString()) + 1);
 						else
-							concreteValueRegister.add(dest.toString(),
-									concreteValueSegment.getRegVal(src
-											.toString()));
+							concreteValueRegister.add(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						if (concreteFlag.getcFlag())
-							concreteValueRegister.add(dest.toString(),
-									getBitVecValue(((Immediate) src)
-											.getNumber().intValue()) + 1);
+							concreteValueRegister.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+									.intValue()) + 1);
 						else
-							concreteValueRegister.add(dest.toString(),
-									getBitVecValue(((Immediate) src)
-											.getNumber().intValue()));
+							concreteValueRegister.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+									.intValue()));
 
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						if (concreteFlag.getcFlag())
 							concreteValueRegisterPart.add(dest.toString(),
-									concreteValueRegister.getRegVal(src
-											.toString()) + 1);
+									concreteValueRegister.getRegVal(src.toString()) + 1);
 						else
 							concreteValueRegisterPart.add(dest.toString(),
-									concreteValueRegister.getRegVal(src
-											.toString()));
+									concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						if (concreteFlag.getcFlag())
 							concreteValueRegisterPart.add(dest.toString(),
-									concreteValueRegisterPart.getRegVal(src
-											.toString()) + 1);
+									concreteValueRegisterPart.getRegVal(src.toString()) + 1);
 						else
 							concreteValueRegisterPart.add(dest.toString(),
-									concreteValueRegisterPart.getRegVal(src
-											.toString()));
+									concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						if (concreteFlag.getcFlag())
 							concreteValueRegisterPart.add(dest.toString(),
-									concreteValueSegment.getRegVal(src
-											.toString()) + 1);
+									concreteValueSegment.getRegVal(src.toString()) + 1);
 						else
 							concreteValueRegisterPart.add(dest.toString(),
-									concreteValueSegment.getRegVal(src
-											.toString()));
+									concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						if (concreteFlag.getcFlag())
-							concreteValueRegisterPart.add(dest.toString(),
-									getBitVecValue(((Immediate) src)
-											.getNumber().intValue()) + 1);
+							concreteValueRegisterPart.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+									.intValue()) + 1);
 						else
-							concreteValueRegisterPart.add(dest.toString(),
-									getBitVecValue(((Immediate) src)
-											.getNumber().intValue()));
+							concreteValueRegisterPart.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+									.intValue()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						if (concreteFlag.getcFlag())
 							concreteValueSegment.add(dest.toString(),
-									concreteValueRegister.getRegVal(src
-											.toString()) + 1);
+									concreteValueRegister.getRegVal(src.toString()) + 1);
 						else
-							concreteValueSegment.add(dest.toString(),
-									concreteValueRegister.getRegVal(src
-											.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+							concreteValueSegment.add(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						if (concreteFlag.getcFlag())
 							concreteValueSegment.add(dest.toString(),
-									concreteValueRegisterPart.getRegVal(src
-											.toString()) + 1);
+									concreteValueRegisterPart.getRegVal(src.toString()) + 1);
 						else
 							concreteValueSegment.add(dest.toString(),
-									concreteValueRegisterPart.getRegVal(src
-											.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+									concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						if (concreteFlag.getcFlag())
 							concreteValueSegment.add(dest.toString(),
-									concreteValueSegment.getRegVal(src
-											.toString()) + 1);
+									concreteValueSegment.getRegVal(src.toString()) + 1);
 						else
-							concreteValueSegment.add(dest.toString(),
-									concreteValueSegment.getRegVal(src
-											.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+							concreteValueSegment.add(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						if (concreteFlag.getcFlag())
-							concreteValueSegment.add(dest.toString(),
-									getBitVecValue(((Immediate) src)
-											.getNumber().intValue()) + 1);
+							concreteValueSegment.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+									.intValue()) + 1);
 						else
-							concreteValueSegment.add(dest.toString(),
-									getBitVecValue(((Immediate) src)
-											.getNumber().intValue()));
+							concreteValueSegment.add(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+									.intValue()));
 					}
 				}
 				// X86MemoryOperand
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						if (concreteFlag.getcFlag())
-							concreteValueMemoryOperand.add(
-									(X86MemoryOperand) dest,
-									concreteValueRegister.getRegVal(src
-											.toString()) + 1);
+							concreteValueMemoryOperand.add((X86MemoryOperand) dest,
+									concreteValueRegister.getRegVal(src.toString()) + 1);
 						else
-							concreteValueMemoryOperand.add(
-									(X86MemoryOperand) dest,
-									concreteValueRegister.getRegVal(src
-											.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+							concreteValueMemoryOperand.add((X86MemoryOperand) dest,
+									concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						if (concreteFlag.getcFlag())
-							concreteValueMemoryOperand.add(
-									(X86MemoryOperand) dest,
-									concreteValueRegisterPart.getRegVal(src
-											.toString()) + 1);
+							concreteValueMemoryOperand.add((X86MemoryOperand) dest,
+									concreteValueRegisterPart.getRegVal(src.toString()) + 1);
 						else
-							concreteValueMemoryOperand.add(
-									(X86MemoryOperand) dest,
-									concreteValueRegisterPart.getRegVal(src
-											.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+							concreteValueMemoryOperand.add((X86MemoryOperand) dest,
+									concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						if (concreteFlag.getcFlag())
-							concreteValueMemoryOperand.add(
-									(X86MemoryOperand) dest,
-									concreteValueSegment.getRegVal(src
-											.toString()) + 1);
+							concreteValueMemoryOperand.add((X86MemoryOperand) dest,
+									concreteValueSegment.getRegVal(src.toString()) + 1);
 						else
-							concreteValueMemoryOperand.add(
-									(X86MemoryOperand) dest,
-									concreteValueSegment.getRegVal(src
-											.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+							concreteValueMemoryOperand.add((X86MemoryOperand) dest,
+									concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						if (concreteFlag.getcFlag())
-							concreteValueMemoryOperand.add(
-									(X86MemoryOperand) dest,
-									getBitVecValue(((Immediate) src)
-											.getNumber().intValue()) + 1);
+							concreteValueMemoryOperand.add((X86MemoryOperand) dest, getBitVecValue(((Immediate) src)
+									.getNumber().intValue()) + 1);
 						else
-							concreteValueMemoryOperand.add(
-									(X86MemoryOperand) dest,
-									getBitVecValue(((Immediate) src)
-											.getNumber().intValue()));
+							concreteValueMemoryOperand.add((X86MemoryOperand) dest, getBitVecValue(((Immediate) src)
+									.getNumber().intValue()));
 					}
 				}
 
 				// newDest.addExprValue(SymbolicValue.ADD_EXPR, result);
 			} else {
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 				// halt_status = FAILED;
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
@@ -1405,111 +1230,75 @@ public class ConcreteExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegister
-								.and(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegister.and(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueRegister.and(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueRegister.and(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegister.and(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegister.and(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegister.and(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegister.and(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegisterPart
-								.and(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegisterPart.and(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						concreteValueRegisterPart.and(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+								concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegisterPart.and(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegisterPart.and(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegisterPart.and(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegisterPart.and(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueSegment
-								.and(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueSegment.and(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueSegment.and(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueSegment.and(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+						concreteValueSegment.and(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueSegment.and(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueSegment.and(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueSegment.and(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueMemoryOperand
-								.and((X86MemoryOperand) dest,
-										concreteValueRegister.getRegVal(src
-												.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
 						concreteValueMemoryOperand.and((X86MemoryOperand) dest,
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+								concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.and((X86MemoryOperand) dest,
+								concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						concreteValueMemoryOperand.and((X86MemoryOperand) dest,
 								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueMemoryOperand.and((X86MemoryOperand) dest,
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueMemoryOperand.and((X86MemoryOperand) dest, getBitVecValue(((Immediate) src)
+								.getNumber().intValue()));
 					}
 				}
 
@@ -1519,8 +1308,7 @@ public class ConcreteExecution {
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
 				// return null;
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 			}
 			break;
 
@@ -1531,12 +1319,10 @@ public class ConcreteExecution {
 				Operand src = ins.getOperand2();
 				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = calculateMemoryOperand((X86MemoryOperand) dest);
-					long tVal = calculateValueMemoryOperand(
-							(X86MemoryOperand) dest, ins);
+					long tVal = calculateValueMemoryOperand((X86MemoryOperand) dest, ins);
 
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						long val = concreteValueRegister.getRegVal(src
-								.toString());
+						long val = concreteValueRegister.getRegVal(src.toString());
 						// This is 32 bits so we have to divide it into 4 parts
 						// and
 						// assigns to 4 new memory operands
@@ -1548,32 +1334,25 @@ public class ConcreteExecution {
 						int l = x.length();
 						if (l < 8)
 							return;
+						concreteValueMemoryOperand.setSymbolMemoryOperandValue(t,
+								Convert.hexToLong(x.substring(l - 2, l)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								t, Convert.hexToLong(x.substring(l - 2, l)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 1),
+								Convert.hexToLong(x.substring(l - 4, l - 2)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 1), Convert
-										.hexToLong(x.substring(l - 4, l - 2)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 2),
+								Convert.hexToLong(x.substring(l - 6, l - 4)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 2), Convert
-										.hexToLong(x.substring(l - 6, l - 4)));
-						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 3), Convert
-										.hexToLong(x.substring(l - 8, l - 6)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 3),
+								Convert.hexToLong(x.substring(l - 8, l - 6)));
 
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						concreteValueMemoryOperand.xor((X86MemoryOperand) dest,
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+								concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						concreteValueMemoryOperand.xor((X86MemoryOperand) dest,
 								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						long x1 = ((Immediate) src).getNumber().intValue();
 						// if (tVal instanceof ValueLongExp) {
 						// long v = ((ValueLongExp) tVal).getValueOperand();
@@ -1582,136 +1361,93 @@ public class ConcreteExecution {
 						int l = x.length();
 						if (l < 8)
 							return;
+						concreteValueMemoryOperand.setSymbolMemoryOperandValue(t,
+								Convert.hexToLong(x.substring(l - 2, l)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								t, Convert.hexToLong(x.substring(l - 2, l)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 1),
+								Convert.hexToLong(x.substring(l - 4, l - 2)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 1), Convert
-										.hexToLong(x.substring(l - 4, l - 2)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 2),
+								Convert.hexToLong(x.substring(l - 6, l - 4)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 2), Convert
-										.hexToLong(x.substring(l - 6, l - 4)));
-						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 3), Convert
-										.hexToLong(x.substring(l - 8, l - 6)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 3),
+								Convert.hexToLong(x.substring(l - 8, l - 6)));
 
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						concreteValueMemoryOperand
-								.xor((X86MemoryOperand) dest,
-										concreteValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+						concreteValueMemoryOperand.xor((X86MemoryOperand) dest,
+								concreteValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86Register")) {
+				} else if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegister
-								.xor(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegister.xor(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueRegister.xor(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueRegister.xor(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegister.xor(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegister.xor(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegister.xor(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegister.xor(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegisterPart
-								.xor(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegisterPart.xor(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						concreteValueRegisterPart.xor(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+								concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegisterPart.xor(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegisterPart.xor(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegisterPart.xor(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegisterPart.xor(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueSegment
-								.xor(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueSegment.xor(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueSegment.xor(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueSegment.xor(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+						concreteValueSegment.xor(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueSegment.xor(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueSegment.xor(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueSegment.xor(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueMemoryOperand
-								.xor((X86MemoryOperand) dest,
-										concreteValueRegister.getRegVal(src
-												.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
 						concreteValueMemoryOperand.xor((X86MemoryOperand) dest,
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+								concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.xor((X86MemoryOperand) dest,
+								concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						concreteValueMemoryOperand.xor((X86MemoryOperand) dest,
 								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueMemoryOperand.xor((X86MemoryOperand) dest,
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueMemoryOperand.xor((X86MemoryOperand) dest, getBitVecValue(((Immediate) src)
+								.getNumber().intValue()));
 					}
 				}
 
@@ -1721,8 +1457,7 @@ public class ConcreteExecution {
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
 				// return null;
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 			}
 			break;
 
@@ -1734,111 +1469,75 @@ public class ConcreteExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegister
-								.sub(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegister.sub(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueRegister.sub(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueRegister.sub(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegister.sub(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegister.sub(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegister.sub(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegister.sub(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegisterPart
-								.sub(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegisterPart.sub(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						concreteValueRegisterPart.sub(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+								concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegisterPart.sub(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegisterPart.sub(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegisterPart.sub(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegisterPart.sub(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueSegment
-								.sub(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueSegment.sub(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueSegment.sub(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueSegment.sub(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+						concreteValueSegment.sub(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueSegment.sub(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueSegment.sub(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueSegment.sub(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueMemoryOperand
-								.sub((X86MemoryOperand) dest,
-										concreteValueRegister.getRegVal(src
-												.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
 						concreteValueMemoryOperand.sub((X86MemoryOperand) dest,
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+								concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.sub((X86MemoryOperand) dest,
+								concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						concreteValueMemoryOperand.sub((X86MemoryOperand) dest,
 								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueMemoryOperand.sub((X86MemoryOperand) dest,
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueMemoryOperand.sub((X86MemoryOperand) dest, getBitVecValue(((Immediate) src)
+								.getNumber().intValue()));
 					}
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -1850,16 +1549,13 @@ public class ConcreteExecution {
 					concreteValueRegister.sub(dest.toString(), 1);
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					concreteValueRegisterPart.sub(dest.toString(), 1);
 					// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister"))
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 					concreteValueSegment.sub(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand"))
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
 					concreteValueMemoryOperand.sub((X86MemoryOperand) dest, 1);
 			} else {
 				// logger.error("Instruction not supported: " + ins.getName());
@@ -1877,111 +1573,75 @@ public class ConcreteExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegister
-								.or(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegister.or(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueRegister.or(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueRegister.or(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegister.or(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegister.or(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegister.or(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegister.or(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegisterPart
-								.or(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegisterPart.or(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						concreteValueRegisterPart.or(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+								concreteValueRegisterPart.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegisterPart.or(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegisterPart.or(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegisterPart.or(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegisterPart.or(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueSegment
-								.or(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueSegment.or(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueSegment.or(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueSegment.or(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+						concreteValueSegment.or(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueSegment.or(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueSegment.or(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueSegment.or(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueMemoryOperand
-								.or((X86MemoryOperand) dest,
-										concreteValueRegister.getRegVal(src
-												.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
 						concreteValueMemoryOperand.or((X86MemoryOperand) dest,
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+								concreteValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.or((X86MemoryOperand) dest,
+								concreteValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						concreteValueMemoryOperand.or((X86MemoryOperand) dest,
 								concreteValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueMemoryOperand.or((X86MemoryOperand) dest,
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueMemoryOperand.or((X86MemoryOperand) dest, getBitVecValue(((Immediate) src)
+								.getNumber().intValue()));
 					}
 				}
 			} else {
@@ -1990,8 +1650,7 @@ public class ConcreteExecution {
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
 				// return null;
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 			}
 			break;
 		case SRL:
@@ -2002,25 +1661,21 @@ public class ConcreteExecution {
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegister
-								.getRegVal(src.toString());
+						long y = concreteValueRegister.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
 						concreteValueRegister.divide(dest.toString(), x);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegisterPart.getRegVal(src
-								.toString());
+						long y = concreteValueRegisterPart.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
 						concreteValueRegister.divide(dest.toString(), x);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
 						long y = concreteValueSegment.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
@@ -2028,41 +1683,34 @@ public class ConcreteExecution {
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						long y = getBitVecValue(((Immediate) src).getNumber()
-								.intValue());
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						long y = getBitVecValue(((Immediate) src).getNumber().intValue());
 						long x = (long) Math.pow(2, y);
 						concreteValueRegister.divide(dest.toString(), x);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src == null)
 						return;
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegister
-								.getRegVal(src.toString());
+						long y = concreteValueRegister.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
 						concreteValueRegisterPart.divide(dest.toString(), x);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegisterPart.getRegVal(src
-								.toString());
+						long y = concreteValueRegisterPart.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
 						concreteValueRegisterPart.divide(dest.toString(), x);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
 						long y = concreteValueSegment.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
@@ -2070,75 +1718,55 @@ public class ConcreteExecution {
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						long y = getBitVecValue(((Immediate) src).getNumber()
-								.intValue());
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						long y = getBitVecValue(((Immediate) src).getNumber().intValue());
 						long x = (long) Math.pow(2, y);
 						concreteValueRegisterPart.divide(dest.toString(), x);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegister
-								.getRegVal(src.toString());
+						long y = concreteValueRegister.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
 						concreteValueSegment.divide(dest.toString(), x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegisterPart.getRegVal(src
-								.toString());
+						long y = concreteValueRegisterPart.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
 						concreteValueSegment.divide(dest.toString(), x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
 						long y = concreteValueSegment.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
 						concreteValueSegment.divide(dest.toString(), x);
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						long y = getBitVecValue(((Immediate) src).getNumber()
-								.intValue());
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						long y = getBitVecValue(((Immediate) src).getNumber().intValue());
 						long x = (long) Math.pow(2, y);
 						concreteValueSegment.divide(dest.toString(), x);
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegister
-								.getRegVal(src.toString());
+						long y = concreteValueRegister.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.div((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.div((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegisterPart.getRegVal(src
-								.toString());
+						long y = concreteValueRegisterPart.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.div((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+						concreteValueMemoryOperand.div((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
 						long y = concreteValueSegment.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.div((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						long y = getBitVecValue(((Immediate) src).getNumber()
-								.intValue());
+						concreteValueMemoryOperand.div((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						long y = getBitVecValue(((Immediate) src).getNumber().intValue());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.div((X86MemoryOperand) dest,
-								x);
+						concreteValueMemoryOperand.div((X86MemoryOperand) dest, x);
 					}
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -2151,93 +1779,65 @@ public class ConcreteExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src == null) {
+						concreteValueRegister.mul(dest.toString(), (long) Math.pow(2, 1));
+					} else if (src.getClass().getSimpleName().equals("X86Register")) {
+						// sv.sub(dest.toString(), src.toString());
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						// sv.sub(dest.toString(), src.toString());
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						// sv.sub(dest.toString(), src.toString());
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						concreteValueRegister.mul(dest.toString(),
-								(long) Math.pow(2, 1));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86Register")) {
-						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegister.mul(dest.toString(), (long) Math
-								.pow(2, getBitVecValue(((Immediate) src)
-										.getNumber().intValue())));
+								(long) Math.pow(2, getBitVecValue(((Immediate) src).getNumber().intValue())));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						concreteValueRegisterPart.mul(dest.toString(),
-								(long) Math.pow(2,
-										getBitVecValue(((Immediate) src)
-												.getNumber().intValue())));
+								(long) Math.pow(2, getBitVecValue(((Immediate) src).getNumber().intValue())));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueSegment.mul(dest.toString(), (long) Math
-								.pow(2, getBitVecValue(((Immediate) src)
-										.getNumber().intValue())));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueSegment.mul(dest.toString(),
+								(long) Math.pow(2, getBitVecValue(((Immediate) src).getNumber().intValue())));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegister
-								.getRegVal(src.toString());
+						long y = concreteValueRegister.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.mul((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.mul((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegisterPart.getRegVal(src
-								.toString());
+						long y = concreteValueRegisterPart.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.mul((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+						concreteValueMemoryOperand.mul((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
 						long y = concreteValueSegment.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.mul((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						long y = getBitVecValue(((Immediate) src).getNumber()
-								.intValue());
+						concreteValueMemoryOperand.mul((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						long y = getBitVecValue(((Immediate) src).getNumber().intValue());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.mul((X86MemoryOperand) dest,
-								x);
+						concreteValueMemoryOperand.mul((X86MemoryOperand) dest, x);
 					}
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -2254,24 +1854,18 @@ public class ConcreteExecution {
 					concreteValueRegister.movS(src.toString(), 0);
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, src.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 					eax = concreteValueRegisterPart.getRegVal(src.toString());
 					concreteValueRegisterPart.setRegVal(src.toString(), 0);
 					// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 					// concreteValueRegister, src.toString());
 
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					eax = concreteValueSegment.getRegVal(src.toString());
-					concreteValueSegment.setSymbolRegisterValue(src.toString(),
-							0);
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
-					eax = concreteValueMemoryOperand
-							.getRegVal((X86MemoryOperand) src);
-					concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-							(X86MemoryOperand) src, 0);
+					concreteValueSegment.setSymbolRegisterValue(src.toString(), 0);
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+					eax = concreteValueMemoryOperand.getRegVal((X86MemoryOperand) src);
+					concreteValueMemoryOperand.setSymbolMemoryOperandValue((X86MemoryOperand) src, 0);
 				}
 
 				// concreteValueRegister.getRegVal(src.toString());
@@ -2279,19 +1873,15 @@ public class ConcreteExecution {
 					concreteValueRegister.mul(dest.toString(), eax);
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					concreteValueRegisterPart.mul(dest.toString(), eax);
 					// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
 
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					concreteValueSegment.mul(dest.toString(), eax);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
-					concreteValueMemoryOperand
-							.mul((X86MemoryOperand) dest, eax);
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+					concreteValueMemoryOperand.mul((X86MemoryOperand) dest, eax);
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
 			}
@@ -2304,86 +1894,64 @@ public class ConcreteExecution {
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						concreteValueRegister.rl(dest.toString(), y);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						concreteValueRegisterPart.rl(dest.toString(), y);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						concreteValueSegment.rl(dest.toString(), y);
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src == null)
 						break;
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegister
-								.getRegVal(src.toString());
+						long y = concreteValueRegister.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.rl((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.rl((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegisterPart.getRegVal(src
-								.toString());
+						long y = concreteValueRegisterPart.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.rl((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+						concreteValueMemoryOperand.rl((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
 						long y = concreteValueSegment.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.rl((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						long y = getBitVecValue(((Immediate) src).getNumber()
-								.intValue());
+						concreteValueMemoryOperand.rl((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						long y = getBitVecValue(((Immediate) src).getNumber().intValue());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.rl((X86MemoryOperand) dest,
-								x);
+						concreteValueMemoryOperand.rl((X86MemoryOperand) dest, x);
 					}
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -2398,92 +1966,69 @@ public class ConcreteExecution {
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						concreteValueRegister.rr(dest.toString(), y);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						concreteValueRegisterPart.rr(dest.toString(), y);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						concreteValueSegment.rr(dest.toString(), y);
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegister
-								.getRegVal(src.toString());
+						long y = concreteValueRegister.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.rr((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+						concreteValueMemoryOperand.rr((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						// sv.sub(dest.toString(), src.toString());
-						long y = concreteValueRegisterPart.getRegVal(src
-								.toString());
+						long y = concreteValueRegisterPart.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.rr((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+						concreteValueMemoryOperand.rr((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						// sv.sub(dest.toString(), src.toString());
 						long y = concreteValueSegment.getRegVal(src.toString());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.rr((X86MemoryOperand) dest,
-								x);
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						long y = getBitVecValue(((Immediate) src).getNumber()
-								.intValue());
+						concreteValueMemoryOperand.rr((X86MemoryOperand) dest, x);
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						long y = getBitVecValue(((Immediate) src).getNumber().intValue());
 						long x = (long) Math.pow(2, y);
-						concreteValueMemoryOperand.rr((X86MemoryOperand) dest,
-								x);
+						concreteValueMemoryOperand.rr((X86MemoryOperand) dest, x);
 					}
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
 			}
 			break;
 		default:
-			System.out.println("Arithmetic statement not supported: "
-					+ ins.getName());
+			System.out.println("Arithmetic statement not supported: " + ins.getName());
 			// halt_status = FAILED;
 			// SymbolicExecution.programTrace.setVisited(startAddress, null,
 			// ins.toString(startAddress, symFinder));
@@ -2495,8 +2040,7 @@ public class ConcreteExecution {
 	private void X86CallInterprete(X86CallInstruction inst) {
 		Operand dest = inst.getOperand1();
 		long r = Long.MIN_VALUE;
-		AbsoluteAddress returnAddress = new AbsoluteAddress(
-				targetTemp.getValue() + inst.getSize());
+		AbsoluteAddress returnAddress = new AbsoluteAddress(targetTemp.getValue() + inst.getSize());
 		// System.out.println("Instruction: " + inst.getName());
 
 		// call structure: push call next eip to stack, jump to call address
@@ -2505,10 +2049,8 @@ public class ConcreteExecution {
 			// returnAddress = new SymbolicValue(((AbsoluteAddress)
 			// dest).getValueOperand());
 			r = ((AbsoluteAddress) dest).getValue();
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
-			r = ((X86PCRelativeAddress) dest).getEffectiveValue(targetTemp
-					.getValue());
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
+			r = ((X86PCRelativeAddress) dest).getEffectiveValue(targetTemp.getValue());
 
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
 			// returnAddress = (prevState.getRegValue(((X86Register)
@@ -2533,21 +2075,18 @@ public class ConcreteExecution {
 			this.evaluateValue = r;
 
 		if (stubLibrary != null
-				&& contain(
-						((Win32StubLibrary) stubLibrary).getAddressStubMap(),
-						new AbsoluteAddress(r))) {
+				&& contain(((Win32StubLibrary) stubLibrary).getAddressStubMap(), new AbsoluteAddress(r))) {
 			// String funcName
 			// SystemCallStub.executeSymbolic(funcName);
 			System.out.println("Address:" + targetTemp.toString());
 			if (APIStub.executeConcrete(funcName, this, inst)) {
 				funcName = "";
-				retAPIAddr = new AbsoluteAddress(targetTemp.getValue()
-						+ inst.getSize());
+				retAPIAddr = new AbsoluteAddress(targetTemp.getValue() + inst.getSize());
 			} else
-				System.out.println("Symbolic Execution of System Call failed:"
-						+ funcName);
+				System.out.println("Symbolic Execution of System Call failed:" + funcName);
 
-			// if (this.targetTemp.getValueOperand() == targetIndirect.getValueOperand())
+			// if (this.targetTemp.getValueOperand() ==
+			// targetIndirect.getValueOperand())
 			// this.evaluateValue = returnAddress.getValueOperand();
 
 			// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
@@ -2578,17 +2117,16 @@ public class ConcreteExecution {
 		String instName = inst.getName();
 
 		/*
-		 * if (neg.get(targetTemp).getValueOperand() == this.addrTraceList.get(0)
-		 * .getValueOperand()) this.formulas.getTop().setOperator(
+		 * if (neg.get(targetTemp).getValueOperand() ==
+		 * this.addrTraceList.get(0) .getValueOperand())
+		 * this.formulas.getTop().setOperator(
 		 * CondJump.getReserCondJump((inst.getName()))); else
 		 * this.formulas.getTop().setOperator(
 		 * CondJump.getCondJump((inst.getName())));
 		 */
 		boolean reverCond = false;
-		if (!neg.isEmpty()
-				&& neg.containsKey(targetTemp)
-				&& neg.get(targetTemp).getValue() == this.addrTraceList.get(0)
-						.getValue()) {
+		if (!neg.isEmpty() && neg.containsKey(targetTemp)
+				&& neg.get(targetTemp).getValue() == this.addrTraceList.get(0).getValue()) {
 			// instName = reverseConditionJump(instName);
 			reverCond = true;
 			// System.out.println("Concrete Reverse Conditional Jump:" +
@@ -2633,27 +2171,23 @@ public class ConcreteExecution {
 					;
 				else {
 					// System.out.println("Debug Loop");
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -2673,27 +2207,23 @@ public class ConcreteExecution {
 					;
 				else {
 					// System.out.println("Debug Loop");
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -2716,8 +2246,7 @@ public class ConcreteExecution {
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JA or JNBE condition is false");
+					System.out.println("Reverse Concrete JA or JNBE condition is false");
 					run = false;
 				}
 			} else if (!concreteFlag.getcFlag() | !concreteFlag.getzFlag())
@@ -2732,30 +2261,25 @@ public class ConcreteExecution {
 			// ((CF) = 0)
 			if (reverCond) {
 				if (concreteFlag.getcFlag())
-					System.out.println("Concrete " + instName
-							+ " condition is true");
+					System.out.println("Concrete " + instName + " condition is true");
 				else {
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -2766,14 +2290,12 @@ public class ConcreteExecution {
 							loopAddr = targetTemp.getValue();
 						}
 					} else {
-						System.out.println("Reverse Concrete " + instName
-								+ " condition is false");
+						System.out.println("Reverse Concrete " + instName + " condition is false");
 						run = false;
 					}
 				}
 			} else if (!concreteFlag.getcFlag())
-				System.out.println("Concrete " + instName
-						+ " condition is true");
+				System.out.println("Concrete " + instName + " condition is true");
 			else {
 
 				if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
@@ -2782,21 +2304,18 @@ public class ConcreteExecution {
 				) {
 
 					if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-						System.out.println("Outside Loop Total: " + loopTotal
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Total: " + loopTotal + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
 					if (loopEach > MAX_NUM_LOOP_EACH) {
-						System.out.println("Outside Loop Each: " + loopEach
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
-					this.addrTraceList.pushList(cfg.getCFGVertices()
-							.getVertex(this.targetTemp).getListLoop(0));
+					this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 					loopTotal++;
 
@@ -2808,8 +2327,7 @@ public class ConcreteExecution {
 					}
 				} else {
 					run = false;
-					System.out.println("Concrete " + instName
-							+ " condition is false");
+					System.out.println("Concrete " + instName + " condition is false");
 				}
 			}
 			/*
@@ -2830,8 +2348,7 @@ public class ConcreteExecution {
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JB or JNAE condition is false");
+					System.out.println("Reverse Concrete JB or JNAE condition is false");
 					run = false;
 				}
 			} else if (concreteFlag.getcFlag())
@@ -2850,8 +2367,7 @@ public class ConcreteExecution {
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JBE or JNA condition is false");
+					System.out.println("Reverse Concrete JBE or JNA condition is false");
 					run = false;
 				}
 			} else if (concreteFlag.getcFlag() | concreteFlag.getzFlag())
@@ -2869,8 +2385,7 @@ public class ConcreteExecution {
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JC condition is false");
+					System.out.println("Reverse Concrete JC condition is false");
 					run = false;
 				}
 			} else if (concreteFlag.getcFlag())
@@ -2885,30 +2400,25 @@ public class ConcreteExecution {
 			// ((CF) = 0)
 			if (reverCond) {
 				if (concreteFlag.getcFlag())
-					System.out.println("Concrete " + instName
-							+ " condition is true");
+					System.out.println("Concrete " + instName + " condition is true");
 				else {
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -2919,14 +2429,12 @@ public class ConcreteExecution {
 							loopAddr = targetTemp.getValue();
 						}
 					} else {
-						System.out.println("Reverse Concrete " + instName
-								+ " condition is false");
+						System.out.println("Reverse Concrete " + instName + " condition is false");
 						run = false;
 					}
 				}
 			} else if (!concreteFlag.getcFlag())
-				System.out.println("Concrete " + instName
-						+ " condition is true");
+				System.out.println("Concrete " + instName + " condition is true");
 			else {
 
 				if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
@@ -2935,21 +2443,18 @@ public class ConcreteExecution {
 				) {
 
 					if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-						System.out.println("Outside Loop Total: " + loopTotal
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Total: " + loopTotal + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
 					if (loopEach > MAX_NUM_LOOP_EACH) {
-						System.out.println("Outside Loop Each: " + loopEach
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
-					this.addrTraceList.pushList(cfg.getCFGVertices()
-							.getVertex(this.targetTemp).getListLoop(0));
+					this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 					loopTotal++;
 
@@ -2961,8 +2466,7 @@ public class ConcreteExecution {
 					}
 				} else {
 					run = false;
-					System.out.println("Concrete " + instName
-							+ " condition is false");
+					System.out.println("Concrete " + instName + " condition is false");
 				}
 			}
 			/*
@@ -2983,13 +2487,10 @@ public class ConcreteExecution {
 				// System.out.println("Concrete JA condition is true");
 				else {
 
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop())
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop())
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 					else {
-						System.out
-								.println("Reverse Concrete JE or JZ condition is false");
+						System.out.println("Reverse Concrete JE or JZ condition is false");
 						run = false;
 					}
 				}
@@ -2999,8 +2500,7 @@ public class ConcreteExecution {
 				;
 			else {
 				if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop())
-					this.addrTraceList.pushList(cfg.getCFGVertices()
-							.getVertex(this.targetTemp).getListLoop(0));
+					this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 				else {
 					System.out.println("Concrete JE or JZ condition is false");
 					run = false;
@@ -3010,17 +2510,14 @@ public class ConcreteExecution {
 			// if
 			// ((SF) = (OF)) and ((ZF) = 0)
 			if (reverCond) {
-				if (!((concreteFlag.getsFlag() == concreteFlag.getoFlag()) & !concreteFlag
-						.getzFlag()))
+				if (!((concreteFlag.getsFlag() == concreteFlag.getoFlag()) & !concreteFlag.getzFlag()))
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JG or JNLE condition is false");
+					System.out.println("Reverse Concrete JG or JNLE condition is false");
 					run = false;
 				}
-			} else if ((concreteFlag.getsFlag() == concreteFlag.getoFlag())
-					& !concreteFlag.getzFlag())
+			} else if ((concreteFlag.getsFlag() == concreteFlag.getoFlag()) & !concreteFlag.getzFlag())
 				;
 			// System.out.println("Concrete JA condition is true");
 			else {
@@ -3035,8 +2532,7 @@ public class ConcreteExecution {
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JGE or JNL condition is false");
+					System.out.println("Reverse Concrete JGE or JNL condition is false");
 					run = false;
 				}
 			} else if (concreteFlag.getsFlag() == concreteFlag.getoFlag())
@@ -3054,8 +2550,7 @@ public class ConcreteExecution {
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JL or JNGE condition is false");
+					System.out.println("Reverse Concrete JL or JNGE condition is false");
 					run = false;
 				}
 			} else if (concreteFlag.getsFlag() != concreteFlag.getoFlag())
@@ -3069,17 +2564,14 @@ public class ConcreteExecution {
 			// if
 			// ((SF) !=� (OF)) or ((ZF) = 1)
 			if (reverCond) {
-				if (!((concreteFlag.getsFlag() != concreteFlag.getoFlag()) | concreteFlag
-						.getzFlag()))
+				if (!((concreteFlag.getsFlag() != concreteFlag.getoFlag()) | concreteFlag.getzFlag()))
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JLE or JNG condition is false");
+					System.out.println("Reverse Concrete JLE or JNG condition is false");
 					run = false;
 				}
-			} else if ((concreteFlag.getsFlag() != concreteFlag.getoFlag())
-					| concreteFlag.getzFlag())
+			} else if ((concreteFlag.getsFlag() != concreteFlag.getoFlag()) | concreteFlag.getzFlag())
 				;
 			// System.out.println("Concrete JA condition is true");
 			else {
@@ -3091,30 +2583,25 @@ public class ConcreteExecution {
 			// ((CF) = 0)
 			if (reverCond) {
 				if (concreteFlag.getcFlag())
-					System.out.println("Concrete " + instName
-							+ " condition is true");
+					System.out.println("Concrete " + instName + " condition is true");
 				else {
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -3125,14 +2612,12 @@ public class ConcreteExecution {
 							loopAddr = targetTemp.getValue();
 						}
 					} else {
-						System.out.println("Reverse Concrete " + instName
-								+ " condition is false");
+						System.out.println("Reverse Concrete " + instName + " condition is false");
 						run = false;
 					}
 				}
 			} else if (!concreteFlag.getcFlag())
-				System.out.println("Concrete " + instName
-						+ " condition is true");
+				System.out.println("Concrete " + instName + " condition is true");
 			else {
 
 				if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
@@ -3141,21 +2626,18 @@ public class ConcreteExecution {
 				) {
 
 					if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-						System.out.println("Outside Loop Total: " + loopTotal
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Total: " + loopTotal + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
 					if (loopEach > MAX_NUM_LOOP_EACH) {
-						System.out.println("Outside Loop Each: " + loopEach
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
-					this.addrTraceList.pushList(cfg.getCFGVertices()
-							.getVertex(this.targetTemp).getListLoop(0));
+					this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 					loopTotal++;
 
@@ -3167,8 +2649,7 @@ public class ConcreteExecution {
 					}
 				} else {
 					run = false;
-					System.out.println("Concrete " + instName
-							+ " condition is false");
+					System.out.println("Concrete " + instName + " condition is false");
 				}
 			}
 			/*
@@ -3191,27 +2672,23 @@ public class ConcreteExecution {
 					 */
 					;
 				else {
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -3222,14 +2699,12 @@ public class ConcreteExecution {
 							loopAddr = targetTemp.getValue();
 						}
 					} else {
-						System.out.println("Reverse Concrete " + instName
-								+ " condition is false");
+						System.out.println("Reverse Concrete " + instName + " condition is false");
 						run = false;
 					}
 				}
 			} else if (!concreteFlag.getzFlag())
-				System.out.println("Concrete " + instName
-						+ " condition is true");
+				System.out.println("Concrete " + instName + " condition is true");
 			else {
 
 				if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
@@ -3238,21 +2713,18 @@ public class ConcreteExecution {
 				) {
 
 					if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-						System.out.println("Outside Loop Total: " + loopTotal
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Total: " + loopTotal + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
 					if (loopEach > MAX_NUM_LOOP_EACH) {
-						System.out.println("Outside Loop Each: " + loopEach
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
-					this.addrTraceList.pushList(cfg.getCFGVertices()
-							.getVertex(this.targetTemp).getListLoop(0));
+					this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 					loopTotal++;
 
@@ -3264,8 +2736,7 @@ public class ConcreteExecution {
 					}
 				} else {
 					run = false;
-					System.out.println("Concrete " + instName
-							+ " condition is false");
+					System.out.println("Concrete " + instName + " condition is false");
 				}
 			}
 		} else if (instName.equals("jno")) {
@@ -3273,30 +2744,25 @@ public class ConcreteExecution {
 			// ((OF) = 0)
 			if (reverCond) {
 				if (concreteFlag.getoFlag())
-					System.out.println("Concrete " + instName
-							+ " condition is true");
+					System.out.println("Concrete " + instName + " condition is true");
 				else {
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -3307,14 +2773,12 @@ public class ConcreteExecution {
 							loopAddr = targetTemp.getValue();
 						}
 					} else {
-						System.out.println("Reverse Concrete " + instName
-								+ " condition is false");
+						System.out.println("Reverse Concrete " + instName + " condition is false");
 						run = false;
 					}
 				}
 			} else if (!concreteFlag.getoFlag())
-				System.out.println("Concrete " + instName
-						+ " condition is true");
+				System.out.println("Concrete " + instName + " condition is true");
 			else {
 
 				if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
@@ -3323,21 +2787,18 @@ public class ConcreteExecution {
 				) {
 
 					if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-						System.out.println("Outside Loop Total: " + loopTotal
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Total: " + loopTotal + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
 					if (loopEach > MAX_NUM_LOOP_EACH) {
-						System.out.println("Outside Loop Each: " + loopEach
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
-					this.addrTraceList.pushList(cfg.getCFGVertices()
-							.getVertex(this.targetTemp).getListLoop(0));
+					this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 					loopTotal++;
 
@@ -3349,8 +2810,7 @@ public class ConcreteExecution {
 					}
 				} else {
 					run = false;
-					System.out.println("Concrete " + instName
-							+ " condition is false");
+					System.out.println("Concrete " + instName + " condition is false");
 				}
 			}
 			/*
@@ -3367,30 +2827,25 @@ public class ConcreteExecution {
 			// ((SF) = 0)
 			if (reverCond) {
 				if (concreteFlag.getsFlag())
-					System.out.println("Concrete " + instName
-							+ " condition is true");
+					System.out.println("Concrete " + instName + " condition is true");
 				else {
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -3401,14 +2856,12 @@ public class ConcreteExecution {
 							loopAddr = targetTemp.getValue();
 						}
 					} else {
-						System.out.println("Reverse Concrete " + instName
-								+ " condition is false");
+						System.out.println("Reverse Concrete " + instName + " condition is false");
 						run = false;
 					}
 				}
 			} else if (!concreteFlag.getsFlag())
-				System.out.println("Concrete " + instName
-						+ " condition is true");
+				System.out.println("Concrete " + instName + " condition is true");
 			else {
 
 				if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
@@ -3417,21 +2870,18 @@ public class ConcreteExecution {
 				) {
 
 					if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-						System.out.println("Outside Loop Total: " + loopTotal
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Total: " + loopTotal + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
 					if (loopEach > MAX_NUM_LOOP_EACH) {
-						System.out.println("Outside Loop Each: " + loopEach
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
-					this.addrTraceList.pushList(cfg.getCFGVertices()
-							.getVertex(this.targetTemp).getListLoop(0));
+					this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 					loopTotal++;
 
@@ -3443,8 +2893,7 @@ public class ConcreteExecution {
 					}
 				} else {
 					run = false;
-					System.out.println("Concrete " + instName
-							+ " condition is false");
+					System.out.println("Concrete " + instName + " condition is false");
 				}
 			}
 			/*
@@ -3461,30 +2910,25 @@ public class ConcreteExecution {
 			// ((PF) = 0)
 			if (reverCond) {
 				if (concreteFlag.getpFlag())
-					System.out.println("Concrete " + instName
-							+ " condition is true");
+					System.out.println("Concrete " + instName + " condition is true");
 				else {
-					if (cfg.getCFGVertices().getVertex(this.targetTemp)
-							.isLoop()) {
+					if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 						// this.addrTraceList.pushList(cfg.getCFGVertices()
 						// .getVertex(this.targetTemp).getListLoop(0));
 						if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-							System.out.println("Outside Loop Total: "
-									+ loopTotal + " Address: "
+							System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 									+ targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
 						if (loopEach > MAX_NUM_LOOP_EACH) {
-							System.out.println("Outside Loop Each: " + loopEach
-									+ " Address: " + targetTemp.toString());
+							System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 							this.stop = true;
 							return;
 						}
 
-						this.addrTraceList.pushList(cfg.getCFGVertices()
-								.getVertex(this.targetTemp).getListLoop(0));
+						this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 						loopTotal++;
 
@@ -3495,14 +2939,12 @@ public class ConcreteExecution {
 							loopAddr = targetTemp.getValue();
 						}
 					} else {
-						System.out.println("Reverse Concrete " + instName
-								+ " condition is false");
+						System.out.println("Reverse Concrete " + instName + " condition is false");
 						run = false;
 					}
 				}
 			} else if (!concreteFlag.getpFlag())
-				System.out.println("Concrete " + instName
-						+ " condition is true");
+				System.out.println("Concrete " + instName + " condition is true");
 			else {
 
 				if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
@@ -3511,21 +2953,18 @@ public class ConcreteExecution {
 				) {
 
 					if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-						System.out.println("Outside Loop Total: " + loopTotal
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Total: " + loopTotal + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
 					if (loopEach > MAX_NUM_LOOP_EACH) {
-						System.out.println("Outside Loop Each: " + loopEach
-								+ " Address: " + targetTemp.toString());
+						System.out.println("Outside Loop Each: " + loopEach + " Address: " + targetTemp.toString());
 						this.stop = true;
 						return;
 					}
 
-					this.addrTraceList.pushList(cfg.getCFGVertices()
-							.getVertex(this.targetTemp).getListLoop(0));
+					this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 
 					loopTotal++;
 
@@ -3537,8 +2976,7 @@ public class ConcreteExecution {
 					}
 				} else {
 					run = false;
-					System.out.println("Concrete " + instName
-							+ " condition is false");
+					System.out.println("Concrete " + instName + " condition is false");
 				}
 			}
 			/*
@@ -3559,8 +2997,7 @@ public class ConcreteExecution {
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JO condition is false");
+					System.out.println("Reverse Concrete JO condition is false");
 					run = false;
 				}
 			} else if (concreteFlag.getoFlag())
@@ -3596,8 +3033,7 @@ public class ConcreteExecution {
 					;
 				// System.out.println("Concrete JA condition is true");
 				else {
-					System.out
-							.println("Reverse Concrete JS condition is false");
+					System.out.println("Reverse Concrete JS condition is false");
 					run = false;
 				}
 			} else if (concreteFlag.getsFlag())
@@ -3621,8 +3057,7 @@ public class ConcreteExecution {
 				// inst.getName());
 
 				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")
-						&& src.getClass().getSimpleName()
-								.equals("X86MemoryOperand")) {
+						&& src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand edi = calculateMemoryOperand((X86MemoryOperand) dest);
 					X86MemoryOperand esi = calculateMemoryOperand((X86MemoryOperand) src);
 
@@ -3635,11 +3070,9 @@ public class ConcreteExecution {
 					// int t = (int) ((ValueLongExp) ecx).getValueOperand();
 					for (int i = 0; i < ecx; i++) {
 						long ediValue = this.calculateValueMemoryOperand(
-								new X86MemoryOperand(edi.getDataType(), edi
-										.getDisplacement() + i), inst);
+								new X86MemoryOperand(edi.getDataType(), edi.getDisplacement() + i), inst);
 						long esiValue = this.calculateValueMemoryOperand(
-								new X86MemoryOperand(esi.getDataType(), esi
-										.getDisplacement() + i), inst);
+								new X86MemoryOperand(esi.getDataType(), esi.getDisplacement() + i), inst);
 
 						if (ediValue != esiValue) {
 							this.concreteFlag.setzFlag(false);
@@ -3698,15 +3131,12 @@ public class ConcreteExecution {
 					x = concreteValueRegister.getRegVal(src.toString());
 					// FlagRelationship.totalChangePart(symbolValueRegisterPart,
 					// symbolValueRegister, "%eax");
-					if (dest.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = this
-								.calculateMemoryOperand((X86MemoryOperand) dest);
+					if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+						X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 
 						for (int i = 0; i < ecx;) {
 							concreteValueMemoryOperand.movDoubleWord(
-									new X86MemoryOperand(inst.getDataType(), t
-											.getDisplacement() + i), x);
+									new X86MemoryOperand(inst.getDataType(), t.getDisplacement() + i), x);
 							i += 4;
 						}
 						// }
@@ -3714,23 +3144,16 @@ public class ConcreteExecution {
 					}
 					concreteValueRegister.mov("%ecx", 0);
 					concreteValueRegister.add("%edi", ecx);
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.toString().equals("%ax")) {
 						x = concreteValueRegisterPart.getRegVal(src.toString());
 						// FlagRelationship.partChangeTotal(symbolValueRegisterPart,
 						// symbolValueRegister, "%ax");
-						if (dest.getClass().getSimpleName()
-								.equals("X86MemoryOperand")) {
-							X86MemoryOperand t = this
-									.calculateMemoryOperand((X86MemoryOperand) dest);
+						if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+							X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 							for (int i = 0; i < ecx;) {
-								concreteValueMemoryOperand
-										.movWord(
-												new X86MemoryOperand(inst
-														.getDataType(), t
-														.getDisplacement() + i),
-												x);
+								concreteValueMemoryOperand.movWord(
+										new X86MemoryOperand(inst.getDataType(), t.getDisplacement() + i), x);
 								i += 2;
 							}
 							// }
@@ -3738,22 +3161,15 @@ public class ConcreteExecution {
 						}
 						concreteValueRegister.mov("%ecx", 0);
 						concreteValueRegister.add("%edi", ecx);
-					} else if (src.toString().endsWith("l")
-							|| src.toString().endsWith("h")) {
+					} else if (src.toString().endsWith("l") || src.toString().endsWith("h")) {
 						x = concreteValueRegisterPart.getRegVal(src.toString());
 						// FlagRelationship.partChangeTotal(symbolValueRegisterPart,
 						// symbolValueRegister, "%ax");
-						if (dest.getClass().getSimpleName()
-								.equals("X86MemoryOperand")) {
-							X86MemoryOperand t = this
-									.calculateMemoryOperand((X86MemoryOperand) dest);
+						if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+							X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 							for (int i = 0; i < ecx; i++) {
-								concreteValueMemoryOperand
-										.movByte(
-												new X86MemoryOperand(inst
-														.getDataType(), t
-														.getDisplacement() + i),
-												x);
+								concreteValueMemoryOperand.movByte(
+										new X86MemoryOperand(inst.getDataType(), t.getDisplacement() + i), x);
 							}
 
 						}
@@ -3773,51 +3189,40 @@ public class ConcreteExecution {
 					x = concreteValueRegister.getRegVal(src.toString());
 					// FlagRelationship.totalChangePart(symbolValueRegisterPart,
 					// symbolValueRegister, "%eax");
-					if (dest.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = this
-								.calculateMemoryOperand((X86MemoryOperand) dest);
+					if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+						X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 
 						concreteValueMemoryOperand.movDoubleWord(
-								new X86MemoryOperand(inst.getDataType(), t
-										.getDisplacement()), x);
+								new X86MemoryOperand(inst.getDataType(), t.getDisplacement()), x);
 						// }
 
 					}
 
 					concreteValueRegister.add("%edi", 4);
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.toString().equals("%ax")) {
 						x = concreteValueRegisterPart.getRegVal(src.toString());
 						// FlagRelationship.partChangeTotal(symbolValueRegisterPart,
 						// symbolValueRegister, "%ax");
-						if (dest.getClass().getSimpleName()
-								.equals("X86MemoryOperand")) {
-							X86MemoryOperand t = this
-									.calculateMemoryOperand((X86MemoryOperand) dest);
+						if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+							X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 
 							concreteValueMemoryOperand.movWord(
-									new X86MemoryOperand(inst.getDataType(), t
-											.getDisplacement()), x);
+									new X86MemoryOperand(inst.getDataType(), t.getDisplacement()), x);
 							// }
 
 						}
 
 						concreteValueRegister.add("%edi", 2);
-					} else if (src.toString().endsWith("l")
-							|| src.toString().endsWith("h")) {
+					} else if (src.toString().endsWith("l") || src.toString().endsWith("h")) {
 						x = concreteValueRegisterPart.getRegVal(src.toString());
 						// FlagRelationship.partChangeTotal(symbolValueRegisterPart,
 						// symbolValueRegister, "%ax");
-						if (dest.getClass().getSimpleName()
-								.equals("X86MemoryOperand")) {
-							X86MemoryOperand t = this
-									.calculateMemoryOperand((X86MemoryOperand) dest);
+						if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+							X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 
 							concreteValueMemoryOperand.movByte(
-									new X86MemoryOperand(inst.getDataType(), t
-											.getDisplacement()), x);
+									new X86MemoryOperand(inst.getDataType(), t.getDisplacement()), x);
 							// }
 
 						}
@@ -3837,8 +3242,7 @@ public class ConcreteExecution {
 
 				long disp = t.getDisplacement();
 				if (t.getBase() != null) {
-					long base = concreteValueRegister.getRegVal(t.getBase()
-							.toString());
+					long base = concreteValueRegister.getRegVal(t.getBase().toString());
 
 					if (inst.getName().toString().endsWith("b")) {
 						concreteValueRegister.add(t.getBase().toString(), 4);
@@ -3851,9 +3255,7 @@ public class ConcreteExecution {
 					}
 
 					// if (base instanceof ValueLongExp) {
-					b1 = calculateValueMemoryOperand(
-							new X86MemoryOperand(inst.getDataType(), base
-									+ disp), inst);
+					b1 = calculateValueMemoryOperand(new X86MemoryOperand(inst.getDataType(), base + disp), inst);
 					// }
 				}
 			}
@@ -3862,8 +3264,7 @@ public class ConcreteExecution {
 				concreteValueRegister.mov("%eax", b1);
 				// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 				// concreteValueRegister, "%eax");
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86RegisterPart")) {
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 				concreteValueRegisterPart.mov("%ax", b1);
 				// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 				// concreteValueRegister, "%ax");
@@ -3891,29 +3292,24 @@ public class ConcreteExecution {
 					// Return: CX = year (1980-2099) DH = month DL = day AL =
 					// day of week (00h=Sunday)
 					if (concreteValueRegisterPart.getRegVal("%ah") == 42) {
-						concreteValueRegisterPart.setConcreteRegisterPartValue(
-								"%cx", Calendar.getInstance()
-										.get(Calendar.YEAR));
+						concreteValueRegisterPart.setConcreteRegisterPartValue("%cx",
+								Calendar.getInstance().get(Calendar.YEAR));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, "%cx");
 						// int z = Calendar.getInstance().get(Calendar.MONTH);
-						concreteValueRegisterPart.setConcreteRegisterPartValue(
-								"%dh",
+						concreteValueRegisterPart.setConcreteRegisterPartValue("%dh",
 								Calendar.getInstance().get(Calendar.MONTH) + 1);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, "%dh");
-						concreteValueRegisterPart.setConcreteRegisterPartValue(
-								"%dl", Calendar.getInstance()
-										.get(Calendar.DATE));
+						concreteValueRegisterPart.setConcreteRegisterPartValue("%dl",
+								Calendar.getInstance().get(Calendar.DATE));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, "%dl");
-						concreteValueRegisterPart.setConcreteRegisterPartValue(
-								"%al",
-								Calendar.getInstance()
-										.get(Calendar.DAY_OF_WEEK));
+						concreteValueRegisterPart.setConcreteRegisterPartValue("%al",
+								Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, "%al");
@@ -3926,135 +3322,98 @@ public class ConcreteExecution {
 		} else if (inst.getName().startsWith("lea")) {
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					concreteValueRegister.mov(dest.toString(),
-							concreteValueRegister.getRegVal(src.toString()));
+					concreteValueRegister.mov(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					concreteValueRegister
-							.mov(dest.toString(), concreteValueRegisterPart
-									.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					concreteValueRegister.mov(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					concreteValueRegister.mov(dest.toString(),
-							concreteValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					concreteValueRegister.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = (X86MemoryOperand) src;
 					if (t.getBase() != null) {
 						concreteValueRegister.mov(dest.toString(),
-								concreteValueRegister.getRegVal(t.getBase()
-										.toString()));
+								concreteValueRegister.getRegVal(t.getBase().toString()));
 						if (t.getDisplacement() != 0)
-							concreteValueRegister.add(dest.toString(),
-									t.getDisplacement());
+							concreteValueRegister.add(dest.toString(), t.getDisplacement());
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					} else if (t.getDisplacement() != 0) {
-						concreteValueRegister.mov(dest.toString(),
-								t.getDisplacement());
+						concreteValueRegister.mov(dest.toString(), t.getDisplacement());
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					concreteValueRegister.mov(dest.toString(),
-							getBitVecValue(((Immediate) src).getNumber()
-									.intValue()));
+					concreteValueRegister
+							.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber().intValue()));
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
 				}
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86RegisterPart")) {
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					concreteValueRegisterPart.mov(dest.toString(),
-							concreteValueRegister.getRegVal(src.toString()));
+					concreteValueRegisterPart.mov(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 					// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					concreteValueRegisterPart
-							.mov(dest.toString(), concreteValueRegisterPart
-									.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					concreteValueRegisterPart.mov(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 					// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					concreteValueRegisterPart.mov(dest.toString(),
-							concreteValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					concreteValueRegisterPart.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 					// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					concreteValueRegisterPart.mov(dest.toString(),
-							getBitVecValue(((Immediate) src).getNumber()
-									.intValue()));
+					concreteValueRegisterPart.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+							.intValue()));
 					// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = (X86MemoryOperand) src;
 					if (t.getBase() != null) {
 						concreteValueRegisterPart.mov(dest.toString(),
-								concreteValueRegister.getRegVal(t.getBase()
-										.toString()));
+								concreteValueRegister.getRegVal(t.getBase().toString()));
 						if (t.getDisplacement() != 0)
-							concreteValueRegisterPart.add(dest.toString(),
-									t.getDisplacement());
+							concreteValueRegisterPart.add(dest.toString(), t.getDisplacement());
 
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
 				}
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister")) {
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
+					concreteValueSegment.mov(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					concreteValueSegment.mov(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					concreteValueSegment.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					concreteValueSegment.mov(dest.toString(),
-							concreteValueRegister.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					concreteValueSegment
-							.mov(dest.toString(), concreteValueRegisterPart
-									.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					concreteValueSegment.mov(dest.toString(),
-							concreteValueSegment.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
-					concreteValueSegment.mov(dest.toString(),
-							concreteValueMemoryOperand
-									.getRegVal((X86MemoryOperand) src));
+							concreteValueMemoryOperand.getRegVal((X86MemoryOperand) src));
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					concreteValueSegment.mov(dest.toString(),
-							getBitVecValue(((Immediate) src).getNumber()
-									.intValue()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+					concreteValueSegment.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber().intValue()));
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = (X86MemoryOperand) src;
 					if (t.getBase() != null) {
 						concreteValueSegment.mov(dest.toString(),
-								concreteValueRegister.getRegVal(t.getBase()
-										.toString()));
+								concreteValueRegister.getRegVal(t.getBase().toString()));
 					}
 				}
 			}
-		} else if (inst.getName().startsWith("cmp")
-				|| inst.getName().startsWith("test")) {
+		} else if (inst.getName().startsWith("cmp") || inst.getName().startsWith("test")) {
 			// SymbolicValue lhs = null, rhs = null;
 
 			if (dest.getClass().getSimpleName().equals("X86Register"))
 				d = concreteValueRegister.getRegVal(dest.toString());
 			else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
 				d = concreteValueRegisterPart.getRegVal(dest.toString());
-			else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister"))
+			else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 				d = concreteValueSegment.getRegVal(dest.toString());
 			else if (dest.getClass().getSimpleName().equals("Immediate"))
 				d = getBitVecValue(((Immediate) dest).getNumber().intValue());
@@ -4068,8 +3427,7 @@ public class ConcreteExecution {
 				s = concreteValueRegister.getRegVal(src.toString());
 			else if (src.getClass().getSimpleName().equals("X86RegisterPart"))
 				s = concreteValueRegisterPart.getRegVal(src.toString());
-			else if (src.getClass().getSimpleName()
-					.equals("X86SegmentRegister"))
+			else if (src.getClass().getSimpleName().equals("X86SegmentRegister"))
 				s = concreteValueSegment.getRegVal(src.toString());
 			else if (src.getClass().getSimpleName().equals("Immediate"))
 				if (inst.getName().endsWith("b")) {
@@ -4078,17 +3436,14 @@ public class ConcreteExecution {
 				} else
 					s = getBitVecValue(((Immediate) src).getNumber().intValue());
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				s = concreteValueMemoryOperand
-						.getMemoryOperandVal((X86MemoryOperand) src);
+				s = concreteValueMemoryOperand.getMemoryOperandVal((X86MemoryOperand) src);
 			}
 
 			// this.formulas.add(new Formula(d.clone(), s.clone()));
 			if (inst.getName().startsWith("cmp"))
-				concreteFlag.changeFlagWithCMP(concreteValueRegister,
-						concreteValueMemoryOperand, concreteStack, d, s);
+				concreteFlag.changeFlagWithCMP(concreteValueRegister, concreteValueMemoryOperand, concreteStack, d, s);
 			else
-				concreteFlag.changeFlagWithTEST(concreteValueRegister,
-						concreteValueMemoryOperand, concreteStack, d, s);
+				concreteFlag.changeFlagWithTEST(concreteValueRegister, concreteValueMemoryOperand, concreteStack, d, s);
 			// set compare status
 
 		} else if (inst.getName().startsWith("pop")) {
@@ -4096,8 +3451,7 @@ public class ConcreteExecution {
 				return;
 
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
-				if (!concreteValueRegister.setSymbolRegisterValue(
-						dest.toString(), concreteStack.pop()))
+				if (!concreteValueRegister.setSymbolRegisterValue(dest.toString(), concreteStack.pop()))
 					System.out.println("Error");
 
 				// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
@@ -4107,10 +3461,8 @@ public class ConcreteExecution {
 				// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 				// concreteValueRegister, "%esp");
 
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86RegisterPart")) {
-				concreteValueRegisterPart.setConcreteRegisterPartValue(
-						dest.toString(), concreteStack.pop());
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
+				concreteValueRegisterPart.setConcreteRegisterPartValue(dest.toString(), concreteStack.pop());
 
 				// System.out.println("Error");
 				// else
@@ -4120,18 +3472,16 @@ public class ConcreteExecution {
 				concreteValueRegister.add("%esp", 2);
 				// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 				// concreteValueRegister, "%esp");
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister")) {
-				if (!concreteValueSegment.setSymbolRegisterValue(
-						dest.toString(), concreteStack.pop()))
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
+				if (!concreteValueSegment.setSymbolRegisterValue(dest.toString(), concreteStack.pop()))
 					System.out.println("Error");
 			} else if (dest.getClass().getSimpleName().equals("Immediate"))
 				// d = new ConstantExp(((Immediate)
 				// dest).getNumber().intValue());
 				;
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				if (!concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-						(X86MemoryOperand) dest, concreteStack.pop()))
+				if (!concreteValueMemoryOperand.setSymbolMemoryOperandValue((X86MemoryOperand) dest,
+						concreteStack.pop()))
 					System.out.println("Error");
 			}
 
@@ -4155,16 +3505,14 @@ public class ConcreteExecution {
 				d = concreteValueRegister.getRegVal(dest.toString());
 			else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
 				d = concreteValueRegisterPart.getRegVal(dest.toString());
-			else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister"))
+			else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 				d = concreteValueRegister.getRegVal(dest.toString());
 			else if (dest.getClass().getSimpleName().equals("Immediate"))
 				d = getBitVecValue(((Immediate) dest).getNumber().intValue());
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				// d = concreteValueMemoryOperand
 				// .getMemoryOperandVal((X86MemoryOperand) dest);
-				d = this.calculateValueMemoryOperand((X86MemoryOperand) dest,
-						inst);
+				d = this.calculateValueMemoryOperand((X86MemoryOperand) dest, inst);
 				/*
 				 * X86MemoryOperand t = (X86MemoryOperand) dest; if (t.getBase()
 				 * != null) { d =
@@ -4201,44 +3549,32 @@ public class ConcreteExecution {
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
 			// returnAddress = new SymbolicValue(((AbsoluteAddress)
 			// dest).getValueOperand());
-			jumpAddress = new AbsoluteAddress(
-					((AbsoluteAddress) dest).getValue());
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
-			jumpAddress = new AbsoluteAddress(
-					((X86PCRelativeAddress) dest).getEffectiveValue(targetTemp
-							.getValue()));
+			jumpAddress = new AbsoluteAddress(((AbsoluteAddress) dest).getValue());
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
+			jumpAddress = new AbsoluteAddress(((X86PCRelativeAddress) dest).getEffectiveValue(targetTemp.getValue()));
 			// System.out.println("RelativeAddress:" + jumpAddress.toString());
 
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
 			// returnAddress = (prevState.getRegValue(((X86Register)
 			// dest).toString())).clone();
-			jumpAddress = new AbsoluteAddress(
-					concreteValueRegister.getRegVal(dest.toString()));
+			jumpAddress = new AbsoluteAddress(concreteValueRegister.getRegVal(dest.toString()));
 
 		} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-			jumpAddress = new AbsoluteAddress(
-					((X86MemoryOperand) dest).getDisplacement());
+			jumpAddress = new AbsoluteAddress(((X86MemoryOperand) dest).getDisplacement());
 			System.out.println("MemoryOperand:" + jumpAddress.toString());
 		}
 
-		if (stubLibrary != null
-				&& contain(
-						((Win32StubLibrary) stubLibrary).getAddressStubMap(),
-						targetTemp)) {
+		if (stubLibrary != null && contain(((Win32StubLibrary) stubLibrary).getAddressStubMap(), targetTemp)) {
 			// String funcName
 			// SystemCallStub.executeConcrete(funcName);
 			System.out.println("Address:" + targetTemp.toString());
 			if (APIStub.executeConcrete(funcName, this, inst))
 				funcName = "";
 			else
-				System.out.println("Concrete Execution of System Call failed:"
-						+ funcName);
+				System.out.println("Concrete Execution of System Call failed:" + funcName);
 			this.evaluateValue = retAPIAddr.getValue();
 		} else {
-			if (jumpAddress != null
-					&& this.targetTemp.getValue() == this.targetIndirect
-							.getValue())
+			if (jumpAddress != null && this.targetTemp.getValue() == this.targetIndirect.getValue())
 				this.evaluateValue = jumpAddress.getValue();
 			else
 				this.evaluateValue = Long.MIN_VALUE;
@@ -4288,115 +3624,86 @@ public class ConcreteExecution {
 				X86MemoryOperand y = (X86MemoryOperand) dest;
 				// Xu li truong hop mov fs:0, esp
 				// Khi do se tac dong den SEH
-				if (y.getSegmentRegister() != null
-						&& y.getSegmentRegister().toString() == "%fs"
+				if (y.getSegmentRegister() != null && y.getSegmentRegister().toString() == "%fs"
 						&& y.getDisplacement() == 0) {
 					System.out.println("SEH Exploit:" + inst.toString());
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						if (((X86Register) src).toString().equals("%esp")) {
-							system.getSEHHandler().getStart()
-									.setNextSEHRecord(concreteStack.get(0));
-							system.getSEHHandler().getStart()
-									.setSEHHandler(concreteStack.get(4));
+							system.getSEHHandler().getStart().setNextSEHRecord(concreteStack.get(0));
+							system.getSEHHandler().getStart().setSEHHandler(concreteStack.get(4));
 						}
 					}
 				} else {
 					X86MemoryOperand t = calculateMemoryOperand((X86MemoryOperand) dest);
 
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						long v = concreteValueRegister
-								.getRegVal(src.toString());
+						long v = concreteValueRegister.getRegVal(src.toString());
 
 						String x = Convert.longToHex(v, 32);
 						int l = x.length();
+						concreteValueMemoryOperand.setSymbolMemoryOperandValue(t,
+								Convert.hexToLong(x.substring(l - 2, l)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								t, Convert.hexToLong(x.substring(l - 2, l)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 1),
+								Convert.hexToLong(x.substring(l - 4, l - 2)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 1), Convert
-										.hexToLong(x.substring(l - 4, l - 2)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 2),
+								Convert.hexToLong(x.substring(l - 6, l - 4)));
 						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 2), Convert
-										.hexToLong(x.substring(l - 6, l - 4)));
-						concreteValueMemoryOperand.setSymbolMemoryOperandValue(
-								new X86MemoryOperand(t.getDataType(), t
-										.getDisplacement() + 3), Convert
-										.hexToLong(x.substring(l - 8, l - 6)));
+								new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 3),
+								Convert.hexToLong(x.substring(l - 8, l - 6)));
 
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						concreteValueMemoryOperand.mov((X86MemoryOperand) dest,
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+								concreteValueRegisterPart.getRegVal(src.toString()));
 
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						concreteValueMemoryOperand.mov((X86MemoryOperand) dest,
 								concreteValueSegment.getRegVal(src.toString()));
 
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						concreteValueMemoryOperand.mov((X86MemoryOperand) dest,
-								concreteValueMemoryOperand
-										.getRegVal((X86MemoryOperand) src));
+								concreteValueMemoryOperand.getRegVal((X86MemoryOperand) src));
 
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueMemoryOperand.mov((X86MemoryOperand) dest,
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueMemoryOperand.mov((X86MemoryOperand) dest, getBitVecValue(((Immediate) src)
+								.getNumber().intValue()));
 
 					}
 				}
 			} else if (dest.getClass().getSimpleName().equals("X86Register")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					concreteValueRegister.mov(dest.toString(),
-							concreteValueRegister.getRegVal(src.toString()));
+					concreteValueRegister.mov(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					concreteValueRegister
-							.mov(dest.toString(), concreteValueRegisterPart
-									.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					concreteValueRegister.mov(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					concreteValueRegister.mov(dest.toString(),
-							concreteValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					concreteValueRegister.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = (X86MemoryOperand) src;
 					long desp = t.getDisplacement();
 
 					// Xu ly cho van de MemoryOperand la [esp + 24]
 					if (t.getBase() != null && t.getBase().toString() == "%esp") {
-						concreteValueRegister.mov(dest.toString(),
-								concreteStack.get(desp));
+						concreteValueRegister.mov(dest.toString(), concreteStack.get(desp));
 					} else if (t.getBase() != null) {
 						// Xy li cho van de MemoryOperand la [eax + 0x401201]
-						long v = concreteValueRegister.getRegVal(t.getBase()
-								.toString());
+						long v = concreteValueRegister.getRegVal(t.getBase().toString());
 
 						// if (v instanceof ValueLongExp) {
-						concreteValueRegister.mov(
-								dest.toString(),
-								calculateValueMemoryOperand(
-										new X86MemoryOperand(t.getDataType(),
-												desp + v), inst));
+						concreteValueRegister.mov(dest.toString(),
+								calculateValueMemoryOperand(new X86MemoryOperand(t.getDataType(), desp + v), inst));
 						// }
 
 					} else
 						// Xu li cho van de MemoryOperand la 0x401020
-						concreteValueRegister.mov(
-								dest.toString(),
-								calculateValueMemoryOperand(
-										new X86MemoryOperand(t.getDataType(),
-												desp), inst));
+						concreteValueRegister.mov(dest.toString(),
+								calculateValueMemoryOperand(new X86MemoryOperand(t.getDataType(), desp), inst));
 
 					// concreteValueRegister.mov(dest.toString(),
 					// concreteValueMemoryOperand
@@ -4404,64 +3711,47 @@ public class ConcreteExecution {
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					concreteValueRegister.mov(dest.toString(),
-							getBitVecValue(((Immediate) src).getNumber()
-									.intValue()));
+					concreteValueRegister
+							.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber().intValue()));
 					// RegisterRelationship.totalChangePart(concreteValueRegisterPart,
 					// concreteValueRegister, dest.toString());
 				}
 			}
 		} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 			if (src.getClass().getSimpleName().equals("X86Register")) {
-				concreteValueRegisterPart.mov(dest.toString(),
-						concreteValueRegister.getRegVal(src.toString()));
+				concreteValueRegisterPart.mov(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 				// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 				// concreteValueRegister, dest.toString());
 			} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
-				concreteValueRegisterPart.mov(dest.toString(),
-						concreteValueRegisterPart.getRegVal(src.toString()));
+				concreteValueRegisterPart.mov(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 				// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 				// concreteValueRegister, dest.toString());
-			} else if (src.getClass().getSimpleName()
-					.equals("X86SegmentRegister")) {
-				concreteValueRegisterPart.mov(dest.toString(),
-						concreteValueSegment.getRegVal(src.toString()));
+			} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+				concreteValueRegisterPart.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 				// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 				// concreteValueRegister, dest.toString());
-			} else if (src.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+			} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				concreteValueRegisterPart.mov(dest.toString(),
-						concreteValueMemoryOperand
-								.getRegVal((X86MemoryOperand) src));
+						concreteValueMemoryOperand.getRegVal((X86MemoryOperand) src));
 				// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 				// concreteValueRegister, dest.toString());
 			} else if (src.getClass().getSimpleName().equals("Immediate")) {
 				concreteValueRegisterPart
-						.mov(dest.toString(), getBitVecValue(((Immediate) src)
-								.getNumber().intValue()));
+						.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber().intValue()));
 				// RegisterRelationship.partChangeTotal(concreteValueRegisterPart,
 				// concreteValueRegister, dest.toString());
 			}
 		} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 			if (src.getClass().getSimpleName().equals("X86Register")) {
-				concreteValueSegment.mov(dest.toString(),
-						concreteValueRegister.getRegVal(src.toString()));
+				concreteValueSegment.mov(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 			} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
-				concreteValueSegment.mov(dest.toString(),
-						concreteValueRegisterPart.getRegVal(src.toString()));
-			} else if (src.getClass().getSimpleName()
-					.equals("X86SegmentRegister")) {
-				concreteValueSegment.mov(dest.toString(),
-						concreteValueSegment.getRegVal(src.toString()));
-			} else if (src.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
-				concreteValueSegment.mov(dest.toString(),
-						concreteValueMemoryOperand
-								.getRegVal((X86MemoryOperand) src));
+				concreteValueSegment.mov(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
+			} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+				concreteValueSegment.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
+			} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+				concreteValueSegment.mov(dest.toString(), concreteValueMemoryOperand.getRegVal((X86MemoryOperand) src));
 			} else if (src.getClass().getSimpleName().equals("Immediate")) {
-				concreteValueSegment
-						.mov(dest.toString(), getBitVecValue(((Immediate) src)
-								.getNumber().intValue()));
+				concreteValueSegment.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber().intValue()));
 			}
 		} else if (inst.getName().startsWith("xchg")) {
 			// normal move
@@ -4469,8 +3759,7 @@ public class ConcreteExecution {
 				X86MemoryOperand t = calculateMemoryOperand((X86MemoryOperand) dest);
 				System.out.println(t.getDisplacement());
 
-				if (!program.checkAddress(new AbsoluteAddress(t
-						.getDisplacement()))) {
+				if (!program.checkAddress(new AbsoluteAddress(t.getDisplacement()))) {
 					// SEH Exploit
 					evaluateValue = system.getSEHHandler().getStart().getSehHandler();
 					running = false;
@@ -4482,9 +3771,7 @@ public class ConcreteExecution {
 				long t = concreteValueRegister.getRegVal(dest.toString());
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueRegister
-								.mov(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueRegister.mov(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						concreteValueRegister.mov(src.toString(), t);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
@@ -4492,8 +3779,7 @@ public class ConcreteExecution {
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						/*
 						 * concreteValueRegister .mov(dest.toString(),
 						 * concreteValueRegisterPart
@@ -4501,35 +3787,27 @@ public class ConcreteExecution {
 						 * .totalChangePart(concreteValueRegisterPart,
 						 * concreteValueRegister, dest.toString());
 						 */
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegister.mov(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegister.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						concreteValueSegment.mov(src.toString(), t);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						concreteValueRegister.mov(dest.toString(),
-								concreteValueMemoryOperand
-										.getRegVal((X86MemoryOperand) src));
-						concreteValueMemoryOperand.mov((X86MemoryOperand) src,
-								t);
+								concreteValueMemoryOperand.getRegVal((X86MemoryOperand) src));
+						concreteValueMemoryOperand.mov((X86MemoryOperand) src, t);
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegister.mov(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegister.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.totalChangePart(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						/*
 						 * concreteValueRegisterPart.mov(dest.toString(),
@@ -4538,11 +3816,9 @@ public class ConcreteExecution {
 						 * .partChangeTotal(concreteValueRegisterPart,
 						 * concreteValueRegister, dest.toString());
 						 */
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						concreteValueRegisterPart.mov(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+								concreteValueRegisterPart.getRegVal(src.toString()));
 						concreteValueRegisterPart.mov(src.toString(), t);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
@@ -4550,63 +3826,43 @@ public class ConcreteExecution {
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueRegisterPart.mov(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueRegisterPart.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						concreteValueSegment.mov(src.toString(), t);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						concreteValueRegisterPart.mov(dest.toString(),
-								concreteValueMemoryOperand
-										.getRegVal((X86MemoryOperand) src));
-						concreteValueMemoryOperand.mov((X86MemoryOperand) src,
-								t);
+								concreteValueMemoryOperand.getRegVal((X86MemoryOperand) src));
+						concreteValueMemoryOperand.mov((X86MemoryOperand) src, t);
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueRegisterPart.mov(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueRegisterPart.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 						// RegisterRelationship.partChangeTotal(
 						// concreteValueRegisterPart,
 						// concreteValueRegister, dest.toString());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						concreteValueSegment
-								.mov(dest.toString(), concreteValueRegister
-										.getRegVal(src.toString()));
+						concreteValueSegment.mov(dest.toString(), concreteValueRegister.getRegVal(src.toString()));
 						concreteValueRegister.mov(src.toString(), t);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						concreteValueSegment.mov(dest.toString(),
-								concreteValueRegisterPart.getRegVal(src
-										.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						concreteValueSegment.mov(dest.toString(), concreteValueRegisterPart.getRegVal(src.toString()));
 						concreteValueRegisterPart.mov(src.toString(), t);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						concreteValueSegment.mov(dest.toString(),
-								concreteValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						concreteValueSegment.mov(dest.toString(), concreteValueSegment.getRegVal(src.toString()));
 						concreteValueSegment.mov(src.toString(), t);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						concreteValueSegment.mov(dest.toString(),
-								concreteValueMemoryOperand
-										.getRegVal((X86MemoryOperand) src));
-						concreteValueMemoryOperand.mov((X86MemoryOperand) src,
-								t);
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						concreteValueSegment.mov(dest.toString(),
-								getBitVecValue(((Immediate) src).getNumber()
-										.intValue()));
+								concreteValueMemoryOperand.getRegVal((X86MemoryOperand) src));
+						concreteValueMemoryOperand.mov((X86MemoryOperand) src, t);
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						concreteValueSegment.mov(dest.toString(), getBitVecValue(((Immediate) src).getNumber()
+								.intValue()));
 					}
 				}
 
@@ -4631,20 +3887,16 @@ public class ConcreteExecution {
 			// SymbolicCondition negativeCond = new SymbolicCondition();
 			// int positiveConnector, negativeConnector;
 
-			if (inst.getName().equals("cmova")
-					|| inst.getName().equals("cmovg")) {
+			if (inst.getName().equals("cmova") || inst.getName().equals("cmovg")) {
 				// positiveConnector = SymbolicCondition.B_OP_GREATER;
 				// negativeConnector = SymbolicCondition.B_OP_NOT_GREATER;
-			} else if (inst.getName().equals("cmovae")
-					|| inst.getName().equals("cmovge")) {
+			} else if (inst.getName().equals("cmovae") || inst.getName().equals("cmovge")) {
 				// positiveConnector = SymbolicCondition.B_OP_NOT_LESS;
 				// negativeConnector = SymbolicCondition.B_OP_LESS;
-			} else if (inst.getName().equals("cmovb")
-					|| inst.getName().equals("cmovl")) {
+			} else if (inst.getName().equals("cmovb") || inst.getName().equals("cmovl")) {
 				// positiveConnector = SymbolicCondition.B_OP_LESS;
 				// negativeConnector = SymbolicCondition.B_OP_NOT_LESS;
-			} else if (inst.getName().equals("cmovbe")
-					|| inst.getName().equals("cmovle")) {
+			} else if (inst.getName().equals("cmovbe") || inst.getName().equals("cmovle")) {
 				// positiveConnector = SymbolicCondition.B_OP_NOT_GREATER;
 				// negativeConnector = SymbolicCondition.B_OP_GREATER;
 			} else if (inst.getName().equals("cmove")) {
@@ -4681,8 +3933,7 @@ public class ConcreteExecution {
 		}
 	}
 
-	private long calculateValueMemoryOperand(X86MemoryOperand t,
-			Instruction inst) {
+	private long calculateValueMemoryOperand(X86MemoryOperand t, Instruction inst) {
 		// TODO Auto-generated method stub
 		long d = 0;
 		// X86MemoryOperand t = (X86MemoryOperand) dest;
@@ -4723,27 +3974,17 @@ public class ConcreteExecution {
 			 */
 			if (inst.getName().toString().endsWith("b")) {
 				if (inst.getName().toString().startsWith("cmp")
-						&& !concreteValueMemoryOperand
-								.contain(new X86MemoryOperand(t.getDataType(),
-										desp))) {
+						&& !concreteValueMemoryOperand.contain(new X86MemoryOperand(t.getDataType(), desp))) {
 					d = program.getByteValueMemory(new AbsoluteAddress(ad));
 				} else
 
-					d = concreteValueMemoryOperand
-							.getMemoryOperandVal(new X86MemoryOperand(t
-									.getDataType(), ad));
+					d = concreteValueMemoryOperand.getMemoryOperandVal(new X86MemoryOperand(t.getDataType(), ad));
 			} else if (inst.getName().toString().endsWith("s")) {
-				d = concreteValueMemoryOperand
-						.getMemoryOperandValWord(new X86MemoryOperand(t
-								.getDataType(), ad));
+				d = concreteValueMemoryOperand.getMemoryOperandValWord(new X86MemoryOperand(t.getDataType(), ad));
 			} else if (inst.getName().toString().endsWith("w")) {
-				d = concreteValueMemoryOperand
-						.getMemoryOperandValWord(new X86MemoryOperand(t
-								.getDataType(), ad));
+				d = concreteValueMemoryOperand.getMemoryOperandValWord(new X86MemoryOperand(t.getDataType(), ad));
 			} else if (inst.getName().toString().endsWith("l")) {
-				d = concreteValueMemoryOperand
-						.getMemoryOperandValDoubleWord(new X86MemoryOperand(t
-								.getDataType(), ad));
+				d = concreteValueMemoryOperand.getMemoryOperandValDoubleWord(new X86MemoryOperand(t.getDataType(), ad));
 			}
 		}
 

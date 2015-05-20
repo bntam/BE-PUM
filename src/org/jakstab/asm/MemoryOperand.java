@@ -43,8 +43,7 @@ public abstract class MemoryOperand extends Operand {
 	private boolean autoIncr;
 	private boolean autoDecr;
 
-	public MemoryOperand(DataType dataType, Register base, Register index,
-			long disp, int scale) {
+	public MemoryOperand(DataType dataType, Register base, Register index, long disp, int scale) {
 		this.dataType = dataType;
 		this.base = base;
 		this.index = index;
@@ -52,8 +51,7 @@ public abstract class MemoryOperand extends Operand {
 		this.scale = scale;
 	}
 
-	public MemoryOperand(DataType dataType, Register base, Register index,
-			long disp) {
+	public MemoryOperand(DataType dataType, Register base, Register index, long disp) {
 		this(dataType, base, index, disp, 1);
 	}
 

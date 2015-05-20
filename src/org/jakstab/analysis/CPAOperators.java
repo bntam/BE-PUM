@@ -30,18 +30,15 @@ public final class CPAOperators {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(CPAOperators.class);
 
-	public static AbstractState mergeSep(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public static AbstractState mergeSep(AbstractState s1, AbstractState s2, Precision precision) {
 		return s2;
 	}
 
-	public static AbstractState mergeJoin(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public static AbstractState mergeJoin(AbstractState s1, AbstractState s2, Precision precision) {
 		return s2.join(s1);
 	}
 
-	public static boolean stopSep(AbstractState s, ReachedSet reached,
-			Precision precision) {
+	public static boolean stopSep(AbstractState s, ReachedSet reached, Precision precision) {
 		for (AbstractState a : reached) {
 			if (s.lessOrEqual(a)) {
 				return true;
@@ -50,8 +47,7 @@ public final class CPAOperators {
 		return false;
 	}
 
-	public static boolean stopJoin(AbstractState s, ReachedSet reached,
-			Precision precision) {
+	public static boolean stopJoin(AbstractState s, ReachedSet reached, Precision precision) {
 		if (reached.isEmpty())
 			return false;
 		return s.lessOrEqual(Lattices.joinAll(reached));

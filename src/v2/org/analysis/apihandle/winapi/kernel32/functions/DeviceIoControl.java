@@ -40,55 +40,54 @@ import v2.org.analysis.value.Value;
  * 
  * @param hDevice
  *            [in] A handle to the device on which the operation is to be
- *            performed. The device is typically a volume, directory, file,
- *            or stream. To retrieve a device handle, use the CreateFile
- *            function. For more information, see Remarks.
+ *            performed. The device is typically a volume, directory, file, or
+ *            stream. To retrieve a device handle, use the CreateFile function.
+ *            For more information, see Remarks.
  * 
  * @param dwIoControlCode
- *            [in] The control code for the operation. This value identifies
- *            the specific operation to be performed and the type of device
- *            on which to perform it. For a list of the control codes, see
- *            Remarks. The documentation for each control code provides
- *            usage details for the lpInBuffer, nInBufferSize, lpOutBuffer,
- *            and nOutBufferSize parameters.
+ *            [in] The control code for the operation. This value identifies the
+ *            specific operation to be performed and the type of device on which
+ *            to perform it. For a list of the control codes, see Remarks. The
+ *            documentation for each control code provides usage details for the
+ *            lpInBuffer, nInBufferSize, lpOutBuffer, and nOutBufferSize
+ *            parameters.
  * 
  * @param lpInBuffer
  *            [in, optional] A pointer to the input buffer that contains the
- *            data required to perform the operation. The format of this
- *            data depends on the value of the dwIoControlCode parameter.
- *            This parameter can be NULL if dwIoControlCode specifies an
- *            operation that does not require input data.
+ *            data required to perform the operation. The format of this data
+ *            depends on the value of the dwIoControlCode parameter. This
+ *            parameter can be NULL if dwIoControlCode specifies an operation
+ *            that does not require input data.
  * 
  * @param nInBufferSize
  *            [in] The size of the input buffer, in bytes.
  * 
  * @param lpOutBuffer
- *            [out, optional] A pointer to the output buffer that is to
- *            receive the data returned by the operation. The format of this
- *            data depends on the value of the dwIoControlCode parameter.
- *            This parameter can be NULL if dwIoControlCode specifies an
- *            operation that does not return data.
+ *            [out, optional] A pointer to the output buffer that is to receive
+ *            the data returned by the operation. The format of this data
+ *            depends on the value of the dwIoControlCode parameter. This
+ *            parameter can be NULL if dwIoControlCode specifies an operation
+ *            that does not return data.
  * 
  * @param nOutBufferSize
  *            [in] The size of the output buffer, in bytes.
  * 
  * @param lpBytesReturned
- *            [out, optional] A pointer to a variable that receives the size
- *            of the data stored in the output buffer, in bytes.
+ *            [out, optional] A pointer to a variable that receives the size of
+ *            the data stored in the output buffer, in bytes.
  * 
  * @param lpOverlapped
  *            [in, out, optional] A pointer to an OVERLAPPED structure.
  * 
- * @return If the operation completes successfully, the return value is
- *         nonzero.
- *         
+ * @return If the operation completes successfully, the return value is nonzero.
+ * 
  * @author Yen Nguyen
  *
  */
 public class DeviceIoControl extends Kernel32API {
 
 	public DeviceIoControl() {
-		
+
 	}
 
 	@Override
@@ -153,26 +152,27 @@ public class DeviceIoControl extends Kernel32API {
 
 			register.mov("eax", new LongValue(ret.longValue()));
 
+			if (lpInBuffer != null)
+				try {
+					String str = new String(lpInBuffer.array(), "UTF-8");
+					memory.setText(new X86MemoryOperand(DataType.INT32, t3), str);
+					System.out.println("Data: " + str);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 
-			if (lpInBuffer != null) try {
-				String str = new String(lpInBuffer.array(), "UTF-8");
-				memory.setText(new X86MemoryOperand(DataType.INT32, t3), str);
-				System.out.println("Data: " + str);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-			
-			if (lpOutBuffer != null) try {
-				String str = new String(lpOutBuffer.array(), "UTF-8");
-				memory.setText(new X86MemoryOperand(DataType.INT32, t5), str);
-				System.out.println("Data: " + str);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-			
+			if (lpOutBuffer != null)
+				try {
+					String str = new String(lpOutBuffer.array(), "UTF-8");
+					memory.setText(new X86MemoryOperand(DataType.INT32, t5), str);
+					System.out.println("Data: " + str);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+
 			if (t7 != 0L) {
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t7), new LongValue(
-						lpBytesReturned.getValue().longValue()));
+				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t7), new LongValue(lpBytesReturned
+						.getValue().longValue()));
 			}
 
 			if (t8 != 0L) {

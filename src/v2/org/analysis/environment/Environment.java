@@ -53,8 +53,9 @@ public class Environment {
 		memory.resetImportTable(Program.getProgram());
 
 		register = new Register();
-		//register.mov("edx", new LongValue(Program.getProgram().getEntryPoint()
-		//		.getValue()));
+		// register.mov("edx", new
+		// LongValue(Program.getProgram().getEntryPoint()
+		// .getValue()));
 		register.mov("edx", new LongValue(0x7C90E4F4));
 		register.mov("esi", new LongValue(0xFFFFFFFF));
 		register.mov("ecx", new LongValue(0x12FFB0));
@@ -68,8 +69,8 @@ public class Environment {
 
 		if (stack instanceof StackV2) {
 			((StackV2) stack).setEnvironment(this);
-			//((StackV2) stack).init(new LongValue(system.getKernel()
-			//		.getReturnRandomValue()));
+			// ((StackV2) stack).init(new LongValue(system.getKernel()
+			// .getReturnRandomValue()));
 			((StackV2) stack).init(new LongValue(0x7C817067));
 		} else if (stack instanceof StackV1)
 			stack.push((new LongValue(system.getKernel().getReturnRandomValue())));
@@ -84,13 +85,13 @@ public class Environment {
 		Environment ret = new Environment();
 		if (register != null)
 			ret.setRegister(register.clone());
-		
+
 		if (flag != null)
 			ret.setFlag(flag.clone());
-		
+
 		if (memory != null)
 			ret.setMemory(memory.clone());
-		
+
 		if (stack != null)
 			ret.setStack(stack.clone());
 		ret.getMemory().setEnvironment(ret);
@@ -101,8 +102,7 @@ public class Environment {
 	}
 
 	public boolean equals(Environment e) {
-		return register.equals(e.getRegister()) && memory.equals(e.getMemory())
-				&& stack.equals(e.getStack())
+		return register.equals(e.getRegister()) && memory.equals(e.getMemory()) && stack.equals(e.getStack())
 		// && flag.equals(e.getFlag())
 		;
 	}

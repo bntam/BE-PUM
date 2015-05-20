@@ -28,14 +28,14 @@ public class IsDebuggerPresent extends Kernel32API {
 	 * 
 	 */
 	public IsDebuggerPresent() {
-		
+
 	}
 
 	@Override
 	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Register register = env.getRegister();
-		
+
 		// This function has no parameters.
 		boolean ret = Kernel32DLL.INSTANCE.IsDebuggerPresent();
 		System.out.println("Return Value:" + ret);

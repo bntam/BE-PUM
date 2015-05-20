@@ -34,8 +34,7 @@ import org.jakstab.util.Logger;
 
 public class X86SegmentRegisters {
 
-	private final static Logger logger = Logger
-			.getLogger(X86SegmentRegisters.class);
+	private final static Logger logger = Logger.getLogger(X86SegmentRegisters.class);
 
 	public static final int NUM_SEGMENT_REGISTERS = 6;
 

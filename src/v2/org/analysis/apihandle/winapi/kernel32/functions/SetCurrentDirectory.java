@@ -32,11 +32,11 @@ import v2.org.analysis.value.Value;
  * 
  * @param lpPathName
  *            : The path to the new current directory. This parameter may
- *            specify a relative path or a full path. In either case, the
- *            full path of the specified directory is calculated and stored
- *            as the current directory. For more information, see File
- *            Names, Paths, and Namespaces.
- *            
+ *            specify a relative path or a full path. In either case, the full
+ *            path of the specified directory is calculated and stored as the
+ *            current directory. For more information, see File Names, Paths,
+ *            and Namespaces.
+ * 
  * @return If the function succeeds, the return value is nonzero.
  * 
  * @author Yen Nguyen
@@ -48,7 +48,7 @@ public class SetCurrentDirectory extends Kernel32API {
 	 * 
 	 */
 	public SetCurrentDirectory() {
-		
+
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class SetCurrentDirectory extends Kernel32API {
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
 		Register register = env.getRegister();
-		
+
 		Value x1 = stack.pop();
 
 		System.out.println("Argument:" + x1);

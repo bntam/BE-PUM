@@ -16,8 +16,7 @@ public class Condition {
 
 	public boolean equal(Condition cond) {
 		for (int index = 0; index < connector.size(); index++)
-			if (leftC.get(index) != cond.getLeftC(index)
-					|| rightC.get(index) != cond.getRightC(index)
+			if (leftC.get(index) != cond.getLeftC(index) || rightC.get(index) != cond.getRightC(index)
 					|| connector.get(index) != cond.getConnector(index))
 				return false;
 		return true;
@@ -75,8 +74,7 @@ public class Condition {
 	public void printInfo() {
 		System.out.println("Condition:");
 		for (int index = 0; index < connector.size(); index++) {
-			System.out.println(leftC.get(index) + " " + connector.get(index)
-					+ " " + rightC.get(index));
+			System.out.println(leftC.get(index) + " " + connector.get(index) + " " + rightC.get(index));
 			System.out
 					.println("---------------------------------------------------------------------------------------------");
 		}

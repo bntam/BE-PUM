@@ -72,8 +72,7 @@ public class ProcedureState implements AbstractState {
 	@Override
 	public AbstractState join(LatticeElement l) {
 		ProcedureState other = (ProcedureState) l;
-		return new ProcedureState(
-				other.procedureEntries.union(this.procedureEntries));
+		return new ProcedureState(other.procedureEntries.union(this.procedureEntries));
 	}
 
 	/*
@@ -82,8 +81,7 @@ public class ProcedureState implements AbstractState {
 	 * .rtl.expressions.RTLExpression[])
 	 */
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -112,8 +110,7 @@ public class ProcedureState implements AbstractState {
 	@Override
 	public boolean lessOrEqual(LatticeElement l) {
 		ProcedureState other = (ProcedureState) l;
-		return other.isTop()
-				|| other.procedureEntries.containsAll(this.procedureEntries);
+		return other.isTop() || other.procedureEntries.containsAll(this.procedureEntries);
 	}
 
 	@Override
@@ -125,9 +122,7 @@ public class ProcedureState implements AbstractState {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((procedureEntries == null) ? 0 : procedureEntries.hashCode());
+		result = prime * result + ((procedureEntries == null) ? 0 : procedureEntries.hashCode());
 		return result;
 	}
 

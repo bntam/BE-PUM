@@ -36,8 +36,7 @@ public class KSet implements AbstractDomainElement {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(KSet.class);
 
-	private static Set<BasedNumberElement> FULL_SET = Collections
-			.singleton(null);
+	private static Set<BasedNumberElement> FULL_SET = Collections.singleton(null);
 	private static KSet TOP = new KSet(-1, FULL_SET);
 
 	static KSet getTop() {
@@ -81,8 +80,7 @@ public class KSet implements AbstractDomainElement {
 
 	@Override
 	public boolean hasUniqueConcretization() {
-		return !isTop() && set.size() == 1
-				&& set.iterator().next().hasUniqueConcretization();
+		return !isTop() && set.size() == 1 && set.iterator().next().hasUniqueConcretization();
 	}
 
 	@Override
@@ -138,13 +136,11 @@ public class KSet implements AbstractDomainElement {
 	}
 
 	@Override
-	public AbstractDomainElement readStore(int bitWidth,
-			PartitionedMemory<? extends AbstractDomainElement> store) {
+	public AbstractDomainElement readStore(int bitWidth, PartitionedMemory<? extends AbstractDomainElement> store) {
 		Set<BasedNumberElement> resultSet = new FastSet<BasedNumberElement>();
 		int k = 0;
 		for (BasedNumberElement e : set) {
-			KSet memVal = (KSet) store.get(e.getRegion(), e.getNumber()
-					.longValue(), bitWidth);
+			KSet memVal = (KSet) store.get(e.getRegion(), e.getNumber().longValue(), bitWidth);
 			if (!memVal.isBot() && !memVal.isTop()) {
 				resultSet.addAll(memVal.set);
 				k = Math.max(k, memVal.bound);
@@ -154,22 +150,19 @@ public class KSet implements AbstractDomainElement {
 	}
 
 	@Override
-	public Collection<? extends AbstractDomainElement> readStorePowerSet(
-			int bitWidth,
+	public Collection<? extends AbstractDomainElement> readStorePowerSet(int bitWidth,
 			PartitionedMemory<? extends AbstractDomainElement> store) {
 		if (isTop())
 			return Collections.singleton(getTop());
 		Set<AbstractDomainElement> result = new FastSet<AbstractDomainElement>();
 		for (BasedNumberElement e : set) {
-			result.add(store.get(e.getRegion(), e.getNumber().longValue(),
-					bitWidth));
+			result.add(store.get(e.getRegion(), e.getNumber().longValue(), bitWidth));
 		}
 		return result;
 	}
 
 	@Override
-	public <A extends AbstractDomainElement> void writeStore(int bitWidth,
-			PartitionedMemory<A> store, A value) {
+	public <A extends AbstractDomainElement> void writeStore(int bitWidth, PartitionedMemory<A> store, A value) {
 
 		if (isTop()) {
 			store.setTop();
@@ -185,8 +178,7 @@ public class KSet implements AbstractDomainElement {
 				else if (e.isNumberTop())
 					store.setTop(e.getRegion());
 				else
-					store.weakUpdate(e.getRegion(), e.getNumber().longValue(),
-							bitWidth, value);
+					store.weakUpdate(e.getRegion(), e.getNumber().longValue(), bitWidth, value);
 			}
 		}
 	}

@@ -9,12 +9,10 @@ package v2.org.analysis.system;
  */
 public class Process {
 	private String moduleFileName, commanLine, curDir, pStarupInfo;
-	private long pAttribute, tAttribute, handleFlag, creationFlag, envBlock,
-			pInformation;
+	private long pAttribute, tAttribute, handleFlag, creationFlag, envBlock, pInformation;
 
-	public Process(String moduleFileName, String commandLine, long t3, long t4,
-			long t5, long t6, long t7, String curDir, String pStarupInfo,
-			long t10) {
+	public Process(String moduleFileName, String commandLine, long t3, long t4, long t5, long t6, long t7,
+			String curDir, String pStarupInfo, long t10) {
 		// TODO Auto-generated constructor stub
 		this.setModuleFileName(moduleFileName);
 		this.setCommanLine(commandLine);

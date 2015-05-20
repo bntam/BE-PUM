@@ -51,14 +51,10 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 		p.setDescription("Replays pre-recorded traces as an under-approximation of control flow.");
 	}
 
-	public static JOption<String> traceFiles = JOption
-			.create("trace-file",
-					"f",
-					"",
-					"Comma separated list of trace files to use for tracereplay (default is <mainFile>.parsed)");
+	public static JOption<String> traceFiles = JOption.create("trace-file", "f", "",
+			"Comma separated list of trace files to use for tracereplay (default is <mainFile>.parsed)");
 
-	private static final Logger logger = Logger
-			.getLogger(TraceReplayAnalysis.class);
+	private static final Logger logger = Logger.getLogger(TraceReplayAnalysis.class);
 
 	private final SetMultimap<AbsoluteAddress, AbsoluteAddress> succ;
 
@@ -86,20 +82,17 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 			try {
 				line = in.readLine();
 			} catch (IOException e) {
-				logger.fatal("IO error when reading from trace: "
-						+ e.getMessage());
+				logger.fatal("IO error when reading from trace: " + e.getMessage());
 				throw new RuntimeException(e);
 			}
 			if (line != null) {
 
 				if (line.charAt(0) == 'A') {
 					// Dima's "parsed" format
-					curPC = new AbsoluteAddress(Long.parseLong(
-							line.substring(9, line.indexOf('\t', 9)), 16));
+					curPC = new AbsoluteAddress(Long.parseLong(line.substring(9, line.indexOf('\t', 9)), 16));
 				} else {
 					// Pure format produced by temu's text conversion
-					curPC = new AbsoluteAddress(Long.parseLong(
-							line.substring(0, line.indexOf(':')), 16));
+					curPC = new AbsoluteAddress(Long.parseLong(line.substring(0, line.indexOf(':')), 16));
 				}
 
 				if (line.equals(lastLine)) {
@@ -109,8 +102,7 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 
 					// Only add the edge if either source or target are in the
 					// program. This collapses library functions.
-					if (lastPC != null
-							&& (isProgramAddress(lastPC) || isProgramAddress(curPC))) {
+					if (lastPC != null && (isProgramAddress(lastPC) || isProgramAddress(curPC))) {
 						succ.put(lastPC, curPC);
 						lastPC = curPC;
 					}
@@ -124,8 +116,7 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		return null;
 	}
 
@@ -135,8 +126,7 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 
 		if (s2.isBot()) {
 			return s1;
@@ -153,13 +143,11 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge,
-			Precision precision) {
+	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge, Precision precision) {
 		return Collections.singleton(singlePost(state, cfaEdge, precision));
 	}
 
-	private AbstractState singlePost(AbstractState state, CFAEdge cfaEdge,
-			Precision precision) {
+	private AbstractState singlePost(AbstractState state, CFAEdge cfaEdge, Precision precision) {
 
 		Location edgeTarget = cfaEdge.getTarget();
 		Location edgeSource = cfaEdge.getSource();
@@ -177,8 +165,7 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 		RTLStatement stmt = (RTLStatement) cfaEdge.getTransformer();
 
 		if (edgeTarget.getAddress().equals(tState.getCurrentPC())
-				&& !(stmt instanceof RTLAssume && ((RTLAssume) stmt)
-						.getSource().getType() == RTLGoto.Type.REPEAT)) {
+				&& !(stmt instanceof RTLAssume && ((RTLAssume) stmt).getSource().getType() == RTLGoto.Type.REPEAT)) {
 			// Next statement has same address (and is no back jump from REP),
 			// so do not move forward in trace
 			return tState;
@@ -196,19 +183,16 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 					// Target is in program, but on a different path not taken
 					// by this trace
 					if (!tState.isBot())
-						logger.debug("Visiting edge " + cfaEdge
-								+ ", trace expected " + tState.getNextPC()
-								+ " next.");
+						logger.debug("Visiting edge " + cfaEdge + ", trace expected " + tState.getNextPC() + " next.");
 					return TraceReplayState.BOT;
 				} else {
 					// Target is not in program, so we went into another module
 					// (library) that the over-approximation models by a stub
 					// In the trace, the TraceReplayAnalysis constructor
 					// collapsed the function to a single address
-					logger.debug("Jumping out of module to " + edgeTarget
-							+ " ("
-							+ Program.getProgram().getSymbolFor(edgeTarget)
-							+ "), fast forwarding from " + cfaEdge.getSource());
+					logger.debug("Jumping out of module to " + edgeTarget + " ("
+							+ Program.getProgram().getSymbolFor(edgeTarget) + "), fast forwarding from "
+							+ cfaEdge.getSource());
 
 					// If we are in a BOT state, we cannot figure out what the
 					// native address of the library function is
@@ -222,16 +206,14 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 					// succ.get(edgeSource.getAddress());
 
 					if (succ.get(edgeSource.getAddress()).size() != 1) {
-						logger.error("Cannot map virtual edge " + cfaEdge
-								+ " to trace, possible trace successors: "
+						logger.error("Cannot map virtual edge " + cfaEdge + " to trace, possible trace successors: "
 								+ succ.get(edgeSource.getAddress()));
 						return TraceReplayState.BOT;
 					}
 
 					// Since state is not BOT, we know edgeSource is contained
 					// in succ.
-					return new TraceReplayState(succ, succ
-							.get(edgeSource.getAddress()).iterator().next());
+					return new TraceReplayState(succ, succ.get(edgeSource.getAddress()).iterator().next());
 				}
 			}
 		}
@@ -239,8 +221,7 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 		return Pair.create(s, precision);
 	}
 
@@ -250,8 +231,7 @@ public class TraceReplayAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 		return null;
 	}

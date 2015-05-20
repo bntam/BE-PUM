@@ -68,7 +68,7 @@ import v2.org.analysis.value.Value;
 public class DuplicateHandle extends Kernel32API {
 
 	public DuplicateHandle() {
-		
+
 	}
 
 	@Override

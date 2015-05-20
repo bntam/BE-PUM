@@ -31,8 +31,7 @@ import java.util.Set;
 public class ReverseCFATransformerFactory implements StateTransformerFactory {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(ReverseCFATransformerFactory.class);
+	private static final Logger logger = Logger.getLogger(ReverseCFATransformerFactory.class);
 
 	private SetMultimap<Location, CFAEdge> reverseCFA;
 	private Location sink;

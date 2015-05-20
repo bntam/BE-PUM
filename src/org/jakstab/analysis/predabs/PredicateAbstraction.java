@@ -49,8 +49,7 @@ public class PredicateAbstraction implements ConfigurableProgramAnalysis {
 		p.setExplicit(true);
 	}
 
-	private static final Logger logger = Logger
-			.getLogger(PredicateAbstraction.class);
+	private static final Logger logger = Logger.getLogger(PredicateAbstraction.class);
 
 	private BDDFactory bddFactory;
 
@@ -60,8 +59,7 @@ public class PredicateAbstraction implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		return new PredicatePrecision();
 	}
 
@@ -71,162 +69,140 @@ public class PredicateAbstraction implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 		return CPAOperators.mergeJoin(s1, s2, precision);
 	}
 
 	@Override
-	public Set<AbstractState> post(final AbstractState state, CFAEdge edge,
-			final Precision precision) {
+	public Set<AbstractState> post(final AbstractState state, CFAEdge edge, final Precision precision) {
 		final RTLStatement statement = (RTLStatement) edge.getTransformer();
 		final PredicateAbstractionState s = (PredicateAbstractionState) state;
 		final PredicatePrecision prec = (PredicatePrecision) precision;
-		Set<AbstractState> post = statement
-				.accept(new DefaultStatementVisitor<Set<AbstractState>>() {
+		Set<AbstractState> post = statement.accept(new DefaultStatementVisitor<Set<AbstractState>>() {
 
-					private final Set<AbstractState> fallThroughState() {
-						return Collections.singleton(state);
-					}
+			private final Set<AbstractState> fallThroughState() {
+				return Collections.singleton(state);
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLAlloc stmt) {
-						return fallThroughState();
-					}
+			@Override
+			public Set<AbstractState> visit(RTLAlloc stmt) {
+				return fallThroughState();
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLAssert stmt) {
-						if (Solver.isSatisfiable(ExpressionFactory.createAnd(s
-								.getStateFormula(prec), ExpressionFactory
-								.createNot(stmt.getAssertion())))) {
-							logger.error("Found possible assertion violation at "
-									+ stmt.getLabel()
-									+ "! "
-									+ stmt
-									+ " evaluated to "
-									+ Characters.TOP
-									+ " in state:");
-							logger.error(s);
+			@Override
+			public Set<AbstractState> visit(RTLAssert stmt) {
+				if (Solver.isSatisfiable(ExpressionFactory.createAnd(s.getStateFormula(prec),
+						ExpressionFactory.createNot(stmt.getAssertion())))) {
+					logger.error("Found possible assertion violation at " + stmt.getLabel() + "! " + stmt
+							+ " evaluated to " + Characters.TOP + " in state:");
+					logger.error(s);
+				}
+				return fallThroughState();
+			}
+
+			@Override
+			public Set<AbstractState> visit(RTLVariableAssignment stmt) {
+				BDD postPreds = s.predicates.id();
+				Writable lhs = stmt.getLeftHandSide();
+
+				RTLExpression xprime = ExpressionFactory.createVariable("xprime" + lhs.getBitWidth(), lhs.getBitWidth());
+
+				Context subCtx = new Context();
+				subCtx.substitute(lhs, xprime);
+
+				Solver solver = Solver.createSolver();
+				RTLExpression stateFormula = s.getStateFormula(prec);
+				solver.addAssertion(stateFormula);
+				solver.addAssertion(ExpressionFactory.createEqual(xprime, stmt.getRightHandSide()));
+
+				for (int predIdx = 0; predIdx <= PredicateMap.getMaxIndex(); predIdx++) {
+					RTLExpression p = PredicateMap.getPredicate(predIdx);
+					if (!p.getUsedVariables().contains(lhs))
+						continue;
+					// substitute x by xprime
+					p = p.evaluate(subCtx);
+
+					// Clear variable from predicate BDD
+					setVariableDontCare(postPreds, predIdx);
+
+					// check if the predicate holds or not
+					solver.push();
+					solver.addAssertion(ExpressionFactory.createNot(p));
+
+					if (solver.isUnsatisfiable()) {
+						postPreds.andWith(bddFactory.ithVar(predIdx));
+					} else {
+						// Now check whether the negative of the
+						// predicate holds
+						solver.pop();
+						solver.push();
+						solver.addAssertion(p);
+						if (solver.isUnsatisfiable()) {
+							postPreds.andWith(bddFactory.nithVar(predIdx));
 						}
-						return fallThroughState();
 					}
+					// nothing for don't know, the predicate is already
+					// cleared from the BDD
 
-					@Override
-					public Set<AbstractState> visit(RTLVariableAssignment stmt) {
-						BDD postPreds = s.predicates.id();
-						Writable lhs = stmt.getLeftHandSide();
+					solver.pop();
+				}
 
-						RTLExpression xprime = ExpressionFactory
-								.createVariable("xprime" + lhs.getBitWidth(),
-										lhs.getBitWidth());
+				return Collections.singleton((AbstractState) new PredicateAbstractionState(postPreds));
+			}
 
-						Context subCtx = new Context();
-						subCtx.substitute(lhs, xprime);
+			@Override
+			public Set<AbstractState> visit(RTLMemoryAssignment stmt) {
+				// Memory assignments not supported
+				return fallThroughState();
+			}
 
-						Solver solver = Solver.createSolver();
-						RTLExpression stateFormula = s.getStateFormula(prec);
-						solver.addAssertion(stateFormula);
-						solver.addAssertion(ExpressionFactory.createEqual(
-								xprime, stmt.getRightHandSide()));
+			@Override
+			public Set<AbstractState> visit(RTLAssume stmt) {
+				Solver solver = Solver.createSolver();
+				solver.addAssertion(s.getStateFormula(prec));
+				solver.addAssertion(stmt.getAssumption());
+				if (solver.isUnsatisfiable())
+					return Collections.emptySet();
 
-						for (int predIdx = 0; predIdx <= PredicateMap
-								.getMaxIndex(); predIdx++) {
-							RTLExpression p = PredicateMap
-									.getPredicate(predIdx);
-							if (!p.getUsedVariables().contains(lhs))
-								continue;
-							// substitute x by xprime
-							p = p.evaluate(subCtx);
+				// OK? was empty in old impl
+				BDD postPreds = s.predicates.id();
 
-							// Clear variable from predicate BDD
+				for (int predIdx = 0; predIdx <= PredicateMap.getMaxIndex(); predIdx++) {
+					RTLExpression p = PredicateMap.getPredicate(predIdx);
+					// check if the predicate holds or not
+					solver.push();
+					solver.addAssertion(ExpressionFactory.createNot(p));
+					if (solver.isUnsatisfiable()) {
+						setVariableDontCare(postPreds, predIdx);
+						postPreds.andWith(bddFactory.ithVar(predIdx));
+					} else {
+						// Now check whether the negative of the
+						// predicate holds
+						solver.pop();
+						solver.push();
+						solver.addAssertion(p);
+						if (solver.isUnsatisfiable()) {
 							setVariableDontCare(postPreds, predIdx);
-
-							// check if the predicate holds or not
-							solver.push();
-							solver.addAssertion(ExpressionFactory.createNot(p));
-
-							if (solver.isUnsatisfiable()) {
-								postPreds.andWith(bddFactory.ithVar(predIdx));
-							} else {
-								// Now check whether the negative of the
-								// predicate holds
-								solver.pop();
-								solver.push();
-								solver.addAssertion(p);
-								if (solver.isUnsatisfiable()) {
-									postPreds.andWith(bddFactory
-											.nithVar(predIdx));
-								}
-							}
-							// nothing for don't know, the predicate is already
-							// cleared from the BDD
-
-							solver.pop();
+							postPreds.andWith(bddFactory.nithVar(predIdx));
 						}
-
-						return Collections
-								.singleton((AbstractState) new PredicateAbstractionState(
-										postPreds));
 					}
+					solver.pop();
+				}
 
-					@Override
-					public Set<AbstractState> visit(RTLMemoryAssignment stmt) {
-						// Memory assignments not supported
-						return fallThroughState();
-					}
+				return Collections.singleton((AbstractState) new PredicateAbstractionState(postPreds));
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLAssume stmt) {
-						Solver solver = Solver.createSolver();
-						solver.addAssertion(s.getStateFormula(prec));
-						solver.addAssertion(stmt.getAssumption());
-						if (solver.isUnsatisfiable())
-							return Collections.emptySet();
+			@Override
+			public Set<AbstractState> visit(RTLDealloc stmt) {
+				return fallThroughState();
+			}
 
-						// OK? was empty in old impl
-						BDD postPreds = s.predicates.id();
+			@Override
+			public Set<AbstractState> visit(RTLSkip stmt) {
+				return fallThroughState();
+			}
 
-						for (int predIdx = 0; predIdx <= PredicateMap
-								.getMaxIndex(); predIdx++) {
-							RTLExpression p = PredicateMap
-									.getPredicate(predIdx);
-							// check if the predicate holds or not
-							solver.push();
-							solver.addAssertion(ExpressionFactory.createNot(p));
-							if (solver.isUnsatisfiable()) {
-								setVariableDontCare(postPreds, predIdx);
-								postPreds.andWith(bddFactory.ithVar(predIdx));
-							} else {
-								// Now check whether the negative of the
-								// predicate holds
-								solver.pop();
-								solver.push();
-								solver.addAssertion(p);
-								if (solver.isUnsatisfiable()) {
-									setVariableDontCare(postPreds, predIdx);
-									postPreds.andWith(bddFactory
-											.nithVar(predIdx));
-								}
-							}
-							solver.pop();
-						}
-
-						return Collections
-								.singleton((AbstractState) new PredicateAbstractionState(
-										postPreds));
-					}
-
-					@Override
-					public Set<AbstractState> visit(RTLDealloc stmt) {
-						return fallThroughState();
-					}
-
-					@Override
-					public Set<AbstractState> visit(RTLSkip stmt) {
-						return fallThroughState();
-					}
-
-				});
+		});
 
 		// logger.info(edge);
 		// logger.info(post);
@@ -235,15 +211,13 @@ public class PredicateAbstraction implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 		return s;
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 		return Pair.create(s, precision);
 	}
 

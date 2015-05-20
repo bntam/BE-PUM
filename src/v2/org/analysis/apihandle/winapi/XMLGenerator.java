@@ -23,8 +23,8 @@ public class XMLGenerator {
 	}
 
 	private static void println(String packageName, String funcName, String fileName) {
-		System.out.println("\t\t<API funcName=\"" + funcName.toLowerCase() + "\" className=\""
-				+ packageName + fileName + "\" />");
+		System.out.println("\t\t<API funcName=\"" + funcName.toLowerCase() + "\" className=\"" + packageName + fileName
+				+ "\" />");
 	}
 
 	/**
@@ -46,9 +46,9 @@ public class XMLGenerator {
 					String packageName = XMLGenerator.class.getPackage().getName() + "." + file.getName()
 							+ ".functions.";
 					String funcName = api.getName().replace(".java", "");
-					
-					//System.out.println("\t\t" + funcName);
-					
+
+					// System.out.println("\t\t" + funcName);
+
 					println(packageName, funcName, funcName);
 					println(packageName, funcName + "A", funcName);
 					println(packageName, funcName + "W", funcName);

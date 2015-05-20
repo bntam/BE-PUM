@@ -34,8 +34,7 @@ import java.util.Map;
  */
 public class ExplicitPrecision implements Precision {
 
-	private static final Logger logger = Logger
-			.getLogger(ExplicitPrecision.class);
+	private static final Logger logger = Logger.getLogger(ExplicitPrecision.class);
 
 	public enum TrackingLevel {
 		NONE, REGION, FULL
@@ -90,14 +89,12 @@ public class ExplicitPrecision implements Precision {
 	}
 
 	public void trackRegionOnly(MemoryRegion r, long offset) {
-		logger.debug("Only tracking region of memory (" + r + "," + offset
-				+ ")");
+		logger.debug("Only tracking region of memory (" + r + "," + offset + ")");
 		memLevels.put(r, offset, TrackingLevel.REGION);
 	}
 
 	public int getStoreThreshold(MemoryRegion region, long offset) {
-		if (region.equals(MemoryRegion.GLOBAL)
-				|| region.equals(MemoryRegion.STACK))
+		if (region.equals(MemoryRegion.GLOBAL) || region.equals(MemoryRegion.STACK))
 			return defaultThreshold;
 		else
 			return BoundedAddressTracking.heapThreshold.getValue();

@@ -13,15 +13,13 @@ import java.util.List;
 public class VirtualMemoryHandle {
 	List<VirtualMemory> vList;
 	VirtualMemory currentVirtualMemory;
-	
+
 	public VirtualMemoryHandle() {
 		vList = new ArrayList<VirtualMemory>();
 	}
 
-	public long virtualAllocate(long address, long size, long type,
-			long accessProtection) {
-		VirtualMemory v = new VirtualMemory(address, size, type,
-				accessProtection);
+	public long virtualAllocate(long address, long size, long type, long accessProtection) {
+		VirtualMemory v = new VirtualMemory(address, size, type, accessProtection);
 		long base = Math.round(Math.random() * Math.pow(10, 7));
 		v.setBaseAddress(base);
 		vList.add(v);
@@ -39,13 +37,13 @@ public class VirtualMemoryHandle {
 
 		return 0;
 	}
-	
+
 	// PHONG: change here
-	public void setCurrentVirtualMemory(VirtualMemory curVM){
+	public void setCurrentVirtualMemory(VirtualMemory curVM) {
 		this.currentVirtualMemory = curVM;
 	}
-	
-	public VirtualMemory getCurrentVirtualMemory(){
+
+	public VirtualMemory getCurrentVirtualMemory() {
 		return this.currentVirtualMemory;
 	}
 }

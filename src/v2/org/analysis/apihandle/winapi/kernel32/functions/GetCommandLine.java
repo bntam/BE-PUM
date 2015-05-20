@@ -34,7 +34,7 @@ public class GetCommandLine extends Kernel32API {
 	 * 
 	 */
 	public GetCommandLine() {
-		
+
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class GetCommandLine extends Kernel32API {
 
 		// This function has no parameters.
 		long disp = 4796200;
-		//String commandLine = Kernel32DLL.INSTANCE.GetCommandLine();
+		// String commandLine = Kernel32DLL.INSTANCE.GetCommandLine();
 		String commandLine = "C:/Windows/" + program.getFileName();
-		
+
 		System.out.println("Argument MemoryOperand:" + disp + ", Command Line:" + commandLine);
 
 		memory.setText(new X86MemoryOperand(DataType.INT32, disp), commandLine);

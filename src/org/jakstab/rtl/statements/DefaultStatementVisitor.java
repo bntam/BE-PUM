@@ -29,8 +29,7 @@ import org.jakstab.util.Logger;
 public abstract class DefaultStatementVisitor<T> implements StatementVisitor<T> {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(DefaultStatementVisitor.class);
+	private static final Logger logger = Logger.getLogger(DefaultStatementVisitor.class);
 
 	@Override
 	public T visit(RTLVariableAssignment stmt) {
@@ -111,9 +110,8 @@ public abstract class DefaultStatementVisitor<T> implements StatementVisitor<T> 
 	 * @return An object of the parameter type.
 	 */
 	protected T visitDefault(RTLStatement stmt) {
-		throw new UnsupportedOperationException(
-				"Visitor does not support statements of type "
-						+ stmt.getClass().getSimpleName() + "!");
+		throw new UnsupportedOperationException("Visitor does not support statements of type "
+				+ stmt.getClass().getSimpleName() + "!");
 	}
 
 }

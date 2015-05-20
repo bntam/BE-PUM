@@ -118,7 +118,7 @@ public class HeapCreate extends Kernel32API {
 	 * 
 	 */
 	public HeapCreate() {
-		
+
 	}
 
 	@Override

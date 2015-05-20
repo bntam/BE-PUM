@@ -40,13 +40,11 @@ public abstract class BinaryInputBuffer {
 	public void seek(long pos) throws java.io.IOException {
 		// skips to absolute location 'point' in the file
 		if (pos < 0 || pos >= getSize())
-			throw new java.io.IOException(
-					"BinaryInputBuffer.seek: Seek position outside of file bounds: "
-							+ pos);
+			throw new java.io.IOException("BinaryInputBuffer.seek: Seek position outside of file bounds: " + pos);
 
 		current = (int) pos;
 	}
-	
+
 	/**
 	 * Reads a null-terminated ASCII string from the file starting at the
 	 * current location and ending at the next 0x00 ('\0') byte.
@@ -130,8 +128,7 @@ public abstract class BinaryInputBuffer {
 		if (bytes == null)
 			return;
 		if ((current + bytes.length) > getSize())
-			throw new java.io.IOException(
-					"BinaryInputBuffer.read: Premature EOF");
+			throw new java.io.IOException("BinaryInputBuffer.read: Premature EOF");
 
 		for (int i = 0; i < bytes.length; i++)
 			// bytes[i] = data[current++];
@@ -160,8 +157,7 @@ public abstract class BinaryInputBuffer {
 	 */
 	public int readWORD() throws java.io.IOException {
 		if (current + 1 >= getSize())
-			throw new java.io.IOException(
-					"BinaryInputBuffer.readWORD: Premature EOF");
+			throw new java.io.IOException("BinaryInputBuffer.readWORD: Premature EOF");
 
 		int b1 = readBYTE();
 		int b2 = readBYTE();
@@ -175,15 +171,13 @@ public abstract class BinaryInputBuffer {
 	 */
 	public long readDWORD() throws java.io.IOException {
 		if (current + 3 >= getSize())
-			throw new java.io.IOException(
-					"BinaryInputBuffer.readDWORD: Premature EOF");
+			throw new java.io.IOException("BinaryInputBuffer.readDWORD: Premature EOF");
 		int b1 = readBYTE();
 		int b2 = readBYTE();
 		int b3 = readBYTE();
 		int b4 = readBYTE();
 
-		long result = ((b1 & 0xFFL) | ((b2 & 0xFFL) << 8)
-				| ((b3 & 0xFFL) << 16) | ((b4 & 0xFFL) << 24));
+		long result = ((b1 & 0xFFL) | ((b2 & 0xFFL) << 8) | ((b3 & 0xFFL) << 16) | ((b4 & 0xFFL) << 24));
 		return result;
 	}
 
@@ -194,8 +188,7 @@ public abstract class BinaryInputBuffer {
 	public long readDDWORD() throws java.io.IOException {
 		// throws java.io.IOException if EOF
 		if (current + 7 >= getSize())
-			throw new java.io.IOException(
-					"BinaryInputBuffer.readDWORD: Premature EOF");
+			throw new java.io.IOException("BinaryInputBuffer.readDWORD: Premature EOF");
 		int b1 = readBYTE();
 		int b2 = readBYTE();
 		int b3 = readBYTE();
@@ -205,10 +198,8 @@ public abstract class BinaryInputBuffer {
 		int b7 = readBYTE();
 		int b8 = readBYTE();
 
-		long result = ((b1 & 0xFFl) | ((b2 & 0xFFl) << 8)
-				| ((b3 & 0xFFl) << 16) | ((b4 & 0xFFl) << 24)
-				| ((b5 & 0xFFl) << 32) | ((b6 & 0xFFl) << 40)
-				| ((b7 & 0xFFl) << 48) | ((b8 & 0xFFl) << 56));
+		long result = ((b1 & 0xFFl) | ((b2 & 0xFFl) << 8) | ((b3 & 0xFFl) << 16) | ((b4 & 0xFFl) << 24)
+				| ((b5 & 0xFFl) << 32) | ((b6 & 0xFFl) << 40) | ((b7 & 0xFFl) << 48) | ((b8 & 0xFFl) << 56));
 		return result;
 	}
 
@@ -226,16 +217,14 @@ public abstract class BinaryInputBuffer {
 	 */
 	public int readINT32() throws java.io.IOException {
 		if (current + 3 >= getSize())
-			throw new java.io.IOException(
-					"BinaryInputBuffer.readINT32: Premature EOF");
+			throw new java.io.IOException("BinaryInputBuffer.readINT32: Premature EOF");
 
 		int b1 = readBYTE();
 		int b2 = readBYTE();
 		int b3 = readBYTE();
 		int b4 = readBYTE();
 
-		int temp = (b1 & 0xFF) | ((b2 & 0xFF) << 8) | ((b3 & 0xFF) << 16)
-				| ((b4 & 0xFF) << 24);
+		int temp = (b1 & 0xFF) | ((b2 & 0xFF) << 8) | ((b3 & 0xFF) << 16) | ((b4 & 0xFF) << 24);
 		return temp;
 	}
 
@@ -246,8 +235,7 @@ public abstract class BinaryInputBuffer {
 	public int readINT16() throws java.io.IOException {
 		short shorty = 0;
 		if (current + 1 >= getSize())
-			throw new java.io.IOException(
-					"BinaryInputBuffer.readINT16: Premature EOF");
+			throw new java.io.IOException("BinaryInputBuffer.readINT16: Premature EOF");
 		int b1 = readBYTE();
 		int b2 = readBYTE();
 
@@ -261,8 +249,7 @@ public abstract class BinaryInputBuffer {
 	 */
 	public int readINT8() throws java.io.IOException {
 		if (current >= getSize())
-			throw new java.io.IOException(
-					"BinaryInputBuffer.readINT8: Premature EOF");
+			throw new java.io.IOException("BinaryInputBuffer.readINT8: Premature EOF");
 		return ((byte) readBYTE());
 	}
 
@@ -288,15 +275,12 @@ public abstract class BinaryInputBuffer {
 
 	public abstract void setWord(int fp, long value) throws java.io.IOException;
 
-	public abstract void setDoubleWord(int fp, long value)
-			throws java.io.IOException;
+	public abstract void setDoubleWord(int fp, long value) throws java.io.IOException;
 
 	public abstract void addBYTE(int fp, long i) throws java.io.IOException;
 
-	public abstract void addDoubleWord(int fp1, long value)
-			throws java.io.IOException;
+	public abstract void addDoubleWord(int fp1, long value) throws java.io.IOException;
 
-	public abstract void addWord(int fp1, long value)
-			throws java.io.IOException;
+	public abstract void addWord(int fp1, long value) throws java.io.IOException;
 
 }

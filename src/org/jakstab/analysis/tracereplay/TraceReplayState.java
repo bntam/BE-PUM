@@ -39,8 +39,7 @@ import java.util.Set;
 public class TraceReplayState implements UnderApproximateState {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(TraceReplayState.class);
+	private static final Logger logger = Logger.getLogger(TraceReplayState.class);
 
 	public static TraceReplayState BOT = new TraceReplayState();
 
@@ -53,8 +52,7 @@ public class TraceReplayState implements UnderApproximateState {
 		succ = null;
 	}
 
-	public TraceReplayState(SetMultimap<AbsoluteAddress, AbsoluteAddress> succ,
-			AbsoluteAddress cur) {
+	public TraceReplayState(SetMultimap<AbsoluteAddress, AbsoluteAddress> succ, AbsoluteAddress cur) {
 		this.succ = succ;
 		this.cur = cur;
 	}
@@ -96,8 +94,7 @@ public class TraceReplayState implements UnderApproximateState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 
 		// Only concretize expression requests from transformerFactory
 		// Warning: If this method is invoked with 2 parameters for other

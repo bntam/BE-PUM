@@ -61,8 +61,8 @@ public class CFGEdge {
 
 	public void printInfo() {
 		System.out.println("Edge:");
-		System.out.println("From Source Vertex:" + source.getAddr().toString()
-				+ " to Dest Vertex:" + destination.getAddr().toString());
+		System.out.println("From Source Vertex:" + source.getAddr().toString() + " to Dest Vertex:"
+				+ destination.getAddr().toString());
 		cond.printInfo();
 		System.out
 				.println("---------------------------------------------------------------------------------------------");

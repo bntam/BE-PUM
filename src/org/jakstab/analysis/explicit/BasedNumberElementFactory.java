@@ -29,12 +29,10 @@ import java.util.List;
 /**
  * @author Johannes Kinder
  */
-public class BasedNumberElementFactory implements
-		AbstractValueFactory<BasedNumberElement> {
+public class BasedNumberElementFactory implements AbstractValueFactory<BasedNumberElement> {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(BasedNumberElementFactory.class);
+	private static final Logger logger = Logger.getLogger(BasedNumberElementFactory.class);
 
 	/*
 	 * @see

@@ -32,32 +32,30 @@ import v2.org.analysis.value.Value;
  * Creates or opens a named or unnamed event object.
  * 
  * @param lpEventAttributes
- *            [in, optional] A pointer to a SECURITY_ATTRIBUTES structure.
- *            If this parameter is NULL, the handle cannot be inherited by
- *            child processes.
+ *            [in, optional] A pointer to a SECURITY_ATTRIBUTES structure. If
+ *            this parameter is NULL, the handle cannot be inherited by child
+ *            processes.
  * 
  * @param bManualReset
  *            [in] If this parameter is TRUE, the function creates a
  *            manual-reset event object, which requires the use of the
- *            ResetEvent function to set the event state to nonsignaled. If
- *            this parameter is FALSE, the function creates an auto-reset
- *            event object, and system automatically resets the event state
- *            to nonsignaled after a single waiting thread has been
- *            released.
+ *            ResetEvent function to set the event state to nonsignaled. If this
+ *            parameter is FALSE, the function creates an auto-reset event
+ *            object, and system automatically resets the event state to
+ *            nonsignaled after a single waiting thread has been released.
  * 
  * @param bInitialState
  *            [in] If this parameter is TRUE, the initial state of the event
  *            object is signaled; otherwise, it is nonsignaled.
  * 
  * @param lpName
- *            [in, optional] The name of the event object. The name is
- *            limited to MAX_PATH characters. Name comparison is case
- *            sensitive.
+ *            [in, optional] The name of the event object. The name is limited
+ *            to MAX_PATH characters. Name comparison is case sensitive.
  * 
- * @return If the function succeeds, the return value is a handle to the
- *         event object. If the named event object existed before the
- *         function call, the function returns a handle to the existing
- *         object and GetLastError returns ERROR_ALREADY_EXISTS.
+ * @return If the function succeeds, the return value is a handle to the event
+ *         object. If the named event object existed before the function call,
+ *         the function returns a handle to the existing object and GetLastError
+ *         returns ERROR_ALREADY_EXISTS.
  * 
  * @author Yen Nguyen
  *
@@ -90,8 +88,8 @@ public class CreateEvent extends Kernel32API {
 			BOOL bManualReset = new BOOL(t2);
 			BOOL bInitialState = new BOOL(t3);
 			String lpName = (t4 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t4)) : null;
-			HANDLE ret = Kernel32DLL.INSTANCE.CreateEvent(null , bManualReset, bInitialState , lpName);
-			
+			HANDLE ret = Kernel32DLL.INSTANCE.CreateEvent(null, bManualReset, bInitialState, lpName);
+
 			register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
 			System.out.println("Return value:" + Pointer.nativeValue(ret.getPointer()));
 		}

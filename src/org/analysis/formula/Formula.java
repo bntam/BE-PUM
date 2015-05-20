@@ -20,23 +20,19 @@ public class Formula {
 	}
 
 	public String toString() {
-		return "(" + leftExp.toString() + " " + operator + " "
-				+ rightExp.toString() + ")";
+		return "(" + leftExp.toString() + " " + operator + " " + rightExp.toString() + ")";
 	}
 
 	public String toStringPrefix() {
 		if (operator.equals("not"))
 			return "( not " + " " + leftExp.toStringPreFix() + ")";
 
-		String result = "(" + operator + " " + leftExp.toStringPreFix() + " "
-				+ rightExp.toStringPreFix() + ")";
+		String result = "(" + operator + " " + leftExp.toStringPreFix() + " " + rightExp.toStringPreFix() + ")";
 
 		if (operator.equals("=="))
-			result = "( = " + " " + leftExp.toStringPreFix() + " "
-					+ rightExp.toStringPreFix() + ")";
+			result = "( = " + " " + leftExp.toStringPreFix() + " " + rightExp.toStringPreFix() + ")";
 		else if (operator.equals("!="))
-			result = "(not ( =" + " " + leftExp.toStringPreFix() + " "
-					+ rightExp.toStringPreFix() + ") )";
+			result = "(not ( =" + " " + leftExp.toStringPreFix() + " " + rightExp.toStringPreFix() + ") )";
 
 		return result;
 	}
@@ -98,8 +94,7 @@ public class Formula {
 	}
 
 	public boolean equal(Formula sf) {
-		return this.getOperator() == sf.getOperator()
-				&& this.getLeftExp().equal(sf.getLeftExp())
+		return this.getOperator() == sf.getOperator() && this.getLeftExp().equal(sf.getLeftExp())
 				&& this.getRightExp().equal(sf.getRightExp());
 	}
 }

@@ -39,8 +39,7 @@ import org.jakstab.util.Logger;
  */
 public class X86ControlRegisters {
 
-	private final static Logger logger = Logger
-			.getLogger(X86ControlRegisters.class);
+	private final static Logger logger = Logger.getLogger(X86ControlRegisters.class);
 
 	public static final int NUM_CONTROL_REGISTERS = 5;
 
@@ -60,8 +59,7 @@ public class X86ControlRegisters {
 		CR3 = new X86ControlRegister(3, "%cr3");
 		CR4 = new X86ControlRegister(4, "%cr4");
 
-		controlRegisters = (new X86ControlRegister[] { CR0, INVALID, CR2, CR3,
-				CR4 });
+		controlRegisters = (new X86ControlRegister[] { CR0, INVALID, CR2, CR3, CR4 });
 	}
 
 	public static int getNumberOfRegisters() {

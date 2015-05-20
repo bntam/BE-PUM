@@ -53,21 +53,18 @@ public class ValuationState implements AbstractState {
 	private PartitionedMemory<AbstractDomainElement> store;
 
 	public ValuationState(ValuationState proto) {
-		this(proto.valueFactory, new VariableValuation<AbstractDomainElement>(
-				proto.varVal), new PartitionedMemory<AbstractDomainElement>(
-				proto.store));
+		this(proto.valueFactory, new VariableValuation<AbstractDomainElement>(proto.varVal),
+				new PartitionedMemory<AbstractDomainElement>(proto.store));
 	}
 
 	@SuppressWarnings("unchecked")
 	public ValuationState(AbstractValueFactory valueFactory) {
-		this(valueFactory, new VariableValuation<AbstractDomainElement>(
-				valueFactory), new PartitionedMemory<AbstractDomainElement>(
-				valueFactory));
+		this(valueFactory, new VariableValuation<AbstractDomainElement>(valueFactory),
+				new PartitionedMemory<AbstractDomainElement>(valueFactory));
 	}
 
 	@SuppressWarnings("unchecked")
-	private ValuationState(AbstractValueFactory valueFactory,
-			VariableValuation<AbstractDomainElement> varVal,
+	private ValuationState(AbstractValueFactory valueFactory, VariableValuation<AbstractDomainElement> varVal,
 			PartitionedMemory<AbstractDomainElement> store) {
 		this.valueFactory = valueFactory;
 		this.varVal = varVal;
@@ -86,41 +83,33 @@ public class ValuationState implements AbstractState {
 
 			@Override
 			public Set<AbstractDomainElement> visit(RTLBitRange e) {
-				AbstractDomainElement first = Lattices.joinAll(e
-						.getFirstBitIndex().accept(this));
-				AbstractDomainElement last = Lattices.joinAll(e
-						.getLastBitIndex().accept(this));
-				if (first.hasUniqueConcretization()
-						&& last.hasUniqueConcretization()) {
+				AbstractDomainElement first = Lattices.joinAll(e.getFirstBitIndex().accept(this));
+				AbstractDomainElement last = Lattices.joinAll(e.getLastBitIndex().accept(this));
+				if (first.hasUniqueConcretization() && last.hasUniqueConcretization()) {
 					Set<AbstractDomainElement> res = new FastSet<AbstractDomainElement>();
-					for (AbstractDomainElement aOp : e.getOperand()
-							.accept(this)) {
-						res.add(aOp.bitExtract(first.concretize().iterator()
-								.next().intValue(), last.concretize()
+					for (AbstractDomainElement aOp : e.getOperand().accept(this)) {
+						res.add(aOp.bitExtract(first.concretize().iterator().next().intValue(), last.concretize()
 								.iterator().next().intValue()));
 					}
 					return res;
 				} else {
-					return Collections.singleton(valueFactory.createTop(e
-							.getBitWidth()));
+					return Collections.singleton(valueFactory.createTop(e.getBitWidth()));
 				}
 			}
 
 			@Override
 			public Set<AbstractDomainElement> visit(RTLMemoryLocation e) {
 				Set<AbstractDomainElement> res = new FastSet<AbstractDomainElement>();
-				for (AbstractDomainElement aAddress : e.getAddress().accept(
-						this)) {
-					res.addAll(aAddress.readStorePowerSet(e.getBitWidth(),
-							store));
+				for (AbstractDomainElement aAddress : e.getAddress().accept(this)) {
+					res.addAll(aAddress.readStorePowerSet(e.getBitWidth(), store));
 				}
 				return res;
 			}
 
 			@Override
 			public Set<AbstractDomainElement> visit(RTLOperation e) {
-				Tuple<Set<AbstractDomainElement>> aOperandSets = new Tuple<Set<AbstractDomainElement>>(
-						e.getOperandCount());
+				Tuple<Set<AbstractDomainElement>> aOperandSets = new Tuple<Set<AbstractDomainElement>>(e
+						.getOperandCount());
 				for (int i = 0; i < e.getOperandCount(); i++) {
 					aOperandSets.set(i, e.getOperands()[i].accept(this));
 				}
@@ -129,8 +118,7 @@ public class ValuationState implements AbstractState {
 
 				Set<AbstractDomainElement> res = new FastSet<AbstractDomainElement>();
 
-				for (Tuple<AbstractDomainElement> aOperands : Sets
-						.crossProduct(aOperandSets)) {
+				for (Tuple<AbstractDomainElement> aOperands : Sets.crossProduct(aOperandSets)) {
 
 					AbstractDomainElement result;
 
@@ -155,10 +143,8 @@ public class ValuationState implements AbstractState {
 						// If both sides can only have AbstractDomainElement
 						// single value, just
 						// see if they are equal.
-						if (aOperands.get(0).hasUniqueConcretization()
-								&& aOperands.get(1).hasUniqueConcretization()) {
-							if (aOperands.get(0).concretize()
-									.equals(aOperands.get(1).concretize())) {
+						if (aOperands.get(0).hasUniqueConcretization() && aOperands.get(1).hasUniqueConcretization()) {
+							if (aOperands.get(0).concretize().equals(aOperands.get(1).concretize())) {
 								result = valueFactory.createTrue();
 							} else {
 								result = valueFactory.createFalse();
@@ -207,32 +193,27 @@ public class ValuationState implements AbstractState {
 
 			@Override
 			public Set<AbstractDomainElement> visit(RTLNondet e) {
-				return Collections.singleton(valueFactory.createTop(e
-						.getBitWidth()));
+				return Collections.singleton(valueFactory.createTop(e.getBitWidth()));
 			}
 
 			@Override
 			public Set<AbstractDomainElement> visit(RTLNumber e) {
-				return Collections.singleton(valueFactory
-						.createAbstractValue(e));
+				return Collections.singleton(valueFactory.createAbstractValue(e));
 			}
 
 			@Override
 			public Set<AbstractDomainElement> visit(RTLSpecialExpression e) {
-				return Collections.singleton(valueFactory.createTop(e
-						.getBitWidth()));
+				return Collections.singleton(valueFactory.createTop(e.getBitWidth()));
 			}
 
 		});
 	}
 
-	public void setMemoryValue(AbstractDomainElement address, int bitWidth,
-			AbstractDomainElement value) {
+	public void setMemoryValue(AbstractDomainElement address, int bitWidth, AbstractDomainElement value) {
 		address.writeStore(bitWidth, store, value);
 	}
 
-	public void setMemoryValue(MemoryRegion region, long offset, int bitWidth,
-			AbstractDomainElement value) {
+	public void setMemoryValue(MemoryRegion region, long offset, int bitWidth, AbstractDomainElement value) {
 		store.set(region, offset, bitWidth, value);
 	}
 
@@ -240,13 +221,11 @@ public class ValuationState implements AbstractState {
 		varVal.set(var, value);
 	}
 
-	public AbstractDomainElement getMemoryValue(AbstractDomainElement address,
-			int bitWidth) {
+	public AbstractDomainElement getMemoryValue(AbstractDomainElement address, int bitWidth) {
 		return address.readStore(bitWidth, store);
 	}
 
-	public AbstractDomainElement getMemoryValue(MemoryRegion region,
-			long offset, int bitWidth) {
+	public AbstractDomainElement getMemoryValue(MemoryRegion region, long offset, int bitWidth) {
 		return store.get(region, offset, bitWidth);
 	}
 
@@ -282,19 +261,15 @@ public class ValuationState implements AbstractState {
 			return other;
 
 		// Join variable valuations
-		VariableValuation<AbstractDomainElement> jVarVal = varVal
-				.join(other.varVal);
-		PartitionedMemory<AbstractDomainElement> jStore = store
-				.join(other.store);
+		VariableValuation<AbstractDomainElement> jVarVal = varVal.join(other.varVal);
+		PartitionedMemory<AbstractDomainElement> jStore = store.join(other.store);
 
 		return new ValuationState(valueFactory, jVarVal, jStore);
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
-		Tuple<Set<RTLNumber>> tupleOfSets = new Tuple<Set<RTLNumber>>(
-				expressions.length);
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
+		Tuple<Set<RTLNumber>> tupleOfSets = new Tuple<Set<RTLNumber>>(expressions.length);
 		for (int i = 0; i < expressions.length; i++) {
 			Set<RTLNumber> concreteValues = new FastSet<RTLNumber>();
 			for (AbstractDomainElement el : abstractEvalPowerSet(expressions[i])) {

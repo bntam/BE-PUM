@@ -26,8 +26,8 @@ import v2.org.analysis.value.Value;
  * @param nTypeFlag
  *            The type of keyboard information to be retrieved.
  * 
- * @return If the function succeeds, the return value specifies the
- *         requested information.
+ * @return If the function succeeds, the return value specifies the requested
+ *         information.
  * 
  * @author Yen Nguyen
  *
@@ -50,7 +50,7 @@ public class GetKeyboardType extends User32API {
 			long t1 = ((LongValue) x1).getValue();
 
 			int nTypeFlag = (int) t1;
-			int ret = User32DLL.INSTANCE.GetKeyboardType(nTypeFlag );
+			int ret = User32DLL.INSTANCE.GetKeyboardType(nTypeFlag);
 
 			register.mov("eax", new LongValue(ret));
 		}

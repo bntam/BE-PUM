@@ -53,24 +53,21 @@ public class X86MemoryOperand extends MemoryOperand {
 		return segReg;
 	}
 
-	public X86MemoryOperand(DataType dataType, X86SegmentRegister segReg,
-			X86Register base, X86Register index, long disp, int scale) {
+	public X86MemoryOperand(DataType dataType, X86SegmentRegister segReg, X86Register base, X86Register index,
+			long disp, int scale) {
 		super(dataType, base, index, disp, 1 << scale);
 		this.segReg = segReg;
 	}
 
-	public X86MemoryOperand(DataType dataType, X86SegmentRegister segReg,
-			X86Register base, X86Register index, long disp) {
+	public X86MemoryOperand(DataType dataType, X86SegmentRegister segReg, X86Register base, X86Register index, long disp) {
 		this(dataType, segReg, base, index, disp, 0);
 	}
 
-	public X86MemoryOperand(DataType dataType, X86SegmentRegister segReg,
-			X86Register base) {
+	public X86MemoryOperand(DataType dataType, X86SegmentRegister segReg, X86Register base) {
 		this(dataType, segReg, base, null, 0, 0);
 	}
 
-	public X86MemoryOperand(DataType dataType, X86SegmentRegister segReg,
-			long disp) {
+	public X86MemoryOperand(DataType dataType, X86SegmentRegister segReg, long disp) {
 		this(dataType, segReg, null, null, disp, 0);
 	}
 
@@ -85,8 +82,7 @@ public class X86MemoryOperand extends MemoryOperand {
 	 */
 	@Override
 	public String toString(long currentPc, SymbolFinder symFinder) {
-		if (getBase() == null && getIndex() == null
-				&& getSegmentRegister() == null && symFinder != null)
+		if (getBase() == null && getIndex() == null && getSegmentRegister() == null && symFinder != null)
 			return symFinder.getSymbolFor(getDisplacement());
 		else
 			return toString();

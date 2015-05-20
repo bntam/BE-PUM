@@ -12,12 +12,10 @@ public class CondJump {
 		} else if (jIns.startsWith("jne") || jIns.startsWith("jnz")) {
 			result = "!=";
 			// nc.setConnector("=");
-		} else if (jIns.startsWith("jb") || jIns.startsWith("jnae")
-				|| jIns.startsWith("jc")) {
+		} else if (jIns.startsWith("jb") || jIns.startsWith("jnae") || jIns.startsWith("jc")) {
 			result = "<";
 			// nc.setConnector(">=");
-		} else if (jIns.startsWith("jnb") || jIns.startsWith("jae")
-				|| jIns.startsWith("jnc")) {
+		} else if (jIns.startsWith("jnb") || jIns.startsWith("jae") || jIns.startsWith("jnc")) {
 			result = ">=";
 			// nc.setConnector("<");
 		} else if (jIns.startsWith("jbe") || jIns.startsWith("jna")) {
@@ -52,12 +50,10 @@ public class CondJump {
 		} else if (jIns.startsWith("jne") || jIns.startsWith("jnz")) {
 			result = "==";
 			// nc.setConnector("=");
-		} else if (jIns.startsWith("jb") || jIns.startsWith("jnae")
-				|| jIns.startsWith("jc")) {
+		} else if (jIns.startsWith("jb") || jIns.startsWith("jnae") || jIns.startsWith("jc")) {
 			result = ">=";
 			// nc.setConnector(">=");
-		} else if (jIns.startsWith("jnb") || jIns.startsWith("jae")
-				|| jIns.startsWith("jnc")) {
+		} else if (jIns.startsWith("jnb") || jIns.startsWith("jae") || jIns.startsWith("jnc")) {
 			result = "<";
 			// nc.setConnector("<");
 		} else if (jIns.startsWith("jbe") || jIns.startsWith("jna")) {

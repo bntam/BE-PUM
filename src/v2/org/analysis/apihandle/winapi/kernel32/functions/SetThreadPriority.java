@@ -52,7 +52,7 @@ public class SetThreadPriority extends Kernel32API {
 	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
-		//Memory memory = env.getMemory();
+		// Memory memory = env.getMemory();
 		Register register = env.getRegister();
 
 		Value x1 = stack.pop();
@@ -62,11 +62,11 @@ public class SetThreadPriority extends Kernel32API {
 		if (x1 instanceof LongValue && x2 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
-			
+
 			HANDLE hThread = new HANDLE(new Pointer(t1));
 			int nPriority = (int) t2;
 			BOOL ret = Kernel32DLL.INSTANCE.SetThreadPriority(hThread, nPriority);
-			
+
 			register.mov("eax", new LongValue(ret.longValue()));
 		}
 		return false;

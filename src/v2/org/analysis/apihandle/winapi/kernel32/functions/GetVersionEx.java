@@ -47,7 +47,7 @@ public class GetVersionEx extends Kernel32API {
 	 * 
 	 */
 	public GetVersionEx() {
-		
+
 	}
 
 	@Override

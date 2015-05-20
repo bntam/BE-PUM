@@ -59,7 +59,7 @@ public class MoveFile extends Kernel32API {
 	 * 
 	 */
 	public MoveFile() {
-		
+
 	}
 
 	@Override

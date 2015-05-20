@@ -24,7 +24,7 @@ import v2.org.analysis.value.Value;
  * 
  * @param uExitCode
  *            : The exit code for the process and all threads.
- *            
+ * 
  * @author Yen Nguyen
  *
  */
@@ -34,23 +34,23 @@ public class ExitProcess extends Kernel32API {
 	 * 
 	 */
 	public ExitProcess() {
-		
+
 	}
 
 	@Override
 	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
-		
+
 		// UINT uExitCode exit code for all threads
 		Value x1 = stack.pop();
 
 		System.out.println("Argument:" + x1);
-		
+
 		if (x1 instanceof LongValue) {
 			LongValue x = (LongValue) x1;
-			
-			Kernel32DLL.INSTANCE.ExitProcess((int)x.getValue());
+
+			Kernel32DLL.INSTANCE.ExitProcess((int) x.getValue());
 		}
 		return false;
 	}

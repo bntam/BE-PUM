@@ -67,7 +67,7 @@ public class WriteFile extends Kernel32API {
 	 * 
 	 */
 	public WriteFile() {
-		
+
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class WriteFile extends Kernel32API {
 			byte[] lpBuffer = str.getBytes();
 			int nNumberOfBytesToWrite = (int) t3;
 			IntByReference lpNumberOfBytesWritten = new IntByReference((int) t4);
-			
+
 			OVERLAPPED lpOverlapped = new OVERLAPPED();
 			if (t5 != 0L) {
 				lpOverlapped.Internal = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t5)).getValue());

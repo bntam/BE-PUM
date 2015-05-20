@@ -21,8 +21,7 @@ package org.jakstab.asm;
 import org.jakstab.rtl.expressions.ExpressionFactory;
 import org.jakstab.rtl.expressions.RTLNumber;
 
-public class AbsoluteAddress extends Address implements
-		Comparable<AbsoluteAddress> {
+public class AbsoluteAddress extends Address implements Comparable<AbsoluteAddress> {
 
 	protected long value;
 

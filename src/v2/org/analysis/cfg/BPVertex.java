@@ -52,20 +52,13 @@ public class BPVertex {
 		return addr.toString() + " " + ins.getName();
 	}
 
-	public boolean equal(BPVertex v) {		
+	public boolean equal(BPVertex v) {
 		// TODO Auto-generated method stub
-		if (addr != null
-				&& v != null
-				&& v.getAddress() != null
-				&& ins != null
-				&& v.getInstruction() != null
-				&& addr.getValue() == v.getAddress().getValue()
-				&& ins.getName().equals(v.getInstruction().getName())
-				&& ins.getOperandCount() == v.getInstruction()
-						.getOperandCount()) {
+		if (addr != null && v != null && v.getAddress() != null && ins != null && v.getInstruction() != null
+				&& addr.getValue() == v.getAddress().getValue() && ins.getName().equals(v.getInstruction().getName())
+				&& ins.getOperandCount() == v.getInstruction().getOperandCount()) {
 			for (int i = 0; i < ins.getOperandCount(); i++)
-				if (!ins.getOperand(i).toString()
-						.equals(v.getInstruction().getOperand(i).toString()))
+				if (!ins.getOperand(i).toString().equals(v.getInstruction().getOperand(i).toString()))
 					return false;
 
 			return true;
@@ -74,9 +67,9 @@ public class BPVertex {
 		if (v != null && addr == null && v.getAddress() == null && v.getType() == type
 				&& v.getProperty().equals(property))
 			return true;
-		
-		if (addr != null && v != null && v.getAddress() != null && addr.getValue() == v.getAddress().getValue() && ins == null && v.getInstruction() == null && v.getType() == type
-				&& v.getProperty().equals(property))
+
+		if (addr != null && v != null && v.getAddress() != null && addr.getValue() == v.getAddress().getValue()
+				&& ins == null && v.getInstruction() == null && v.getType() == type && v.getProperty().equals(property))
 			return true;
 
 		return false;

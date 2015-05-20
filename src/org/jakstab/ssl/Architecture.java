@@ -60,43 +60,25 @@ public class Architecture {
 	// flags
 	private static final SetOfVariables statusFlags;
 	static {
-		temporaryVariables = new SetOfVariables(
-				Arrays.asList(new RTLVariable[] {
-						ExpressionFactory.createVariable("tmpb", 8),
-						ExpressionFactory.createVariable("tmph", 16),
-						ExpressionFactory.createVariable("tmp1", 32),
-						ExpressionFactory.createVariable("tmp2", 32),
-						ExpressionFactory.createVariable("tmp3", 32),
-						ExpressionFactory.createVariable("tmp4", 32),
-						ExpressionFactory.createVariable("tmp5", 32),
-						ExpressionFactory.createVariable("retaddr", 32),
-						ExpressionFactory.createVariable("tmpl", 64),
-						ExpressionFactory.createVariable("tmpD", 80),
-						ExpressionFactory.createVariable("tmpD1", 80),
-						ExpressionFactory.createVariable("tmpD2", 80),
-						ExpressionFactory.createVariable("tmpb1", 8),
-						ExpressionFactory.createVariable("tmpb2", 8),
-						ExpressionFactory.createVariable("tmph1", 16),
-						ExpressionFactory.createVariable("tmph2", 16),
-						ExpressionFactory.createVariable("tmpq2", 64),
-						ExpressionFactory.createVariable("tmpq3", 64),
-						ExpressionFactory.createVariable("tmpq5", 64) }));
-		statusFlags = new SetOfVariables(Arrays.asList(new RTLVariable[] {
-				ExpressionFactory.createVariable("%AF", 1),
-				ExpressionFactory.createVariable("%CF", 1),
-				ExpressionFactory.createVariable("%C1", 1),
-				ExpressionFactory.createVariable("%C2", 1),
-				ExpressionFactory.createVariable("%FLF", 1),
-				ExpressionFactory.createVariable("%FZF", 1),
-				ExpressionFactory.createVariable("%fsw", 16),
-				ExpressionFactory.createVariable("%fcw", 16),
-				ExpressionFactory.createVariable("%fstp", 8),
-				ExpressionFactory.createVariable("%DF", 1),
-				ExpressionFactory.createVariable("%IF", 1),
-				ExpressionFactory.createVariable("%OF", 1),
-				ExpressionFactory.createVariable("%PF", 1),
-				ExpressionFactory.createVariable("%SF", 1),
-				ExpressionFactory.createVariable("%ZF", 1) }));
+		temporaryVariables = new SetOfVariables(Arrays.asList(new RTLVariable[] {
+				ExpressionFactory.createVariable("tmpb", 8), ExpressionFactory.createVariable("tmph", 16),
+				ExpressionFactory.createVariable("tmp1", 32), ExpressionFactory.createVariable("tmp2", 32),
+				ExpressionFactory.createVariable("tmp3", 32), ExpressionFactory.createVariable("tmp4", 32),
+				ExpressionFactory.createVariable("tmp5", 32), ExpressionFactory.createVariable("retaddr", 32),
+				ExpressionFactory.createVariable("tmpl", 64), ExpressionFactory.createVariable("tmpD", 80),
+				ExpressionFactory.createVariable("tmpD1", 80), ExpressionFactory.createVariable("tmpD2", 80),
+				ExpressionFactory.createVariable("tmpb1", 8), ExpressionFactory.createVariable("tmpb2", 8),
+				ExpressionFactory.createVariable("tmph1", 16), ExpressionFactory.createVariable("tmph2", 16),
+				ExpressionFactory.createVariable("tmpq2", 64), ExpressionFactory.createVariable("tmpq3", 64),
+				ExpressionFactory.createVariable("tmpq5", 64) }));
+		statusFlags = new SetOfVariables(Arrays.asList(new RTLVariable[] { ExpressionFactory.createVariable("%AF", 1),
+				ExpressionFactory.createVariable("%CF", 1), ExpressionFactory.createVariable("%C1", 1),
+				ExpressionFactory.createVariable("%C2", 1), ExpressionFactory.createVariable("%FLF", 1),
+				ExpressionFactory.createVariable("%FZF", 1), ExpressionFactory.createVariable("%fsw", 16),
+				ExpressionFactory.createVariable("%fcw", 16), ExpressionFactory.createVariable("%fstp", 8),
+				ExpressionFactory.createVariable("%DF", 1), ExpressionFactory.createVariable("%IF", 1),
+				ExpressionFactory.createVariable("%OF", 1), ExpressionFactory.createVariable("%PF", 1),
+				ExpressionFactory.createVariable("%SF", 1), ExpressionFactory.createVariable("%ZF", 1) }));
 	}
 
 	private File specFile;
@@ -119,8 +101,7 @@ public class Architecture {
 	 * @param fileName
 	 *            The path of the SSL file to be parsed.
 	 */
-	public Architecture(String fileName) throws FileNotFoundException,
-			ANTLRException {
+	public Architecture(String fileName) throws FileNotFoundException, ANTLRException {
 
 		parseSSL(fileName);
 		magicInstructions = new MagicInstructions();
@@ -177,8 +158,7 @@ public class Architecture {
 	 * Writes the whole instruction set to System.out.
 	 */
 	void dumpToConsole() {
-		for (Iterator<Map.Entry<String, SSLInstruction>> iter = instructions
-				.entrySet().iterator(); iter.hasNext();) {
+		for (Iterator<Map.Entry<String, SSLInstruction>> iter = instructions.entrySet().iterator(); iter.hasNext();) {
 			Map.Entry<String, SSLInstruction> entry = iter.next();
 			SSLInstruction instr = entry.getValue();
 			System.out.println(instr.toString() + ": " + instr.getBody());
@@ -196,8 +176,8 @@ public class Architecture {
 	private final int OPERAND_TYPE_MATCH_SCORE = 3; // Parameter type possibly
 													// matches (modrm to reg)
 
-	private static final String[] repInstructions = new String[] { "CMPS",
-			"LODS", "MOVS", "SCAS", "STOS", "INS", "OUTS", "NOP" };
+	private static final String[] repInstructions = new String[] { "CMPS", "LODS", "MOVS", "SCAS", "STOS", "INS",
+			"OUTS", "NOP" };
 
 	/**
 	 * Returns the name of this instruction in the SSL definitions. Used for
@@ -265,9 +245,7 @@ public class Architecture {
 
 		// check for a direct match and return it if there are no other
 		// possibilities
-		if (instructions.containsKey(name)
-				&& (!instrGroups.containsKey(name) || instrGroups.get(name)
-						.size() == 1)) {
+		if (instructions.containsKey(name) && (!instrGroups.containsKey(name) || instrGroups.get(name).size() == 1)) {
 			return instructions.get(name);
 		}
 
@@ -294,8 +272,7 @@ public class Architecture {
 			if (instr.getOperandCount() == proto.getParameterCount())
 				score += NUM_OPERANDS_SCORE;
 
-			if (Options.summarizeRep.getValue()
-					&& proto.getName().startsWith("REP")
+			if (Options.summarizeRep.getValue() && proto.getName().startsWith("REP")
 					&& proto.getName().endsWith("SUMMARY")) {
 				score++;
 			}
@@ -306,24 +283,15 @@ public class Architecture {
 
 				// Special handling for implicit operands
 				if (oper instanceof Register
-						&& ((oper.equals(X86Registers.EAX) && proto.getName()
-								.endsWith("EAX"))
-								|| (oper.equals(X86Registers.AX) && proto
-										.getName().endsWith("AX"))
-								|| (oper.equals(X86Registers.AL) && proto
-										.getName().endsWith("AL"))
-								|| (oper.equals(X86SegmentRegisters.CS) && proto
-										.getName().endsWith("CS"))
-								|| (oper.equals(X86SegmentRegisters.DS) && proto
-										.getName().endsWith("DS"))
-								|| (oper.equals(X86SegmentRegisters.ES) && proto
-										.getName().endsWith("ES"))
-								|| (oper.equals(X86SegmentRegisters.FS) && proto
-										.getName().endsWith("FS"))
-								|| (oper.equals(X86SegmentRegisters.GS) && proto
-										.getName().endsWith("GS")) || (oper
-								.equals(X86SegmentRegisters.SS) && proto
-								.getName().endsWith("SS"))
+						&& ((oper.equals(X86Registers.EAX) && proto.getName().endsWith("EAX"))
+								|| (oper.equals(X86Registers.AX) && proto.getName().endsWith("AX"))
+								|| (oper.equals(X86Registers.AL) && proto.getName().endsWith("AL"))
+								|| (oper.equals(X86SegmentRegisters.CS) && proto.getName().endsWith("CS"))
+								|| (oper.equals(X86SegmentRegisters.DS) && proto.getName().endsWith("DS"))
+								|| (oper.equals(X86SegmentRegisters.ES) && proto.getName().endsWith("ES"))
+								|| (oper.equals(X86SegmentRegisters.FS) && proto.getName().endsWith("FS"))
+								|| (oper.equals(X86SegmentRegisters.GS) && proto.getName().endsWith("GS")) || (oper
+								.equals(X86SegmentRegisters.SS) && proto.getName().endsWith("SS"))
 
 						)) {
 					score += IMPLICIT_OPERAND_MATCH_SCORE;
@@ -337,15 +305,11 @@ public class Architecture {
 
 				String param = proto.getParameter(i).getName();
 				if ((oper instanceof Register && param.startsWith("reg"))
-						|| (oper instanceof X86FloatRegister && param
-								.equals("sti"))
+						|| (oper instanceof X86FloatRegister && param.equals("sti"))
 						|| (oper instanceof Immediate && param.equals("i"
-								+ Integer.toString(((Immediate) oper)
-										.getDataType().bits())))
-						|| (oper instanceof MemoryOperand && (param
-								.equals("modrm") || param.equals("mem")))
-						|| (oper instanceof PCRelativeAddress && (param
-								.startsWith("reloc"))))
+								+ Integer.toString(((Immediate) oper).getDataType().bits())))
+						|| (oper instanceof MemoryOperand && (param.equals("modrm") || param.equals("mem")))
+						|| (oper instanceof PCRelativeAddress && (param.startsWith("reloc"))))
 					score += OPERAND_TYPE_EXACT_SCORE;
 				else if (oper instanceof Register && param.equals("modrm"))
 					score += OPERAND_TYPE_MATCH_SCORE;
@@ -377,44 +341,31 @@ public class Architecture {
 	 * @return a sequence of RTL statements that match the instruction's
 	 *         behavior
 	 */
-	public StatementSequence getRTLEquivalent(AbsoluteAddress address,
-			Instruction instr) {
+	public StatementSequence getRTLEquivalent(AbsoluteAddress address, Instruction instr) {
 
 		StatementSequence rtlTemplate = null;
 
 		SSLInstruction sslInstr = matchInstruction(instr);
 		if (sslInstr == null) {
-			logger.warn(address + ": No equivalent SSL instruction found for: "
-					+ instr.getName());
+			logger.warn(address + ": No equivalent SSL instruction found for: " + instr.getName());
 		} else {
 			rtlTemplate = sslInstr.getBody();
 		}
 		Context instrParamContext = new Context();
 
 		boolean excessAsmOps = false;
-		if (sslInstr != null
-				&& instr.getOperandCount() > sslInstr.getParameterCount()) {
+		if (sslInstr != null && instr.getOperandCount() > sslInstr.getParameterCount()) {
 			excessAsmOps = true;
-			logger.debug("Different number of operands for " + instr.getName()
-					+ " (" + instr.getOperandCount() + ") and "
-					+ sslInstr.toString() + " (" + sslInstr.getParameterCount()
-					+ ")!");
+			logger.debug("Different number of operands for " + instr.getName() + " (" + instr.getOperandCount()
+					+ ") and " + sslInstr.toString() + " (" + sslInstr.getParameterCount() + ")!");
 			logger.debug("Unassigned operand: " + instr.getOperand(0));
-			for (int i = sslInstr.getParameterCount() + 1; i < instr
-					.getOperandCount(); i++)
-				logger.debug("Unassigned operand: "
-						+ instr.getOperand(i).toString());
+			for (int i = sslInstr.getParameterCount() + 1; i < instr.getOperandCount(); i++)
+				logger.debug("Unassigned operand: " + instr.getOperand(i).toString());
 		}
-		if (!(sslInstr == null || instr.getOperandCount() >= sslInstr
-				.getParameterCount())) {
-			logger.error("Instruction: "
-					+ address
-					+ ": "
-					+ instr.toString(address.getValue(),
-							new DummySymbolFinder()));
+		if (!(sslInstr == null || instr.getOperandCount() >= sslInstr.getParameterCount())) {
+			logger.error("Instruction: " + address + ": " + instr.toString(address.getValue(), new DummySymbolFinder()));
 			logger.error("Template: " + sslInstr);
-			throw new RuntimeException(
-					"Too few operands in ASM instruction for SSL template");
+			throw new RuntimeException("Too few operands in ASM instruction for SSL template");
 		}
 
 		/*
@@ -424,11 +375,9 @@ public class Architecture {
 		 */
 		if (sslInstr != null)
 			for (int i = 0; i < sslInstr.getParameterCount(); i++) {
-				Operand iOp = excessAsmOps ? instr.getOperand(i + 1) : instr
-						.getOperand(i);
+				Operand iOp = excessAsmOps ? instr.getOperand(i + 1) : instr.getOperand(i);
 				RTLExpression opAsExpr = ExpressionFactory.createOperand(iOp);
-				instrParamContext
-						.substitute(sslInstr.getParameter(i), opAsExpr);
+				instrParamContext.substitute(sslInstr.getParameter(i), opAsExpr);
 			}
 
 		/*
@@ -438,10 +387,8 @@ public class Architecture {
 		long pcValue = address.getValue();
 		if (instr instanceof X86Instruction)
 			pcValue += instr.getSize();
-		instrParamContext.addAssignment(
-				ExpressionFactory.pc,
-				ExpressionFactory.createNumber(pcValue,
-						ExpressionFactory.pc.getBitWidth()));
+		instrParamContext.addAssignment(ExpressionFactory.pc,
+				ExpressionFactory.createNumber(pcValue, ExpressionFactory.pc.getBitWidth()));
 
 		if (rtlTemplate == null) {
 			logger.debug("Null RTL body for instruction: " + instr.getName());
@@ -462,17 +409,14 @@ public class Architecture {
 				stmt.setNextLabel(new Location(address, rtlId));
 			}
 		} else {
-			logger.debug("Detected semantic nop during instantiation: "
-					+ address);
+			logger.debug("Detected semantic nop during instantiation: " + address);
 			instrRTL = new StatementSequence();
 			RTLSkip nop = new RTLSkip();
 			nop.setLabel(address, 0);
 			instrRTL.addFirst(nop);
 		}
 		// set next label of the last statement to fall-through instruction
-		instrRTL.getLast().setNextLabel(
-				new Location(new AbsoluteAddress(address.getValue()
-						+ instr.getSize()), 0));
+		instrRTL.getLast().setNextLabel(new Location(new AbsoluteAddress(address.getValue() + instr.getSize()), 0));
 
 		// infer missing bit widths:
 		try {
@@ -480,8 +424,7 @@ public class Architecture {
 				s.inferTypes(this);
 		} catch (TypeInferenceException e) {
 			e.printStackTrace();
-			logger.error("Instruction: "
-					+ instr.toString(pcValue, new DummySymbolFinder()));
+			logger.error("Instruction: " + instr.toString(pcValue, new DummySymbolFinder()));
 			logger.error("RTL: " + instrRTL);
 			throw new RuntimeException();
 		}
@@ -501,11 +444,9 @@ public class Architecture {
 		return stackPointer.getBitWidth();
 	}
 
-	public void parseSSL(String fileName) throws FileNotFoundException,
-			ANTLRException {
+	public void parseSSL(String fileName) throws FileNotFoundException, ANTLRException {
 		specFile = new File(fileName);
-		logger.info("Reading machine specification from " + specFile.getName()
-				+ ".");
+		logger.info("Reading machine specification from " + specFile.getName() + ".");
 
 		SSLLexer lex = new SSLLexer(new FileInputStream(specFile));
 		SSLParser parser = new SSLParser(lex);
@@ -522,8 +463,8 @@ public class Architecture {
 
 		instructions = new TreeMap<String, SSLInstruction>();
 		instrGroups = new TreeMap<String, List<SSLInstruction>>();
-		for (Iterator<Map.Entry<String, SSLFunction>> iterator = instrPrototypes
-				.entrySet().iterator(); iterator.hasNext();) {
+		for (Iterator<Map.Entry<String, SSLFunction>> iterator = instrPrototypes.entrySet().iterator(); iterator
+				.hasNext();) {
 			Map.Entry<String, SSLFunction> entry = iterator.next();
 			String name = entry.getKey();
 			SSLFunction proto = entry.getValue();
@@ -557,26 +498,20 @@ public class Architecture {
 				RTLStatement exitStatement = rtlBody.getLast();
 				if (exitStatement instanceof AssignmentTemplate) {
 					AssignmentTemplate assignment = (AssignmentTemplate) exitStatement;
-					if (assignment.getLeftHandSide().equals(
-							ExpressionFactory.pc)) {
+					if (assignment.getLeftHandSide().equals(ExpressionFactory.pc)) {
 						RTLGoto newGoto;
 						RTLExpression rhs = assignment.getRightHandSide();
 						if (rhs instanceof RTLConditionalExpression) {
 							RTLConditionalExpression condExpr = (RTLConditionalExpression) rhs;
 							if (condExpr.getTrueExpression() == ExpressionFactory.pc) {
 								// conditional goto to false expression
-								newGoto = new RTLGoto(
-										condExpr.getFalseExpression(),
-										ExpressionFactory.createNot(condExpr
-												.getCondition()), gotoType);
+								newGoto = new RTLGoto(condExpr.getFalseExpression(),
+										ExpressionFactory.createNot(condExpr.getCondition()), gotoType);
 							} else if (condExpr.getFalseExpression() == ExpressionFactory.pc) {
 								// conditional goto to true expression
-								newGoto = new RTLGoto(
-										condExpr.getTrueExpression(),
-										condExpr.getCondition(), gotoType);
+								newGoto = new RTLGoto(condExpr.getTrueExpression(), condExpr.getCondition(), gotoType);
 							} else {
-								logger.error("Dual branch in SSL definition: "
-										+ rtlBody);
+								logger.error("Dual branch in SSL definition: " + rtlBody);
 								assert false;
 								newGoto = new RTLGoto(rhs, gotoType);
 							}
@@ -589,16 +524,14 @@ public class Architecture {
 				}
 
 				// If there is any pc-assignment, then add a goto to the end
-				if (rtlBody.getDefinedVariables()
-						.contains(ExpressionFactory.pc)) {
+				if (rtlBody.getDefinedVariables().contains(ExpressionFactory.pc)) {
 					rtlBody.addLast(new RTLGoto(ExpressionFactory.pc, gotoType));
 				}
 
 			} else
 				logger.debug("Null rtl body: " + proto);
 
-			SSLInstruction instr = new SSLInstruction(proto.getName(),
-					proto.getParameters(), rtlBody);
+			SSLInstruction instr = new SSLInstruction(proto.getName(), proto.getParameters(), rtlBody);
 
 			// logger.debug("Result:\n" + instr.getBody());
 
@@ -611,8 +544,7 @@ public class Architecture {
 			} else
 				instrGroups.get(parts[0]).add(instr);
 		}
-		logger.debug("-- Suffix map has " + instrGroups.size()
-				+ " unique instructions.");
+		logger.debug("-- Suffix map has " + instrGroups.size() + " unique instructions.");
 	}
 
 }

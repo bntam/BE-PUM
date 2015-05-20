@@ -24,9 +24,9 @@ import v2.org.analysis.value.LongValue;
  * Retrieves the current Windows ANSI code page identifier for the operating
  * system.
  * 
- * @return Returns the current Windows ANSI code page (ACP) identifier for
- *         the operating system. See Code Page Identifiers for a list of
- *         identifiers for Windows ANSI code pages and other code pages.
+ * @return Returns the current Windows ANSI code page (ACP) identifier for the
+ *         operating system. See Code Page Identifiers for a list of identifiers
+ *         for Windows ANSI code pages and other code pages.
  * 
  * @author Yen Nguyen
  *
@@ -34,20 +34,20 @@ import v2.org.analysis.value.LongValue;
 public class GetACP extends Kernel32API {
 
 	public GetACP() {
-		
+
 	}
 
 	@Override
 	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Register register = env.getRegister();
-		
+
 		// This function has no parameters.
 		UINT ret = Kernel32DLL.INSTANCE.GetACP();
 		System.out.println("ACP:" + ret.longValue());
 
 		register.mov("eax", new LongValue(ret.longValue()));
-		
+
 		return false;
 	}
 

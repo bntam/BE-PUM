@@ -10,9 +10,9 @@ public final class FileAttribute {
 	int FILE_ATTRIBUTE_SYSTEM = 0x00000004;
 	int FILE_ATTRIBUTE_TEMPORARY = 0x00000100;
 	int FILE_ATTRIBUTE_UNDEFINED = 0xFFFFFFFF;
-	
+
 	private int fileAttribute;
-	
+
 	public FileAttribute() {
 		// TODO Auto-generated constructor stub
 	}
@@ -24,35 +24,35 @@ public final class FileAttribute {
 	public void setFileAttributeArchive() {
 		this.fileAttribute = FILE_ATTRIBUTE_ARCHIVE;
 	}
-	
+
 	public void setFileAttributeEncrypted() {
 		this.fileAttribute = FILE_ATTRIBUTE_ENCRYPTED;
 	}
-	
+
 	public void setFileAttributeHidden() {
 		this.fileAttribute = FILE_ATTRIBUTE_HIDDEN;
 	}
-	
+
 	public void setFileAttributeNormal() {
 		this.fileAttribute = FILE_ATTRIBUTE_NORMAL;
 	}
-	
+
 	public void setFileAttributeOffline() {
 		this.fileAttribute = FILE_ATTRIBUTE_OFFLINE;
 	}
-	
+
 	public void setFileAttributeReadonly() {
 		this.fileAttribute = FILE_ATTRIBUTE_READONLY;
 	}
-	
+
 	public void setFileAttributeSystem() {
 		this.fileAttribute = FILE_ATTRIBUTE_SYSTEM;
 	}
-	
+
 	public void setFileAttributeTemporary() {
 		this.fileAttribute = FILE_ATTRIBUTE_TEMPORARY;
 	}
-	
+
 	public void setFileAttributeUndefined() {
 		this.fileAttribute = FILE_ATTRIBUTE_UNDEFINED;
 	}

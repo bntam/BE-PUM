@@ -32,12 +32,10 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class RTLConditionalExpression extends AbstractRTLExpression implements
-		RTLExpression {
+public class RTLConditionalExpression extends AbstractRTLExpression implements RTLExpression {
 
 	@SuppressWarnings("unused")
-	private final static Logger logger = Logger
-			.getLogger(RTLConditionalExpression.class);
+	private final static Logger logger = Logger.getLogger(RTLConditionalExpression.class);
 
 	protected Set<RTLMemoryLocation> usedMemoryLocations = null;
 
@@ -51,14 +49,13 @@ public class RTLConditionalExpression extends AbstractRTLExpression implements
 	 * @param trueExpression
 	 * @param falseExpression
 	 */
-	protected RTLConditionalExpression(RTLExpression condition,
-			RTLExpression trueExpression, RTLExpression falseExpression) {
+	protected RTLConditionalExpression(RTLExpression condition, RTLExpression trueExpression,
+			RTLExpression falseExpression) {
 		super();
 		this.condition = condition;
 		this.trueExpression = trueExpression;
 		this.falseExpression = falseExpression;
-		this.size = 1 + condition.size() + trueExpression.size()
-				+ falseExpression.size();
+		this.size = 1 + condition.size() + trueExpression.size() + falseExpression.size();
 	}
 
 	/**
@@ -84,8 +81,8 @@ public class RTLConditionalExpression extends AbstractRTLExpression implements
 
 	@Override
 	public String toString() {
-		return "(" + condition.toString() + " ? " + trueExpression.toString()
-				+ " : " + falseExpression.toString() + ")";
+		return "(" + condition.toString() + " ? " + trueExpression.toString() + " : " + falseExpression.toString()
+				+ ")";
 	}
 
 	@Override
@@ -104,17 +101,13 @@ public class RTLConditionalExpression extends AbstractRTLExpression implements
 		RTLExpression evaldFalse = falseExpression.evaluate(context);
 
 		// Collapse "(x == y) ? 1<1> : 0<1>" to (x == y)
-		if (evaldTrue.equals(ExpressionFactory.TRUE)
-				&& evaldFalse.equals(ExpressionFactory.FALSE)) {
+		if (evaldTrue.equals(ExpressionFactory.TRUE) && evaldFalse.equals(ExpressionFactory.FALSE)) {
 			return evaldCondition;
-		} else if (evaldTrue.equals(ExpressionFactory.FALSE)
-				&& evaldFalse.equals(ExpressionFactory.TRUE)) {
-			return ExpressionFactory.createOperation(Operator.NOT,
-					evaldCondition);
+		} else if (evaldTrue.equals(ExpressionFactory.FALSE) && evaldFalse.equals(ExpressionFactory.TRUE)) {
+			return ExpressionFactory.createOperation(Operator.NOT, evaldCondition);
 		}
 
-		return ExpressionFactory.createConditionalExpression(evaldCondition,
-				evaldTrue, evaldFalse);
+		return ExpressionFactory.createConditionalExpression(evaldCondition, evaldTrue, evaldFalse);
 	}
 
 	@Override
@@ -134,8 +127,7 @@ public class RTLConditionalExpression extends AbstractRTLExpression implements
 			usedMemoryLocations = new FastSet<RTLMemoryLocation>();
 			usedMemoryLocations.addAll(condition.getUsedMemoryLocations());
 			usedMemoryLocations.addAll(trueExpression.getUsedMemoryLocations());
-			usedMemoryLocations
-					.addAll(falseExpression.getUsedMemoryLocations());
+			usedMemoryLocations.addAll(falseExpression.getUsedMemoryLocations());
 		}
 		return usedMemoryLocations;
 	}
@@ -153,8 +145,7 @@ public class RTLConditionalExpression extends AbstractRTLExpression implements
 		if (obj == null || obj.getClass() != this.getClass())
 			return false;
 		RTLConditionalExpression other = (RTLConditionalExpression) obj;
-		return other.condition.equals(condition)
-				&& other.trueExpression.equals(trueExpression)
+		return other.condition.equals(condition) && other.trueExpression.equals(trueExpression)
 				&& other.falseExpression.equals(falseExpression);
 	}
 
@@ -163,8 +154,7 @@ public class RTLConditionalExpression extends AbstractRTLExpression implements
 	 */
 	@Override
 	public int hashCode() {
-		return 17 + condition.hashCode() + trueExpression.hashCode()
-				+ falseExpression.hashCode();
+		return 17 + condition.hashCode() + trueExpression.hashCode() + falseExpression.hashCode();
 	}
 
 	@Override
@@ -173,18 +163,14 @@ public class RTLConditionalExpression extends AbstractRTLExpression implements
 	}
 
 	@Override
-	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth)
-			throws TypeInferenceException {
+	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth) throws TypeInferenceException {
 		RTLExpression typedCondition = condition.inferBitWidth(arch, 1);
-		RTLExpression typedTrueExpression = trueExpression.inferBitWidth(arch,
-				expectedBitWidth);
-		RTLExpression typedFalseExpression = falseExpression.inferBitWidth(
-				arch, expectedBitWidth);
-		if (typedCondition != condition
-				|| typedTrueExpression != trueExpression
+		RTLExpression typedTrueExpression = trueExpression.inferBitWidth(arch, expectedBitWidth);
+		RTLExpression typedFalseExpression = falseExpression.inferBitWidth(arch, expectedBitWidth);
+		if (typedCondition != condition || typedTrueExpression != trueExpression
 				|| typedFalseExpression != falseExpression)
-			return ExpressionFactory.createConditionalExpression(
-					typedCondition, typedTrueExpression, typedFalseExpression);
+			return ExpressionFactory.createConditionalExpression(typedCondition, typedTrueExpression,
+					typedFalseExpression);
 		else
 			return this;
 	}

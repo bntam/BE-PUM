@@ -40,8 +40,7 @@ public class OpenClipboard extends User32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Register register = env.getRegister();

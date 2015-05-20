@@ -15,8 +15,7 @@ import org.jakstab.rtl.statements.*;
 import java.util.*;
 
 @SuppressWarnings("all")
-public class SSLPreprocessor extends antlr.TreeParser implements
-		SSLParserTokenTypes {
+public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenTypes {
 
 	private Map<String, Long> constants = new HashMap<String, Long>();
 	private Map<String, List<AST>> tables = new HashMap<String, List<AST>>();
@@ -250,8 +249,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			currentAST = __currentAST3333;
 			_t = __t3333;
 			_t = _t.getNextSibling();
-			functions.put(fn.getText(), new SSLFunction(fn.getText(), pl,
-					astFactory.dupTree(fb)));
+			functions.put(fn.getText(), new SSLFunction(fn.getText(), pl, astFactory.dupTree(fb)));
 			break;
 		}
 		case INSTR: {
@@ -297,8 +295,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 					if (rtl.getFirstChild() != null)
 						oldIns.getAST().addChild(rtl.getFirstChild());
 				} else
-					instructions.put(in.getName(), new SSLFunction(
-							in.getName(), pl, rtl));
+					instructions.put(in.getName(), new SSLFunction(in.getName(), pl, rtl));
 			}
 
 			break;
@@ -427,9 +424,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			regIdFrom = intValue(_t);
 			_t = _retTree;
 
-			registers.add((RTLVariable) ExpressionFactory
-					.createRegisterVariable(r1.getText(),
-							RTLVariable.UNKNOWN_BITWIDTH));
+			registers.add((RTLVariable) ExpressionFactory.createRegisterVariable(r1.getText(),
+					RTLVariable.UNKNOWN_BITWIDTH));
 
 			break;
 		}
@@ -541,11 +537,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			if (coveredRegFrom != null)
 				throw new RuntimeException("COVERS not yet supported!");
 			if (sharedReg != null) {
-				ExpressionFactory.createSharedRegisterVariable(r2.getText(),
-						sharedReg.getText(), shareFrom, shareTo);
+				ExpressionFactory.createSharedRegisterVariable(r2.getText(), sharedReg.getText(), shareFrom, shareTo);
 			} else {
-				registers.add((RTLVariable) ExpressionFactory
-						.createRegisterVariable(r2.getText(), bitWidth));
+				registers.add((RTLVariable) ExpressionFactory.createRegisterVariable(r2.getText(), bitWidth));
 			}
 
 			break;
@@ -615,8 +609,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			}
 
 			for (String regName : regList) {
-				registers.add((RTLVariable) ExpressionFactory
-						.createRegisterVariable(regName, bitWidth));
+				registers.add((RTLVariable) ExpressionFactory.createRegisterVariable(regName, bitWidth));
 			}
 
 			break;
@@ -704,8 +697,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 				res = new LinkedList<AST>();
 				for (AST tt : t)
 					for (AST hh : h)
-						res.add(astFactory.create(NAME,
-								hh.getText() + tt.getText()));
+						res.add(astFactory.create(NAME, hh.getText() + tt.getText()));
 
 			}
 			currentAST = __currentAST3348;
@@ -814,8 +806,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 		return res;
 	}
 
-	public final List<SSLInstructionName> instr_name(AST _t)
-			throws RecognitionException {
+	public final List<SSLInstructionName> instr_name(AST _t) throws RecognitionException {
 		List<SSLInstructionName> res = null;
 		;
 
@@ -840,8 +831,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			_loop3358: do {
 				if (_t == null)
 					_t = ASTNULL;
-				if ((_t.getType() == NAME || _t.getType() == LSQUARE || _t
-						.getType() == DECOR)) {
+				if ((_t.getType() == NAME || _t.getType() == LSQUARE || _t.getType() == DECOR)) {
 					e = instr_name_elem(_t);
 					_t = _retTree;
 
@@ -860,8 +850,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 									newMap.putAll(lhsIn.getVarMap());
 								if (rhsIn.getVarMap() != null)
 									newMap.putAll(rhsIn.getVarMap());
-								tmp.add(new SSLInstructionName(lhsIn.getName()
-										+ rhsIn.getName(), newMap));
+								tmp.add(new SSLInstructionName(lhsIn.getName() + rhsIn.getName(), newMap));
 							}
 						}
 						res = tmp;
@@ -945,8 +934,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 		return res;
 	}
 
-	public final List<SSLInstructionName> instr_name_elem(AST _t)
-			throws RecognitionException {
+	public final List<SSLInstructionName> instr_name_elem(AST _t) throws RecognitionException {
 		List<SSLInstructionName> res = null;
 		;
 
@@ -1002,8 +990,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			if (tables.containsKey(tname.getText()))
 				table = tables.get(tname.getText());
 			else
-				throw new RecognitionException("Undefined table: "
-						+ tname.getText());
+				throw new RecognitionException("Undefined table: " + tname.getText());
 
 			{
 				if (_t == null)
@@ -1019,11 +1006,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 					int i = 0;
 					for (AST tableEntry : table) {
 						Map<String, AST> curVars = new HashMap<String, AST>();
-						curVars.put(vname.getText(), (AST) astFactory
-								.make((new ASTArray(1)).add(astFactory.create(
-										NUM, Integer.toString(i)))));
-						res.add(new SSLInstructionName(tableEntry.getText(),
-								curVars));
+						curVars.put(vname.getText(), (AST) astFactory.make((new ASTArray(1)).add(astFactory.create(NUM,
+								Integer.toString(i)))));
+						res.add(new SSLInstructionName(tableEntry.getText(), curVars));
 						i++;
 					}
 
@@ -1038,11 +1023,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 
 					int index = Integer.parseInt(tidx.getText());
 					if (index < table.size()) {
-						res.add(new SSLInstructionName(table.get(index)
-								.getText()));
+						res.add(new SSLInstructionName(table.get(index).getText()));
 					} else
-						throw new RecognitionException("Index " + index
-								+ " out of bounds for table " + tname.getText()
+						throw new RecognitionException("Index " + index + " out of bounds for table " + tname.getText()
 								+ "!");
 
 					break;
@@ -1120,8 +1103,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			rtl_expand_AST = (AST) currentAST.root;
 			rtl_expand_AST = astFactory.create(RTL, "RTL");
 			currentAST.root = rtl_expand_AST;
-			currentAST.child = rtl_expand_AST != null
-					&& rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
+			currentAST.child = rtl_expand_AST != null && rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
 					.getFirstChild() : rtl_expand_AST;
 			currentAST.advanceChildToEnd();
 			{
@@ -1163,14 +1145,12 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			if (locals.peek().containsKey(s))
 				rtl_expand_AST = astFactory.dupTree(locals.peek().get(s));
 			else if (constants.containsKey(s))
-				rtl_expand_AST = astFactory.create(NUM,
-						Long.toString(constants.get(s)));
+				rtl_expand_AST = astFactory.create(NUM, Long.toString(constants.get(s)));
 			else
 				rtl_expand_AST = astFactory.dupTree(name_AST);
 
 			currentAST.root = rtl_expand_AST;
-			currentAST.child = rtl_expand_AST != null
-					&& rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
+			currentAST.child = rtl_expand_AST != null && rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
 					.getFirstChild() : rtl_expand_AST;
 			currentAST.advanceChildToEnd();
 		} else if ((_t.getType() == LSQUARE)) {
@@ -1204,8 +1184,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			rtl_expand_AST = astFactory.dupTree(expr);
 
 			currentAST.root = rtl_expand_AST;
-			currentAST.child = rtl_expand_AST != null
-					&& rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
+			currentAST.child = rtl_expand_AST != null && rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
 					.getFirstChild() : rtl_expand_AST;
 			currentAST.advanceChildToEnd();
 		} else if ((_t.getType() == LOOKUP_OP)) {
@@ -1245,12 +1224,10 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			int index = Integer.parseInt(otindex_AST.getText());
 			AST op = table.get(index);
 			op = astFactory.dupTree(op);
-			rtl_expand_AST = (AST) astFactory.make((new ASTArray(3)).add(op)
-					.add(lexpr_AST).add(rexpr_AST));
+			rtl_expand_AST = (AST) astFactory.make((new ASTArray(3)).add(op).add(lexpr_AST).add(rexpr_AST));
 
 			currentAST.root = rtl_expand_AST;
-			currentAST.child = rtl_expand_AST != null
-					&& rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
+			currentAST.child = rtl_expand_AST != null && rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
 					.getFirstChild() : rtl_expand_AST;
 			currentAST.advanceChildToEnd();
 		} else if ((_t.getType() == FUNCTION)) {
@@ -1304,8 +1281,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			locals.pop();
 
 			currentAST.root = rtl_expand_AST;
-			currentAST.child = rtl_expand_AST != null
-					&& rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
+			currentAST.child = rtl_expand_AST != null && rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
 					.getFirstChild() : rtl_expand_AST;
 			currentAST.advanceChildToEnd();
 		} else if (((_t.getType() >= SEMI && _t.getType() <= DOT))) {
@@ -1347,8 +1323,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 		_retTree = _t;
 	}
 
-	public final StatementSequence convertToRTL(AST _t)
-			throws RecognitionException {
+	public final StatementSequence convertToRTL(AST _t) throws RecognitionException {
 		StatementSequence statements = new StatementSequence();
 		;
 
@@ -1425,8 +1400,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			_t = __t3378;
 			_t = _t.getNextSibling();
 
-			statements.addFirst(new AssignmentTemplate(bitWidth,
-					(Writable) lhs, rhs));
+			statements.addFirst(new AssignmentTemplate(bitWidth, (Writable) lhs, rhs));
 			// System.out.println("Got assigntype!" + statements.toString());
 
 		} else if ((_t.getType() == LITERAL_MEMSET)) {
@@ -1515,8 +1489,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 		return statements;
 	}
 
-	public final RTLExpression rtlExpr(AST _t, int bw)
-			throws RecognitionException {
+	public final RTLExpression rtlExpr(AST _t, int bw) throws RecognitionException {
 		RTLExpression ret = null;
 		;
 
@@ -2511,8 +2484,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			currentAST = __currentAST3428;
 			_t = __t3428;
 			_t = _t.getNextSibling();
-			ret = ExpressionFactory.createAnd(e1,
-					ExpressionFactory.createNot(e2));
+			ret = ExpressionFactory.createAnd(e1, ExpressionFactory.createNot(e2));
 			rtlExpr_AST = (AST) currentAST.root;
 			break;
 		}
@@ -2537,8 +2509,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			currentAST = __currentAST3429;
 			_t = __t3429;
 			_t = _t.getNextSibling();
-			ret = ExpressionFactory.createOr(e1,
-					ExpressionFactory.createNot(e2));
+			ret = ExpressionFactory.createOr(e1, ExpressionFactory.createNot(e2));
 			rtlExpr_AST = (AST) currentAST.root;
 			break;
 		}
@@ -2563,8 +2534,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			currentAST = __currentAST3430;
 			_t = __t3430;
 			_t = _t.getNextSibling();
-			ret = ExpressionFactory.createXor(e1,
-					ExpressionFactory.createNot(e2));
+			ret = ExpressionFactory.createXor(e1, ExpressionFactory.createNot(e2));
 			rtlExpr_AST = (AST) currentAST.root;
 			break;
 		}
@@ -2837,8 +2807,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			n1 = intValue(_t);
 			_t = _retTree;
 			astFactory.addASTChild(currentAST, returnAST);
-			ret = ExpressionFactory.createNumber(n1,
-					RTLVariable.UNKNOWN_BITWIDTH);
+			ret = ExpressionFactory.createNumber(n1, RTLVariable.UNKNOWN_BITWIDTH);
 			rtlExpr_AST = (AST) currentAST.root;
 			break;
 		}
@@ -2868,8 +2837,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			currentAST = __currentAST3441;
 			_t = __t3441;
 			_t = _t.getNextSibling();
-			ret = ExpressionFactory.createMemoryLocation(e1,
-					(bw != 0 ? Math.abs(bw) : RTLVariable.UNKNOWN_BITWIDTH));
+			ret = ExpressionFactory.createMemoryLocation(e1, (bw != 0 ? Math.abs(bw) : RTLVariable.UNKNOWN_BITWIDTH));
 			rtlExpr_AST = (AST) currentAST.root;
 			break;
 		}
@@ -2994,21 +2962,16 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 			_t = _t.getNextSibling();
 
 			if (str.equals("sgnex"))
-				ret = ExpressionFactory.createSignExtend(exprList[0],
-						exprList[1], exprList[2]);
+				ret = ExpressionFactory.createSignExtend(exprList[0], exprList[1], exprList[2]);
 			else if (str.equals("zfill"))
-				ret = ExpressionFactory.createZeroFill(exprList[0],
-						exprList[1], exprList[2]);
+				ret = ExpressionFactory.createZeroFill(exprList[0], exprList[1], exprList[2]);
 			else if (str.equals("fsize"))
-				ret = ExpressionFactory.createFloatResize(exprList[0],
-						exprList[1], exprList[2]);
+				ret = ExpressionFactory.createFloatResize(exprList[0], exprList[1], exprList[2]);
 			// temporary solution until real float support
 			else if (str.equals("ftoi"))
-				ret = ExpressionFactory.createFloatResize(exprList[0],
-						exprList[1], exprList[2]);
+				ret = ExpressionFactory.createFloatResize(exprList[0], exprList[1], exprList[2]);
 			else if (str.equals("itof"))
-				ret = ExpressionFactory.createFloatResize(exprList[0],
-						exprList[1], exprList[2]);
+				ret = ExpressionFactory.createFloatResize(exprList[0], exprList[1], exprList[2]);
 			else
 				ret = ExpressionFactory.createSpecialExpression(str, exprList);
 
@@ -3024,12 +2987,10 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 		return ret;
 	}
 
-	public final Map<RTLExpression, RTLExpression> convertSimplificationTemplates(
-			AST _t) throws RecognitionException {
+	public final Map<RTLExpression, RTLExpression> convertSimplificationTemplates(AST _t) throws RecognitionException {
 		Map<RTLExpression, RTLExpression> mapping = new HashMap<RTLExpression, RTLExpression>();
 
-		AST convertSimplificationTemplates_AST_in = (_t == ASTNULL) ? null
-				: (AST) _t;
+		AST convertSimplificationTemplates_AST_in = (_t == ASTNULL) ? null : (AST) _t;
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
 		AST convertSimplificationTemplates_AST = null;
@@ -3153,24 +3114,17 @@ public class SSLPreprocessor extends antlr.TreeParser implements
 		return value;
 	}
 
-	public static final String[] _tokenNames = { "<0>", "EOF", "<2>",
-			"NULL_TREE_LOOKAHEAD", "SEMI", "NUM", "NAME", "EQUATE", "PLUS",
-			"MINUS", "\"INTEGER\"", "\"FLOAT\"", "COMMA", "REG_ID", "INDEX",
-			"LSQUARE", "RSQUARE", "\"COVERS\"", "TO", "\"SHARES\"", "AT",
-			"\"OPERAND\"", "LCURLY", "RCURLY", "ASSIGNTYPE", "\"ENDIANNESS\"",
-			"\"BIG\"", "\"LITTLE\"", "LPAREN", "RPAREN", "QUOTE", "DECOR",
-			"MOD", "MUL", "DIV", "SMUL", "SDIV", "SMOD", "\"rlc\"", "\"rrc\"",
-			"\"rl\"", "\"rr\"", "RSHIFT", "LSHIFT", "RSHIFTA", "OR", "ORNOT",
-			"AND", "ANDNOT", "XOR", "XORNOT", "MUL_F", "MUL_FD", "MUL_FQ",
-			"MUL_FSD", "MUL_FDQ", "DIV_F", "DIV_FD", "DIV_FQ", "PLUS_F",
-			"PLUS_FD", "PLUS_FQ", "MINUS_F", "MINUS_FD", "MINUS_FQ", "\"pow\"",
-			"EQ", "NE", "LT", "GT", "LE", "GE", "LTU", "GTU", "LEU", "GEU",
-			"PRIME", "DOLLAR", "\"halt\"", "UNDERSCORE", "\"MEMSET\"",
-			"\"MEMCPY\"", "\"r\"", "\"m\"", "COLON", "FLOATNUM", "QUEST",
-			"S_E", "NOT", "FNEG", "LNOT", "\"and\"", "\"or\"", "\"FAST\"",
-			"CONSTANT", "TABLE", "CROSSP", "FUNCTION", "INSTR", "INSTR_NAME",
-			"LOOKUP_OP", "RTL", "BUILTIN", "CAST", "REGDECL", "WS", "COMMENT",
-			"DIGITS", "HEXDIGITS", "FLOAT_OR_NUM", "ASSIGN", "THEN",
+	public static final String[] _tokenNames = { "<0>", "EOF", "<2>", "NULL_TREE_LOOKAHEAD", "SEMI", "NUM", "NAME",
+			"EQUATE", "PLUS", "MINUS", "\"INTEGER\"", "\"FLOAT\"", "COMMA", "REG_ID", "INDEX", "LSQUARE", "RSQUARE",
+			"\"COVERS\"", "TO", "\"SHARES\"", "AT", "\"OPERAND\"", "LCURLY", "RCURLY", "ASSIGNTYPE", "\"ENDIANNESS\"",
+			"\"BIG\"", "\"LITTLE\"", "LPAREN", "RPAREN", "QUOTE", "DECOR", "MOD", "MUL", "DIV", "SMUL", "SDIV", "SMOD",
+			"\"rlc\"", "\"rrc\"", "\"rl\"", "\"rr\"", "RSHIFT", "LSHIFT", "RSHIFTA", "OR", "ORNOT", "AND", "ANDNOT",
+			"XOR", "XORNOT", "MUL_F", "MUL_FD", "MUL_FQ", "MUL_FSD", "MUL_FDQ", "DIV_F", "DIV_FD", "DIV_FQ", "PLUS_F",
+			"PLUS_FD", "PLUS_FQ", "MINUS_F", "MINUS_FD", "MINUS_FQ", "\"pow\"", "EQ", "NE", "LT", "GT", "LE", "GE",
+			"LTU", "GTU", "LEU", "GEU", "PRIME", "DOLLAR", "\"halt\"", "UNDERSCORE", "\"MEMSET\"", "\"MEMCPY\"",
+			"\"r\"", "\"m\"", "COLON", "FLOATNUM", "QUEST", "S_E", "NOT", "FNEG", "LNOT", "\"and\"", "\"or\"",
+			"\"FAST\"", "CONSTANT", "TABLE", "CROSSP", "FUNCTION", "INSTR", "INSTR_NAME", "LOOKUP_OP", "RTL",
+			"BUILTIN", "CAST", "REGDECL", "WS", "COMMENT", "DIGITS", "HEXDIGITS", "FLOAT_OR_NUM", "ASSIGN", "THEN",
 			"ASSIGNTYPE_OR_MUL", "DOT" };
 
 	private static final long[] mk_tokenSet_0() {

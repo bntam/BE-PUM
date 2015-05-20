@@ -51,8 +51,7 @@ public class TestCaseValue {
 	public void printVarValue(String name) {
 		// double r = 0;
 		if (contain(name))
-			System.out.println(name + " = "
-					+ varValue.get(varName.indexOf(name)));
+			System.out.println(name + " = " + varValue.get(varName.indexOf(name)));
 		else
 			System.out.println("Variable " + name + " is not found!");
 		// return Double.MAX_VALUE;
@@ -94,20 +93,17 @@ public class TestCaseValue {
 					if (var.contains(",") && !var.contains("(,")) {
 						int pos1 = var.lastIndexOf("(");
 						int pos2 = var.lastIndexOf(",");
-						var = "op_addr_base2_disp_" + var.substring(0, pos1)
-								+ "_" + var.substring(pos1 + 2, pos2) + "_"
-								+ var.substring(pos2 + 2, var.length() - 1);
+						var = "op_addr_base2_disp_" + var.substring(0, pos1) + "_" + var.substring(pos1 + 2, pos2)
+								+ "_" + var.substring(pos2 + 2, var.length() - 1);
 					} else if (var.contains("(%")) {
 						// 0x400005f5(%edi)
 						// String t[] = var.split("(");
 						int pos = var.lastIndexOf("(");
-						var = "op_addr_base_disp_" + var.substring(0, pos)
-								+ "_"
+						var = "op_addr_base_disp_" + var.substring(0, pos) + "_"
 								+ var.substring(pos + 2, var.length() - 1);
 					} else if (var.contains("(,")) {
 						// 0x105(,%ecx)
-						var = "op_addr_base3_disp_"
-								+ var.substring(0, var.length() - 1);
+						var = "op_addr_base3_disp_" + var.substring(0, var.length() - 1);
 						var = var.replace("(,", "");
 						var = var.replace("%", "_");
 					} else
@@ -117,44 +113,36 @@ public class TestCaseValue {
 					if (var.contains(",,")) {
 						// (%ecx,,4)
 						int pos = var.lastIndexOf(",,");
-						var = "op_addr_base_index_" + var.substring(2, pos)
-								+ "_"
+						var = "op_addr_base_index_" + var.substring(2, pos) + "_"
 								+ var.substring(pos + 2, var.length() - 1);
 					} else if (var.contains(",")) {
 						// (%eax,%eax)
 						int pos = var.lastIndexOf(",");
-						var = "op_addr_base_index_" + var.substring(2, pos - 1)
-								+ "_"
+						var = "op_addr_base_index_" + var.substring(2, pos - 1) + "_"
 								+ var.substring(pos + 2, var.length() - 1);
 						// (%ebx,%edx,8)
 						var = var.replace(",", "_");
 						var = var.replace("%", "");
 					} else
 						// (%edi)
-						var = "op_addr_base_"
-								+ var.substring(2, var.length() - 1);
+						var = "op_addr_base_" + var.substring(2, var.length() - 1);
 				} else if (var.startsWith("%") && var.contains(":(%")) {
 					// %es:(%eax)
 					int pos = var.lastIndexOf(":");
-					var = "op_addr_base_index_disp_" + var.substring(1, pos)
-							+ "_" + var.substring(pos + 3, var.length() - 1);
+					var = "op_addr_base_index_disp_" + var.substring(1, pos) + "_"
+							+ var.substring(pos + 3, var.length() - 1);
 				} else if (var.contains(",") && var.contains("(%")) {
 					int pos1 = var.lastIndexOf("(");
 					int pos2 = var.lastIndexOf(",");
-					var = "op_addr_base_index_base_"
-							+ var.substring(0, pos1 - 1) + "_"
-							+ var.substring(pos1 + 2, pos2) + "_"
-							+ var.substring(pos2 + 2, var.length() - 1);
+					var = "op_addr_base_index_base_" + var.substring(0, pos1 - 1) + "_" + var.substring(pos1 + 2, pos2)
+							+ "_" + var.substring(pos2 + 2, var.length() - 1);
 				} else if (var.contains(":") && var.contains("(%")) {
 					// ss:-116(%ebx)
 					int pos1 = var.lastIndexOf(":");
 					int pos2 = var.lastIndexOf("(");
-					var = "op_addr_base_index_base_index_"
-							+ var.substring(1, pos1) + "_"
-							+ var.substring(pos1 + 1, pos2) + "_"
-							+ var.substring(pos2 + 2, var.length() - 1);
-				} else if (var.contains("(%") && !var.contains(":")
-						&& !var.contains(",")) {
+					var = "op_addr_base_index_base_index_" + var.substring(1, pos1) + "_"
+							+ var.substring(pos1 + 1, pos2) + "_" + var.substring(pos2 + 2, var.length() - 1);
+				} else if (var.contains("(%") && !var.contains(":") && !var.contains(",")) {
 					// -53(%eax)
 					int pos = var.lastIndexOf("(");
 					var = "op_addr_base_index3_" + var.substring(0, pos) + "_"
@@ -162,8 +150,7 @@ public class TestCaseValue {
 				} else if (var.contains(":") && var.startsWith("%")) {
 					// %es:-1388509968
 					int pos = var.lastIndexOf(":");
-					var = "op_addr_base_index4_" + var.substring(1, pos) + "_"
-							+ var.substring(pos + 1, var.length());
+					var = "op_addr_base_index4_" + var.substring(1, pos) + "_" + var.substring(pos + 1, var.length());
 				}
 
 				var = var.replace(",", "_");

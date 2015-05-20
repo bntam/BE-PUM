@@ -37,13 +37,12 @@ import org.jakstab.util.BinaryInputBuffer;
 
 public class SSEMoveDecoder extends SSEInstructionDecoder {
 
-	public SSEMoveDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2) {
+	public SSEMoveDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2) {
 		super(name, addrMode1, operandType1, addrMode2, operandType2);
 	}
 
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand op1 = getOperand1(bytesArray, operandSize, addrSize);
 		Operand op2 = getOperand2(bytesArray, operandSize, addrSize);
 		int size = byteIndex - instrStartIndex;

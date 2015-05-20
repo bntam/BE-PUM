@@ -72,8 +72,7 @@ public class HeapAlloc extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Register register = env.getRegister();
@@ -88,14 +87,12 @@ public class HeapAlloc extends Kernel32API {
 		Value x3 = stack.pop();
 		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue
-				&& x3 instanceof LongValue) {
+		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
 
-			LPVOID ret = Kernel32DLL.INSTANCE.HeapAlloc(new HANDLE(new Pointer(
-					t1)), new DWORD(t2), new SIZE_T(t3));
+			LPVOID ret = Kernel32DLL.INSTANCE.HeapAlloc(new HANDLE(new Pointer(t1)), new DWORD(t2), new SIZE_T(t3));
 
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.toPointer());
 			register.mov("eax", new LongValue(value));

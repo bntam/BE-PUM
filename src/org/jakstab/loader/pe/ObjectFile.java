@@ -56,20 +56,17 @@ public class ObjectFile extends AbstractCOFFModule {
 	private final AbsoluteAddress entryPoint;
 	private Set<UnresolvedSymbol> unresolvedSymbols;
 
-	public ObjectFile(File peFile, Architecture arch)
-			throws java.io.IOException, BinaryParseException {
+	public ObjectFile(File peFile, Architecture arch) throws java.io.IOException, BinaryParseException {
 		this(new FileInputStream(peFile), arch);
 	}
 
-	public ObjectFile(InputStream inStream, Architecture arch)
-			throws java.io.IOException, BinaryParseException {
+	public ObjectFile(InputStream inStream, Architecture arch) throws java.io.IOException, BinaryParseException {
 
 		imageBase = 0x1000;
 		inBuf = new BinaryFileInputBuffer(inStream);
 
 		coff_header = new COFF_Header(inBuf);
-		logger.debug("Reading " + coff_header.getNumberOfSections()
-				+ " sections.");
+		logger.debug("Reading " + coff_header.getNumberOfSections() + " sections.");
 
 		// /// Parse Section Headers and sections /////////////////////////
 		section_headers = new SectionHeader[coff_header.getNumberOfSections()];
@@ -83,37 +80,30 @@ public class ObjectFile extends AbstractCOFFModule {
 		for (int i = 0; i < coff_header.getNumberOfSections(); i++) {
 			SectionHeader sectionHeader = new SectionHeader(inBuf);
 			section_headers[i] = sectionHeader;
-			if (sectionHeader.getName().equals(".text")
-					&& !sectionHeader.hasComdat())
+			if (sectionHeader.getName().equals(".text") && !sectionHeader.hasComdat())
 				codeSection = i;
-			logger.debug("  Read section " + (i + 1) + ": "
-					+ sectionHeader.getName());
+			logger.debug("  Read section " + (i + 1) + ": " + sectionHeader.getName());
 
 			// Allocate virtual address for section
-			if (!sectionHeader.isRemovedByLinker()
-					&& !sectionHeader.isDiscardable()) {
+			if (!sectionHeader.isRemovedByLinker() && !sectionHeader.isDiscardable()) {
 				sectionHeader.VirtualAddress = currentRVA;
 				sectionHeader.VirtualSize = sectionHeader.SizeOfRawData;
 				currentRVA += sectionHeader.VirtualSize;
-				logger.debug("Allocated section "
-						+ sectionHeader.getName()
-						+ " at RVA 0x"
-						+ Integer
-								.toHexString((int) sectionHeader.VirtualAddress));
+				logger.debug("Allocated section " + sectionHeader.getName() + " at RVA 0x"
+						+ Integer.toHexString((int) sectionHeader.VirtualAddress));
 			}
 		}
 		// ///////////////////////////////////////////////////////////////
 		if (codeSection < 0) {
-			throw new BinaryParseException(
-					"No code section found in object file!");
+			throw new BinaryParseException("No code section found in object file!");
 		}
 
 		// ///////////////////////////////////////////////////////////////
 		// Read string table for symbols
 		Map<Integer, String> stringTable = new HashMap<Integer, String>();
 		if (coff_header.getNumberOfSymbols() > 0) {
-			long stringTableOffset = coff_header.getPointerToSymbolTable()
-					+ coff_header.getNumberOfSymbols() * SYMBOL_LENGTH;
+			long stringTableOffset = coff_header.getPointerToSymbolTable() + coff_header.getNumberOfSymbols()
+					* SYMBOL_LENGTH;
 			inBuf.seek(stringTableOffset);
 			int stringTableSize = inBuf.readINT32();
 			while (inBuf.getCurrent() < stringTableOffset + stringTableSize) {
@@ -159,14 +149,11 @@ public class ObjectFile extends AbstractCOFFModule {
 			for (int i = 0; i < csHead.NumberOfRelocations; i++) {
 				relocations[i] = new RelocationEntry(inBuf);
 
-				SymbolEntry symbolEntry = symbolTable[relocations[i]
-						.getTableIndex()];
+				SymbolEntry symbolEntry = symbolTable[relocations[i].getTableIndex()];
 
-				logger.debug("  RVA 0x"
-						+ Integer.toHexString((int) (relocations[i].getRVA() + csHead.VirtualAddress))
-						+ ": make "
-						+ (relocations[i].isDirectVirtualAddress() ? "direct"
-								: "relative") + " to " + symbolEntry);
+				logger.debug("  RVA 0x" + Integer.toHexString((int) (relocations[i].getRVA() + csHead.VirtualAddress))
+						+ ": make " + (relocations[i].isDirectVirtualAddress() ? "direct" : "relative") + " to "
+						+ symbolEntry);
 
 				// Mark relocation entries to external symbols as unresolved, so
 				// the resolution mechanism in the Program class takes care of
@@ -177,17 +164,14 @@ public class ObjectFile extends AbstractCOFFModule {
 				else if (relocations[i].isRelativeDisplacement())
 					mode = AddressingType.PC_RELATIVE;
 				else
-					throw new RuntimeException(
-							"Unknown addressing type for unresolved symbol "
-									+ relocations[i].toString());
+					throw new RuntimeException("Unknown addressing type for unresolved symbol "
+							+ relocations[i].toString());
 
 				String name = symbolEntry.getName();
 				name = stripSymbolName(name);
 
-				UnresolvedSymbol unresolvedSymbol = new UnresolvedSymbol(this,
-						name,
-						(int) (getFilePointerFromRVA(relocations[i].getRVA()
-								+ csHead.VirtualAddress)), mode);
+				UnresolvedSymbol unresolvedSymbol = new UnresolvedSymbol(this, name,
+						(int) (getFilePointerFromRVA(relocations[i].getRVA() + csHead.VirtualAddress)), mode);
 				// If it's an external symbol, rely on the Program class to
 				// resolve it
 				if (symbolEntry.isExternal()) {
@@ -196,11 +180,8 @@ public class ObjectFile extends AbstractCOFFModule {
 				} else {
 					// Otherwise, perform relocation now
 					logger.debug("  -- Relocating " + symbolEntry.getName());
-					AbsoluteAddress relocatedAddress = new AbsoluteAddress(
-							symbolEntry.getValue()
-									+ imageBase
-									+ section_headers[symbolEntry
-											.getSectionNumber() - 1].VirtualAddress);
+					AbsoluteAddress relocatedAddress = new AbsoluteAddress(symbolEntry.getValue() + imageBase
+							+ section_headers[symbolEntry.getSectionNumber() - 1].VirtualAddress);
 					logger.debug("  New address: " + relocatedAddress);
 					unresolvedSymbol.resolve(relocatedAddress);
 				}
@@ -266,8 +247,7 @@ public class ObjectFile extends AbstractCOFFModule {
 			// Only look for sections that are actually loaded
 			if (sh.isDiscardable() || sh.isRemovedByLinker())
 				continue;
-			if (sh.VirtualAddress <= rva
-					&& (sh.VirtualAddress + sh.VirtualSize) > rva) {
+			if (sh.VirtualAddress <= rva && (sh.VirtualAddress + sh.VirtualSize) > rva) {
 				return i;
 			}
 		}
@@ -284,8 +264,7 @@ public class ObjectFile extends AbstractCOFFModule {
 		Set<ExportedSymbol> exportedSymbols = new FastSet<ExportedSymbol>();
 
 		for (int i = 0; i < coff_header.getNumberOfSymbols(); i++) {
-			if (symbolTable[i].isExternal()
-					&& symbolTable[i].getSectionNumber() > 0) {
+			if (symbolTable[i].isExternal() && symbolTable[i].getSectionNumber() > 0) {
 				String name = symbolTable[i].getName();
 				// section number is 1-based in symbol table
 				int section = symbolTable[i].getSectionNumber() - 1;
@@ -293,14 +272,12 @@ public class ObjectFile extends AbstractCOFFModule {
 				// logger.debug("Locating symbol " + name);
 
 				name = stripSymbolName(name);
-				long fp = getSectionHeader(section).PointerToRawData
-						+ symbolTable[i].getValue();
+				long fp = getSectionHeader(section).PointerToRawData + symbolTable[i].getValue();
 
 				AbsoluteAddress address = getVirtualAddress(fp);
 				exportedSymbols.add(new ExportedSymbol(this, name, address));
-				logger.debug("Exporting " + name + " at file offset " + fp
-						+ ", section offset " + symbolTable[i].getValue()
-						+ " in " + section_headers[section].getName()
+				logger.debug("Exporting " + name + " at file offset " + fp + ", section offset "
+						+ symbolTable[i].getValue() + " in " + section_headers[section].getName()
 						+ ", which evaluates to VA " + address);
 
 			}

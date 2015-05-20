@@ -51,7 +51,7 @@ public class VirtualFree extends Kernel32API {
 	 * 
 	 */
 	public VirtualFree() {
-		
+
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class VirtualFree extends Kernel32API {
 			// String fileName = symbolValueMemoryOperand.getText(new
 			// X86MemoryOperand(DataType.INT32, t1));
 			System.out.println("Base Address:" + t1 + ", Size:" + t2 + ", Free Type:" + t3);
-			
+
 			BOOL ret = Kernel32DLL.INSTANCE.VirtualFree(new LPVOID(t1), new SIZE_T(t2), new DWORD(t3));
 
 			register.mov("eax", new LongValue(ret.longValue()));

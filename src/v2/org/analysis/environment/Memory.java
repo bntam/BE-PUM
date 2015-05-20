@@ -50,8 +50,7 @@ public class Memory {
 	}
 
 	public String outputMemory() {
-		FileProcess fp = new FileProcess(System.getProperty("user.dir")
-				+ "/data/memory.txt");
+		FileProcess fp = new FileProcess(System.getProperty("user.dir") + "/data/memory.txt");
 		String ret = "";
 		for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
 			ret += entry.getKey() + "\t" + entry.getValue() + "\n";
@@ -83,10 +82,12 @@ public class Memory {
 	}
 
 	public void addMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().add(dest.getDisplacement(), v, inst, ((X86MemoryOperand)dest).getDataType());
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().add(dest.getDisplacement(), v, inst,
+		 * ((X86MemoryOperand)dest).getDataType()); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -103,10 +104,11 @@ public class Memory {
 	}
 
 	public void andMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().and(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().and(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -144,11 +146,8 @@ public class Memory {
 					long fp1 = module.getFilePointer(new AbsoluteAddress(addr));
 
 					if (fp1 < 0 || (int) fp1 < 0) {
-						Program.getProgram()
-								.getLog()
-								.debugString(
-										"Requested instruction outside of file area: "
-												+ address);
+						Program.getProgram().getLog()
+								.debugString("Requested instruction outside of file area: " + address);
 						return false;
 					}
 
@@ -158,16 +157,14 @@ public class Memory {
 					// long old_v =
 					// module.getDisassembler().getMemoryByteValue((int) fp1);
 					if (module.getDisassembler() instanceof X86Disassembler) {
-						X86Disassembler x86Dis = (X86Disassembler) module
-								.getDisassembler();
+						X86Disassembler x86Dis = (X86Disassembler) module.getDisassembler();
 						long oldValue = x86Dis.getMemoryByteValue((int) fp1);
 
 						if (oldValue != ((LongValue) v).getValue()) {
 							// Program.getProgram().setTechnique("SMC");
 							// Program.getProgram().setDetailTechnique("SMC:" +
 							// new AbsoluteAddress(addr) + " ");
-							module.getDisassembler().setMemoryByteValue(
-									(int) fp1, ((LongValue) v).getValue());
+							module.getDisassembler().setMemoryByteValue((int) fp1, ((LongValue) v).getValue());
 							reset.put(addr, new LongValue(oldValue));
 						}
 					}
@@ -227,10 +224,11 @@ public class Memory {
 	}
 
 	public void divMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().div(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().div(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -254,8 +252,7 @@ public class Memory {
 		// TODO Auto-generated method stub
 		long val = (int) m.getDisplacement();
 		if (m.getBase() != null) {
-			Value r = env.getRegister()
-					.getRegisterValue(m.getBase().toString());
+			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
 			if (r != null && r instanceof LongValue) {
 				// PHONG: change long address here to int address
 				val += (int) ((LongValue) r).getValue();
@@ -266,8 +263,7 @@ public class Memory {
 		}
 
 		if (m.getIndex() != null) {
-			Value index = env.getRegister().getRegisterValue(
-					m.getIndex().toString());
+			Value index = env.getRegister().getRegisterValue(m.getIndex().toString());
 
 			if (index != null && index instanceof LongValue) {
 				if (m.getScale() != 0)
@@ -284,18 +280,15 @@ public class Memory {
 	public Value calculateAddress(X86MemoryOperand m) {
 		// TODO Auto-generated method stub
 		if (m.getBase() != null) {
-			Value r = env.getRegister()
-					.getRegisterValue(m.getBase().toString());
+			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
 			Value index = null;
 			if (m.getIndex() != null)
-				index = env.getRegister().getRegisterValue(
-						m.getIndex().toString());
+				index = env.getRegister().getRegisterValue(m.getIndex().toString());
 			// long ret = 0;
 
 			if (index != null) {
 				if (m.getScale() != 0)
-					r = r.addFunction(index.unsignedMulFunction(new LongValue(m
-							.getScale())));
+					r = r.addFunction(index.unsignedMulFunction(new LongValue(m.getScale())));
 			}
 
 			r = r.addFunction(new LongValue(m.getDisplacement()));
@@ -333,8 +326,7 @@ public class Memory {
 
 		long val = (int) m.getDisplacement();
 		if (m.getBase() != null) {
-			Value r = env.getRegister()
-					.getRegisterValue(m.getBase().toString());
+			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
 			if (r != null && r instanceof LongValue) {
 				// PHONG: change long address here to int address
 				val += (int) ((LongValue) r).getValue();
@@ -345,8 +337,7 @@ public class Memory {
 		}
 
 		if (m.getIndex() != null) {
-			Value index = env.getRegister().getRegisterValue(
-					m.getIndex().toString());
+			Value index = env.getRegister().getRegisterValue(m.getIndex().toString());
 
 			if (index != null && index instanceof LongValue) {
 				if (m.getScale() != 0)
@@ -362,14 +353,11 @@ public class Memory {
 
 	public Value getByteMemoryValue(long address) {
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
-			return new LongValue(env.getSystem().getKernel()
-					.readByte((int) address));
+			return new LongValue(env.getSystem().getKernel().readByte((int) address));
 		}
 
-		if (env.getSystem().getFileHandle()
-				.isInsideFIle(new AbsoluteAddress(address))) {
-			return new LongValue(env.getSystem().getFileHandle()
-					.readByte((int) address));
+		if (env.getSystem().getFileHandle().isInsideFIle(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getFileHandle().readByte((int) address));
 		}
 
 		for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
@@ -381,32 +369,31 @@ public class Memory {
 
 		try {
 			if (program.isInside(new AbsoluteAddress(address)))
-				return new LongValue(program.getByteValueMemoryPhong(
-						new AbsoluteAddress(address), env));
+				return new LongValue(program.getByteValueMemoryPhong(new AbsoluteAddress(address), env));
 			else {
-				//YenNguyen: Access jna's memory here
+				// YenNguyen: Access jna's memory here
 				if (address != 0) {
 					ExternalMemoryReturnData ret = ExternalMemory.getByte(address);
-					if (ret != null && ret.isValidAddress) 
+					if (ret != null && ret.isValidAddress)
 						return ret.value;
 				}
-				//return new SymbolValue(Convert.generateString(
-				//			new X86MemoryOperand(DataType.INT8, address))
-				//			.toString());
+				// return new SymbolValue(Convert.generateString(
+				// new X86MemoryOperand(DataType.INT8, address))
+				// .toString());
 				return new LongValue(0);
 			}
 		} catch (Exception e) {
-			return new SymbolValue(Convert.generateString(
-					new X86MemoryOperand(DataType.INT8, address)).toString());
-			//return new LongValue(0);
+			return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT8, address)).toString());
+			// return new LongValue(0);
 		}
 	}
 
 	public Value getByteMemoryValue(X86MemoryOperand dest) {
 		long d = evaluateAddress(dest);
 
-		// PHONG: 20150605 -----------------------------------------------------------------------
-		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"){
+		// PHONG: 20150605
+		// -----------------------------------------------------------------------
+		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
 		// ---------------------------------------------------------------------------------------
@@ -423,14 +410,11 @@ public class Memory {
 		 */
 
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
-			return new LongValue(env.getSystem().getKernel()
-					.readDoubleWord((int) address));
+			return new LongValue(env.getSystem().getKernel().readDoubleWord((int) address));
 		}
 
-		if (env.getSystem().getFileHandle()
-				.isInsideFIle(new AbsoluteAddress(address))) {
-			return new LongValue(env.getSystem().getFileHandle()
-					.readDoubleWord((int) address));
+		if (env.getSystem().getFileHandle().isInsideFIle(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getFileHandle().readDoubleWord((int) address));
 		}
 
 		long ret1 = UNKNOWN, ret2 = UNKNOWN, ret3 = UNKNOWN, ret4 = UNKNOWN;
@@ -444,36 +428,28 @@ public class Memory {
 					ret1 = ((LongValue) v).getValue();
 					p = true;
 				} else
-					return new SymbolValue(
-							Convert.generateString(new X86MemoryOperand(
-									DataType.INT32, address)));
+					return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
 			} else if (evaluateAddress(m) == address + 1) {
 				Value v = entry.getValue();
 				if (v instanceof LongValue) {
 					ret2 = ((LongValue) v).getValue();
 					p = true;
 				} else
-					return new SymbolValue(
-							Convert.generateString(new X86MemoryOperand(
-									DataType.INT32, address)));
+					return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
 			} else if (evaluateAddress(m) == address + 2) {
 				Value v = entry.getValue();
 				if (v instanceof LongValue) {
 					ret3 = ((LongValue) v).getValue();
 					p = true;
 				} else
-					return new SymbolValue(
-							Convert.generateString(new X86MemoryOperand(
-									DataType.INT32, address)));
+					return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
 			} else if (evaluateAddress(m) == address + 3) {
 				Value v = entry.getValue();
 				if (v instanceof LongValue) {
 					ret4 = ((LongValue) v).getValue();
 					p = true;
 				} else
-					return new SymbolValue(
-							Convert.generateString(new X86MemoryOperand(
-									DataType.INT32, address)));
+					return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
 			}
 		}
 
@@ -482,22 +458,17 @@ public class Memory {
 				ret1 = program.getByteValueMemory(new AbsoluteAddress(address));
 
 			if (ret2 == UNKNOWN)
-				ret2 = program.getByteValueMemory(new AbsoluteAddress(
-						address + 1));
+				ret2 = program.getByteValueMemory(new AbsoluteAddress(address + 1));
 
 			if (ret3 == UNKNOWN)
-				ret3 = program.getByteValueMemory(new AbsoluteAddress(
-						address + 2));
+				ret3 = program.getByteValueMemory(new AbsoluteAddress(address + 2));
 
 			if (ret4 == UNKNOWN)
-				ret4 = program.getByteValueMemory(new AbsoluteAddress(
-						address + 3));
+				ret4 = program.getByteValueMemory(new AbsoluteAddress(address + 3));
 		}
 
-		if (ret1 != UNKNOWN && ret2 != UNKNOWN && ret3 != UNKNOWN
-				&& ret4 != UNKNOWN)
-			return new LongValue(calculateDoubleWordValue(ret1, ret2, ret3,
-					ret4));
+		if (ret1 != UNKNOWN && ret2 != UNKNOWN && ret3 != UNKNOWN && ret4 != UNKNOWN)
+			return new LongValue(calculateDoubleWordValue(ret1, ret2, ret3, ret4));
 
 		/*
 		 * if (ret1 != UNKNOWN) { try { return new
@@ -512,24 +483,23 @@ public class Memory {
 
 		try {
 			if (program.isInside(new AbsoluteAddress(address)))
-				return new LongValue(
-						program.getDoubleWordValueMemory(new AbsoluteAddress(
-								address)));
+				return new LongValue(program.getDoubleWordValueMemory(new AbsoluteAddress(address)));
 			else {
 				if (address != 0) {
 					ExternalMemoryReturnData ret = ExternalMemory.getDoubleWord(address);
 					if (ret != null && ret.isValidAddress) {
 						return ret.value;
-					} 
-				} 
-				//return new SymbolValue(
-				//	Convert.generateString(new X86MemoryOperand(
-				//			DataType.INT32, address)));
+					}
+				}
+				// return new SymbolValue(
+				// Convert.generateString(new X86MemoryOperand(
+				// DataType.INT32, address)));
 				return new LongValue(0);
 			}
 		} catch (Exception e) {
-			//return new SymbolValue(Convert.generateString(new X86MemoryOperand(
-			//		DataType.INT32, address)));
+			// return new SymbolValue(Convert.generateString(new
+			// X86MemoryOperand(
+			// DataType.INT32, address)));
 			return new LongValue(0);
 		}
 	}
@@ -537,8 +507,9 @@ public class Memory {
 	public Value getDoubleWordMemoryValue(X86MemoryOperand dest) {
 		long d = evaluateAddress(dest);
 
-		// PHONG: 20150506 If segment is FS ------------------------------------------------------
-		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"){
+		// PHONG: 20150506 If segment is FS
+		// ------------------------------------------------------
+		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
 		// ---------------------------------------------------------------------------------------
@@ -569,13 +540,14 @@ public class Memory {
 		 * System.out.println("Access the value of Stack"); return
 		 * env.getStack().getValueStackFromIndex(dest.getDisplacement()); }
 		 */
-		// PHONG: 20150507 ---------------------------------------------------------------------
+		// PHONG: 20150507
+		// ---------------------------------------------------------------------
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"
-				&& dest.getDisplacement() == 0){
+				&& dest.getDisplacement() == 0) {
 			return new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
 		}
 		// --------------------------------------------------------------------------------------
-		
+
 		/*
 		 * if ((dest.getDataType() != DataType.INT32 &&
 		 * inst.getName().endsWith("l")) || (dest.getDataType() != DataType.INT8
@@ -676,14 +648,11 @@ public class Memory {
 
 	public Value getWordMemoryValue(long address) {
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
-			return new LongValue(env.getSystem().getKernel()
-					.readWord((int) address));
+			return new LongValue(env.getSystem().getKernel().readWord((int) address));
 		}
 
-		if (env.getSystem().getFileHandle()
-				.isInsideFIle(new AbsoluteAddress(address))) {
-			return new LongValue(env.getSystem().getFileHandle()
-					.readWord((int) address));
+		if (env.getSystem().getFileHandle().isInsideFIle(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getFileHandle().readWord((int) address));
 		}
 
 		long ret1 = UNKNOWN, ret2 = UNKNOWN;
@@ -697,8 +666,7 @@ public class Memory {
 					ret1 = ((LongValue) v1).getValue();
 					p = true;
 				} else
-					return new SymbolValue(Convert.generateString(
-							new X86MemoryOperand(DataType.INT16, address))
+					return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address))
 							.toString());
 				// break;
 			} else if (evaluateAddress(m) == address + 1) {
@@ -707,8 +675,7 @@ public class Memory {
 					ret2 = ((LongValue) v2).getValue();
 					p = true;
 				} else
-					return new SymbolValue(Convert.generateString(
-							new X86MemoryOperand(DataType.INT16, address))
+					return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address))
 							.toString());
 				// break;
 			}
@@ -718,8 +685,7 @@ public class Memory {
 			if (ret1 == UNKNOWN)
 				ret1 = program.getByteValueMemory(new AbsoluteAddress(address));
 			else if (ret2 == UNKNOWN)
-				ret2 = program.getByteValueMemory(new AbsoluteAddress(
-						address + 1));
+				ret2 = program.getByteValueMemory(new AbsoluteAddress(address + 1));
 		}
 
 		if (ret1 != UNKNOWN && ret2 != UNKNOWN)
@@ -728,54 +694,45 @@ public class Memory {
 		if (ret1 != UNKNOWN) {
 			try {
 				return new LongValue(calculateWordValue(ret1,
-						program.getWordValueMemory(new AbsoluteAddress(
-								address + 1))));
+						program.getWordValueMemory(new AbsoluteAddress(address + 1))));
 			} catch (Exception e) {
-				return new SymbolValue(Convert.generateString(
-						new X86MemoryOperand(DataType.INT16, address))
-						.toString());
+				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)).toString());
 			}
 		} else if (ret2 != UNKNOWN) {
 			try {
-				return new LongValue(
-						calculateWordValue(
-								program.getWordValueMemory(new AbsoluteAddress(
-										address)), ret2));
+				return new LongValue(calculateWordValue(program.getWordValueMemory(new AbsoluteAddress(address)), ret2));
 			} catch (Exception e) {
-				return new SymbolValue(
-						Convert.generateString(new X86MemoryOperand(
-								DataType.INT16, address)));
+				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
 			}
 		}
 
 		try {
 			if (program.isInside(new AbsoluteAddress(address)))
-				return new LongValue(
-						program.getWordValueMemory(new AbsoluteAddress(address)));
+				return new LongValue(program.getWordValueMemory(new AbsoluteAddress(address)));
 			else {
-				//YenNguyen: Access jna's memory here
+				// YenNguyen: Access jna's memory here
 				if (address != 0) {
 					ExternalMemoryReturnData ret = ExternalMemory.getWord(address);
 					if (ret != null && ret.isValidAddress) {
 						return ret.value;
 					}
 				}
-				//return new SymbolValue(Convert.generateString(
-				//	new X86MemoryOperand(DataType.INT8, address))
-				//		.toString());
+				// return new SymbolValue(Convert.generateString(
+				// new X86MemoryOperand(DataType.INT8, address))
+				// .toString());
 				return new LongValue(0);
-			}			
+			}
 		} catch (Exception e) {
-			return new SymbolValue(Convert.generateString(new X86MemoryOperand(
-					DataType.INT16, address)));
+			return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
 		}
 	}
 
 	public Value getWordMemoryValue(X86MemoryOperand dest) {
 		long d = evaluateAddress(dest);
 
-		// PHONG: 20150605 -----------------------------------------------------------------------
-		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"){
+		// PHONG: 20150605
+		// -----------------------------------------------------------------------
+		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
 		// ---------------------------------------------------------------------------------------
@@ -793,10 +750,11 @@ public class Memory {
 	}
 
 	public void mulMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().mul(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().mul(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -809,8 +767,7 @@ public class Memory {
 	private Value normalizeValue(Value v, Instruction inst) {
 		if (v instanceof LongValue) {
 			long t = ((LongValue) v).getValue();
-			return new LongValue(Convert.convetUnsignedValue(t,
-					Convert.getBitCount(inst)));
+			return new LongValue(Convert.convetUnsignedValue(t, Convert.getBitCount(inst)));
 		}
 
 		return v;
@@ -823,10 +780,11 @@ public class Memory {
 	}
 
 	public void orMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().or(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().or(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -847,10 +805,8 @@ public class Memory {
 			long m = entry.getKey();
 			// long addr = evaluateAddress(m);
 			long fp1 = module.getFilePointer(new AbsoluteAddress(m));
-			module.getDisassembler().setMemoryByteValue((int) fp1,
-					((LongValue) entry.getValue()).getValue());
-			if (m - address.getValue() < instr.getSize()
-					&& m - address.getValue() >= 0) {
+			module.getDisassembler().setMemoryByteValue((int) fp1, ((LongValue) entry.getValue()).getValue());
+			if (m - address.getValue() < instr.getSize() && m - address.getValue() >= 0) {
 				Program.getProgram().setTechnique("SMC");
 				Program.getProgram().setDetailTechnique("SMC:" + address + " ");
 			}
@@ -865,10 +821,11 @@ public class Memory {
 	}
 
 	public void rlMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().rl(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().rl(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -885,10 +842,11 @@ public class Memory {
 	}
 
 	public void rrMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().rr(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().rr(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -968,20 +926,16 @@ public class Memory {
 			}
 
 			if (!s1)
-				memory.put(new X86MemoryOperand(DataType.INT32, address),
-						new LongValue(x1));
+				memory.put(new X86MemoryOperand(DataType.INT32, address), new LongValue(x1));
 
 			if (!s2)
-				memory.put(new X86MemoryOperand(DataType.INT32, address + 1),
-						new LongValue(x2));
+				memory.put(new X86MemoryOperand(DataType.INT32, address + 1), new LongValue(x2));
 
 			if (!s3)
-				memory.put(new X86MemoryOperand(DataType.INT32, address + 2),
-						new LongValue(x3));
+				memory.put(new X86MemoryOperand(DataType.INT32, address + 2), new LongValue(x3));
 
 			if (!s4)
-				memory.put(new X86MemoryOperand(DataType.INT32, address + 3),
-						new LongValue(x4));
+				memory.put(new X86MemoryOperand(DataType.INT32, address + 3), new LongValue(x4));
 		} else {
 			for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
 				X86MemoryOperand m = (X86MemoryOperand) entry.getKey();
@@ -1065,9 +1019,7 @@ public class Memory {
 			if (x == 47)
 				x = 92;
 
-			this.setByteMemoryValue(
-					new X86MemoryOperand(m.getDataType(), disp), new LongValue(
-							x));
+			this.setByteMemoryValue(new X86MemoryOperand(m.getDataType(), disp), new LongValue(x));
 			disp++;
 		}
 	}
@@ -1082,9 +1034,7 @@ public class Memory {
 			if (x == 47)
 				x = 92;
 
-			this.setByteMemoryValue(
-					new X86MemoryOperand(m.getDataType(), disp), new LongValue(
-							x));
+			this.setByteMemoryValue(new X86MemoryOperand(m.getDataType(), disp), new LongValue(x));
 			disp++;
 		}
 		return t.length;
@@ -1121,12 +1071,10 @@ public class Memory {
 			}
 
 			if (!s1)
-				memory.put(new X86MemoryOperand(DataType.INT32, address),
-						new LongValue(x1));
+				memory.put(new X86MemoryOperand(DataType.INT32, address), new LongValue(x1));
 
 			if (!s2)
-				memory.put(new X86MemoryOperand(DataType.INT32, address + 1),
-						new LongValue(x2));
+				memory.put(new X86MemoryOperand(DataType.INT32, address + 1), new LongValue(x2));
 		} else {
 			for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
 				X86MemoryOperand m = (X86MemoryOperand) entry.getKey();
@@ -1160,10 +1108,11 @@ public class Memory {
 
 	public void subMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
 		// Process with Stack
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().sub(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().sub(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -1188,10 +1137,11 @@ public class Memory {
 	}
 
 	public void xorMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().xor(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().xor(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -1223,12 +1173,12 @@ public class Memory {
 		setMemoryValue(address, o, inst);
 	}
 
-	public void divSignMemoryValue(X86MemoryOperand dest, Value v,
-			Instruction inst) {
-		/*if (dest.getBase() != null && dest.getBase().toString().contains("esp")) {
-			env.getStack().div(dest.getDisplacement(), v, inst);
-			return;
-		}*/
+	public void divSignMemoryValue(X86MemoryOperand dest, Value v, Instruction inst) {
+		/*
+		 * if (dest.getBase() != null &&
+		 * dest.getBase().toString().contains("esp")) {
+		 * env.getStack().div(dest.getDisplacement(), v, inst); return; }
+		 */
 
 		long d = evaluateAddress(dest);
 
@@ -1271,12 +1221,11 @@ public class Memory {
 		ExecutableImage m = program.getMainModule();
 
 		if (m != null && m instanceof PEModule) {
-			Map<AbsoluteAddress, Pair<String, String>> importTable = ((PEModule)m).getImportTable();
+			Map<AbsoluteAddress, Pair<String, String>> importTable = ((PEModule) m).getImportTable();
 
 			for (Map.Entry<AbsoluteAddress, Pair<String, String>> entry : importTable.entrySet()) {
-				//ret += entry.getKey() + "\t" + entry.getValue() + "\n";
-				long temp = env.getSystem().getProcAddress(entry.getValue().getLeft(),
-						entry.getValue().getRight());
+				// ret += entry.getKey() + "\t" + entry.getValue() + "\n";
+				long temp = env.getSystem().getProcAddress(entry.getValue().getLeft(), entry.getValue().getRight());
 				setDoubleWordMemoryValue(entry.getKey().getValue(), new LongValue(temp));
 			}
 		}

@@ -38,15 +38,14 @@ public class CreateThread extends Kernel32API {
 		Memory memory = env.getMemory();
 		Register register = env.getRegister();
 		Program program = Program.getProgram();
-		
+
 		/*
-		 * LPSECURITY_ATTRIBUTES lpThreadAttributes, // pointer to
-		 * thread security attributes DWORD dwStackSize, // initial
-		 * thread stack size, in bytes LPTHREAD_START_ROUTINE
-		 * lpStartAddress, // pointer to thread function LPVOID
-		 * lpParameter, // argument for new thread DWORD
-		 * dwCreationFlags, // creation flags LPDWORD lpThreadId //
-		 * pointer to returned thread identifier
+		 * LPSECURITY_ATTRIBUTES lpThreadAttributes, // pointer to thread
+		 * security attributes DWORD dwStackSize, // initial thread stack size,
+		 * in bytes LPTHREAD_START_ROUTINE lpStartAddress, // pointer to thread
+		 * function LPVOID lpParameter, // argument for new thread DWORD
+		 * dwCreationFlags, // creation flags LPDWORD lpThreadId // pointer to
+		 * returned thread identifier
 		 */
 		Value x1 = stack.pop();
 		Value x2 = stack.pop();
@@ -54,10 +53,9 @@ public class CreateThread extends Kernel32API {
 		Value x4 = stack.pop();
 		Value x5 = stack.pop();
 		Value x6 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-				+ x4 + " " + x5 + " " + x6);
-		
-		//Kernel32.INSTANCE.creat
+		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
+
+		// Kernel32.INSTANCE.creat
 		return false;
 	}
 

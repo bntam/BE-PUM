@@ -34,11 +34,9 @@ import org.jakstab.util.BinaryInputBuffer;
  * @author Michael Stepp
  */
 public class ImageDataDirectory {
-	public static final String[] STRINGS = { "Export Table", "Import Table",
-			"Resource Table", "Exception Table", "Certificate Table",
-			"Base Relocation Table", "Debug", "Architecture", "Global Pointer",
-			"TLS Table", "Load Config Table", "Bound Import Table",
-			"Import Address Table", "Delay Import Descriptor Table",
+	public static final String[] STRINGS = { "Export Table", "Import Table", "Resource Table", "Exception Table",
+			"Certificate Table", "Base Relocation Table", "Debug", "Architecture", "Global Pointer", "TLS Table",
+			"Load Config Table", "Bound Import Table", "Import Address Table", "Delay Import Descriptor Table",
 			"CLI Header", "None" };
 
 	public static final int EXPORT_TABLE_INDEX = 0;

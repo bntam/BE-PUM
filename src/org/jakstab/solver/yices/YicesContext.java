@@ -47,8 +47,7 @@ public class YicesContext {
 		String line;
 		while ((line = YicesWrapper.getNextOutputLine()) != null) {
 			logger.error("Extra yices output: " + line);
-			throw new RuntimeException(
-					"Extra yices output, check for parse errors!");
+			throw new RuntimeException("Extra yices output, check for parse errors!");
 		}
 
 		if (isInconsistent())
@@ -92,15 +91,13 @@ public class YicesContext {
 			return true;
 		} else {
 			logger.error("Unknown result: " + result);
-			throw new RuntimeException(
-					"Yices returned unknown result, check for parse errors!");
+			throw new RuntimeException("Yices returned unknown result, check for parse errors!");
 			// return false;
 		}
 	}
 
 	public void declareVariable(RTLVariable var) {
-		declareVariable(var.getName(),
-				YicesWrapper.makeBVType(var.getBitWidth()));
+		declareVariable(var.getName(), YicesWrapper.makeBVType(var.getBitWidth()));
 	}
 
 	public void declareVariable(String name, String type) {
@@ -132,8 +129,7 @@ public class YicesContext {
 		// ids are only output at verbosity > 2
 		if (YicesWrapper.getVerbosity() >= 2) {
 			try {
-				id = Integer.parseInt(YicesWrapper.getNextOutputLine()
-						.substring(4));
+				id = Integer.parseInt(YicesWrapper.getNextOutputLine().substring(4));
 			} catch (NumberFormatException e) {
 				logger.warn("Could not parse assertion ID!");
 				throw new RuntimeException("Error parsing Yices output!");
@@ -149,8 +145,7 @@ public class YicesContext {
 	public void readCommand(String cmd) {
 		// logger.debug(cmd);
 		if (YicesWrapper.read(yicesContext, cmd) == 0) {
-			throw new RuntimeException("Yices error: "
-					+ YicesWrapper.getLastErrorMessage());
+			throw new RuntimeException("Yices error: " + YicesWrapper.getLastErrorMessage());
 		}
 	}
 

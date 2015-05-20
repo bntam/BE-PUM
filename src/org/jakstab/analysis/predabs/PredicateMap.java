@@ -44,20 +44,15 @@ public class PredicateMap {
 	 */
 
 	static {
-		addPredicate(ExpressionFactory.createGreaterOrEqual(
-				ExpressionFactory.createVariable("eax", 32),
+		addPredicate(ExpressionFactory.createGreaterOrEqual(ExpressionFactory.createVariable("eax", 32),
 				ExpressionFactory.createNumber(0, 32)));
-		addPredicate(ExpressionFactory.createLessThan(
-				ExpressionFactory.createVariable("ecx", 32),
+		addPredicate(ExpressionFactory.createLessThan(ExpressionFactory.createVariable("ecx", 32),
 				ExpressionFactory.createNumber(0, 32)));
-		addPredicate(ExpressionFactory.createEqual(
-				ExpressionFactory.createVariable("eax", 32),
+		addPredicate(ExpressionFactory.createEqual(ExpressionFactory.createVariable("eax", 32),
 				ExpressionFactory.createNumber(0, 32)));
-		addPredicate(ExpressionFactory.createEqual(
-				ExpressionFactory.createVariable("ebx", 32),
+		addPredicate(ExpressionFactory.createEqual(ExpressionFactory.createVariable("ebx", 32),
 				ExpressionFactory.createNumber(0, 32)));
-		addPredicate(ExpressionFactory.createEqual(
-				ExpressionFactory.createVariable("eax", 32),
+		addPredicate(ExpressionFactory.createEqual(ExpressionFactory.createVariable("eax", 32),
 				ExpressionFactory.createVariable("ebx", 32)));
 		// addPredicate(ExpressionFactory.createEqual(
 		// ExpressionFactory.createMemoryLocation(Program.getProgram().getArchitecture().stackPointer(),

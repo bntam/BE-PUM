@@ -20,11 +20,11 @@ import v2.org.analysis.value.Value;
 
 public class DefaultStub extends APIStub {
 	private String libraryName = "";
-	//private List<String> processedAPI = new ArrayList<String>();
+
+	// private List<String> processedAPI = new ArrayList<String>();
 
 	@Override
-	public boolean executeAPI(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst, int cond) {
+	public boolean executeAPI(AbsoluteAddress address, String funcName, BPState curState, Instruction inst, int cond) {
 		// TODO Auto-generated method stub
 		// long returnValue;
 		boolean ret = true;
@@ -37,17 +37,16 @@ public class DefaultStub extends APIStub {
 		BPCFG cfg = program.getBPCFG();
 
 		System.out.println("Default stub for handling " + funcName);
-		//if (funcName.equals("_except_handler3"))
-		//	System.out.println("Debug");
+		// if (funcName.equals("_except_handler3"))
+		// System.out.println("Debug");
 		if (inst.getName().toString().equals("jmp")) {
 			System.out.println("JMP of API:" + funcName);
-			BPVertex v1 = cfg.getVertex(curState.getLocation(),
-					curState.getInstruction());
+			BPVertex v1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 			v1.setProperty(getFullName(funcName));
 			BPVertex v2 = new BPVertex();
 			// v2.setAddress(address);
 			//
-			v2.setProperty(getFullName(funcName));			
+			v2.setProperty(getFullName(funcName));
 
 			if (funcName.equals("ExitProcess") || funcName.equals("exit")) {
 				v2.setType(BPVertex.ExitNode);
@@ -58,7 +57,7 @@ public class DefaultStub extends APIStub {
 				curState.setInstruction(null);
 				return true;
 			}
-			
+
 			v2.setType(BPVertex.APINode);
 			v2 = cfg.insertVertex(v2);
 			cfg.insertEdge(new BPEdge(v1, v2));
@@ -67,8 +66,7 @@ public class DefaultStub extends APIStub {
 			if (returnAddr instanceof LongValue) {
 				r = ((LongValue) returnAddr).getValue();
 			} else
-				r = curState.getLocation().getValue()
-						+ curState.getInstruction().getSize();
+				r = curState.getLocation().getValue() + curState.getInstruction().getSize();
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			Instruction newInst = program.getInstruction(addr, env);
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
@@ -79,13 +77,12 @@ public class DefaultStub extends APIStub {
 		} else if (inst.getName().toString().equals("call")) {
 			System.out.println("Call of API:" + funcName);
 
-			BPVertex v1 = cfg.getVertex(curState.getLocation(),
-					curState.getInstruction());
+			BPVertex v1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 			v1.setProperty(getFullName(funcName));
 			BPVertex v2 = new BPVertex();
-			// v2.setAddress(address);			
+			// v2.setAddress(address);
 			v2.setProperty(getFullName(funcName));
-			
+
 			if (funcName.equals("ExitProcess") || funcName.equals("exit")) {
 				v2.setType(BPVertex.ExitNode);
 				v2 = cfg.insertVertex(v2);
@@ -95,12 +92,11 @@ public class DefaultStub extends APIStub {
 				curState.setInstruction(null);
 				return true;
 			}
-			
+
 			v2.setType(BPVertex.APINode);
 			v2 = cfg.insertVertex(v2);
 			cfg.insertEdge(new BPEdge(v1, v2));
-			long r = curState.getLocation().getValue()
-					+ curState.getInstruction().getSize();
+			long r = curState.getLocation().getValue() + curState.getInstruction().getSize();
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			Instruction newInst = program.getInstruction(addr, env);
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
@@ -117,10 +113,9 @@ public class DefaultStub extends APIStub {
 			Value x4 = stack.pop();
 			Value x5 = stack.pop();
 			Value x6 = stack.pop();
-			System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3
-					+ ", " + x4 + ", " + x5 + ", " + x6);
+			System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3 + ", " + x4 + ", " + x5 + ", " + x6);
 			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
-		} else	if (funcName.startsWith("InternetGetConnectedState")) {
+		} else if (funcName.startsWith("InternetGetConnectedState")) {
 			Value x1 = stack.pop();
 			Value x2 = stack.pop();
 			System.out.println("Argument: " + x1 + ", " + x2);
@@ -130,18 +125,15 @@ public class DefaultStub extends APIStub {
 			Value x2 = stack.pop();
 			System.out.println("Argument: " + x1 + ", " + x2);
 			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
-		} else
-		if (funcName.startsWith("setusermatherr")) {
+		} else if (funcName.startsWith("setusermatherr")) {
 			Value x1 = stack.pop();
 			System.out.println("Argument: " + x1);
 			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
-		} else
-		if (funcName.startsWith("puts")) {
+		} else if (funcName.startsWith("puts")) {
 			Value x1 = stack.pop();
 			System.out.println("Argument: " + x1);
 			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
-		} else
-		if (funcName.startsWith("_write")) {
+		} else if (funcName.startsWith("_write")) {
 			Value x1 = stack.pop();
 			Value x2 = stack.pop();
 			Value x3 = stack.pop();
@@ -165,8 +157,7 @@ public class DefaultStub extends APIStub {
 			Value x5 = stack.pop();
 			System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3 + ", " + x4 + ", " + x5);
 			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
-		} else			
-		if (funcName.startsWith("_controlfp")) {
+		} else if (funcName.startsWith("_controlfp")) {
 			Value x1 = stack.pop();
 			Value x2 = stack.pop();
 			stack.push(x2);
@@ -193,26 +184,23 @@ public class DefaultStub extends APIStub {
 			if (x1 instanceof LongValue && x2 instanceof LongValue) {
 				/*
 				 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-				 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+				 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(),
+				 * program);
 				 */
-				String commandLine = memory.getText(new X86MemoryOperand(
-						DataType.INT32, ((LongValue) x1).getValue()));
-				System.out.println("Command Line:" + commandLine
-						+ ", Window Style:" + ((LongValue) x2).getValue());
-				register.mov(
-						"eax",
-						new LongValue(system.getWindowHandle().createWindow(
-								commandLine, ((LongValue) x2).getValue())));
+				String commandLine = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
+				System.out.println("Command Line:" + commandLine + ", Window Style:" + ((LongValue) x2).getValue());
+				register.mov("eax",
+						new LongValue(system.getWindowHandle().createWindow(commandLine, ((LongValue) x2).getValue())));
 
 			}
-		} else {		
-			//Default Stub
-			/*if (!this.processedAPI.contains(funcName)) {
-				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
-				processedAPI.add(funcName);
-			} else {
-				env.getRegister().setRegisterValue("eax", new LongValue(1));
-			}*/
+		} else {
+			// Default Stub
+			/*
+			 * if (!this.processedAPI.contains(funcName)) {
+			 * env.getRegister().setRegisterValue("eax", new
+			 * SymbolValue("api_eax")); processedAPI.add(funcName); } else {
+			 * env.getRegister().setRegisterValue("eax", new LongValue(1)); }
+			 */
 			System.out.println("No Handling of this API");
 			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
 		}

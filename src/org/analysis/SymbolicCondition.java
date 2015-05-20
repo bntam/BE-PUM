@@ -34,8 +34,7 @@ public class SymbolicCondition {
 		 * clone a new element with the same structure
 		 */
 		public CondElement clone() {
-			CondElement res = new CondElement(lhs.clone(), rhs.clone(),
-					connector);
+			CondElement res = new CondElement(lhs.clone(), rhs.clone(), connector);
 			return res;
 		}
 
@@ -136,8 +135,7 @@ public class SymbolicCondition {
 	public SymbolicCondition clone() {
 		SymbolicCondition res = new SymbolicCondition();
 		for (int i = 0; i < conditionSet.size(); i++) {
-			res.addCondition(conditionSet.get(i).lhs, conditionSet.get(i).rhs,
-					conditionSet.get(i).connector);
+			res.addCondition(conditionSet.get(i).lhs, conditionSet.get(i).rhs, conditionSet.get(i).connector);
 		}
 		return res;
 	}

@@ -29,19 +29,17 @@ import org.jakstab.util.Logger;
 public abstract class AbstractRTLExpression implements RTLExpression {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(AbstractRTLExpression.class);
+	private static final Logger logger = Logger.getLogger(AbstractRTLExpression.class);
 
 	protected SetOfVariables usedVariables = null;
 
 	@Override
-	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth)
-			throws TypeInferenceException {
+	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth) throws TypeInferenceException {
 
 		if (getBitWidth() != expectedBitWidth) {
 			assert getBitWidth() > 0 : "Bitwidth <= 0!";
-			throw new TypeInferenceException("Expected " + this + " to be "
-					+ expectedBitWidth + " bit, got " + getBitWidth());
+			throw new TypeInferenceException("Expected " + this + " to be " + expectedBitWidth + " bit, got "
+					+ getBitWidth());
 		} else {
 			return this;
 		}

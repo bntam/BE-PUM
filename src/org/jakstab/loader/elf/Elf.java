@@ -147,9 +147,7 @@ public class Elf {
 		protected ELFhdr() throws IOException {
 			efile.seek(0);
 			efile.readFully(e_ident);
-			if (e_ident[ELFhdr.EI_MAG0] != 0x7f
-					|| e_ident[ELFhdr.EI_MAG1] != 'E'
-					|| e_ident[ELFhdr.EI_MAG2] != 'L'
+			if (e_ident[ELFhdr.EI_MAG0] != 0x7f || e_ident[ELFhdr.EI_MAG1] != 'E' || e_ident[ELFhdr.EI_MAG2] != 'L'
 					|| e_ident[ELFhdr.EI_MAG3] != 'F')
 				throw new IOException("No ELF File"); //$NON-NLS-1$
 			efile.setEndian(e_ident[ELFhdr.EI_DATA] == ELFhdr.ELFDATA2LSB);
@@ -175,8 +173,7 @@ public class Elf {
 				break;
 			case ELFhdr.ELFCLASSNONE:
 			default:
-				throw new IOException(
-						"Unknown ELF class " + e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
+				throw new IOException("Unknown ELF class " + e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
 			}
 			e_flags = efile.readIntE();
 			e_ehsize = efile.readShortE();
@@ -193,9 +190,7 @@ public class Elf {
 				throw new BinaryParseException("No ELF File"); //$NON-NLS-1$
 			}
 			System.arraycopy(bytes, 0, e_ident, 0, e_ident.length);
-			if (e_ident[ELFhdr.EI_MAG0] != 0x7f
-					|| e_ident[ELFhdr.EI_MAG1] != 'E'
-					|| e_ident[ELFhdr.EI_MAG2] != 'L'
+			if (e_ident[ELFhdr.EI_MAG0] != 0x7f || e_ident[ELFhdr.EI_MAG1] != 'E' || e_ident[ELFhdr.EI_MAG2] != 'L'
 					|| e_ident[ELFhdr.EI_MAG3] != 'F')
 				throw new BinaryParseException("No ELF File"); //$NON-NLS-1$
 			boolean isle = (e_ident[ELFhdr.EI_DATA] == ELFhdr.ELFDATA2LSB);
@@ -231,8 +226,7 @@ public class Elf {
 				break;
 			case ELFhdr.ELFCLASSNONE:
 			default:
-				throw new BinaryParseException(
-						"Unknown ELF class " + e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
+				throw new BinaryParseException("Unknown ELF class " + e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
 			}
 			e_flags = makeInt(bytes, offset, isle);
 			offset += 4;
@@ -250,28 +244,22 @@ public class Elf {
 			offset += 2;
 		}
 
-		private final short makeShort(byte[] val, int offset, boolean isle)
-				throws BinaryParseException {
+		private final short makeShort(byte[] val, int offset, boolean isle) throws BinaryParseException {
 			if (val.length < offset + 2)
-				throw new BinaryParseException(
-						"Offset out of range when reading Short.");
+				throw new BinaryParseException("Offset out of range when reading Short.");
 			if (isle) {
 				return (short) ((val[offset + 1] << 8) + val[offset + 0]);
 			}
 			return (short) ((val[offset + 0] << 8) + val[offset + 1]);
 		}
 
-		private final long makeInt(byte[] val, int offset, boolean isle)
-				throws BinaryParseException {
+		private final long makeInt(byte[] val, int offset, boolean isle) throws BinaryParseException {
 			if (val.length < offset + 4)
-				throw new BinaryParseException(
-						"Offset out of range when reading Int.");
+				throw new BinaryParseException("Offset out of range when reading Int.");
 			if (isle) {
-				return ((val[offset + 3] << 24) + (val[offset + 2] << 16)
-						+ (val[offset + 1] << 8) + val[offset + 0]);
+				return ((val[offset + 3] << 24) + (val[offset + 2] << 16) + (val[offset + 1] << 8) + val[offset + 0]);
 			}
-			return ((val[offset + 0] << 24) + (val[offset + 1] << 16)
-					+ (val[offset + 2] << 8) + val[offset + 3]);
+			return ((val[offset + 0] << 24) + (val[offset + 1] << 16) + (val[offset + 2] << 8) + val[offset + 3]);
 		}
 
 		private final long makeLong(byte[] val, int offset, boolean isle) {
@@ -280,25 +268,21 @@ public class Elf {
 			if (isle)
 				for (int i = 7; i >= 0; i--) {
 					shift = i * 8;
-					result += (((long) val[offset + i]) << shift)
-							& (0xffL << shift);
+					result += (((long) val[offset + i]) << shift) & (0xffL << shift);
 				}
 			else
 				for (int i = 0; i <= 7; i++) {
 					shift = (7 - i) * 8;
-					result += (((long) val[offset + i]) << shift)
-							& (0xffL << shift);
+					result += (((long) val[offset + i]) << shift) & (0xffL << shift);
 				}
 			return result;
 		}
 
-		private final long makeUnsignedLong(byte[] val, int offset, boolean isle)
-				throws BinaryParseException {
+		private final long makeUnsignedLong(byte[] val, int offset, boolean isle) throws BinaryParseException {
 			long result = makeLong(val, offset, isle);
 			if (result < 0) {
-				throw new BinaryParseException(
-						"Maximal file offset is " + Long.toHexString(Long.MAX_VALUE) + //$NON-NLS-1$
-								" given offset is " + Long.toHexString(result)); //$NON-NLS-1$
+				throw new BinaryParseException("Maximal file offset is " + Long.toHexString(Long.MAX_VALUE) + //$NON-NLS-1$
+						" given offset is " + Long.toHexString(result)); //$NON-NLS-1$
 			}
 			return result;
 
@@ -375,8 +359,7 @@ public class Elf {
 		}
 	}
 
-	protected String string_from_elf_section(Elf.Section section, int index)
-			throws BinaryParseException {
+	protected String string_from_elf_section(Elf.Section section, int index) throws BinaryParseException {
 		if (index > section.sh_size) {
 			return EMPTY_STRING;
 		}
@@ -581,8 +564,7 @@ public class Elf {
 				break;
 			case ELFhdr.ELFCLASSNONE:
 			default:
-				throw new IOException(
-						"Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
+				throw new IOException("Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
 			}
 
 		}
@@ -641,8 +623,7 @@ public class Elf {
 		}
 	}
 
-	public Dynamic[] getDynamicSections(Section section)
-			throws BinaryParseException {
+	public Dynamic[] getDynamicSections(Section section) throws BinaryParseException {
 		if (section.sh_type != Section.SHT_DYNAMIC) {
 			return new Dynamic[0];
 		}
@@ -672,8 +653,7 @@ public class Elf {
 					break;
 				case ELFhdr.ELFCLASSNONE:
 				default:
-					throw new BinaryParseException(
-							"Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
+					throw new BinaryParseException("Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
 				}
 
 				if (dynEnt.d_tag != Dynamic.DT_NULL)
@@ -686,8 +666,7 @@ public class Elf {
 		return dynList.toArray(new Dynamic[0]);
 	}
 
-	private void commonSetup(String file, long offset)
-			throws BinaryParseException {
+	private void commonSetup(String file, long offset) throws BinaryParseException {
 		try {
 			efile = new ERandomAccessFile(file, "r"); //$NON-NLS-1$
 			efile.setFileOffset(offset);
@@ -940,16 +919,14 @@ public class Elf {
 		return attrib;
 	}
 
-	public static Attribute getAttributes(String file)
-			throws BinaryParseException {
+	public static Attribute getAttributes(String file) throws BinaryParseException {
 		Elf elf = new Elf(file);
 		Attribute attrib = elf.getAttributes();
 		elf.dispose();
 		return attrib;
 	}
 
-	public static Attribute getAttributes(byte[] array)
-			throws BinaryParseException {
+	public static Attribute getAttributes(byte[] array) throws BinaryParseException {
 
 		Elf emptyElf = new Elf();
 		emptyElf.ehdr = emptyElf.new ELFhdr(array);
@@ -961,10 +938,8 @@ public class Elf {
 	}
 
 	public static boolean isElfHeader(byte[] e_ident) {
-		if (e_ident.length < 4 || e_ident[ELFhdr.EI_MAG0] != 0x7f
-				|| e_ident[ELFhdr.EI_MAG1] != 'E'
-				|| e_ident[ELFhdr.EI_MAG2] != 'L'
-				|| e_ident[ELFhdr.EI_MAG3] != 'F')
+		if (e_ident.length < 4 || e_ident[ELFhdr.EI_MAG0] != 0x7f || e_ident[ELFhdr.EI_MAG1] != 'E'
+				|| e_ident[ELFhdr.EI_MAG2] != 'L' || e_ident[ELFhdr.EI_MAG3] != 'F')
 			return false;
 		return true;
 	}
@@ -1050,8 +1025,7 @@ public class Elf {
 						break;
 					case ELFhdr.ELFCLASSNONE:
 					default:
-						throw new IOException(
-								"Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
+						throw new IOException("Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
 					}
 
 					sections[i].sh_link = efile.readIntE();
@@ -1069,8 +1043,7 @@ public class Elf {
 						break;
 					case ELFhdr.ELFCLASSNONE:
 					default:
-						throw new BinaryParseException(
-								"Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
+						throw new BinaryParseException("Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
 					}
 					if (sections[i].sh_type == Section.SHT_SYMTAB)
 						syms = i;
@@ -1084,8 +1057,7 @@ public class Elf {
 		return sections;
 	}
 
-	private Symbol[] loadSymbolsBySection(Section section)
-			throws BinaryParseException {
+	private Symbol[] loadSymbolsBySection(Section section) throws BinaryParseException {
 		int numSyms = 1;
 		if (section.sh_entsize != 0) {
 			numSyms = (int) section.sh_size / (int) section.sh_entsize;
@@ -1123,8 +1095,7 @@ public class Elf {
 					break;
 				case ELFhdr.ELFCLASSNONE:
 				default:
-					throw new BinaryParseException(
-							"Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
+					throw new BinaryParseException("Unknown ELF class " + ehdr.e_ident[ELFhdr.EI_CLASS]); //$NON-NLS-1$
 				}
 				// JK: We add also the non-symbol at index 0 to maintain the
 				// correct ordering
@@ -1223,9 +1194,8 @@ public class Elf {
 	protected long readUnsignedLong(ERandomAccessFile file) throws IOException {
 		long result = file.readLongE();
 		if (result < 0) {
-			throw new IOException(
-					"Maximal file offset is " + Long.toHexString(Long.MAX_VALUE) + //$NON-NLS-1$
-							" given offset is " + Long.toHexString(result)); //$NON-NLS-1$
+			throw new IOException("Maximal file offset is " + Long.toHexString(Long.MAX_VALUE) + //$NON-NLS-1$
+					" given offset is " + Long.toHexString(result)); //$NON-NLS-1$
 		}
 		return result;
 	}

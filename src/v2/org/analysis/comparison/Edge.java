@@ -1,19 +1,18 @@
 package v2.org.analysis.comparison;
 
-public class Edge{
+public class Edge {
 	private Vertex source, dest;
-	
+
 	public boolean equals(Edge t) {
-		return source.equals(t.getSource()) 
-				&& dest.equals(t.getDest());
+		return source.equals(t.getSource()) && dest.equals(t.getDest());
 	}
-	
+
 	public Edge() {
 		source = new Vertex();
 		dest = new Vertex();
 	}
-	
-	public Edge (Vertex s, Vertex d) {
+
+	public Edge(Vertex s, Vertex d) {
 		this.source = s;
 		this.dest = d;
 	}
@@ -26,7 +25,8 @@ public class Edge{
 	}
 
 	/**
-	 * @param source the source to set
+	 * @param source
+	 *            the source to set
 	 */
 	public void setSource(Vertex source) {
 		this.source = source;
@@ -40,13 +40,15 @@ public class Edge{
 	}
 
 	/**
-	 * @param dest the dest to set
+	 * @param dest
+	 *            the dest to set
 	 */
 	public void setDest(Vertex dest) {
 		this.dest = dest;
-	} 
-	
+	}
+
 	public String toString() {
-		return source.getAddress() + ": " + source.getInstructionString() + " --> " + dest.getAddress() + ": " + dest.getInstructionString();
+		return source.getAddress() + ": " + source.getInstructionString() + " --> " + dest.getAddress() + ": "
+				+ dest.getInstructionString();
 	}
 }

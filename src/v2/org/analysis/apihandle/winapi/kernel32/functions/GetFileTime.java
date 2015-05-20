@@ -66,7 +66,7 @@ import v2.org.analysis.value.Value;
 public class GetFileTime extends Kernel32API {
 
 	public GetFileTime() {
-		
+
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class GetFileTime extends Kernel32API {
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
 			long t4 = ((LongValue) x4).getValue();
-			
+
 			HANDLE hFile = new HANDLE(new Pointer(t1));
 			FILETIME lpCreationTime = new FILETIME();
 			FILETIME lpLastAccessTime = new FILETIME();
@@ -95,13 +95,19 @@ public class GetFileTime extends Kernel32API {
 			boolean ret = Kernel32.INSTANCE.GetFileTime(hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime);
 
 			register.mov("eax", new LongValue(ret ? 1 : 0));
-			
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(lpCreationTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 4), new LongValue(lpCreationTime.dwHighDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(lpLastAccessTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 + 4), new LongValue(lpLastAccessTime.dwHighDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(lpLastWriteTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 + 4), new LongValue(lpLastWriteTime.dwHighDateTime));
+
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(
+					lpCreationTime.dwLowDateTime));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 4), new LongValue(
+					lpCreationTime.dwHighDateTime));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
+					lpLastAccessTime.dwLowDateTime));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 + 4), new LongValue(
+					lpLastAccessTime.dwHighDateTime));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
+					lpLastWriteTime.dwLowDateTime));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 + 4), new LongValue(
+					lpLastWriteTime.dwHighDateTime));
 		}
 		return false;
 	}

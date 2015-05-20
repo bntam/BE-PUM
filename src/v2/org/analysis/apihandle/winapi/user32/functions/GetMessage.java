@@ -88,19 +88,19 @@ public class GetMessage extends User32API {
 			BOOL ret = User32DLL.INSTANCE.GetMessage(lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax);
 
 			register.mov("eax", new LongValue(ret.longValue()));
-			
+
 			long value = Pointer.nativeValue(lpMsg.hWnd.getPointer());
 			memory.setDoubleWordMemoryValue(t1, new LongValue(value));
-			
+
 			value = lpMsg.message;
 			memory.setDoubleWordMemoryValue(t1 += 4, new LongValue(value));
-			
+
 			value = lpMsg.wParam.longValue();
 			memory.setDoubleWordMemoryValue(t1 += 4, new LongValue(value));
-			
+
 			value = lpMsg.lParam.longValue();
 			memory.setDoubleWordMemoryValue(t1 += 4, new LongValue(value));
-			
+
 			value = lpMsg.time;
 			memory.setDoubleWordMemoryValue(t1 += 4, new LongValue(value));
 

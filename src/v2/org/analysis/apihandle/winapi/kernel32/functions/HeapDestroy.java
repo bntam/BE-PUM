@@ -63,7 +63,7 @@ public class HeapDestroy extends Kernel32API {
 	 * 
 	 */
 	public HeapDestroy() {
-		
+
 	}
 
 	@Override

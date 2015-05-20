@@ -32,7 +32,7 @@ import v2.org.analysis.value.LongValue;
 public class GetTickCount extends Kernel32API {
 
 	public GetTickCount() {
-		
+
 	}
 
 	@Override

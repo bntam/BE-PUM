@@ -42,7 +42,7 @@ public class FindClose extends Kernel32API {
 	 * 
 	 */
 	public FindClose() {
-		
+
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class FindClose extends Kernel32API {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Register register = env.getRegister();
-		//Memory memory = env.getMemory();
+		// Memory memory = env.getMemory();
 
 		// HANDLE hFindFile file search handle
 		Value x1 = stack.pop();
@@ -62,7 +62,8 @@ public class FindClose extends Kernel32API {
 			HANDLE in_output = new HANDLE((t != 0L) ? new Pointer(t) : Pointer.NULL);
 			BOOL ret = Kernel32DLL.INSTANCE.FindClose(in_output);
 
-			//memory.setDoubleWordMemoryValue(t, new LongValue(Pointer.nativeValue(in_output.getPointer())));
+			// memory.setDoubleWordMemoryValue(t, new
+			// LongValue(Pointer.nativeValue(in_output.getPointer())));
 
 			register.mov("eax", new LongValue((ret.booleanValue()) ? 1 : 0));
 		}

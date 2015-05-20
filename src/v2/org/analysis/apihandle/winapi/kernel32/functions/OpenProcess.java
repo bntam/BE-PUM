@@ -50,11 +50,10 @@ public class OpenProcess extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
-		//Memory memory = env.getMemory();
+		// Memory memory = env.getMemory();
 		Register register = env.getRegister();
 
 		Value x1 = stack.pop();
@@ -62,8 +61,7 @@ public class OpenProcess extends Kernel32API {
 		Value x3 = stack.pop();
 		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue
-				&& x3 instanceof LongValue) {
+		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();

@@ -55,7 +55,7 @@ public class FindFirstFile extends Kernel32API {
 	 * 
 	 */
 	public FindFirstFile() {
-		
+
 	}
 
 	@Override

@@ -3,13 +3,11 @@ package v2.org.analysis.comparison;
 public class Vertex {
 	private String id = "";
 	private String addr = null;
-	private String inst = "";	
+	private String inst = "";
 	private boolean isAPI = false;
-	
+
 	public boolean equals(Vertex t) {
-		return id.equals(t.getID()) &&
-				addr.equals(t.getAddress()) 
-				&& inst.equals(t.getInstructionString());
+		return id.equals(t.getID()) && addr.equals(t.getAddress()) && inst.equals(t.getInstructionString());
 	}
 
 	public Vertex() {
@@ -19,7 +17,7 @@ public class Vertex {
 		this.setAddress(a);
 		this.setInstructionString(inst);
 	}
-	
+
 	public Vertex(String id, String a, String inst) {
 		this.setID(id);
 		this.setAddress(a);
@@ -69,7 +67,8 @@ public class Vertex {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setID(String id) {
 		this.id = id;
@@ -83,7 +82,8 @@ public class Vertex {
 	}
 
 	/**
-	 * @param isAPI the isAPI to set
+	 * @param isAPI
+	 *            the isAPI to set
 	 */
 	public void setAPI(boolean isAPI) {
 		this.isAPI = isAPI;

@@ -26,6 +26,7 @@ import v2.org.analysis.value.Value;
 public class MAPIStub extends APIStub {
 	private String libraryName = "mapistub.dll";
 	private List<String> processedAPI = new ArrayList<String>();
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -34,8 +35,7 @@ public class MAPIStub extends APIStub {
 	 * org.jakstab.asm.Instruction)
 	 */
 	@Override
-	public boolean executeAPI(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst, int cond) {
+	public boolean executeAPI(AbsoluteAddress address, String funcName, BPState curState, Instruction inst, int cond) {
 		// TODO Auto-generated method stub
 		// long returnValue;
 		boolean ret = true;
@@ -51,8 +51,7 @@ public class MAPIStub extends APIStub {
 		// System.out.println("Debug");
 		if (inst.getName().toString().equals("jmp")) {
 			System.out.println("JMP Symbolic Execution of API:" + funcName);
-			BPVertex v1 = cfg.getVertex(curState.getLocation(),
-					curState.getInstruction());
+			BPVertex v1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 			v1.setProperty(getFullName(funcName));
 			BPVertex v2 = new BPVertex();
 			// v2.setAddress(address);
@@ -66,9 +65,9 @@ public class MAPIStub extends APIStub {
 				curState.setLocation(null);
 				curState.setInstruction(null);
 				return true;
-			}			
+			}
 
-			v2.setType(BPVertex.APINode);			
+			v2.setType(BPVertex.APINode);
 			v2 = cfg.insertVertex(v2);
 			cfg.insertEdge(new BPEdge(v1, v2));
 			Value returnAddr = stack.pop();
@@ -76,8 +75,7 @@ public class MAPIStub extends APIStub {
 			if (returnAddr instanceof LongValue) {
 				r = ((LongValue) returnAddr).getValue();
 			} else
-				r = curState.getLocation().getValue()
-						+ curState.getInstruction().getSize();
+				r = curState.getLocation().getValue() + curState.getInstruction().getSize();
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			Instruction newInst = program.getInstruction(addr, env);
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
@@ -88,8 +86,7 @@ public class MAPIStub extends APIStub {
 		} else if (inst.getName().toString().equals("call")) {
 			System.out.println("Call Symbolic Execution of API:" + funcName);
 
-			BPVertex v1 = cfg.getVertex(curState.getLocation(),
-					curState.getInstruction());
+			BPVertex v1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 			v1.setProperty(getFullName(funcName));
 			BPVertex v2 = new BPVertex();
 			// v2.setAddress(address);
@@ -106,8 +103,7 @@ public class MAPIStub extends APIStub {
 				return true;
 			}
 
-			long r = curState.getLocation().getValue()
-					+ curState.getInstruction().getSize();
+			long r = curState.getLocation().getValue() + curState.getInstruction().getSize();
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			Instruction newInst = program.getInstruction(addr, env);
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
@@ -128,14 +124,16 @@ public class MAPIStub extends APIStub {
 			 * if (x1 instanceof LongValue && x2 instanceof LongValue) {
 			 * 
 			 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-			 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+			 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(),
+			 * program);
 			 * 
 			 * String commandLine = memory.getText(new X86MemoryOperand(
 			 * DataType.INT32, ((LongValue) x1).getValueOperand()));
 			 * System.out.println("Command Line:" + commandLine +
-			 * ", Window Style:" + ((LongValue) x2).getValueOperand()); register.mov(
-			 * "eax", new LongValue(system.getWindowHandle().createWindow(
-			 * commandLine, ((LongValue) x2).getValueOperand())));
+			 * ", Window Style:" + ((LongValue) x2).getValueOperand());
+			 * register.mov( "eax", new
+			 * LongValue(system.getWindowHandle().createWindow( commandLine,
+			 * ((LongValue) x2).getValueOperand())));
 			 * 
 			 * }
 			 */

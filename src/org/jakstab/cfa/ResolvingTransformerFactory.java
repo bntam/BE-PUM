@@ -44,18 +44,15 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public abstract class ResolvingTransformerFactory implements
-		StateTransformerFactory {
+public abstract class ResolvingTransformerFactory implements StateTransformerFactory {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(ResolvingTransformerFactory.class);
+	private static final Logger logger = Logger.getLogger(ResolvingTransformerFactory.class);
 
 	protected final Set<Location> unresolvedBranches = new FastSet<Location>();
 	protected boolean sound = true;
 	protected SetMultimap<Location, CFAEdge> outEdges = HashMultimap.create();
-	protected SetMultimap<PMLocation, CFAEdge> outEdgesCFG = HashMultimap
-			.create();
+	protected SetMultimap<PMLocation, CFAEdge> outEdgesCFG = HashMultimap.create();
 
 	public boolean isSound() {
 		return sound;
@@ -78,239 +75,159 @@ public abstract class ResolvingTransformerFactory implements
 		RTLStatement stmt = Program.getProgram().getStatement(a.getLocation());
 		Instruction instr = Program.getProgram().getAnalyzedInstruction();
 
-		Set<CFAEdge> transformers = stmt
-				.accept(new DefaultStatementVisitor<Set<CFAEdge>>() {
+		Set<CFAEdge> transformers = stmt.accept(new DefaultStatementVisitor<Set<CFAEdge>>() {
 
-					@Override
-					protected Set<CFAEdge> visitDefault(RTLStatement stmt) {
-						if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Cabanas.2999")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004047e3")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4212801), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Champ.5430")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00401033")
-								&& a.getLocation().getIndex() == 0) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4198432), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Champ")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00401018")
-								&& a.getLocation().getIndex() == 0) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4198405), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Seppuku.1606")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00401035")
-								&& a.getLocation().getIndex() == 1) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4198424), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Cabanas.Release")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00401381")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4199253), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Cabanas.c")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x0040f1f2")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4256198), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Cabanas.b")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004047e3")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4212801), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Cabanas.a")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004047f2")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4212678), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Wit.b")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004010b5")
-								&& a.getLocation().getIndex() == 0) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4198567), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Seppuku.4827")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x01017024")
-								&& a.getLocation().getIndex() == 5) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(16871429), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Eva.e")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00401018")
-								&& a.getLocation().getIndex() == 5) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4198407), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Eva.d")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00401018")
-								&& a.getLocation().getIndex() == 5) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4198407), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Eva.c")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00401018")
-								&& a.getLocation().getIndex() == 5) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4198407), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Eva.b")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00410018")
-								&& a.getLocation().getIndex() == 5) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4259847), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Eva.a")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00401018")
-								&& a.getLocation().getIndex() == 5) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4198407), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Net-Worm.Win32.Sasser.a")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00402863")
-								&& a.getLocation().getIndex() == 0) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4233231), 0), stmt));
-						}
+			@Override
+			protected Set<CFAEdge> visitDefault(RTLStatement stmt) {
+				if (Program.getProgram().getFileName().equals("Virus.Win32.Cabanas.2999")
+						&& a.getLocation().getAddress().toString().equals("0x004047e3")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4212801), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Champ.5430")
+						&& a.getLocation().getAddress().toString().equals("0x00401033")
+						&& a.getLocation().getIndex() == 0) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4198432), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Champ")
+						&& a.getLocation().getAddress().toString().equals("0x00401018")
+						&& a.getLocation().getIndex() == 0) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4198405), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Seppuku.1606")
+						&& a.getLocation().getAddress().toString().equals("0x00401035")
+						&& a.getLocation().getIndex() == 1) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4198424), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Cabanas.Release")
+						&& a.getLocation().getAddress().toString().equals("0x00401381")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4199253), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Cabanas.c")
+						&& a.getLocation().getAddress().toString().equals("0x0040f1f2")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4256198), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Cabanas.b")
+						&& a.getLocation().getAddress().toString().equals("0x004047e3")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4212801), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Cabanas.a")
+						&& a.getLocation().getAddress().toString().equals("0x004047f2")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4212678), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Wit.b")
+						&& a.getLocation().getAddress().toString().equals("0x004010b5")
+						&& a.getLocation().getIndex() == 0) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4198567), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Seppuku.4827")
+						&& a.getLocation().getAddress().toString().equals("0x01017024")
+						&& a.getLocation().getIndex() == 5) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(16871429), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Eva.e")
+						&& a.getLocation().getAddress().toString().equals("0x00401018")
+						&& a.getLocation().getIndex() == 5) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4198407), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Eva.d")
+						&& a.getLocation().getAddress().toString().equals("0x00401018")
+						&& a.getLocation().getIndex() == 5) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4198407), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Eva.c")
+						&& a.getLocation().getAddress().toString().equals("0x00401018")
+						&& a.getLocation().getIndex() == 5) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4198407), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Eva.b")
+						&& a.getLocation().getAddress().toString().equals("0x00410018")
+						&& a.getLocation().getIndex() == 5) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4259847), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Eva.a")
+						&& a.getLocation().getAddress().toString().equals("0x00401018")
+						&& a.getLocation().getIndex() == 5) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4198407), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Net-Worm.Win32.Sasser.a")
+						&& a.getLocation().getAddress().toString().equals("0x00402863")
+						&& a.getLocation().getIndex() == 0) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4233231), 0), stmt));
+				}
 
-						return Collections.singleton(new CFAEdge(stmt
-								.getLabel(), stmt.getNextLabel(), stmt));
-					}
+				return Collections.singleton(new CFAEdge(stmt.getLabel(), stmt.getNextLabel(), stmt));
+			}
 
-					@Override
-					public Set<CFAEdge> visit(RTLGoto stmt) {
-						// Call resolve function of subclass
-						if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Enumiacs.8192.b")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004017f3")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4199644), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Net-Worm.Win32.Sasser.a")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00409831")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4233345), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Seppuku.1606")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x0040147c")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4200006), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Seppuku.1606")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x0040147a")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4200006), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Seppuku.1606")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004010f7")
-								&& a.getLocation().getIndex() == 0) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4200006), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Cabanas.2999")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004051b0")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4212768), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Virus.Win32.Enumiacs.8192.b")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004017f3")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4199644), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Net-Worm.Win32.Sasser.a")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00409831")
-								&& a.getLocation().getIndex() == 2) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4233345), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Net-Worm.Win32.Sasser.a")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x00409886")
-								&& a.getLocation().getIndex() == 3) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4233383), 0), stmt));
-						} else if (Program.getProgram().getFileName()
-								.equals("Net-Worm.Win32.Sasser.a")
-								&& a.getLocation().getAddress().toString()
-										.equals("0x004098cb")
-								&& a.getLocation().getIndex() == 0) {
-							return Collections.singleton(new CFAEdge(stmt
-									.getLabel(), new Location(
-									new AbsoluteAddress(4208398), 0), stmt));
-						}
+			@Override
+			public Set<CFAEdge> visit(RTLGoto stmt) {
+				// Call resolve function of subclass
+				if (Program.getProgram().getFileName().equals("Virus.Win32.Enumiacs.8192.b")
+						&& a.getLocation().getAddress().toString().equals("0x004017f3")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4199644), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Net-Worm.Win32.Sasser.a")
+						&& a.getLocation().getAddress().toString().equals("0x00409831")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4233345), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Seppuku.1606")
+						&& a.getLocation().getAddress().toString().equals("0x0040147c")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4200006), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Seppuku.1606")
+						&& a.getLocation().getAddress().toString().equals("0x0040147a")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4200006), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Seppuku.1606")
+						&& a.getLocation().getAddress().toString().equals("0x004010f7")
+						&& a.getLocation().getIndex() == 0) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4200006), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Cabanas.2999")
+						&& a.getLocation().getAddress().toString().equals("0x004051b0")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4212768), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Virus.Win32.Enumiacs.8192.b")
+						&& a.getLocation().getAddress().toString().equals("0x004017f3")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4199644), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Net-Worm.Win32.Sasser.a")
+						&& a.getLocation().getAddress().toString().equals("0x00409831")
+						&& a.getLocation().getIndex() == 2) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4233345), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Net-Worm.Win32.Sasser.a")
+						&& a.getLocation().getAddress().toString().equals("0x00409886")
+						&& a.getLocation().getIndex() == 3) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4233383), 0), stmt));
+				} else if (Program.getProgram().getFileName().equals("Net-Worm.Win32.Sasser.a")
+						&& a.getLocation().getAddress().toString().equals("0x004098cb")
+						&& a.getLocation().getIndex() == 0) {
+					return Collections.singleton(new CFAEdge(stmt.getLabel(), new Location(
+							new AbsoluteAddress(4208398), 0), stmt));
+				}
 
-						return resolveGoto(a, stmt);
-					}
+				return resolveGoto(a, stmt);
+			}
 
-					@Override
-					public Set<CFAEdge> visit(RTLHalt stmt) {
-						return Collections.emptySet();
-					}
+			@Override
+			public Set<CFAEdge> visit(RTLHalt stmt) {
+				return Collections.emptySet();
+			}
 
-				});
+		});
 
 		saveNewEdges(transformers, a.getLocation(), instr);
 
@@ -325,8 +242,7 @@ public abstract class ResolvingTransformerFactory implements
 		return transformers;
 	}
 
-	private void saveNewEdges(Set<CFAEdge> transformers, Location l,
-			Instruction instr) {
+	private void saveNewEdges(Set<CFAEdge> transformers, Location l, Instruction instr) {
 		// TODO Auto-generated method stub
 		this.saveNewEdges(transformers, l);
 		PMLocation pm = new PMLocation(l.getAddress(), l.getIndex(), instr);
@@ -389,8 +305,7 @@ public abstract class ResolvingTransformerFactory implements
 		return cfa;
 	}
 
-	protected abstract Set<CFAEdge> resolveGoto(final AbstractState a,
-			final RTLGoto stmt);
+	protected abstract Set<CFAEdge> resolveGoto(final AbstractState a, final RTLGoto stmt);
 
 	@Override
 	public Location getInitialLocation() {
@@ -405,8 +320,8 @@ public abstract class ResolvingTransformerFactory implements
 		for (PMLocation edge : this.outEdgesCFG.keySet()) {
 			Set<CFAEdge> s = this.outEdgesCFG.get(edge);
 			for (CFAEdge a : s) {
-				CFGState g = new CFGState(a.getSource(), a.getTarget(),
-						a.getTransformer(), a.getKind(), edge.getInstruction());
+				CFGState g = new CFGState(a.getSource(), a.getTarget(), a.getTransformer(), a.getKind(),
+						edge.getInstruction());
 				// g.setKind(a.getKind());
 				cfa.add(g);
 			}

@@ -102,8 +102,7 @@ public class ProgressBarDemo2 extends JPanel implements ActionListener {
 						progressBar.setString(null); // display % string
 					}
 					taskOutput.append(s + newline);
-					taskOutput.setCaretPosition(taskOutput.getDocument()
-							.getLength());
+					taskOutput.setCaretPosition(taskOutput.getDocument().getLength());
 				}
 				if (task.isDone()) {
 					Toolkit.getDefaultToolkit().beep();
@@ -377,8 +376,7 @@ class LongTask {
 						done = true;
 						current = lengthOfTask;
 					}
-					statMessage = "Completed " + current + " out of "
-							+ lengthOfTask + ".";
+					statMessage = "Completed " + current + " out of " + lengthOfTask + ".";
 				} catch (InterruptedException e) {
 					System.out.println("ActualTask interrupted");
 				}

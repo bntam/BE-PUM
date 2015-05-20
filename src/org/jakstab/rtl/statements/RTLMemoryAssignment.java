@@ -36,17 +36,14 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class RTLMemoryAssignment extends AbstractRTLStatement implements
-		RTLStatement {
+public class RTLMemoryAssignment extends AbstractRTLStatement implements RTLStatement {
 
-	private static final Logger logger = Logger
-			.getLogger(RTLMemoryAssignment.class);
+	private static final Logger logger = Logger.getLogger(RTLMemoryAssignment.class);
 
 	private RTLMemoryLocation leftHandSide;
 	private RTLExpression rightHandSide;
 
-	public RTLMemoryAssignment(RTLMemoryLocation leftHandSide,
-			RTLExpression rightHandSide) {
+	public RTLMemoryAssignment(RTLMemoryLocation leftHandSide, RTLExpression rightHandSide) {
 		super();
 		this.leftHandSide = leftHandSide;
 		this.rightHandSide = rightHandSide;
@@ -78,9 +75,7 @@ public class RTLMemoryAssignment extends AbstractRTLStatement implements
 			leftHandSide = (RTLMemoryLocation) evaldLHS;
 		} else {
 			logger.error("Error: LHS of assignment no longer memory location after evaluation: "
-					+ this.leftHandSide.toString()
-					+ " = "
-					+ evaldLHS.toString());
+					+ this.leftHandSide.toString() + " = " + evaldLHS.toString());
 		}
 		return this;
 	}
@@ -99,8 +94,7 @@ public class RTLMemoryAssignment extends AbstractRTLStatement implements
 
 	@Override
 	public void inferTypes(Architecture arch) throws TypeInferenceException {
-		leftHandSide = (RTLMemoryLocation) (leftHandSide.inferBitWidth(arch,
-				getBitWidth()));
+		leftHandSide = (RTLMemoryLocation) (leftHandSide.inferBitWidth(arch, getBitWidth()));
 		rightHandSide = rightHandSide.inferBitWidth(arch, getBitWidth());
 	}
 
@@ -143,10 +137,8 @@ public class RTLMemoryAssignment extends AbstractRTLStatement implements
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((leftHandSide == null) ? 0 : leftHandSide.hashCode());
-		result = prime * result
-				+ ((rightHandSide == null) ? 0 : rightHandSide.hashCode());
+		result = prime * result + ((leftHandSide == null) ? 0 : leftHandSide.hashCode());
+		result = prime * result + ((rightHandSide == null) ? 0 : rightHandSide.hashCode());
 		return result;
 	}
 

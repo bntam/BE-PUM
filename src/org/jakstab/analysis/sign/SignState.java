@@ -40,8 +40,7 @@ public class SignState implements AbstractState {
 	private static long maxStateId = 0;
 
 	static final SignState TOP = new SignState();
-	static final SignState BOT = new SignState(
-			(Map<RTLVariable, SignElement>) null);
+	static final SignState BOT = new SignState((Map<RTLVariable, SignElement>) null);
 
 	private Map<RTLVariable, SignElement> aVarVal;
 	private final long stateId;
@@ -260,8 +259,7 @@ public class SignState implements AbstractState {
 		// maps
 		// of "other" are implicitly TOP and thus every value is less or equal
 		// than them.
-		for (Map.Entry<RTLVariable, SignElement> entry : other.aVarVal
-				.entrySet()) {
+		for (Map.Entry<RTLVariable, SignElement> entry : other.aVarVal.entrySet()) {
 			RTLVariable var = entry.getKey();
 			SignElement v = entry.getValue();
 			if (!getValue(var).lessOrEqual(v)) {
@@ -301,17 +299,14 @@ public class SignState implements AbstractState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 
-		Tuple<Set<RTLNumber>> cValues = new Tuple<Set<RTLNumber>>(
-				expressions.length);
+		Tuple<Set<RTLNumber>> cValues = new Tuple<Set<RTLNumber>>(expressions.length);
 		for (int i = 0; i < expressions.length; i++) {
 			SignElement aValue = abstractEval(expressions[i]);
 			// Only ZERO elements can be concretized to numbers
-			cValues.set(i, Collections.singleton(aValue
-					.equals(SignElement.ZERO) ? ExpressionFactory.createNumber(
-					0, expressions[i].getBitWidth()) : null));
+			cValues.set(i, Collections.singleton(aValue.equals(SignElement.ZERO) ? ExpressionFactory.createNumber(0,
+					expressions[i].getBitWidth()) : null));
 		}
 
 		return Sets.crossProduct(cValues);
@@ -333,16 +328,13 @@ public class SignState implements AbstractState {
 			RTLExpression clause;
 			switch (entry.getValue()) {
 			case POSITIVE:
-				clause = ExpressionFactory.createGreaterThan(var,
-						ExpressionFactory.createNumber(0, var.getBitWidth()));
+				clause = ExpressionFactory.createGreaterThan(var, ExpressionFactory.createNumber(0, var.getBitWidth()));
 				break;
 			case NEGATIVE:
-				clause = ExpressionFactory.createLessThan(var,
-						ExpressionFactory.createNumber(0, var.getBitWidth()));
+				clause = ExpressionFactory.createLessThan(var, ExpressionFactory.createNumber(0, var.getBitWidth()));
 				break;
 			case ZERO:
-				clause = ExpressionFactory.createEqual(var,
-						ExpressionFactory.createNumber(0, var.getBitWidth()));
+				clause = ExpressionFactory.createEqual(var, ExpressionFactory.createNumber(0, var.getBitWidth()));
 				break;
 			default:
 				clause = null;

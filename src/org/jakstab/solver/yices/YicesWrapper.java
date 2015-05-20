@@ -61,17 +61,15 @@ public class YicesWrapper {
 		}
 		// Fail otherwise
 		else {
-			throw new RuntimeException(
-					"Unsupported architecture/OS combination for Yices-binding: "
-							+ arch + " and " + uname);
+			throw new RuntimeException("Unsupported architecture/OS combination for Yices-binding: " + arch + " and "
+					+ uname);
 		}
 		logger.verbose("Successfully loaded Yices v" + getVersion());
 
 		setVerbosity(0);
 		enableLogFile("yiceslog.txt");
 
-		outputFile = new File(System.getProperty("java.io.tmpdir").concat(
-				"/yices.out")).getAbsolutePath();
+		outputFile = new File(System.getProperty("java.io.tmpdir").concat("/yices.out")).getAbsolutePath();
 
 		initYicesOutputReader();
 
@@ -138,13 +136,11 @@ public class YicesWrapper {
 
 	public static String makeBVConstant(int size, long value) {
 		assert size > 0 : "Trying to make constant of negative length!";
-		return makeOperation("mk-bv", Integer.toString(size),
-				Long.toString(value));
+		return makeOperation("mk-bv", Integer.toString(size), Long.toString(value));
 	}
 
 	public static String makeBVExtract(String expr, int begin, int end) {
-		return makeOperation("bv-extract", Integer.toString(end),
-				Integer.toString(begin), expr);
+		return makeOperation("bv-extract", Integer.toString(end), Integer.toString(begin), expr);
 	}
 
 	public static String makeBVGreaterOrEqual(String e1, String e2) {
@@ -221,8 +217,7 @@ public class YicesWrapper {
 	}
 
 	public static String makeBVShiftRight(String e1, int shiftCount) {
-		return makeOperation("bv-shift-right0", e1,
-				Integer.toString(shiftCount));
+		return makeOperation("bv-shift-right0", e1, Integer.toString(shiftCount));
 	}
 
 	public static String makeBVShiftLeft(String e1, int shiftCount) {
@@ -288,8 +283,7 @@ public class YicesWrapper {
 		try {
 			line = outputReader.readLine();
 		} catch (IOException e) {
-			throw new RuntimeException(
-					"Cannot open temporary yices output file!");
+			throw new RuntimeException("Cannot open temporary yices output file!");
 		}
 		return line;
 	}

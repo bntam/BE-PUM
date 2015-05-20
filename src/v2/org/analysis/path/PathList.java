@@ -7,25 +7,25 @@ import java.util.List;
 
 public class PathList {
 	private List<Long> addrList;
-	
+
 	public List<Long> extract(long v) {
 		List<Long> ret = new ArrayList<Long>();
 		boolean add = false;
-		for (Long l: addrList) {
+		for (Long l : addrList) {
 			if (l.longValue() == v)
 				add = true;
-			
+
 			if (add)
 				ret.add(l);
 		}
-		
+
 		return ret;
 	}
 
 	@Override
 	public String toString() {
 		String ret = "Trace: ";
-		for (Long t: addrList) {
+		for (Long t : addrList) {
 			ret += new AbsoluteAddress(t.longValue()).toString() + ", ";
 		}
 		return ret;
@@ -63,7 +63,7 @@ public class PathList {
 				return true;
 		return false;
 	}
-	
+
 	public Long pop() {
 		if (this.isEmpty())
 			return null;

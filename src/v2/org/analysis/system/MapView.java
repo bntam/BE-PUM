@@ -8,13 +8,11 @@ package v2.org.analysis.system;
  * 
  */
 public class MapView {
-	private long securityAttribute, protectionMapping, highOrder, lowOrder,
-			fileMapNameAddress;
+	private long securityAttribute, protectionMapping, highOrder, lowOrder, fileMapNameAddress;
 	private String fileMapName;
 	private long mapViewHandle;
 
-	public MapView(long securityAttribute, long protectionMapping,
-			long highOrder, long lowOrder, String fileMapName) {
+	public MapView(long securityAttribute, long protectionMapping, long highOrder, long lowOrder, String fileMapName) {
 		super();
 		this.securityAttribute = securityAttribute;
 		this.protectionMapping = protectionMapping;

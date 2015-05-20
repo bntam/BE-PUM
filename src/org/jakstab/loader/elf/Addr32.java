@@ -37,10 +37,8 @@ public class Addr32 implements IAddress {
 		if (addrBytes.length != 4)
 			throw (new NumberFormatException("Invalid address array")); //$NON-NLS-1$
 		/* We should mask out sign bits to have correct value */
-		this.address = ((((long) addrBytes[0]) << 24) & 0xFF000000L)
-				+ ((((long) addrBytes[1]) << 16) & 0x00FF0000L)
-				+ ((((long) addrBytes[2]) << 8) & 0x0000FF00L)
-				+ (addrBytes[3] & 0x000000FFL);
+		this.address = ((((long) addrBytes[0]) << 24) & 0xFF000000L) + ((((long) addrBytes[1]) << 16) & 0x00FF0000L)
+				+ ((((long) addrBytes[2]) << 8) & 0x0000FF00L) + (addrBytes[3] & 0x000000FFL);
 	}
 
 	public Addr32(long rawaddress) {

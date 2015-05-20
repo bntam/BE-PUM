@@ -91,8 +91,7 @@ public class BPCFG {
 			return null;
 
 		for (BPVertex v : verteces)
-			if (v.getAddress() != null
-					&& v.getAddress().getValue() == location.getValue()
+			if (v.getAddress() != null && v.getAddress().getValue() == location.getValue()
 					&& v.getInstruction().compareInstruction(instruction))
 				return v;
 
@@ -129,11 +128,11 @@ public class BPCFG {
 
 	public BPVertex getEntryPoint() {
 		// TODO Auto-generated method stub
-		for (BPVertex s: verteces) {
+		for (BPVertex s : verteces) {
 			if (s.getType() == 0)
 				return s;
 		}
-		
+
 		return null;
-	}	
+	}
 }

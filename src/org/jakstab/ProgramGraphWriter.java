@@ -50,8 +50,7 @@ import java.util.List;
  */
 public class ProgramGraphWriter {
 
-	private static final Logger logger = Logger
-			.getLogger(ProgramGraphWriter.class);
+	private static final Logger logger = Logger.getLogger(ProgramGraphWriter.class);
 	private Program program;
 
 	private Set<Location> mustLeaves;
@@ -163,7 +162,7 @@ public class ProgramGraphWriter {
 
 	// Does not write a real graph, but still fits best into this class
 	public void writeDisassembly(BPCFG l, String filename) {
-		//System.out.println("Writing assembly file to " + filename);
+		// System.out.println("Writing assembly file to " + filename);
 		try {
 			FileWriter out = new FileWriter(filename);
 			for (BPVertex vertex : l.getVertecesList()) {
@@ -176,12 +175,10 @@ public class ProgramGraphWriter {
 					sb.append(vertex.getProperty() + ": API Node").append("\t");
 					sb.append(Characters.NEWLINE);
 				} else if (vertex.getType() == BPVertex.UnknownNode) {
-					sb.append(vertex.getProperty() + ": Unknown Node").append(
-							"\t");
+					sb.append(vertex.getProperty() + ": Unknown Node").append("\t");
 					sb.append(Characters.NEWLINE);
 				} else if (vertex.getType() == BPVertex.ExitNode) {
-					sb.append(vertex.getProperty() + ": Exit Node")
-							.append("\t");
+					sb.append(vertex.getProperty() + ": Exit Node").append("\t");
 					sb.append(Characters.NEWLINE);
 				} else {
 					sb.append(pc).append(":\t");
@@ -204,52 +201,49 @@ public class ProgramGraphWriter {
 		// TODO Auto-generated method stub
 		if (instr == null)
 			return "null";
-		
+
 		String r = "";
 		if (instr instanceof X86Instruction) {
-			X86Instruction i = (X86Instruction) instr; 
+			X86Instruction i = (X86Instruction) instr;
 			if (i.hasPrefixREPZ())
 				r += "rep ";
 			else if (i.hasPrefixREPNZ())
 				r += "repn ";
 		} else if (instr instanceof X86ArithmeticInstruction) {
-			X86ArithmeticInstruction i = (X86ArithmeticInstruction) instr; 
+			X86ArithmeticInstruction i = (X86ArithmeticInstruction) instr;
 			if (i.hasPrefixREPZ())
 				r += "rep ";
 			else if (i.hasPrefixREPNZ())
 				r += "repn ";
 		} else if (instr instanceof X86MoveInstruction) {
-			X86MoveInstruction i = (X86MoveInstruction) instr; 
+			X86MoveInstruction i = (X86MoveInstruction) instr;
 			if (i.hasPrefixREPZ())
 				r += "rep ";
 			else if (i.hasPrefixREPNZ())
 				r += "repn ";
 		} else if (instr instanceof X86CallInstruction) {
-			X86CallInstruction i = (X86CallInstruction) instr; 
+			X86CallInstruction i = (X86CallInstruction) instr;
 			if (i.hasPrefixREPZ())
 				r += "rep ";
 			else if (i.hasPrefixREPNZ())
 				r += "repn ";
 		} else if (instr instanceof X86CondJmpInstruction) {
-			X86CondJmpInstruction i = (X86CondJmpInstruction) instr; 
+			X86CondJmpInstruction i = (X86CondJmpInstruction) instr;
 			if (i.hasPrefixREPZ())
 				r += "rep ";
 			else if (i.hasPrefixREPNZ())
 				r += "repn ";
 		}
-			
-		
+
 		r += instr.getName();
 		if (vertex.getProperty().equals("")) {
 			int i = instr.getOperandCount();
 			if (i == 1) {
 				r += " " + instr.getOperand(0).toString();
 			} else if (i == 2)
-				r += " " + instr.getOperand(0).toString() + ", "
-						+ instr.getOperand(1).toString();
+				r += " " + instr.getOperand(0).toString() + ", " + instr.getOperand(1).toString();
 			else if (i == 3)
-				r += " " + instr.getOperand(0).toString() + ", "
-						+ instr.getOperand(1).toString() + ", "
+				r += " " + instr.getOperand(0).toString() + ", " + instr.getOperand(1).toString() + ", "
 						+ instr.getOperand(2).toString();
 
 		} else
@@ -277,8 +271,7 @@ public class ProgramGraphWriter {
 					processedNodes.add(targetAddr.getValue());
 				}
 
-				nodes.add(new PMLocation(e.getSource().getAddress(), e
-						.getSource().getIndex(), e.getSourceInstruction()));
+				nodes.add(new PMLocation(e.getSource().getAddress(), e.getSource().getIndex(), e.getSourceInstruction()));
 				// nodes.add(e.getTarget());
 			}
 		}
@@ -299,26 +292,21 @@ public class ProgramGraphWriter {
 				// program.getInstruction1(nodeAddr);
 				String nodeName = nodeAddr.toString();
 				String nodeLabel = program.getSymbolFor(nodeAddr);
-				if (nodeAddr.toString().equals("0xff000020")
-						|| nodeAddr.toString().equals("0xff000010"))
+				if (nodeAddr.toString().equals("0xff000020") || nodeAddr.toString().equals("0xff000010"))
 					System.out.println("Debug" + nodeAddr.toString());
 
 				// numNodes ++;
-				if (instr != null
-						&& program.getAssemblyMap().containsKey(nodeAddr)) {
+				if (instr != null && program.getAssemblyMap().containsKey(nodeAddr)) {
 					ExecutableImage ext = program.getModule(nodeAddr);
 					if (ext == null)
 						System.out.println("Debug");
 
-					String instrString = instr.toString(nodeAddr.getValue(),
-							program.getModule(nodeAddr).getSymbolFinder());
+					String instrString = instr.toString(nodeAddr.getValue(), program.getModule(nodeAddr)
+							.getSymbolFinder());
 					instrString = instrString.replace("\t", " ");
-					gwriter.writeNode(nodeName,
-							nodeLabel + "\\n" + instrString,
-							getNodeProperties(node));
+					gwriter.writeNode(nodeName, nodeLabel + "\\n" + instrString, getNodeProperties(node));
 				} else {
-					gwriter.writeNode(nodeName, nodeLabel,
-							getNodeProperties(node));
+					gwriter.writeNode(nodeName, nodeLabel, getNodeProperties(node));
 				}
 			}
 
@@ -336,26 +324,20 @@ public class ProgramGraphWriter {
 					if (bi.isConditional()) {
 						// Get the original goto from the program (not the
 						// converted assume)
-						RTLStatement rtlGoto = program.getStatement(e
-								.getSource());
+						RTLStatement rtlGoto = program.getStatement(e.getSource());
 
 						// If this is the fall-through edge, output F, otherwise
 						// T
-						label = targetAddr.equals(rtlGoto.getNextLabel()
-								.getAddress()) ? "F" : "T";
+						label = targetAddr.equals(rtlGoto.getNextLabel().getAddress()) ? "F" : "T";
 					}
 				}
 
 				if (label != null)
-					gwriter.writeLabeledEdge(sourceAddr.toString(), targetAddr
-							.toString(), label,
-							e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK
-									: Color.GREEN);
+					gwriter.writeLabeledEdge(sourceAddr.toString(), targetAddr.toString(), label,
+							e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK : Color.GREEN);
 				else
-					gwriter.writeEdge(sourceAddr.toString(), targetAddr
-							.toString(),
-							e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK
-									: Color.GREEN);
+					gwriter.writeEdge(sourceAddr.toString(), targetAddr.toString(), e.getKind()
+							.equals(CFAEdge.Kind.MAY) ? Color.BLACK : Color.GREEN);
 			}
 
 			gwriter.close();
@@ -446,15 +428,12 @@ public class ProgramGraphWriter {
 				if (instr != null) {
 					// ExecutableImage ext = program.getModule(nodeAddr);
 
-					String instrString = instr.toString(nodeAddr.getValue(),
-							program.getModule(nodeAddr).getSymbolFinder());
+					String instrString = instr.toString(nodeAddr.getValue(), program.getModule(nodeAddr)
+							.getSymbolFinder());
 					instrString = instrString.replace("\t", " ");
-					gwriter.writeNode(nodeName,
-							nodeLabel + "\\n" + instrString,
-							getNodeProperties(node));
+					gwriter.writeNode(nodeName, nodeLabel + "\\n" + instrString, getNodeProperties(node));
 				} else {
-					gwriter.writeNode(nodeName, nodeLabel,
-							getNodeProperties(node));
+					gwriter.writeNode(nodeName, nodeLabel, getNodeProperties(node));
 				}
 			}
 
@@ -472,26 +451,20 @@ public class ProgramGraphWriter {
 					if (bi.isConditional()) {
 						// Get the original goto from the program (not the
 						// converted assume)
-						RTLStatement rtlGoto = program.getStatement(e
-								.getSource());
+						RTLStatement rtlGoto = program.getStatement(e.getSource());
 
 						// If this is the fall-through edge, output F, otherwise
 						// T
-						label = targetAddr.equals(rtlGoto.getNextLabel()
-								.getAddress()) ? "F" : "T";
+						label = targetAddr.equals(rtlGoto.getNextLabel().getAddress()) ? "F" : "T";
 					}
 				}
 
 				if (label != null)
-					gwriter.writeLabeledEdge(sourceAddr.toString(), targetAddr
-							.toString(), label,
-							e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK
-									: Color.GREEN);
+					gwriter.writeLabeledEdge(sourceAddr.toString(), targetAddr.toString(), label,
+							e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK : Color.GREEN);
 				else
-					gwriter.writeEdge(sourceAddr.toString(), targetAddr
-							.toString(),
-							e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK
-									: Color.GREEN);
+					gwriter.writeEdge(sourceAddr.toString(), targetAddr.toString(), e.getKind()
+							.equals(CFAEdge.Kind.MAY) ? Color.BLACK : Color.GREEN);
 			}
 
 			gwriter.close();
@@ -534,17 +507,14 @@ public class ProgramGraphWriter {
 						labelBuilder.append("\n");
 					}
 				}
-				gwriter.writeNode(nodeName, labelBuilder.toString(),
-						getNodeProperties(node));
+				gwriter.writeNode(nodeName, labelBuilder.toString(), getNodeProperties(node));
 			}
 
 			for (CFAEdge e : program.getCFA()) {
 				if (e.getKind() == null)
 					logger.error("Null kind? " + e);
-				gwriter.writeLabeledEdge(e.getSource().toString(), e
-						.getTarget().toString(), e.getTransformer().toString(),
-						e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK
-								: Color.GREEN);
+				gwriter.writeLabeledEdge(e.getSource().toString(), e.getTarget().toString(), e.getTransformer()
+						.toString(), e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK : Color.GREEN);
 			}
 
 			gwriter.close();
@@ -554,8 +524,7 @@ public class ProgramGraphWriter {
 		}
 	}
 
-	public void writeControlFlowAutomaton(String filename,
-			Map<Location, Object> reached) {
+	public void writeControlFlowAutomaton(String filename, Map<Location, Object> reached) {
 		Set<Location> nodes = new HashSet<Location>();
 		for (CFAEdge e : program.getCFA()) {
 			nodes.add(e.getTarget());
@@ -581,17 +550,14 @@ public class ProgramGraphWriter {
 					else
 						labelBuilder.append(info.toString());
 				}
-				gwriter.writeNode(nodeName, labelBuilder.toString(),
-						getNodeProperties(node));
+				gwriter.writeNode(nodeName, labelBuilder.toString(), getNodeProperties(node));
 			}
 
 			for (CFAEdge e : program.getCFA()) {
 				if (e.getKind() == null)
 					logger.error("Null kind? " + e);
-				gwriter.writeLabeledEdge(e.getSource().toString(), e
-						.getTarget().toString(), e.getTransformer().toString(),
-						e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK
-								: Color.GREEN);
+				gwriter.writeLabeledEdge(e.getSource().toString(), e.getTarget().toString(), e.getTransformer()
+						.toString(), e.getKind().equals(CFAEdge.Kind.MAY) ? Color.BLACK : Color.GREEN);
 			}
 
 			gwriter.close();
@@ -601,8 +567,7 @@ public class ProgramGraphWriter {
 		}
 	}
 
-	public void writeCallGraph(String filename,
-			SetMultimap<Location, Location> callGraph) {
+	public void writeCallGraph(String filename, SetMultimap<Location, Location> callGraph) {
 		// Create dot file
 		GraphWriter gwriter = createGraphWriter(filename);
 		if (gwriter == null)
@@ -615,13 +580,11 @@ public class ProgramGraphWriter {
 			for (Map.Entry<Location, Location> e : callGraph.entries()) {
 				nodes.add(e.getKey());
 				nodes.add(e.getValue());
-				gwriter.writeEdge(e.getKey().toString(), e.getValue()
-						.toString());
+				gwriter.writeEdge(e.getKey().toString(), e.getValue().toString());
 			}
 
 			for (Location node : nodes) {
-				gwriter.writeNode(node.toString(), node.toString(),
-						getNodeProperties(node));
+				gwriter.writeNode(node.toString(), node.toString(), getNodeProperties(node));
 			}
 
 			gwriter.close();
@@ -664,8 +627,7 @@ public class ProgramGraphWriter {
 				// nodeLabel.append("\\n");
 				// nodeLabel.append(curState);
 				for (AbstractState coverState : art.getCoveringStates(curState)) {
-					nodeLabel.append("Covered by ")
-							.append(coverState.getIdentifier()).append("\\n");
+					nodeLabel.append("Covered by ").append(coverState.getIdentifier()).append("\\n");
 				}
 
 				gwriter.writeNode(nodeName, nodeLabel.toString(), properties);
@@ -690,16 +652,13 @@ public class ProgramGraphWriter {
 	public void writeDisassembly(Program program, String filename) {
 		logger.info("Writing assembly file to " + filename);
 
-		SetMultimap<AbsoluteAddress, CFAEdge> branchEdges = HashMultimap
-				.create();
-		SetMultimap<AbsoluteAddress, CFAEdge> branchEdgesRev = HashMultimap
-				.create();
+		SetMultimap<AbsoluteAddress, CFAEdge> branchEdges = HashMultimap.create();
+		SetMultimap<AbsoluteAddress, CFAEdge> branchEdgesRev = HashMultimap.create();
 		if (!Options.noGraphs.getValue()) {
 			for (CFAEdge e : program.getCFA()) {
 				AbsoluteAddress sourceAddr = e.getSource().getAddress();
 				AbsoluteAddress targetAddr = e.getTarget().getAddress();
-				if (program.getInstruction(sourceAddr) instanceof BranchInstruction
-						&& !sourceAddr.equals(targetAddr)) {
+				if (program.getInstruction(sourceAddr) instanceof BranchInstruction && !sourceAddr.equals(targetAddr)) {
 					branchEdges.put(sourceAddr, e);
 					branchEdgesRev.put(targetAddr, e);
 				}
@@ -708,14 +667,12 @@ public class ProgramGraphWriter {
 
 		try {
 			FileWriter out = new FileWriter(filename);
-			for (Map.Entry<AbsoluteAddress, Instruction> entry : program
-					.getAssemblyMap().entrySet()) {
+			for (Map.Entry<AbsoluteAddress, Instruction> entry : program.getAssemblyMap().entrySet()) {
 				AbsoluteAddress pc = entry.getKey();
 				// SymbolicExecution.setStartAddress(pc);
 				Instruction instr = entry.getValue();
 				StringBuilder sb = new StringBuilder();
-				SymbolFinder symFinder = program.getModule(pc)
-						.getSymbolFinder();
+				SymbolFinder symFinder = program.getModule(pc).getSymbolFinder();
 				if (symFinder.hasSymbolFor(pc)) {
 					sb.append(Characters.NEWLINE);
 					sb.append(symFinder.getSymbolFor(pc));
@@ -764,28 +721,27 @@ public class ProgramGraphWriter {
 			return;
 		}
 	}
-	
+
 	private String getInstructionString(Instruction instr, AbsoluteAddress nodeAddr) {
 		String instrString = "";
 		if (instr != null) {
 			ExecutableImage ext = program.getModule(nodeAddr);
-			
+
 			if (ext != null)
-				instrString = instr.toString(nodeAddr.getValue(),
-						ext.getSymbolFinder());
+				instrString = instr.toString(nodeAddr.getValue(), ext.getSymbolFinder());
 			else {
 				// PHONG: change here for Virtual memory
-//				instrString = nodeAddr.toString();
-//				instrString = instr.getName()+" ";
-//				for (int i = 0; i < instr.getOperandCount(); i++){
-//					if (i  == instr.getOperandCount() - 1)
-//						instrString = instrString + instr.getOperand(i);
-//					else instrString = instrString + instr.getOperand(i) + ", ";
-//				}
-				instrString = instr.toString(nodeAddr.getValue(),null);
+				// instrString = nodeAddr.toString();
+				// instrString = instr.getName()+" ";
+				// for (int i = 0; i < instr.getOperandCount(); i++){
+				// if (i == instr.getOperandCount() - 1)
+				// instrString = instrString + instr.getOperand(i);
+				// else instrString = instrString + instr.getOperand(i) + ", ";
+				// }
+				instrString = instr.toString(nodeAddr.getValue(), null);
 			}
-			instrString = instrString.replace("\t", " ");			
-		} 
+			instrString = instrString.replace("\t", " ");
+		}
 		return instrString;
 	}
 
@@ -797,12 +753,13 @@ public class ProgramGraphWriter {
 		if (gwriter == null)
 			return;
 
-		//System.out.println("Writing assembly CFG to " + gwriter.getFilename());
+		// System.out.println("Writing assembly CFG to " +
+		// gwriter.getFilename());
 		try {
 			for (BPVertex node : verteces) {
-				//if (node.getType() != 4) {
-					//break;
-				
+				// if (node.getType() != 4) {
+				// break;
+
 				AbsoluteAddress nodeAddr = node.getAddress();
 				Instruction instr = node.getInstruction();
 				String nodeName = "";
@@ -819,42 +776,39 @@ public class ProgramGraphWriter {
 				 * System.out.println("Debug");
 				 */
 				// PHONG: debug here
-//				if (nodeLabel.startsWith("0x0033014a"))
-//					System.out.println("Debug");
-				 
+				// if (nodeLabel.startsWith("0x0033014a"))
+				// System.out.println("Debug");
+
 				// numNodes ++;
 				String instrString = getInstructionString(instr, nodeAddr);
-				if (instrString != "") 
-					gwriter.writeNode(normalizeString(nodeName + instrString), nodeLabel
-							+ "\\n" + instrString, getNodeProperties(node));
-				else 
-					gwriter.writeNode(normalizeString(nodeName), nodeLabel,
-							getNodeProperties(node));	
-				//}
+				if (instrString != "")
+					gwriter.writeNode(normalizeString(nodeName + instrString), nodeLabel + "\\n" + instrString,
+							getNodeProperties(node));
+				else
+					gwriter.writeNode(normalizeString(nodeName), nodeLabel, getNodeProperties(node));
+				// }
 			}
 
 			for (BPEdge e : edges) {
 				/*
 				 * if (e.getKind() == null) logger.error("Null kind? " + e);
 				 */
-				//if (e.getSourceVertex().getType() != 4 && e.getDestVertex().getType() != 4) {
-					//break;
-				
+				// if (e.getSourceVertex().getType() != 4 &&
+				// e.getDestVertex().getType() != 4) {
+				// break;
+
 				AbsoluteAddress sourceAddr = e.getSourceVertex().getAddress();
-				String sNode = sourceAddr == null ? e.getSourceVertex()
-						.getProperty() : sourceAddr.toString();
+				String sNode = sourceAddr == null ? e.getSourceVertex().getProperty() : sourceAddr.toString();
 				AbsoluteAddress targetAddr = e.getDestVertex().getAddress();
-				String dNode = targetAddr == null ? e.getDestVertex()
-						.getProperty() : targetAddr.toString();
-						
-				String sInst = getInstructionString(e.getSourceVertex().getInstruction(), 
-						e.getSourceVertex().getAddress());
-				String dInst = getInstructionString(e.getDestVertex().getInstruction(), 
-						e.getDestVertex().getAddress());
+				String dNode = targetAddr == null ? e.getDestVertex().getProperty() : targetAddr.toString();
+
+				String sInst = getInstructionString(e.getSourceVertex().getInstruction(), e.getSourceVertex()
+						.getAddress());
+				String dInst = getInstructionString(e.getDestVertex().getInstruction(), e.getDestVertex().getAddress());
 
 				String label = null;
 				Instruction instr = e.getSourceVertex().getInstruction();
-				//Instruction instrD = e.getDestVertex().getInstruction();
+				// Instruction instrD = e.getDestVertex().getInstruction();
 
 				if (instr instanceof BranchInstruction) {
 					BranchInstruction bi = (BranchInstruction) instr;
@@ -874,12 +828,11 @@ public class ProgramGraphWriter {
 				}
 
 				if (label != null)
-					gwriter.writeLabeledEdge(normalizeString(sNode + sInst),
-							normalizeString(dNode + dInst), label, Color.BLACK);
+					gwriter.writeLabeledEdge(normalizeString(sNode + sInst), normalizeString(dNode + dInst), label,
+							Color.BLACK);
 				else
-					gwriter.writeEdge(normalizeString(sNode + sInst),
-							normalizeString(dNode + dInst), Color.BLACK);
-			//}
+					gwriter.writeEdge(normalizeString(sNode + sInst), normalizeString(dNode + dInst), Color.BLACK);
+				// }
 			}
 
 			gwriter.close();
@@ -917,9 +870,10 @@ public class ProgramGraphWriter {
 		}
 
 		/*
-		 * if (curStmt != null) { if (curStmt.getLabel().getAddress().getValueOperand()
-		 * >= 0xFACE0000L) { properties.put("color", "lightgrey");
-		 * properties.put("fillcolor", "lightgrey"); }
+		 * if (curStmt != null) { if
+		 * (curStmt.getLabel().getAddress().getValueOperand() >= 0xFACE0000L) {
+		 * properties.put("color", "lightgrey"); properties.put("fillcolor",
+		 * "lightgrey"); }
 		 * 
 		 * if (program.getUnresolvedBranches().contains(curStmt.getLabel())) {
 		 * properties.put("fillcolor", "red"); }

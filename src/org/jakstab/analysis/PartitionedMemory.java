@@ -39,8 +39,7 @@ import java.util.Map;
 /**
  * @author Johannes Kinder
  */
-public final class PartitionedMemory<A extends AbstractValue> implements
-		LatticeElement {
+public final class PartitionedMemory<A extends AbstractValue> implements LatticeElement {
 
 	protected final class MemoryCell {
 		final long offset;
@@ -62,8 +61,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result
-					+ ((contents == null) ? 0 : contents.hashCode());
+			result = prime * result + ((contents == null) ? 0 : contents.hashCode());
 			result = prime * result + (int) (offset ^ (offset >>> 32));
 			result = prime * result + size;
 			return result;
@@ -92,8 +90,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		}
 	}
 
-	private static final Logger logger = Logger
-			.getLogger(PartitionedMemory.class);
+	private static final Logger logger = Logger.getLogger(PartitionedMemory.class);
 
 	private final LazyHashMapMap<MemoryRegion, Long, MemoryCell> store;
 	private boolean dataIsTop;
@@ -120,8 +117,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		dataIsTop = true;
 		logger.verbose("Overapproximated all memory regions to TOP!");
 		if (Options.debug.getValue())
-			throw new UnknownPointerAccessException(
-					"Set all memory regions to TOP!");
+			throw new UnknownPointerAccessException("Set all memory regions to TOP!");
 	}
 
 	public void setTop(MemoryRegion region) {
@@ -152,10 +148,8 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 			// as it is initialized to the static data of the executable.
 			// If heap cells are assumed to be initially BOT, we also need to do
 			// this.
-			if ((Options.initHeapToBot.getValue() && region != MemoryRegion.STACK)
-					|| region == MemoryRegion.GLOBAL) {
-				MemoryCell topCell = new MemoryCell(offset + i, 1,
-						valueFactory.createTop(8));
+			if ((Options.initHeapToBot.getValue() && region != MemoryRegion.STACK) || region == MemoryRegion.GLOBAL) {
+				MemoryCell topCell = new MemoryCell(offset + i, 1, valueFactory.createTop(8));
 				store.put(region, offset + i, topCell);
 			} else {
 				store.remove(region, offset + i);
@@ -188,10 +182,8 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 	 */
 	public void set(MemoryRegion region, long offset, int bitWidth, A value) {
 		assert region != MemoryRegion.TOP;
-		assert (!(value instanceof BitVectorType) || ((BitVectorType) value)
-				.getBitWidth() == bitWidth) : "Memory access bitwidth "
-				+ bitWidth + " does not match bitwidth of value to set: "
-				+ ((BitVectorType) value).getBitWidth();
+		assert (!(value instanceof BitVectorType) || ((BitVectorType) value).getBitWidth() == bitWidth) : "Memory access bitwidth "
+				+ bitWidth + " does not match bitwidth of value to set: " + ((BitVectorType) value).getBitWidth();
 
 		int size = bitWidth / 8;
 
@@ -217,15 +209,13 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public void weakUpdate(MemoryRegion region, long offset, int bitWidth,
-			A value) {
+	public void weakUpdate(MemoryRegion region, long offset, int bitWidth, A value) {
 		assert region != MemoryRegion.TOP;
 		A oldValue = get(region, offset, bitWidth);
 
 		// If we treat heap cells as initialized to BOT, just set uninitialized
 		// cells to the new value
-		if (Options.initHeapToBot.getValue() && oldValue.isTop()
-				&& !store.containsKey(region, offset))
+		if (Options.initHeapToBot.getValue() && oldValue.isTop() && !store.containsKey(region, offset))
 			set(region, offset, bitWidth, value);
 		else
 			set(region, offset, bitWidth, (A) value.join(oldValue));
@@ -242,8 +232,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 				// | ,offset
 				// | | ,cell.offset + cell.size
 				// A A[A A]B B B B
-				if (cell.size > size
-						&& (cell.offset + cell.size >= offset + size)) {
+				if (cell.size > size && (cell.offset + cell.size >= offset + size)) {
 					// Extract bitrange from bigger cell
 					int firstBit = (int) ((offset - cell.offset) * 8);
 					int lastBit = firstBit + bitWidth - 1;
@@ -258,8 +247,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 							break;
 						}
 
-						cValues.add(RTLBitRange.calculate(firstBit, lastBit,
-								cVal));
+						cValues.add(RTLBitRange.calculate(firstBit, lastBit, cVal));
 					}
 					if (cValues != null) {
 						A e = valueFactory.createAbstractValue(cValues);
@@ -290,15 +278,13 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 							for (RTLNumber last : lastValues) {
 								long val = last.longValue();
 								if (i < size - 1) {
-									val = val
-											| (0xFF & cVal.longValue()) << (i * 8);
+									val = val | (0xFF & cVal.longValue()) << (i * 8);
 								} else {
 									// do not mask the MSB with 0xFF, so we get
 									// sign extension for free
 									val = val | (cVal.longValue() << i * 8);
 								}
-								cValues.add(ExpressionFactory.createNumber(val,
-										(i + 1) * 8));
+								cValues.add(ExpressionFactory.createNumber(val, (i + 1) * 8));
 							}
 						}
 						lastValues = cValues;
@@ -310,8 +296,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 					}
 				}
 
-				logger.verbose("Mismatching get with bitwidth " + bitWidth
-						+ " on cell at " + region + " + " + offset
+				logger.verbose("Mismatching get with bitwidth " + bitWidth + " on cell at " + region + " + " + offset
 						+ " with bitwidth " + cell.size * 8);
 
 				return valueFactory.createTop(bitWidth);
@@ -335,10 +320,8 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 			) {
 				RTLNumber mValue;
 				try {
-					mValue = module.readMemoryLocation(ExpressionFactory
-							.createMemoryLocation(
-									ExpressionFactory.createNumber(offset),
-									bitWidth));
+					mValue = module.readMemoryLocation(ExpressionFactory.createMemoryLocation(
+							ExpressionFactory.createNumber(offset), bitWidth));
 					// Memory outside the program area is implicitly initialized
 					// to top
 					if (mValue != null)
@@ -351,8 +334,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		return valueFactory.createTop(bitWidth);
 	}
 
-	public void memcpy(MemoryRegion srcRegion, long srcOffset,
-			MemoryRegion dstRegion, long dstOffset, long size) {
+	public void memcpy(MemoryRegion srcRegion, long srcOffset, MemoryRegion dstRegion, long dstOffset, long size) {
 
 		for (long i = 0; i < size;) {
 			long dstPtr = dstOffset + i;
@@ -380,8 +362,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 
 		// stack.headMap(offset).clear();
 		// for (Iterator<Long> it = stack.keySet().iterator(); it.hasNext();)
-		for (Iterator<Map.Entry<Long, MemoryCell>> it = store
-				.subMapIterator(MemoryRegion.STACK); it.hasNext();)
+		for (Iterator<Map.Entry<Long, MemoryCell>> it = store.subMapIterator(MemoryRegion.STACK); it.hasNext();)
 			if (it.next().getKey() < offset) {
 				it.remove();
 			}
@@ -398,28 +379,26 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		// because constant image data is not present in store, but only visible
 		// through calls to get().
 		if (store.containsLeftKey(MemoryRegion.GLOBAL)) {
-			for (Map.Entry<Long, MemoryCell> entry : store.getSubMap(
-					MemoryRegion.GLOBAL).entrySet()) {
+			for (Map.Entry<Long, MemoryCell> entry : store.getSubMap(MemoryRegion.GLOBAL).entrySet()) {
 				long offset = entry.getKey();
 				if (offset != entry.getValue().offset)
 					continue;
 				int bitWidth = entry.getValue().size * 8;
 				A value = entry.getValue().contents;
-				result.set(MemoryRegion.GLOBAL, offset, bitWidth, (A) value
-						.join(other.get(MemoryRegion.GLOBAL, offset, bitWidth)));
+				result.set(MemoryRegion.GLOBAL, offset, bitWidth,
+						(A) value.join(other.get(MemoryRegion.GLOBAL, offset, bitWidth)));
 			}
 		}
 
-		for (EntryIterator<MemoryRegion, Long, MemoryCell> entryIt = other.store
-				.entryIterator(); entryIt.hasEntry(); entryIt.next()) {
+		for (EntryIterator<MemoryRegion, Long, MemoryCell> entryIt = other.store.entryIterator(); entryIt.hasEntry(); entryIt
+				.next()) {
 			long offset = entryIt.getRightKey();
 			if (offset != entryIt.getValue().offset)
 				continue;
 			MemoryRegion region = entryIt.getLeftKey();
 			int bitWidth = entryIt.getValue().size * 8;
 			A value = entryIt.getValue().contents;
-			result.set(region, offset, bitWidth,
-					(A) value.join(this.get(region, offset, bitWidth)));
+			result.set(region, offset, bitWidth, (A) value.join(this.get(region, offset, bitWidth)));
 
 		}
 
@@ -447,8 +426,8 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		// value is less or equal to them.
 		PartitionedMemory<A> other = (PartitionedMemory<A>) l;
 
-		for (EntryIterator<MemoryRegion, Long, MemoryCell> entryIt = other.store
-				.entryIterator(); entryIt.hasEntry(); entryIt.next()) {
+		for (EntryIterator<MemoryRegion, Long, MemoryCell> entryIt = other.store.entryIterator(); entryIt.hasEntry(); entryIt
+				.next()) {
 			long offset = entryIt.getRightKey();
 			if (offset != entryIt.getValue().offset)
 				continue;
@@ -461,15 +440,13 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 
 		// Other direction for global region only
 		if (store.containsLeftKey(MemoryRegion.GLOBAL)) {
-			for (Map.Entry<Long, MemoryCell> entry : store.getSubMap(
-					MemoryRegion.GLOBAL).entrySet()) {
+			for (Map.Entry<Long, MemoryCell> entry : store.getSubMap(MemoryRegion.GLOBAL).entrySet()) {
 				long offset = entry.getKey();
 				if (offset != entry.getValue().offset)
 					continue;
 				int bitWidth = entry.getValue().size * 8;
 				A value = entry.getValue().contents;
-				if (!other.get(MemoryRegion.GLOBAL, offset, bitWidth)
-						.lessOrEqual(value))
+				if (!other.get(MemoryRegion.GLOBAL, offset, bitWidth).lessOrEqual(value))
 					return false;
 			}
 		}
@@ -482,12 +459,10 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		StringBuilder res = new StringBuilder();
 		for (MemoryRegion region : store.leftKeySet()) {
 			res.append(" ").append(region).append(": [");
-			for (Map.Entry<Long, MemoryCell> entry : store.getSubMap(region)
-					.entrySet()) {
+			for (Map.Entry<Long, MemoryCell> entry : store.getSubMap(region).entrySet()) {
 				if (entry.getValue().offset == entry.getKey()) {
 					if (region.equals(MemoryRegion.GLOBAL))
-						res.append("0x").append(
-								Integer.toHexString(entry.getKey().intValue()));
+						res.append("0x").append(Integer.toHexString(entry.getKey().intValue()));
 					else
 						res.append(entry.getKey());
 					res.append("=").append(entry.getValue()).append(",");
@@ -517,11 +492,9 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		return new MemoryIterator();
 	}
 
-	private class MemoryIterator implements
-			EntryIterator<MemoryRegion, Long, A> {
+	private class MemoryIterator implements EntryIterator<MemoryRegion, Long, A> {
 
-		private EntryIterator<MemoryRegion, Long, MemoryCell> storeIt = store
-				.entryIterator();
+		private EntryIterator<MemoryRegion, Long, MemoryCell> storeIt = store.entryIterator();
 
 		@Override
 		public MemoryRegion getLeftKey() {
@@ -546,8 +519,7 @@ public final class PartitionedMemory<A extends AbstractValue> implements
 		@Override
 		public void next() {
 			storeIt.next();
-			while (storeIt.hasEntry()
-					&& storeIt.getRightKey() != storeIt.getValue().offset)
+			while (storeIt.hasEntry() && storeIt.getRightKey() != storeIt.getValue().offset)
 				storeIt.next();
 		}
 	}

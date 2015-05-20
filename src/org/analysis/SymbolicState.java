@@ -190,8 +190,7 @@ public class SymbolicState {
 		SymbolicState res = new SymbolicState();
 
 		for (int i = 0; i < generalPurposeRegs.size(); i++) {
-			res.setRegValue(generalPurposeRegs.get(i), registerValues.get(i)
-					.clone());
+			res.setRegValue(generalPurposeRegs.get(i), registerValues.get(i).clone());
 		}
 		res.setCondition(stateCondition.clone());
 		for (int i = 0; i < symbolicStack.size(); i++) {
@@ -201,8 +200,7 @@ public class SymbolicState {
 			res.setCompareStatus(compareStatus.clone());
 		}
 
-		for (Map.Entry<MemoryOperand, SymbolicValue> entry : memoryValues
-				.entrySet()) {
+		for (Map.Entry<MemoryOperand, SymbolicValue> entry : memoryValues.entrySet()) {
 			res.addMemoryValue(entry.getKey(), entry.getValue().clone());
 		}
 
@@ -215,8 +213,8 @@ public class SymbolicState {
 	public void printInfo() {
 		System.out.print("REGS:");
 		for (int i = 0; i < generalPurposeRegs.size(); i++) {
-			System.out.println("\t" + generalPurposeRegs.get(i).toUpperCase()
-					+ " : " + registerValues.get(i).toString());
+			System.out.println("\t" + generalPurposeRegs.get(i).toUpperCase() + " : "
+					+ registerValues.get(i).toString());
 		}
 		if (compareStatus != null) {
 			System.out.println("COMPARARE: " + compareStatus.toString());
@@ -237,10 +235,8 @@ public class SymbolicState {
 		}
 		if (memoryValues.size() > 0) {
 			System.out.print("---MEMORY: ");
-			for (Map.Entry<MemoryOperand, SymbolicValue> entry : memoryValues
-					.entrySet()) {
-				System.out.print("<" + entry.getKey().toString() + " : "
-						+ entry.getValue().toString() + ">");
+			for (Map.Entry<MemoryOperand, SymbolicValue> entry : memoryValues.entrySet()) {
+				System.out.print("<" + entry.getKey().toString() + " : " + entry.getValue().toString() + ">");
 			}
 			System.out.println();
 		}

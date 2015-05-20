@@ -40,8 +40,7 @@ import java.util.List;
 public class StatementSequence implements Iterable<RTLStatement>, Serializable {
 
 	@SuppressWarnings("unused")
-	private final static Logger logger = Logger
-			.getLogger(StatementSequence.class);
+	private final static Logger logger = Logger.getLogger(StatementSequence.class);
 	private static final long serialVersionUID = -3750283603929931899L;
 
 	private LinkedList<RTLStatement> sequence;
@@ -146,15 +145,12 @@ public class StatementSequence implements Iterable<RTLStatement>, Serializable {
 			if (statement instanceof AssignmentTemplate) {
 				AssignmentTemplate a = (AssignmentTemplate) statement;
 
-				RTLExpression genericEvaldLHS = a.getLeftHandSide().accept(
-						visitor);
+				RTLExpression genericEvaldLHS = a.getLeftHandSide().accept(visitor);
 				RTLExpression evaldRHS = a.getRightHandSide().accept(visitor);
 
 				if (!(genericEvaldLHS instanceof Writable))
-					throw new RuntimeException(
-							"Error: LHS of assignment no longer writable after canonization: "
-									+ a.getLeftHandSide().toString() + " = "
-									+ genericEvaldLHS.toString());
+					throw new RuntimeException("Error: LHS of assignment no longer writable after canonization: "
+							+ a.getLeftHandSide().toString() + " = " + genericEvaldLHS.toString());
 
 				Writable evaldLHS = (Writable) genericEvaldLHS;
 
@@ -174,8 +170,7 @@ public class StatementSequence implements Iterable<RTLStatement>, Serializable {
 				if (evaldLHS.equals(evaldRHS))
 					continue;
 
-				evaldStatement = new AssignmentTemplate(a.getBitWidth(),
-						evaldLHS, evaldRHS);
+				evaldStatement = new AssignmentTemplate(a.getBitWidth(), evaldLHS, evaldRHS);
 
 			} else /* non AssignmentTemplate */{
 				evaldStatement = statement.evaluate(new Context());
@@ -187,8 +182,7 @@ public class StatementSequence implements Iterable<RTLStatement>, Serializable {
 			return null;
 
 		if (skipCondition != null) {
-			RTLGoto skipGoto = new RTLGoto(ExpressionFactory.pc, skipCondition,
-					RTLGoto.Type.STRING_LENGTH_CHECK);
+			RTLGoto skipGoto = new RTLGoto(ExpressionFactory.pc, skipCondition, RTLGoto.Type.STRING_LENGTH_CHECK);
 			addFirst(skipGoto);
 		}
 
@@ -196,8 +190,7 @@ public class StatementSequence implements Iterable<RTLStatement>, Serializable {
 			// Create a dummy goto statement, this will point to the
 			// instruction's address after instantiation
 			if (!repeatCondition.equals(ExpressionFactory.FALSE)) {
-				RTLStatement condGoto = new RTLGoto(null, repeatCondition,
-						RTLGoto.Type.REPEAT);
+				RTLStatement condGoto = new RTLGoto(null, repeatCondition, RTLGoto.Type.REPEAT);
 				addLast(condGoto);
 			}
 		}
@@ -217,8 +210,7 @@ public class StatementSequence implements Iterable<RTLStatement>, Serializable {
 
 		for (RTLStatement statement : oldSequence) {
 			if (statement instanceof AssignmentTemplate)
-				sequence.addLast(((AssignmentTemplate) statement)
-						.convertToSpecificAssignmentType());
+				sequence.addLast(((AssignmentTemplate) statement).convertToSpecificAssignmentType());
 			else
 				sequence.addLast(statement);
 
@@ -252,8 +244,7 @@ public class StatementSequence implements Iterable<RTLStatement>, Serializable {
 		return sequence;
 	}
 
-	public StatementSequence replace(RTLStatement statement,
-			RTLStatement replacement) {
+	public StatementSequence replace(RTLStatement statement, RTLStatement replacement) {
 		LinkedList<RTLStatement> oldSequence = sequence;
 		sequence = new LinkedList<RTLStatement>();
 		for (RTLStatement stmt : oldSequence) {

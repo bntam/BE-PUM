@@ -28,8 +28,7 @@ public class BinaryFileInputBuffer extends BinaryInputBuffer {
 	private int size;
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(BinaryFileInputBuffer.class);
+	private static final Logger logger = Logger.getLogger(BinaryFileInputBuffer.class);
 
 	/**
 	 * Creates a BinaryInputBuffer from the given InputStream and buffers all
@@ -37,18 +36,16 @@ public class BinaryFileInputBuffer extends BinaryInputBuffer {
 	 * will only buffer the data that is available at the time the constructor
 	 * is called (i.e. as much as is reported by InputStream.available()).
 	 */
-	public BinaryFileInputBuffer(java.io.InputStream input)
-			throws java.io.IOException {
+	public BinaryFileInputBuffer(java.io.InputStream input) throws java.io.IOException {
 		// reads in an entire input stream and buffers it
 		current = 0;
 		data = new byte[input.available()];
 		size = input.read(data);
 		input.close();
 	}
-	
+
 	// PHONG: insert additional constructor here
-	public BinaryFileInputBuffer(byte[] opcodes)
-	{
+	public BinaryFileInputBuffer(byte[] opcodes) {
 		// reads in an entire input stream and buffers it
 		current = 0;
 		size = opcodes.length;

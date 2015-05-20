@@ -40,8 +40,7 @@ public class GlobalLock extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		// Memory memory = env.getMemory();
@@ -57,10 +56,7 @@ public class GlobalLock extends Kernel32API {
 			HANDLE hMem = new HANDLE(new Pointer(t1));
 			LPVOID ret = Kernel32DLL.INSTANCE.GlobalLock(hMem);
 
-			register.mov(
-					"eax",
-					new LongValue(ret == null ? 0 : Pointer.nativeValue(ret
-							.toPointer())));
+			register.mov("eax", new LongValue(ret == null ? 0 : Pointer.nativeValue(ret.toPointer())));
 		}
 		return false;
 	}

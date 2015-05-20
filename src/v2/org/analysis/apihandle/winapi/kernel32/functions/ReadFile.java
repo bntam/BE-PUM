@@ -79,7 +79,7 @@ public class ReadFile extends Kernel32API {
 	 * 
 	 */
 	public ReadFile() {
-		
+
 	}
 
 	@Override
@@ -139,22 +139,22 @@ public class ReadFile extends Kernel32API {
 
 			boolean ret = Kernel32.INSTANCE.ReadFile(hFile, lpBuffer, nNumberOfBytesToRead, lpNumberOfBytesRead,
 					lpOverlapped);
-			
-			register.mov("eax", new LongValue(ret ? 1 : 0));
 
+			register.mov("eax", new LongValue(ret ? 1 : 0));
 
 			try {
 				byte[] bufferArray = lpBuffer.array();
 				for (int i = 0; i < bufferArray.length; i++) {
-					memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t2 + i), new LongValue((long)bufferArray[i]));
+					memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t2 + i), new LongValue(
+							(long) bufferArray[i]));
 				}
-				//System.out.println("Data: " + str);
+				// System.out.println("Data: " + str);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			System.out.println("ReadFile is done");
-			
+
 			if (t4 != 0L) {
 				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
 						lpNumberOfBytesRead.getValue()));

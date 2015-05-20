@@ -29,8 +29,7 @@ public class FileImage {
 	}
 
 	public long getReturnRandomValue() {
-		return baseAddress + 2 * Convert.hexToLong("50000")
-				+ (int) Math.random() * 5000;
+		return baseAddress + 2 * Convert.hexToLong("50000") + (int) Math.random() * 5000;
 	}
 
 	public int getLength() {
@@ -44,53 +43,43 @@ public class FileImage {
 	public static void main(String[] args) {
 		FileImage k = new FileImage();
 
-		System.out.println("Base address: " + k.baseAddress + " Hex:"
-				+ Convert.longToHex(k.baseAddress));
+		System.out.println("Base address: " + k.baseAddress + " Hex:" + Convert.longToHex(k.baseAddress));
 		System.out.println("Length: " + k.getLength());
 		String index = "3c";
 		int offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index + " Value:" + offset);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read word: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
-		System.out.println("Read double word: " + k.readDoubleWord(offset)
-				+ " Hex:" + Convert.longToHex(k.readDoubleWord(offset), 32));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read word: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read double word: " + k.readDoubleWord(offset) + " Hex:"
+				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
 		index = "168";
 		offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read word: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
-		System.out.println("Read double word: " + k.readDoubleWord(offset)
-				+ " Hex:" + Convert.longToHex(k.readDoubleWord(offset), 32));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read word: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read double word: " + k.readDoubleWord(offset) + " Hex:"
+				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
 		index = "600";
 		offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read word: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
-		System.out.println("Read double word: " + k.readDoubleWord(offset)
-				+ " Hex:" + Convert.longToHex(k.readDoubleWord(offset), 32));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read word: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read double word: " + k.readDoubleWord(offset) + " Hex:"
+				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
 		// index = "2648";
 		// offset = (int) (k.baseAddress +
 		// k.getPeHandler().getCodeBaseAddress());
 		offset = (int) k.getPeHandler().getEntryPoint().getValue();
 		System.out.println("Offset:" + offset);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read byte: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read byte: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
 		System.out.println("Read byte: " + k.readDoubleWord(offset) + " Hex:"
 				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
-		System.out.println("Read Instruction at:"
-				+ k.getPeHandler().getEntryPoint().toString());
+		System.out.println("Read Instruction at:" + k.getPeHandler().getEntryPoint().toString());
 		Instruction inst = k.readInstruction(k.getPeHandler().getEntryPoint());
 		System.out.println("Name: " + inst.getName());
 		for (int i = 0; i < inst.getOperandCount(); i++)

@@ -1,6 +1,5 @@
 package v2.org.analysis;
 
-
 import org.jakstab.Program;
 
 import javax.imageio.ImageIO;
@@ -20,7 +19,7 @@ public class MainWindows extends JFrame {
 	private JMenuItem itmOpen;
 	private JMenuItem itmExit;
 	private JMenu menuHelp;
-	//private JMenuItem itmWelcome;
+	// private JMenuItem itmWelcome;
 	private JMenuItem itmAbout;
 	private Dialog aboutDialog;
 	private JScrollPane pnlImage;
@@ -28,13 +27,12 @@ public class MainWindows extends JFrame {
 	private BufferedImage image;
 	private JLabel picLabel;
 	private JProgressBar progressBar;
-	private Font bigFont = new Font( "Serif", Font.TRUETYPE_FONT, 18 );
+	private Font bigFont = new Font("Serif", Font.TRUETYPE_FONT, 18);
 
 	public static void main(String args[]) {
 		try {
 			// Set System L&F
-	        UIManager.setLookAndFeel(
-	            UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			// handle exception
 		}
@@ -55,7 +53,7 @@ public class MainWindows extends JFrame {
 		menuBar.add(menuFile);
 		generateMenuHelp();
 		menuBar.add(menuHelp);
-		generateAboutDialog();	
+		generateAboutDialog();
 
 		progressBar = new JProgressBar(0, 100);
 		progressBar.setValue(0);
@@ -67,10 +65,10 @@ public class MainWindows extends JFrame {
 		// or not the string is shown.
 		progressBar.setStringPainted(true); // get space for the string
 		progressBar.setString(""); // but don't paint it
-//        progressBar = new JProgressBar(0, 100);
-//        progressBar.setStringPainted(true);
-////        progressBar.setValue(0);
-		
+		// progressBar = new JProgressBar(0, 100);
+		// progressBar.setStringPainted(true);
+		// // progressBar.setValue(0);
+
 		// ======== this ========
 		picLabel = new JLabel();
 		pnlImage = new JScrollPane(picLabel);
@@ -83,12 +81,12 @@ public class MainWindows extends JFrame {
 		setLocationRelativeTo(getOwner());
 	}
 
-	//Generate menu file
+	// Generate menu file
 	private void generateMenuFile() {
-		
+
 		menuFile = new JMenu();
 		menuFile.setText("File");
-		 
+
 		// ---- itmOpen ----
 		itmOpen = new JMenuItem();
 		itmOpen.setText("Open File...");
@@ -115,7 +113,7 @@ public class MainWindows extends JFrame {
 		itmExit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				itmExitActionPerformed(e);	
+				itmExitActionPerformed(e);
 			}
 		});
 		menuFile.add(itmExit);
@@ -124,12 +122,12 @@ public class MainWindows extends JFrame {
 	private void generateMenuHelp() {
 		menuHelp = new JMenu();
 		menuHelp.setText("Help");
-		
+
 		// ---- itmWelcome ----
-		//itmWelcome = new JMenuItem();
-	//	itmWelcome.setText("Welcome");
-		//menuHelp.add(itmWelcome);
-	//	menuHelp.addSeparator();
+		// itmWelcome = new JMenuItem();
+		// itmWelcome.setText("Welcome");
+		// menuHelp.add(itmWelcome);
+		// menuHelp.addSeparator();
 
 		// ---- itmAbout ----
 		itmAbout = new JMenuItem();
@@ -144,8 +142,8 @@ public class MainWindows extends JFrame {
 		itmAbout.setFont(bigFont);
 		menuHelp.setFont(bigFont);
 	}
-	
-	//Generate about dialog box to display info about Be-PUM
+
+	// Generate about dialog box to display info about Be-PUM
 	private void generateAboutDialog() {
 		aboutDialog = new Dialog(aboutDialog);
 		aboutDialog.setTitle("About Dialog");
@@ -168,23 +166,23 @@ public class MainWindows extends JFrame {
 		aboutDialog.setLocationRelativeTo(aboutDialog.getOwner());
 	}
 
-	//show message box
+	// show message box
 	private void itmAboutActionPerformed(ActionEvent e) {
-	
-		JOptionPane.showMessageDialog(this,"BE-PUM is a a tool which intends to generate Pushdown model\nfrom binary code of malwares.\n\n"
-				+ "Version: 2.0\n\n"
-				+ "Published: 2013\n\n"
-				+"Authors:\nMinh Hai Nguyen\nThanh Tho Quan\nMizuhito Ogawa\nDo Duy Phong\n\n",
+
+		JOptionPane.showMessageDialog(this,
+				"BE-PUM is a a tool which intends to generate Pushdown model\nfrom binary code of malwares.\n\n"
+						+ "Version: 2.0\n\n" + "Published: 2013\n\n"
+						+ "Authors:\nMinh Hai Nguyen\nThanh Tho Quan\nMizuhito Ogawa\nDo Duy Phong\n\n",
 				"About BE-PUM", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	// Convert .dot to image and display on screen
 	private void itmOpenActionPerformed(ActionEvent e) throws IOException {
-		
+
 		final String dir = promptForFile();
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		setIndeterminate(true);
-        menuBar.setEnabled(false);
+		menuBar.setEnabled(false);
 
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
@@ -198,8 +196,8 @@ public class MainWindows extends JFrame {
 					picLabel.removeAll();
 					picLabel.setIcon(new ImageIcon(image));
 					picLabel.revalidate();
-			        setCursor(null);
-			        menuBar.setEnabled(true);
+					setCursor(null);
+					menuBar.setEnabled(true);
 					setIndeterminate(false);
 				}
 			}
@@ -218,29 +216,27 @@ public class MainWindows extends JFrame {
 	// Display File chooser box
 	private String promptForFile() {
 		Preferences prefs = Preferences.userRoot().node(getClass().getName());
-		JFileChooser fc = new JFileChooser(prefs.get(LAST_USED_FOLDER,
-		    new File(".").getAbsolutePath()));
-		
+		JFileChooser fc = new JFileChooser(prefs.get(LAST_USED_FOLDER, new File(".").getAbsolutePath()));
+
 		int returnVal = fc.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			//prefs.put(LAST_USED_FOLDER, fc.getParent().toString());
+			// prefs.put(LAST_USED_FOLDER, fc.getParent().toString());
 			return fc.getSelectedFile().getAbsolutePath();
 		} else {
 			return null;
 		}
 	}
-	
+
 	// Convert .dot file to image and save it into the tmp folder
-	private String convertDotToImg(String path){
+	private String convertDotToImg(String path) {
 		try {
 			String root = System.getProperty("user.dir");
-			//String newFile = copyFileUsingStream(new File(path), root
-			//		+ "\\dot\\tmp\\");
+			// String newFile = copyFileUsingStream(new File(path), root
+			// + "\\dot\\tmp\\");
 			Main.analyzeFile(path);
 			String nPath = Program.getProgram().generatePathFileName(path);
 			String output = nPath + ".png";
-			String command = root + "\\dot\\dot.exe -Tpng " + nPath
-					+ "_model.dot -o " + output;
+			String command = root + "\\dot\\dot.exe -Tpng " + nPath + "_model.dot -o " + output;
 			System.out.println(command);
 			Process p = Runtime.getRuntime().exec(command);
 			p.waitFor();
@@ -250,33 +246,34 @@ public class MainWindows extends JFrame {
 		}
 		return null;
 	}
-	
+
 	// copy selected file into folder
 	private String copyFileUsingStream(File source, String dest) throws IOException {
-	    InputStream is = null;
-	    OutputStream os = null;
-	    File newFile = new File(dest + source.getName());
-	    try {
-	        is = new FileInputStream(source);
-	        os = new FileOutputStream(newFile);
-	        byte[] buffer = new byte[1024];
-	        int length;
-	        while ((length = is.read(buffer)) > 0) {
-//	        	setProgressValue((int) ((length * 100 / source.length()) * 10 / 100));
-	            os.write(buffer, 0, length);
-	        }
-	    } finally {
-	        is.close();
-	        os.close();
-	    }
-	    return newFile.getAbsolutePath();
+		InputStream is = null;
+		OutputStream os = null;
+		File newFile = new File(dest + source.getName());
+		try {
+			is = new FileInputStream(source);
+			os = new FileOutputStream(newFile);
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = is.read(buffer)) > 0) {
+				// setProgressValue((int) ((length * 100 / source.length()) * 10
+				// / 100));
+				os.write(buffer, 0, length);
+			}
+		} finally {
+			is.close();
+			os.close();
+		}
+		return newFile.getAbsolutePath();
 	}
 
 	private void setIndeterminate(boolean flag) {
 		progressBar.setIndeterminate(flag);
 		Rectangle progressRect = progressBar.getBounds();
 		progressRect.x = 0;
-		progressRect.y = 0;         
+		progressRect.y = 0;
 		progressBar.paintImmediately(progressRect);
 	}
 }

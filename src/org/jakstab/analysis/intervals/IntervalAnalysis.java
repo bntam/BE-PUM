@@ -52,8 +52,7 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(IntervalAnalysis.class);
+	private static final Logger logger = Logger.getLogger(IntervalAnalysis.class);
 	private AbstractValueFactory<IntervalElement> valueFactory;
 
 	public IntervalAnalysis() {
@@ -61,8 +60,7 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		return new IntervalPrecision();
 	}
 
@@ -88,8 +86,7 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 	 * .AbstractState, org.jakstab.analysis.AbstractState)
 	 */
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 
 		// Widen s2 towards s1.
 		// return ((IntervalState)s2).widen((IntervalState)s1);
@@ -104,26 +101,23 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 
 		ValuationState widenedState = new ValuationState(valueFactory);
 		// Widen variable valuations
-		for (Iterator<Map.Entry<RTLVariable, AbstractDomainElement>> entryIt = current
-				.variableIterator(); entryIt.hasNext();) {
-			Map.Entry<RTLVariable, AbstractDomainElement> entry = entryIt
-					.next();
+		for (Iterator<Map.Entry<RTLVariable, AbstractDomainElement>> entryIt = current.variableIterator(); entryIt
+				.hasNext();) {
+			Map.Entry<RTLVariable, AbstractDomainElement> entry = entryIt.next();
 			RTLVariable var = entry.getKey();
 			IntervalElement v = (IntervalElement) entry.getValue();
-			widenedState.setVariableValue(var,
-					v.widen((IntervalElement) towards.getVariableValue(var)));
+			widenedState.setVariableValue(var, v.widen((IntervalElement) towards.getVariableValue(var)));
 		}
 
 		// Widen memory
-		for (EntryIterator<MemoryRegion, Long, AbstractDomainElement> entryIt = current
-				.storeIterator(); entryIt.hasEntry(); entryIt.next()) {
+		for (EntryIterator<MemoryRegion, Long, AbstractDomainElement> entryIt = current.storeIterator(); entryIt
+				.hasEntry(); entryIt.next()) {
 			MemoryRegion region = entryIt.getLeftKey();
 			Long offset = entryIt.getRightKey();
 			IntervalElement v = (IntervalElement) entryIt.getValue();
 			int bitWidth = v.getBitWidth();
-			widenedState.setMemoryValue(region, offset, bitWidth, v
-					.widen((IntervalElement) towards.getMemoryValue(region,
-							offset, bitWidth)));
+			widenedState.setMemoryValue(region, offset, bitWidth,
+					v.widen((IntervalElement) towards.getMemoryValue(region, offset, bitWidth)));
 		}
 
 		return widenedState;
@@ -137,172 +131,146 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 	 * org.jakstab.analysis.Precision)
 	 */
 	@Override
-	public Set<AbstractState> post(final AbstractState state, CFAEdge cfaEdge,
-			Precision precision) {
+	public Set<AbstractState> post(final AbstractState state, CFAEdge cfaEdge, Precision precision) {
 
 		final RTLStatement statement = (RTLStatement) cfaEdge.getTransformer();
 		final ValuationState iState = (ValuationState) state;
 
-		return Collections.singleton(statement
-				.accept(new DefaultStatementVisitor<AbstractState>() {
+		return Collections.singleton(statement.accept(new DefaultStatementVisitor<AbstractState>() {
 
-					@Override
-					protected AbstractState visitDefault(RTLStatement stmt) {
-						return state;
-					}
+			@Override
+			protected AbstractState visitDefault(RTLStatement stmt) {
+				return state;
+			}
 
-					@Override
-					public AbstractState visit(RTLVariableAssignment stmt) {
-						ValuationState post = new ValuationState(iState);
-						Writable lhs = stmt.getLeftHandSide();
-						RTLExpression rhs = stmt.getRightHandSide();
-						AbstractDomainElement evaledRhs = iState
-								.abstractEval(rhs);
-						post.setVariableValue((RTLVariable) lhs, evaledRhs);
-						return post;
-					}
+			@Override
+			public AbstractState visit(RTLVariableAssignment stmt) {
+				ValuationState post = new ValuationState(iState);
+				Writable lhs = stmt.getLeftHandSide();
+				RTLExpression rhs = stmt.getRightHandSide();
+				AbstractDomainElement evaledRhs = iState.abstractEval(rhs);
+				post.setVariableValue((RTLVariable) lhs, evaledRhs);
+				return post;
+			}
 
-					@Override
-					public AbstractState visit(RTLMemoryAssignment stmt) {
-						ValuationState post = new ValuationState(iState);
-						RTLMemoryLocation m = stmt.getLeftHandSide();
-						RTLExpression rhs = stmt.getRightHandSide();
-						AbstractDomainElement evaledRhs = iState
-								.abstractEval(rhs);
-						AbstractDomainElement evaledAddress = iState
-								.abstractEval(m.getAddress());
-						post.setMemoryValue(evaledAddress, m.getBitWidth(),
-								evaledRhs);
-						return post;
-					}
+			@Override
+			public AbstractState visit(RTLMemoryAssignment stmt) {
+				ValuationState post = new ValuationState(iState);
+				RTLMemoryLocation m = stmt.getLeftHandSide();
+				RTLExpression rhs = stmt.getRightHandSide();
+				AbstractDomainElement evaledRhs = iState.abstractEval(rhs);
+				AbstractDomainElement evaledAddress = iState.abstractEval(m.getAddress());
+				post.setMemoryValue(evaledAddress, m.getBitWidth(), evaledRhs);
+				return post;
+			}
 
-					@Override
-					public AbstractState visit(RTLAssume stmt) {
+			@Override
+			public AbstractState visit(RTLAssume stmt) {
 
-						ValuationState post = new ValuationState(iState);
+				ValuationState post = new ValuationState(iState);
 
-						RTLExpression assumption = stmt.getAssumption();
+				RTLExpression assumption = stmt.getAssumption();
 
-						// TODO: implement assume
+				// TODO: implement assume
 
-						if (assumption instanceof RTLOperation) {
-							RTLOperation op = (RTLOperation) assumption;
-							switch (op.getOperator()) {
-							case UNSIGNED_LESS_OR_EQUAL:
-								RTLExpression lhs = op.getOperands()[0];
-								RTLExpression rhs = op.getOperands()[1];
-								IntervalElement evaledLhs = (IntervalElement) iState
-										.abstractEval(lhs);
-								IntervalElement evaledRhs = (IntervalElement) iState
-										.abstractEval(rhs);
+				if (assumption instanceof RTLOperation) {
+					RTLOperation op = (RTLOperation) assumption;
+					switch (op.getOperator()) {
+					case UNSIGNED_LESS_OR_EQUAL:
+						RTLExpression lhs = op.getOperands()[0];
+						RTLExpression rhs = op.getOperands()[1];
+						IntervalElement evaledLhs = (IntervalElement) iState.abstractEval(lhs);
+						IntervalElement evaledRhs = (IntervalElement) iState.abstractEval(rhs);
 
-								if (evaledRhs.getLeft() >= 0) {
-									IntervalElement uLessInt = new IntervalElement(
-											evaledRhs.getRegion(), 0, evaledRhs
-													.getRight(), 1, evaledLhs
-													.getBitWidth());
-									// TODO: Implement meet for interval
-									// elements for optimal result
-									// uLessInt = uLessInt.meet(evaledLhs);
-									// if uLessInt.isBot() return
-									// Collections.emptySet();
-									// cheap but sound solution for now: only
-									// use new interval if it has less elements
-									if (uLessInt.size() < evaledLhs.size()) {
-										if (lhs instanceof RTLVariable) {
-											post.setVariableValue(
-													(RTLVariable) lhs, uLessInt);
-										} else if (lhs instanceof RTLMemoryLocation) {
-											RTLMemoryLocation m = (RTLMemoryLocation) lhs;
-											AbstractDomainElement evaledAddress = iState
-													.abstractEval(m
-															.getAddress());
-											post.setMemoryValue(evaledAddress,
-													m.getBitWidth(), uLessInt);
-										}
-									}
+						if (evaledRhs.getLeft() >= 0) {
+							IntervalElement uLessInt = new IntervalElement(evaledRhs.getRegion(), 0, evaledRhs
+									.getRight(), 1, evaledLhs.getBitWidth());
+							// TODO: Implement meet for interval
+							// elements for optimal result
+							// uLessInt = uLessInt.meet(evaledLhs);
+							// if uLessInt.isBot() return
+							// Collections.emptySet();
+							// cheap but sound solution for now: only
+							// use new interval if it has less elements
+							if (uLessInt.size() < evaledLhs.size()) {
+								if (lhs instanceof RTLVariable) {
+									post.setVariableValue((RTLVariable) lhs, uLessInt);
+								} else if (lhs instanceof RTLMemoryLocation) {
+									RTLMemoryLocation m = (RTLMemoryLocation) lhs;
+									AbstractDomainElement evaledAddress = iState.abstractEval(m.getAddress());
+									post.setMemoryValue(evaledAddress, m.getBitWidth(), uLessInt);
 								}
-								break;
 							}
 						}
-
-						return post;
+						break;
 					}
+				}
 
-					@Override
-					public AbstractState visit(RTLAlloc stmt) {
-						ValuationState post = new ValuationState(iState);
-						Writable lhs = stmt.getPointer();
+				return post;
+			}
 
-						MemoryRegion newRegion;
-						if (stmt.getAllocationName() != null) {
-							newRegion = MemoryRegion.create(stmt
-									.getAllocationName());
-						} else {
-							// TODO: Detect whether this allocation is unique to
-							// allow strong updates
-							newRegion = MemoryRegion.createAsSummary("alloc"
-									+ stmt.getLabel());
-						}
+			@Override
+			public AbstractState visit(RTLAlloc stmt) {
+				ValuationState post = new ValuationState(iState);
+				Writable lhs = stmt.getPointer();
 
-						IntervalElement basePointer = new IntervalElement(
-								newRegion, ExpressionFactory
-										.createNumber(0, 32));
+				MemoryRegion newRegion;
+				if (stmt.getAllocationName() != null) {
+					newRegion = MemoryRegion.create(stmt.getAllocationName());
+				} else {
+					// TODO: Detect whether this allocation is unique to
+					// allow strong updates
+					newRegion = MemoryRegion.createAsSummary("alloc" + stmt.getLabel());
+				}
 
-						if (lhs instanceof RTLVariable) {
-							post.setVariableValue((RTLVariable) lhs,
-									basePointer);
-						} else {
-							RTLMemoryLocation m = (RTLMemoryLocation) lhs;
-							AbstractDomainElement evaledAddress = iState
-									.abstractEval(m.getAddress());
-							post.setMemoryValue(evaledAddress, m.getBitWidth(),
-									basePointer);
-						}
+				IntervalElement basePointer = new IntervalElement(newRegion, ExpressionFactory.createNumber(0, 32));
 
-						return post;
-					}
+				if (lhs instanceof RTLVariable) {
+					post.setVariableValue((RTLVariable) lhs, basePointer);
+				} else {
+					RTLMemoryLocation m = (RTLMemoryLocation) lhs;
+					AbstractDomainElement evaledAddress = iState.abstractEval(m.getAddress());
+					post.setMemoryValue(evaledAddress, m.getBitWidth(), basePointer);
+				}
 
-					@Override
-					public AbstractState visit(RTLHavoc stmt) {
-						ValuationState post = new ValuationState(iState);
+				return post;
+			}
 
-						// Only create a single state with the havoc range,
-						// since this analysis
-						// is not path sensitive
-						post.setVariableValue(stmt.getVariable(),
-						// new
-						// IntervalElement(ExpressionFactory.getInstance().createNumber(0,
-						// stmt.getVariable().getBitWidth()),
-						// (RTLNumber)stmt.getMaximum()));
-								new IntervalElement(MemoryRegion.GLOBAL, 0,
-										((RTLNumber) stmt.getMaximum())
-												.longValue(), 1, stmt
-												.getVariable().getBitWidth()));
+			@Override
+			public AbstractState visit(RTLHavoc stmt) {
+				ValuationState post = new ValuationState(iState);
 
-						return post;
-					}
+				// Only create a single state with the havoc range,
+				// since this analysis
+				// is not path sensitive
+				post.setVariableValue(stmt.getVariable(),
+				// new
+				// IntervalElement(ExpressionFactory.getInstance().createNumber(0,
+				// stmt.getVariable().getBitWidth()),
+				// (RTLNumber)stmt.getMaximum()));
+						new IntervalElement(MemoryRegion.GLOBAL, 0, ((RTLNumber) stmt.getMaximum()).longValue(), 1,
+								stmt.getVariable().getBitWidth()));
 
-					@Override
-					public AbstractState visit(RTLUnknownProcedureCall stmt) {
-						ValuationState post = new ValuationState(iState);
-						for (RTLVariable var : stmt.getDefinedVariables()) {
-							post.setVariableValue(var,
-									IntervalElement.getTop(var.getBitWidth()));
-						}
-						post.setMemoryValue(IntervalElement.getTop(Program
-								.getProgram().getArchitecture()
-								.getAddressBitWidth()), 32, IntervalElement
-								.getTop(32));
-						return post;
-					}
+				return post;
+			}
 
-				}));
+			@Override
+			public AbstractState visit(RTLUnknownProcedureCall stmt) {
+				ValuationState post = new ValuationState(iState);
+				for (RTLVariable var : stmt.getDefinedVariables()) {
+					post.setVariableValue(var, IntervalElement.getTop(var.getBitWidth()));
+				}
+				post.setMemoryValue(
+						IntervalElement.getTop(Program.getProgram().getArchitecture().getAddressBitWidth()), 32,
+						IntervalElement.getTop(32));
+				return post;
+			}
+
+		}));
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 
 		ValuationState state = (ValuationState) s;
@@ -314,8 +282,7 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 			// one successor state.
 			if (t instanceof BasedNumberValuation) {
 				BasedNumberValuation exState = (BasedNumberValuation) t;
-				for (Map.Entry<RTLVariable, BasedNumberElement> entry : exState
-						.getVariableValuation()) {
+				for (Map.Entry<RTLVariable, BasedNumberElement> entry : exState.getVariableValuation()) {
 					RTLVariable var = entry.getKey();
 					BasedNumberElement exVal = entry.getValue();
 					if (exVal.isTop() || exVal.isNumberTop())
@@ -324,13 +291,12 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 						if (strengthenedState == null) {
 							strengthenedState = new ValuationState(state);
 						}
-						strengthenedState.setVariableValue(
-								var,
-								new IntervalElement(exVal.getRegion(), exVal
-										.getNumber()));
+						strengthenedState.setVariableValue(var,
+								new IntervalElement(exVal.getRegion(), exVal.getNumber()));
 						// logger.debug("Strengthened state " +
 						// state.getIdentifier() +
-						// " by setting " + var + " to " + state.getValueOperand(var));
+						// " by setting " + var + " to " +
+						// state.getValueOperand(var));
 					}
 				}
 			}
@@ -340,8 +306,7 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 		return Pair.create(s, precision);
 	}
 
@@ -361,36 +326,30 @@ public class IntervalAnalysis implements ConfigurableProgramAnalysis {
 	public RTLExpression getStateFormula(ValuationState state) {
 		RTLExpression result = null;
 
-		for (Iterator<Map.Entry<RTLVariable, AbstractDomainElement>> entryIt = state
-				.variableIterator(); entryIt.hasNext();) {
-			Map.Entry<RTLVariable, AbstractDomainElement> entry = entryIt
-					.next();
+		for (Iterator<Map.Entry<RTLVariable, AbstractDomainElement>> entryIt = state.variableIterator(); entryIt
+				.hasNext();) {
+			Map.Entry<RTLVariable, AbstractDomainElement> entry = entryIt.next();
 			RTLVariable var = entry.getKey();
 			IntervalElement interval = (IntervalElement) entry.getValue();
 
 			if (interval.size() == 1) {
 				result = addClause(
 						result,
-						ExpressionFactory.createEqual(
-								var,
-								ExpressionFactory.createNumber(
-										interval.getLeft(), var.getBitWidth())));
+						ExpressionFactory.createEqual(var,
+								ExpressionFactory.createNumber(interval.getLeft(), var.getBitWidth())));
 			} else {
 				if (!interval.leftOpen()) {
-					result = addClause(result,
+					result = addClause(
+							result,
 							ExpressionFactory.createLessOrEqual(
-									ExpressionFactory.createNumber(
-											interval.getLeft(),
-											var.getBitWidth()), var));
+									ExpressionFactory.createNumber(interval.getLeft(), var.getBitWidth()), var));
 				}
 
 				if (!interval.rightOpen()) {
-					result = addClause(result,
-							ExpressionFactory.createLessOrEqual(
-									var,
-									ExpressionFactory.createNumber(
-											interval.getRight(),
-											var.getBitWidth())));
+					result = addClause(
+							result,
+							ExpressionFactory.createLessOrEqual(var,
+									ExpressionFactory.createNumber(interval.getRight(), var.getBitWidth())));
 				}
 			}
 		}

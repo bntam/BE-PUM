@@ -4,11 +4,11 @@ public class FILE_TIME {
 
 	private int lowDateTime;
 	private int highDateTime;
-	
+
 	public FILE_TIME() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public FILE_TIME(int lowTime, int highTime) {
 		this.setLowDateTime(lowTime);
 		this.setHighDateTime(highTime);
@@ -29,5 +29,5 @@ public class FILE_TIME {
 	public void setHighDateTime(int highDateTime) {
 		this.highDateTime = highDateTime;
 	}
-	
+
 }

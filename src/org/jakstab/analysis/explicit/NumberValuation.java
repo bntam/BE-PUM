@@ -49,12 +49,10 @@ import java.util.Set;
  */
 public final class NumberValuation implements AbstractState {
 
-	private static final Logger logger = Logger
-			.getLogger(NumberValuation.class);
+	private static final Logger logger = Logger.getLogger(NumberValuation.class);
 	private static long maxStateId = 0;
 
-	static final NumberValuation TOP = new NumberValuation(
-			new HashMap<RTLVariable, NumberElement>(),
+	static final NumberValuation TOP = new NumberValuation(new HashMap<RTLVariable, NumberElement>(),
 			new HashMap<RTLMemoryLocation, NumberElement>(), true);
 
 	public static NumberValuation createInitialState() {
@@ -80,12 +78,11 @@ public final class NumberValuation implements AbstractState {
 	 * Creates a new state which is equivalent to TOP.
 	 */
 	private NumberValuation() {
-		this(new HashMap<RTLVariable, NumberElement>(),
-				new HashMap<RTLMemoryLocation, NumberElement>(), false);
+		this(new HashMap<RTLVariable, NumberElement>(), new HashMap<RTLMemoryLocation, NumberElement>(), false);
 	}
 
-	private NumberValuation(Map<RTLVariable, NumberElement> aVarVal,
-			Map<RTLMemoryLocation, NumberElement> aMemVal, boolean dataIsTop) {
+	private NumberValuation(Map<RTLVariable, NumberElement> aVarVal, Map<RTLMemoryLocation, NumberElement> aMemVal,
+			boolean dataIsTop) {
 		stateId = ++maxStateId;
 		this.aVarVal = aVarVal;
 		this.aMemVal = aMemVal;
@@ -125,8 +122,7 @@ public final class NumberValuation implements AbstractState {
 				if (aFirstBit.isTop() || aLastBit.isTop() || aOperand.isTop())
 					return NumberElement.getTop(e.getBitWidth());
 
-				return new NumberElement(RTLBitRange.calculate(
-						aFirstBit.getNumber(), aLastBit.getNumber(),
+				return new NumberElement(RTLBitRange.calculate(aFirstBit.getNumber(), aLastBit.getNumber(),
 						aOperand.getNumber()));
 			}
 
@@ -138,8 +134,7 @@ public final class NumberValuation implements AbstractState {
 				if (NumberElement.TRUE.lessOrEqual(aCondition))
 					result = e.getTrueExpression().accept(this);
 				if (NumberElement.FALSE.lessOrEqual(aCondition)) {
-					NumberElement falseVal = e.getFalseExpression()
-							.accept(this);
+					NumberElement falseVal = e.getFalseExpression().accept(this);
 					result = result == null ? falseVal : result.join(falseVal);
 				}
 				return result;
@@ -154,9 +149,7 @@ public final class NumberValuation implements AbstractState {
 					return NumberElement.getTop(m.getBitWidth());
 				// create constant memory location
 				RTLNumber constantAddress = abstractAddress.getNumber();
-				m = ExpressionFactory.createMemoryLocation(
-						m.getSegmentRegister(), constantAddress,
-						m.getBitWidth());
+				m = ExpressionFactory.createMemoryLocation(m.getSegmentRegister(), constantAddress, m.getBitWidth());
 				// check value of the constant memory location in this state
 				return getValue(m);
 			}
@@ -173,18 +166,16 @@ public final class NumberValuation implements AbstractState {
 
 			@Override
 			public NumberElement visit(RTLOperation e) {
-				RTLExpression[] aOperands = new RTLExpression[e
-						.getOperandCount()];
+				RTLExpression[] aOperands = new RTLExpression[e.getOperandCount()];
 				for (int i = 0; i < e.getOperandCount(); i++) {
 					NumberElement aOperand = e.getOperands()[i].accept(this);
 					if (aOperand.isTop())
-						aOperands[i] = ExpressionFactory
-								.nondet(e.getOperands()[i].getBitWidth());
+						aOperands[i] = ExpressionFactory.nondet(e.getOperands()[i].getBitWidth());
 					else
 						aOperands[i] = aOperand.getNumber();
 				}
-				RTLExpression result = ExpressionFactory.createOperation(
-						e.getOperator(), aOperands).evaluate(new Context());
+				RTLExpression result = ExpressionFactory.createOperation(e.getOperator(), aOperands).evaluate(
+						new Context());
 				if (result instanceof RTLNumber)
 					return new NumberElement((RTLNumber) result);
 				else
@@ -194,14 +185,11 @@ public final class NumberValuation implements AbstractState {
 			@Override
 			public NumberElement visit(RTLSpecialExpression e) {
 				if (e.getOperator().equals(RTLSpecialExpression.GETPROCADDRESS)) {
-					NumberElement aLibNameAddr = e.getOperands()[0]
-							.accept(this);
-					NumberElement aProcNameAddr = e.getOperands()[1]
-							.accept(this);
+					NumberElement aLibNameAddr = e.getOperands()[0].accept(this);
+					NumberElement aProcNameAddr = e.getOperands()[1].accept(this);
 					if (!aLibNameAddr.isTop() && !aProcNameAddr.isTop()) {
 						long libNameAddr = aLibNameAddr.getNumber().longValue();
-						long procNameAddr = aProcNameAddr.getNumber()
-								.longValue();
+						long procNameAddr = aProcNameAddr.getNumber().longValue();
 						String libName = getCString(libNameAddr);
 						// If it's length 1, it's most probably a unicode
 						// string:
@@ -209,12 +197,9 @@ public final class NumberValuation implements AbstractState {
 							libName = getWString(libNameAddr);
 						}
 						String procName = getCString(procNameAddr);
-						logger.info("GetProcAddress for " + procName
-								+ " from module " + libName);
-						long procAddress = Program.getProgram()
-								.getProcAddress(libName, procName).getValue();
-						return new NumberElement(
-								ExpressionFactory.createNumber(procAddress, 32));
+						logger.info("GetProcAddress for " + procName + " from module " + libName);
+						long procAddress = Program.getProgram().getProcAddress(libName, procName).getValue();
+						return new NumberElement(ExpressionFactory.createNumber(procAddress, 32));
 
 					} else {
 						logger.info("Could not determine parameters of GetProcAddress!");
@@ -233,8 +218,7 @@ public final class NumberValuation implements AbstractState {
 		return e.accept(visitor);
 	}
 
-	public AbstractState abstractPost(StateTransformer transformer,
-			Precision precision) {
+	public AbstractState abstractPost(StateTransformer transformer, Precision precision) {
 
 		final RTLStatement statement = (RTLStatement) transformer;
 
@@ -251,8 +235,7 @@ public final class NumberValuation implements AbstractState {
 				NumberElement evaledRhs = abstractEval(stmt.getRightHandSide());
 
 				post.setValue(stmt.getLeftHandSide(), evaledRhs);
-				if (post.aVarVal.isEmpty() && post.aMemVal.isEmpty()
-						&& post.dataIsTop)
+				if (post.aVarVal.isEmpty() && post.aMemVal.isEmpty() && post.dataIsTop)
 					return TOP;
 				return post;
 			}
@@ -268,21 +251,17 @@ public final class NumberValuation implements AbstractState {
 				// if the address cannot be determined, set all store memory to
 				// TOP
 				if (abstractAddress.isTop()) {
-					logger.verbose(stmt.getLabel()
-							+ ": Cannot resolve memory write to " + m
+					logger.verbose(stmt.getLabel() + ": Cannot resolve memory write to " + m
 							+ ". Defaulting all memory to " + Characters.TOP);
 					post.clearMemory();
 				}
 				// if it's a constant address, store the assigned value
 				else {
 					RTLNumber constantAddress = abstractAddress.getNumber();
-					m = ExpressionFactory.createMemoryLocation(
-							m.getSegmentRegister(), constantAddress,
-							m.getBitWidth());
+					m = ExpressionFactory.createMemoryLocation(m.getSegmentRegister(), constantAddress, m.getBitWidth());
 					post.setValue(m, evaledRhs);
 				}
-				if (post.aVarVal.isEmpty() && post.aMemVal.isEmpty()
-						&& post.dataIsTop)
+				if (post.aVarVal.isEmpty() && post.aMemVal.isEmpty() && post.dataIsTop)
 					return TOP;
 				return post;
 			}
@@ -292,8 +271,7 @@ public final class NumberValuation implements AbstractState {
 				NumberValuation post = new NumberValuation(NumberValuation.this);
 				RTLVariable v = stmt.getVariable();
 				post.setValue(v, NumberElement.getTop(v.getBitWidth()));
-				if (post.aVarVal.isEmpty() && post.aMemVal.isEmpty()
-						&& post.dataIsTop)
+				if (post.aVarVal.isEmpty() && post.aMemVal.isEmpty() && post.dataIsTop)
 					return TOP;
 				return post;
 			}
@@ -302,8 +280,7 @@ public final class NumberValuation implements AbstractState {
 			public NumberValuation visit(RTLAssume stmt) {
 				NumberElement truthValue = abstractEval(stmt.getAssumption());
 				if (truthValue.equals(NumberElement.FALSE)) {
-					logger.info(getIdentifier() + ": Transformer " + stmt
-							+ " is infeasible.");
+					logger.info(getIdentifier() + ": Transformer " + stmt + " is infeasible.");
 					return null;
 				} else if (truthValue.equals(NumberElement.TRUE)) {
 					return fallThroughState();
@@ -312,19 +289,14 @@ public final class NumberValuation implements AbstractState {
 					// Currently works only for simple assumptions assume(var =
 					// value)
 					if (stmt.getAssumption() instanceof RTLOperation) {
-						RTLOperation operation = (RTLOperation) stmt
-								.getAssumption();
+						RTLOperation operation = (RTLOperation) stmt.getAssumption();
 						if (operation.getOperator() == Operator.EQUAL) {
 							if (operation.getOperands()[0] instanceof RTLVariable) {
-								RTLVariable var = (RTLVariable) operation
-										.getOperands()[0];
+								RTLVariable var = (RTLVariable) operation.getOperands()[0];
 								if (operation.getOperands()[1] instanceof RTLNumber) {
-									RTLNumber value = (RTLNumber) operation
-											.getOperands()[1];
-									logger.debug("Restricting state to " + var
-											+ " = " + value);
-									NumberValuation post = new NumberValuation(
-											NumberValuation.this);
+									RTLNumber value = (RTLNumber) operation.getOperands()[1];
+									logger.debug("Restricting state to " + var + " = " + value);
+									NumberValuation post = new NumberValuation(NumberValuation.this);
 									post.setValue(var, new NumberElement(value));
 									return post;
 								}
@@ -339,10 +311,8 @@ public final class NumberValuation implements AbstractState {
 			public NumberValuation visit(RTLAlloc stmt) {
 				NumberValuation post = new NumberValuation(NumberValuation.this);
 				// Clobber value in pointer, overwritten by allocated address
-				post.setValue(stmt.getPointer(),
-						NumberElement.getTop(stmt.getPointer().getBitWidth()));
-				if (post.aVarVal.isEmpty() && post.aMemVal.isEmpty()
-						&& post.dataIsTop)
+				post.setValue(stmt.getPointer(), NumberElement.getTop(stmt.getPointer().getBitWidth()));
+				if (post.aVarVal.isEmpty() && post.aMemVal.isEmpty() && post.dataIsTop)
 					return TOP;
 				return post;
 			}
@@ -430,8 +400,7 @@ public final class NumberValuation implements AbstractState {
 			// Check if the memory location references the program's data area
 			// or imports
 			if (m.getAddress() instanceof RTLNumber) {
-				AbsoluteAddress a = new AbsoluteAddress(
-						(RTLNumber) m.getAddress());
+				AbsoluteAddress a = new AbsoluteAddress((RTLNumber) m.getAddress());
 				ExecutableImage module = Program.getProgram().getModule(a);
 				if (module == null)
 					return NumberElement.getTop(m.getBitWidth());
@@ -522,14 +491,12 @@ public final class NumberValuation implements AbstractState {
 		// Join memory valuations. We need to do both directions, because
 		// constant image data is not present in aMemVal, but only visible
 		// through calls to getValueOperand().
-		for (Map.Entry<RTLMemoryLocation, NumberElement> entry : aMemVal
-				.entrySet()) {
+		for (Map.Entry<RTLMemoryLocation, NumberElement> entry : aMemVal.entrySet()) {
 			RTLMemoryLocation m = entry.getKey();
 			NumberElement v = entry.getValue();
 			result.setValue(m, v.join(other.getValue(m)));
 		}
-		for (Map.Entry<RTLMemoryLocation, NumberElement> entry : other.aMemVal
-				.entrySet()) {
+		for (Map.Entry<RTLMemoryLocation, NumberElement> entry : other.aMemVal.entrySet()) {
 			RTLMemoryLocation m = entry.getKey();
 			NumberElement v = entry.getValue();
 			result.setValue(m, v.join(getValue(m)));
@@ -559,8 +526,7 @@ public final class NumberValuation implements AbstractState {
 		// maps
 		// of "other" are implicitly TOP and thus every value is less or equal
 		// than them.
-		for (Map.Entry<RTLVariable, NumberElement> entry : other.aVarVal
-				.entrySet()) {
+		for (Map.Entry<RTLVariable, NumberElement> entry : other.aVarVal.entrySet()) {
 			RTLVariable var = entry.getKey();
 			NumberElement v = entry.getValue();
 			if (!getValue(var).lessOrEqual(v)) {
@@ -570,8 +536,7 @@ public final class NumberValuation implements AbstractState {
 			}
 		}
 
-		for (Map.Entry<RTLMemoryLocation, NumberElement> entry : other.aMemVal
-				.entrySet()) {
+		for (Map.Entry<RTLMemoryLocation, NumberElement> entry : other.aMemVal.entrySet()) {
 			RTLMemoryLocation m = entry.getKey();
 			NumberElement v = entry.getValue();
 			if (!getValue(m).lessOrEqual(v)) {
@@ -596,8 +561,7 @@ public final class NumberValuation implements AbstractState {
 		if (isTop())
 			return false;
 
-		return dataIsTop == other.dataIsTop && aVarVal.equals(other.aVarVal)
-				&& aMemVal.equals(other.aMemVal);
+		return dataIsTop == other.dataIsTop && aVarVal.equals(other.aVarVal) && aMemVal.equals(other.aMemVal);
 	}
 
 	@Override
@@ -612,16 +576,13 @@ public final class NumberValuation implements AbstractState {
 		else if (isBot())
 			return Characters.BOT;
 		else
-			return "Var: " + aVarVal.toString() + ", Mem: "
-					+ aMemVal.toString();
+			return "Var: " + aVarVal.toString() + ", Mem: " + aMemVal.toString();
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 
-		Tuple<Set<RTLNumber>> cValues = new Tuple<Set<RTLNumber>>(
-				expressions.length);
+		Tuple<Set<RTLNumber>> cValues = new Tuple<Set<RTLNumber>>(expressions.length);
 		for (int i = 0; i < expressions.length; i++) {
 			NumberElement aValue = abstractEval(expressions[i]);
 			cValues.set(i, aValue.concretize());

@@ -70,12 +70,11 @@ public class WinExec extends Kernel32API {
 	 * Constructor
 	 */
 	public WinExec() {
-		
+
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		// Prepare environment
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
@@ -93,14 +92,11 @@ public class WinExec extends Kernel32API {
 			 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
 			 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
 			 */
-			String commandLine = memory.getText(new X86MemoryOperand(
-					DataType.INT32, ((LongValue) x1).getValue()));
+			String commandLine = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
 			commandLine = Storage.getMappingPath(commandLine);
-			System.out.println("Command Line:" + commandLine
-					+ ", Window Style:" + ((LongValue) x2).getValue());
+			System.out.println("Command Line:" + commandLine + ", Window Style:" + ((LongValue) x2).getValue());
 
-			int ret = Kernel32DLL.INSTANCE.WinExec(commandLine,
-					((int) ((LongValue) x2).getValue()));
+			int ret = Kernel32DLL.INSTANCE.WinExec(commandLine, ((int) ((LongValue) x2).getValue()));
 
 			register.mov("eax", new LongValue(ret));
 		}

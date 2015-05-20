@@ -23,8 +23,8 @@ public class LibraryHandle {
 
 		libraryName.add(new Library("mapistub.dll"));
 		libraryName.add(new Library("msvcrt.dll"));
-		//libraryName.add(new Library("user32.dll"));
-		//libraryName.add(new Library("kernel32.dll"));
+		// libraryName.add(new Library("user32.dll"));
+		// libraryName.add(new Library("kernel32.dll"));
 	}
 
 	public Library getLibrary(long libraryHandle) {
@@ -48,11 +48,11 @@ public class LibraryHandle {
 	}
 
 	public boolean isInside(AbsoluteAddress addr) {
-		//Hai: Special Case when this address is API Address
-		//Change later
+		// Hai: Special Case when this address is API Address
+		// Change later
 		for (Library l : libraryName)
 			if (!l.getLibraryName().equals("kernel32.dll") && !l.getLibraryName().equals("user32.dll")
-				&& l.getExportTable().containsKey(addr))
+					&& l.getExportTable().containsKey(addr))
 				return true;
 
 		return false;

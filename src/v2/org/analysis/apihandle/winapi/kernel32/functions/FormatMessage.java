@@ -135,8 +135,8 @@ public class FormatMessage extends Kernel32API {
 			char[] lpBuffer = new char[(int) t6];
 			DWORD nSize = new DWORD(t6);
 			String[] Arguments = null;
-			DWORD ret = Kernel32DLL.INSTANCE
-					.FormatMessage(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer, nSize, Arguments);
+			DWORD ret = Kernel32DLL.INSTANCE.FormatMessage(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer,
+					nSize, Arguments);
 
 			register.mov("eax", new LongValue(ret.longValue()));
 		}

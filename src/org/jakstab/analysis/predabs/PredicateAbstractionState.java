@@ -35,8 +35,7 @@ import java.util.Set;
 public class PredicateAbstractionState implements AbstractState {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(PredicateAbstractionState.class);
+	private static final Logger logger = Logger.getLogger(PredicateAbstractionState.class);
 
 	final BDD predicates;
 
@@ -70,8 +69,7 @@ public class PredicateAbstractionState implements AbstractState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -144,8 +142,7 @@ public class PredicateAbstractionState implements AbstractState {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((predicates == null) ? 0 : predicates.hashCode());
+		result = prime * result + ((predicates == null) ? 0 : predicates.hashCode());
 		return result;
 	}
 

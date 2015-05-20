@@ -1,8 +1,8 @@
 package v2.org.analysis.comparison;
 
-
 public abstract class Comparison {
-	private String toolName ="";	 
+	private String toolName = "";
+
 	/**
 	 * @return the toolName
 	 */
@@ -11,11 +11,12 @@ public abstract class Comparison {
 	}
 
 	/**
-	 * @param toolName the toolName to set
+	 * @param toolName
+	 *            the toolName to set
 	 */
 	public void setToolName(String toolName) {
 		this.toolName = toolName;
 	}
-	
+
 	public abstract void compare(String fileName);
 }

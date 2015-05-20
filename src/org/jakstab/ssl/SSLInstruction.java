@@ -37,13 +37,11 @@ public final class SSLInstruction implements Serializable {
 	private final StatementSequence body;
 	private final String name;
 
-	public SSLInstruction(String name, String[] parameters,
-			StatementSequence body) {
+	public SSLInstruction(String name, String[] parameters, StatementSequence body) {
 		super();
 		this.name = name;
 		this.body = body;
-		if (parameters == null || parameters.length == 0
-				|| parameters[0] == null) {
+		if (parameters == null || parameters.length == 0 || parameters[0] == null) {
 			this.parameters = null;
 			this.parameterCount = 0;
 		} else {
@@ -54,8 +52,7 @@ public final class SSLInstruction implements Serializable {
 					parameterCount = i;
 					break;
 				} else {
-					this.parameters[i] = ExpressionFactory
-							.createVariable(parameters[i]);
+					this.parameters[i] = ExpressionFactory.createVariable(parameters[i]);
 				}
 			this.parameterCount = parameterCount;
 		}

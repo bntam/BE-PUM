@@ -39,10 +39,9 @@ public class GetSysColorBrush extends User32API {
 	public GetSysColorBrush() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Register register = env.getRegister();
@@ -53,10 +52,10 @@ public class GetSysColorBrush extends User32API {
 
 		if (x1 instanceof LongValue) {
 			long x = ((LongValue) x1).getValue();
-			
+
 			int nIndex = (int) x;
 			HBRUSH ret = User32DLL.INSTANCE.GetSysColorBrush(nIndex);
-			
+
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 			register.mov("eax", new LongValue(value));
 			System.out.println("Return Value: " + value);

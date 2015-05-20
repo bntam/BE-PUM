@@ -37,57 +37,47 @@ public class User32Image {
 	public User32Image() {
 		createImage();
 		exportTable = new HashMap<AbsoluteAddress, String>();
-		//initExportTable();
+		// initExportTable();
 	}
 
 	public User32Image(String path) {
 		this.path = path;
 		createImage();
 		exportTable = new HashMap<AbsoluteAddress, String>();
-		//initExportTable();
+		// initExportTable();
 	}
 
-	/*private void initExportTable() {
-		// TODO Auto-generated method stub
-		exportTable.put(new AbsoluteAddress(2088899403),
-				"GetWindowsDirectoryA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088849274),
-				"GetSystemDirectoryA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088980502),
-				"GetCurrentDirectoryA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088984821),
-				"SetCurrentDirectoryA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088843369),
-				"FindFirstFileA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088839186),
-				"SetFileAttributesA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088770088),
-				"CreateFileA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088801518),
-				"CreateFileMappingA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088803287),
-				"CloseHandle@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088980169),
-				"FindNextFileA@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088810901),
-				"MapViewOfFile@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088811012),
-				"UnmapViewOfFile@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088832030),
-				"SetFilePointer@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088968286),
-				"SetEndOfFile@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088824423),
-				"FindClose@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088833642),
-				"GetVersion@kernel32.dll");
-		exportTable.put(new AbsoluteAddress(2088841507),
-				"IsDebuggerPresent@kernel32.dll");
-	}
-*/
+	/*
+	 * private void initExportTable() { // TODO Auto-generated method stub
+	 * exportTable.put(new AbsoluteAddress(2088899403),
+	 * "GetWindowsDirectoryA@kernel32.dll"); exportTable.put(new
+	 * AbsoluteAddress(2088849274), "GetSystemDirectoryA@kernel32.dll");
+	 * exportTable.put(new AbsoluteAddress(2088980502),
+	 * "GetCurrentDirectoryA@kernel32.dll"); exportTable.put(new
+	 * AbsoluteAddress(2088984821), "SetCurrentDirectoryA@kernel32.dll");
+	 * exportTable.put(new AbsoluteAddress(2088843369),
+	 * "FindFirstFileA@kernel32.dll"); exportTable.put(new
+	 * AbsoluteAddress(2088839186), "SetFileAttributesA@kernel32.dll");
+	 * exportTable.put(new AbsoluteAddress(2088770088),
+	 * "CreateFileA@kernel32.dll"); exportTable.put(new
+	 * AbsoluteAddress(2088801518), "CreateFileMappingA@kernel32.dll");
+	 * exportTable.put(new AbsoluteAddress(2088803287),
+	 * "CloseHandle@kernel32.dll"); exportTable.put(new
+	 * AbsoluteAddress(2088980169), "FindNextFileA@kernel32.dll");
+	 * exportTable.put(new AbsoluteAddress(2088810901),
+	 * "MapViewOfFile@kernel32.dll"); exportTable.put(new
+	 * AbsoluteAddress(2088811012), "UnmapViewOfFile@kernel32.dll");
+	 * exportTable.put(new AbsoluteAddress(2088832030),
+	 * "SetFilePointer@kernel32.dll"); exportTable.put(new
+	 * AbsoluteAddress(2088968286), "SetEndOfFile@kernel32.dll");
+	 * exportTable.put(new AbsoluteAddress(2088824423),
+	 * "FindClose@kernel32.dll"); exportTable.put(new
+	 * AbsoluteAddress(2088833642), "GetVersion@kernel32.dll");
+	 * exportTable.put(new AbsoluteAddress(2088841507),
+	 * "IsDebuggerPresent@kernel32.dll"); }
+	 */
 	public long getReturnRandomValue() {
-		return baseAddress + Convert.hexToLong("300") + (int) Math.random()
-				* 30;
+		return baseAddress + Convert.hexToLong("300") + (int) Math.random() * 30;
 	}
 
 	public int getLength() {
@@ -101,66 +91,53 @@ public class User32Image {
 	public static void main(String[] args) {
 		User32Image k = new User32Image();
 
-		System.out.println("Base address: " + k.baseAddress + " Hex:"
-				+ Convert.longToHex(k.baseAddress));
+		System.out.println("Base address: " + k.baseAddress + " Hex:" + Convert.longToHex(k.baseAddress));
 		System.out.println("Length: " + k.getLength());
 		String index = "3c";
 		int offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index + " Value:" + offset);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read word: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
-		System.out.println("Read double word: " + k.readDoubleWord(offset)
-				+ " Hex:" + Convert.longToHex(k.readDoubleWord(offset), 32));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read word: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read double word: " + k.readDoubleWord(offset) + " Hex:"
+				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
 		index = "168";
 		offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read word: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
-		System.out.println("Read double word: " + k.readDoubleWord(offset)
-				+ " Hex:" + Convert.longToHex(k.readDoubleWord(offset), 32));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read word: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read double word: " + k.readDoubleWord(offset) + " Hex:"
+				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
 		index = "262c";
 		offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read word: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
-		System.out.println("Read double word: " + k.readDoubleWord(offset)
-				+ " Hex:" + Convert.longToHex(k.readDoubleWord(offset), 32));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read word: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read double word: " + k.readDoubleWord(offset) + " Hex:"
+				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
 		index = "2648";
 		offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read byte: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read byte: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
 		System.out.println("Read byte: " + k.readDoubleWord(offset) + " Hex:"
 				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
 		index = "264c";
 		offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read byte: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read byte: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
 		System.out.println("Read byte: " + k.readDoubleWord(offset) + " Hex:"
 				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 
 		index = "2650";
 		offset = (int) (k.baseAddress + Convert.hexToLong(index));
 		System.out.println("Offset:" + index);
-		System.out.println("Read byte: " + k.readByte(offset) + " Hex:"
-				+ Convert.longToHex(k.readByte(offset), 8));
-		System.out.println("Read byte: " + k.readWord(offset) + " Hex:"
-				+ Convert.longToHex(k.readWord(offset), 16));
+		System.out.println("Read byte: " + k.readByte(offset) + " Hex:" + Convert.longToHex(k.readByte(offset), 8));
+		System.out.println("Read byte: " + k.readWord(offset) + " Hex:" + Convert.longToHex(k.readWord(offset), 16));
 		System.out.println("Read byte: " + k.readDoubleWord(offset) + " Hex:"
 				+ Convert.longToHex(k.readDoubleWord(offset), 32));
 	}
@@ -206,7 +183,7 @@ public class User32Image {
 
 	public int readByte(int offset) {
 		int off = (int) getRVAAddress(offset - this.baseAddress);
-		//int off = (int) (offset - this.baseAddress);
+		// int off = (int) (offset - this.baseAddress);
 		if (off < 0 || off >= value.length)
 			return Integer.MIN_VALUE;
 		return value[off];
@@ -245,7 +222,8 @@ public class User32Image {
 		/*
 		 * for (Entry<AbsoluteAddress, String> entry: exportTable.entrySet()) {
 		 * String t[] = entry.getValueOperand().split("@"); if
-		 * (t[0].equals(functionName)) return entry.getKey().getValueOperand(); }
+		 * (t[0].equals(functionName)) return entry.getKey().getValueOperand();
+		 * }
 		 * 
 		 * return 0;
 		 */
@@ -255,17 +233,16 @@ public class User32Image {
 
 	public boolean isInsideKernel32(AbsoluteAddress nextAddr) {
 		// TODO Auto-generated method stub
-		return nextAddr.getValue() >= this.baseAddress
-				&& nextAddr.getValue() < (this.baseAddress + getLength());
+		return nextAddr.getValue() >= this.baseAddress && nextAddr.getValue() < (this.baseAddress + getLength());
 	}
 
 	public String getProcName(long v) {
 		// TODO Auto-generated method stub
 		/*
 		 * String s=""; for (Entry<AbsoluteAddress, String> entry :
-		 * exportTable.entrySet()) { if (entry.getKey().getValueOperand() == v) s =
-		 * entry.getValueOperand(); } String d = peHandler.getExportName(v); if
-		 * (!s.equals(d)) System.out.println("Debug");
+		 * exportTable.entrySet()) { if (entry.getKey().getValueOperand() == v)
+		 * s = entry.getValueOperand(); } String d = peHandler.getExportName(v);
+		 * if (!s.equals(d)) System.out.println("Debug");
 		 */
 		return peHandler.getExportName(v);
 	}

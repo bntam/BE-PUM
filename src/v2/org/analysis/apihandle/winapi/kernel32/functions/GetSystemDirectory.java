@@ -54,7 +54,7 @@ public class GetSystemDirectory extends Kernel32API {
 	 * 
 	 */
 	public GetSystemDirectory() {
-		
+
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class GetSystemDirectory extends Kernel32API {
 			UINT ret = Kernel32DLL.INSTANCE.GetSystemDirectory(lpBuffer, uSize);
 			String curDir = new String(lpBuffer);
 			curDir = curDir.substring(0, ret.intValue());
-			
+
 			memory.setText(new X86MemoryOperand(DataType.INT32, t1), curDir, ret.longValue());
 			System.out.println("System Directory:" + curDir);
 			register.mov("eax", new LongValue(ret.longValue()));

@@ -44,10 +44,9 @@ public class ConcreteValueMemoryOperand {
 	 * ConcreteMemoryOperandList(var); this.program = program; }
 	 */
 
-	public ConcreteValueMemoryOperand(TestCaseValue var, Program program,
-			ConcreteValueRegister concreteValueRegister,
-			ConcreteValueRegisterPart concreteValueRegisterPart,
-			ConcreteValueSegment concreteValueSegment, TestCaseValue var1) {
+	public ConcreteValueMemoryOperand(TestCaseValue var, Program program, ConcreteValueRegister concreteValueRegister,
+			ConcreteValueRegisterPart concreteValueRegisterPart, ConcreteValueSegment concreteValueSegment,
+			TestCaseValue var1) {
 		// TODO Auto-generated constructor stub
 		this.memoryOperandList = new ConcreteMemoryOperandList(var1);
 		this.program = program;
@@ -88,8 +87,7 @@ public class ConcreteValueMemoryOperand {
 
 			addr = BitVector.add(addr, dest.getDisplacement());
 
-			result = program
-					.getDoubleWordValueMemory(new AbsoluteAddress(addr));
+			result = program.getDoubleWordValueMemory(new AbsoluteAddress(addr));
 			/*
 			 * System.out.println("32 Bit Value of Memory Operand at " + new
 			 * AbsoluteAddress(addr).toString() + " is " + result);
@@ -308,12 +306,9 @@ public class ConcreteValueMemoryOperand {
 			String hex = Convert.longToHex(x, 32);
 			int l = hex.length();
 			mov(m, Convert.hexToLong(hex.substring(l - 2, l)));
-			mov(new X86MemoryOperand(m.getDataType(), t + 1),
-					Convert.hexToLong(hex.substring(l - 4, l - 2)));
-			mov(new X86MemoryOperand(m.getDataType(), t + 2),
-					Convert.hexToLong(hex.substring(l - 6, l - 4)));
-			mov(new X86MemoryOperand(m.getDataType(), t + 3),
-					Convert.hexToLong(hex.substring(l - 8, l - 6)));
+			mov(new X86MemoryOperand(m.getDataType(), t + 1), Convert.hexToLong(hex.substring(l - 4, l - 2)));
+			mov(new X86MemoryOperand(m.getDataType(), t + 2), Convert.hexToLong(hex.substring(l - 6, l - 4)));
+			mov(new X86MemoryOperand(m.getDataType(), t + 3), Convert.hexToLong(hex.substring(l - 8, l - 6)));
 			return;
 		}
 
@@ -330,8 +325,7 @@ public class ConcreteValueMemoryOperand {
 			String hex = Convert.longToHex(x, 16);
 			int l = hex.length();
 			mov(m, Convert.hexToLong(hex.substring(l - 2, l)));
-			mov(new X86MemoryOperand(m.getDataType(), t + 1),
-					Convert.hexToLong(hex.substring(l - 4, l - 2)));
+			mov(new X86MemoryOperand(m.getDataType(), t + 1), Convert.hexToLong(hex.substring(l - 4, l - 2)));
 			/*
 			 * mov(new X86MemoryOperand(m.getDataType(), t + 2),
 			 * Convert.hexToLong(hex.substring(l - 6, l - 4))); mov(new
@@ -348,7 +342,8 @@ public class ConcreteValueMemoryOperand {
 		// TODO Auto-generated method stub
 		/*
 		 * long t = m.getDisplacement(); if (m.getBase() == null) { // if (x
-		 * instanceof ValueLongExp) { // long x1 = ((ValueLongExp)x).getValueOperand();
+		 * instanceof ValueLongExp) { // long x1 =
+		 * ((ValueLongExp)x).getValueOperand();
 		 * 
 		 * String hex = Convert.longToHex(x, 16); int l = hex.length(); mov(m,
 		 * Convert.hexToLong(hex.substring(l - 2, l))); mov(new
@@ -377,8 +372,7 @@ public class ConcreteValueMemoryOperand {
 			if (x == 47)
 				x = 92;
 
-			this.movByte(new X86MemoryOperand(x86MemoryOperand.getDataType(),
-					disp), x);
+			this.movByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp), x);
 			disp++;
 		}
 	}
@@ -396,8 +390,7 @@ public class ConcreteValueMemoryOperand {
 				return ret;
 
 			ret += (char) v;
-			v = getMemoryOperandValByte(new X86MemoryOperand(
-					x86MemoryOperand.getDataType(), disp));
+			v = getMemoryOperandValByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp));
 		}
 	}
 
@@ -413,8 +406,7 @@ public class ConcreteValueMemoryOperand {
 			if (x == 47)
 				x = 92;
 
-			this.movByte(new X86MemoryOperand(x86MemoryOperand.getDataType(),
-					disp), x);
+			this.movByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp), x);
 			disp++;
 		}
 
@@ -434,8 +426,7 @@ public class ConcreteValueMemoryOperand {
 				return ret;
 
 			ret += (char) v;
-			v = getMemoryOperandValByte(new X86MemoryOperand(
-					x86MemoryOperand.getDataType(), disp));
+			v = getMemoryOperandValByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp));
 			size--;
 		}
 	}

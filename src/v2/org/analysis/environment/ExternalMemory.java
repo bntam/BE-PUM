@@ -11,9 +11,10 @@ public class ExternalMemory {
 		public long address;
 		public boolean isValidAddress = false;
 		public LongValue value;
-		
+
 		public String toString() {
-			return "JNA's Address: " + this.address + " is " + ((this.isValidAddress) ? "valid, value = " + this.value : "invalid ");
+			return "JNA's Address: " + this.address + " is "
+					+ ((this.isValidAddress) ? "valid, value = " + this.value : "invalid ");
 		}
 	}
 
@@ -21,27 +22,21 @@ public class ExternalMemory {
 	}
 
 	public synchronized static ExternalMemoryReturnData getByte(long address) {
-		/*ExternalMemoryReturnData ret = (new ExternalMemory()).new ExternalMemoryReturnData();
-		ret.address = address;
-		
-		if (address == 0) {
-			ret.isValidAddress = false;
-			ret.value = new LongValue(0);
-			return ret;
-		}
-		
-		Thread pointer = new Thread(new AccessPointerThread(ret));
-		pointer.start();
-		try {
-			pointer.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-		}
-		return ret;*/
+		/*
+		 * ExternalMemoryReturnData ret = (new ExternalMemory()).new
+		 * ExternalMemoryReturnData(); ret.address = address;
+		 * 
+		 * if (address == 0) { ret.isValidAddress = false; ret.value = new
+		 * LongValue(0); return ret; }
+		 * 
+		 * Thread pointer = new Thread(new AccessPointerThread(ret));
+		 * pointer.start(); try { pointer.join(); } catch (InterruptedException
+		 * e) { // TODO Auto-generated catch block // e.printStackTrace(); }
+		 * return ret;
+		 */
 		return null;
 	}
-	
+
 	private static long calculateDoubleWordValue(long r1, long r2, long r3, long r4) {
 		/*
 		 * int ret = 0; ret = (int) r1; ret |= r2 << 8; ret |= r3 << 16; ret |=
@@ -63,35 +58,34 @@ public class ExternalMemory {
 		ExternalMemoryReturnData ret1 = getByte(address + 1);
 		ExternalMemoryReturnData ret2 = getByte(address + 2);
 		ExternalMemoryReturnData ret3 = getByte(address + 3);
-		
-		if (ret != null && ret.isValidAddress && ret1 != null && ret1.isValidAddress && 
-				ret2 != null && ret2.isValidAddress
-				&& ret3 != null && ret3.isValidAddress) {
-			ret.value = new LongValue(calculateDoubleWordValue(ret.value.getValue(), ret1.value.getValue(), ret2.value.getValue(),
-					ret3.value.getValue()));
+
+		if (ret != null && ret.isValidAddress && ret1 != null && ret1.isValidAddress && ret2 != null
+				&& ret2.isValidAddress && ret3 != null && ret3.isValidAddress) {
+			ret.value = new LongValue(calculateDoubleWordValue(ret.value.getValue(), ret1.value.getValue(),
+					ret2.value.getValue(), ret3.value.getValue()));
 		}
 		return ret;
-		//return null;
+		// return null;
 	}
-	
+
 	public synchronized static ExternalMemoryReturnData getWord(long address) {
 		// TODO Auto-generated method stub
 		ExternalMemoryReturnData ret = getByte(address);
 		ExternalMemoryReturnData ret1 = getByte(address + 1);
-				
+
 		if (ret != null && ret.isValidAddress && ret1 != null && ret1.isValidAddress) {
 			ret.value = new LongValue(calculateWordValue(ret.value.getValue(), ret1.value.getValue()));
 		}
-		
-		//System.out.println(ret);
+
+		// System.out.println(ret);
 		return ret;
-		//return null;
+		// return null;
 	}
 }
 
 class AccessPointerThread implements Runnable {
 	private ExternalMemoryReturnData data;
-	
+
 	public AccessPointerThread(ExternalMemoryReturnData buffer) {
 		this.data = buffer;
 	}
@@ -101,10 +95,10 @@ class AccessPointerThread implements Runnable {
 		Pointer ptr = new Pointer(this.data.address);
 		try {
 			byte ret = ptr.getByte(0);
-			this.data.value = new LongValue((long)ret);
+			this.data.value = new LongValue((long) ret);
 			this.data.isValidAddress = true;
 		} catch (Exception e) {
-			
-		}		
-	}	
+
+		}
+	}
 }

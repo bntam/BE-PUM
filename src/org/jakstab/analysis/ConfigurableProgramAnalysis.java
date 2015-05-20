@@ -46,8 +46,7 @@ public interface ConfigurableProgramAnalysis {
 	 *            the current precision
 	 * @return the set of successor states
 	 */
-	public Set<AbstractState> post(final AbstractState state, CFAEdge cfaEdge,
-			Precision precision);
+	public Set<AbstractState> post(final AbstractState state, CFAEdge cfaEdge, Precision precision);
 
 	/**
 	 * Strengthens state s using information from other states. This method will
@@ -64,8 +63,7 @@ public interface ConfigurableProgramAnalysis {
 	 *            the current precision
 	 * @return a strengthened copy of s or the unmodified s
 	 */
-	public AbstractState strengthen(AbstractState s,
-			final Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, final Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision);
 
 	/**
@@ -80,8 +78,7 @@ public interface ConfigurableProgramAnalysis {
 	 * @return a new state, which is greater or equal to s2 in the abstract
 	 *         domain.
 	 */
-	public AbstractState merge(final AbstractState s1, final AbstractState s2,
-			Precision precision);
+	public AbstractState merge(final AbstractState s1, final AbstractState s2, Precision precision);
 
 	/**
 	 * Stop checks whether the abstract state s is covered by the collection of
@@ -95,8 +92,7 @@ public interface ConfigurableProgramAnalysis {
 	 *            the current precision
 	 * @return true if s is covered by reached, false otherwise
 	 */
-	public boolean stop(final AbstractState s, ReachedSet reached,
-			Precision precision);
+	public boolean stop(final AbstractState s, ReachedSet reached, Precision precision);
 
 	/**
 	 * Adjusts the precision of a state using information taken from the set of
@@ -110,8 +106,7 @@ public interface ConfigurableProgramAnalysis {
 	 *            the set of reached states
 	 * @return the possibly widened state s and a new, adjusted precision object
 	 */
-	public Pair<AbstractState, Precision> prec(final AbstractState s,
-			Precision precision, ReachedSet reached);
+	public Pair<AbstractState, Precision> prec(final AbstractState s, Precision precision, ReachedSet reached);
 
 	/**
 	 * Initializes an abstract state with initial valuations using a given
@@ -132,6 +127,5 @@ public interface ConfigurableProgramAnalysis {
 	 *            the transformer by which this new location was reached.
 	 * @return the initial precision
 	 */
-	public Precision initPrecision(Location location,
-			StateTransformer transformer);
+	public Precision initPrecision(Location location, StateTransformer transformer);
 }

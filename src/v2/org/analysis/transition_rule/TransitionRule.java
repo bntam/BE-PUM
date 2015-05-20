@@ -12,7 +12,6 @@ import java.util.List;
  * 
  */
 public abstract class TransitionRule {
-	public abstract void getNewState(BPPath path, List<BPPath> pathList,
-			boolean cond);
+	public abstract void getNewState(BPPath path, List<BPPath> pathList, boolean cond);
 
 }

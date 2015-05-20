@@ -32,8 +32,7 @@ import java.util.Set;
 public class ConcretizationInputBuffer extends BinaryInputBuffer {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(ConcretizationInputBuffer.class);
+	private static final Logger logger = Logger.getLogger(ConcretizationInputBuffer.class);
 
 	private AbstractState state;
 	private ExecutableImage module;
@@ -45,8 +44,7 @@ public class ConcretizationInputBuffer extends BinaryInputBuffer {
 
 	@Override
 	public byte getByteAt(int fp) {
-		RTLNumber va = ExpressionFactory.createNumber(
-				module.getVirtualAddress(fp).getValue(), 32);
+		RTLNumber va = ExpressionFactory.createNumber(module.getVirtualAddress(fp).getValue(), 32);
 		RTLMemoryLocation m = ExpressionFactory.createMemoryLocation(va, 8);
 		Set<Tuple<RTLNumber>> cValSet = state.projectionFromConcretization(m);
 		// Hooray for fragile code
@@ -55,8 +53,7 @@ public class ConcretizationInputBuffer extends BinaryInputBuffer {
 
 	@Override
 	public long getSize() {
-		return module.getMaxAddress().getValue()
-				- module.getMinAddress().getValue();
+		return module.getMaxAddress().getValue() - module.getMinAddress().getValue();
 	}
 
 	@Override

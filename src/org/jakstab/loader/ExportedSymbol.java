@@ -32,8 +32,7 @@ public class ExportedSymbol {
 	private final String name;
 	private final AbsoluteAddress address;
 
-	public ExportedSymbol(ExecutableImage module, String name,
-			AbsoluteAddress address) {
+	public ExportedSymbol(ExecutableImage module, String name, AbsoluteAddress address) {
 		this.module = module;
 		this.name = name;
 		this.address = address;

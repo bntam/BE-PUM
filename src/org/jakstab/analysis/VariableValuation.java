@@ -27,18 +27,15 @@ import java.util.Map.Entry;
 /**
  * @author Johannes Kinder
  */
-public class VariableValuation<A extends AbstractValue> implements
-		LatticeElement, Iterable<Map.Entry<RTLVariable, A>> {
+public class VariableValuation<A extends AbstractValue> implements LatticeElement, Iterable<Map.Entry<RTLVariable, A>> {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(VariableValuation.class);
+	private static final Logger logger = Logger.getLogger(VariableValuation.class);
 
 	protected final TreeMap<RTLVariable, A> aVarVal;
 	protected final AbstractValueFactory<A> valueFactory;
 
-	protected VariableValuation(TreeMap<RTLVariable, A> aVarVal,
-			AbstractValueFactory<A> valueFactory) {
+	protected VariableValuation(TreeMap<RTLVariable, A> aVarVal, AbstractValueFactory<A> valueFactory) {
 		this.aVarVal = aVarVal;
 		this.valueFactory = valueFactory;
 	}
@@ -59,8 +56,7 @@ public class VariableValuation<A extends AbstractValue> implements
 			// See if we can get the value from a covering register
 			RTLBitRange asParent = ExpressionFactory.getRegisterAsParent(var);
 
-			if (asParent != null
-					&& asParent.getOperand() instanceof RTLVariable) {
+			if (asParent != null && asParent.getOperand() instanceof RTLVariable) {
 				RTLVariable parent = (RTLVariable) asParent.getOperand();
 				// Recursive call for al -> ax -> eax
 				A parentVal = get(parent);
@@ -88,8 +84,7 @@ public class VariableValuation<A extends AbstractValue> implements
 			// Modify Jakstab: instead of creating the TOP value, we create the
 			// random value
 			if (var.getName().equals("esp"))
-				return valueFactory.createAbstractValue(new RTLNumber(
-						(long) (Math.random() * Math.pow(10, 5)), 32));
+				return valueFactory.createAbstractValue(new RTLNumber((long) (Math.random() * Math.pow(10, 5)), 32));
 
 			return valueFactory.createTop(var.getBitWidth());
 		}
@@ -116,8 +111,7 @@ public class VariableValuation<A extends AbstractValue> implements
 		// Set parent register - we only do this if the value to set represents
 		// a single concrete value. If we want to generalize this, we have to
 		// build the cartesian product of concretizations
-		if (asParent != null && asParent.getOperand() instanceof RTLVariable
-				&& value.hasUniqueConcretization()) {
+		if (asParent != null && asParent.getOperand() instanceof RTLVariable && value.hasUniqueConcretization()) {
 			RTLVariable parent = (RTLVariable) asParent.getOperand();
 			A parentVal = get(parent);
 			RTLNumber cRhs = value.concretize().iterator().next();
@@ -130,8 +124,7 @@ public class VariableValuation<A extends AbstractValue> implements
 				}
 				Context ctx = new Context();
 				ctx.addAssignment(parent, cVal);
-				RTLExpression result = asParent.applyInverse(cRhs)
-						.evaluate(ctx);
+				RTLExpression result = asParent.applyInverse(cRhs).evaluate(ctx);
 				cValues.add((RTLNumber) result);
 			}
 			if (cValues != null) {
@@ -179,8 +172,7 @@ public class VariableValuation<A extends AbstractValue> implements
 		if (isBot() || other.isTop())
 			return other;
 
-		VariableValuation<A> joinedValuation = new VariableValuation<A>(
-				valueFactory);
+		VariableValuation<A> joinedValuation = new VariableValuation<A>(valueFactory);
 		// Join variable valuations
 		for (Map.Entry<RTLVariable, A> entry : aVarVal.entrySet()) {
 			RTLVariable var = entry.getKey();

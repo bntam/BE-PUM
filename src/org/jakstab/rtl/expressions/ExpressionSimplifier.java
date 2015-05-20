@@ -39,8 +39,7 @@ import java.util.Map;
  */
 public class ExpressionSimplifier {
 
-	private final static Logger logger = Logger
-			.getLogger(ExpressionSimplifier.class);
+	private final static Logger logger = Logger.getLogger(ExpressionSimplifier.class);
 	private static ExpressionSimplifier instance;
 
 	public final static ExpressionSimplifier getInstance() {
@@ -61,8 +60,7 @@ public class ExpressionSimplifier {
 
 	private ExpressionSimplifier() throws Exception {
 		// (x < y) | (x = y) <-> x <= y
-		File specFile = new File(Options.jakstabHome
-				+ "/ssl/simplifications.ssl");
+		File specFile = new File(Options.jakstabHome + "/ssl/simplifications.ssl");
 		logger.info("Reading simplifications from " + specFile.getName() + ".");
 
 		SSLLexer lex = new SSLLexer(new FileInputStream(specFile));
@@ -76,14 +74,12 @@ public class ExpressionSimplifier {
 		// registers = prep.getRegisters();
 		// registers.removeAll(statusFlags);
 
-		logger.debug("-- Got " + instrPrototypes.size()
-				+ " simplification groups.");
+		logger.debug("-- Got " + instrPrototypes.size() + " simplification groups.");
 
 		Map<RTLExpression, RTLExpression> wholeMapping = new LinkedHashMap<RTLExpression, RTLExpression>();
 
 		for (Map.Entry<String, SSLFunction> entry : instrPrototypes.entrySet()) {
-			Map<RTLExpression, RTLExpression> mapping = prep
-					.convertSimplificationTemplates(entry.getValue().getAST());
+			Map<RTLExpression, RTLExpression> mapping = prep.convertSimplificationTemplates(entry.getValue().getAST());
 			wholeMapping.putAll(mapping);
 		}
 
@@ -116,9 +112,7 @@ public class ExpressionSimplifier {
 				RTLExpression eFirst = e.getFirstBitIndex().accept(this);
 				RTLExpression eLast = e.getLastBitIndex().accept(this);
 				RTLExpression eOp = e.getOperand().accept(this);
-				if (eFirst != e.getFirstBitIndex()
-						|| eLast != e.getLastBitIndex()
-						|| eOp != e.getOperand())
+				if (eFirst != e.getFirstBitIndex() || eLast != e.getLastBitIndex() || eOp != e.getOperand())
 					return ExpressionFactory.createBitRange(eOp, eFirst, eLast);
 				else
 					return e;
@@ -132,10 +126,8 @@ public class ExpressionSimplifier {
 				RTLExpression eCond = e.getCondition().accept(this);
 				RTLExpression eTrue = e.getTrueExpression().accept(this);
 				RTLExpression eFalse = e.getFalseExpression().accept(this);
-				if (eTrue != e.getTrueExpression()
-						|| eFalse != e.getFalseExpression())
-					return ExpressionFactory.createConditionalExpression(eCond,
-							eTrue, eFalse);
+				if (eTrue != e.getTrueExpression() || eFalse != e.getFalseExpression())
+					return ExpressionFactory.createConditionalExpression(eCond, eTrue, eFalse);
 				else
 					return e;
 			}
@@ -154,8 +146,7 @@ public class ExpressionSimplifier {
 					changed |= eOperands[i] != e.getOperands()[i];
 				}
 				if (changed)
-					return ExpressionFactory.createOperation(e.getOperator(),
-							eOperands);
+					return ExpressionFactory.createOperation(e.getOperator(), eOperands);
 				else
 					return e;
 			}
@@ -174,8 +165,7 @@ public class ExpressionSimplifier {
 					changed |= eOperands[i] != e.getOperands()[i];
 				}
 				if (changed)
-					return ExpressionFactory.createSpecialExpression(
-							e.getOperator(), eOperands);
+					return ExpressionFactory.createSpecialExpression(e.getOperator(), eOperands);
 				else
 					return e;
 			}
@@ -210,8 +200,7 @@ public class ExpressionSimplifier {
 			// A cycle in the substitution rules could cause an infinite loop
 			// here!
 			if (rounds++ > 50) {
-				throw new RuntimeException(
-						"Over 50 iterations in substitution rules! Infinite loop?");
+				throw new RuntimeException("Over 50 iterations in substitution rules! Infinite loop?");
 			}
 			// Repeat while it's still changing
 		} while (old != e);
@@ -230,8 +219,7 @@ public class ExpressionSimplifier {
 			if (match(e, patterns[i], bindings)) {
 				// Success
 				Context context = new Context();
-				for (Map.Entry<RTLVariable, RTLExpression> binding : bindings
-						.entrySet())
+				for (Map.Entry<RTLVariable, RTLExpression> binding : bindings.entrySet())
 					context.substitute(binding.getKey(), binding.getValue());
 				RTLExpression result = results[i].evaluate(context);
 				// logger.debug("Simplified " + e + " to " + result);
@@ -247,8 +235,7 @@ public class ExpressionSimplifier {
 	 * Check whether an expression matches a pattern, and if so, under which
 	 * binding of template variables to subexpressions.
 	 */
-	private static boolean match(final RTLExpression expr,
-			final RTLExpression pattern,
+	private static boolean match(final RTLExpression expr, final RTLExpression pattern,
 			final Map<RTLVariable, RTLExpression> bindings) {
 
 		ExpressionVisitor<Boolean> matcher = new ExpressionVisitor<Boolean>() {
@@ -292,8 +279,7 @@ public class ExpressionSimplifier {
 			public Boolean visit(RTLOperation e) {
 
 				// Negated variables can match constants
-				if (subExpr instanceof RTLNumber
-						&& e.getOperator() == Operator.NEG) {
+				if (subExpr instanceof RTLNumber && e.getOperator() == Operator.NEG) {
 					// Negate the number
 					subExpr = ExpressionFactory.createNeg(subExpr);
 					subExpr = subExpr.evaluate(new Context());
@@ -333,14 +319,12 @@ public class ExpressionSimplifier {
 
 			@Override
 			public Boolean visit(RTLNondet e) {
-				throw new IllegalArgumentException(
-						"RTLNondet in simplification pattern!");
+				throw new IllegalArgumentException("RTLNondet in simplification pattern!");
 			}
 
 			@Override
 			public Boolean visit(RTLMemoryLocation e) {
-				throw new IllegalArgumentException(
-						"RTLMemoryLocation in simplification pattern!");
+				throw new IllegalArgumentException("RTLMemoryLocation in simplification pattern!");
 			}
 
 			@Override

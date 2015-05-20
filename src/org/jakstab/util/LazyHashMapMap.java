@@ -32,8 +32,7 @@ public final class LazyHashMapMap<K, L, V> implements MapMap<K, L, V> {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(LazyHashMapMap.class);
 
-	private static final class ReferenceCountingHashMapMap<M, N, W> extends
-			HashMapMap<M, N, W> {
+	private static final class ReferenceCountingHashMapMap<M, N, W> extends HashMapMap<M, N, W> {
 
 		private int referenceCount;
 		private int hashCode = 0;
@@ -43,8 +42,7 @@ public final class LazyHashMapMap<K, L, V> implements MapMap<K, L, V> {
 			referenceCount = 1;
 		}
 
-		public ReferenceCountingHashMapMap(
-				ReferenceCountingHashMapMap<M, N, W> innerMap) {
+		public ReferenceCountingHashMapMap(ReferenceCountingHashMapMap<M, N, W> innerMap) {
 			super(innerMap);
 			referenceCount = 1;
 		}

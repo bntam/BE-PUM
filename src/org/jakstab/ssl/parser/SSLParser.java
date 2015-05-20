@@ -63,8 +63,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = start_AST;
 	}
 
-	public final void specification() throws RecognitionException,
-			TokenStreamException {
+	public final void specification() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -85,12 +84,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			}
 			if (inputState.guessing == 0) {
 				specification_AST = (AST) currentAST.root;
-				specification_AST = (AST) astFactory.make((new ASTArray(2))
-						.add(astFactory.create(SEMI, "SEMI")).add(
-								specification_AST));
+				specification_AST = (AST) astFactory.make((new ASTArray(2)).add(astFactory.create(SEMI, "SEMI")).add(
+						specification_AST));
 				currentAST.root = specification_AST;
-				currentAST.child = specification_AST != null
-						&& specification_AST.getFirstChild() != null ? specification_AST
+				currentAST.child = specification_AST != null && specification_AST.getFirstChild() != null ? specification_AST
 						.getFirstChild() : specification_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -148,13 +145,11 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 					function_def();
 					astFactory.addASTChild(currentAST, returnAST);
 					part_AST = (AST) currentAST.root;
-				} else if ((LA(1) == NAME) && (LA(2) == EQUATE)
-						&& (LA(3) == NAME || LA(3) == LCURLY)) {
+				} else if ((LA(1) == NAME) && (LA(2) == EQUATE) && (LA(3) == NAME || LA(3) == LCURLY)) {
 					table_def();
 					astFactory.addASTChild(currentAST, returnAST);
 					part_AST = (AST) currentAST.root;
-				} else if ((_tokenSet_2.member(LA(1)))
-						&& (_tokenSet_3.member(LA(2)))) {
+				} else if ((_tokenSet_2.member(LA(1))) && (_tokenSet_3.member(LA(2)))) {
 					instr_def();
 					astFactory.addASTChild(currentAST, returnAST);
 					part_AST = (AST) currentAST.root;
@@ -173,8 +168,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = part_AST;
 	}
 
-	public final void const_def() throws RecognitionException,
-			TokenStreamException {
+	public final void const_def() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -192,12 +186,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			astFactory.addASTChild(currentAST, returnAST);
 			if (inputState.guessing == 0) {
 				const_def_AST = (AST) currentAST.root;
-				const_def_AST = (AST) astFactory.make((new ASTArray(2)).add(
-						astFactory.create(CONSTANT, "CONSTANT")).add(
-						const_def_AST));
+				const_def_AST = (AST) astFactory.make((new ASTArray(2)).add(astFactory.create(CONSTANT, "CONSTANT"))
+						.add(const_def_AST));
 				currentAST.root = const_def_AST;
-				currentAST.child = const_def_AST != null
-						&& const_def_AST.getFirstChild() != null ? const_def_AST
+				currentAST.child = const_def_AST != null && const_def_AST.getFirstChild() != null ? const_def_AST
 						.getFirstChild() : const_def_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -213,8 +205,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = const_def_AST;
 	}
 
-	public final void registers_decl() throws RecognitionException,
-			TokenStreamException {
+	public final void registers_decl() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -258,12 +249,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			}
 			if (inputState.guessing == 0) {
 				registers_decl_AST = (AST) currentAST.root;
-				registers_decl_AST = (AST) astFactory.make((new ASTArray(2))
-						.add(astFactory.create(REGDECL, "REGDECL")).add(
-								registers_decl_AST));
+				registers_decl_AST = (AST) astFactory.make((new ASTArray(2)).add(astFactory.create(REGDECL, "REGDECL"))
+						.add(registers_decl_AST));
 				currentAST.root = registers_decl_AST;
-				currentAST.child = registers_decl_AST != null
-						&& registers_decl_AST.getFirstChild() != null ? registers_decl_AST
+				currentAST.child = registers_decl_AST != null && registers_decl_AST.getFirstChild() != null ? registers_decl_AST
 						.getFirstChild() : registers_decl_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -279,8 +268,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = registers_decl_AST;
 	}
 
-	public final void operands_decl() throws RecognitionException,
-			TokenStreamException {
+	public final void operands_decl() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -317,8 +305,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = operands_decl_AST;
 	}
 
-	public final void endianness() throws RecognitionException,
-			TokenStreamException {
+	public final void endianness() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -362,8 +349,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = endianness_AST;
 	}
 
-	public final void function_def() throws RecognitionException,
-			TokenStreamException {
+	public final void function_def() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -384,12 +370,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			match(RCURLY);
 			if (inputState.guessing == 0) {
 				function_def_AST = (AST) currentAST.root;
-				function_def_AST = (AST) astFactory.make((new ASTArray(2)).add(
-						astFactory.create(FUNCTION, "FUNCTION")).add(
-						function_def_AST));
+				function_def_AST = (AST) astFactory.make((new ASTArray(2)).add(astFactory.create(FUNCTION, "FUNCTION"))
+						.add(function_def_AST));
 				currentAST.root = function_def_AST;
-				currentAST.child = function_def_AST != null
-						&& function_def_AST.getFirstChild() != null ? function_def_AST
+				currentAST.child = function_def_AST != null && function_def_AST.getFirstChild() != null ? function_def_AST
 						.getFirstChild() : function_def_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -405,8 +389,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = function_def_AST;
 	}
 
-	public final void table_def() throws RecognitionException,
-			TokenStreamException {
+	public final void table_def() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -422,11 +405,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			astFactory.addASTChild(currentAST, returnAST);
 			if (inputState.guessing == 0) {
 				table_def_AST = (AST) currentAST.root;
-				table_def_AST = (AST) astFactory.make((new ASTArray(2)).add(
-						astFactory.create(TABLE, "TABLE")).add(table_def_AST));
+				table_def_AST = (AST) astFactory.make((new ASTArray(2)).add(astFactory.create(TABLE, "TABLE")).add(
+						table_def_AST));
 				currentAST.root = table_def_AST;
-				currentAST.child = table_def_AST != null
-						&& table_def_AST.getFirstChild() != null ? table_def_AST
+				currentAST.child = table_def_AST != null && table_def_AST.getFirstChild() != null ? table_def_AST
 						.getFirstChild() : table_def_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -442,8 +424,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = table_def_AST;
 	}
 
-	public final void instr_def() throws RecognitionException,
-			TokenStreamException {
+	public final void instr_def() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -458,11 +439,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			astFactory.addASTChild(currentAST, returnAST);
 			if (inputState.guessing == 0) {
 				instr_def_AST = (AST) currentAST.root;
-				instr_def_AST = (AST) astFactory.make((new ASTArray(2)).add(
-						astFactory.create(INSTR, "INSTR")).add(instr_def_AST));
+				instr_def_AST = (AST) astFactory.make((new ASTArray(2)).add(astFactory.create(INSTR, "INSTR")).add(
+						instr_def_AST));
 				currentAST.root = instr_def_AST;
-				currentAST.child = instr_def_AST != null
-						&& instr_def_AST.getFirstChild() != null ? instr_def_AST
+				currentAST.child = instr_def_AST != null && instr_def_AST.getFirstChild() != null ? instr_def_AST
 						.getFirstChild() : instr_def_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -478,8 +458,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = instr_def_AST;
 	}
 
-	public final void fast_list() throws RecognitionException,
-			TokenStreamException {
+	public final void fast_list() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -539,8 +518,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = num_AST;
 	}
 
-	public final void const_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void const_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -571,8 +549,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 								break;
 							}
 							default: {
-								throw new NoViableAltException(LT(1),
-										getFilename());
+								throw new NoViableAltException(LT(1), getFilename());
 							}
 							}
 						}
@@ -598,8 +575,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = const_expr_AST;
 	}
 
-	public final void register_decl() throws RecognitionException,
-			TokenStreamException {
+	public final void register_decl() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -764,8 +740,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = register_decl_AST;
 	}
 
-	public final void register_list() throws RecognitionException,
-			TokenStreamException {
+	public final void register_list() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -802,8 +777,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = register_list_AST;
 	}
 
-	public final void operand_decl() throws RecognitionException,
-			TokenStreamException {
+	public final void operand_decl() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -824,8 +798,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 				astFactory.addASTChild(currentAST, returnAST);
 				match(RCURLY);
 				operand_decl_AST = (AST) currentAST.root;
-			} else if ((LA(1) == NAME)
-					&& (LA(2) == NAME || LA(2) == LSQUARE || LA(2) == ASSIGNTYPE)) {
+			} else if ((LA(1) == NAME) && (LA(2) == NAME || LA(2) == LSQUARE || LA(2) == ASSIGNTYPE)) {
 				AST tmp155_AST = null;
 				tmp155_AST = astFactory.create(LT(1));
 				astFactory.makeASTRoot(currentAST, tmp155_AST);
@@ -877,8 +850,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = operand_decl_AST;
 	}
 
-	public final void param_list() throws RecognitionException,
-			TokenStreamException {
+	public final void param_list() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -889,8 +861,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		try { // for error handling
 			{
 				boolean synPredMatched3138 = false;
-				if (((LA(1) == NAME) && (_tokenSet_8.member(LA(2))) && (_tokenSet_9
-						.member(LA(3))))) {
+				if (((LA(1) == NAME) && (_tokenSet_8.member(LA(2))) && (_tokenSet_9.member(LA(3))))) {
 					int _m3138 = mark();
 					synPredMatched3138 = true;
 					inputState.guessing++;
@@ -923,9 +894,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 
 						} while (true);
 					}
-				} else if ((_tokenSet_10.member(LA(1)))
-						&& (_tokenSet_9.member(LA(2)))
-						&& (_tokenSet_11.member(LA(3)))) {
+				} else if ((_tokenSet_10.member(LA(1))) && (_tokenSet_9.member(LA(2))) && (_tokenSet_11.member(LA(3)))) {
 				} else {
 					throw new NoViableAltException(LT(1), getFilename());
 				}
@@ -933,12 +902,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			}
 			if (inputState.guessing == 0) {
 				param_list_AST = (AST) currentAST.root;
-				param_list_AST = (AST) astFactory.make((new ASTArray(2)).add(
-						(AST) astFactory.create(COMMA, ","))
-						.add(param_list_AST));
+				param_list_AST = (AST) astFactory.make((new ASTArray(2)).add((AST) astFactory.create(COMMA, ",")).add(
+						param_list_AST));
 				currentAST.root = param_list_AST;
-				currentAST.child = param_list_AST != null
-						&& param_list_AST.getFirstChild() != null ? param_list_AST
+				currentAST.child = param_list_AST != null && param_list_AST.getFirstChild() != null ? param_list_AST
 						.getFirstChild() : param_list_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -975,8 +942,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = expr_AST;
 	}
 
-	public final void rt_list() throws RecognitionException,
-			TokenStreamException {
+	public final void rt_list() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1002,11 +968,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			}
 			if (inputState.guessing == 0) {
 				rt_list_AST = (AST) currentAST.root;
-				rt_list_AST = (AST) astFactory.make((new ASTArray(2)).add(
-						astFactory.create(RTL, "RTL")).add(rt_list_AST));
+				rt_list_AST = (AST) astFactory.make((new ASTArray(2)).add(astFactory.create(RTL, "RTL")).add(
+						rt_list_AST));
 				currentAST.root = rt_list_AST;
-				currentAST.child = rt_list_AST != null
-						&& rt_list_AST.getFirstChild() != null ? rt_list_AST
+				currentAST.child = rt_list_AST != null && rt_list_AST.getFirstChild() != null ? rt_list_AST
 						.getFirstChild() : rt_list_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -1022,8 +987,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = rt_list_AST;
 	}
 
-	public final void table_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void table_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1031,9 +995,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 
 		try { // for error handling
 			boolean synPredMatched3100 = false;
-			if (((LA(1) == NAME || LA(1) == LCURLY)
-					&& (_tokenSet_15.member(LA(2))) && (_tokenSet_16
-						.member(LA(3))))) {
+			if (((LA(1) == NAME || LA(1) == LCURLY) && (_tokenSet_15.member(LA(2))) && (_tokenSet_16.member(LA(3))))) {
 				int _m3100 = mark();
 				synPredMatched3100 = true;
 				inputState.guessing++;
@@ -1051,13 +1013,11 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 				str_table_expr();
 				astFactory.addASTChild(currentAST, returnAST);
 				table_expr_AST = (AST) currentAST.root;
-			} else if ((LA(1) == LCURLY) && (LA(2) == QUOTE)
-					&& (_tokenSet_17.member(LA(3)))) {
+			} else if ((LA(1) == LCURLY) && (LA(2) == QUOTE) && (_tokenSet_17.member(LA(3)))) {
 				op_str_table();
 				astFactory.addASTChild(currentAST, returnAST);
 				table_expr_AST = (AST) currentAST.root;
-			} else if ((LA(1) == LCURLY) && (LA(2) == QUOTE)
-					&& (_tokenSet_18.member(LA(3)))) {
+			} else if ((LA(1) == LCURLY) && (LA(2) == QUOTE) && (_tokenSet_18.member(LA(3)))) {
 				expr_str_table();
 				astFactory.addASTChild(currentAST, returnAST);
 				table_expr_AST = (AST) currentAST.root;
@@ -1076,8 +1036,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = table_expr_AST;
 	}
 
-	public final void str_table_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void str_table_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1093,14 +1052,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 						astFactory.addASTChild(currentAST, returnAST);
 						if (inputState.guessing == 0) {
 							str_table_expr_AST = (AST) currentAST.root;
-							str_table_expr_AST = (AST) astFactory
-									.make((new ASTArray(2))
-											.add(astFactory.create(CROSSP,
-													"CROSSP")).add(
-													str_table_expr_AST));
+							str_table_expr_AST = (AST) astFactory.make((new ASTArray(2)).add(
+									astFactory.create(CROSSP, "CROSSP")).add(str_table_expr_AST));
 							currentAST.root = str_table_expr_AST;
-							currentAST.child = str_table_expr_AST != null
-									&& str_table_expr_AST.getFirstChild() != null ? str_table_expr_AST
+							currentAST.child = str_table_expr_AST != null && str_table_expr_AST.getFirstChild() != null ? str_table_expr_AST
 									.getFirstChild() : str_table_expr_AST;
 							currentAST.advanceChildToEnd();
 						}
@@ -1122,8 +1077,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = str_table_expr_AST;
 	}
 
-	public final void op_str_table() throws RecognitionException,
-			TokenStreamException {
+	public final void op_str_table() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1163,8 +1117,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = op_str_table_AST;
 	}
 
-	public final void expr_str_table() throws RecognitionException,
-			TokenStreamException {
+	public final void expr_str_table() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1204,8 +1157,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = expr_str_table_AST;
 	}
 
-	public final void str_table() throws RecognitionException,
-			TokenStreamException {
+	public final void str_table() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1259,8 +1211,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = str_table_AST;
 	}
 
-	public final void str_entry() throws RecognitionException,
-			TokenStreamException {
+	public final void str_entry() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1281,12 +1232,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 				match(QUOTE);
 				if (inputState.guessing == 0) {
 					str_entry_AST = (AST) currentAST.root;
-					str_entry_AST = (AST) astFactory.make((new ASTArray(2))
-							.add(str_entry_AST)
-							.add(astFactory.create(NAME, "")));
+					str_entry_AST = (AST) astFactory.make((new ASTArray(2)).add(str_entry_AST).add(
+							astFactory.create(NAME, "")));
 					currentAST.root = str_entry_AST;
-					currentAST.child = str_entry_AST != null
-							&& str_entry_AST.getFirstChild() != null ? str_entry_AST
+					currentAST.child = str_entry_AST != null && str_entry_AST.getFirstChild() != null ? str_entry_AST
 							.getFirstChild() : str_entry_AST;
 					currentAST.advanceChildToEnd();
 				}
@@ -1328,8 +1277,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = str_entry_AST;
 	}
 
-	public final void op_str_entry() throws RecognitionException,
-			TokenStreamException {
+	public final void op_str_entry() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1355,8 +1303,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = op_str_entry_AST;
 	}
 
-	public final void bin_oper() throws RecognitionException,
-			TokenStreamException {
+	public final void bin_oper() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1747,8 +1694,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = bin_oper_AST;
 	}
 
-	public final void expr_str_entry() throws RecognitionException,
-			TokenStreamException {
+	public final void expr_str_entry() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1774,8 +1720,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = expr_str_entry_AST;
 	}
 
-	public final void instr_name() throws RecognitionException,
-			TokenStreamException {
+	public final void instr_name() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1800,11 +1745,9 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 			if (inputState.guessing == 0) {
 				instr_name_AST = (AST) currentAST.root;
 				instr_name_AST = (AST) astFactory.make((new ASTArray(2)).add(
-						astFactory.create(INSTR_NAME, "INSTR_NAME")).add(
-						instr_name_AST));
+						astFactory.create(INSTR_NAME, "INSTR_NAME")).add(instr_name_AST));
 				currentAST.root = instr_name_AST;
-				currentAST.child = instr_name_AST != null
-						&& instr_name_AST.getFirstChild() != null ? instr_name_AST
+				currentAST.child = instr_name_AST != null && instr_name_AST.getFirstChild() != null ? instr_name_AST
 						.getFirstChild() : instr_name_AST;
 				currentAST.advanceChildToEnd();
 			}
@@ -1820,8 +1763,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = instr_name_AST;
 	}
 
-	public final void instr_name_head() throws RecognitionException,
-			TokenStreamException {
+	public final void instr_name_head() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1829,9 +1771,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 
 		try { // for error handling
 			boolean synPredMatched3123 = false;
-			if (((_tokenSet_2.member(LA(1)))
-					&& (LA(2) == NAME || LA(2) == LSQUARE) && (_tokenSet_22
-						.member(LA(3))))) {
+			if (((_tokenSet_2.member(LA(1))) && (LA(2) == NAME || LA(2) == LSQUARE) && (_tokenSet_22.member(LA(3))))) {
 				int _m3123 = mark();
 				synPredMatched3123 = true;
 				inputState.guessing++;
@@ -1851,8 +1791,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 				instr_name_tail();
 				astFactory.addASTChild(currentAST, returnAST);
 				instr_name_head_AST = (AST) currentAST.root;
-			} else if ((LA(1) == NAME) && (_tokenSet_23.member(LA(2)))
-					&& (_tokenSet_24.member(LA(3)))) {
+			} else if ((LA(1) == NAME) && (_tokenSet_23.member(LA(2))) && (_tokenSet_24.member(LA(3)))) {
 				AST tmp230_AST = null;
 				tmp230_AST = astFactory.create(LT(1));
 				astFactory.makeASTRoot(currentAST, tmp230_AST);
@@ -1873,8 +1812,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = instr_name_head_AST;
 	}
 
-	public final void instr_name_tail() throws RecognitionException,
-			TokenStreamException {
+	public final void instr_name_tail() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1882,9 +1820,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 
 		try { // for error handling
 			boolean synPredMatched3129 = false;
-			if (((_tokenSet_2.member(LA(1)))
-					&& (LA(2) == NAME || LA(2) == LSQUARE) && (_tokenSet_22
-						.member(LA(3))))) {
+			if (((_tokenSet_2.member(LA(1))) && (LA(2) == NAME || LA(2) == LSQUARE) && (_tokenSet_22.member(LA(3))))) {
 				int _m3129 = mark();
 				synPredMatched3129 = true;
 				inputState.guessing++;
@@ -1904,9 +1840,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 				instr_name_tail();
 				astFactory.addASTChild(currentAST, returnAST);
 				instr_name_tail_AST = (AST) currentAST.root;
-			} else if ((_tokenSet_23.member(LA(1)))
-					&& (_tokenSet_24.member(LA(2)))
-					&& (_tokenSet_25.member(LA(3)))) {
+			} else if ((_tokenSet_23.member(LA(1))) && (_tokenSet_24.member(LA(2))) && (_tokenSet_25.member(LA(3)))) {
 				instr_name_tail_AST = (AST) currentAST.root;
 			} else {
 				throw new NoViableAltException(LT(1), getFilename());
@@ -1923,8 +1857,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = instr_name_tail_AST;
 	}
 
-	public final void instr_name_decor() throws RecognitionException,
-			TokenStreamException {
+	public final void instr_name_decor() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -1947,8 +1880,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = instr_name_decor_AST;
 	}
 
-	public final void instr_name_elem() throws RecognitionException,
-			TokenStreamException {
+	public final void instr_name_elem() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2086,13 +2018,11 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 				match(RPAREN);
 				if (inputState.guessing == 0) {
 					rt_AST = (AST) currentAST.root;
-					rt_AST = (AST) astFactory.make((new ASTArray(2)).add(
-							astFactory.create(FUNCTION, "FUNCTION"))
-							.add(rt_AST));
+					rt_AST = (AST) astFactory.make((new ASTArray(2)).add(astFactory.create(FUNCTION, "FUNCTION")).add(
+							rt_AST));
 					currentAST.root = rt_AST;
-					currentAST.child = rt_AST != null
-							&& rt_AST.getFirstChild() != null ? rt_AST
-							.getFirstChild() : rt_AST;
+					currentAST.child = rt_AST != null && rt_AST.getFirstChild() != null ? rt_AST.getFirstChild()
+							: rt_AST;
 					currentAST.advanceChildToEnd();
 				}
 				rt_AST = (AST) currentAST.root;
@@ -2126,8 +2056,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = rt_AST;
 	}
 
-	public final void assign_rt() throws RecognitionException,
-			TokenStreamException {
+	public final void assign_rt() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2195,8 +2124,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = assign_rt_AST;
 	}
 
-	public final void expr_list() throws RecognitionException,
-			TokenStreamException {
+	public final void expr_list() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2344,8 +2272,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = var_AST;
 	}
 
-	public final void primary_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void primary_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2476,12 +2403,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 					match(RPAREN);
 					if (inputState.guessing == 0) {
 						primary_expr_AST = (AST) currentAST.root;
-						primary_expr_AST = (AST) astFactory.make((new ASTArray(
-								2)).add(astFactory.create(BUILTIN, "BUILTIN"))
-								.add(primary_expr_AST));
+						primary_expr_AST = (AST) astFactory.make((new ASTArray(2)).add(
+								astFactory.create(BUILTIN, "BUILTIN")).add(primary_expr_AST));
 						currentAST.root = primary_expr_AST;
-						currentAST.child = primary_expr_AST != null
-								&& primary_expr_AST.getFirstChild() != null ? primary_expr_AST
+						currentAST.child = primary_expr_AST != null && primary_expr_AST.getFirstChild() != null ? primary_expr_AST
 								.getFirstChild() : primary_expr_AST;
 						currentAST.advanceChildToEnd();
 					}
@@ -2501,8 +2426,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = primary_expr_AST;
 	}
 
-	public final void postfix_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void postfix_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2551,15 +2475,10 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 						}
 						if (inputState.guessing == 0) {
 							postfix_expr_AST = (AST) currentAST.root;
-							postfix_expr_AST = (AST) astFactory
-									.make((new ASTArray(3))
-											.add(astFactory
-													.create(CAST, "CAST"))
-											.add(width_AST)
-											.add(postfix_expr_AST));
+							postfix_expr_AST = (AST) astFactory.make((new ASTArray(3))
+									.add(astFactory.create(CAST, "CAST")).add(width_AST).add(postfix_expr_AST));
 							currentAST.root = postfix_expr_AST;
-							currentAST.child = postfix_expr_AST != null
-									&& postfix_expr_AST.getFirstChild() != null ? postfix_expr_AST
+							currentAST.child = postfix_expr_AST != null && postfix_expr_AST.getFirstChild() != null ? postfix_expr_AST
 									.getFirstChild() : postfix_expr_AST;
 							currentAST.advanceChildToEnd();
 						}
@@ -2583,8 +2502,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = postfix_expr_AST;
 	}
 
-	public final void lookup_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void lookup_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2627,20 +2545,14 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 					astFactory.addASTChild(currentAST, returnAST);
 					if (inputState.guessing == 0) {
 						lookup_expr_AST = (AST) currentAST.root;
-						lookup_expr_AST = (AST) astFactory
-								.make((new ASTArray(2)).add(
-										astFactory.create(LOOKUP_OP,
-												"LOOKUP_OP")).add(
-										lookup_expr_AST));
+						lookup_expr_AST = (AST) astFactory.make((new ASTArray(2)).add(
+								astFactory.create(LOOKUP_OP, "LOOKUP_OP")).add(lookup_expr_AST));
 						currentAST.root = lookup_expr_AST;
-						currentAST.child = lookup_expr_AST != null
-								&& lookup_expr_AST.getFirstChild() != null ? lookup_expr_AST
+						currentAST.child = lookup_expr_AST != null && lookup_expr_AST.getFirstChild() != null ? lookup_expr_AST
 								.getFirstChild() : lookup_expr_AST;
 						currentAST.advanceChildToEnd();
 					}
-				} else if ((_tokenSet_30.member(LA(1)))
-						&& (_tokenSet_31.member(LA(2)))
-						&& (_tokenSet_32.member(LA(3)))) {
+				} else if ((_tokenSet_30.member(LA(1))) && (_tokenSet_31.member(LA(2))) && (_tokenSet_32.member(LA(3)))) {
 				} else {
 					throw new NoViableAltException(LT(1), getFilename());
 				}
@@ -2658,8 +2570,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = lookup_expr_AST;
 	}
 
-	public final void unary_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void unary_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2710,8 +2621,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = unary_expr_AST;
 	}
 
-	public final void fp_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void fp_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2831,8 +2741,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 								break;
 							}
 							default: {
-								throw new NoViableAltException(LT(1),
-										getFilename());
+								throw new NoViableAltException(LT(1), getFilename());
 							}
 							}
 						}
@@ -2856,8 +2765,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = fp_expr_AST;
 	}
 
-	public final void arith_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void arith_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -2928,8 +2836,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 								break;
 							}
 							default: {
-								throw new NoViableAltException(LT(1),
-										getFilename());
+								throw new NoViableAltException(LT(1), getFilename());
 							}
 							}
 						}
@@ -2953,8 +2860,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = arith_expr_AST;
 	}
 
-	public final void bit_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void bit_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -3060,8 +2966,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 								break;
 							}
 							default: {
-								throw new NoViableAltException(LT(1),
-										getFilename());
+								throw new NoViableAltException(LT(1), getFilename());
 							}
 							}
 						}
@@ -3085,8 +2990,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = bit_expr_AST;
 	}
 
-	public final void cond_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void cond_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -3171,8 +3075,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 								break;
 							}
 							default: {
-								throw new NoViableAltException(LT(1),
-										getFilename());
+								throw new NoViableAltException(LT(1), getFilename());
 							}
 							}
 						}
@@ -3196,8 +3099,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = cond_expr_AST;
 	}
 
-	public final void log_expr() throws RecognitionException,
-			TokenStreamException {
+	public final void log_expr() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -3226,8 +3128,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 								break;
 							}
 							default: {
-								throw new NoViableAltException(LT(1),
-										getFilename());
+								throw new NoViableAltException(LT(1), getFilename());
 							}
 							}
 						}
@@ -3251,8 +3152,7 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = log_expr_AST;
 	}
 
-	public final void fast_entry() throws RecognitionException,
-			TokenStreamException {
+	public final void fast_entry() throws RecognitionException, TokenStreamException {
 
 		returnAST = null;
 		ASTPair currentAST = new ASTPair();
@@ -3283,24 +3183,17 @@ public class SSLParser extends antlr.LLkParser implements SSLParserTokenTypes {
 		returnAST = fast_entry_AST;
 	}
 
-	public static final String[] _tokenNames = { "<0>", "EOF", "<2>",
-			"NULL_TREE_LOOKAHEAD", "SEMI", "NUM", "NAME", "EQUATE", "PLUS",
-			"MINUS", "\"INTEGER\"", "\"FLOAT\"", "COMMA", "REG_ID", "INDEX",
-			"LSQUARE", "RSQUARE", "\"COVERS\"", "TO", "\"SHARES\"", "AT",
-			"\"OPERAND\"", "LCURLY", "RCURLY", "ASSIGNTYPE", "\"ENDIANNESS\"",
-			"\"BIG\"", "\"LITTLE\"", "LPAREN", "RPAREN", "QUOTE", "DECOR",
-			"MOD", "MUL", "DIV", "SMUL", "SDIV", "SMOD", "\"rlc\"", "\"rrc\"",
-			"\"rl\"", "\"rr\"", "RSHIFT", "LSHIFT", "RSHIFTA", "OR", "ORNOT",
-			"AND", "ANDNOT", "XOR", "XORNOT", "MUL_F", "MUL_FD", "MUL_FQ",
-			"MUL_FSD", "MUL_FDQ", "DIV_F", "DIV_FD", "DIV_FQ", "PLUS_F",
-			"PLUS_FD", "PLUS_FQ", "MINUS_F", "MINUS_FD", "MINUS_FQ", "\"pow\"",
-			"EQ", "NE", "LT", "GT", "LE", "GE", "LTU", "GTU", "LEU", "GEU",
-			"PRIME", "DOLLAR", "\"halt\"", "UNDERSCORE", "\"MEMSET\"",
-			"\"MEMCPY\"", "\"r\"", "\"m\"", "COLON", "FLOATNUM", "QUEST",
-			"S_E", "NOT", "FNEG", "LNOT", "\"and\"", "\"or\"", "\"FAST\"",
-			"CONSTANT", "TABLE", "CROSSP", "FUNCTION", "INSTR", "INSTR_NAME",
-			"LOOKUP_OP", "RTL", "BUILTIN", "CAST", "REGDECL", "WS", "COMMENT",
-			"DIGITS", "HEXDIGITS", "FLOAT_OR_NUM", "ASSIGN", "THEN",
+	public static final String[] _tokenNames = { "<0>", "EOF", "<2>", "NULL_TREE_LOOKAHEAD", "SEMI", "NUM", "NAME",
+			"EQUATE", "PLUS", "MINUS", "\"INTEGER\"", "\"FLOAT\"", "COMMA", "REG_ID", "INDEX", "LSQUARE", "RSQUARE",
+			"\"COVERS\"", "TO", "\"SHARES\"", "AT", "\"OPERAND\"", "LCURLY", "RCURLY", "ASSIGNTYPE", "\"ENDIANNESS\"",
+			"\"BIG\"", "\"LITTLE\"", "LPAREN", "RPAREN", "QUOTE", "DECOR", "MOD", "MUL", "DIV", "SMUL", "SDIV", "SMOD",
+			"\"rlc\"", "\"rrc\"", "\"rl\"", "\"rr\"", "RSHIFT", "LSHIFT", "RSHIFTA", "OR", "ORNOT", "AND", "ANDNOT",
+			"XOR", "XORNOT", "MUL_F", "MUL_FD", "MUL_FQ", "MUL_FSD", "MUL_FDQ", "DIV_F", "DIV_FD", "DIV_FQ", "PLUS_F",
+			"PLUS_FD", "PLUS_FQ", "MINUS_F", "MINUS_FD", "MINUS_FQ", "\"pow\"", "EQ", "NE", "LT", "GT", "LE", "GE",
+			"LTU", "GTU", "LEU", "GEU", "PRIME", "DOLLAR", "\"halt\"", "UNDERSCORE", "\"MEMSET\"", "\"MEMCPY\"",
+			"\"r\"", "\"m\"", "COLON", "FLOATNUM", "QUEST", "S_E", "NOT", "FNEG", "LNOT", "\"and\"", "\"or\"",
+			"\"FAST\"", "CONSTANT", "TABLE", "CROSSP", "FUNCTION", "INSTR", "INSTR_NAME", "LOOKUP_OP", "RTL",
+			"BUILTIN", "CAST", "REGDECL", "WS", "COMMENT", "DIGITS", "HEXDIGITS", "FLOAT_OR_NUM", "ASSIGN", "THEN",
 			"ASSIGNTYPE_OR_MUL", "DOT" };
 
 	protected void buildTokenTypeASTClassMap() {

@@ -39,8 +39,7 @@ public interface AbstractDomainElement extends AbstractValue {
 	 * @return a collection of abstract values that were read from the address
 	 *         pointed to by this element
 	 */
-	public Collection<? extends AbstractDomainElement> readStorePowerSet(
-			int bitWidth,
+	public Collection<? extends AbstractDomainElement> readStorePowerSet(int bitWidth,
 			PartitionedMemory<? extends AbstractDomainElement> store);
 
 	/**
@@ -54,8 +53,7 @@ public interface AbstractDomainElement extends AbstractValue {
 	 *            The abstract memory to be read from
 	 * @return The abstract value that was read
 	 */
-	public AbstractDomainElement readStore(int bitWidth,
-			PartitionedMemory<? extends AbstractDomainElement> store);
+	public AbstractDomainElement readStore(int bitWidth, PartitionedMemory<? extends AbstractDomainElement> store);
 
 	/**
 	 * Writes an abstract value to the given memory.
@@ -69,8 +67,7 @@ public interface AbstractDomainElement extends AbstractValue {
 	 * @param value
 	 *            The abstract value to be written
 	 */
-	public <A extends AbstractDomainElement> void writeStore(int bitWidth,
-			PartitionedMemory<A> store, A value);
+	public <A extends AbstractDomainElement> void writeStore(int bitWidth, PartitionedMemory<A> store, A value);
 
 	/**
 	 * Abstract plus.

@@ -27,9 +27,9 @@ import v2.org.analysis.value.Value;
  * Frees a block of environment strings.
  * 
  * @param lpszEnvironmentBlock
- *            : A pointer to a block of environment strings. The pointer to
- *            the block must be obtained by calling the
- *            GetEnvironmentStrings function.
+ *            : A pointer to a block of environment strings. The pointer to the
+ *            block must be obtained by calling the GetEnvironmentStrings
+ *            function.
  * 
  * @return If the function succeeds, the return value is nonzero.
  * 
@@ -42,7 +42,7 @@ public class FreeEnvironmentStrings extends Kernel32API {
 	 * 
 	 */
 	public FreeEnvironmentStrings() {
-		
+
 	}
 
 	@Override
@@ -50,15 +50,15 @@ public class FreeEnvironmentStrings extends Kernel32API {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Register register = env.getRegister();
-		
+
 		// LPTSTR lpszEnvironmentBlock pointer to a block of environment strings
 		Value x1 = stack.pop();
 		System.out.println("Argument:" + x1);
-		
+
 		if (x1 instanceof LongValue) {
 			long t = ((LongValue) x1).getValue();
 			BOOL ret = Kernel32DLL.INSTANCE.FreeEnvironmentStrings(new Pointer(t));
-			
+
 			register.mov("eax", new LongValue(ret.longValue()));
 		}
 		return false;

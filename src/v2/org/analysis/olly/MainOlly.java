@@ -12,8 +12,8 @@ public class MainOlly {
 		AbsoluteAddress checkedAddr = new AbsoluteAddress(0);
 		AbsoluteAddress endAddr = new AbsoluteAddress(0);
 		String fileName = "out_themida_";
-		int num = 8;
-		
+		int num = 12;
+
 		OllyCompare ollyCompare = new OllyCompare("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
 				memoryEndAddr, stackIndex);
 		ollyCompare.importOllyData(checkedAddr, endAddr);

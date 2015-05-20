@@ -58,8 +58,7 @@ public class GraphvizWriter implements GraphWriter {
 	}
 
 	@Override
-	public final void writeNode(String id, String body,
-			Map<String, String> properties) throws IOException {
+	public final void writeNode(String id, String body, Map<String, String> properties) throws IOException {
 		out.write(toIdentifier(id));
 		out.write("[label=\"");
 		out.write(body.replace("\n", "\\n"));
@@ -82,8 +81,7 @@ public class GraphvizWriter implements GraphWriter {
 	}
 
 	@Override
-	public void writeEdge(String id1, String id2, Color color)
-			throws IOException {
+	public void writeEdge(String id1, String id2, Color color) throws IOException {
 		Map<String, String> map = new HashMap<String, String>();
 		if (color != null) {
 			map.put("color", colorConvert(color));
@@ -92,8 +90,7 @@ public class GraphvizWriter implements GraphWriter {
 	}
 
 	@Override
-	public final void writeEdge(String id1, String id2,
-			Map<String, String> properties) throws IOException {
+	public final void writeEdge(String id1, String id2, Map<String, String> properties) throws IOException {
 		out.write(toIdentifier(id1));
 		out.write(" -> ");
 		out.write(toIdentifier(id2));
@@ -116,14 +113,12 @@ public class GraphvizWriter implements GraphWriter {
 	}
 
 	@Override
-	public final void writeLabeledEdge(String id1, String id2, String label)
-			throws IOException {
+	public final void writeLabeledEdge(String id1, String id2, String label) throws IOException {
 		writeLabeledEdge(id1, id2, label, null);
 	}
 
 	@Override
-	public final void writeLabeledEdge(String id1, String id2, String label,
-			Color color) throws IOException {
+	public final void writeLabeledEdge(String id1, String id2, String label, Color color) throws IOException {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("label", label.replace("\n", "\\n"));
 		if (color != null) {
@@ -149,8 +144,7 @@ public class GraphvizWriter implements GraphWriter {
 	}
 
 	private static String colorConvert(Color color) {
-		return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(),
-				color.getBlue());
+		return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 }

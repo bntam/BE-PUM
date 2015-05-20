@@ -31,8 +31,7 @@ import java.util.Set;
 /**
  * @author Johannes Kinder
  */
-public class RTLOperation extends AbstractRTLExpression implements
-		RTLExpression {
+public class RTLOperation extends AbstractRTLExpression implements RTLExpression {
 
 	private final static Logger logger = Logger.getLogger(RTLOperation.class);
 
@@ -55,8 +54,8 @@ public class RTLOperation extends AbstractRTLExpression implements
 		size = theSize;
 
 		bitWidth = calculateBitWidth(operator, operands);
-		assert bitWidth == 1 || (bitWidth % 8 == 0) : "Bitwidth not a multiple of 8: "
-				+ bitWidth + ". Operation was " + this;
+		assert bitWidth == 1 || (bitWidth % 8 == 0) : "Bitwidth not a multiple of 8: " + bitWidth + ". Operation was "
+				+ this;
 	}
 
 	/**
@@ -86,8 +85,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 	public String toString() {
 		StringBuilder res = new StringBuilder();
 
-		if (operator == Operator.SIGN_EXTEND || operator == Operator.ZERO_FILL
-				|| operator == Operator.FSIZE) {
+		if (operator == Operator.SIGN_EXTEND || operator == Operator.ZERO_FILL || operator == Operator.FSIZE) {
 			res.append(operator + "(");
 			res.append(operands[0].toString());
 			for (int i = 1; i < operandCount; i++)
@@ -103,14 +101,12 @@ public class RTLOperation extends AbstractRTLExpression implements
 				res.append(operator.toString() + " " + operands[0].toString());
 				break;
 			case 2:
-				res.append(operands[0] + " " + operator.toString() + " "
-						+ operands[1]);
+				res.append(operands[0] + " " + operator.toString() + " " + operands[1]);
 				break;
 			default: {
 				res.append(operands[0].toString());
 				for (int i = 1; i < operandCount; i++)
-					res.append(" " + operator.toString() + " "
-							+ operands[i].toString());
+					res.append(" " + operator.toString() + " " + operands[i].toString());
 			}
 			}
 			res.append(')');
@@ -131,8 +127,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 			newOperands[i - 1] = opArray[i];
 
 		// Bitwidth may only change when it was unknown before
-		assert (bitWidth == RTLVariable.UNKNOWN_BITWIDTH)
-				|| (calculateBitWidth(operator, newOperands) == bitWidth) : "Bitwidth of "
+		assert (bitWidth == RTLVariable.UNKNOWN_BITWIDTH) || (calculateBitWidth(operator, newOperands) == bitWidth) : "Bitwidth of "
 				+ this
 				+ " changed from "
 				+ bitWidth
@@ -151,19 +146,16 @@ public class RTLOperation extends AbstractRTLExpression implements
 		return e instanceof RTLNumber && ((RTLNumber) e).longValue() == -1L;
 	}
 
-	private final boolean equalsLaterOperand(int opIndex,
-			RTLExpression[] opArray) {
+	private final boolean equalsLaterOperand(int opIndex, RTLExpression[] opArray) {
 		for (int j = opIndex + 1; j < opArray.length; j++)
 			if (opArray[j].equals(opArray[opIndex]))
 				return true;
 		return false;
 	}
 
-	private final boolean equalsBitWiseNotOfLaterOperand(int opIndex,
-			RTLExpression[] opArray) {
+	private final boolean equalsBitWiseNotOfLaterOperand(int opIndex, RTLExpression[] opArray) {
 		for (int j = opIndex + 1; j < opArray.length; j++)
-			if (opArray[j]
-					.equals(ExpressionFactory.createNot(opArray[opIndex])))
+			if (opArray[j].equals(ExpressionFactory.createNot(opArray[opIndex])))
 				return true;
 		return false;
 	}
@@ -196,19 +188,16 @@ public class RTLOperation extends AbstractRTLExpression implements
 				return subExp;
 			} else {
 				RTLExpression zfillExp = ExpressionFactory.createZeroFill(
-						ExpressionFactory.createNumber(
-								subExp.getBitWidth() + 1, 8), ExpressionFactory
-								.createNumber(castWidth - 1, 8), subExp);
-				logger.warn("Replacing cast: " + this.toString()
-						+ " with zero_fill: " + zfillExp);
+						ExpressionFactory.createNumber(subExp.getBitWidth() + 1, 8),
+						ExpressionFactory.createNumber(castWidth - 1, 8), subExp);
+				logger.warn("Replacing cast: " + this.toString() + " with zero_fill: " + zfillExp);
 				return zfillExp;
 			}
 
 		case SIGN_EXTEND:
 		case ZERO_FILL:
 			assert operandCount == 3;
-			if (evaledOperands[0] instanceof RTLNumber
-					&& evaledOperands[1] instanceof RTLNumber
+			if (evaledOperands[0] instanceof RTLNumber && evaledOperands[1] instanceof RTLNumber
 					&& evaledOperands[2] instanceof RTLNumber) {
 				long op = ((RTLNumber) evaledOperands[2]).longValue();
 				int width = evaledOperands[2].getBitWidth();
@@ -221,29 +210,25 @@ public class RTLOperation extends AbstractRTLExpression implements
 						long extension = op | RTLBitRange.bitMask(from, to);
 						// logger.debug("Sign extension: " + evaledOperands[2] +
 						// " => " + extension);
-						return ExpressionFactory.createNumber(extension,
-								targetWidth);
+						return ExpressionFactory.createNumber(extension, targetWidth);
 					} else {
 						return ExpressionFactory.createNumber(op, targetWidth);
 					}
 				} else { // ZERO_FILL
 					long filled = op
-							& (RTLBitRange.bitMask(0, from - 1) | RTLBitRange
-									.bitMask(to + 1, targetWidth - 1));
+							& (RTLBitRange.bitMask(0, from - 1) | RTLBitRange.bitMask(to + 1, targetWidth - 1));
 					return ExpressionFactory.createNumber(filled, targetWidth);
 				}
 			} else {
-				return ExpressionFactory
-						.createOperation(operator, evaledOperands[0],
-								evaledOperands[1], evaledOperands[2]);
+				return ExpressionFactory.createOperation(operator, evaledOperands[0], evaledOperands[1],
+						evaledOperands[2]);
 			}
 			// break; Unreachable;
 
 		case FSIZE:
 			assert operandCount == 3;
 			// do nothing for now
-			return ExpressionFactory.createOperation(operator,
-					evaledOperands[0], evaledOperands[1], evaledOperands[2]);
+			return ExpressionFactory.createOperation(operator, evaledOperands[0], evaledOperands[1], evaledOperands[2]);
 		case XOR:
 			if (operandCount == 2) {
 				if (evaledOperands[0].equals(evaledOperands[1]))
@@ -253,11 +238,9 @@ public class RTLOperation extends AbstractRTLExpression implements
 				if (isZero(evaledOperands[1]))
 					return evaledOperands[0];
 				if (allBitsOne(evaledOperands[0]))
-					return ExpressionFactory.createNot(evaledOperands[1])
-							.evaluate(context);
+					return ExpressionFactory.createNot(evaledOperands[1]).evaluate(context);
 				if (allBitsOne(evaledOperands[1]))
-					return ExpressionFactory.createNot(evaledOperands[0])
-							.evaluate(context);
+					return ExpressionFactory.createNot(evaledOperands[0]).evaluate(context);
 			}
 			break;
 
@@ -270,11 +253,9 @@ public class RTLOperation extends AbstractRTLExpression implements
 				if (ExpressionFactory.TRUE.equals(evaledOperands[1]))
 					return evaledOperands[0];
 				if (ExpressionFactory.FALSE.equals(evaledOperands[0]))
-					return ExpressionFactory.createNot(evaledOperands[1])
-							.evaluate(context);
+					return ExpressionFactory.createNot(evaledOperands[1]).evaluate(context);
 				if (ExpressionFactory.FALSE.equals(evaledOperands[1]))
-					return ExpressionFactory.createNot(evaledOperands[0])
-							.evaluate(context);
+					return ExpressionFactory.createNot(evaledOperands[0]).evaluate(context);
 			}
 			break;
 
@@ -289,43 +270,34 @@ public class RTLOperation extends AbstractRTLExpression implements
 					if (isZero(op))
 						return ExpressionFactory.createNumber(0, getBitWidth());
 					if (equalsLaterOperand(opIndex, evaledOperands))
-						return removeOperand(opIndex, evaledOperands).evaluate(
-								context);
+						return removeOperand(opIndex, evaledOperands).evaluate(context);
 					if (equalsBitWiseNotOfLaterOperand(opIndex, evaledOperands))
 						return ExpressionFactory.createNumber(0, getBitWidth());
 					if (allBitsOne(op))
-						return removeOperand(opIndex, evaledOperands).evaluate(
-								context);
+						return removeOperand(opIndex, evaledOperands).evaluate(context);
 					break;
 				case OR:
 					if (allBitsOne(op))
-						return ExpressionFactory
-								.createNumber(-1, getBitWidth());
+						return ExpressionFactory.createNumber(-1, getBitWidth());
 					if (equalsLaterOperand(opIndex, evaledOperands))
-						return removeOperand(opIndex, evaledOperands).evaluate(
-								context);
+						return removeOperand(opIndex, evaledOperands).evaluate(context);
 					if (equalsBitWiseNotOfLaterOperand(opIndex, evaledOperands))
-						return ExpressionFactory.createNumber(
-								-(2 ^ (getBitWidth() - 1)), getBitWidth());
+						return ExpressionFactory.createNumber(-(2 ^ (getBitWidth() - 1)), getBitWidth());
 					if (isZero(op))
-						return removeOperand(opIndex, evaledOperands).evaluate(
-								context);
+						return removeOperand(opIndex, evaledOperands).evaluate(context);
 					break;
 				case PLUS:
 					if (isZero(op))
-						return removeOperand(opIndex, evaledOperands).evaluate(
-								context);
+						return removeOperand(opIndex, evaledOperands).evaluate(context);
 					// Simplify (x + y - x + z) to (y + z)
 					if (op instanceof RTLOperation) {
 						RTLOperation operation = (RTLOperation) op;
 						if (operation.getOperator().equals(Operator.NEG)) {
 							for (int j = 0; j < evaledOperands.length; j++) {
-								if (operation.getOperands()[0]
-										.equals(evaledOperands[j])) {
+								if (operation.getOperands()[0].equals(evaledOperands[j])) {
 									// x + (-x) == 0
 									if (evaledOperands.length == 2)
-										return ExpressionFactory.createNumber(
-												0, evaldBitwidth);
+										return ExpressionFactory.createNumber(0, evaldBitwidth);
 									// Remove both from sum but leave the rest
 									RTLExpression[] newOperands = new RTLExpression[evaledOperands.length - 2];
 									int newIdx = 0;
@@ -336,10 +308,8 @@ public class RTLOperation extends AbstractRTLExpression implements
 									if (newOperands.length == 1)
 										return newOperands[0];
 									else
-										return ExpressionFactory
-												.createOperation(operator,
-														newOperands).evaluate(
-														context);
+										return ExpressionFactory.createOperation(operator, newOperands).evaluate(
+												context);
 								}
 							}
 						}
@@ -364,24 +334,20 @@ public class RTLOperation extends AbstractRTLExpression implements
 				case OR:
 					for (int opIndex = 0; opIndex < child.operandCount; opIndex++) {
 						RTLExpression subOp = child.operands[opIndex];
-						if (!(subOp instanceof RTLOperation)
-								|| !(((RTLOperation) subOp).operator == Operator.NOT)) {
+						if (!(subOp instanceof RTLOperation) || !(((RTLOperation) subOp).operator == Operator.NOT)) {
 							break andOrCheck;
 						}
 					}
 					// The current NOTs child is an AND or OR with only NOTed
 					// children.
-					RTLExpression[] strippedSubOps = new RTLExpression[child
-							.getOperandCount()];
+					RTLExpression[] strippedSubOps = new RTLExpression[child.getOperandCount()];
 					for (int opIndex = 0; opIndex < child.operandCount; opIndex++)
 						strippedSubOps[opIndex] = ((RTLOperation) child.operands[opIndex]).operands[0];
 
 					if (child.operator == Operator.AND)
-						return ExpressionFactory.createOperation(Operator.OR,
-								strippedSubOps);
+						return ExpressionFactory.createOperation(Operator.OR, strippedSubOps);
 					else
-						return ExpressionFactory.createOperation(Operator.AND,
-								strippedSubOps);
+						return ExpressionFactory.createOperation(Operator.AND, strippedSubOps);
 				}
 			}
 			break;
@@ -395,34 +361,29 @@ public class RTLOperation extends AbstractRTLExpression implements
 		// (x < y) | (x = y) <-> x <= y (in integer bitvectors)
 		// If the operator is an OR, has 2 operands, which are both again
 		// operations
-		if (operator == Operator.OR && operandCount == 2
-				&& evaledOperands[0] instanceof RTLOperation
+		if (operator == Operator.OR && operandCount == 2 && evaledOperands[0] instanceof RTLOperation
 				&& evaledOperands[1] instanceof RTLOperation) {
 			RTLOperation op0 = (RTLOperation) evaledOperands[0];
 			RTLOperation op1 = (RTLOperation) evaledOperands[1];
 			// If each operation has 2 operands which are equal to the ones of
 			// the other operation
-			if (op0.getOperandCount() == 2 && op1.getOperandCount() == 2
-					&& op0.operands[0].equals(op1.operands[0])
+			if (op0.getOperandCount() == 2 && op1.getOperandCount() == 2 && op0.operands[0].equals(op1.operands[0])
 					&& op0.operands[1].equals(op1.operands[1])) {
 				// If one operation is u< and the other =, return u<=
 				if ((op0.operator == Operator.UNSIGNED_LESS && op1.operator == Operator.EQUAL)
 						|| (op1.operator == Operator.UNSIGNED_LESS && op0.operator == Operator.EQUAL))
-					return ExpressionFactory.createUnsignedLessOrEqual(
-							op0.operands[0], op0.operands[1]);
+					return ExpressionFactory.createUnsignedLessOrEqual(op0.operands[0], op0.operands[1]);
 				// If one operation is < and the other =, return <=
 				if ((op0.operator == Operator.LESS && op1.operator == Operator.EQUAL)
 						|| (op1.operator == Operator.LESS && op0.operator == Operator.EQUAL))
-					return ExpressionFactory.createLessOrEqual(op0.operands[0],
-							op0.operands[1]);
+					return ExpressionFactory.createLessOrEqual(op0.operands[0], op0.operands[1]);
 			}
 		}
 
 		// ///////////////////////
 		// Combine numeric operands
 
-		ArrayList<RTLExpression> exprOps = new ArrayList<RTLExpression>(
-				operandCount);
+		ArrayList<RTLExpression> exprOps = new ArrayList<RTLExpression>(operandCount);
 		ArrayList<Long> numericOps = new ArrayList<Long>(operandCount);
 		for (int i = 0; i < operandCount; i++) {
 			// Numeric operand?
@@ -433,8 +394,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 			}
 		}
 
-		if (numericOps.size() > 0
-				&& (numericOps.size() > 1 || operandCount == 1)) {
+		if (numericOps.size() > 0 && (numericOps.size() > 1 || operandCount == 1)) {
 			long result;
 
 			if (operandCount == 1) {
@@ -447,11 +407,9 @@ public class RTLOperation extends AbstractRTLExpression implements
 					result = ~op;
 					break;
 				default:
-					logger.info("Missing operand handler for \""
-							+ this.operator
+					logger.info("Missing operand handler for \"" + this.operator
 							+ "\"! Cannot determine numeric result in evaluation.");
-					return ExpressionFactory.createOperation(this.operator,
-							evaledOperands);
+					return ExpressionFactory.createOperation(this.operator, evaledOperands);
 				}
 			} else {
 				long op1 = numericOps.get(0);
@@ -483,16 +441,13 @@ public class RTLOperation extends AbstractRTLExpression implements
 					}
 					break;
 				case EQUAL:
-					result = op1 == op2 ? ExpressionFactory.TRUE.longValue()
-							: ExpressionFactory.FALSE.longValue();
+					result = op1 == op2 ? ExpressionFactory.TRUE.longValue() : ExpressionFactory.FALSE.longValue();
 					break;
 				case LESS:
-					result = op1 < op2 ? ExpressionFactory.TRUE.longValue()
-							: ExpressionFactory.FALSE.longValue();
+					result = op1 < op2 ? ExpressionFactory.TRUE.longValue() : ExpressionFactory.FALSE.longValue();
 					break;
 				case LESS_OR_EQUAL:
-					result = op1 <= op2 ? ExpressionFactory.TRUE.longValue()
-							: ExpressionFactory.FALSE.longValue();
+					result = op1 <= op2 ? ExpressionFactory.TRUE.longValue() : ExpressionFactory.FALSE.longValue();
 					break;
 				case UNSIGNED_LESS:
 					if (op1 < 0 && op2 >= 0)
@@ -500,8 +455,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 					else if (op2 < 0 && op1 >= 0)
 						result = ExpressionFactory.TRUE.longValue();
 					else
-						result = op1 < op2 ? ExpressionFactory.TRUE.longValue()
-								: ExpressionFactory.FALSE.longValue();
+						result = op1 < op2 ? ExpressionFactory.TRUE.longValue() : ExpressionFactory.FALSE.longValue();
 					break;
 				case UNSIGNED_LESS_OR_EQUAL:
 					if (op1 < 0 && op2 >= 0)
@@ -509,9 +463,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 					else if (op2 < 0 && op1 >= 0)
 						result = ExpressionFactory.TRUE.longValue();
 					else
-						result = op1 <= op2 ? ExpressionFactory.TRUE
-								.longValue() : ExpressionFactory.FALSE
-								.longValue();
+						result = op1 <= op2 ? ExpressionFactory.TRUE.longValue() : ExpressionFactory.FALSE.longValue();
 					break;
 				case SHL:
 					result = op1 << op2;
@@ -532,22 +484,18 @@ public class RTLOperation extends AbstractRTLExpression implements
 					result = op1 ^ op2;
 					break;
 				default:
-					logger.info("Missing operand handler for \""
-							+ this.operator
+					logger.info("Missing operand handler for \"" + this.operator
 							+ "\"! Cannot determine numeric result in evaluation.");
-					return ExpressionFactory.createOperation(this.operator,
-							evaledOperands);
+					return ExpressionFactory.createOperation(this.operator, evaledOperands);
 				}
 			}
 
 			RTLExpression numericOperand;
 			// Check if result is pseudo-boolean
 			if (evaldBitwidth == 1) {
-				numericOperand = result != 0 ? ExpressionFactory.TRUE
-						: ExpressionFactory.FALSE;
+				numericOperand = result != 0 ? ExpressionFactory.TRUE : ExpressionFactory.FALSE;
 			} else {
-				numericOperand = ExpressionFactory.createNumber(result,
-						evaldBitwidth);
+				numericOperand = ExpressionFactory.createNumber(result, evaldBitwidth);
 			}
 			// Combine with remaining non-numeric operands if necessary
 			if (exprOps.size() == 0) {
@@ -578,8 +526,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 		if (usedMemoryLocations == null) {
 			usedMemoryLocations = new FastSet<RTLMemoryLocation>();
 			for (int i = 0; i < operandCount; i++) {
-				usedMemoryLocations
-						.addAll(operands[i].getUsedMemoryLocations());
+				usedMemoryLocations.addAll(operands[i].getUsedMemoryLocations());
 			}
 		}
 		return usedMemoryLocations;
@@ -593,8 +540,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 		if (obj == null || obj.getClass() != this.getClass())
 			return false;
 		RTLOperation other = (RTLOperation) obj;
-		return this.operator.equals(other.operator)
-				&& Arrays.equals(this.operands, other.operands);
+		return this.operator.equals(other.operator) && Arrays.equals(this.operands, other.operands);
 	}
 
 	/*
@@ -610,8 +556,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 		return size;
 	}
 
-	private static int calculateBitWidth(Operator operation,
-			RTLExpression[] operands) {
+	private static int calculateBitWidth(Operator operation, RTLExpression[] operands) {
 		switch (operation) {
 		// Testers
 		case EQUAL:
@@ -645,9 +590,8 @@ public class RTLOperation extends AbstractRTLExpression implements
 					return RTLVariable.UNKNOWN_BITWIDTH;
 				// assert operands[i].getBitWidth() == bw :
 				if (operands[i].getBitWidth() != bw) {
-					logger.warn("Different bitwidths in operands: " + bw
-							+ " and " + operands[i].getBitWidth() + " for "
-							+ operation + Arrays.toString(operands));
+					logger.warn("Different bitwidths in operands: " + bw + " and " + operands[i].getBitWidth()
+							+ " for " + operation + Arrays.toString(operands));
 					bw = Math.max(bw, operands[i].getBitWidth());
 				}
 			}
@@ -682,8 +626,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 			return ((RTLNumber) operands[1]).intValue();
 		case SIGN_EXTEND:
 		case ZERO_FILL:
-			return Math.max(((RTLNumber) operands[1]).intValue() + 1,
-					operands[2].getBitWidth());
+			return Math.max(((RTLNumber) operands[1]).intValue() + 1, operands[2].getBitWidth());
 
 		default:
 			throw new RuntimeException("Unhandled bitwidth case: " + operation);
@@ -696,8 +639,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 	}
 
 	@Override
-	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth)
-			throws TypeInferenceException {
+	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth) throws TypeInferenceException {
 		RTLExpression[] typedOperands = new RTLExpression[operandCount];
 
 		switch (operator) {
@@ -718,8 +660,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 					break;
 			}
 			if (bw <= 0)
-				throw new TypeInferenceException("Cannot infer type for "
-						+ toString() + "!");
+				throw new TypeInferenceException("Cannot infer type for " + toString() + "!");
 			for (int i = 0; i < operandCount; i++)
 				typedOperands[i] = operands[i].inferBitWidth(arch, bw);
 
@@ -734,8 +675,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 		case FMUL:
 		case FDIV:
 			for (int i = 0; i < operandCount; i++)
-				typedOperands[i] = operands[i].inferBitWidth(arch,
-						expectedBitWidth);
+				typedOperands[i] = operands[i].inferBitWidth(arch, expectedBitWidth);
 			return ExpressionFactory.createOperation(operator, typedOperands);
 
 			// Shifting
@@ -746,14 +686,12 @@ public class RTLOperation extends AbstractRTLExpression implements
 		case ROLC:
 		case ROR:
 		case RORC:
-			typedOperands[0] = operands[0]
-					.inferBitWidth(arch, expectedBitWidth);
+			typedOperands[0] = operands[0].inferBitWidth(arch, expectedBitWidth);
 			// is this always 8? no, e.g. not in bts modrm, eax.
 			try {
 				typedOperands[1] = operands[1].inferBitWidth(arch, 8);
 			} catch (TypeInferenceException e) {
-				logger.warn("Exception on inferring type of shift distance "
-						+ operands[1]);
+				logger.warn("Exception on inferring type of shift distance " + operands[1]);
 				// If there is another type already, leave it
 				typedOperands[1] = operands[1];
 			}
@@ -765,17 +703,14 @@ public class RTLOperation extends AbstractRTLExpression implements
 		case DIV:
 			// Division always has bitwidth of divisor (at least on intel...)
 			typedOperands[0] = operands[0];
-			typedOperands[1] = operands[1]
-					.inferBitWidth(arch, expectedBitWidth);
+			typedOperands[1] = operands[1].inferBitWidth(arch, expectedBitWidth);
 			return ExpressionFactory.createOperation(operator, typedOperands);
 			// Should be something like: sum of all op-bws = expectedbw; not
 			// implemented for now.
 		case MUL:
 			assert operands.length == 2;
-			typedOperands[0] = operands[0].inferBitWidth(arch,
-					expectedBitWidth / 2);
-			typedOperands[1] = operands[1].inferBitWidth(arch,
-					expectedBitWidth / 2);
+			typedOperands[0] = operands[0].inferBitWidth(arch, expectedBitWidth / 2);
+			typedOperands[1] = operands[1].inferBitWidth(arch, expectedBitWidth / 2);
 			return ExpressionFactory.createOperation(operator, typedOperands);
 		case POWER_OF:
 			return this;
@@ -796,8 +731,8 @@ public class RTLOperation extends AbstractRTLExpression implements
 			int targetWidth = to + 1;
 			typedOperands[1] = operands[1].inferBitWidth(arch, 8);
 			if (targetWidth != expectedBitWidth)
-				throw new TypeInferenceException("Bit extension to "
-						+ targetWidth + "bits, expected " + expectedBitWidth);
+				throw new TypeInferenceException("Bit extension to " + targetWidth + "bits, expected "
+						+ expectedBitWidth);
 			typedOperands[2] = operands[2].inferBitWidth(arch, from);
 			return ExpressionFactory.createOperation(operator, typedOperands);
 
@@ -808,8 +743,7 @@ public class RTLOperation extends AbstractRTLExpression implements
 			typedOperands[1] = operands[1].inferBitWidth(arch, 8);
 
 			if (to != expectedBitWidth)
-				throw new TypeInferenceException("Round to " + to
-						+ "bits, expected " + expectedBitWidth);
+				throw new TypeInferenceException("Round to " + to + "bits, expected " + expectedBitWidth);
 			typedOperands[2] = operands[2].inferBitWidth(arch, from);
 			return ExpressionFactory.createOperation(operator, typedOperands);
 

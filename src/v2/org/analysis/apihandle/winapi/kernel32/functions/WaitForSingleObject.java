@@ -57,7 +57,7 @@ public class WaitForSingleObject extends Kernel32API {
 	 * 
 	 */
 	public WaitForSingleObject() {
-		
+
 	}
 
 	@Override

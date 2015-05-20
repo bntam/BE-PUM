@@ -46,19 +46,17 @@ public class SSEInstructionDecoder extends InstructionDecoder {
 		super(name, addrMode1, operandType1);
 	}
 
-	public SSEInstructionDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2) {
+	public SSEInstructionDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2) {
 		super(name, addrMode1, operandType1, addrMode2, operandType2);
 	}
 
-	public SSEInstructionDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2, int addrMode3, int operandType3) {
-		super(name, addrMode1, operandType1, addrMode2, operandType2,
-				addrMode3, operandType3);
+	public SSEInstructionDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2,
+			int addrMode3, int operandType3) {
+		super(name, addrMode1, operandType1, addrMode2, operandType2, addrMode3, operandType3);
 	}
 
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand op1 = getOperand1(bytesArray, operandSize, addrSize);
 		Operand op2 = getOperand2(bytesArray, operandSize, addrSize);
 		Operand op3 = getOperand3(bytesArray, operandSize, addrSize);

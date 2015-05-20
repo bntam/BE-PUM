@@ -22,8 +22,7 @@ public class TestBitVec {
 		System.out.println("Div: " + BitVector.unsignedDiv(4294965296l, 100));
 		System.out.println("Greater Than: " + BitVector.gt(100, -2000));
 		System.out.println("Less Than: " + BitVector.lt(100, -2000));
-		System.out
-				.println("Greater Than or Equal: " + BitVector.ge(100, -2000));
+		System.out.println("Greater Than or Equal: " + BitVector.ge(100, -2000));
 		System.out.println("Less Than or Equal: " + BitVector.le(100, -2000));
 		long x = 8519680;
 		System.out.println("Rotate Left: " + BitVector.rl(x, 5));

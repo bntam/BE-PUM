@@ -117,8 +117,7 @@ public class COFF_Header {
 	/**
 	 * Parses a COFF_Header from an input stream
 	 */
-	public COFF_Header(BinaryInputBuffer in) throws java.io.IOException,
-			BinaryParseException {
+	public COFF_Header(BinaryInputBuffer in) throws java.io.IOException, BinaryParseException {
 		Machine = in.readWORD();
 		NumberOfSections = in.readWORD();
 		TimeDateStamp = in.readDWORD();
@@ -128,20 +127,16 @@ public class COFF_Header {
 		Characteristics = in.readWORD();
 
 		if (!isX86())
-			throw new BinaryParseException(
-					"Non-x86 COFF files currently not supported!");
+			throw new BinaryParseException("Non-x86 COFF files currently not supported!");
 
 		logger.debug("COFF Header: {");
 		logger.debug("  Machine = " + "0x" + Integer.toHexString(Machine));
 		logger.debug("  NumberOfSections = " + getNumberOfSections());
-		logger.debug("  TimeDateStamp = " + "0x"
-				+ Long.toHexString(TimeDateStamp));
-		logger.debug("  PointerToSymbolTable = " + "0x"
-				+ Long.toHexString(PointerToSymbolTable));
+		logger.debug("  TimeDateStamp = " + "0x" + Long.toHexString(TimeDateStamp));
+		logger.debug("  PointerToSymbolTable = " + "0x" + Long.toHexString(PointerToSymbolTable));
 		logger.debug("  NumberOfSymbols = " + NumberOfSymbols);
 		logger.debug("  SizeOfOptionalHeader = " + SizeOfOptionalHeader);
-		logger.debug("  Characteristics (Flags) = "
-				+ Integer.toBinaryString(Characteristics));
+		logger.debug("  Characteristics (Flags) = " + Integer.toBinaryString(Characteristics));
 		logger.debug("}");
 	}
 

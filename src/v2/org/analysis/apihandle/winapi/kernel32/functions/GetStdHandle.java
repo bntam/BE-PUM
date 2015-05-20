@@ -57,7 +57,7 @@ public class GetStdHandle extends Kernel32API {
 	 * 
 	 */
 	public GetStdHandle() {
-		
+
 	}
 
 	@Override

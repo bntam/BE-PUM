@@ -26,8 +26,8 @@ import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 /**
- * Frees a memory block allocated from a heap by the HeapAlloc or
- * HeapReAlloc function.
+ * Frees a memory block allocated from a heap by the HeapAlloc or HeapReAlloc
+ * function.
  * 
  * @param hHeap
  *            : A handle to the heap whose memory block is to be freed. This
@@ -35,15 +35,14 @@ import v2.org.analysis.value.Value;
  *            function.
  * 
  * @param dwFlags
- *            : The heap free options. Specifying the following value
- *            overrides the corresponding value specified in the flOptions
- *            parameter when the heap was created by using the HeapCreate
- *            function.
+ *            : The heap free options. Specifying the following value overrides
+ *            the corresponding value specified in the flOptions parameter when
+ *            the heap was created by using the HeapCreate function.
  * 
  * @param lpMem
  *            : A pointer to the memory block to be freed. This pointer is
- *            returned by the HeapAlloc or HeapReAlloc function. If this
- *            pointer is NULL, the behavior is undefined.
+ *            returned by the HeapAlloc or HeapReAlloc function. If this pointer
+ *            is NULL, the behavior is undefined.
  * 
  * @return If the function succeeds, the return value is nonzero.
  * 
@@ -56,7 +55,7 @@ public class HeapFree extends Kernel32API {
 	 * 
 	 */
 	public HeapFree() {
-		
+
 	}
 
 	@Override
@@ -64,21 +63,21 @@ public class HeapFree extends Kernel32API {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Register register = env.getRegister();
-		
+
 		/*
-		 * HANDLE hHeap, // handle to the heap DWORD dwFlags, // heap
-		 * freeing flags LPVOID lpMem // pointer to the memory to free
+		 * HANDLE hHeap, // handle to the heap DWORD dwFlags, // heap freeing
+		 * flags LPVOID lpMem // pointer to the memory to free
 		 */
 		Value x1 = stack.pop();
 		Value x2 = stack.pop();
 		Value x3 = stack.pop();
 		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
-		
+
 		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
-			
+
 			boolean ret = Kernel32DLL.INSTANCE.HeapFree(new HANDLE(new Pointer(t1)), new DWORD(t2), new LPVOID(t3));
 
 			register.mov("eax", new LongValue((ret) ? 1 : 0));

@@ -41,8 +41,7 @@ public class LocationAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(LocationAnalysis.class);
+	private static final Logger logger = Logger.getLogger(LocationAnalysis.class);
 
 	public LocationAnalysis() {
 		super();
@@ -54,31 +53,26 @@ public class LocationAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 		return CPAOperators.mergeSep(s1, s2, precision);
 	}
 
 	@Override
-	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge,
-			Precision precision) {
+	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge, Precision precision) {
 		LocationState cs = (LocationState) state;
 		if (cs.isBot())
 			return Collections.singleton((AbstractState) LocationState.BOT);
-		return Collections.singleton((AbstractState) (new LocationState(cfaEdge
-				.getTarget())));
+		return Collections.singleton((AbstractState) (new LocationState(cfaEdge.getTarget())));
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 		return s;
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 		return Pair.create(s, precision);
 	}
 
@@ -88,8 +82,7 @@ public class LocationAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		return null;
 	}
 

@@ -52,8 +52,7 @@ public class LoadIcon extends User32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -72,10 +71,8 @@ public class LoadIcon extends User32API {
 				hInstance = new HINSTANCE();
 				hInstance.setPointer(new Pointer(t1));
 			}
-			WString lpIconName = new WString(
-					memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
-			HICON ret = User32DLL.INSTANCE
-					.LoadIcon(hInstance, lpIconName);
+			WString lpIconName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+			HICON ret = User32DLL.INSTANCE.LoadIcon(hInstance, lpIconName);
 
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 			register.mov("eax", new LongValue(value));

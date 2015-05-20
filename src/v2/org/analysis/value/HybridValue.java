@@ -12,9 +12,8 @@ public class HybridValue implements Value {
 	private int connector;
 	public static int MAX_CON = 22;
 	public Map<String, Long> valueMap = new HashMap<String, Long>();
-	String[] con_mean = new String[] { "Undefined", "+", "-", "*", "/", "and",
-			"or", "not", "xor", "=", ">", "<", ">=", "<=", "!=", "==", "u>",
-			"u<", "u>=", "u<=", "%", "^" };
+	String[] con_mean = new String[] { "Undefined", "+", "-", "*", "/", "and", "or", "not", "xor", "=", ">", "<", ">=",
+			"<=", "!=", "==", "u>", "u<", "u>=", "u<=", "%", "^" };
 
 	@Override
 	public String getName() {
@@ -32,10 +31,8 @@ public class HybridValue implements Value {
 		super();
 		this.left = left;
 		this.connector = con;
-		this.right = right;		
+		this.right = right;
 	}
-
-	
 
 	public HybridValue(Value left, String con, Value right) {
 		super();
@@ -103,13 +100,11 @@ public class HybridValue implements Value {
 
 	@Override
 	public String toString() {
-		return "(" + left.toString() + " " + this.getConnector() + " "
-				+ right.toString() + ")";
+		return "(" + left.toString() + " " + this.getConnector() + " " + right.toString() + ")";
 	}
 
 	public String toStringZ3() {
-		return "( " + this.getConnector() + " " + left.toString() + " "
-				+ right.toString() + ")";
+		return "( " + this.getConnector() + " " + left.toString() + " " + right.toString() + ")";
 	}
 
 	@Override
@@ -121,8 +116,7 @@ public class HybridValue implements Value {
 		else if (exp instanceof SymbolValue)
 			result = new SymbolValue(((SymbolValue) exp).getVarName());
 		else if (exp instanceof HybridValue)
-			result = new HybridValue(((HybridValue) exp).getLeft(),
-					((HybridValue) exp).getConnector(),
+			result = new HybridValue(((HybridValue) exp).getLeft(), ((HybridValue) exp).getConnector(),
 					((HybridValue) exp).getRight());
 		else if (exp instanceof TopValue)
 			return new TopValue();
@@ -323,10 +317,8 @@ public class HybridValue implements Value {
 	public String toStringPreFix() {
 		// TODO Auto-generated method stub
 		if (getConnector().equals("!="))
-			return "(not(=" + " " + left.toStringPreFix() + " "
-					+ right.toStringPreFix() + "))";
-		return "(" + getBVConnector() + " " + left.toStringPreFix() + " "
-				+ right.toStringPreFix() + ")";
+			return "(not(=" + " " + left.toStringPreFix() + " " + right.toStringPreFix() + "))";
+		return "(" + getBVConnector() + " " + left.toStringPreFix() + " " + right.toStringPreFix() + ")";
 	}
 
 	private String getBVConnector() {
@@ -399,7 +391,7 @@ public class HybridValue implements Value {
 
 		if (getConnector().equals("/"))
 			return new LongValue(BitVector.unsignedDiv(l1.getValue(), r1.getValue()));
-		
+
 		if (getConnector().equals("mod") || getConnector().equals("%"))
 			return new LongValue(BitVector.mod(l1.getValue(), r1.getValue()));
 
@@ -416,20 +408,16 @@ public class HybridValue implements Value {
 			return new LongValue(BitVector.xor(l1.getValue(), r1.getValue()));
 
 		if (getConnector().equals(">"))
-			return new BooleanValue(BitVector.gt(((LongValue) l).getValue(),
-					((LongValue) r).getValue()));
+			return new BooleanValue(BitVector.gt(((LongValue) l).getValue(), ((LongValue) r).getValue()));
 
 		if (getConnector().equals(">="))
-			return new BooleanValue(BitVector.ge(((LongValue) l).getValue(),
-					((LongValue) r).getValue()));
+			return new BooleanValue(BitVector.ge(((LongValue) l).getValue(), ((LongValue) r).getValue()));
 
 		if (getConnector().equals("<"))
-			return new BooleanValue(BitVector.lt(((LongValue) l).getValue(),
-					((LongValue) r).getValue()));
+			return new BooleanValue(BitVector.lt(((LongValue) l).getValue(), ((LongValue) r).getValue()));
 
 		if (getConnector().equals("<="))
-			return new BooleanValue(BitVector.le(((LongValue) l).getValue(),
-					((LongValue) r).getValue()));
+			return new BooleanValue(BitVector.le(((LongValue) l).getValue(), ((LongValue) r).getValue()));
 
 		return this;
 	}
@@ -485,13 +473,13 @@ public class HybridValue implements Value {
 			if (temp != null)
 				result.addAll(temp);
 		}
-		
+
 		if (right != null) {
 			List<String> temp = right.getVariable();
 			if (temp != null)
 				result.addAll(temp);
 		}
-		
+
 		return result;
 	}
 

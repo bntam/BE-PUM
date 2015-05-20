@@ -23,10 +23,10 @@ import v2.org.analysis.value.LongValue;
 /**
  * Retrieves a bitmask representing the currently available disk drives.
  * 
- * @return If the function succeeds, the return value is a bitmask
- *         representing the currently available disk drives. Bit position 0
- *         (the least-significant bit) is drive A, bit position 1 is drive
- *         B, bit position 2 is drive C, and so on.
+ * @return If the function succeeds, the return value is a bitmask representing
+ *         the currently available disk drives. Bit position 0 (the
+ *         least-significant bit) is drive A, bit position 1 is drive B, bit
+ *         position 2 is drive C, and so on.
  * 
  * @author Yen Nguyen
  *
@@ -34,7 +34,7 @@ import v2.org.analysis.value.LongValue;
 public class GetLogicalDrives extends Kernel32API {
 
 	public GetLogicalDrives() {
-		
+
 	}
 
 	@Override

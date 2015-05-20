@@ -86,7 +86,6 @@ public class StackV1 extends Stack {
 		}
 	}
 
-
 	// Truy cap cac thanh phan trong stack [esp + desp]
 	public Value getValueStackFromIndex(long desp) {
 		// TODO Auto-generated method stub
@@ -246,8 +245,7 @@ public class StackV1 extends Stack {
 	private Value normalizeValue(Value v, Instruction inst) {
 		if (v instanceof LongValue) {
 			long t = ((LongValue) v).getValue();
-			return new LongValue(Convert.convetUnsignedValue(t,
-					Convert.getBitCount(inst)));
+			return new LongValue(Convert.convetUnsignedValue(t, Convert.getBitCount(inst)));
 		}
 
 		return v;
@@ -275,6 +273,6 @@ public class StackV1 extends Stack {
 	@Override
 	public void push16(Value pushedElement) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

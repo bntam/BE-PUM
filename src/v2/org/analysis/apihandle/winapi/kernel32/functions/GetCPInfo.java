@@ -78,7 +78,7 @@ public class GetCPInfo extends Kernel32API {
 					lpCPInfo.DefaultChar[0]));
 			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(
 					lpCPInfo.DefaultChar[1]));
-			
+
 			for (int i = 0; i < 12; i++) {
 				memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 1 + i), new LongValue(
 						lpCPInfo.LeadByte[i]));

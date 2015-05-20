@@ -120,9 +120,8 @@ public class RawModule implements ExecutableImage {
 
 	@Override
 	public Iterator<AbsoluteAddress> codeBytesIterator() {
-		throw new UnsupportedOperationException(
-				"Code iteration not yet implemented for "
-						+ this.getClass().getSimpleName() + "!");
+		throw new UnsupportedOperationException("Code iteration not yet implemented for "
+				+ this.getClass().getSimpleName() + "!");
 	}
 
 	@Override
@@ -130,7 +129,7 @@ public class RawModule implements ExecutableImage {
 		return inBuf.getByteArray();
 	}
 
-	//Provide later
+	// Provide later
 	@Override
 	public boolean insideFileArea(AbsoluteAddress va) {
 		// TODO Auto-generated method stub

@@ -4,8 +4,7 @@ import org.analysis.formula.*;
 import v2.org.analysis.complement.BitVector;
 
 public class SymbolFlag {
-	private Value aFlag, cFlag, dFlag, iFlag, oFlag, pFlag, sFlag, tFlag,
-			zFlag;
+	private Value aFlag, cFlag, dFlag, iFlag, oFlag, pFlag, sFlag, tFlag, zFlag;
 
 	public SymbolFlag clone() {
 		SymbolFlag c = new SymbolFlag();
@@ -108,8 +107,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithCMP(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// addr 0x8 @asm "cmp    %eax,%ebx"
 		// label pc_0x8
 		// R_EBX:u32 = source
@@ -129,8 +127,7 @@ public class SymbolFlag {
 
 			// *1* %OF := ((op1 < 0) & (op2 >= 0) & (result > 0))
 			// | ((op1 >= 0) & (op2 < 0) & (result < 0))
-			oFlag = new BooleanExp(((d < 0) & (s >= 0) & (t > 0))
-					| ((d >= 0) & (s < 0) & (t < 0)));
+			oFlag = new BooleanExp(((d < 0) & (s >= 0) & (t > 0)) | ((d >= 0) & (s < 0) & (t < 0)));
 
 			// R_SF:bool = high:bool(T_t_84:u32)
 			sFlag = new BooleanExp(t < 0);
@@ -158,14 +155,12 @@ public class SymbolFlag {
 			HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 			HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 			HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-			HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-					new HybridBooleanExp(o2, "and", o3));
+			HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 			HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 			HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 			HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-			HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-					new HybridBooleanExp(o6, "and", o7));
+			HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 			oFlag = new HybridBooleanExp(o4, "or", o8);
 			// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -187,8 +182,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithADD(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 
 		Value t = new HybridExp(dest, "+", source);
 
@@ -218,14 +212,12 @@ public class SymbolFlag {
 		HybridExp of1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp of2 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp of3 = new HybridExp(t, ">=", new LongValue(0));
-		HybridBooleanExp of4 = new HybridBooleanExp(of1, "and",
-				new HybridBooleanExp(of2, "and", of3));
+		HybridBooleanExp of4 = new HybridBooleanExp(of1, "and", new HybridBooleanExp(of2, "and", of3));
 
 		HybridExp of5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp of6 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp of7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp of8 = new HybridBooleanExp(of5, "and",
-				new HybridBooleanExp(of6, "and", of7));
+		HybridBooleanExp of8 = new HybridBooleanExp(of5, "and", new HybridBooleanExp(of6, "and", of7));
 
 		oFlag = new HybridBooleanExp(of4, "or", of8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -246,8 +238,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithMOVSB(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// addr 0x8 @asm "cmp    %eax,%ebx"
 		// label pc_0x8
 		// R_EBX:u32 = source
@@ -270,14 +261,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -298,8 +287,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithEXCHG(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// addr 0x8 @asm "cmp    %eax,%ebx"
 		// label pc_0x8
 		// R_EBX:u32 = source
@@ -322,14 +310,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -350,8 +336,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithLEA(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// addr 0x8 @asm "cmp    %eax,%ebx"
 		// label pc_0x8
 		// R_EBX:u32 = source
@@ -374,14 +359,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -402,16 +385,14 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithROR(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// *1* %CF := result@[31:31]
 		// *1* %OF := [count = 1?(op1@[31:31]) ~= (op1@[30:30]):nondet(1)]
 
 	}
 
 	public void changeFlagWithROL(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// *1* %OF := [count = 1?(op1@[31:31]) ~= %CF:nondet(1)]
 		// *1* %CF := result@[31:31]
 
@@ -432,14 +413,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -460,8 +439,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithADC(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// addr 0x8 @asm "cmp    %eax,%ebx"
 		// label pc_0x8
 		// R_EBX:u32 = source
@@ -484,14 +462,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -512,22 +488,19 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithSHR(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// *1* %CF := combine@[(count - 1):(count - 1)]
 		// *1* %OF := [count = 1?(result@[31:31]) ~= %CF:nondet(1)]
 	}
 
 	public void changeFlagWithSHL(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// *1* %CF := combine@[(32 - count):(32 - count)]
 		// *1* %OF := [count = 1?(result@[31:31]) ~= %CF:nondet(1)]
 	}
 
 	public void changeFlagWithIMUL(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// *1* %CF := [(sgnex(1,31,result@[31:31]) = result@[32:63])?0:1]
 		// *1* %OF := %CF
 
@@ -548,14 +521,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -576,8 +547,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithXOR(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// *1* %CF := 0
 		// *1* %OF := 0
 		// *1* %ZF := (result = 0)
@@ -604,8 +574,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithOR(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// *1* %CF := 0
 		// *1* %OF := 0
 		// *1* %ZF := (result = 0)
@@ -656,8 +625,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithAND(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// *1* %CF := 0
 		// *1* %OF := 0
 		// *1* %ZF := (result = 0)
@@ -684,8 +652,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithDEC(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// addr 0x8 @asm "cmp    %eax,%ebx"
 		// label pc_0x8
 		// R_EBX:u32 = source
@@ -708,14 +675,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -736,8 +701,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithSUB(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// addr 0x8 @asm "cmp    %eax,%ebx"
 		// label pc_0x8
 		// R_EBX:u32 = source
@@ -760,14 +724,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -788,8 +750,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithINC(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolMemoryOperandValueRegister,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolMemoryOperandValueRegister, SymbolStack symbolStack, Value dest, Value source) {
 		// addr 0x8 @asm "cmp    %eax,%ebx"
 		// label pc_0x8
 		// R_EBX:u32 = source
@@ -812,14 +773,12 @@ public class SymbolFlag {
 		HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 		HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 		HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-				new HybridBooleanExp(o2, "and", o3));
+		HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 		HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 		HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 		HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-				new HybridBooleanExp(o6, "and", o7));
+		HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 		oFlag = new HybridBooleanExp(o4, "or", o8);
 		// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^
@@ -848,12 +807,10 @@ public class SymbolFlag {
 
 			// *1* %CF := ((op1 < 0) & (op2 < 0))
 			// | ((result >= 0) & ((op1 < 0) | (op2 < 0)))
-			cFlag = new BooleanExp(((d < 0) & (s < 0))
-					| ((r >= 0) & ((d < 0) | (s < 0))));
+			cFlag = new BooleanExp(((d < 0) & (s < 0)) | ((r >= 0) & ((d < 0) | (s < 0))));
 			// *1* %OF := ((op1 < 0) & (op2 < 0) & (result >= 0))
 			// | ((op1 >= 0) & (op2 >= 0) & (result < 0))
-			oFlag = new BooleanExp(((d < 0) & (s < 0) & (r >= 0))
-					| ((d >= 0) & (s >= 0) & (r < 0)));
+			oFlag = new BooleanExp(((d < 0) & (s < 0) & (r >= 0)) | ((d >= 0) & (s >= 0) & (r < 0)));
 			// *1* %SF := (result < 0)
 			sFlag = new BooleanExp(r < 0);
 			// *1* %ZF := (result = 0)
@@ -929,8 +886,7 @@ public class SymbolFlag {
 	}
 
 	public void changeFlagWithTEST(SymbolValueRegister symbolValueRegister,
-			SymbolValueMemoryOperand symbolValueMemoryOperand,
-			SymbolStack symbolStack, Value dest, Value source) {
+			SymbolValueMemoryOperand symbolValueMemoryOperand, SymbolStack symbolStack, Value dest, Value source) {
 		// TODO Auto-generated method stub
 		if (dest instanceof AnyExp || source instanceof AnyExp) {
 			cFlag = new BooleanExp(false);
@@ -945,8 +901,7 @@ public class SymbolFlag {
 
 			// *1* %OF := ((op1 < 0) & (op2 >= 0) & (result > 0))
 			// | ((op1 >= 0) & (op2 < 0) & (result < 0))
-			oFlag = new BooleanExp(((d < 0) & (s >= 0) & (t > 0))
-					| ((d >= 0) & (s < 0) & (t < 0)));
+			oFlag = new BooleanExp(((d < 0) & (s >= 0) & (t > 0)) | ((d >= 0) & (s < 0) & (t < 0)));
 
 			// R_SF:bool = high:bool(T_t_84:u32)
 			sFlag = new BooleanExp(t < 0);
@@ -974,14 +929,12 @@ public class SymbolFlag {
 			HybridExp o1 = new HybridExp(dest, "<", new LongValue(0));
 			HybridExp o2 = new HybridExp(source, ">=", new LongValue(0));
 			HybridExp o3 = new HybridExp(t, ">", new LongValue(0));
-			HybridBooleanExp o4 = new HybridBooleanExp(o1, "and",
-					new HybridBooleanExp(o2, "and", o3));
+			HybridBooleanExp o4 = new HybridBooleanExp(o1, "and", new HybridBooleanExp(o2, "and", o3));
 
 			HybridExp o5 = new HybridExp(dest, ">=", new LongValue(0));
 			HybridExp o6 = new HybridExp(source, "<", new LongValue(0));
 			HybridExp o7 = new HybridExp(t, "<", new LongValue(0));
-			HybridBooleanExp o8 = new HybridBooleanExp(o5, "and",
-					new HybridBooleanExp(o6, "and", o7));
+			HybridBooleanExp o8 = new HybridBooleanExp(o5, "and", new HybridBooleanExp(o6, "and", o7));
 
 			oFlag = new HybridBooleanExp(o4, "or", o8);
 			// R_AF:bool = 0x10:u32 == (0x10:u32 & (T_t_84:u32 ^ R_EBX:u32 ^

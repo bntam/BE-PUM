@@ -37,28 +37,24 @@ public class CFGState implements Comparable<CFGState> {
 	private StateTransformer transformer;
 	private Kind kind;
 
-	public CFGState(Location source, Location target,
-			StateTransformer transformer, Kind kind2, Instruction instr) {
+	public CFGState(Location source, Location target, StateTransformer transformer, Kind kind2, Instruction instr) {
 		this(source, target, transformer, kind2);
 		this.instSource = instr;
 		this.instDest = null;
 	}
 
-	public CFGState(Location source, Location target,
-			StateTransformer transformer, Kind kind2, Instruction instr,
+	public CFGState(Location source, Location target, StateTransformer transformer, Kind kind2, Instruction instr,
 			Instruction ins) {
 		this(source, target, transformer, kind2);
 		this.instSource = instr;
 		this.instDest = ins;
 	}
 
-	public CFGState(Location source, Location target,
-			StateTransformer transformer, Kind kind) {
+	public CFGState(Location source, Location target, StateTransformer transformer, Kind kind) {
 		super();
-		assert (source != null && target != null) : "Cannot create edge with dangling edges: "
-				+ source + " -> " + target;
-		assert transformer != null : "Need to specify transformer for edge "
-				+ source + " -> " + target;
+		assert (source != null && target != null) : "Cannot create edge with dangling edges: " + source + " -> "
+				+ target;
+		assert transformer != null : "Need to specify transformer for edge " + source + " -> " + target;
 		assert kind != null : "Need to specify an edge kind";
 		this.source = source;
 		this.target = target;
@@ -66,8 +62,7 @@ public class CFGState implements Comparable<CFGState> {
 		this.kind = kind;
 	}
 
-	public CFGState(Location source, Location target,
-			StateTransformer transformer) {
+	public CFGState(Location source, Location target, StateTransformer transformer) {
 		this(source, target, transformer, Kind.MAY);
 	}
 
@@ -102,8 +97,7 @@ public class CFGState implements Comparable<CFGState> {
 
 	public void setTransformer(StateTransformer t) {
 		transformer = t;
-		assert transformer != null : "Need to specify transformer for edge "
-				+ source + " -> " + target;
+		assert transformer != null : "Need to specify transformer for edge " + source + " -> " + target;
 	}
 
 	public void setSource(Location source) {
@@ -117,11 +111,9 @@ public class CFGState implements Comparable<CFGState> {
 	@Override
 	public String toString() {
 		if (instSource != null && instDest != null)
-			return source + ":" + instSource.getName() + " -" + kind + "-> "
-					+ target + ":" + instDest.getName();
+			return source + ":" + instSource.getName() + " -" + kind + "-> " + target + ":" + instDest.getName();
 		else if (instSource != null)
-			return source + ":" + instSource.getName() + " -" + kind + "-> "
-					+ target;
+			return source + ":" + instSource.getName() + " -" + kind + "-> " + target;
 		else
 			return source + " -" + kind + "-> " + target;
 	}

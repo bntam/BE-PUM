@@ -90,9 +90,11 @@ public class SystemTimeToFileTime extends Kernel32API {
 
 			BOOL ret = Kernel32DLL.INSTANCE.SystemTimeToFileTime(lpSystemTime, lpFileTime);
 			register.mov("eax", new LongValue(ret.longValue()));
-			
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(lpFileTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 4), new LongValue(lpFileTime.dwHighDateTime));
+
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(
+					lpFileTime.dwLowDateTime));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 4), new LongValue(
+					lpFileTime.dwHighDateTime));
 		}
 		return false;
 	}

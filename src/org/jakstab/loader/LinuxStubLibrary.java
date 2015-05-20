@@ -38,8 +38,7 @@ import java.util.Map;
  */
 public class LinuxStubLibrary implements StubProvider {
 
-	private static final Logger logger = Logger
-			.getLogger(LinuxStubLibrary.class);
+	private static final Logger logger = Logger.getLogger(LinuxStubLibrary.class);
 
 	private Map<String, AbsoluteAddress> activeStubs;
 	private int impId;
@@ -52,9 +51,8 @@ public class LinuxStubLibrary implements StubProvider {
 		this.arch = arch;
 		activeStubs = new HashMap<String, AbsoluteAddress>();
 		impId = 0;
-		arg0 = ExpressionFactory.createMemoryLocation(ExpressionFactory
-				.createPlus(arch.stackPointer(),
-						ExpressionFactory.createNumber(4, 32)), 32);
+		arg0 = ExpressionFactory.createMemoryLocation(
+				ExpressionFactory.createPlus(arch.stackPointer(), ExpressionFactory.createNumber(4, 32)), 32);
 		// arg1 =
 		// ExpressionFactory.createMemoryLocation(ExpressionFactory.createPlus(arch.stackPointer(),
 		// ExpressionFactory.createNumber(8, 32)), 32);
@@ -79,41 +77,33 @@ public class LinuxStubLibrary implements StubProvider {
 		if (function.equals("__libc_start_main")) {
 			seq.addLast(new RTLGoto(arg0, Type.CALL));
 		} else if (function.equals("printf")) {
-			seq.addLast(new RTLDebugPrint(
-					"Call to printf, format @ %esp =",
-					ExpressionFactory.createSpecialExpression(
-							RTLSpecialExpression.DBG_PRINTF, ExpressionFactory
-									.createPlus(arch.stackPointer(),
-											ExpressionFactory.createNumber(4,
-													arch.getAddressBitWidth())))));
+			seq.addLast(new RTLDebugPrint("Call to printf, format @ %esp =", ExpressionFactory.createSpecialExpression(
+					RTLSpecialExpression.DBG_PRINTF,
+					ExpressionFactory.createPlus(arch.stackPointer(),
+							ExpressionFactory.createNumber(4, arch.getAddressBitWidth())))));
 		} else {
-			seq.addLast(new RTLVariableAssignment(32, ExpressionFactory
-					.createVariable("%eax"), ExpressionFactory.nondet(32)));
-			seq.addLast(new RTLVariableAssignment(32, ExpressionFactory
-					.createVariable("%ecx"), ExpressionFactory.nondet(32)));
-			seq.addLast(new RTLVariableAssignment(32, ExpressionFactory
-					.createVariable("%edx"), ExpressionFactory.nondet(32)));
+			seq.addLast(new RTLVariableAssignment(32, ExpressionFactory.createVariable("%eax"), ExpressionFactory
+					.nondet(32)));
+			seq.addLast(new RTLVariableAssignment(32, ExpressionFactory.createVariable("%ecx"), ExpressionFactory
+					.nondet(32)));
+			seq.addLast(new RTLVariableAssignment(32, ExpressionFactory.createVariable("%edx"), ExpressionFactory
+					.nondet(32)));
 		}
 
 		// store return address in retaddr
 		if (returns) {
-			seq.addLast(new RTLVariableAssignment(32, arch
-					.returnAddressVariable(), ExpressionFactory
-					.createMemoryLocation(arch.stackPointer(), arch
-							.stackPointer().getBitWidth())));
+			seq.addLast(new RTLVariableAssignment(32, arch.returnAddressVariable(), ExpressionFactory
+					.createMemoryLocation(arch.stackPointer(), arch.stackPointer().getBitWidth())));
 		}
 
 		// adjust stack pointer
-		seq.addLast(new RTLVariableAssignment(
-				arch.stackPointer().getBitWidth(), arch.stackPointer(),
-				ExpressionFactory.createPlus(arch.stackPointer(),
-						ExpressionFactory.createNumber(stackIncrement, arch
-								.stackPointer().getBitWidth()))));
+		seq.addLast(new RTLVariableAssignment(arch.stackPointer().getBitWidth(), arch.stackPointer(), ExpressionFactory
+				.createPlus(arch.stackPointer(),
+						ExpressionFactory.createNumber(stackIncrement, arch.stackPointer().getBitWidth()))));
 
 		if (returns) {
 			// Read return address from temporary variable
-			seq.addLast(new RTLGoto(Program.getProgram().getArchitecture()
-					.returnAddressVariable(), RTLGoto.Type.RETURN));
+			seq.addLast(new RTLGoto(Program.getProgram().getArchitecture().returnAddressVariable(), RTLGoto.Type.RETURN));
 		} else {
 			// artificial termination statement
 			seq.addLast(new RTLHalt());

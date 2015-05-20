@@ -66,7 +66,7 @@ import v2.org.analysis.value.Value;
 public class VirtualAlloc extends Kernel32API {
 
 	public VirtualAlloc() {
-		
+
 	}
 
 	@Override
@@ -92,14 +92,15 @@ public class VirtualAlloc extends Kernel32API {
 			long t3 = ((LongValue) x3).getValue();
 			long t4 = ((LongValue) x4).getValue();
 
-			System.out.println("Address:" + t1 + ", Size:" + t2 + ", Allocation Type:" + t3 + ", Protection Type:" + t4);
+			System.out
+					.println("Address:" + t1 + ", Size:" + t2 + ", Allocation Type:" + t3 + ", Protection Type:" + t4);
 
 			LPVOID lpAddress = (t1 != 0L) ? new LPVOID(t1) : null;
 			SIZE_T dwSize = new SIZE_T(t2);
 			DWORD flAllocationType = new DWORD(t3);
 			DWORD flProtect = new DWORD(t4);
 			LPVOID ret = Kernel32DLL.INSTANCE.VirtualAlloc(lpAddress, dwSize, flAllocationType, flProtect);
-			
+
 			register.mov("eax", new LongValue(Pointer.nativeValue(ret.toPointer())));
 		}
 		return false;

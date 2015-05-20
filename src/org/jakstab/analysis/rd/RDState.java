@@ -71,8 +71,7 @@ public class RDState implements AbstractState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 		// Not required for secondary analyses
 		return null;
 	}

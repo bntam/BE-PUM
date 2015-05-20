@@ -39,7 +39,7 @@ public class GetSystemTime extends Kernel32API {
 	 * 
 	 */
 	public GetSystemTime() {
-		
+
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class GetSystemTime extends Kernel32API {
 			SYSTEMTIME lpSystemTime = new SYSTEMTIME();
 			Kernel32.INSTANCE.GetSystemTime(lpSystemTime);
 
-			// typedef unsigned short      WORD;
+			// typedef unsigned short WORD;
 			// It just use 2 bytes of memory
 			memory.setWordMemoryValue(t, new LongValue(lpSystemTime.wYear));
 			memory.setWordMemoryValue(t + 2, new LongValue(lpSystemTime.wMonth));

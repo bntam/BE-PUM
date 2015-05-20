@@ -30,8 +30,7 @@ import java.util.Map;
 public class ELFSymbolFinder implements SymbolFinder {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(ELFSymbolFinder.class);
+	private static final Logger logger = Logger.getLogger(ELFSymbolFinder.class);
 
 	private ELFModule module;
 	Map<AbsoluteAddress, String> symbols;

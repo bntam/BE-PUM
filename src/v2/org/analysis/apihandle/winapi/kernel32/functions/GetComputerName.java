@@ -51,7 +51,7 @@ import v2.org.analysis.value.Value;
 public class GetComputerName extends Kernel32API {
 
 	public GetComputerName() {
-		
+
 	}
 
 	@Override
@@ -67,14 +67,15 @@ public class GetComputerName extends Kernel32API {
 
 		if (x1 instanceof LongValue && x2 instanceof LongValue) {
 			long t2 = ((LongValue) x2).getValue();
-			
+
 			char[] lpBuffer = new char[(int) t2];
 			IntByReference lpnSize = new IntByReference((int) t2);
-			
+
 			boolean ret = Kernel32.INSTANCE.GetComputerName(lpBuffer, lpnSize);
 
 			String compName = new String(lpBuffer);
-			memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()), compName, compName.length());
+			memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()), compName,
+					compName.length());
 			System.out.println("Computer Name:" + compName);
 			register.mov("eax", new LongValue(ret ? 1 : 0));
 		}

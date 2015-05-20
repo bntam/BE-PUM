@@ -45,8 +45,7 @@ public class AnyValue implements Value {
 		else if (exp instanceof SymbolValue)
 			result = new SymbolValue(((SymbolValue) exp).getVarName());
 		else if (exp instanceof HybridValue)
-			result = new HybridValue(((HybridValue) exp).getLeft(),
-					((HybridValue) exp).getConnector(),
+			result = new HybridValue(((HybridValue) exp).getLeft(), ((HybridValue) exp).getConnector(),
 					((HybridValue) exp).getRight());
 		return result;
 	}
@@ -54,45 +53,42 @@ public class AnyValue implements Value {
 	@Override
 	public Value addFunction(Value exp) {
 		// TODO Auto-generated method stub
-		/*Value result = null;
-		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "+",
-					new LongValue(((LongValue) exp).getValueOperand()));
-		else if (exp instanceof SymbolValue)
-			result = new HybridValue(new SymbolValue(varName), "+", exp);
-		else if (exp instanceof HybridValue)
-			result = new HybridValue(new SymbolValue(varName), "+", exp);
-		return result;*/
+		/*
+		 * Value result = null; if (exp instanceof LongValue) result = new
+		 * HybridValue(new SymbolValue(varName), "+", new LongValue(((LongValue)
+		 * exp).getValueOperand())); else if (exp instanceof SymbolValue) result
+		 * = new HybridValue(new SymbolValue(varName), "+", exp); else if (exp
+		 * instanceof HybridValue) result = new HybridValue(new
+		 * SymbolValue(varName), "+", exp); return result;
+		 */
 		return this;
 	}
 
 	@Override
 	public Value subFunction(Value exp) {
 		// TODO Auto-generated method stub
-		/*Value result = null;
-		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "-",
-					new LongValue(((LongValue) exp).getValueOperand()));
-		else if (exp instanceof SymbolValue)
-			result = new HybridValue(new SymbolValue(varName), "-", exp);
-		else if (exp instanceof HybridValue)
-			result = new HybridValue(new SymbolValue(varName), "-", exp);
-		return result;*/
+		/*
+		 * Value result = null; if (exp instanceof LongValue) result = new
+		 * HybridValue(new SymbolValue(varName), "-", new LongValue(((LongValue)
+		 * exp).getValueOperand())); else if (exp instanceof SymbolValue) result
+		 * = new HybridValue(new SymbolValue(varName), "-", exp); else if (exp
+		 * instanceof HybridValue) result = new HybridValue(new
+		 * SymbolValue(varName), "-", exp); return result;
+		 */
 		return this;
 	}
 
 	@Override
 	public Value unsignedMulFunction(Value exp) {
 		// TODO Auto-generated method stub
-		/*Value result = null;
-		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "*",
-					new LongValue(((LongValue) exp).getValueOperand()));
-		else if (exp instanceof SymbolValue)
-			result = new HybridValue(new SymbolValue(varName), "*", exp);
-		else if (exp instanceof HybridValue)
-			result = new HybridValue(new SymbolValue(varName), "*", exp);
-		return result;*/
+		/*
+		 * Value result = null; if (exp instanceof LongValue) result = new
+		 * HybridValue(new SymbolValue(varName), "*", new LongValue(((LongValue)
+		 * exp).getValueOperand())); else if (exp instanceof SymbolValue) result
+		 * = new HybridValue(new SymbolValue(varName), "*", exp); else if (exp
+		 * instanceof HybridValue) result = new HybridValue(new
+		 * SymbolValue(varName), "*", exp); return result;
+		 */
 		return this;
 	}
 
@@ -114,15 +110,14 @@ public class AnyValue implements Value {
 	@Override
 	public Value unsignedDivFunction(Value exp) {
 		// TODO Auto-generated method stub
-		/*Value result = null;
-		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "/",
-					new LongValue(((LongValue) exp).getValueOperand()));
-		else if (exp instanceof SymbolValue)
-			result = new HybridValue(new SymbolValue(varName), "/", exp);
-		else if (exp instanceof HybridValue)
-			result = new HybridValue(new SymbolValue(varName), "/", exp);
-		return result;*/
+		/*
+		 * Value result = null; if (exp instanceof LongValue) result = new
+		 * HybridValue(new SymbolValue(varName), "/", new LongValue(((LongValue)
+		 * exp).getValueOperand())); else if (exp instanceof SymbolValue) result
+		 * = new HybridValue(new SymbolValue(varName), "/", exp); else if (exp
+		 * instanceof HybridValue) result = new HybridValue(new
+		 * SymbolValue(varName), "/", exp); return result;
+		 */
 		return this;
 	}
 
@@ -184,14 +179,12 @@ public class AnyValue implements Value {
 			if (var.contains(",")) {
 				int pos1 = var.lastIndexOf("(");
 				int pos2 = var.lastIndexOf(",");
-				var = "op_addr_base2_disp_" + var.substring(0, pos1) + "_"
-						+ var.substring(pos1 + 2, pos2) + "_"
+				var = "op_addr_base2_disp_" + var.substring(0, pos1) + "_" + var.substring(pos1 + 2, pos2) + "_"
 						+ var.substring(pos2 + 2, var.length() - 1);
 			} else if (var.contains("(%")) {
 				// String t[] = var.split("(");
 				int pos = var.lastIndexOf("(");
-				var = "op_addr_base_disp_" + var.substring(0, pos) + "_"
-						+ var.substring(pos + 2, var.length() - 1);
+				var = "op_addr_base_disp_" + var.substring(0, pos) + "_" + var.substring(pos + 2, var.length() - 1);
 			} else
 				var = "op_addr_disp_" + var;
 		else if (var.startsWith("(%")) {
@@ -203,13 +196,11 @@ public class AnyValue implements Value {
 				var = "op_addr_base_" + var.substring(2, var.length() - 1);
 		} else if (var.startsWith("%") && var.contains(":(%")) {
 			int pos = var.lastIndexOf(":");
-			var = "op_addr_base_index_disp_" + var.substring(1, pos) + "_"
-					+ var.substring(pos + 3, var.length() - 1);
+			var = "op_addr_base_index_disp_" + var.substring(1, pos) + "_" + var.substring(pos + 3, var.length() - 1);
 		} else if (var.contains(",") && var.contains("(%")) {
 			int pos1 = var.lastIndexOf("(");
 			int pos2 = var.lastIndexOf(",");
-			var = "op_addr_base_index_base_" + var.substring(0, pos1 - 1) + "_"
-					+ var.substring(pos1 + 2, pos2) + "_"
+			var = "op_addr_base_index_base_" + var.substring(0, pos1 - 1) + "_" + var.substring(pos1 + 2, pos2) + "_"
 					+ var.substring(pos2 + 2, var.length() - 1);
 		}
 
@@ -269,7 +260,7 @@ public class AnyValue implements Value {
 		// TODO Auto-generated method stub
 		ArrayList<String> result = new ArrayList<String>();
 		result.add(varName);
-		
+
 		return result;
 	}
 

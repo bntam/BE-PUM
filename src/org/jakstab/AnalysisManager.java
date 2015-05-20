@@ -26,8 +26,7 @@ import java.util.*;
 
 public class AnalysisManager {
 
-	private static final Logger logger = Logger
-			.getLogger(AnalysisManager.class);
+	private static final Logger logger = Logger.getLogger(AnalysisManager.class);
 	private static final AnalysisManager instance = new AnalysisManager();
 
 	public static AnalysisManager getInstance() {
@@ -44,24 +43,18 @@ public class AnalysisManager {
 
 		// Enumerate all analyses and register them
 		String pkg = "org.jakstab.analysis";
-		File dir = new File(Options.jakstabHome + "/bin/"
-				+ pkg.replace(".", "/"));
-		List<Class<? extends ConfigurableProgramAnalysis>> classes = findCPAClasses(
-				dir, pkg);
+		File dir = new File(Options.jakstabHome + "/bin/" + pkg.replace(".", "/"));
+		List<Class<? extends ConfigurableProgramAnalysis>> classes = findCPAClasses(dir, pkg);
 		for (Class<? extends ConfigurableProgramAnalysis> cpaClass : classes) {
 			AnalysisProperties aProps = new AnalysisProperties();
 			try {
 				// logger.debug("Trying to register " +
 				// cpaClass.getSimpleName());
-				cpaClass.getMethod("register", AnalysisProperties.class)
-						.invoke(cpaClass, aProps);
+				cpaClass.getMethod("register", AnalysisProperties.class).invoke(cpaClass, aProps);
 				if (aProps.getShortHand() != ' ') {
 					if (shortHandMap.containsKey(aProps.getShortHand())) {
-						logger.fatal("Duplicate short hand '"
-								+ aProps.getShortHand()
-								+ "' registered by "
-								+ shortHandMap.get(aProps.getShortHand())
-										.getSimpleName() + " and "
+						logger.fatal("Duplicate short hand '" + aProps.getShortHand() + "' registered by "
+								+ shortHandMap.get(aProps.getShortHand()).getSimpleName() + " and "
 								+ cpaClass.getSimpleName() + ".");
 					}
 					shortHandMap.put(aProps.getShortHand(), cpaClass);
@@ -78,8 +71,7 @@ public class AnalysisManager {
 	}
 
 	public ConfigurableProgramAnalysis createAnalysis(char shortHand) {
-		Class<? extends ConfigurableProgramAnalysis> cpaClass = shortHandMap
-				.get(shortHand);
+		Class<? extends ConfigurableProgramAnalysis> cpaClass = shortHandMap.get(shortHand);
 
 		if (cpaClass == null)
 			return null;
@@ -96,8 +88,7 @@ public class AnalysisManager {
 	}
 
 	public String getName(char shortHand) {
-		Class<? extends ConfigurableProgramAnalysis> cpaClass = shortHandMap
-				.get(shortHand);
+		Class<? extends ConfigurableProgramAnalysis> cpaClass = shortHandMap.get(shortHand);
 
 		if (cpaClass == null)
 			return null;
@@ -106,8 +97,7 @@ public class AnalysisManager {
 	}
 
 	public String getDescription(char shortHand) {
-		Class<? extends ConfigurableProgramAnalysis> cpaClass = shortHandMap
-				.get(shortHand);
+		Class<? extends ConfigurableProgramAnalysis> cpaClass = shortHandMap.get(shortHand);
 
 		if (cpaClass == null)
 			return null;
@@ -129,8 +119,7 @@ public class AnalysisManager {
 		return new String(shds);
 	}
 
-	private static List<Class<? extends ConfigurableProgramAnalysis>> findCPAClasses(
-			File directory, String packageName) {
+	private static List<Class<? extends ConfigurableProgramAnalysis>> findCPAClasses(File directory, String packageName) {
 
 		List<Class<? extends ConfigurableProgramAnalysis>> classes = new ArrayList<Class<? extends ConfigurableProgramAnalysis>>();
 
@@ -138,33 +127,23 @@ public class AnalysisManager {
 			String fileName = file.getName();
 			if (file.isDirectory()) {
 				assert !fileName.contains(".");
-				classes.addAll(findCPAClasses(file, packageName + "."
-						+ fileName));
+				classes.addAll(findCPAClasses(file, packageName + "." + fileName));
 			} else if (fileName.endsWith(".class")) {
 				Class<?> clazz;
 				try {
 					try {
-						clazz = Class.forName(packageName + '.'
-								+ fileName.substring(0, fileName.length() - 6));
+						clazz = Class.forName(packageName + '.' + fileName.substring(0, fileName.length() - 6));
 					} catch (ExceptionInInitializerError e) {
-						clazz = Class.forName(
-								packageName
-										+ '.'
-										+ fileName.substring(0,
-												fileName.length() - 6), false,
+						clazz = Class.forName(packageName + '.' + fileName.substring(0, fileName.length() - 6), false,
 								Thread.currentThread().getContextClassLoader());
 					}
-					if (ConfigurableProgramAnalysis.class
-							.isAssignableFrom(clazz)) {
+					if (ConfigurableProgramAnalysis.class.isAssignableFrom(clazz)) {
 						int mod = clazz.getModifiers();
-						if (!Modifier.isAbstract(mod)
-								&& !Modifier.isInterface(mod))
-							classes.add(clazz
-									.asSubclass(ConfigurableProgramAnalysis.class));
+						if (!Modifier.isAbstract(mod) && !Modifier.isInterface(mod))
+							classes.add(clazz.asSubclass(ConfigurableProgramAnalysis.class));
 					}
 				} catch (ClassNotFoundException e) {
-					logger.warn("Could not load class " + packageName + "."
-							+ fileName);
+					logger.warn("Could not load class " + packageName + "." + fileName);
 				}
 			}
 		}

@@ -30,8 +30,7 @@ public class TypeInferenceException extends Exception {
 	private static final long serialVersionUID = -3924092510568053158L;
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(TypeInferenceException.class);
+	private static final Logger logger = Logger.getLogger(TypeInferenceException.class);
 
 	/**
 	 * 

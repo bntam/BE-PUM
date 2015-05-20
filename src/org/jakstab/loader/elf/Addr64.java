@@ -18,8 +18,7 @@ public class Addr64 implements IAddress {
 	public static final Addr64 ZERO = new Addr64("0"); //$NON-NLS-1$
 	public static final Addr64 MAX = new Addr64("ffffffffffffffff", 16); //$NON-NLS-1$
 
-	public static final BigInteger MAX_OFFSET = new BigInteger(
-			"ffffffffffffffff", 16); //$NON-NLS-1$
+	public static final BigInteger MAX_OFFSET = new BigInteger("ffffffffffffffff", 16); //$NON-NLS-1$
 
 	private static final int BYTES_NUM = 8;
 	private static final int DIGITS_NUM = BYTES_NUM * 2;
@@ -48,8 +47,7 @@ public class Addr64 implements IAddress {
 	public Addr64(String addr, boolean truncate) {
 		addr = addr.toLowerCase();
 		if (addr.startsWith("0x")) { //$NON-NLS-1$
-			address = checkAddress(new BigInteger(addr.substring(2), 16),
-					truncate);
+			address = checkAddress(new BigInteger(addr.substring(2), 16), truncate);
 		} else {
 			address = checkAddress(new BigInteger(addr, 10), truncate);
 		}
@@ -65,8 +63,7 @@ public class Addr64 implements IAddress {
 
 	private BigInteger checkAddress(BigInteger addr, boolean truncate) {
 		if (addr.signum() == -1) {
-			throw new IllegalArgumentException(
-					"Invalid Address, must be positive value"); //$NON-NLS-1$
+			throw new IllegalArgumentException("Invalid Address, must be positive value"); //$NON-NLS-1$
 		}
 		if (addr.bitLength() > 64) {
 			if (truncate) {

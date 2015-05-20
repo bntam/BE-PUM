@@ -44,8 +44,7 @@ import java.util.*;
 public final class SubstitutionState implements AbstractState {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(SubstitutionState.class);
+	private static final Logger logger = Logger.getLogger(SubstitutionState.class);
 	private static long maxStateId = 0;
 
 	public static final SubstitutionState TOP = new SubstitutionState();
@@ -86,36 +85,28 @@ public final class SubstitutionState implements AbstractState {
 
 			@Override
 			public SubstitutionElement visit(RTLBitRange e) {
-				SubstitutionElement aFirstBit = e.getFirstBitIndex().accept(
-						this);
+				SubstitutionElement aFirstBit = e.getFirstBitIndex().accept(this);
 				SubstitutionElement aLastBit = e.getLastBitIndex().accept(this);
 				SubstitutionElement aOperand = e.getOperand().accept(this);
 
-				return new SubstitutionElement(
-						ExpressionFactory.createBitRange(
-								aOperand.getExpression(),
-								aFirstBit.getExpression(),
-								aLastBit.getExpression()));
+				return new SubstitutionElement(ExpressionFactory.createBitRange(aOperand.getExpression(),
+						aFirstBit.getExpression(), aLastBit.getExpression()));
 			}
 
 			@Override
 			public SubstitutionElement visit(RTLConditionalExpression e) {
 				SubstitutionElement aCondition = e.getCondition().accept(this);
 				SubstitutionElement aTrue = e.getTrueExpression().accept(this);
-				SubstitutionElement aFalse = e.getFalseExpression()
-						.accept(this);
-				return new SubstitutionElement(
-						ExpressionFactory.createConditionalExpression(
-								aCondition.getExpression(),
-								aTrue.getExpression(), aFalse.getExpression()));
+				SubstitutionElement aFalse = e.getFalseExpression().accept(this);
+				return new SubstitutionElement(ExpressionFactory.createConditionalExpression(
+						aCondition.getExpression(), aTrue.getExpression(), aFalse.getExpression()));
 			}
 
 			@Override
 			public SubstitutionElement visit(RTLMemoryLocation m) {
 				SubstitutionElement aAddress = m.getAddress().accept(this);
 				if (!aAddress.isTop()) {
-					m = ExpressionFactory.createMemoryLocation(
-							m.getSegmentRegister(), aAddress.getExpression(),
+					m = ExpressionFactory.createMemoryLocation(m.getSegmentRegister(), aAddress.getExpression(),
 							m.getBitWidth());
 				}
 				SubstitutionElement s = getValue(m);
@@ -138,28 +129,21 @@ public final class SubstitutionState implements AbstractState {
 
 			@Override
 			public SubstitutionElement visit(RTLOperation e) {
-				RTLExpression[] aOperands = new RTLExpression[e
-						.getOperandCount()];
+				RTLExpression[] aOperands = new RTLExpression[e.getOperandCount()];
 				for (int i = 0; i < e.getOperandCount(); i++) {
-					aOperands[i] = e.getOperands()[i].accept(this)
-							.getExpression();
+					aOperands[i] = e.getOperands()[i].accept(this).getExpression();
 				}
-				return new SubstitutionElement(ExpressionFactory
-						.createOperation(e.getOperator(), aOperands).evaluate(
-								new Context()));
+				return new SubstitutionElement(ExpressionFactory.createOperation(e.getOperator(), aOperands).evaluate(
+						new Context()));
 			}
 
 			@Override
 			public SubstitutionElement visit(RTLSpecialExpression e) {
-				RTLExpression[] aOperands = new RTLExpression[e
-						.getOperandCount()];
+				RTLExpression[] aOperands = new RTLExpression[e.getOperandCount()];
 				for (int i = 0; i < e.getOperandCount(); i++) {
-					aOperands[i] = e.getOperands()[i].accept(this)
-							.getExpression();
+					aOperands[i] = e.getOperands()[i].accept(this).getExpression();
 				}
-				return new SubstitutionElement(
-						ExpressionFactory.createSpecialExpression(
-								e.getOperator(), aOperands));
+				return new SubstitutionElement(ExpressionFactory.createSpecialExpression(e.getOperator(), aOperands));
 			}
 
 			@Override
@@ -175,180 +159,163 @@ public final class SubstitutionState implements AbstractState {
 		};
 
 		SubstitutionElement result = e.accept(visitor);
-		RTLExpression simplified = ExpressionSimplifier.getInstance().simplify(
-				result.getExpression());
+		RTLExpression simplified = ExpressionSimplifier.getInstance().simplify(result.getExpression());
 		if (simplified != result.getExpression())
 			result = new SubstitutionElement(simplified);
 		return result;
 	}
 
-	public AbstractState abstractPost(StateTransformer transformer,
-			Precision precision) {
+	public AbstractState abstractPost(StateTransformer transformer, Precision precision) {
 		if (isBot())
 			return BOT;
 
 		final RTLStatement statement = (RTLStatement) transformer;
 
-		return statement
-				.accept(new DefaultStatementVisitor<SubstitutionState>() {
+		return statement.accept(new DefaultStatementVisitor<SubstitutionState>() {
 
-					private SubstitutionState clobber(Writable x) {
-						SubstitutionState post = new SubstitutionState(
-								SubstitutionState.this);
+			private SubstitutionState clobber(Writable x) {
+				SubstitutionState post = new SubstitutionState(SubstitutionState.this);
 
-						// Remove existing substitutions for the pointer
-						post.aVarVal.remove(x);
-						// Remove substituted expressions that contain the
-						// pointer
-						for (Iterator<Map.Entry<Writable, SubstitutionElement>> iter = post.aVarVal
-								.entrySet().iterator(); iter.hasNext();) {
-							Map.Entry<Writable, SubstitutionElement> e = iter
-									.next();
-							if (e.getValue().getExpression().getUsedVariables()
-									.contains(x)) {
-								iter.remove();
-							}
+				// Remove existing substitutions for the pointer
+				post.aVarVal.remove(x);
+				// Remove substituted expressions that contain the
+				// pointer
+				for (Iterator<Map.Entry<Writable, SubstitutionElement>> iter = post.aVarVal.entrySet().iterator(); iter
+						.hasNext();) {
+					Map.Entry<Writable, SubstitutionElement> e = iter.next();
+					if (e.getValue().getExpression().getUsedVariables().contains(x)) {
+						iter.remove();
+					}
+				}
+
+				if (post.aVarVal.isEmpty())
+					return TOP;
+				if (post.equals(SubstitutionState.this))
+					return SubstitutionState.this;
+				return post;
+			}
+
+			@Override
+			protected SubstitutionState visitDefault(RTLStatement stmt) {
+				return SubstitutionState.this;
+			}
+
+			@Override
+			public SubstitutionState visit(RTLVariableAssignment stmt) {
+
+				// Copy old state to new state
+				SubstitutionState post = new SubstitutionState(SubstitutionState.this);
+				Writable lhs = stmt.getLeftHandSide();
+				RTLExpression rhs = stmt.getRightHandSide();
+
+				// Evaluate righthandside
+				rhs = abstractEval(rhs).getExpression();
+
+				// Remove existing substitution for the LHS
+				post.aVarVal.remove(lhs);
+				// If RHS is a pure variable, assign RHS to LHS as
+				// substitution
+				if (!containsNondet(rhs)) {
+					post.setValue(lhs, new SubstitutionElement(rhs));
+				}
+
+				// If any expression in the map uses the LHS variable,
+				// it is now invalid, so remove it
+				// Note: This also removes substitutions that were just
+				// added such
+				// as esp = esp - 4
+				List<RTLVariable> aliasing = new LinkedList<RTLVariable>();
+				aliasing.add((RTLVariable) lhs);
+				// Remove mappings of all aliasing registers
+				aliasing.addAll(ExpressionFactory.coveredRegisters((RTLVariable) lhs));
+				aliasing.addAll(ExpressionFactory.coveringRegisters((RTLVariable) lhs));
+
+				for (RTLVariable v : aliasing) {
+					for (Iterator<Map.Entry<Writable, SubstitutionElement>> iter = post.aVarVal.entrySet().iterator(); iter
+							.hasNext();) {
+						Map.Entry<Writable, SubstitutionElement> e = iter.next();
+						if (e.getKey().getUsedVariablesOnWrite().contains(v)
+								|| e.getValue().getExpression().getUsedVariables().contains(v)) {
+							iter.remove();
 						}
-
-						if (post.aVarVal.isEmpty())
-							return TOP;
-						if (post.equals(SubstitutionState.this))
-							return SubstitutionState.this;
-						return post;
 					}
+				}
 
-					@Override
-					protected SubstitutionState visitDefault(RTLStatement stmt) {
-						return SubstitutionState.this;
+				if (post.aVarVal.isEmpty())
+					return TOP;
+				if (post.equals(SubstitutionState.this))
+					return SubstitutionState.this;
+				// logger.info("Post: " + post);
+				return post;
+			}
+
+			@Override
+			public SubstitutionState visit(RTLMemoryAssignment stmt) {
+
+				// Copy old state to new state
+				SubstitutionState post = new SubstitutionState(SubstitutionState.this);
+				RTLMemoryLocation lhs = stmt.getLeftHandSide();
+				RTLExpression rhs = stmt.getRightHandSide();
+
+				// Evaluate righthandside
+				rhs = abstractEval(rhs).getExpression();
+
+				// Substitute address elements in a memory location LHS
+				SubstitutionElement aAddress = abstractEval(lhs.getAddress());
+				if (!aAddress.isTop())
+					lhs = ExpressionFactory.createMemoryLocation(lhs.getSegmentRegister(), aAddress.getExpression(),
+							lhs.getBitWidth());
+
+				// Remove existing substitution for the LHS
+				post.aVarVal.remove(lhs);
+				// If RHS is a pure memory expression, assign RHS to LHS
+				// as substitution
+				if (!containsNondet(rhs)) {
+					post.setValue(lhs, new SubstitutionElement(rhs));
+				}
+
+				// If any expression in the map uses the LHS variable,
+				// it is now invalid, so remove it
+				// Note: This also removes substitutions that were just
+				// added such
+				// as esp = esp - 4
+				// Remove all substitutions that might alias with it
+				// (trivial implementation of memory aliasing, always
+				// yes)
+				for (Iterator<Map.Entry<Writable, SubstitutionElement>> iter = post.aVarVal.entrySet().iterator(); iter
+						.hasNext();) {
+					Map.Entry<Writable, SubstitutionElement> e = iter.next();
+					if (e.getKey() instanceof RTLMemoryLocation
+							|| !e.getValue().getExpression().getUsedMemoryLocations().isEmpty()) {
+						iter.remove();
 					}
+				}
 
-					@Override
-					public SubstitutionState visit(RTLVariableAssignment stmt) {
+				if (post.aVarVal.isEmpty())
+					return TOP;
+				if (post.equals(SubstitutionState.this))
+					return SubstitutionState.this;
+				// logger.info("Post: " + post);
+				return post;
+			}
 
-						// Copy old state to new state
-						SubstitutionState post = new SubstitutionState(
-								SubstitutionState.this);
-						Writable lhs = stmt.getLeftHandSide();
-						RTLExpression rhs = stmt.getRightHandSide();
+			@Override
+			public SubstitutionState visit(RTLAlloc stmt) {
+				return clobber(stmt.getPointer());
+			}
 
-						// Evaluate righthandside
-						rhs = abstractEval(rhs).getExpression();
+			@Override
+			public SubstitutionState visit(RTLUnknownProcedureCall stmt) {
+				// Remove all substitutions
+				return TOP;
+			}
 
-						// Remove existing substitution for the LHS
-						post.aVarVal.remove(lhs);
-						// If RHS is a pure variable, assign RHS to LHS as
-						// substitution
-						if (!containsNondet(rhs)) {
-							post.setValue(lhs, new SubstitutionElement(rhs));
-						}
+			@Override
+			public SubstitutionState visit(RTLHavoc stmt) {
+				return clobber(stmt.getVariable());
+			}
 
-						// If any expression in the map uses the LHS variable,
-						// it is now invalid, so remove it
-						// Note: This also removes substitutions that were just
-						// added such
-						// as esp = esp - 4
-						List<RTLVariable> aliasing = new LinkedList<RTLVariable>();
-						aliasing.add((RTLVariable) lhs);
-						// Remove mappings of all aliasing registers
-						aliasing.addAll(ExpressionFactory
-								.coveredRegisters((RTLVariable) lhs));
-						aliasing.addAll(ExpressionFactory
-								.coveringRegisters((RTLVariable) lhs));
-
-						for (RTLVariable v : aliasing) {
-							for (Iterator<Map.Entry<Writable, SubstitutionElement>> iter = post.aVarVal
-									.entrySet().iterator(); iter.hasNext();) {
-								Map.Entry<Writable, SubstitutionElement> e = iter
-										.next();
-								if (e.getKey().getUsedVariablesOnWrite()
-										.contains(v)
-										|| e.getValue().getExpression()
-												.getUsedVariables().contains(v)) {
-									iter.remove();
-								}
-							}
-						}
-
-						if (post.aVarVal.isEmpty())
-							return TOP;
-						if (post.equals(SubstitutionState.this))
-							return SubstitutionState.this;
-						// logger.info("Post: " + post);
-						return post;
-					}
-
-					@Override
-					public SubstitutionState visit(RTLMemoryAssignment stmt) {
-
-						// Copy old state to new state
-						SubstitutionState post = new SubstitutionState(
-								SubstitutionState.this);
-						RTLMemoryLocation lhs = stmt.getLeftHandSide();
-						RTLExpression rhs = stmt.getRightHandSide();
-
-						// Evaluate righthandside
-						rhs = abstractEval(rhs).getExpression();
-
-						// Substitute address elements in a memory location LHS
-						SubstitutionElement aAddress = abstractEval(lhs
-								.getAddress());
-						if (!aAddress.isTop())
-							lhs = ExpressionFactory.createMemoryLocation(
-									lhs.getSegmentRegister(),
-									aAddress.getExpression(), lhs.getBitWidth());
-
-						// Remove existing substitution for the LHS
-						post.aVarVal.remove(lhs);
-						// If RHS is a pure memory expression, assign RHS to LHS
-						// as substitution
-						if (!containsNondet(rhs)) {
-							post.setValue(lhs, new SubstitutionElement(rhs));
-						}
-
-						// If any expression in the map uses the LHS variable,
-						// it is now invalid, so remove it
-						// Note: This also removes substitutions that were just
-						// added such
-						// as esp = esp - 4
-						// Remove all substitutions that might alias with it
-						// (trivial implementation of memory aliasing, always
-						// yes)
-						for (Iterator<Map.Entry<Writable, SubstitutionElement>> iter = post.aVarVal
-								.entrySet().iterator(); iter.hasNext();) {
-							Map.Entry<Writable, SubstitutionElement> e = iter
-									.next();
-							if (e.getKey() instanceof RTLMemoryLocation
-									|| !e.getValue().getExpression()
-											.getUsedMemoryLocations().isEmpty()) {
-								iter.remove();
-							}
-						}
-
-						if (post.aVarVal.isEmpty())
-							return TOP;
-						if (post.equals(SubstitutionState.this))
-							return SubstitutionState.this;
-						// logger.info("Post: " + post);
-						return post;
-					}
-
-					@Override
-					public SubstitutionState visit(RTLAlloc stmt) {
-						return clobber(stmt.getPointer());
-					}
-
-					@Override
-					public SubstitutionState visit(RTLUnknownProcedureCall stmt) {
-						// Remove all substitutions
-						return TOP;
-					}
-
-					@Override
-					public SubstitutionState visit(RTLHavoc stmt) {
-						return clobber(stmt.getVariable());
-					}
-
-				});
+		});
 	}
 
 	@Override
@@ -402,8 +369,7 @@ public final class SubstitutionState implements AbstractState {
 		SubstitutionState result = new SubstitutionState();
 
 		// Join variable valuations
-		for (Map.Entry<Writable, SubstitutionElement> entry : aVarVal
-				.entrySet()) {
+		for (Map.Entry<Writable, SubstitutionElement> entry : aVarVal.entrySet()) {
 			Writable w = entry.getKey();
 			SubstitutionElement v = entry.getValue();
 			result.setValue(w, v.join(other.getValue(w)));
@@ -428,8 +394,7 @@ public final class SubstitutionState implements AbstractState {
 		// maps
 		// of "other" are implicitly TOP and thus every value is less or equal
 		// than them.
-		for (Map.Entry<Writable, SubstitutionElement> entry : other.aVarVal
-				.entrySet()) {
+		for (Map.Entry<Writable, SubstitutionElement> entry : other.aVarVal.entrySet()) {
 			Writable w = entry.getKey();
 			SubstitutionElement v = entry.getValue();
 			if (!getValue(w).lessOrEqual(v)) {
@@ -452,15 +417,13 @@ public final class SubstitutionState implements AbstractState {
 
 			@Override
 			public Boolean visit(RTLBitRange e) {
-				return e.getFirstBitIndex().accept(this)
-						|| e.getLastBitIndex().accept(this)
+				return e.getFirstBitIndex().accept(this) || e.getLastBitIndex().accept(this)
 						|| e.getOperand().accept(this);
 			}
 
 			@Override
 			public Boolean visit(RTLConditionalExpression e) {
-				return e.getCondition().accept(this)
-						|| e.getTrueExpression().accept(this)
+				return e.getCondition().accept(this) || e.getTrueExpression().accept(this)
 						|| e.getFalseExpression().accept(this);
 			}
 
@@ -516,11 +479,9 @@ public final class SubstitutionState implements AbstractState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 
-		Tuple<Set<RTLNumber>> cValues = new Tuple<Set<RTLNumber>>(
-				expressions.length);
+		Tuple<Set<RTLNumber>> cValues = new Tuple<Set<RTLNumber>>(expressions.length);
 		for (int i = 0; i < expressions.length; i++) {
 			SubstitutionElement aValue = abstractEval(expressions[i]);
 			cValues.set(i, aValue.concretize());

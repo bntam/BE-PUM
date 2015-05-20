@@ -48,8 +48,7 @@ public class DummyState implements AbstractState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 
 		Tuple<RTLNumber> cVector = new Tuple<RTLNumber>(expressions.length);
 		for (int i = 0; i < expressions.length; i++) {

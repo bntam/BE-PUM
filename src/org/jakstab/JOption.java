@@ -25,8 +25,7 @@ public class JOption<T> {
 	private final String description;
 	private T value;
 
-	public static <T> JOption<T> create(String name, String paramName,
-			T defaultValue, String description) {
+	public static <T> JOption<T> create(String name, String paramName, T defaultValue, String description) {
 		assert defaultValue != null;
 		return new JOption<T>(name, paramName, defaultValue, description);
 	}
@@ -35,8 +34,7 @@ public class JOption<T> {
 		return new JOption<Boolean>(name, "", Boolean.FALSE, description);
 	}
 
-	private JOption(String name, String paramName, T defaultValue,
-			String description) {
+	private JOption(String name, String paramName, T defaultValue, String description) {
 		super();
 		assert (!name.startsWith("-")) : "Option names should be defined without dashes";
 		if (name.length() == 1) {
@@ -100,9 +98,8 @@ public class JOption<T> {
 
 	@Override
 	public String toString() {
-		return "Option [name=" + name + ", paramName=" + paramName
-				+ ", defaultValue=" + defaultValue + ", description="
-				+ description + ", value=" + value + "]";
+		return "Option [name=" + name + ", paramName=" + paramName + ", defaultValue=" + defaultValue
+				+ ", description=" + description + ", value=" + value + "]";
 	}
 
 }

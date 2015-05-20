@@ -47,8 +47,8 @@ public class MainAnalysis {
 
 	public static void main(String[] args) {
 		mainThread = Thread.currentThread();
-		
-		//String[] arg = SplitUsingTokenizer("-m " + file, " ");
+
+		// String[] arg = SplitUsingTokenizer("-m " + file, " ");
 		// String[] arg = SplitUsingTokenizer(pathFile, " ");
 		// String[] arg = SplitUsingTokenizer("-s -m asm/chosenFile/processing/"
 		// + in, " ");
@@ -79,7 +79,7 @@ public class MainAnalysis {
 		// ///////////////////////
 		// Parse executable
 
-		Program program = Program.createProgram(arch);	
+		Program program = Program.createProgram(arch);
 		program.setDebugLevel(3);
 
 		File mainFile = new File(Options.mainFilename).getAbsoluteFile();
@@ -95,8 +95,7 @@ public class MainAnalysis {
 
 				// If we are processing drivers, use the driver's name as base
 				// name
-				if (Options.wdm.getValue()
-						&& moduleFile.getName().toLowerCase().endsWith(".sys")) {
+				if (Options.wdm.getValue() && moduleFile.getName().toLowerCase().endsWith(".sys")) {
 					baseFileName = getBaseFileName(moduleFile);
 				}
 			}
@@ -125,15 +124,12 @@ public class MainAnalysis {
 
 		// Change entry point if requested
 		if (Options.startAddress.getValue() > 0) {
-			logger.verbose("Setting start address to 0x"
-					+ Long.toHexString(Options.startAddress.getValue()));
-			program.setEntryAddress(new AbsoluteAddress(Options.startAddress
-					.getValue()));
+			logger.verbose("Setting start address to 0x" + Long.toHexString(Options.startAddress.getValue()));
+			program.setEntryAddress(new AbsoluteAddress(Options.startAddress.getValue()));
 		}
 
 		// Add surrounding "%DF := 1; call entrypoint; halt;"
-		program.installHarness(Options.heuristicEntryPoints.getValue() ? new HeuristicHarness()
-				: new DefaultHarness());
+		program.installHarness(Options.heuristicEntryPoints.getValue() ? new HeuristicHarness() : new DefaultHarness());
 
 		// stats.record(baseFileName.substring(slashIdx));
 		// stats.record(version);
@@ -196,73 +192,63 @@ public class MainAnalysis {
 			// ProgramGraphWriter graphWriter = new ProgramGraphWriter(program);
 
 			if (!otfMG.isCompleted()) {
-				System.out
-						.println(Characters
-								.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
+				System.out.println(Characters.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
 			} else
-				System.out.println(Characters
-						.starredBox("Analysis finished, CFG is complete!"));
+				System.out.println(Characters.starredBox("Analysis finished, CFG is complete!"));
 
 			if (!otfMG.isSound()) {
-				logger.error(Characters
-						.starredBox("WARNING: Analysis was unsound!"));
+				logger.error(Characters.starredBox("WARNING: Analysis was unsound!"));
 			}
-			program.generageCFG(baseFileName);			
-			BPCFG cfg = program.getBPCFG();		
-			
+			program.generageCFG(baseFileName);
+			BPCFG cfg = program.getBPCFG();
+
 			long overallEndTime = System.currentTimeMillis();
 			System.out.println(Characters.DOUBLE_LINE_FULL_WIDTH);
-			System.out
-					.println("   Statistics for On-The-Fly Model Generation of BE-PUM");
+			System.out.println("   Statistics for On-The-Fly Model Generation of BE-PUM");
 			System.out.println(Characters.DOUBLE_LINE_FULL_WIDTH);
-			System.out.println("   Filename:                     "
-					+ program.getFileName());
+			System.out.println("   Filename:                     " + program.getFileName());
 			System.out.println("   Runtime:                     "
 					+ String.format("%8dms", (overallEndTime - overallStartTime)));
 			System.out.println("   Instructions:                        "
 					+ String.format("%8d", cfg.getInstructionCount()));
-			System.out.println("   Nodes:                        "
-					+ String.format("%8d", cfg.getVertexCount()));
-			System.out.println("   Edges:                        "
-					+ String.format("%8d", cfg.getEdgeCount()));
-			FileProcess fullResultFile = program.getFullResultFile();	
-			
+			System.out.println("   Nodes:                        " + String.format("%8d", cfg.getVertexCount()));
+			System.out.println("   Edges:                        " + String.format("%8d", cfg.getEdgeCount()));
+			FileProcess fullResultFile = program.getFullResultFile();
+
 			fullResultFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
 			fullResultFile.appendFile("   Statistics for On-The-Fly Model Generation of BE-PUM");
 			fullResultFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
-			fullResultFile.appendFile("   Filename:                     "
-					+ program.getFileName());
+			fullResultFile.appendFile("   Filename:                     " + program.getFileName());
 			fullResultFile.appendFile("   Runtime:                     "
 					+ String.format("%8dms", (overallEndTime - overallStartTime)));
 			fullResultFile.appendFile("   Instructions:                        "
 					+ String.format("%8d", cfg.getInstructionCount()));
-			fullResultFile.appendFile("   Nodes:                        "
-					+ String.format("%8d", cfg.getVertexCount()));
-			fullResultFile.appendFile("   Edges:                        "
-					+ String.format("%8d", cfg.getEdgeCount()));
-			
+			fullResultFile.appendFile("   Nodes:                        " + String.format("%8d", cfg.getVertexCount()));
+			fullResultFile.appendFile("   Edges:                        " + String.format("%8d", cfg.getEdgeCount()));
+
 			FileProcess resultFile = program.getResultFile();
-			resultFile.appendFile(program.getFileName() + "\t" + String.format("%8dms", (overallEndTime - overallStartTime))
-					+ "\t" + String.format("%8d", cfg.getVertexCount()) + "\t"
-					+ String.format("%8d", cfg.getEdgeCount()) + "\t"
-					+ program.getTechnique() + "\t" + program.getDetailTechnique());
-			
+			resultFile.appendFile(program.getFileName() + "\t"
+					+ String.format("%8dms", (overallEndTime - overallStartTime)) + "\t"
+					+ String.format("%8d", cfg.getVertexCount()) + "\t" + String.format("%8d", cfg.getEdgeCount())
+					+ "\t" + program.getTechnique() + "\t" + program.getDetailTechnique());
+
 			program.getResultFileTemp().appendInLine(program.getDetailTechnique());
-			program.getResultFileTemp().appendInLine('\t' + String.format("%8dms", (overallEndTime - overallStartTime))
-					+ "\t" + String.format("%8d", cfg.getVertexCount()) + "\t"
-					+ String.format("%8d", cfg.getEdgeCount()));	
-			
-			//Comparison between IDA and BE-PUM
-			//String f = program.generatePathFileName(baseFileName);			
+			program.getResultFileTemp().appendInLine(
+					'\t' + String.format("%8dms", (overallEndTime - overallStartTime)) + "\t"
+							+ String.format("%8d", cfg.getVertexCount()) + "\t"
+							+ String.format("%8d", cfg.getEdgeCount()));
+
+			// Comparison between IDA and BE-PUM
+			// String f = program.generatePathFileName(baseFileName);
 			new DOTComparison().exportComparison(baseFileName);
-			
+
 			// System.out.println("Vertex List:");
 			// System.out.println(Program.getProgram().getBPCFG().getVertecesList().toString());
 			// System.out.println("Edges List:");
 			// System.out.println(Program.getProgram().getBPCFG().getEdgesList().toString());
 			try {
 				Runtime.getRuntime().removeShutdownHook(shutdownThread);
-				//System.exit(0);
+				// System.exit(0);
 			} catch (IllegalStateException e) {
 				// Happens when shutdown has already been initiated by Ctrl-C or
 				// Return
@@ -275,8 +261,6 @@ public class MainAnalysis {
 			System.exit(1);
 		}
 	}
-	
-	
 
 	private static void runAlgorithm(Algorithm a) {
 		activeAlgorithm = a;
@@ -299,7 +283,7 @@ public class MainAnalysis {
 	public static void analyzeFile(String file) {
 		// TODO Auto-generated method stub
 		mainThread = Thread.currentThread();
-		
+
 		String[] arg = SplitUsingTokenizer("-m " + file, " ");
 		// String[] arg = SplitUsingTokenizer(pathFile, " ");
 		// String[] arg = SplitUsingTokenizer("-s -m asm/chosenFile/processing/"
@@ -331,7 +315,7 @@ public class MainAnalysis {
 		// ///////////////////////
 		// Parse executable
 
-		Program program = Program.createProgram(arch);	
+		Program program = Program.createProgram(arch);
 		program.setDebugLevel(3);
 
 		File mainFile = new File(Options.mainFilename).getAbsoluteFile();
@@ -347,8 +331,7 @@ public class MainAnalysis {
 
 				// If we are processing drivers, use the driver's name as base
 				// name
-				if (Options.wdm.getValue()
-						&& moduleFile.getName().toLowerCase().endsWith(".sys")) {
+				if (Options.wdm.getValue() && moduleFile.getName().toLowerCase().endsWith(".sys")) {
 					baseFileName = getBaseFileName(moduleFile);
 				}
 			}
@@ -377,15 +360,12 @@ public class MainAnalysis {
 
 		// Change entry point if requested
 		if (Options.startAddress.getValue() > 0) {
-			logger.verbose("Setting start address to 0x"
-					+ Long.toHexString(Options.startAddress.getValue()));
-			program.setEntryAddress(new AbsoluteAddress(Options.startAddress
-					.getValue()));
+			logger.verbose("Setting start address to 0x" + Long.toHexString(Options.startAddress.getValue()));
+			program.setEntryAddress(new AbsoluteAddress(Options.startAddress.getValue()));
 		}
 
 		// Add surrounding "%DF := 1; call entrypoint; halt;"
-		program.installHarness(Options.heuristicEntryPoints.getValue() ? new HeuristicHarness()
-				: new DefaultHarness());
+		program.installHarness(Options.heuristicEntryPoints.getValue() ? new HeuristicHarness() : new DefaultHarness());
 
 		// stats.record(baseFileName.substring(slashIdx));
 		// stats.record(version);
@@ -448,66 +428,56 @@ public class MainAnalysis {
 			// ProgramGraphWriter graphWriter = new ProgramGraphWriter(program);
 
 			if (!otfMG.isCompleted()) {
-				System.out
-						.println(Characters
-								.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
+				System.out.println(Characters.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
 			} else
-				System.out.println(Characters
-						.starredBox("Analysis finished, CFG is complete!"));
+				System.out.println(Characters.starredBox("Analysis finished, CFG is complete!"));
 
 			if (!otfMG.isSound()) {
-				logger.error(Characters
-						.starredBox("WARNING: Analysis was unsound!"));
+				logger.error(Characters.starredBox("WARNING: Analysis was unsound!"));
 			}
-			program.generageCFG(baseFileName);			
-			BPCFG cfg = program.getBPCFG();		
-			
+			program.generageCFG(baseFileName);
+			BPCFG cfg = program.getBPCFG();
+
 			long overallEndTime = System.currentTimeMillis();
 			System.out.println(Characters.DOUBLE_LINE_FULL_WIDTH);
-			System.out
-					.println("   Statistics for On-The-Fly Model Generation of BE-PUM");
+			System.out.println("   Statistics for On-The-Fly Model Generation of BE-PUM");
 			System.out.println(Characters.DOUBLE_LINE_FULL_WIDTH);
-			System.out.println("   Filename:                     "
-					+ program.getFileName());
+			System.out.println("   Filename:                     " + program.getFileName());
 			System.out.println("   Runtime:                     "
 					+ String.format("%8dms", (overallEndTime - overallStartTime)));
 			System.out.println("   Instructions:                        "
 					+ String.format("%8d", cfg.getInstructionCount()));
-			System.out.println("   Nodes:                        "
-					+ String.format("%8d", cfg.getVertexCount()));
-			System.out.println("   Edges:                        "
-					+ String.format("%8d", cfg.getEdgeCount()));
-			FileProcess fullResultFile = program.getFullResultFile();	
-			
+			System.out.println("   Nodes:                        " + String.format("%8d", cfg.getVertexCount()));
+			System.out.println("   Edges:                        " + String.format("%8d", cfg.getEdgeCount()));
+			FileProcess fullResultFile = program.getFullResultFile();
+
 			fullResultFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
 			fullResultFile.appendFile("   Statistics for On-The-Fly Model Generation of BE-PUM");
 			fullResultFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
-			fullResultFile.appendFile("   Filename:                     "
-					+ program.getFileName());
+			fullResultFile.appendFile("   Filename:                     " + program.getFileName());
 			fullResultFile.appendFile("   Runtime:                     "
 					+ String.format("%8dms", (overallEndTime - overallStartTime)));
 			fullResultFile.appendFile("   Instructions:                        "
 					+ String.format("%8d", cfg.getInstructionCount()));
-			fullResultFile.appendFile("   Nodes:                        "
-					+ String.format("%8d", cfg.getVertexCount()));
-			fullResultFile.appendFile("   Edges:                        "
-					+ String.format("%8d", cfg.getEdgeCount()));
-			
+			fullResultFile.appendFile("   Nodes:                        " + String.format("%8d", cfg.getVertexCount()));
+			fullResultFile.appendFile("   Edges:                        " + String.format("%8d", cfg.getEdgeCount()));
+
 			FileProcess resultFile = program.getResultFile();
-			resultFile.appendFile(program.getFileName() + "\t" + String.format("%8dms", (overallEndTime - overallStartTime))
-					+ "\t" + String.format("%8d", cfg.getVertexCount()) + "\t"
-					+ String.format("%8d", cfg.getEdgeCount()) + "\t"
-					+ program.getTechnique() + "\t" + program.getDetailTechnique());
-			
+			resultFile.appendFile(program.getFileName() + "\t"
+					+ String.format("%8dms", (overallEndTime - overallStartTime)) + "\t"
+					+ String.format("%8d", cfg.getVertexCount()) + "\t" + String.format("%8d", cfg.getEdgeCount())
+					+ "\t" + program.getTechnique() + "\t" + program.getDetailTechnique());
+
 			program.getResultFileTemp().appendInLine(program.getDetailTechnique());
-			program.getResultFileTemp().appendInLine('\t' + String.format("%8dms", (overallEndTime - overallStartTime))
-					+ "\t" + String.format("%8d", cfg.getVertexCount()) + "\t"
-					+ String.format("%8d", cfg.getEdgeCount()));	
-			
-			//Comparison between IDA and BE-PUM
-			//String f = program.generatePathFileName(baseFileName);			
+			program.getResultFileTemp().appendInLine(
+					'\t' + String.format("%8dms", (overallEndTime - overallStartTime)) + "\t"
+							+ String.format("%8d", cfg.getVertexCount()) + "\t"
+							+ String.format("%8d", cfg.getEdgeCount()));
+
+			// Comparison between IDA and BE-PUM
+			// String f = program.generatePathFileName(baseFileName);
 			new DOTComparison().exportComparison(baseFileName);
-			
+
 			// System.out.println("Vertex List:");
 			// System.out.println(Program.getProgram().getBPCFG().getVertecesList().toString());
 			// System.out.println("Edges List:");

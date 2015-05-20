@@ -45,8 +45,7 @@ import java.util.Set;
  */
 public class BoundedAddressTracking implements ConfigurableProgramAnalysis {
 
-	private final static Logger logger = Logger
-			.getLogger(BoundedAddressTracking.class);
+	private final static Logger logger = Logger.getLogger(BoundedAddressTracking.class);
 
 	public static void register(AnalysisProperties p) {
 		p.setShortHand('x');
@@ -55,25 +54,20 @@ public class BoundedAddressTracking implements ConfigurableProgramAnalysis {
 		p.setExplicit(true);
 	}
 
-	public static JOption<Integer> varThreshold = JOption
-			.create("explicit-threshold", "k", 5,
-					"Set the maximum number of values tracked per variable per location.");
-	public static JOption<Integer> heapThreshold = JOption.create(
-			"heap-threshold", "k", 5,
+	public static JOption<Integer> varThreshold = JOption.create("explicit-threshold", "k", 5,
+			"Set the maximum number of values tracked per variable per location.");
+	public static JOption<Integer> heapThreshold = JOption.create("heap-threshold", "k", 5,
 			"Explicit threshold for data stored on the heap.");
-	public static JOption<Boolean> repPrecBoost = JOption.create(
-			"rep-prec-boost",
+	public static JOption<Boolean> repPrecBoost = JOption.create("rep-prec-boost",
 			"Increase precision for rep-prefixed instructions.");
-	public static JOption<Boolean> keepDeadStack = JOption.create(
-			"keep-dead-stack",
+	public static JOption<Boolean> keepDeadStack = JOption.create("keep-dead-stack",
 			"Do not discard stack contents below current stack pointer.");
 
 	public BoundedAddressTracking() {
 	}
 
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 		// Reduces states, but makes it harder to reconstruct the trace that
 		// lead to a certain state
 		if (s2.lessOrEqual(s1))
@@ -87,22 +81,18 @@ public class BoundedAddressTracking implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge,
-			Precision precision) {
-		return ((BasedNumberValuation) state).abstractPost(
-				(RTLStatement) cfaEdge.getTransformer(), precision);
+	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge, Precision precision) {
+		return ((BasedNumberValuation) state).abstractPost((RTLStatement) cfaEdge.getTransformer(), precision);
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 		return s;
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 
 		// This method uses the fact that there is only 1 precision per location
 
@@ -110,8 +100,7 @@ public class BoundedAddressTracking implements ConfigurableProgramAnalysis {
 		BasedNumberValuation widenedState = (BasedNumberValuation) s;
 
 		// Only check value counts if we have at least enough states to reach it
-		if (reached.size() > Math.min(varThreshold.getValue(),
-				heapThreshold.getValue())) {
+		if (reached.size() > Math.min(varThreshold.getValue(), heapThreshold.getValue())) {
 
 			boolean changed = false;
 
@@ -129,38 +118,31 @@ public class BoundedAddressTracking implements ConfigurableProgramAnalysis {
 					if (countRegions(existingValues) > threshold) {
 						eprec.stopTracking(v);
 						if (!changed) {
-							widenedState = new BasedNumberValuation(
-									widenedState);
+							widenedState = new BasedNumberValuation(widenedState);
 							changed = true;
 						}
-						widenedState.setValue(v,
-								BasedNumberElement.getTop(v.getBitWidth()));
+						widenedState.setValue(v, BasedNumberElement.getTop(v.getBitWidth()));
 					} else {
 						eprec.trackRegionOnly(v);
 						if (!changed) {
-							widenedState = new BasedNumberValuation(
-									widenedState);
+							widenedState = new BasedNumberValuation(widenedState);
 							changed = true;
 						}
-						logger.debug("Only tracking region of " + v
-								+ ", values were " + existingValues);
-						widenedState.setValue(v, new BasedNumberElement(
-								widenedState.getValue(v).getRegion(),
+						logger.debug("Only tracking region of " + v + ", values were " + existingValues);
+						widenedState.setValue(v, new BasedNumberElement(widenedState.getValue(v).getRegion(),
 								NumberElement.getTop(v.getBitWidth())));
 					}
 				}
 			}
 
 			// Check value counts for store
-			PartitionedMemory<BasedNumberElement> sStore = ((BasedNumberValuation) s)
-					.getStore();
-			for (EntryIterator<MemoryRegion, Long, BasedNumberElement> entryIt = sStore
-					.entryIterator(); entryIt.hasEntry(); entryIt.next()) {
+			PartitionedMemory<BasedNumberElement> sStore = ((BasedNumberValuation) s).getStore();
+			for (EntryIterator<MemoryRegion, Long, BasedNumberElement> entryIt = sStore.entryIterator(); entryIt
+					.hasEntry(); entryIt.next()) {
 				MemoryRegion region = entryIt.getLeftKey();
 				Long offset = entryIt.getRightKey();
 				BasedNumberElement value = entryIt.getValue();
-				SetMultimap<Long, BasedNumberElement> memoryMap = eprec.regionMaps
-						.get(region);
+				SetMultimap<Long, BasedNumberElement> memoryMap = eprec.regionMaps.get(region);
 				if (memoryMap == null)
 					continue;
 
@@ -172,44 +154,34 @@ public class BoundedAddressTracking implements ConfigurableProgramAnalysis {
 					if (countRegions(existingValues) > 5 * threshold) {
 						eprec.stopTracking(region, offset);
 						if (!changed) {
-							widenedState = new BasedNumberValuation(
-									widenedState);
+							widenedState = new BasedNumberValuation(widenedState);
 							changed = true;
 						}
-						widenedState.getStore().set(region, offset,
-								value.getBitWidth(),
+						widenedState.getStore().set(region, offset, value.getBitWidth(),
 								BasedNumberElement.getTop(value.getBitWidth()));
 					} else {
 						eprec.trackRegionOnly(region, offset);
 						if (!changed) {
-							widenedState = new BasedNumberValuation(
-									widenedState);
+							widenedState = new BasedNumberValuation(widenedState);
 							changed = true;
 						}
-						widenedState.getStore().set(
-								region,
-								offset,
-								value.getBitWidth(),
-								new BasedNumberElement(value.getRegion(),
-										NumberElement.getTop(value
-												.getBitWidth())));
+						widenedState.getStore().set(region, offset, value.getBitWidth(),
+								new BasedNumberElement(value.getRegion(), NumberElement.getTop(value.getBitWidth())));
 					}
 				}
 			}
 		}
 
 		// Collect all values for all variables
-		for (Map.Entry<RTLVariable, BasedNumberElement> entry : widenedState
-				.getVariableValuation()) {
+		for (Map.Entry<RTLVariable, BasedNumberElement> entry : widenedState.getVariableValuation()) {
 			eprec.varMap.put(entry.getKey(), entry.getValue());
 		}
 
 		// Collect all values for all memory areas
 		PartitionedMemory<BasedNumberElement> store = widenedState.getStore();
-		for (EntryIterator<MemoryRegion, Long, BasedNumberElement> entryIt = store
-				.entryIterator(); entryIt.hasEntry(); entryIt.next()) {
-			SetMultimap<Long, BasedNumberElement> memoryMap = eprec.regionMaps
-					.get(entryIt.getLeftKey());
+		for (EntryIterator<MemoryRegion, Long, BasedNumberElement> entryIt = store.entryIterator(); entryIt.hasEntry(); entryIt
+				.next()) {
+			SetMultimap<Long, BasedNumberElement> memoryMap = eprec.regionMaps.get(entryIt.getLeftKey());
 			if (memoryMap == null) {
 				memoryMap = HashMultimap.create();
 				eprec.regionMaps.put(entryIt.getLeftKey(), memoryMap);
@@ -227,20 +199,16 @@ public class BoundedAddressTracking implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		ExplicitPrecision p = new ExplicitPrecision(varThreshold.getValue());
 
 		// Increase precision of ecx, esi, edi for REP prefixed instructions
 		Program program = Program.getProgram();
 		if (BoundedAddressTracking.repPrecBoost.getValue()) {
 			AbsoluteAddress addr = location.getAddress();
-			X86Instruction instr = (X86Instruction) program
-					.getInstruction(addr);
-			if (instr != null
-					&& (instr.hasPrefixREPZ() || instr.hasPrefixREPNZ())) {
-				logger.debug("boost-rep: REP instruction at " + location
-						+ ", increasing precision of loop registers.");
+			X86Instruction instr = (X86Instruction) program.getInstruction(addr);
+			if (instr != null && (instr.hasPrefixREPZ() || instr.hasPrefixREPNZ())) {
+				logger.debug("boost-rep: REP instruction at " + location + ", increasing precision of loop registers.");
 				p.setThreshold(ExpressionFactory.createVariable("%ecx"), 1000);
 				p.setThreshold(ExpressionFactory.createVariable("%esi"), 1000);
 				p.setThreshold(ExpressionFactory.createVariable("%edi"), 1000);

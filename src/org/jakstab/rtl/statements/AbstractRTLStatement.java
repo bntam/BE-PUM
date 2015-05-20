@@ -36,8 +36,7 @@ import java.util.Set;
 public abstract class AbstractRTLStatement implements RTLStatement, Cloneable {
 
 	@SuppressWarnings("unused")
-	private final static Logger logger = Logger
-			.getLogger(AbstractRTLStatement.class);
+	private final static Logger logger = Logger.getLogger(AbstractRTLStatement.class);
 
 	/**
 	 * Cached results for simple queries.
@@ -171,9 +170,8 @@ public abstract class AbstractRTLStatement implements RTLStatement, Cloneable {
 		int res = label.compareTo(o.getLabel());
 		if (res != 0)
 			return res;
-		throw new IllegalStateException(
-				"Comparing two non-equal RTLStatements with the same label: "
-						+ this.label + " " + o.getLabel());
+		throw new IllegalStateException("Comparing two non-equal RTLStatements with the same label: " + this.label
+				+ " " + o.getLabel());
 	}
 
 	@Override

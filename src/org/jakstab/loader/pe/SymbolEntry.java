@@ -45,24 +45,20 @@ class SymbolEntry {
 	private final int StorageClass;
 	private final int NumberOfAuxSymbols;
 
-	public SymbolEntry(BinaryInputBuffer inBuf, Map<Integer, String> stringTable)
-			throws IOException {
+	public SymbolEntry(BinaryInputBuffer inBuf, Map<Integer, String> stringTable) throws IOException {
 		// Parse name
 		byte[] nameArray = new byte[8];
 		inBuf.read(nameArray);
 		// If first 4 bytes are 0, the next 4 are an offset into the string
 		// table
-		if ((nameArray[0] == 0) && (nameArray[1] == 0) && (nameArray[2] == 0)
-				&& (nameArray[3] == 0)) {
-			int stringOffset = ((nameArray[7] & 0xFF) << 24)
-					| ((nameArray[6] & 0xFF) << 16)
+		if ((nameArray[0] == 0) && (nameArray[1] == 0) && (nameArray[2] == 0) && (nameArray[3] == 0)) {
+			int stringOffset = ((nameArray[7] & 0xFF) << 24) | ((nameArray[6] & 0xFF) << 16)
 					| ((nameArray[5] & 0xFF) << 8) | (nameArray[4] & 0xFF);
 			String nameString = stringTable.get(stringOffset);
 			if (nameString != null) {
 				Name = nameString;
 			} else {
-				logger.warn("No name in string table for symbol at specified offset "
-						+ stringOffset);
+				logger.warn("No name in string table for symbol at specified offset " + stringOffset);
 				Name = "Anonymous(" + stringOffset + ")";
 			}
 		} else {
@@ -138,8 +134,7 @@ class SymbolEntry {
 
 	@Override
 	public String toString() {
-		return "Name: " + Name + " Storage class: " + StorageClass
-				+ " Section number: " + SectionNumber + " Value: "
+		return "Name: " + Name + " Storage class: " + StorageClass + " Section number: " + SectionNumber + " Value: "
 				+ Long.toHexString(Value);
 	}
 

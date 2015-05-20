@@ -29,8 +29,7 @@ import org.jakstab.util.Logger;
 public class MagicInstructions {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(MagicInstructions.class);
+	private static final Logger logger = Logger.getLogger(MagicInstructions.class);
 
 	private final SSLInstruction allocPrototype;
 	private final SSLInstruction deallocPrototype;
@@ -52,50 +51,36 @@ public class MagicInstructions {
 		RTLVariable i16 = ExpressionFactory.createVariable("i16");
 		RTLVariable i32 = ExpressionFactory.createVariable("i32");
 		Writable modrm = ExpressionFactory.createVariable("modrm");
-		allocPrototype = makePrototype("ALLOC", new RTLAlloc(reg32),
-				reg32.toString());
-		deallocPrototype = makePrototype("DEALLOC", new RTLDealloc(
-				ExpressionFactory.createVariable("modrm")), modrm.toString());
-		nondet8Prototype = makePrototype("NONDET8", new AssignmentTemplate(8,
-				reg8, ExpressionFactory.nondet(8)), reg8.toString(),
-				i8.toString());
-		nondet16Prototype = makePrototype("NONDET16", new AssignmentTemplate(
-				16, reg16, ExpressionFactory.nondet(16)), reg16.toString(),
-				i16.toString());
-		nondet32Prototype = makePrototype("NONDET32", new AssignmentTemplate(
-				32, reg32, ExpressionFactory.nondet(32)), reg32.toString(),
-				i32.toString());
-		havoc8leqPrototype = makePrototype("HAVOC8ULEQ",
-				new RTLHavoc(reg8, i8), reg8.toString(), i8.toString());
-		havoc16leqPrototype = makePrototype("HAVOC16ULEQ", new RTLHavoc(reg16,
-				i16), reg16.toString(), i16.toString());
-		havoc32leqPrototype = makePrototype("HAVOC32ULEQ", new RTLHavoc(reg32,
-				i32), reg32.toString(), i32.toString());
+		allocPrototype = makePrototype("ALLOC", new RTLAlloc(reg32), reg32.toString());
+		deallocPrototype = makePrototype("DEALLOC", new RTLDealloc(ExpressionFactory.createVariable("modrm")),
+				modrm.toString());
+		nondet8Prototype = makePrototype("NONDET8", new AssignmentTemplate(8, reg8, ExpressionFactory.nondet(8)),
+				reg8.toString(), i8.toString());
+		nondet16Prototype = makePrototype("NONDET16", new AssignmentTemplate(16, reg16, ExpressionFactory.nondet(16)),
+				reg16.toString(), i16.toString());
+		nondet32Prototype = makePrototype("NONDET32", new AssignmentTemplate(32, reg32, ExpressionFactory.nondet(32)),
+				reg32.toString(), i32.toString());
+		havoc8leqPrototype = makePrototype("HAVOC8ULEQ", new RTLHavoc(reg8, i8), reg8.toString(), i8.toString());
+		havoc16leqPrototype = makePrototype("HAVOC16ULEQ", new RTLHavoc(reg16, i16), reg16.toString(), i16.toString());
+		havoc32leqPrototype = makePrototype("HAVOC32ULEQ", new RTLHavoc(reg32, i32), reg32.toString(), i32.toString());
 		assertGTPrototype = makePrototype(
 				"ASSERTGT",
-				new RTLAssert(ExpressionFactory.createGreaterThan(
-						reg32,
-						ExpressionFactory.createCast(modrm,
-								ExpressionFactory.createNumber(32, 8)))),
-				reg32.toString(), modrm.toString());
+				new RTLAssert(ExpressionFactory.createGreaterThan(reg32,
+						ExpressionFactory.createCast(modrm, ExpressionFactory.createNumber(32, 8)))), reg32.toString(),
+				modrm.toString());
 		assertGEPrototype = makePrototype(
 				"ASSERTGE",
-				new RTLAssert(ExpressionFactory.createGreaterOrEqual(
-						reg32,
-						ExpressionFactory.createCast(modrm,
-								ExpressionFactory.createNumber(32, 8)))),
-				reg32.toString(), modrm.toString());
+				new RTLAssert(ExpressionFactory.createGreaterOrEqual(reg32,
+						ExpressionFactory.createCast(modrm, ExpressionFactory.createNumber(32, 8)))), reg32.toString(),
+				modrm.toString());
 		assertEQPrototype = makePrototype(
 				"ASSERTEQ",
-				new RTLAssert(ExpressionFactory.createEqual(
-						reg32,
-						ExpressionFactory.createCast(modrm,
-								ExpressionFactory.createNumber(32, 8)))),
-				reg32.toString(), modrm.toString());
+				new RTLAssert(ExpressionFactory.createEqual(reg32,
+						ExpressionFactory.createCast(modrm, ExpressionFactory.createNumber(32, 8)))), reg32.toString(),
+				modrm.toString());
 	}
 
-	private SSLInstruction makePrototype(String name, RTLStatement statement,
-			String... params) {
+	private SSLInstruction makePrototype(String name, RTLStatement statement, String... params) {
 		StatementSequence seq = new StatementSequence();
 		seq.addFirst(statement);
 		return new SSLInstruction(name, params, seq);

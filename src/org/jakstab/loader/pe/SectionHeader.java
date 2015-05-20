@@ -111,8 +111,7 @@ public class SectionHeader {
 	}
 
 	public boolean isReadOnlySection() {
-		return (Characteristics & IMAGE_SCN_MEM_READ) > 0
-				&& (Characteristics & IMAGE_SCN_MEM_WRITE) == 0;
+		return (Characteristics & IMAGE_SCN_MEM_READ) > 0 && (Characteristics & IMAGE_SCN_MEM_WRITE) == 0;
 	}
 
 	public boolean hasComdat() {
@@ -137,16 +136,12 @@ public class SectionHeader {
 		logger.debug("  VirtualSize = " + "0x" + Long.toHexString(VirtualSize));
 		logger.debug("  VirtualAddress = 0x" + Long.toHexString(VirtualAddress));
 		logger.debug("  SizeOfRawData = 0x" + Long.toHexString(SizeOfRawData));
-		logger.debug("  PointerToRawData = " + "0x"
-				+ Long.toHexString(PointerToRawData));
-		logger.debug("  PointerToRelocations = " + "0x"
-				+ Long.toHexString(PointerToRelocations));
-		logger.debug("  PointerToLinenumbers = " + "0x"
-				+ Long.toHexString(PointerToLinenumbers));
+		logger.debug("  PointerToRawData = " + "0x" + Long.toHexString(PointerToRawData));
+		logger.debug("  PointerToRelocations = " + "0x" + Long.toHexString(PointerToRelocations));
+		logger.debug("  PointerToLinenumbers = " + "0x" + Long.toHexString(PointerToLinenumbers));
 		logger.debug("  NumberOfRelocations = " + NumberOfRelocations);
 		logger.debug("  NumberOfLinenumbers = " + NumberOfLinenumbers);
-		logger.debug("  Characteristics = 0x"
-				+ Long.toHexString(Characteristics));
+		logger.debug("  Characteristics = 0x" + Long.toHexString(Characteristics));
 		logger.debug("}");
 	}
 }

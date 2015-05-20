@@ -86,7 +86,8 @@ public class WritePrivateProfileString extends Kernel32API {
 			WString lpAppName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
 			WString lpKeyName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
 			WString lpString = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
-			WString lpFileName = new WString(Storage.getMappingPath(memory.getText(new X86MemoryOperand(DataType.INT32, t4))));
+			WString lpFileName = new WString(Storage.getMappingPath(memory.getText(new X86MemoryOperand(DataType.INT32,
+					t4))));
 			BOOL ret = Kernel32DLL.INSTANCE.WritePrivateProfileString(lpAppName, lpKeyName, lpString, lpFileName);
 
 			register.mov("eax", new LongValue(ret.longValue()));

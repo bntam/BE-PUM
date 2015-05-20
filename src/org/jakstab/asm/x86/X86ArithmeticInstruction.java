@@ -38,12 +38,11 @@ import org.jakstab.asm.ArithmeticInstruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.Operation;
 
-public class X86ArithmeticInstruction extends X86Instruction implements
-		ArithmeticInstruction {
+public class X86ArithmeticInstruction extends X86Instruction implements ArithmeticInstruction {
 	final private Operation operation; // RTL operation
 
-	public X86ArithmeticInstruction(String name, Operation operation,
-			Operand op1, Operand op2, Operand op3, int size, int prefixes) {
+	public X86ArithmeticInstruction(String name, Operation operation, Operand op1, Operand op2, Operand op3, int size,
+			int prefixes) {
 		super(name, op1, op2, op3, size, prefixes);
 		this.operation = operation;
 		if (SymbolicExecution.INSTRUCTION_DEBUG_MODE) {
@@ -63,8 +62,7 @@ public class X86ArithmeticInstruction extends X86Instruction implements
 		}
 	}
 
-	public X86ArithmeticInstruction(String name, Operation operation,
-			Operand op1, Operand op2, int size, int prefixes) {
+	public X86ArithmeticInstruction(String name, Operation operation, Operand op1, Operand op2, int size, int prefixes) {
 		super(name, op1, op2, size, prefixes);
 		this.operation = operation;
 		if (SymbolicExecution.INSTRUCTION_DEBUG_MODE) {

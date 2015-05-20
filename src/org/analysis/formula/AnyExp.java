@@ -43,8 +43,7 @@ public class AnyExp implements Value {
 		else if (exp instanceof SymbolExp)
 			result = new SymbolExp(((SymbolExp) exp).getVarName());
 		else if (exp instanceof HybridExp)
-			result = new HybridExp(((HybridExp) exp).getLeft(),
-					((HybridExp) exp).getConnector(),
+			result = new HybridExp(((HybridExp) exp).getLeft(), ((HybridExp) exp).getConnector(),
 					((HybridExp) exp).getRight());
 		return result;
 	}
@@ -54,8 +53,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "+", new LongValue(
-					((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "+", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "+", exp);
 		else if (exp instanceof HybridExp)
@@ -68,8 +66,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "-", new LongValue(
-					((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "-", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "-", exp);
 		else if (exp instanceof HybridExp)
@@ -82,8 +79,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "*", new LongValue(
-					((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "*", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "*", exp);
 		else if (exp instanceof HybridExp)
@@ -101,8 +97,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "/", new LongValue(
-					((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "/", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "/", exp);
 		else if (exp instanceof HybridExp)
@@ -115,8 +110,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "and",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "and", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "and", exp);
 		else if (exp instanceof HybridExp)
@@ -129,8 +123,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "or", new LongValue(
-					((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "or", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "or", exp);
 		else if (exp instanceof HybridExp)
@@ -149,8 +142,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "xor",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "xor", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "xor", exp);
 		else if (exp instanceof HybridExp)
@@ -163,8 +155,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "xor",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "xor", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "xor", exp);
 		else if (exp instanceof HybridExp)
@@ -177,8 +168,7 @@ public class AnyExp implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridExp(new SymbolExp(varName), "xor",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridExp(new SymbolExp(varName), "xor", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolExp)
 			result = new HybridExp(new SymbolExp(varName), "xor", exp);
 		else if (exp instanceof HybridExp)
@@ -203,14 +193,12 @@ public class AnyExp implements Value {
 			if (var.contains(",")) {
 				int pos1 = var.lastIndexOf("(");
 				int pos2 = var.lastIndexOf(",");
-				var = "op_addr_base2_disp_" + var.substring(0, pos1) + "_"
-						+ var.substring(pos1 + 2, pos2) + "_"
+				var = "op_addr_base2_disp_" + var.substring(0, pos1) + "_" + var.substring(pos1 + 2, pos2) + "_"
 						+ var.substring(pos2 + 2, var.length() - 1);
 			} else if (var.contains("(%")) {
 				// String t[] = var.split("(");
 				int pos = var.lastIndexOf("(");
-				var = "op_addr_base_disp_" + var.substring(0, pos) + "_"
-						+ var.substring(pos + 2, var.length() - 1);
+				var = "op_addr_base_disp_" + var.substring(0, pos) + "_" + var.substring(pos + 2, var.length() - 1);
 			} else
 				var = "op_addr_disp_" + var;
 		else if (var.startsWith("(%")) {
@@ -222,13 +210,11 @@ public class AnyExp implements Value {
 				var = "op_addr_base_" + var.substring(2, var.length() - 1);
 		} else if (var.startsWith("%") && var.contains(":(%")) {
 			int pos = var.lastIndexOf(":");
-			var = "op_addr_base_index_disp_" + var.substring(1, pos) + "_"
-					+ var.substring(pos + 3, var.length() - 1);
+			var = "op_addr_base_index_disp_" + var.substring(1, pos) + "_" + var.substring(pos + 3, var.length() - 1);
 		} else if (var.contains(",") && var.contains("(%")) {
 			int pos1 = var.lastIndexOf("(");
 			int pos2 = var.lastIndexOf(",");
-			var = "op_addr_base_index_base_" + var.substring(0, pos1 - 1) + "_"
-					+ var.substring(pos1 + 2, pos2) + "_"
+			var = "op_addr_base_index_base_" + var.substring(0, pos1 - 1) + "_" + var.substring(pos1 + 2, pos2) + "_"
 					+ var.substring(pos2 + 2, var.length() - 1);
 		}
 

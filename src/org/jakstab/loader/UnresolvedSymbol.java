@@ -22,8 +22,7 @@ import org.jakstab.util.Logger;
 
 public class UnresolvedSymbol {
 
-	private static final Logger logger = Logger
-			.getLogger(UnresolvedSymbol.class);
+	private static final Logger logger = Logger.getLogger(UnresolvedSymbol.class);
 
 	private final ExecutableImage module;
 	private final String fromLibrary;
@@ -36,8 +35,8 @@ public class UnresolvedSymbol {
 
 	private final AddressingType addressingType;
 
-	public UnresolvedSymbol(ExecutableImage module, String fromLibrary,
-			String name, int filepointer, AddressingType addressingType) {
+	public UnresolvedSymbol(ExecutableImage module, String fromLibrary, String name, int filepointer,
+			AddressingType addressingType) {
 		this.fromLibrary = fromLibrary;
 		this.module = module;
 		this.name = name;
@@ -45,8 +44,7 @@ public class UnresolvedSymbol {
 		this.addressingType = addressingType;
 	}
 
-	public UnresolvedSymbol(ExecutableImage module, String name,
-			int filepointer, AddressingType addressingType) {
+	public UnresolvedSymbol(ExecutableImage module, String name, int filepointer, AddressingType addressingType) {
 		this(module, null, name, filepointer, addressingType);
 	}
 
@@ -58,14 +56,11 @@ public class UnresolvedSymbol {
 		} else if (addressingType == AddressingType.PC_RELATIVE) {
 			// offset = absolute address - PC value (PC holds address of _next_
 			// instruction, which is 4 bytes (address size) from file pointer)
-			address = virtualAddress.getValue()
-					- module.getVirtualAddress(fp + 4).getValue();
+			address = virtualAddress.getValue() - module.getVirtualAddress(fp + 4).getValue();
 		}
-		logger.debug("Patching bytes at VA " + module.getVirtualAddress(fp)
-				+ ", offset 0x" + Integer.toHexString(fp) + " in byte array, "
-				+ "which were " + Integer.toHexString(data[fp]) + " "
-				+ Integer.toHexString(data[fp + 1]) + " "
-				+ Integer.toHexString(data[fp + 2]) + " "
+		logger.debug("Patching bytes at VA " + module.getVirtualAddress(fp) + ", offset 0x" + Integer.toHexString(fp)
+				+ " in byte array, " + "which were " + Integer.toHexString(data[fp]) + " "
+				+ Integer.toHexString(data[fp + 1]) + " " + Integer.toHexString(data[fp + 2]) + " "
 				+ Integer.toHexString(data[fp + 3]));
 		data[fp] = (byte) (address & 0xFFL);
 		data[fp + 1] = (byte) ((address >> 8) & 0xFFL);

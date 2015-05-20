@@ -30,7 +30,7 @@ import v2.org.analysis.value.LongValue;
 public class GetCurrentProcessId extends Kernel32API {
 
 	public GetCurrentProcessId() {
-		
+
 	}
 
 	@Override

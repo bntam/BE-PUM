@@ -37,11 +37,9 @@ import org.analysis.X86Interpretation;
 import org.jakstab.asm.Address;
 import org.jakstab.asm.BranchInstruction;
 
-public class X86CondJmpInstruction extends X86Instruction implements
-		BranchInstruction {
+public class X86CondJmpInstruction extends X86Instruction implements BranchInstruction {
 
-	public X86CondJmpInstruction(String name, X86PCRelativeAddress addr,
-			int size, int prefixes) {
+	public X86CondJmpInstruction(String name, X86PCRelativeAddress addr, int size, int prefixes) {
 		super(name, addr, size, prefixes);
 		addr.setInstructionSize(getSize());
 		if (SymbolicExecution.INSTRUCTION_DEBUG_MODE) {

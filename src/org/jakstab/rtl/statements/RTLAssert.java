@@ -105,8 +105,7 @@ public class RTLAssert extends AbstractRTLStatement implements RTLStatement {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((assertion == null) ? 0 : assertion.hashCode());
+		result = prime * result + ((assertion == null) ? 0 : assertion.hashCode());
 		return result;
 	}
 

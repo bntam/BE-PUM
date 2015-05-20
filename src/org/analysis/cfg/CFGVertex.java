@@ -127,18 +127,14 @@ public class CFGVertex {
 
 	public void printInfo() {
 		System.out.println("Vertex:");
-		System.out.println("Address:" + this.addr.toString() + " Long value:"
-				+ this.addr.getValue());
+		System.out.println("Address:" + this.addr.toString() + " Long value:" + this.addr.getValue());
 		if (ins != null) {
 			System.out.println("Instruction:" + ins.getName());
 			for (int j = 0; j < ins.getOperandCount(); j++) {
 				String op = "";
-				if (ins.getOperand(j).getClass().getSimpleName()
-						.equals("X86PCRelativeAddress")) {
+				if (ins.getOperand(j).getClass().getSimpleName().equals("X86PCRelativeAddress")) {
 					// long start = this.addr.getValueOperand();
-					op = ""
-							+ ((X86PCRelativeAddress) ins.getOperand(j))
-									.getEffectiveValue(this.addr.getValue());
+					op = "" + ((X86PCRelativeAddress) ins.getOperand(j)).getEffectiveValue(this.addr.getValue());
 				} else
 					op = ins.getOperand(j).toString();
 				System.out.println("Operand number " + j + " is " + op);
@@ -154,8 +150,7 @@ public class CFGVertex {
 				this.printTraceLoop();
 		}
 		System.out.println();
-		System.out
-				.println("-------------------------------------------------------------------");
+		System.out.println("-------------------------------------------------------------------");
 	}
 
 	public void printTraceList() {

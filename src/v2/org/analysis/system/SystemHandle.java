@@ -15,10 +15,10 @@ public class SystemHandle {
 	private WindowHandle windowHandle;
 	private LibraryHandle libraryHandle;
 	private String path = "C:/Windows";
-	
+
 	// PHONG: Check if it is being in process of Virtual Memory
 	private boolean inVirtualMemory;
-	
+
 	public FileHandle getFileHandle() {
 		return fileHandle;
 	}
@@ -30,7 +30,7 @@ public class SystemHandle {
 	public void setKernel(Kernel32Image kernel) {
 		this.kernelHandle = kernel;
 	}
-	
+
 	public User32Image getUser32() {
 		return userHandle;
 	}
@@ -63,16 +63,15 @@ public class SystemHandle {
 
 	public boolean checkAddrInKernel32(long ad) {
 		// TODO Auto-generated method stub
-		return ad >= this.getKernel().getBaseAddress()
-				&& ad < this.getFileHandle().getBaseAddress();
+		return ad >= this.getKernel().getBaseAddress() && ad < this.getFileHandle().getBaseAddress();
 	}
 
 	public long getLibraryHandle(String libraryName) {
 		// TODO Auto-generated method stub
-		String libName = libraryName.toLowerCase(); 
+		String libName = libraryName.toLowerCase();
 		if (libName.equals("kernel32.dll") || libName.contains("kernel32"))
 			return getKernel().getBaseAddress();
-		
+
 		if (libName.equals("user32.dll") || libName.contains("user32"))
 			return getUser32().getBaseAddress();
 
@@ -90,7 +89,7 @@ public class SystemHandle {
 		if (kernel.getBaseAddress() == libraryHandle) {
 			return kernel.getProcAddress(functionName);
 		}
-		
+
 		User32Image user = getUser32();
 		if (user.getBaseAddress() == libraryHandle) {
 			return user.getProcAddress(functionName);
@@ -111,7 +110,7 @@ public class SystemHandle {
 		if (l.getLibraryName().equals("ws2_32.dll"))
 			if (function == 57)
 				return l.getAPIAddr("gethostname");
-		    else if (function == 115)
+			else if (function == 115)
 				return l.getAPIAddr("WSAStarup");
 
 		return 0;
@@ -158,8 +157,7 @@ public class SystemHandle {
 		this.heapHandle = heapHandle;
 	}
 
-	public long createFile(String fileName, long t2, long t3, long t4, long t5,
-			long t6, long t7) {
+	public long createFile(String fileName, long t2, long t3, long t4, long t5, long t6, long t7) {
 		// TODO Auto-generated method stub
 		return fileHandle.createFile(fileName, t2, t3, t4, t5, t6, t7);
 	}
@@ -254,7 +252,7 @@ public class SystemHandle {
 		// TODO Auto-generated method stub
 		if (value == -11)
 			return 7;
-		
+
 		return 0;
 	}
 

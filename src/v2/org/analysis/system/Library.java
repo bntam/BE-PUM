@@ -54,8 +54,7 @@ public class Library {
 	private void initializeExportTable() {
 		// TODO Auto-generated method stub
 		if (this.libraryName.equals("mapistub.dll")) {
-			exportTable.put("fixmapi", (long) (baseAddress + Math.random()
-					* Math.pow(10, 2)));
+			exportTable.put("fixmapi", (long) (baseAddress + Math.random() * Math.pow(10, 2)));
 		}
 	}
 

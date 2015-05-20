@@ -32,17 +32,14 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class RTLVariableAssignment extends AbstractRTLStatement implements
-		RTLStatement {
+public class RTLVariableAssignment extends AbstractRTLStatement implements RTLStatement {
 
-	private static final Logger logger = Logger
-			.getLogger(RTLVariableAssignment.class);
+	private static final Logger logger = Logger.getLogger(RTLVariableAssignment.class);
 
 	private RTLVariable leftHandSide;
 	private RTLExpression rightHandSide;
 
-	public RTLVariableAssignment(int bitWidth, RTLVariable leftHandSide,
-			RTLExpression rightHandSide) {
+	public RTLVariableAssignment(int bitWidth, RTLVariable leftHandSide, RTLExpression rightHandSide) {
 		super();
 		this.leftHandSide = leftHandSide;
 		this.rightHandSide = rightHandSide;
@@ -85,8 +82,7 @@ public class RTLVariableAssignment extends AbstractRTLStatement implements
 
 	@Override
 	public void inferTypes(Architecture arch) throws TypeInferenceException {
-		rightHandSide = rightHandSide.inferBitWidth(arch,
-				leftHandSide.getBitWidth());
+		rightHandSide = rightHandSide.inferBitWidth(arch, leftHandSide.getBitWidth());
 	}
 
 	@Override
@@ -133,10 +129,8 @@ public class RTLVariableAssignment extends AbstractRTLStatement implements
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((leftHandSide == null) ? 0 : leftHandSide.hashCode());
-		result = prime * result
-				+ ((rightHandSide == null) ? 0 : rightHandSide.hashCode());
+		result = prime * result + ((leftHandSide == null) ? 0 : leftHandSide.hashCode());
+		result = prime * result + ((rightHandSide == null) ? 0 : rightHandSide.hashCode());
 		return result;
 	}
 

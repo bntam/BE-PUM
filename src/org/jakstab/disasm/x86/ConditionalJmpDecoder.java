@@ -42,11 +42,10 @@ public class ConditionalJmpDecoder extends InstructionDecoder {
 		super(name, addrMode1, operandType1);
 	}
 
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand addr = getOperand1(bytesArray, operandSize, addrSize);
 		assert (addr instanceof X86PCRelativeAddress) : "Address should be PC Relative!";
-		return factory.newCondJmpInstruction(name, (X86PCRelativeAddress) addr,
-				byteIndex - instrStartIndex, prefixes);
+		return factory.newCondJmpInstruction(name, (X86PCRelativeAddress) addr, byteIndex - instrStartIndex, prefixes);
 	}
 }

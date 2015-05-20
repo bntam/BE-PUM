@@ -39,8 +39,7 @@ import java.util.Set;
 
 public class VpcTrackingAnalysis implements ConfigurableProgramAnalysis {
 
-	private final static Logger logger = Logger
-			.getLogger(VpcTrackingAnalysis.class);
+	private final static Logger logger = Logger.getLogger(VpcTrackingAnalysis.class);
 
 	public static void register(AnalysisProperties p) {
 		p.setShortHand('v');
@@ -55,16 +54,13 @@ public class VpcTrackingAnalysis implements ConfigurableProgramAnalysis {
 	private RTLVariable vpc;
 
 	public VpcTrackingAnalysis() {
-		vpc = ExpressionFactory
-				.createVariable(vpcName.getValue().toLowerCase());
-		StatsTracker.getInstance().record("VPC",
-				VpcTrackingAnalysis.vpcName.getValue());
+		vpc = ExpressionFactory.createVariable(vpcName.getValue().toLowerCase());
+		StatsTracker.getInstance().record("VPC", VpcTrackingAnalysis.vpcName.getValue());
 		logger.debug("Using VPC " + vpc);
 	}
 
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 		// Reduces states, but makes it harder to reconstruct the trace that
 		// lead to a certain state
 		if (s2.lessOrEqual(s1))
@@ -78,35 +74,29 @@ public class VpcTrackingAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge,
-			Precision precision) {
+	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge, Precision precision) {
 		BasedNumberValuation b = (BasedNumberValuation) state;
-		return ((BasedNumberValuation) state).abstractPost(
-				(RTLStatement) cfaEdge.getTransformer(),
+		return ((BasedNumberValuation) state).abstractPost((RTLStatement) cfaEdge.getTransformer(),
 				((VpcPrecision) precision).getPrecision(b.getValue(vpc)));
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 		return s;
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 
 		// This method uses the fact that there is only 1 precision per location
 
 		VpcPrecision vprec = (VpcPrecision) precision;
 		BasedNumberValuation widenedState = (BasedNumberValuation) s;
-		ExplicitPrecision eprec = vprec
-				.getPrecision(widenedState.getValue(vpc));
+		ExplicitPrecision eprec = vprec.getPrecision(widenedState.getValue(vpc));
 
 		// Only check value counts if we have at least enough states to reach it
-		if (reached.size() > Math.min(
-				BoundedAddressTracking.varThreshold.getValue(),
+		if (reached.size() > Math.min(BoundedAddressTracking.varThreshold.getValue(),
 				BoundedAddressTracking.heapThreshold.getValue())) {
 
 			boolean changed = false;
@@ -125,38 +115,31 @@ public class VpcTrackingAnalysis implements ConfigurableProgramAnalysis {
 					if (countRegions(existingValues) > threshold) {
 						eprec.stopTracking(v);
 						if (!changed) {
-							widenedState = new BasedNumberValuation(
-									widenedState);
+							widenedState = new BasedNumberValuation(widenedState);
 							changed = true;
 						}
-						widenedState.setValue(v,
-								BasedNumberElement.getTop(v.getBitWidth()));
+						widenedState.setValue(v, BasedNumberElement.getTop(v.getBitWidth()));
 					} else {
 						eprec.trackRegionOnly(v);
 						if (!changed) {
-							widenedState = new BasedNumberValuation(
-									widenedState);
+							widenedState = new BasedNumberValuation(widenedState);
 							changed = true;
 						}
-						logger.debug("Only tracking region of " + v
-								+ ", values were " + existingValues);
-						widenedState.setValue(v, new BasedNumberElement(
-								widenedState.getValue(v).getRegion(),
+						logger.debug("Only tracking region of " + v + ", values were " + existingValues);
+						widenedState.setValue(v, new BasedNumberElement(widenedState.getValue(v).getRegion(),
 								NumberElement.getTop(v.getBitWidth())));
 					}
 				}
 			}
 
 			// Check value counts for store
-			PartitionedMemory<BasedNumberElement> sStore = ((BasedNumberValuation) s)
-					.getStore();
-			for (EntryIterator<MemoryRegion, Long, BasedNumberElement> entryIt = sStore
-					.entryIterator(); entryIt.hasEntry(); entryIt.next()) {
+			PartitionedMemory<BasedNumberElement> sStore = ((BasedNumberValuation) s).getStore();
+			for (EntryIterator<MemoryRegion, Long, BasedNumberElement> entryIt = sStore.entryIterator(); entryIt
+					.hasEntry(); entryIt.next()) {
 				MemoryRegion region = entryIt.getLeftKey();
 				Long offset = entryIt.getRightKey();
 				BasedNumberElement value = entryIt.getValue();
-				SetMultimap<Long, BasedNumberElement> memoryMap = eprec.regionMaps
-						.get(region);
+				SetMultimap<Long, BasedNumberElement> memoryMap = eprec.regionMaps.get(region);
 				if (memoryMap == null)
 					continue;
 
@@ -168,44 +151,34 @@ public class VpcTrackingAnalysis implements ConfigurableProgramAnalysis {
 					if (countRegions(existingValues) > 5 * threshold) {
 						eprec.stopTracking(region, offset);
 						if (!changed) {
-							widenedState = new BasedNumberValuation(
-									widenedState);
+							widenedState = new BasedNumberValuation(widenedState);
 							changed = true;
 						}
-						widenedState.getStore().set(region, offset,
-								value.getBitWidth(),
+						widenedState.getStore().set(region, offset, value.getBitWidth(),
 								BasedNumberElement.getTop(value.getBitWidth()));
 					} else {
 						eprec.trackRegionOnly(region, offset);
 						if (!changed) {
-							widenedState = new BasedNumberValuation(
-									widenedState);
+							widenedState = new BasedNumberValuation(widenedState);
 							changed = true;
 						}
-						widenedState.getStore().set(
-								region,
-								offset,
-								value.getBitWidth(),
-								new BasedNumberElement(value.getRegion(),
-										NumberElement.getTop(value
-												.getBitWidth())));
+						widenedState.getStore().set(region, offset, value.getBitWidth(),
+								new BasedNumberElement(value.getRegion(), NumberElement.getTop(value.getBitWidth())));
 					}
 				}
 			}
 		}
 
 		// Collect all values for all variables
-		for (Map.Entry<RTLVariable, BasedNumberElement> entry : widenedState
-				.getVariableValuation()) {
+		for (Map.Entry<RTLVariable, BasedNumberElement> entry : widenedState.getVariableValuation()) {
 			eprec.varMap.put(entry.getKey(), entry.getValue());
 		}
 
 		// Collect all values for all memory areas
 		PartitionedMemory<BasedNumberElement> store = widenedState.getStore();
-		for (EntryIterator<MemoryRegion, Long, BasedNumberElement> entryIt = store
-				.entryIterator(); entryIt.hasEntry(); entryIt.next()) {
-			SetMultimap<Long, BasedNumberElement> memoryMap = eprec.regionMaps
-					.get(entryIt.getLeftKey());
+		for (EntryIterator<MemoryRegion, Long, BasedNumberElement> entryIt = store.entryIterator(); entryIt.hasEntry(); entryIt
+				.next()) {
+			SetMultimap<Long, BasedNumberElement> memoryMap = eprec.regionMaps.get(entryIt.getLeftKey());
 			if (memoryMap == null) {
 				memoryMap = HashMultimap.create();
 				eprec.regionMaps.put(entryIt.getLeftKey(), memoryMap);
@@ -223,8 +196,7 @@ public class VpcTrackingAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 
 		return new VpcPrecision();
 	}

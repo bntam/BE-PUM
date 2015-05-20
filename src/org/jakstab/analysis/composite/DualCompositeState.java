@@ -37,8 +37,7 @@ import java.util.Set;
 public class DualCompositeState extends CompositeState {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(DualCompositeState.class);
+	private static final Logger logger = Logger.getLogger(DualCompositeState.class);
 
 	public DualCompositeState(AbstractState[] components) {
 		super(components);
@@ -53,8 +52,7 @@ public class DualCompositeState extends CompositeState {
 				continue;
 			// Concretize this component state and then take the union with
 			// existing ones
-			Set<Tuple<RTLNumber>> concreteTuples = components[i]
-					.projectionFromConcretization(expressions);
+			Set<Tuple<RTLNumber>> concreteTuples = components[i].projectionFromConcretization(expressions);
 			// logger.info(concreteTuples);
 			/*
 			 * Return value of null here represents the bottom element, so it
@@ -74,8 +72,7 @@ public class DualCompositeState extends CompositeState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 
 		Set<Tuple<RTLNumber>> result = null;
 		for (int i = 0; i < components.length; i++) {
@@ -83,8 +80,7 @@ public class DualCompositeState extends CompositeState {
 				continue;
 			// Concretize this component state and then intersect it with
 			// existing ones
-			Set<Tuple<RTLNumber>> concreteTuples = components[i]
-					.projectionFromConcretization(expressions);
+			Set<Tuple<RTLNumber>> concreteTuples = components[i].projectionFromConcretization(expressions);
 			// logger.info(concreteTuples);
 			/*
 			 * Return value of null represents the whole set of tuples of
@@ -121,9 +117,7 @@ public class DualCompositeState extends CompositeState {
 							RTLNumber rNumber = rTuple.get(j);
 							// if the component is no wildcard and not equal,
 							// don't match, try next new tuple for match
-							if (cNumber != RTLNumber.WILDCARD
-									&& rNumber != null
-									&& !cNumber.equals(rNumber)) {
+							if (cNumber != RTLNumber.WILDCARD && rNumber != null && !cNumber.equals(rNumber)) {
 								continue cTuplesLoop;
 							} else {
 								// handle wildcards on both sides:

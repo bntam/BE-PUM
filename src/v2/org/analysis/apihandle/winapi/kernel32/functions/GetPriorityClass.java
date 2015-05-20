@@ -47,7 +47,7 @@ public class GetPriorityClass extends Kernel32API {
 			long t1 = ((LongValue) x1).getValue();
 
 			HANDLE hProcess = new HANDLE(new Pointer(t1));
-			DWORD ret = Kernel32DLL.INSTANCE.GetPriorityClass(hProcess );
+			DWORD ret = Kernel32DLL.INSTANCE.GetPriorityClass(hProcess);
 
 			long value = ret.longValue();
 			register.mov("eax", new LongValue(value));

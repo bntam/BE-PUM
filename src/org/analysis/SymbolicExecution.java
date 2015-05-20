@@ -35,8 +35,7 @@ public class SymbolicExecution {
 	public static final int NORMAL_EXECUTION = 0;
 	public static final int INVARIANT_CHECKING_EXECUTION = 1;
 	public static final int INVARIANT_POPULATING_EXECUTION = 2;
-	private final static Logger logger = Logger
-			.getLogger(SymbolicExecution.class);
+	private final static Logger logger = Logger.getLogger(SymbolicExecution.class);
 	// data retrieve from program
 	private Map<AbsoluteAddress, Instruction> assemblyMap;
 	private static TreeMap<AbsoluteAddress, SymbolicState> stateMap;
@@ -51,8 +50,7 @@ public class SymbolicExecution {
 	 *            long value of starting address
 	 */
 	public static void setStartAddress(AbsoluteAddress address) {
-		if (startAddress == null
-				|| address.getValue() < startAddress.getValue()) {
+		if (startAddress == null || address.getValue() < startAddress.getValue()) {
 			startAddress = address;
 		}
 	}
@@ -75,8 +73,7 @@ public class SymbolicExecution {
 		stateMap = new TreeMap<AbsoluteAddress, SymbolicState>();
 		programTrace = new TraceTracker();
 		// init program trace
-		for (Map.Entry<AbsoluteAddress, Instruction> inst : assemblyMap
-				.entrySet()) {
+		for (Map.Entry<AbsoluteAddress, Instruction> inst : assemblyMap.entrySet()) {
 			stateMap.put(inst.getKey(), null);
 			programTrace.addTraceAddress(inst.getKey().getValue());
 		}
@@ -93,8 +90,7 @@ public class SymbolicExecution {
 			return null;
 		}
 		TreeMap<AbsoluteAddress, SymbolicState> res = new TreeMap<AbsoluteAddress, SymbolicState>();
-		for (Map.Entry<AbsoluteAddress, SymbolicState> entry : stateMap
-				.entrySet()) {
+		for (Map.Entry<AbsoluteAddress, SymbolicState> entry : stateMap.entrySet()) {
 			if (entry.getValue() != null) {
 				res.put(entry.getKey(), entry.getValue().clone());
 			} else {
@@ -133,12 +129,10 @@ public class SymbolicExecution {
 		for (int i = 0; i < currentState.getRegisterList().size(); i++) {
 			tmpName = currentState.getRegisterList().get(i);
 			currentState.getRegValue(tmpName).initialSymbolicValue();
-			logger.info(tmpName + " <-- "
-					+ currentState.getRegValue(tmpName).toString());
+			logger.info(tmpName + " <-- " + currentState.getRegValue(tmpName).toString());
 		}
 		// TraceTracker.printInfo();
-		SymbolicWorkList.addWork(new SymbolicValue(startAddress.getValue()),
-				null, stateMap, programTrace, null);
+		SymbolicWorkList.addWork(new SymbolicValue(startAddress.getValue()), null, stateMap, programTrace, null);
 
 		// Start symbolic execution
 		// The progress will start in 2 step
@@ -174,8 +168,7 @@ public class SymbolicExecution {
 			if (nextAddressValue == null) {
 				// unresolve address found
 				unresolveAddrFound = true;
-				remainingJob
-						.setEndingStatus(SymbolicWorkList.UNRESOLVE_ADDRESS);
+				remainingJob.setEndingStatus(SymbolicWorkList.UNRESOLVE_ADDRESS);
 				remainingJob.setUnresolvedAddress(nextAddress);
 				break;
 			}
@@ -187,8 +180,7 @@ public class SymbolicExecution {
 			// stop job when address out of bound or unresolve address found
 			while (!unresolveAddrFound && !addressOutOfBound) {
 				// halt when revisit node or work done
-				while (!revisitNode && !unresolveAddrFound
-						&& !addressOutOfBound) {
+				while (!revisitNode && !unresolveAddrFound && !addressOutOfBound) {
 					currentInstruction = assemblyMap.get(startAddress);
 
 					if (currentInstruction == null) {
@@ -224,38 +216,31 @@ public class SymbolicExecution {
 
 					X86Interpretation.setStartAddress(startAddress);
 					// compare status is reset after executing statement
-					nextAddress = currentInstruction.interprete(currentState
-							.clone());
+					nextAddress = currentInstruction.interprete(currentState.clone());
 
 					// check interpretation status
 					if (X86Interpretation.getReturnStatus() == X86Interpretation.FAILED) {
 						unresolveAddrFound = true;
-						remainingJob
-								.setEndingStatus(SymbolicWorkList.NOT_SUPPORTED_FUNCTION);
+						remainingJob.setEndingStatus(SymbolicWorkList.NOT_SUPPORTED_FUNCTION);
 						break;
 					} else if (X86Interpretation.getReturnStatus() == X86Interpretation.MISSING_MEMORY) {
 						unresolveAddrFound = true;
-						remainingJob
-								.setEndingStatus(SymbolicWorkList.MISSING_MEMORY);
-						remainingJob.setMissingMemory(X86Interpretation
-								.getMemoryLocation());
+						remainingJob.setEndingStatus(SymbolicWorkList.MISSING_MEMORY);
+						remainingJob.setMissingMemory(X86Interpretation.getMemoryLocation());
 						break;
 					} else if (X86Interpretation.getReturnStatus() == X86Interpretation.MISSING_STACK) {
 						unresolveAddrFound = true;
-						remainingJob
-								.setEndingStatus(SymbolicWorkList.MISSING_STACK);
+						remainingJob.setEndingStatus(SymbolicWorkList.MISSING_STACK);
 						break;
 					}
 
 					nextAddressValue = nextAddress.calculateExprIntVal();
 					if (nextAddressValue == null) {
 						unresolveAddrFound = true;
-						remainingJob
-								.setEndingStatus(SymbolicWorkList.UNRESOLVE_ADDRESS);
+						remainingJob.setEndingStatus(SymbolicWorkList.UNRESOLVE_ADDRESS);
 						remainingJob.setUnresolvedAddress(nextAddress);
 					}
-					startAddress = new AbsoluteAddress(
-							nextAddressValue.longValue());
+					startAddress = new AbsoluteAddress(nextAddressValue.longValue());
 				}
 				if (revisitNode) {
 					// change running mode
@@ -271,14 +256,12 @@ public class SymbolicExecution {
 					// we only deal with 1 simple loop now
 					// - delete previous added add, cause now we combine traces
 					// to find invariants
-					SymbolicWorkList.getRemainingWorks().remove(
-							SymbolicWorkList.getRemainingWorks().size() - 1);
+					SymbolicWorkList.getRemainingWorks().remove(SymbolicWorkList.getRemainingWorks().size() - 1);
 					// - variables (eax, ebc, ecx ...)
 					// now replaced with symbols ("%eax", "%ebx", "%ecx"...)
 					// indicate old variables
 					for (int i = 0; i < currentState.getRegisterList().size(); i++) {
-						currentState.setRegValue(currentState.getRegisterList()
-								.get(i), new SymbolicValue(currentState
+						currentState.setRegValue(currentState.getRegisterList().get(i), new SymbolicValue(currentState
 								.getRegisterList().get(i)));
 					}
 					// - execute trace again until we find the loop node (jump)
@@ -288,12 +271,9 @@ public class SymbolicExecution {
 					if (tmpLoc.getNextAddress() != null) {
 						// a loop call to itself
 						if (tmpLoc.getNextAddress().calculateExprIntVal() != null
-								&& tmpLoc.getNextAddress()
-										.calculateExprIntVal().longValue() == loopStart) {
-							System.out
-									.println("NON TERMINATING LOOP FOUND. EXIT");
-							remainingJob
-									.setEndingStatus(SymbolicWorkList.NOT_SUPPORTED_FUNCTION);
+								&& tmpLoc.getNextAddress().calculateExprIntVal().longValue() == loopStart) {
+							System.out.println("NON TERMINATING LOOP FOUND. EXIT");
+							remainingJob.setEndingStatus(SymbolicWorkList.NOT_SUPPORTED_FUNCTION);
 							unresolveAddrFound = true;
 							break;
 						}
@@ -301,18 +281,14 @@ public class SymbolicExecution {
 
 					// find the relationship between state variables
 					do {
-						currentInstruction = assemblyMap
-								.get(new AbsoluteAddress(tmpLoc.getAddress()));
-						X86Interpretation.setStartAddress(new AbsoluteAddress(
-								tmpLoc.getAddress()));
+						currentInstruction = assemblyMap.get(new AbsoluteAddress(tmpLoc.getAddress()));
+						X86Interpretation.setStartAddress(new AbsoluteAddress(tmpLoc.getAddress()));
 						// no need to clone running state, we just want to find
 						// the relationship
 						currentInstruction.interprete(currentState);
 						// as the trace is traversed, no need to error checking
 						// here
-						tmpLoc = loopTrace.getLocationInfo(tmpLoc
-								.getNextAddress().calculateExprIntVal()
-								.longValue());
+						tmpLoc = loopTrace.getLocationInfo(tmpLoc.getNextAddress().calculateExprIntVal().longValue());
 					} while (X86Interpretation.getStartAddress() != loopEnd);
 
 					// - we have the relationship between new and old variables
@@ -328,21 +304,18 @@ public class SymbolicExecution {
 					String regName = "";
 					for (int i = 0; i < loopStartState.getRegisterList().size(); i++) {
 						regName = loopStartState.getRegisterList().get(i);
-						initialConstraint.addCondition(new SymbolicValue(
-								regName), loopStartState.getRegValue(regName)
+						initialConstraint.addCondition(new SymbolicValue(regName), loopStartState.getRegValue(regName)
 								.clone(), SymbolicCondition.B_OP_EQUAL);
 					}
 					// add path behavior
 					for (int i = 0; i < currentState.getRegisterList().size(); i++) {
 						regName = currentState.getRegisterList().get(i);
-						pathConstraint.addCondition(new SymbolicValue(regName
-								+ "_NEW"), currentState.getRegValue(regName)
-								.clone(), SymbolicCondition.B_OP_EQUAL);
+						pathConstraint.addCondition(new SymbolicValue(regName + "_NEW"),
+								currentState.getRegValue(regName).clone(), SymbolicCondition.B_OP_EQUAL);
 					}
 					// we have initial constraint and path constraint
-					LinearInvariantSolver solver = new LinearInvariantSolver(
-							currentState.getRegisterList(), initialConstraint,
-							pathConstraint);
+					LinearInvariantSolver solver = new LinearInvariantSolver(currentState.getRegisterList(),
+							initialConstraint, pathConstraint);
 					// solve to find invariants
 					ArrayList<SymbolicValue> invariants = solver.solve();
 					ArrayList<String> preservedRegs = solver.getPreservedRegs();
@@ -364,22 +337,16 @@ public class SymbolicExecution {
 								tmpVal = invariants.get(i);
 								if (i < lastIndex) {
 									if (tmpVal.calculateExprIntVal() == 1) {
-										tmpVal = new SymbolicValue(currentState
-												.getRegisterList().get(i));
+										tmpVal = new SymbolicValue(currentState.getRegisterList().get(i));
 									} else {
-										tmpVal.addExprValue(
-												SymbolicValue.MUL_EXPR,
-												new SymbolicValue(currentState
-														.getRegisterList().get(
-																i)));
+										tmpVal.addExprValue(SymbolicValue.MUL_EXPR, new SymbolicValue(currentState
+												.getRegisterList().get(i)));
 									}
 									if (lhs == null) {
 										lhs = tmpVal;
 									} else {
-										SymbolicValue newLHS = new SymbolicValue(
-												lhs);
-										newLHS.addExprValue(
-												SymbolicValue.ADD_EXPR, tmpVal);
+										SymbolicValue newLHS = new SymbolicValue(lhs);
+										newLHS.addExprValue(SymbolicValue.ADD_EXPR, tmpVal);
 										lhs = newLHS;
 									}
 									// if (i > 0) {
@@ -401,27 +368,20 @@ public class SymbolicExecution {
 						// new symbol created for variables.
 						preservedState = loopStartState;
 						loopStartState = null;
-						for (int i = 0; i < currentState.getRegisterList()
-								.size(); i++) {
+						for (int i = 0; i < currentState.getRegisterList().size(); i++) {
 							regName = currentState.getRegisterList().get(i);
-							if (currentState.getRegValue(regName)
-									.calculateExprIntVal() != null) {
-								preservedState.setRegValue(regName,
-										currentState.getRegValue(regName));
+							if (currentState.getRegValue(regName).calculateExprIntVal() != null) {
+								preservedState.setRegValue(regName, currentState.getRegValue(regName));
 							} else {
 								if (!preservedRegs.contains(regName)) {
 									// generate new symbol, update invariant
-									preservedState.getRegValue(regName)
-											.initialSymbolicValue();
-									lhs.exchangeSymbol(regName, preservedState
-											.getRegValue(regName)
-											.getSymbolValue());
+									preservedState.getRegValue(regName).initialSymbolicValue();
+									lhs.exchangeSymbol(regName, preservedState.getRegValue(regName).getSymbolValue());
 								}
 							}
 						}
 						invariantCond = new SymbolicCondition();
-						invariantCond.addCondition(lhs, rhs,
-								SymbolicCondition.B_OP_EQUAL);
+						invariantCond.addCondition(lhs, rhs, SymbolicCondition.B_OP_EQUAL);
 
 						// - execute trace again until we find the loop node
 						// (jump) again
@@ -439,16 +399,13 @@ public class SymbolicExecution {
 							X86Interpretation.setStartAddress(startAddress);
 							currentInstruction.interprete(currentState.clone());
 
-							tmpLoc = loopTrace.getLocationInfo(tmpLoc
-									.getNextAddress().calculateExprIntVal()
+							tmpLoc = loopTrace.getLocationInfo(tmpLoc.getNextAddress().calculateExprIntVal()
 									.longValue());
-							startAddress = new AbsoluteAddress(
-									tmpLoc.getAddress());
+							startAddress = new AbsoluteAddress(tmpLoc.getAddress());
 						} while (X86Interpretation.getStartAddress() != loopEnd);
 						// loop processed, continue with negative path
 						unresolveAddrFound = true;
-						remainingJob
-								.setEndingStatus(SymbolicWorkList.INVARIANT_FOUND);
+						remainingJob.setEndingStatus(SymbolicWorkList.INVARIANT_FOUND);
 						preservedState = null;
 					}
 				}
@@ -460,8 +417,7 @@ public class SymbolicExecution {
 			}
 			System.out.println("WORK INFORMATION");
 			System.out.println(Characters.DOUBLE_LINE_FULL_WIDTH);
-			ArrayList<Location> trackerInfo = remainingJob.getTraceTracker()
-					.trackerInfo();
+			ArrayList<Location> trackerInfo = remainingJob.getTraceTracker().trackerInfo();
 			SymbolicState tmpState = null;
 			for (int i = 0; i < trackerInfo.size(); i++) {
 				// trace info
@@ -469,14 +425,12 @@ public class SymbolicExecution {
 					System.out.println(Characters.LINE_FULL_WIDTH);
 				}
 				// state information
-				tmpState = remainingJob.getStateMap().get(
-						new AbsoluteAddress(trackerInfo.get(i).getAddress()));
+				tmpState = remainingJob.getStateMap().get(new AbsoluteAddress(trackerInfo.get(i).getAddress()));
 				if (tmpState != null) {
 					tmpState.printInfo();
 				}
 				// statement and tracing information
-				remainingJob.getTraceTracker().getTraceInfo(
-						trackerInfo.get(i).getAddress());
+				remainingJob.getTraceTracker().getTraceInfo(trackerInfo.get(i).getAddress());
 			}
 			System.out.println(Characters.LINE_FULL_WIDTH);
 			if (remainingJob.getEndingStatus() == SymbolicWorkList.NOT_SUPPORTED_FUNCTION) {
@@ -484,15 +438,13 @@ public class SymbolicExecution {
 			} else if (remainingJob.getEndingStatus() == SymbolicWorkList.MISSING_MEMORY) {
 				System.out.println("<WORK FINISHED. MEMORY UNKNOWN>");
 			} else if (remainingJob.getEndingStatus() == SymbolicWorkList.MISSING_STACK) {
-				System.out
-						.println("<WORK FINISHED. STACK INFORMATION MISSING>");
+				System.out.println("<WORK FINISHED. STACK INFORMATION MISSING>");
 			} else if (remainingJob.getEndingStatus() == SymbolicWorkList.UNRESOLVE_ADDRESS) {
 				System.out.println("<WORK FINISHED. UNRESOLVED ADDRESS FOUND>");
 			} else if (remainingJob.getEndingStatus() == SymbolicWorkList.INVARIANT_FOUND) {
 				System.out.println("<WORK FINISHED. INVARIANT INFERRED>");
 			} else {
-				System.out
-						.println("<WORK FINISHED. ALL INSTRUCTION PROCESSED>");
+				System.out.println("<WORK FINISHED. ALL INSTRUCTION PROCESSED>");
 			}
 		}
 		// finish while all job done or unresolve address found

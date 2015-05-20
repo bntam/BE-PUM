@@ -26,8 +26,7 @@ import org.jakstab.util.Logger;
 public class DisassemblyException extends StateException {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(DisassemblyException.class);
+	private static final Logger logger = Logger.getLogger(DisassemblyException.class);
 	private static final long serialVersionUID = 7769575556043906512L;
 
 	public DisassemblyException(String msg) {

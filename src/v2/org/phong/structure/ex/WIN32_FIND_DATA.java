@@ -1,7 +1,7 @@
 package v2.org.phong.structure.ex;
 
 public class WIN32_FIND_DATA {
-	
+
 	private String fileAttributes;
 	private FILE_TIME creationTime;
 	private FILE_TIME lastAccessTime;
@@ -12,13 +12,13 @@ public class WIN32_FIND_DATA {
 	private int reserved1;
 	private String fileName;
 	private String altFileName;
-	
-	public WIN32_FIND_DATA(){
-		
+
+	public WIN32_FIND_DATA() {
+
 	}
-	
-	public WIN32_FIND_DATA(String fAttr, FILE_TIME cTime, FILE_TIME lAccTime, FILE_TIME lWriTime,
-			int fSizeH, int fSizeL, int r0, int r1, String fName, String altfName){
+
+	public WIN32_FIND_DATA(String fAttr, FILE_TIME cTime, FILE_TIME lAccTime, FILE_TIME lWriTime, int fSizeH,
+			int fSizeL, int r0, int r1, String fName, String altfName) {
 		this.setFileAttributes(fAttr);
 		this.setCreationTime(cTime);
 		this.setLastAccessTime(lAccTime);
@@ -110,6 +110,5 @@ public class WIN32_FIND_DATA {
 	public void setAltFileName(String altFileName) {
 		this.altFileName = altFileName;
 	}
-	
-	
+
 }

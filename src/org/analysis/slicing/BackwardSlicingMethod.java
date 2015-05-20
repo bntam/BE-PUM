@@ -57,8 +57,7 @@ public class BackwardSlicingMethod {
 		return false;
 	}
 
-	public static boolean slicingAlgorithm(AddressList trace,
-			AbsoluteAddress indirectTarget,
+	public static boolean slicingAlgorithm(AddressList trace, AbsoluteAddress indirectTarget,
 			Map<AbsoluteAddress, Instruction> map, TestCaseValue sv) {
 		int pos = trace.getPos(indirectTarget);
 		List<String> relevant = new ArrayList<String>();
@@ -66,11 +65,9 @@ public class BackwardSlicingMethod {
 		if (ins.getOperand(0).getClass().getSimpleName().equals("X86Register")) {
 			relevant.add(ins.getOperand(0).toString().substring(1));
 			sv.add(ins.getOperand(0).toString().substring(1), 0);
-		} else if (ins.getOperand(0).getClass().getSimpleName()
-				.equals("X86MemoryOperand")) {
+		} else if (ins.getOperand(0).getClass().getSimpleName().equals("X86MemoryOperand")) {
 			relevant.add(ins.getOperand(0).toString());
-			sv.add("op_addr_"
-					+ ((X86MemoryOperand) ins.getOperand(0)).toString(), 0);
+			sv.add("op_addr_" + ((X86MemoryOperand) ins.getOperand(0)).toString(), 0);
 		} else
 			return false;
 
@@ -80,20 +77,15 @@ public class BackwardSlicingMethod {
 			for (int i = pos - 1; i >= 0; i--) {
 				ins = map.get(trace.get(i));
 				for (int j = 0; j < ins.getOperandCount(); j++)
-					if (ins.getOperand(j).getClass().getSimpleName()
-							.equals("X86Register"))
+					if (ins.getOperand(j).getClass().getSimpleName().equals("X86Register"))
 						sv.add(ins.getOperand(j).toString().substring(1), 0);
-					else if (ins.getOperand(j).getClass().getSimpleName()
-							.equals("X86MemoryOperand"))
-						sv.add("op_addr_"
-								+ ((X86MemoryOperand) ins.getOperand(j))
-										.toString(), 0);
+					else if (ins.getOperand(j).getClass().getSimpleName().equals("X86MemoryOperand"))
+						sv.add("op_addr_" + ((X86MemoryOperand) ins.getOperand(j)).toString(), 0);
 
 				if (ins.getOperandCount() == 2) {
 					Operand op0 = ins.getOperand(0);
 					Operand op1 = ins.getOperand(1);
-					if (ins.getName().startsWith("cmp")
-							|| ins.getName().startsWith("test")) {
+					if (ins.getName().startsWith("cmp") || ins.getName().startsWith("test")) {
 						add(op0, relevant);
 						add(op1, relevant);
 					} else {

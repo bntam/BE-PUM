@@ -49,8 +49,7 @@ public class OpenFile extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -61,19 +60,16 @@ public class OpenFile extends Kernel32API {
 		Value x3 = stack.pop();
 		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue
-				&& x3 instanceof LongValue) {
+		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
 
-			String lpFileName = memory.getText(new X86MemoryOperand(
-					DataType.INT32, t1));
+			String lpFileName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
 			lpFileName = Storage.getMappingPath(lpFileName);
 			OFSTRUCT lpReOpenBuff = new OFSTRUCT();
 			UINT uStyle = new UINT(t3);
-			int ret = Kernel32DLL.INSTANCE.OpenFile(lpFileName, lpReOpenBuff,
-					uStyle);
+			int ret = Kernel32DLL.INSTANCE.OpenFile(lpFileName, lpReOpenBuff, uStyle);
 
 			register.mov("eax", new LongValue(ret));
 
@@ -86,17 +82,15 @@ public class OpenFile extends Kernel32API {
 
 			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
 					new LongValue(lpReOpenBuff.cBytes.longValue()));
-			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t2 += 1),
-					new LongValue(lpReOpenBuff.fFixedDisk.longValue()));
-			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t2 += 1), new LongValue(lpReOpenBuff.nErrCode.longValue()));
-			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t2 += 2), new LongValue(lpReOpenBuff.Reserved1 == null ? 0 : lpReOpenBuff.Reserved1.longValue()));
-			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t2 += 2), new LongValue(lpReOpenBuff.Reserved2 == null ? 0 : lpReOpenBuff.Reserved2.longValue()));
-			memory.setText(new X86MemoryOperand(DataType.INT32, t2 += 2),
-					new String(lpReOpenBuff.szPathName));
+			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(
+					lpReOpenBuff.fFixedDisk.longValue()));
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(
+					lpReOpenBuff.nErrCode.longValue()));
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 2), new LongValue(
+					lpReOpenBuff.Reserved1 == null ? 0 : lpReOpenBuff.Reserved1.longValue()));
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 2), new LongValue(
+					lpReOpenBuff.Reserved2 == null ? 0 : lpReOpenBuff.Reserved2.longValue()));
+			memory.setText(new X86MemoryOperand(DataType.INT32, t2 += 2), new String(lpReOpenBuff.szPathName));
 		}
 		return false;
 	}

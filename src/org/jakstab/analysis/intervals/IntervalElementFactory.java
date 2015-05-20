@@ -30,12 +30,10 @@ import java.util.List;
 /**
  * @author Johannes Kinder
  */
-public class IntervalElementFactory implements
-		AbstractValueFactory<IntervalElement> {
+public class IntervalElementFactory implements AbstractValueFactory<IntervalElement> {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(IntervalElementFactory.class);
+	private static final Logger logger = Logger.getLogger(IntervalElementFactory.class);
 
 	public IntervalElementFactory() {
 	}

@@ -69,8 +69,7 @@ public class GetTempFileName extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -83,26 +82,21 @@ public class GetTempFileName extends Kernel32API {
 
 		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue
-				&& x3 instanceof LongValue && x4 instanceof LongValue) {
+		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
 			long t4 = ((LongValue) x4).getValue();
 
-			WString lpPathName = new WString(
-					memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
-			WString lpPrefixString = new WString(
-					memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+			WString lpPathName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
+			WString lpPrefixString = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
 			UINT uUnique = new UINT(t3);
 			char[] lpTempFileName = new char[260]; // #define MAX_PATH 260
-			UINT ret = Kernel32DLL.INSTANCE.GetTempFileName(lpPathName,
-					lpPrefixString, uUnique, lpTempFileName);
+			UINT ret = Kernel32DLL.INSTANCE.GetTempFileName(lpPathName, lpPrefixString, uUnique, lpTempFileName);
 
 			register.mov("eax", new LongValue(ret.longValue()));
 
-			memory.setText(new X86MemoryOperand(DataType.INT32, t4),
-					new String(lpTempFileName));
+			memory.setText(new X86MemoryOperand(DataType.INT32, t4), new String(lpTempFileName));
 		}
 		return false;
 	}

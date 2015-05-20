@@ -36,12 +36,10 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class RTLNumber extends AbstractRTLExpression implements RTLExpression,
-		AbstractDomainElement {
+public class RTLNumber extends AbstractRTLExpression implements RTLExpression, AbstractDomainElement {
 
 	public static final RTLNumber WILDCARD = null;
-	public static final Set<RTLNumber> ALL_NUMBERS = Collections
-			.singleton(WILDCARD);
+	public static final Set<RTLNumber> ALL_NUMBERS = Collections.singleton(WILDCARD);
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(RTLNumber.class);
@@ -123,9 +121,7 @@ public class RTLNumber extends AbstractRTLExpression implements RTLExpression,
 
 	@Override
 	public String toHexString() {
-		String bw = "<"
-				+ (bitWidth == RTLVariable.UNKNOWN_BITWIDTH ? "?" : bitWidth)
-				+ ">";
+		String bw = "<" + (bitWidth == RTLVariable.UNKNOWN_BITWIDTH ? "?" : bitWidth) + ">";
 		String hex = Integer.toHexString((int) value);
 		if (value < 0 && bitWidth > 0) {
 			hex = hex.substring(Math.max(0, hex.length() - (bitWidth / 4)));
@@ -162,26 +158,22 @@ public class RTLNumber extends AbstractRTLExpression implements RTLExpression,
 	}
 
 	@Override
-	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth)
-			throws TypeInferenceException {
+	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth) throws TypeInferenceException {
 		if (bitWidth == expectedBitWidth)
 			return this;
 		else if (bitWidth <= 0) {
 			// Does the value (signed) fit into the bits?
 			if (Math.log(Math.abs(value)) / Math.log(2) <= (expectedBitWidth - 1))
-				return ExpressionFactory.createNumber(this.value,
-						expectedBitWidth);
+				return ExpressionFactory.createNumber(this.value, expectedBitWidth);
 			else
-				throw new TypeInferenceException("Expected bit width of "
-						+ expectedBitWidth
+				throw new TypeInferenceException("Expected bit width of " + expectedBitWidth
 						+ " too small to hold numeric value of " + value + "!");
 		} else if (bitWidth < expectedBitWidth) {
 			// TODO: Check if sign extension is correct
 			return ExpressionFactory.createNumber(value, expectedBitWidth);
 		} else {
 			// Expected bitwidth less than our bitwidth
-			throw new TypeInferenceException(this.toString()
-					+ " expected to be of bitwidth " + expectedBitWidth);
+			throw new TypeInferenceException(this.toString() + " expected to be of bitwidth " + expectedBitWidth);
 		}
 	}
 
@@ -203,8 +195,7 @@ public class RTLNumber extends AbstractRTLExpression implements RTLExpression,
 	@Override
 	public RTLNumber multiply(AbstractDomainElement op) {
 		RTLNumber other = (RTLNumber) op;
-		return ExpressionFactory.createNumber(value * other.value,
-				Math.max(bitWidth, other.bitWidth));
+		return ExpressionFactory.createNumber(value * other.value, Math.max(bitWidth, other.bitWidth));
 	}
 
 	@Override
@@ -215,13 +206,11 @@ public class RTLNumber extends AbstractRTLExpression implements RTLExpression,
 	@Override
 	public RTLNumber plus(AbstractDomainElement op) {
 		RTLNumber other = (RTLNumber) op;
-		return ExpressionFactory.createNumber(value + other.value,
-				Math.max(bitWidth, other.bitWidth));
+		return ExpressionFactory.createNumber(value + other.value, Math.max(bitWidth, other.bitWidth));
 	}
 
 	@Override
-	public RTLNumber readStore(int bitWidth,
-			PartitionedMemory<? extends AbstractDomainElement> store) {
+	public RTLNumber readStore(int bitWidth, PartitionedMemory<? extends AbstractDomainElement> store) {
 		return (RTLNumber) store.get(MemoryRegion.GLOBAL, value, bitWidth);
 	}
 
@@ -232,8 +221,7 @@ public class RTLNumber extends AbstractRTLExpression implements RTLExpression,
 	}
 
 	@Override
-	public <A extends AbstractDomainElement> void writeStore(int bitWidth,
-			PartitionedMemory<A> store, A valueToWrite) {
+	public <A extends AbstractDomainElement> void writeStore(int bitWidth, PartitionedMemory<A> store, A valueToWrite) {
 		store.set(MemoryRegion.GLOBAL, value, bitWidth, valueToWrite);
 	}
 
@@ -250,9 +238,7 @@ public class RTLNumber extends AbstractRTLExpression implements RTLExpression,
 	@Override
 	public RTLNumber zeroFill(int first, int last) {
 		int targetWidth = Math.max(bitWidth, last + 1);
-		long filled = value
-				& (RTLBitRange.bitMask(0, first - 1) | RTLBitRange.bitMask(
-						last + 1, targetWidth - 1));
+		long filled = value & (RTLBitRange.bitMask(0, first - 1) | RTLBitRange.bitMask(last + 1, targetWidth - 1));
 		return ExpressionFactory.createNumber(filled, targetWidth);
 	}
 

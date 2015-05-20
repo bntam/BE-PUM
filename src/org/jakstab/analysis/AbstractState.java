@@ -41,8 +41,7 @@ public interface AbstractState extends LatticeElement {
 	 * @return the set of possible combinations of concrete values for the given
 	 *         expressions.
 	 */
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions);
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions);
 
 	@Override
 	public AbstractState join(LatticeElement l);

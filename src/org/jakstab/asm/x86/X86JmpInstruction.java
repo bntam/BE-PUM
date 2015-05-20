@@ -39,8 +39,7 @@ import org.jakstab.asm.BranchInstruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.PCRelativeAddress;
 
-public class X86JmpInstruction extends X86Instruction implements
-		BranchInstruction {
+public class X86JmpInstruction extends X86Instruction implements BranchInstruction {
 
 	public X86JmpInstruction(String name, Operand target, int size, int prefixes) {
 		super(name, target, size, prefixes);

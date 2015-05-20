@@ -33,8 +33,7 @@ import java.util.*;
  * 
  * @author Johannes Kinder
  */
-public class ReachedSet extends AbstractSet<AbstractState> implements
-		Collection<AbstractState> {
+public class ReachedSet extends AbstractSet<AbstractState> implements Collection<AbstractState> {
 
 	private static final Logger logger = Logger.getLogger(ReachedSet.class);
 
@@ -45,8 +44,7 @@ public class ReachedSet extends AbstractSet<AbstractState> implements
 	private final AbstractState whereState;
 
 	public ReachedSet() {
-		this(-1, -1, null, HashMultimap.<AbstractState, CompositeState> create(
-				1000, 5));
+		this(-1, -1, null, HashMultimap.<AbstractState, CompositeState> create(1000, 5));
 	}
 
 	private ReachedSet(int selectedRow, int whereRow, AbstractState whereState,
@@ -59,8 +57,7 @@ public class ReachedSet extends AbstractSet<AbstractState> implements
 
 	public ReachedSet select(int component) {
 		assert this.selectedRow == -1;
-		return new ReachedSet(component, this.whereRow, this.whereState,
-				this.compositeMap);
+		return new ReachedSet(component, this.whereRow, this.whereState, this.compositeMap);
 	}
 
 	public ReachedSet where(int row, AbstractState state) {
@@ -110,8 +107,7 @@ public class ReachedSet extends AbstractSet<AbstractState> implements
 	public boolean contains(Object o) {
 		if (selectedRow < 0) {
 			if (o instanceof CompositeState)
-				return compositeMap.containsEntry(
-						((CompositeState) o).getComponent(indexComponent), o);
+				return compositeMap.containsEntry(((CompositeState) o).getComponent(indexComponent), o);
 			else
 				throw new UnsupportedOperationException();
 		} else {
@@ -124,8 +120,7 @@ public class ReachedSet extends AbstractSet<AbstractState> implements
 	}
 
 	public void logHighestStateCounts(int count) {
-		AbstractState[] stateArray = compositeMap.keySet().toArray(
-				new AbstractState[compositeMap.keySet().size()]);
+		AbstractState[] stateArray = compositeMap.keySet().toArray(new AbstractState[compositeMap.keySet().size()]);
 		Arrays.sort(stateArray, new Comparator<AbstractState>() {
 			@Override
 			public int compare(AbstractState o1, AbstractState o2) {
@@ -139,8 +134,7 @@ public class ReachedSet extends AbstractSet<AbstractState> implements
 		logger.fatal("The " + count + " locations with highest state count:");
 		logger.fatal("==========================================");
 		for (int i = 0; i < Math.min(count, stateArray.length); i++) {
-			logger.fatal(stateArray[i] + ":\t"
-					+ compositeMap.get(stateArray[i]).size());
+			logger.fatal(stateArray[i] + ":\t" + compositeMap.get(stateArray[i]).size());
 		}
 		logger.fatal("-------------");
 		logger.fatal("Top Location:");

@@ -34,8 +34,7 @@ import org.jakstab.util.Logger;
 
 public class X86FloatRegisters {
 
-	private final static Logger logger = Logger
-			.getLogger(X86FloatRegisters.class);
+	private final static Logger logger = Logger.getLogger(X86FloatRegisters.class);
 
 	public static int getNumRegisters() {
 		return NUM_REGISTERS;
@@ -77,7 +76,6 @@ public class X86FloatRegisters {
 		ST5 = new X86FloatRegister(5);
 		ST6 = new X86FloatRegister(6);
 		ST7 = new X86FloatRegister(7);
-		registers = (new X86FloatRegister[] { ST0, ST1, ST2, ST3, ST4, ST5,
-				ST6, ST7 });
+		registers = (new X86FloatRegister[] { ST0, ST1, ST2, ST3, ST4, ST5, ST6, ST7 });
 	}
 }

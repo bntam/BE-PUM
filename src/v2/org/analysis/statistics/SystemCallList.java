@@ -35,8 +35,7 @@ public class SystemCallList {
 	private boolean check(String src, String dest) {
 		String[] s1 = src.split("@");
 		String[] d1 = dest.split("@");
-		if (s1[0].toLowerCase().equals(d1[0].toLowerCase())
-				&& s1[1].toLowerCase().equals(d1[1].toLowerCase()))
+		if (s1[0].toLowerCase().equals(d1[0].toLowerCase()) && s1[1].toLowerCase().equals(d1[1].toLowerCase()))
 			return true;
 
 		return false;
@@ -66,8 +65,7 @@ public class SystemCallList {
 			nameListFile.appendFile(nameList.get(i));
 			for (int j = 0; j < l.size(); j++)
 				nameListFile.appendFile(l.get(j));
-			nameListFile
-					.appendFile("===============================================");
+			nameListFile.appendFile("===============================================");
 		}
 	}
 

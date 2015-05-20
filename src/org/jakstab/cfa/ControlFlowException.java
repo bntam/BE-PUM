@@ -27,8 +27,7 @@ import org.jakstab.util.Logger;
 public class ControlFlowException extends StateException {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(ControlFlowException.class);
+	private static final Logger logger = Logger.getLogger(ControlFlowException.class);
 	private static final long serialVersionUID = 5529762591261437012L;
 
 	public ControlFlowException(AbstractState s, String msg) {

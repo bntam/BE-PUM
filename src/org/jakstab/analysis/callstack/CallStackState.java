@@ -57,8 +57,7 @@ public class CallStackState implements AbstractState {
 		this.callStack = callStack;
 	}
 
-	public AbstractState abstractPost(StateTransformer transformer,
-			Precision precision) {
+	public AbstractState abstractPost(StateTransformer transformer, Precision precision) {
 		if (isBot())
 			return BOT;
 		if (isTop())
@@ -75,8 +74,7 @@ public class CallStackState implements AbstractState {
 			@Override
 			public CallStackState visit(RTLAssume stmt) {
 
-				Instruction instr = Program.getProgram().getAssemblyMap()
-						.get(stmt.getAddress());
+				Instruction instr = Program.getProgram().getAssemblyMap().get(stmt.getAddress());
 				Deque<Location> postStack;
 				RTLGoto gotoStmt = stmt.getSource();
 
@@ -92,16 +90,13 @@ public class CallStackState implements AbstractState {
 						logger.warn("Return instruction on empty call stack!");
 					} else {
 						Location target = postStack.pop();
-						logger.debug("Call stack: Return to " + target
-								+ ". Remaining stack " + postStack);
+						logger.debug("Call stack: Return to " + target + ". Remaining stack " + postStack);
 					}
 				}
 				// Prologue Call
-				else if (Program.getProgram().getHarness()
-						.contains(stmt.getAddress())) {
+				else if (Program.getProgram().getHarness().contains(stmt.getAddress())) {
 					postStack = new LinkedList<Location>(callStack);
-					postStack.push(new Location(Program.getProgram()
-							.getHarness()
+					postStack.push(new Location(Program.getProgram().getHarness()
 							.getFallthroughAddress(stmt.getAddress())));
 				}
 				// Call
@@ -109,21 +104,17 @@ public class CallStackState implements AbstractState {
 					Location returnLabel;
 					if (instr == null) {
 						// Happens in import stubs containing a call
-						logger.info("No instruction at address "
-								+ stmt.getLabel());
+						logger.info("No instruction at address " + stmt.getLabel());
 						returnLabel = gotoStmt.getNextLabel();
 					} else {
-						returnLabel = new Location(new AbsoluteAddress(
-								addressValue + instr.getSize()));
+						returnLabel = new Location(new AbsoluteAddress(addressValue + instr.getSize()));
 					}
 
 					postStack = new LinkedList<Location>();
-					for (Iterator<Location> iter = callStack
-							.descendingIterator(); iter.hasNext();) {
+					for (Iterator<Location> iter = callStack.descendingIterator(); iter.hasNext();) {
 						Location exRetLoc = iter.next();
 						if (exRetLoc.equals(returnLabel)) {
-							logger.verbose("Recursion detected in call at "
-									+ stmt.getAddress());
+							logger.verbose("Recursion detected in call at " + stmt.getAddress());
 							break;
 						} else {
 							postStack.push(exRetLoc);
@@ -165,14 +156,9 @@ public class CallStackState implements AbstractState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
-		if (!isBot()
-				&& !isTop()
-				&& expressions.length == 2
-				&& expressions[0].equals(ExpressionFactory.TRUE)
-				&& expressions[1].equals(Program.getProgram().getArchitecture()
-						.returnAddressVariable())) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
+		if (!isBot() && !isTop() && expressions.length == 2 && expressions[0].equals(ExpressionFactory.TRUE)
+				&& expressions[1].equals(Program.getProgram().getArchitecture().returnAddressVariable())) {
 
 			if (callStack.isEmpty()) {
 				logger.error("Trying to read return target from empty callstack!");
@@ -180,10 +166,8 @@ public class CallStackState implements AbstractState {
 			}
 
 			logger.debug("Concretizing callstack element: " + callStack.peek());
-			return Collections.singleton(Tuple.create(
-					ExpressionFactory.TRUE,
-					ExpressionFactory.createNumber(callStack.peek()
-							.getAddress().getValue(), 32)));
+			return Collections.singleton(Tuple.create(ExpressionFactory.TRUE,
+					ExpressionFactory.createNumber(callStack.peek().getAddress().getValue(), 32)));
 		} else {
 			Tuple<RTLNumber> result = new Tuple<RTLNumber>(expressions.length);
 			for (int i = 0; i < expressions.length; i++) {

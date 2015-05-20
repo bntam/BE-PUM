@@ -37,16 +37,13 @@ public class NumberElement implements AbstractValue, BitVectorType {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(NumberElement.class);
 
-	public static final NumberElement TRUE = new NumberElement(
-			ExpressionFactory.TRUE);
-	public static final NumberElement FALSE = new NumberElement(
-			ExpressionFactory.FALSE);
+	public static final NumberElement TRUE = new NumberElement(ExpressionFactory.TRUE);
+	public static final NumberElement FALSE = new NumberElement(ExpressionFactory.FALSE);
 
 	private static NumberElement[] TOPS = new NumberElement[128];
 	static {
 		for (int bitWidth = 1; bitWidth <= 128; bitWidth++) {
-			TOPS[bitWidth - 1] = new NumberElement(
-					ExpressionFactory.createNumber(bitWidth - 1, bitWidth));
+			TOPS[bitWidth - 1] = new NumberElement(ExpressionFactory.createNumber(bitWidth - 1, bitWidth));
 		}
 	}
 
@@ -58,8 +55,7 @@ public class NumberElement implements AbstractValue, BitVectorType {
 
 	public NumberElement(RTLNumber v) {
 		this.value = v;
-		assert v.getBitWidth() > 0 : "Cannot create number element for " + v
-				+ " with unknown bitwidth!";
+		assert v.getBitWidth() > 0 : "Cannot create number element for " + v + " with unknown bitwidth!";
 		assert value != null;
 	}
 

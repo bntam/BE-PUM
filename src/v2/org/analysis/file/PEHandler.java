@@ -73,8 +73,7 @@ public class PEHandler extends AbstractCOFFModule {
 		if (expTableRVA > 0) { // We have an export table
 			logger.debug("-- Reading export table...");
 			inBuf.seek(getFilePointerFromRVA(expTableRVA));
-			ImageExportDirectory imageExportDirectory = new ImageExportDirectory(
-					inBuf);
+			ImageExportDirectory imageExportDirectory = new ImageExportDirectory(inBuf);
 
 			inBuf.seek(getFilePointerFromRVA(imageExportDirectory.AddressOfFunctions));
 			// Parse EAT
@@ -83,9 +82,8 @@ public class PEHandler extends AbstractCOFFModule {
 			for (int i = 0; i < tmpEntries.length; i++) {
 				long rva = inBuf.readDWORD();
 				if (rva > 0) {
-					tmpEntries[i] = new ExportEntry(
-							(int) (i + imageExportDirectory.Base),
-							new AbsoluteAddress(rva + getBaseAddress()));
+					tmpEntries[i] = new ExportEntry((int) (i + imageExportDirectory.Base), new AbsoluteAddress(rva
+							+ getBaseAddress()));
 					eatEntries++;
 				}
 			}
@@ -111,8 +109,7 @@ public class PEHandler extends AbstractCOFFModule {
 			for (int i = 0; i < tmpEntries.length; i++)
 				if (tmpEntries[i] != null)
 					exportEntries[j++] = tmpEntries[i];
-			logger.debug("-- Got " + exportEntries.length
-					+ " exported symbols.");
+			logger.debug("-- Got " + exportEntries.length + " exported symbols.");
 		} else
 			logger.debug("-- File contains no exports");
 
@@ -134,8 +131,7 @@ public class PEHandler extends AbstractCOFFModule {
 			for (ImageImportDescriptor descriptor : imageImportDescriptors) {
 				inBuf.seek(getFilePointerFromRVA(descriptor.Name));
 				String libraryFileName = inBuf.readASCII();
-				logger.debug("-- Parsing imports from " + libraryFileName
-						+ "...");
+				logger.debug("-- Parsing imports from " + libraryFileName + "...");
 				// Normalize filenames to lower case
 				libraryFileName = libraryFileName.toLowerCase();
 
@@ -151,8 +147,7 @@ public class PEHandler extends AbstractCOFFModule {
 				// import names will be associated to IAT addresses in any case
 				// AbsoluteAddress iatAddress = (new RVAPointer(this,
 				// descriptor.FirstThunk)).getVAPointer();
-				AbsoluteAddress iatAddress = new AbsoluteAddress(
-						descriptor.FirstThunk + getBaseAddress());
+				AbsoluteAddress iatAddress = new AbsoluteAddress(descriptor.FirstThunk + getBaseAddress());
 
 				while (true) {
 					inBuf.seek(iatFilePtr);
@@ -167,8 +162,7 @@ public class PEHandler extends AbstractCOFFModule {
 						 */
 						int ord = (int) (thunk & 0x7FFFFFFF);
 						String ordName = "ord(" + ord + ")";
-						importTable.put(iatAddress,
-								Pair.create(libraryFileName, ordName));
+						importTable.put(iatAddress, Pair.create(libraryFileName, ordName));
 					} else {
 						/*
 						 * Thunk contains an RVA of either a
@@ -179,13 +173,11 @@ public class PEHandler extends AbstractCOFFModule {
 
 						long rva = getFilePointerFromRVA(thunk);
 						if (rva < 0)
-							throw new BinaryParseException(
-									"RVA in thunk points outside of image!");
+							throw new BinaryParseException("RVA in thunk points outside of image!");
 						// Just skip the ord hint (WORD), we don't need it.
 						inBuf.seek(rva + 2);
 						String funcName = inBuf.readASCII();
-						importTable.put(iatAddress,
-								Pair.create(libraryFileName, funcName));
+						importTable.put(iatAddress, Pair.create(libraryFileName, funcName));
 					}
 					// Advance IAT entry by one DWORD
 					iatAddress = new AbsoluteAddress(iatAddress.getValue() + 4);
@@ -195,8 +187,7 @@ public class PEHandler extends AbstractCOFFModule {
 
 		// TODO: Parse delayload imports
 
-		logger.debug("-- Got " + importTable.size()
-				+ " imported function symbols.");
+		logger.debug("-- Got " + importTable.size() + " imported function symbols.");
 
 		symbolFinder = new PESymbolHandler(this);
 		System.out.println("Finish creating PE Header File:" + fileName);
@@ -219,8 +210,7 @@ public class PEHandler extends AbstractCOFFModule {
 
 	@Override
 	public AbsoluteAddress getEntryPoint() {
-		return new AbsoluteAddress(getBaseAddress()
-				+ pe_header.getAddressOfEntryPoint());
+		return new AbsoluteAddress(getBaseAddress() + pe_header.getAddressOfEntryPoint());
 	}
 
 	@Override
@@ -274,13 +264,11 @@ public class PEHandler extends AbstractCOFFModule {
 	@Override
 	public Set<UnresolvedSymbol> getUnresolvedSymbols() {
 		Set<UnresolvedSymbol> unresolvedSymbols = new FastSet<UnresolvedSymbol>();
-		for (Map.Entry<AbsoluteAddress, Pair<String, String>> importEntry : getImportTable()
-				.entrySet()) {
+		for (Map.Entry<AbsoluteAddress, Pair<String, String>> importEntry : getImportTable().entrySet()) {
 			AbsoluteAddress va = importEntry.getKey();
 			String libraryName = importEntry.getValue().getLeft();
 			String symbolName = importEntry.getValue().getRight();
-			unresolvedSymbols.add(new UnresolvedSymbol(this, libraryName,
-					symbolName, (int) getFilePointer(va),
+			unresolvedSymbols.add(new UnresolvedSymbol(this, libraryName, symbolName, (int) getFilePointer(va),
 					AddressingType.ABSOLUTE));
 		}
 
@@ -295,11 +283,9 @@ public class PEHandler extends AbstractCOFFModule {
 			// FIXME: adds multiple DriverEntries for multiple PE modules, and
 			// is generally hackish
 			logger.debug("Exporting DriverEntry at " + getEntryPoint());
-			exportedSymbols.add(new ExportedSymbol(this, "_DriverEntry@8",
-					getEntryPoint()));
+			exportedSymbols.add(new ExportedSymbol(this, "_DriverEntry@8", getEntryPoint()));
 		} else {
-			exportedSymbols.add(new ExportedSymbol(this, "start",
-					getEntryPoint()));
+			exportedSymbols.add(new ExportedSymbol(this, "start", getEntryPoint()));
 		}
 
 		if (exportEntries != null)
@@ -307,8 +293,7 @@ public class PEHandler extends AbstractCOFFModule {
 				String name = ee.getName();
 				if (name == null)
 					name = "ord(" + ee.getOrdinal() + ")";
-				exportedSymbols.add(new ExportedSymbol(this, name, ee
-						.getAddress()));
+				exportedSymbols.add(new ExportedSymbol(this, name, ee.getAddress()));
 			}
 		return exportedSymbols;
 	}

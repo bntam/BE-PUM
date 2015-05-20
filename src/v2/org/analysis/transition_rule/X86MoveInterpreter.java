@@ -20,8 +20,7 @@ import java.util.List;
 public class X86MoveInterpreter {
 	private APIHandle apiHandle = null;
 
-	public BPState execute(X86MoveInstruction inst, BPPath path,
-			List<BPPath> pathList, X86TransitionRule rule) {
+	public BPState execute(X86MoveInstruction inst, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
 		// TODO Auto-generated method stub
 		this.apiHandle = rule.getAPIHandle();
 		BPState curState = path.getCurrentState();
@@ -33,22 +32,24 @@ public class X86MoveInterpreter {
 		if (inst.getName().startsWith("movz")) {
 			Value source = rule.getValueOperand(src, env, inst);
 			if (source != null && source instanceof LongValue) {
-				long t = ((LongValue)source).getValue();
-				rule.setValueOperand(dest, new LongValue(BitVector.extend(t, 0, opSize)), env, inst);
+				long t = ((LongValue) source).getValue();
+				LongValue temp = new LongValue(BitVector.extend(t, 0, ((X86MemoryOperand)src).getDataType().bits(), opSize));
+				//System.out.println();
+				rule.setValueOperand(dest, temp , env, inst);
 			} else
 				rule.setValueOperand(dest, source, env, inst);
 		} else if (inst.getName().startsWith("movsx")) {
 			Value source = rule.getValueOperand(src, env, inst);
 			if (source != null && source instanceof LongValue) {
-				long t = ((LongValue)source).getValue();
+				long t = ((LongValue) source).getValue();
 				int sign = BitVector.getMSB(t, opSize / 2);
-				rule.setValueOperand(dest, new LongValue(BitVector.extend(t, sign, opSize)), env, inst);
+				rule.setValueOperand(dest, new LongValue(BitVector.extend(t, sign, ((X86MemoryOperand)src).getDataType().bits(), opSize)), env, inst);
 			} else
 				rule.setValueOperand(dest, source, env, inst);
 		} else if (inst.getName().startsWith("mov")) {
 			// normal move
 			Value source = rule.getValueOperand(src, env, inst);
-			//System.out.println();
+			// System.out.println();
 			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				// prevState.getMemoryValues().put((MemoryOperand) dest,
 				// toMoveVal);
@@ -60,36 +61,35 @@ public class X86MoveInterpreter {
 					b = true;
 				else {
 					if (y.getBase() != null) {
-						Value v = env.getRegister().getRegisterValue(
-								y.getBase().toString());
+						Value v = env.getRegister().getRegisterValue(y.getBase().toString());
 						if (v instanceof LongValue)
 							b = (((LongValue) v).getValue() == 0);
 					}
 				}
 
-				if (y.getSegmentRegister() != null
-						&& y.getSegmentRegister().toString() == "%fs" && b) {
-					//System.out.println("SEH Exploit:"
-					//		+ curState.getLocation().toString());
+				if (y.getSegmentRegister() != null && y.getSegmentRegister().toString() == "%fs" && b) {
+					// System.out.println("SEH Exploit:"
+					// + curState.getLocation().toString());
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						if (((X86Register) src).toString().equals("%esp")) {
 							rule.setSEH(curState);
 						}
-						// PHONG: 20150501:-------------------------------------------------
+						// PHONG:
+						// 20150501:-------------------------------------------------
 						else {
 							rule.setSEHOther(curState, ((X86Register) src).toString());
 						}
 						// -----------------------------------------------------------------
 					}
 				} else {
-					//X86MemoryOperand t = env.getMemory().evaluateAddress(
-					//		(X86MemoryOperand) dest, env);
+					// X86MemoryOperand t = env.getMemory().evaluateAddress(
+					// (X86MemoryOperand) dest, env);
 
 					if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 						// SEH Exploit
 						return rule.processSEH(curState);
 					}
-					
+
 					rule.setValueOperand(dest, source, env, inst);
 				}
 			} else {
@@ -102,8 +102,8 @@ public class X86MoveInterpreter {
 			Value temp = rule.getValueOperand(dest, env, inst);
 			Value source = rule.getValueOperand(src, env, inst);
 			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				//X86MemoryOperand t = env.getMemory().evaluateAddress(
-				//		(X86MemoryOperand) dest, env);
+				// X86MemoryOperand t = env.getMemory().evaluateAddress(
+				// (X86MemoryOperand) dest, env);
 
 				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
@@ -113,17 +113,11 @@ public class X86MoveInterpreter {
 			rule.setValueOperand(dest, source, env, inst);
 			rule.setValueOperand(src, temp, env, inst);
 		} else {
-			Program.getProgram().getLog().error("Instruction not supported" + inst + " at "
-				+ curState.getLocation());
-		} 
+			Program.getProgram().getLog().error("Instruction not supported" + inst + " at " + curState.getLocation());
+		}
 
 		rule.generateNextInstruction(inst, path, pathList, true);
 		return curState;
 	}
-
-	
-
-	
-	
 
 }

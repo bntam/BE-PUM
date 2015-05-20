@@ -53,7 +53,7 @@ public class FindNextFile extends Kernel32API {
 	 * 
 	 */
 	public FindNextFile() {
-		
+
 	}
 
 	@Override

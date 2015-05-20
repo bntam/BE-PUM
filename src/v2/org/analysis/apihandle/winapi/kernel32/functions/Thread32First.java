@@ -100,7 +100,7 @@ public class Thread32First extends Kernel32API {
 					index += 4))).getValue());
 
 			System.out.println(lpte.toString(false));
-			
+
 			BOOL ret = Kernel32DLL.INSTANCE.Thread32First(hSnapshot, lpte);
 
 			long value = ret.longValue();

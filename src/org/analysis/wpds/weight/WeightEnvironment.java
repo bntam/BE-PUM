@@ -23,11 +23,9 @@ public class WeightEnvironment {
 	private Program program;
 	private SystemHandle system;
 
-	public WeightEnvironment(SymbolValueRegister symbolValueRegister,
-			SymbolValueRegisterPart symbolValueRegisterPart,
-			SymbolValueMemoryOperand symbolValueMemoryOperand,
-			SymbolValueSegment symbolValueSegment, SymbolFlag symbolFlag,
-			SymbolStack symbolStack, Program program, SystemHandle system) {
+	public WeightEnvironment(SymbolValueRegister symbolValueRegister, SymbolValueRegisterPart symbolValueRegisterPart,
+			SymbolValueMemoryOperand symbolValueMemoryOperand, SymbolValueSegment symbolValueSegment,
+			SymbolFlag symbolFlag, SymbolStack symbolStack, Program program, SystemHandle system) {
 		super();
 		this.setRegister(symbolValueRegister);
 		this.setSymbolValueRegisterPart(symbolValueRegisterPart);
@@ -63,8 +61,7 @@ public class WeightEnvironment {
 	 * @param symbolValueRegisterPart
 	 *            the symbolValueRegisterPart to set
 	 */
-	public void setSymbolValueRegisterPart(
-			SymbolValueRegisterPart symbolValueRegisterPart) {
+	public void setSymbolValueRegisterPart(SymbolValueRegisterPart symbolValueRegisterPart) {
 		this.symbolValueRegisterPart = symbolValueRegisterPart;
 	}
 
@@ -79,8 +76,7 @@ public class WeightEnvironment {
 	 * @param symbolValueMemoryOperand
 	 *            the symbolValueMemoryOperand to set
 	 */
-	public void setSymbolValueMemoryOperand(
-			SymbolValueMemoryOperand symbolValueMemoryOperand) {
+	public void setSymbolValueMemoryOperand(SymbolValueMemoryOperand symbolValueMemoryOperand) {
 		this.symbolValueMemoryOperand = symbolValueMemoryOperand;
 	}
 

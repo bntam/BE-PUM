@@ -27,8 +27,7 @@ public class UnrepresentableElementException extends RuntimeException {
 	private static final long serialVersionUID = -6782319748260289319L;
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(UnrepresentableElementException.class);
+	private static final Logger logger = Logger.getLogger(UnrepresentableElementException.class);
 
 	public UnrepresentableElementException() {
 		super();

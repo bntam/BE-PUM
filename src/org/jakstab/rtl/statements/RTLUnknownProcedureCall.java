@@ -32,12 +32,10 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class RTLUnknownProcedureCall extends AbstractRTLStatement implements
-		RTLStatement {
+public class RTLUnknownProcedureCall extends AbstractRTLStatement implements RTLStatement {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(RTLUnknownProcedureCall.class);
+	private static final Logger logger = Logger.getLogger(RTLUnknownProcedureCall.class);
 
 	private static final SetOfVariables FASTCALL_USED;
 	private static final SetOfVariables INTEL_ABI_DEFINED;

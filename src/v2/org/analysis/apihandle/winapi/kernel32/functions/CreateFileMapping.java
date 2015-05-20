@@ -107,7 +107,8 @@ public class CreateFileMapping extends Kernel32API {
 			String lpName = (t6 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t6)) : null;
 
 			System.out.println("Handle File:" + t1 + ", Security Attribute:" + t2 + ", Object Protection:" + t3
-					+ ", Maximum Size High:" + t4 + ", Maximum Size Low:" + t5 + ", File Mapping Name Address:" + lpName);
+					+ ", Maximum Size High:" + t4 + ", Maximum Size Low:" + t5 + ", File Mapping Name Address:"
+					+ lpName);
 
 			HANDLE ret = Kernel32.INSTANCE.CreateFileMapping(hFile, lpAttributes, flProtect, dwMaximumSizeHigh,
 					dwMaximumSizeLow, lpName);

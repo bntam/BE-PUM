@@ -48,7 +48,7 @@ public class lstrcpy extends Kernel32API {
 	 * 
 	 */
 	public lstrcpy() {
-		
+
 	}
 
 	@Override
@@ -70,13 +70,13 @@ public class lstrcpy extends Kernel32API {
 
 			String dest = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
 			String src = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()));
-			
+
 			System.out.println("Destination Address:" + destAddr + ", Source String:" + src);
-			
+
 			WString ret = Kernel32DLL.INSTANCE.lstrcpy(new WString(dest), new WString(src));
 			memory.setText(new X86MemoryOperand(DataType.INT32, destAddr), ret.toString());
-			
-			//TODO: Fix here
+
+			// TODO: Fix here
 			register.mov("eax", new LongValue(1));
 		}
 		return false;

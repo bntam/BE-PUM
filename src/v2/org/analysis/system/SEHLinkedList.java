@@ -29,8 +29,7 @@ public class SEHLinkedList {
 		this.sehHandler = sehHandler;
 	}
 
-	public SEHLinkedList(long nextSEHRecord, long sehHandler,
-			String nameFunction) {
+	public SEHLinkedList(long nextSEHRecord, long sehHandler, String nameFunction) {
 		super();
 		this.nextSEHRecord = nextSEHRecord;
 		this.sehHandler = sehHandler;

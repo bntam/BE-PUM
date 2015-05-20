@@ -67,14 +67,12 @@ public class IntraCFG {
 	}
 
 	public void test() {
-		Map<AbsoluteAddress, Instruction> assemblyMap = this.program
-				.getAssemblyMap();
+		Map<AbsoluteAddress, Instruction> assemblyMap = this.program.getAssemblyMap();
 
 		// List <AbsoluteAddress> addrProcessed= new ArrayList <AbsoluteAddress>
 		// ();
 
-		Map.Entry<AbsoluteAddress, Instruction> start = assemblyMap.entrySet()
-				.iterator().next();
+		Map.Entry<AbsoluteAddress, Instruction> start = assemblyMap.entrySet().iterator().next();
 		AbsoluteAddress address = start.getKey();
 
 		while (true) {
@@ -85,19 +83,14 @@ public class IntraCFG {
 			System.out.println("Name of instruction " + ins.getName());
 			for (int j = 0; j < ins.getOperandCount(); j++) {
 				if (ins.getName().startsWith("j")) {
-					X86PCRelativeAddress operand = (X86PCRelativeAddress) ins
-							.getOperand(0);
-					AbsoluteAddress a = new AbsoluteAddress(
-							operand.getEffectiveValue(address.getValue()));
-					System.out.println("Operand number " + j + " is "
-							+ a.toString());
+					X86PCRelativeAddress operand = (X86PCRelativeAddress) ins.getOperand(0);
+					AbsoluteAddress a = new AbsoluteAddress(operand.getEffectiveValue(address.getValue()));
+					System.out.println("Operand number " + j + " is " + a.toString());
 				} else {
-					System.out.println("Operand number " + j + " is "
-							+ ins.getOperand(j).toString());
+					System.out.println("Operand number " + j + " is " + ins.getOperand(j).toString());
 				}
 			}
-			System.out
-					.println("-----------------------------------------------");
+			System.out.println("-----------------------------------------------");
 			address = new AbsoluteAddress(address.getValue() + ins.getSize());
 
 		}
@@ -116,22 +109,19 @@ public class IntraCFG {
 		// Map<AbsoluteAddress, Pair<String, String>> importTable = ((PEModule)
 		// Program
 		// .getProgram().getMainModule()).getImportTable();
-		Win32StubLibrary stubLibrary = (Win32StubLibrary) Program.getProgram()
-				.getStubLibrary();
+		Win32StubLibrary stubLibrary = (Win32StubLibrary) Program.getProgram().getStubLibrary();
 		Map<AbsoluteAddress, String> stubMap;
 		if (stubLibrary != null)
 			stubMap = stubLibrary.getAddressMap();
 		else
 			stubMap = new HashMap<AbsoluteAddress, String>();
 		ConcreteStack cStack = new ConcreteStack();
-		Map<AbsoluteAddress, Instruction> assemblyMap = this.program
-				.getAssemblyMap();
+		Map<AbsoluteAddress, Instruction> assemblyMap = this.program.getAssemblyMap();
 		AddressList processedTotalAddrList = new AddressList();
 		// AddressList neg = new AddressList();
 		// List<AbsoluteAddress> startAddrList = new
 		// ArrayList<AbsoluteAddress>();
-		AbsoluteAddress addr = assemblyMap.entrySet().iterator().next()
-				.getKey();
+		AbsoluteAddress addr = assemblyMap.entrySet().iterator().next().getKey();
 		// Get the Start vertex of CFG
 		CFGVertex startNode = new CFGVertex(addr, assemblyMap.get(addr), 0);
 		vertices.add(startNode);
@@ -165,11 +155,9 @@ public class IntraCFG {
 			CFGVertex source;
 			source = vertices.getVertex(address);
 			if (source == null) {
-				System.out.println("Vertex with address " + address.toString()
-						+ " is not added to the list");
+				System.out.println("Vertex with address " + address.toString() + " is not added to the list");
 				if (assemblyMap.get(address) == null) {
-					System.out.println("Address " + address.toString()
-							+ " out of bound");
+					System.out.println("Address " + address.toString() + " out of bound");
 					continue;
 				}
 				source = new CFGVertex(address, assemblyMap.get(address));
@@ -192,8 +180,7 @@ public class IntraCFG {
 
 				if (ins == null) {
 					// if (!address.toString().equals("0x00401035"))
-					System.out.println("Address out of bound "
-							+ address.toString());
+					System.out.println("Address out of bound " + address.toString());
 					vertices.remove(source);
 					break;
 				}
@@ -208,10 +195,8 @@ public class IntraCFG {
 						source.setTraceList(processedList.clone());
 						long temp = 0;
 
-						if (this.program.getPreservedExecutionMap()
-								.containsKey(address)) {
-							address = this.program.getPreservedExecutionMap()
-									.get(address).get(0);
+						if (this.program.getPreservedExecutionMap().containsKey(address)) {
+							address = this.program.getPreservedExecutionMap().get(address).get(0);
 							if (address == null)
 								break;
 							ins = assemblyMap.get(address);
@@ -265,8 +250,7 @@ public class IntraCFG {
 					} else
 						break;
 				} else if (t == 2) {
-					address = new AbsoluteAddress(address.getValue()
-							+ ins.getSize());
+					address = new AbsoluteAddress(address.getValue() + ins.getSize());
 					ins = assemblyMap.get(address);
 					source.setType(6);
 					if (ins != null) {
@@ -316,8 +300,7 @@ public class IntraCFG {
 					// ins.getOperand(0).toString()
 					// + " RightC= " + ins.getOperand(1).toString());
 					// neg.add(address);
-					address = new AbsoluteAddress(address.getValue()
-							+ ins.getSize());
+					address = new AbsoluteAddress(address.getValue() + ins.getSize());
 					ins = assemblyMap.get(address);
 					source.setType(6);
 					if (ins != null) {
@@ -373,8 +356,7 @@ public class IntraCFG {
 					address = lAddr.get(0);
 					if (lAddr.size() > 1) {
 						for (int i = 1; i < lAddr.size(); i++)
-							trace.add(lAddr.get(i), processedList.clone(),
-									cond.clone());
+							trace.add(lAddr.get(i), processedList.clone(), cond.clone());
 					}
 
 					if (address == null) {
@@ -398,17 +380,14 @@ public class IntraCFG {
 					if (ins == null) {
 						// System.out.println(address.toString());
 						address = reduceValue(address.getValue());
-						if (this.program.getPreservedExecutionMap()
-								.containsKey(address)) {
-							address = this.program.getPreservedExecutionMap()
-									.get(address).get(0);
+						if (this.program.getPreservedExecutionMap().containsKey(address)) {
+							address = this.program.getPreservedExecutionMap().get(address).get(0);
 							ins = assemblyMap.get(address);
 						} else if (contain(stubMap, address)) {
 							// HashMap<AbsoluteAddress, String> h =
 							// (HashMap<AbsoluteAddress, String>)
 							// stubLibrary.getAddressStubMap();
-							stubLibrary.getAddressStubMap().put(oldAddr,
-									funcName);
+							stubLibrary.getAddressStubMap().put(oldAddr, funcName);
 
 							address = new AbsoluteAddress(cStack.pop());
 							ins = assemblyMap.get(address);
@@ -514,8 +493,7 @@ public class IntraCFG {
 					// System.out.println("LeftC=" +
 					// ins.getOperand(0).toString() + " Connector=" +
 					// " RightC= " + ins.getOperand(1).toString());
-					AbsoluteAddress next = new AbsoluteAddress(
-							address.getValue() + ins.getSize());
+					AbsoluteAddress next = new AbsoluteAddress(address.getValue() + ins.getSize());
 					// ins = assemblyMap.get(next);
 					if (assemblyMap.get(next) != null) {
 						this.negCondition.put(address, next);
@@ -547,8 +525,7 @@ public class IntraCFG {
 					address = lAddr.get(0);
 					if (lAddr.size() > 1) {
 						for (int i = 1; i < lAddr.size(); i++)
-							trace.add(lAddr.get(i), processedList.clone(),
-									cond.clone());
+							trace.add(lAddr.get(i), processedList.clone(), cond.clone());
 					}
 					source.setTraceList(processedList.clone());
 					if (address == null) {
@@ -636,8 +613,7 @@ public class IntraCFG {
 					nc.setRightC("0");
 					nc.setConnector("<");
 
-					AbsoluteAddress next = new AbsoluteAddress(
-							address.getValue() + ins.getSize());
+					AbsoluteAddress next = new AbsoluteAddress(address.getValue() + ins.getSize());
 					// ins = assemblyMap.get(next);
 					if (assemblyMap.get(next) != null) {
 						this.negCondition.put(address, next);
@@ -669,8 +645,7 @@ public class IntraCFG {
 					address = lAddr.get(0);
 					if (lAddr.size() > 1) {
 						for (int i = 1; i < lAddr.size(); i++)
-							trace.add(lAddr.get(i), processedList.clone(),
-									cond.clone());
+							trace.add(lAddr.get(i), processedList.clone(), cond.clone());
 					}
 					source.setTraceList(processedList.clone());
 					if (address == null) {
@@ -751,16 +726,15 @@ public class IntraCFG {
 		// System.out.println("Debug Create List Loop");
 	}
 
-	private boolean contain(Map<AbsoluteAddress, String> stubMap,
-			AbsoluteAddress address) {
+	private boolean contain(Map<AbsoluteAddress, String> stubMap, AbsoluteAddress address) {
 		// TODO Auto-generated method stub
-		Iterator<Entry<AbsoluteAddress, String>> it = stubMap.entrySet()
-				.iterator();
+		Iterator<Entry<AbsoluteAddress, String>> it = stubMap.entrySet().iterator();
 		long t = 0xFFFFFFFFL & address.getValue();
 		while (it.hasNext()) {
 			@SuppressWarnings("rawtypes")
 			Map.Entry pairs = (Map.Entry) it.next();
-			// if (((String)pairs.getValueOperand()).contains("GetModuleHandleA"))
+			// if
+			// (((String)pairs.getValueOperand()).contains("GetModuleHandleA"))
 			// System.out.println("Debug");
 			AbsoluteAddress addr = ((AbsoluteAddress) pairs.getKey());
 			if (addr.getValue() == t) {
@@ -776,8 +750,7 @@ public class IntraCFG {
 		return new AbsoluteAddress((long) (value % Math.pow(2, 32)));
 	}
 
-	public List<AbsoluteAddress> getJumpAddress(Instruction ins,
-			AbsoluteAddress addr) {
+	public List<AbsoluteAddress> getJumpAddress(Instruction ins, AbsoluteAddress addr) {
 		Operand operand = ins.getOperand(0);
 		List<AbsoluteAddress> l = new ArrayList<AbsoluteAddress>();
 		if (this.program.getPreservedExecutionMap().containsKey(addr))
@@ -785,9 +758,7 @@ public class IntraCFG {
 
 		if (operand instanceof X86PCRelativeAddress) {
 
-			l.add(new AbsoluteAddress(
-					((X86PCRelativeAddress) ins.getOperand(0))
-							.getEffectiveValue(addr.getValue())));
+			l.add(new AbsoluteAddress(((X86PCRelativeAddress) ins.getOperand(0)).getEffectiveValue(addr.getValue())));
 			// if (addr.toString().equals("0x00401041"))
 			// System.out.println("Debug");
 			return l;
@@ -799,8 +770,7 @@ public class IntraCFG {
 			// System.out.println("Debug");
 			// return l;
 			long disp = ((X86MemoryOperand) operand).getDisplacement();
-			long t = program
-					.getDoubleWordValueMemory(new AbsoluteAddress(disp));
+			long t = program.getDoubleWordValueMemory(new AbsoluteAddress(disp));
 			l.add(new AbsoluteAddress(t));
 			return l;
 		}
@@ -817,11 +787,9 @@ public class IntraCFG {
 	// This method is to print the CFG
 	public void prinCFG() {
 		System.out.println("Print the information of CFG.");
-		System.out
-				.println("****************************************************");
+		System.out.println("****************************************************");
 		this.vertices.printInfo();
-		System.out
-				.println("****************************************************");
+		System.out.println("****************************************************");
 		this.edges.printInfo();
 	}
 

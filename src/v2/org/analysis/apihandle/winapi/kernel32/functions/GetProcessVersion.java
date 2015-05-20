@@ -46,7 +46,7 @@ public class GetProcessVersion extends Kernel32API {
 	 * 
 	 */
 	public GetProcessVersion() {
-		
+
 	}
 
 	@Override

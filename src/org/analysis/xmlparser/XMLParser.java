@@ -47,8 +47,7 @@ public class XMLParser {
 		else if (op.getClass().getSimpleName().equals("Immediate"))
 			result = ((Immediate) op).getNumber().intValue() + "";
 		else if (op.getClass().getSimpleName().equals("X86PCRelativeAddress"))
-			result = ((X86PCRelativeAddress) op).getEffectiveValue(addr
-					.getValue()) + "";
+			result = ((X86PCRelativeAddress) op).getEffectiveValue(addr.getValue()) + "";
 		else if (op.getClass().getSimpleName().equals("X86MemoryOperand"))
 			result = "op_addr_" + ((X86MemoryOperand) op).toString();
 
@@ -73,12 +72,9 @@ public class XMLParser {
 
 				Element cfgvertex = new Element("CFGVertex");
 				int type = vertex.getSize() > 0 ? vertex.getType()[0] : 0;
-				cfgvertex.setAttribute(new Attribute("Type", String
-						.valueOf(type)));
-				cfgvertex.setAttribute(new Attribute("Address", String
-						.valueOf(vertex.getAddr().getValue())));
-				cfgvertex.setAttribute(new Attribute("HexAddress", String
-						.valueOf(vertex.getAddr().toString())));
+				cfgvertex.setAttribute(new Attribute("Type", String.valueOf(type)));
+				cfgvertex.setAttribute(new Attribute("Address", String.valueOf(vertex.getAddr().getValue())));
+				cfgvertex.setAttribute(new Attribute("HexAddress", String.valueOf(vertex.getAddr().toString())));
 
 				vertexs.addContent(cfgvertex);
 
@@ -86,24 +82,22 @@ public class XMLParser {
 				Element ins = new Element("Ins");
 
 				String operator = vertex.getIns().getName();
-				String operand = vertex.getIns().getOperandCount() > 0 ? refineValue(
-						vertex.getIns().getOperand(0), vertex.getAddr()) : "";
+				String operand = vertex.getIns().getOperandCount() > 0 ? refineValue(vertex.getIns().getOperand(0),
+						vertex.getAddr()) : "";
 				// String value = "";
-				String value = vertex.getIns().getOperandCount() > 1 ? refineValue(
-						vertex.getIns().getOperand(1), vertex.getAddr()) : "";
+				String value = vertex.getIns().getOperandCount() > 1 ? refineValue(vertex.getIns().getOperand(1),
+						vertex.getAddr()) : "";
 				String instruction = operator + " " + operand + ", " + value;
 
-				if (operator.contains("cmp") || operator.contains("je")
-						|| operator.contains("ja") || operator.contains("jg")
-						|| operator.contains("jl") || operator.contains("jge")
+				if (operator.contains("cmp") || operator.contains("je") || operator.contains("ja")
+						|| operator.contains("jg") || operator.contains("jl") || operator.contains("jge")
 						|| operator.contains("jle") || operator.contains("jnl")) {
 					operand = "";
 					value = "";
 				}
 				if (type == 7 || operator.contains("jmp")) {
-					value = vertex.getIns().getOperandCount() > 0 ? refineValue(
-							vertex.getIns().getOperand(0), vertex.getAddr())
-							: "";
+					value = vertex.getIns().getOperandCount() > 0 ? refineValue(vertex.getIns().getOperand(0),
+							vertex.getAddr()) : "";
 					operand = "";
 				}
 
@@ -119,12 +113,10 @@ public class XMLParser {
 				for (CFGEdge edge : vertex.getOut()) {
 					// CFGEdge
 					Element cfgedge = new Element("CFGEdge");
-					cfgedge.setAttribute(new Attribute("Destination",
-							String.valueOf(edge.getDestination().getAddr()
-									.getValue())));
-					cfgedge.setAttribute(new Attribute("HexDestination",
-							String.valueOf(edge.getDestination().getAddr()
-									.toString())));
+					cfgedge.setAttribute(new Attribute("Destination", String.valueOf(edge.getDestination().getAddr()
+							.getValue())));
+					cfgedge.setAttribute(new Attribute("HexDestination", String.valueOf(edge.getDestination().getAddr()
+							.toString())));
 					// if (edge.getDestination().getAddr()
 					// .getValueOperand() == 4198412)
 					// System.out.println();
@@ -132,17 +124,13 @@ public class XMLParser {
 
 					// CFGEdge/SymbolicExecution
 					Element se = new Element("SymbolicExecution");
-					for (int index = 0; index < edge.getCond()
-							.getConnectorSize(); index++) {
+					for (int index = 0; index < edge.getCond().getConnectorSize(); index++) {
 						// if
-						String left = refineString(edge.getCond().getLeftC(
-								index));
+						String left = refineString(edge.getCond().getLeftC(index));
 						// if (left.equals("al"))
 						// System.out.println("Debug");
-						String right = refineString(edge.getCond().getRightC(
-								index));
-						String con = refineString(edge.getCond().getConnector(
-								index));
+						String right = refineString(edge.getCond().getRightC(index));
+						String con = refineString(edge.getCond().getConnector(index));
 						String text = left + " " + con + " " + right;
 						Element cond = new Element("string").setText(text);
 						se.addContent(cond);
@@ -192,10 +180,8 @@ public class XMLParser {
 			Element symbolvalues = new Element("SymbolValues");
 			for (int i = 0; i < sv.getNumVar(); i++) {
 				Element value = new Element("Symbol");
-				value.addContent(new Element("Name").addContent(sv
-						.getVarName(i)));
-				value.addContent(new Element("Value").addContent(sv
-						.getVarValue(i) + ""));
+				value.addContent(new Element("Name").addContent(sv.getVarName(i)));
+				value.addContent(new Element("Value").addContent(sv.getVarValue(i) + ""));
 				symbolvalues.addContent(value);
 			}
 			root.addContent(symbolvalues);
@@ -223,8 +209,7 @@ public class XMLParser {
 		String line;
 		try {
 			fis = new FileInputStream(fileName);
-			br = new BufferedReader(new InputStreamReader(fis,
-					Charset.forName("UTF-8")));
+			br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
 			while ((line = br.readLine()) != null) {
 				if (line.contains("address"))
 					result = line;

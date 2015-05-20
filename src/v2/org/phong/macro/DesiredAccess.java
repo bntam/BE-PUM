@@ -4,7 +4,7 @@ public class DesiredAccess {
 	int ZERO = 0;
 	int GENERIC_READ = 1;
 	int GENERIC_WRITE = 2;
-	
+
 	private int desiredAccess;
 
 	public int getDesiredAccess() {
@@ -18,7 +18,7 @@ public class DesiredAccess {
 	public void setDesiredAccessWithGenericRead() {
 		this.desiredAccess = GENERIC_READ;
 	}
-	
+
 	public void setDesiredAccessWithGenericWrite() {
 		this.desiredAccess = GENERIC_WRITE;
 	}

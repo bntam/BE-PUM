@@ -36,8 +36,7 @@ import org.jakstab.util.Logger;
 
 public class X86XMMRegisters {
 
-	private final static Logger logger = Logger
-			.getLogger(X86XMMRegisters.class);
+	private final static Logger logger = Logger.getLogger(X86XMMRegisters.class);
 
 	public static final int NUM_XMM_REGISTERS = 8;
 
@@ -63,8 +62,7 @@ public class X86XMMRegisters {
 		XMM6 = new X86XMMRegister(6, "%xmm6");
 		XMM7 = new X86XMMRegister(7, "%xmm7");
 
-		xmmRegisters = (new X86XMMRegister[] { XMM0, XMM1, XMM2, XMM3, XMM4,
-				XMM5, XMM6, XMM7 });
+		xmmRegisters = (new X86XMMRegister[] { XMM0, XMM1, XMM2, XMM3, XMM4, XMM5, XMM6, XMM7 });
 	}
 
 	public static int getNumberOfRegisters() {

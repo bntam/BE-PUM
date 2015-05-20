@@ -27,8 +27,7 @@ public class UnknownPointerAccessException extends StateException {
 	private static final long serialVersionUID = -6538026735037320771L;
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(UnknownPointerAccessException.class);
+	private static final Logger logger = Logger.getLogger(UnknownPointerAccessException.class);
 
 	public UnknownPointerAccessException(String msg) {
 		super(null, msg);

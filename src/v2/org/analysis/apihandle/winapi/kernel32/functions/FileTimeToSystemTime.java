@@ -47,7 +47,7 @@ import v2.org.analysis.value.Value;
 public class FileTimeToSystemTime extends Kernel32API {
 
 	public FileTimeToSystemTime() {
-		
+
 	}
 
 	@Override

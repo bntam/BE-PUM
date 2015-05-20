@@ -6,7 +6,7 @@ public class CreationDistribution {
 	int OPEN_EXISTING = 3;
 	int OPEN_ALWAYS = 4;
 	int TRUNCATE_EXISTING = 5;
-	
+
 	private int creationDistribution;
 
 	public int getCreationDistribution() {
@@ -16,19 +16,19 @@ public class CreationDistribution {
 	public void setCreationDistributionWithCreateNew() {
 		this.creationDistribution = CREATE_NEW;
 	}
-	
+
 	public void setCreationDistributionWithCreateAlways() {
 		this.creationDistribution = CREATE_ALWAYS;
 	}
-	
+
 	public void setCreationDistributionWithOpenExisting() {
 		this.creationDistribution = OPEN_EXISTING;
 	}
-	
+
 	public void setCreationDistributionWithOpenAlways() {
 		this.creationDistribution = OPEN_ALWAYS;
 	}
-	
+
 	public void setCreationDistributionWithTruncateExisting() {
 		this.creationDistribution = TRUNCATE_EXISTING;
 	}

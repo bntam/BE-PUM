@@ -59,8 +59,7 @@ public class InsertMenuItem extends User32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -73,8 +72,7 @@ public class InsertMenuItem extends User32API {
 
 		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue
-				&& x3 instanceof LongValue && x4 instanceof LongValue) {
+		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
@@ -97,59 +95,36 @@ public class InsertMenuItem extends User32API {
 			// public WString dwTypeData;
 			// public UINT cch; // used if MIIM_TYPE (4.0) or MIIM_STRING (>4.0)
 			// public HBITMAP hbmpItem; // used if MIIM_BITMAP
-			lpmii.cbSize = new UINT(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4))).getValue());
-			lpmii.fMask = new UINT(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue());
-			lpmii.fType = new UINT(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue());
-			lpmii.fState = new UINT(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue());
-			lpmii.wID = new UINT(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue());
-			lpmii.hSubMenu = new HMENU(new Pointer(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue()));
+			lpmii.cbSize = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+					t4))).getValue());
+			lpmii.fMask = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+					t4 += 4))).getValue());
+			lpmii.fType = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+					t4 += 4))).getValue());
+			lpmii.fState = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+					t4 += 4))).getValue());
+			lpmii.wID = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+					t4 += 4))).getValue());
+			lpmii.hSubMenu = new HMENU(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
+					DataType.INT32, t4 += 4))).getValue()));
 			lpmii.hbmpChecked = new HBITMAP(new Pointer(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue()));
+					((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 += 4)))
+							.getValue()));
 			lpmii.hbmpUnchecked = new HBITMAP(new Pointer(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue()));
-			lpmii.dwItemData = new ULONG_PTR(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue());
-			long strPtr = ((LongValue) memory
-					.getDoubleWordMemoryValue(new X86MemoryOperand(
-							DataType.INT32, t4 += 40))).getValue();
+					((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 += 4)))
+							.getValue()));
+			lpmii.dwItemData = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
+					DataType.INT32, t4 += 4))).getValue());
+			long strPtr = ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 += 40)))
+					.getValue();
 			lpmii.dwTypeData = new WString(
-					(strPtr != 0L) ? memory.getText(new X86MemoryOperand(
-							DataType.INT32, strPtr)) : null);
-			lpmii.cch = new UINT(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue());
-			lpmii.hbmpItem = new HBITMAP(new Pointer(
-					((LongValue) memory
-							.getDoubleWordMemoryValue(new X86MemoryOperand(
-									DataType.INT32, t4 += 4))).getValue()));
+					(strPtr != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, strPtr)) : null);
+			lpmii.cch = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+					t4 += 4))).getValue());
+			lpmii.hbmpItem = new HBITMAP(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
+					DataType.INT32, t4 += 4))).getValue()));
 
-			BOOL ret = User32DLL.INSTANCE.InsertMenuItem(hMenu, uItem,
-					fByPosition, lpmii);
+			BOOL ret = User32DLL.INSTANCE.InsertMenuItem(hMenu, uItem, fByPosition, lpmii);
 
 			register.mov("eax", new LongValue(ret.longValue()));
 		}

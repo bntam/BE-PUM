@@ -47,8 +47,7 @@ public class StatsPlotter {
 			return;
 
 		try {
-			OutputStreamWriter out = new OutputStreamWriter(
-					new FileOutputStream(instance.filename, true));
+			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(instance.filename, true));
 			out.append(line);
 			out.append("\n");
 			out.close();

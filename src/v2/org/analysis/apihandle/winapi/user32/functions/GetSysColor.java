@@ -35,7 +35,7 @@ public class GetSysColor extends User32API {
 	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
-		//Memory memory = env.getMemory();
+		// Memory memory = env.getMemory();
 		Register register = env.getRegister();
 
 		Value x1 = stack.pop();
@@ -44,7 +44,7 @@ public class GetSysColor extends User32API {
 
 		if (x1 instanceof LongValue) {
 			long x = ((LongValue) x1).getValue();
-			
+
 			int nIndex = (int) x;
 			DWORD ret = User32DLL.INSTANCE.GetSysColor(nIndex);
 			register.mov("eax", new LongValue(ret.longValue()));

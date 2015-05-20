@@ -41,11 +41,9 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class PessimisticStateTransformerFactory extends
-		ResolvingTransformerFactory {
+public class PessimisticStateTransformerFactory extends ResolvingTransformerFactory {
 
-	private static final Logger logger = Logger
-			.getLogger(PessimisticStateTransformerFactory.class);
+	private static final Logger logger = Logger.getLogger(PessimisticStateTransformerFactory.class);
 
 	@Override
 	public Set<CFAEdge> resolveGoto(final AbstractState a, final RTLGoto stmt) {
@@ -55,16 +53,15 @@ public class PessimisticStateTransformerFactory extends
 
 		Set<CFAEdge> results = new FastSet<CFAEdge>();
 
-		Set<Tuple<RTLNumber>> valuePairs = a.projectionFromConcretization(
-				stmt.getCondition(), stmt.getTargetExpression());
+		Set<Tuple<RTLNumber>> valuePairs = a.projectionFromConcretization(stmt.getCondition(),
+				stmt.getTargetExpression());
 		for (Tuple<RTLNumber> pair : valuePairs) {
 			RTLNumber conditionValue = pair.get(0);
 			RTLNumber targetValue = pair.get(1);
 			Location nextLabel;
 			// assume correct condition case
 			assert conditionValue != null;
-			RTLExpression assumption = ExpressionFactory.createEqual(
-					stmt.getCondition(), conditionValue);
+			RTLExpression assumption = ExpressionFactory.createEqual(stmt.getCondition(), conditionValue);
 			if (conditionValue.equals(ExpressionFactory.FALSE)) {
 				// assume (condition = false), and set next statement to
 				// fallthrough
@@ -75,40 +72,30 @@ public class PessimisticStateTransformerFactory extends
 					if (!Options.allEdges.getValue()) {
 						// if target could not be resolved, just leave the edge
 						// out for now
-						logger.info(stmt.getLabel()
-								+ ": Cannot resolve target expression "
-								+ stmt.getTargetExpression()
-								+ ". Continuing with unsound underapproximation.");
+						logger.info(stmt.getLabel() + ": Cannot resolve target expression "
+								+ stmt.getTargetExpression() + ". Continuing with unsound underapproximation.");
 						logger.debug("State is: " + a);
 						sound = false;
 						unresolvedBranches.add(stmt.getLabel());
 						if (Options.debug.getValue())
-							throw new ControlFlowException(a,
-									"Unresolvable control flow fro "
-											+ stmt.getLabel());
+							throw new ControlFlowException(a, "Unresolvable control flow fro " + stmt.getLabel());
 						continue;
 					} else {
 						// Over-approximate target and add edges to all possible
 						// program locations (!)
-						logger.warn(stmt.getLabel()
-								+ ": Cannot resolve target expression "
+						logger.warn(stmt.getLabel() + ": Cannot resolve target expression "
 								+ stmt.getTargetExpression()
 								+ ". Adding over-approximate edges to all program locations!");
 
-						for (Iterator<AbsoluteAddress> it = Program
-								.getProgram().codeAddressIterator(); it
-								.hasNext();) {
+						for (Iterator<AbsoluteAddress> it = Program.getProgram().codeAddressIterator(); it.hasNext();) {
 							targetValue = it.next().toNumericConstant();
-							assumption = ExpressionFactory.createEqual(
-									stmt.getTargetExpression(), targetValue);
+							assumption = ExpressionFactory.createEqual(stmt.getTargetExpression(), targetValue);
 							// set next label to jump target
-							nextLabel = new Location(new AbsoluteAddress(
-									targetValue));
+							nextLabel = new Location(new AbsoluteAddress(targetValue));
 							RTLAssume assume = new RTLAssume(assumption, stmt);
 							assume.setLabel(stmt.getLabel());
 							assume.setNextLabel(nextLabel);
-							results.add(new CFAEdge(assume.getLabel(), assume
-									.getNextLabel(), assume));
+							results.add(new CFAEdge(assume.getLabel(), assume.getNextLabel(), assume));
 						}
 
 						continue;
@@ -116,10 +103,8 @@ public class PessimisticStateTransformerFactory extends
 				} else {
 					// assume (condition = true AND targetExpression =
 					// targetValue)
-					assumption = ExpressionFactory.createAnd(
-							assumption,
-							ExpressionFactory.createEqual(
-									stmt.getTargetExpression(), targetValue));
+					assumption = ExpressionFactory.createAnd(assumption,
+							ExpressionFactory.createEqual(stmt.getTargetExpression(), targetValue));
 					// set next label to jump target
 					nextLabel = new Location(new AbsoluteAddress(targetValue));
 				}
@@ -130,12 +115,10 @@ public class PessimisticStateTransformerFactory extends
 			assume.setNextLabel(nextLabel);
 			// Target address sanity check
 			if (nextLabel.getAddress().getValue() < 10L) {
-				logger.warn("Control flow from " + a.getLocation()
-						+ " reaches address " + nextLabel.getAddress() + "!");
+				logger.warn("Control flow from " + a.getLocation() + " reaches address " + nextLabel.getAddress() + "!");
 			}
 
-			results.add(new CFAEdge(assume.getLabel(), assume.getNextLabel(),
-					assume));
+			results.add(new CFAEdge(assume.getLabel(), assume.getNextLabel(), assume));
 		}
 		// if (results.isEmpty())
 		// System.out.println("Stop");

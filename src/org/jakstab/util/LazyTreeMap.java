@@ -174,8 +174,7 @@ public class LazyTreeMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	}
 
 	private final class MapEntryIterator implements Iterator<Map.Entry<K, V>> {
-		private Iterator<Map.Entry<K, V>> innerIt = innerMap.entrySet()
-				.iterator();
+		private Iterator<Map.Entry<K, V>> innerIt = innerMap.entrySet().iterator();
 		private Map.Entry<K, V> last = null;
 
 		@Override

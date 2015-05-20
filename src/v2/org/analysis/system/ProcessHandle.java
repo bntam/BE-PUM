@@ -32,12 +32,10 @@ public class ProcessHandle {
 		this.pList = pList;
 	}
 
-	public long createProcess(String moduleFileName, String commandLine,
-			long t3, long t4, long t5, long t6, long t7, String curDir,
-			String pStarupInfo, long t10) {
+	public long createProcess(String moduleFileName, String commandLine, long t3, long t4, long t5, long t6, long t7,
+			String curDir, String pStarupInfo, long t10) {
 		// TODO Auto-generated method stub
-		Process p = new Process(moduleFileName, commandLine, t3, t4, t5, t6,
-				t7, curDir, pStarupInfo, t10);
+		Process p = new Process(moduleFileName, commandLine, t3, t4, t5, t6, t7, curDir, pStarupInfo, t10);
 		pList.add(p);
 
 		return 1;

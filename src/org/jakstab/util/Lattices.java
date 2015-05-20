@@ -31,8 +31,7 @@ public class Lattices {
 	private static final Logger logger = Logger.getLogger(Lattices.class);
 
 	@SuppressWarnings("unchecked")
-	public static final <L extends LatticeElement> L joinAll(
-			Collection<L> elementSet) {
+	public static final <L extends LatticeElement> L joinAll(Collection<L> elementSet) {
 		Iterator<L> iter = elementSet.iterator();
 		L result = iter.next();
 		while (iter.hasNext()) {
@@ -57,14 +56,12 @@ public class Lattices {
 	 * @return A lattice element greater or equal to e
 	 */
 	@SuppressWarnings("unchecked")
-	public static final <L extends LatticeElement> L minimumJoin(L e,
-			Collection<L> elementSet) {
+	public static final <L extends LatticeElement> L minimumJoin(L e, Collection<L> elementSet) {
 		Iterator<L> iter = elementSet.iterator();
 		L result = null;
 		while (iter.hasNext()) {
 			L newElement = (L) (e.join(iter.next()));
-			if (!newElement.equals(e)
-					&& (result == null || newElement.lessOrEqual(result)))
+			if (!newElement.equals(e) && (result == null || newElement.lessOrEqual(result)))
 				result = newElement;
 		}
 		assert (result != null); // Will fail if e is already larger than every

@@ -253,8 +253,7 @@ public class ConcreteRegisterPartList {
 	public boolean setRegVal(String dest, long value) {
 		// TODO Auto-generated method stub
 		long x = value;
-		if (dest.contains("si") || dest.contains("di") || dest.contains("sp")
-				|| dest.contains("bp")) {
+		if (dest.contains("si") || dest.contains("di") || dest.contains("sp") || dest.contains("bp")) {
 			x = (long) (value % Math.pow(2, 16));
 		}
 
@@ -414,13 +413,10 @@ public class ConcreteRegisterPartList {
 		long r = val;
 		if (r < 0)
 			r += Math.pow(2, 32);
-		if (dest.contains("al") || dest.contains("bl") || dest.contains("cl")
-				|| dest.contains("dl") || dest.contains("ah")
-				|| dest.contains("bh") || dest.contains("ch")
-				|| dest.contains("dh"))
+		if (dest.contains("al") || dest.contains("bl") || dest.contains("cl") || dest.contains("dl")
+				|| dest.contains("ah") || dest.contains("bh") || dest.contains("ch") || dest.contains("dh"))
 			r = (long) (r % Math.pow(2, 8));
-		else if (dest.equals("%ax") || dest.equals("%bx") || dest.equals("%cx")
-				|| dest.equals("%dx"))
+		else if (dest.equals("%ax") || dest.equals("%bx") || dest.equals("%cx") || dest.equals("%dx"))
 			r = (long) (r % Math.pow(2, 16));
 		return r;
 	}

@@ -18,8 +18,7 @@ public class APIHandler {
 		return 0;
 	}
 
-	public static long getModuleFileNameA(long hModule, long lpFilename,
-			long nSize, Program program) {
+	public static long getModuleFileNameA(long hModule, long lpFilename, long nSize, Program program) {
 		// TODO Auto-generated method stub
 		return nSize;
 	}

@@ -18,7 +18,7 @@ public class VirtualMemory {
 		this.typeAllo = typeAllo;
 		this.typeProtec = typeProtec;
 	}
-	
+
 	// PHONG: change here
 	public VirtualMemory(long baseaddress, long address, long size, long typeAllo, long typeProtec) {
 		super();

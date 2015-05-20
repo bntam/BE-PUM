@@ -57,7 +57,7 @@ public class BlockInput extends User32API {
 			long t1 = ((LongValue) x1).getValue();
 
 			int originalError = Kernel32.INSTANCE.GetLastError();
-			
+
 			BOOL fBlockIt = new BOOL(t1);
 			BOOL ret = User32DLL.INSTANCE.BlockInput(fBlockIt);
 

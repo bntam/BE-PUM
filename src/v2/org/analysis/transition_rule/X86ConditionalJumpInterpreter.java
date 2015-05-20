@@ -14,14 +14,13 @@ import v2.org.analysis.value.*;
 import java.util.List;
 
 public class X86ConditionalJumpInterpreter {
-	public BPState execute(X86CondJmpInstruction ins, BPPath path,
-			List<BPPath> pathList, X86TransitionRule rule) {
+	public BPState execute(X86CondJmpInstruction ins, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void execute(X86CondJmpInstruction inst, BPPath path,
-			List<BPPath> pathList, boolean condition, X86TransitionRule rule) {
+	public void execute(X86CondJmpInstruction inst, BPPath path, List<BPPath> pathList, boolean condition,
+			X86TransitionRule rule) {
 		Formulas formulas = path.getPathCondition();
 		BPState curState = path.getCurrentState();
 		Environment env = curState.getEnvironement();
@@ -41,8 +40,7 @@ public class X86ConditionalJumpInterpreter {
 			// Dang xu li, chua hoan hao
 			// Se check sau voi 1 so truong hop cu the
 			Program.getProgram().setTechnique("Encrypt/Decrypt-May");
-			Program.getProgram().setDetailTechnique(
-					"Encrypt/Decrypt-May:" + curState.getLocation() + " ");
+			Program.getProgram().setDetailTechnique("Encrypt/Decrypt-May:" + curState.getLocation() + " ");
 			env.getRegister().sub("%ecx", new LongValue(1));
 			Value ecx = env.getRegister().getRegisterValue("%ecx");
 
@@ -57,8 +55,7 @@ public class X86ConditionalJumpInterpreter {
 						curState.setFeasiblePath(false);
 					}
 				} else
-					formulas.add((new Formula(ecx, new LongValue(0), "=="))
-							.evaluate());
+					formulas.add((new Formula(ecx, new LongValue(0), "==")).evaluate());
 			} else {
 				if (ecx instanceof LongValue) {
 					long e = ((LongValue) ecx).getValue();
@@ -73,8 +70,7 @@ public class X86ConditionalJumpInterpreter {
 						curState.setFeasiblePath(false);
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"==")).evaluate();
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "==")).evaluate();
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			}
@@ -82,15 +78,14 @@ public class X86ConditionalJumpInterpreter {
 			// Dang xu li, chua hoan hao
 			// Se check sau voi 1 so truong hop cu the
 			Program.getProgram().setTechnique("Encrypt/Decrypt-May");
-			Program.getProgram().setDetailTechnique(
-					"Encrypt/Decrypt-May:" + curState.getLocation() + " ");
+			Program.getProgram().setDetailTechnique("Encrypt/Decrypt-May:" + curState.getLocation() + " ");
 
 			Value ecx = env.getRegister().getRegisterValue("%ecx");
 			Value zf = env.getFlag().getZFlag();
 			if (reverseCond) {
 				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
 					long e = ((LongValue) ecx).getValue();
-					boolean z = ((BooleanValue)zf).getValue();
+					boolean z = ((BooleanValue) zf).getValue();
 
 					if (e == 0 || !z)
 						// System.out.println("Loop Right")
@@ -99,17 +94,14 @@ public class X86ConditionalJumpInterpreter {
 						curState.setFeasiblePath(false);
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"==")).evaluate();
-					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false),
-							"==")).evaluate();
-					formulas.add((new Formula(l1, l2, "or"))
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "==")).evaluate();
+					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false), "==")).evaluate();
+					formulas.add((new Formula(l1, l2, "or")).evaluate());
 				}
 			} else {
 				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
 					long e = ((LongValue) ecx).getValue();
-					boolean z = ((BooleanValue)zf).getValue();
+					boolean z = ((BooleanValue) zf).getValue();
 
 					if (e != 0 && z) {
 						// System.out.println("Loop Right")
@@ -121,9 +113,8 @@ public class X86ConditionalJumpInterpreter {
 						curState.setFeasiblePath(false);
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"!=")).evaluate();
-					//Value l2 = new HybridBooleanValue(l1, "not", null);
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "!=")).evaluate();
+					// Value l2 = new HybridBooleanValue(l1, "not", null);
 					formulas.add((new Formula(l1, zf, "and")).evaluate());
 				}
 			}
@@ -132,15 +123,14 @@ public class X86ConditionalJumpInterpreter {
 			// Dang xu li, chua hoan hao
 			// Se check sau voi 1 so truong hop cu the
 			Program.getProgram().setTechnique("Encrypt/Decrypt-May");
-			Program.getProgram().setDetailTechnique(
-					"Encrypt/Decrypt-May:" + curState.getLocation() + " ");
+			Program.getProgram().setDetailTechnique("Encrypt/Decrypt-May:" + curState.getLocation() + " ");
 
 			Value ecx = env.getRegister().getRegisterValue("%ecx");
 			Value zf = env.getFlag().getZFlag();
 			if (reverseCond) {
 				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
 					long e = ((LongValue) ecx).getValue();
-					boolean z = ((BooleanValue)zf).getValue();
+					boolean z = ((BooleanValue) zf).getValue();
 
 					if (e == 0 || z)
 						// System.out.println("Loop Right")
@@ -149,16 +139,14 @@ public class X86ConditionalJumpInterpreter {
 						curState.setFeasiblePath(false);
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"==")).evaluate();
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "==")).evaluate();
 
-					formulas.add((new Formula(l1, zf, "or"))
-							.evaluate());
+					formulas.add((new Formula(l1, zf, "or")).evaluate());
 				}
 			} else {
 				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
 					long e = ((LongValue) ecx).getValue();
-					boolean z = ((BooleanValue)zf).getValue();
+					boolean z = ((BooleanValue) zf).getValue();
 
 					if (e != 0 && !z) {
 						// System.out.println("Loop Right")
@@ -170,10 +158,8 @@ public class X86ConditionalJumpInterpreter {
 						curState.setFeasiblePath(false);
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"!=")).evaluate();
-					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false),
-							"==")).evaluate();
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "!=")).evaluate();
+					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false), "==")).evaluate();
 					formulas.add((new Formula(l1, l2, "and")).evaluate());
 				}
 			}
@@ -182,18 +168,14 @@ public class X86ConditionalJumpInterpreter {
 			// if
 			// ((CF) = 0) or ((ZF) = 0)
 			// Not finished
-			Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==",
-					new BooleanValue(0))).evaluate();
-			Value l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==",
-					new BooleanValue(0))).evaluate();
+			Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==", new BooleanValue(0))).evaluate();
+			Value l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==", new BooleanValue(0))).evaluate();
 
 			if (reverseCond) {
 				// Exp l3 = new OtherBooleanValue(l1, l2, "or");
 				// formulas.add(new Formula(l3, "not"));
-				l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==",
-						new BooleanValue(1))).evaluate();
-				l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==",
-						new BooleanValue(1))).evaluate();
+				l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==", new BooleanValue(1))).evaluate();
+				l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==", new BooleanValue(1))).evaluate();
 				// Exp l3 = new OtherBooleanValue(l1, l2, "and");
 				// formulas.add(new Formula(l1, l2, "or"));
 
@@ -207,8 +189,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((CF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -222,15 +203,12 @@ public class X86ConditionalJumpInterpreter {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(0), "=="))
-							.evaluate();
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(0), "==")).evaluate();
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -243,8 +221,7 @@ public class X86ConditionalJumpInterpreter {
 						// System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 				// formulas.add(new Formula(env.getFlag().getzFlag(), new
 				// ConstantBooleanValue(0), "=="));
@@ -254,8 +231,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((CF) = 1)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -267,15 +243,12 @@ public class X86ConditionalJumpInterpreter {
 					}// else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (!z) {
 						curState.setFeasiblePath(false);
 						// System.out.println("Debug");
@@ -285,25 +258,20 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 		} else if (instName.equals("jbe") || instName.equals("jna")) {
 			// if
 			// ((CF) = 1) or ((ZF) = 1)
 			// Not finished
-			Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==",
-					new BooleanValue(1)).evaluate());
-			Value l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==",
-					new BooleanValue(1)).evaluate());
+			Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==", new BooleanValue(1)).evaluate());
+			Value l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==", new BooleanValue(1)).evaluate());
 
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue
 						&& env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
-					boolean c = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
+					boolean c = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (z || c) {
 						curState.setFeasiblePath(false);
 						// System.out.println("Debug");
@@ -316,10 +284,8 @@ public class X86ConditionalJumpInterpreter {
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue
 						&& env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
-					boolean c = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
+					boolean c = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (!(z || c)) {
 						curState.setFeasiblePath(false);
 						// System.out.println("Debug");
@@ -338,23 +304,19 @@ public class X86ConditionalJumpInterpreter {
 			// ((CF) = 1)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (z) {
 						curState.setFeasiblePath(false);
 						// System.out.println("Debug");
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (!z) {
 						curState.setFeasiblePath(false);
 						// System.out.println("Debug");
@@ -364,16 +326,14 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 		} else if (instName.equals("jcxz")) {
 			// if
 			// ((CF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (!z) {
 						curState.setFeasiblePath(false);
 						// System.out.println("Debug");
@@ -381,15 +341,12 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (z) {
 						curState.setFeasiblePath(false);
 						// System.out.println("Debug");
@@ -397,8 +354,7 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 			}
 		} else if (instName.equals("je") || instName.equals("jz")) {
@@ -440,8 +396,7 @@ public class X86ConditionalJumpInterpreter {
 
 			if (reverseCond) {
 				if (env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -461,13 +416,11 @@ public class X86ConditionalJumpInterpreter {
 					 * BooleanValue(1), "=="); formulas.add(new Formula(l1,
 					 * "not"));
 					 */
-					formulas.add((new Formula(env.getFlag().getZFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getZFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -483,16 +436,13 @@ public class X86ConditionalJumpInterpreter {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getZFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getZFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 		} else if (instName.equals("jg") || instName.equals("jnle")) {
 			// if
 			// ((SF) = (OF)) and ((ZF) = 0)
-			Value l1 = (new HybridBooleanValue(env.getFlag().getZFlag(),
-					new BooleanValue(0), "==").evaluate());
-			Value l2 = (new HybridBooleanValue(env.getFlag().getSFlag(), env
-					.getFlag().getOFlag(), "==").evaluate());
+			Value l1 = (new HybridBooleanValue(env.getFlag().getZFlag(), new BooleanValue(0), "==").evaluate());
+			Value l2 = (new HybridBooleanValue(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "==").evaluate());
 
 			if (reverseCond) {
 				Value l3 = (new HybridBooleanValue(l1, l2, "and").evaluate());
@@ -509,24 +459,20 @@ public class X86ConditionalJumpInterpreter {
 			// (SF) = (OF)
 
 			if (reverseCond) {
-				Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(),
-						env.getFlag().getOFlag(), "==").evaluate());
+				Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "==").evaluate());
 				formulas.add((new Formula(l1, "not")).evaluate());
 			} else
-				formulas.add((new Formula(env.getFlag().getSFlag(), env
-						.getFlag().getOFlag(), "==")).evaluate());
+				formulas.add((new Formula(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "==")).evaluate());
 		} else if (instName.equals("jl") || instName.equals("jnge")) {
 			// if
 			// (SF) ≠ (OF)
 			// formulas.add(new Formula(env.getFlag().getsFlag(),
 			// env.getFlag().getoFlag(), "!="));
 			if (reverseCond) {
-				Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(),
-						env.getFlag().getOFlag(), "!=").evaluate());
+				Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "!=").evaluate());
 				formulas.add((new Formula(l1, "not")).evaluate());
 			} else
-				formulas.add((new Formula(env.getFlag().getSFlag(), env
-						.getFlag().getOFlag(), "!=")).evaluate());
+				formulas.add((new Formula(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "!=")).evaluate());
 		} else if (instName.equals("jle") || instName.equals("jng")) {
 			// if
 			// ((SF) ≠ (OF)) or ((ZF) = 1)
@@ -536,8 +482,7 @@ public class X86ConditionalJumpInterpreter {
 			// OtherExp l1 = new OtherExp(env.getFlag().getzFlag(), new
 			// ConstantBooleanValue(1), "=");
 			Value l1 = env.getFlag().getZFlag();
-			Value l2 = (new HybridBooleanValue(env.getFlag().getSFlag(), env
-					.getFlag().getOFlag(), "xor")).evaluate();
+			Value l2 = (new HybridBooleanValue(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "xor")).evaluate();
 			// OtherExp l3 = new OtherExp(l2, new ConstantLongExp(0), "!=");
 
 			if (reverseCond) {
@@ -561,8 +506,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((CF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -574,15 +518,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -594,15 +535,13 @@ public class X86ConditionalJumpInterpreter {
 					}// else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 			}
 		} else if (instName.equals("jne") || instName.equals("jnz")) {
 			if (reverseCond) {
 				if (env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -625,15 +564,12 @@ public class X86ConditionalJumpInterpreter {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getZFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getZFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -647,8 +583,7 @@ public class X86ConditionalJumpInterpreter {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getZFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getZFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 				// formulas.add(new Formula(env.getFlag().getzFlag(), new
 				// ConstantBooleanValue(0), "=="));
@@ -658,8 +593,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((OF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getOFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getOFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getOFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -671,15 +605,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getOFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getOFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getOFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getOFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getOFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -691,8 +622,7 @@ public class X86ConditionalJumpInterpreter {
 					}// else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getOFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getOFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 				// formulas.add(new Formula(env.getFlag().getzFlag(), new
 				// ConstantBooleanValue(0), "=="));
@@ -711,8 +641,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((SF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getSFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getSFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getSFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -724,15 +653,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getSFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getSFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getSFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getSFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -744,8 +670,7 @@ public class X86ConditionalJumpInterpreter {
 					}// else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getSFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getSFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 				// formulas.add(new Formula(env.getFlag().getzFlag(), new
 				// ConstantBooleanValue(0), "=="));
@@ -755,8 +680,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((PF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getPFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getPFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getPFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -768,15 +692,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getPFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getPFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getPFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getPFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getPFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -788,8 +709,7 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getPFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getPFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 			}
 		} else if (instName.equals("jo")) {
@@ -797,8 +717,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((OF) = 1)
 			if (reverseCond) {
 				if (env.getFlag().getOFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getOFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getOFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -810,15 +729,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getOFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getOFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getOFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getOFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getOFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -832,8 +748,7 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getOFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getOFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -849,8 +764,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((PF) = 1)
 			if (reverseCond) {
 				if (env.getFlag().getPFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getPFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getPFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -862,15 +776,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getPFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getPFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getPFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getPFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getPFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -884,8 +795,7 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getPFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getPFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -902,8 +812,7 @@ public class X86ConditionalJumpInterpreter {
 			// var.add("sFlag", 0);
 			if (reverseCond) {
 				if (env.getFlag().getSFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getSFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getSFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -915,15 +824,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getSFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getSFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getSFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getSFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -936,8 +842,7 @@ public class X86ConditionalJumpInterpreter {
 						// this.curState.setFeasiblePath(false);
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getSFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getSFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -967,9 +872,8 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(env.getRegister()
-							.getRegisterValue("ecx"), new LongValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getRegister().getRegisterValue("ecx"), new LongValue(0),
+							"==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
@@ -985,8 +889,7 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getRegister()
-							.getRegisterValue("ecx"), new LongValue(0), "=="))
+					formulas.add((new Formula(env.getRegister().getRegisterValue("ecx"), new LongValue(0), "=="))
 							.evaluate());
 			}
 		}
@@ -994,9 +897,7 @@ public class X86ConditionalJumpInterpreter {
 		if (path.getLoopHandle().isCheck()
 		// && path.getLoopHandle().isStop()
 		)
-			path.getLoopHandle().setStop(
-					path.getLoopHandle()
-							.checkFormulas(inst.getName(), curState));
+			path.getLoopHandle().setStop(path.getLoopHandle().checkFormulas(inst.getName(), curState));
 
 		if (curState.checkFeasiblePath())
 			curState.setFeasiblePath(rule.checkZ3(formulas));
@@ -1005,8 +906,7 @@ public class X86ConditionalJumpInterpreter {
 		// curState.setFeasiblePath(true);
 
 		if (curState.checkFeasiblePath()) {
-			BPVertex dest = new BPVertex(curState.getLocation(),
-					curState.getInstruction());
+			BPVertex dest = new BPVertex(curState.getLocation(), curState.getInstruction());
 			dest = cfg.insertVertex(dest);
 			BPEdge edge = new BPEdge(src, dest);
 			cfg.insertEdge(edge);
@@ -1014,16 +914,16 @@ public class X86ConditionalJumpInterpreter {
 		// return curState;
 	}
 
-	public boolean execute(X86CondJmpInstruction inst, Formulas formulas, BPPath path,
-			boolean condition, X86TransitionRule rule) {
-		//Formulas formulas = path.getPathCondition();
+	public boolean execute(X86CondJmpInstruction inst, Formulas formulas, BPPath path, boolean condition,
+			X86TransitionRule rule) {
+		// Formulas formulas = path.getPathCondition();
 		BPState curState = path.getCurrentState();
 		Environment env = curState.getEnvironement();
-						
+
 		boolean reverseCond = !condition;
 		String instName = inst.getName();
 		boolean isFeasible = true;
-		
+
 		// structure: create new work associated with condition-false case
 		// jump to condition-true case
 		// add state condition into each trace
@@ -1033,31 +933,29 @@ public class X86ConditionalJumpInterpreter {
 			// Dang xu li, chua hoan hao
 			// Se check sau voi 1 so truong hop cu the
 			Program.getProgram().setTechnique("Encrypt/Decrypt-May");
-			Program.getProgram().setDetailTechnique(
-					"Encrypt/Decrypt-May:" + curState.getLocation() + " ");
-			//env.getRegister().sub("%ecx", new LongValue(1));
+			Program.getProgram().setDetailTechnique("Encrypt/Decrypt-May:" + curState.getLocation() + " ");
+			// env.getRegister().sub("%ecx", new LongValue(1));
 			Value ecx = env.getRegister().getRegisterValue("%ecx");
 
 			if (reverseCond) {
 				if (ecx instanceof LongValue) {
 					long e = ((LongValue) ecx).getValue();
-					
+
 					if (e <= 0)
 						// System.out.println("Loop Right")
 						;
 					else {
-						//curState.setFeasiblePath(false);
+						// curState.setFeasiblePath(false);
 						isFeasible = false;
 					}
 				} else {
-					//ecx = ecx.subFunction(new LongValue(1));
-					formulas.add((new Formula(ecx, new LongValue(0), "=="))
-							.evaluate());
+					// ecx = ecx.subFunction(new LongValue(1));
+					formulas.add((new Formula(ecx, new LongValue(0), "==")).evaluate());
 				}
 			} else {
 				if (ecx instanceof LongValue) {
 					long e = ((LongValue) ecx).getValue();
-					
+
 					if (e > 0) {
 						// System.out.println("Loop Right")
 						// curState.setFeasiblePath(true);
@@ -1065,13 +963,12 @@ public class X86ConditionalJumpInterpreter {
 						;
 					} else {
 						// System.out.println("Debug Loop");
-						//curState.setFeasiblePath(false);
+						// curState.setFeasiblePath(false);
 						isFeasible = false;
 					}
 				} else {
-					//ecx = ecx.subFunction(new LongValue(1));
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"==")).evaluate();
+					// ecx = ecx.subFunction(new LongValue(1));
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "==")).evaluate();
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			}
@@ -1079,15 +976,14 @@ public class X86ConditionalJumpInterpreter {
 			// Dang xu li, chua hoan hao
 			// Se check sau voi 1 so truong hop cu the
 			Program.getProgram().setTechnique("Encrypt/Decrypt-May");
-			Program.getProgram().setDetailTechnique(
-					"Encrypt/Decrypt-May:" + curState.getLocation() + " ");
+			Program.getProgram().setDetailTechnique("Encrypt/Decrypt-May:" + curState.getLocation() + " ");
 
 			Value ecx = env.getRegister().getRegisterValue("%ecx");
 			Value zf = env.getFlag().getZFlag();
 			if (reverseCond) {
 				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
 					long e = ((LongValue) ecx).getValue();
-					boolean z = ((BooleanValue)zf).getValue();
+					boolean z = ((BooleanValue) zf).getValue();
 
 					if (e == 0 || !z)
 						// System.out.println("Loop Right")
@@ -1097,17 +993,14 @@ public class X86ConditionalJumpInterpreter {
 						isFeasible = false;
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"==")).evaluate();
-					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false),
-							"==")).evaluate();
-					formulas.add((new Formula(l1, l2, "or"))
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "==")).evaluate();
+					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false), "==")).evaluate();
+					formulas.add((new Formula(l1, l2, "or")).evaluate());
 				}
 			} else {
 				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
 					long e = ((LongValue) ecx).getValue();
-					boolean z = ((BooleanValue)zf).getValue();
+					boolean z = ((BooleanValue) zf).getValue();
 
 					if (e != 0 && z) {
 						// System.out.println("Loop Right")
@@ -1120,9 +1013,8 @@ public class X86ConditionalJumpInterpreter {
 						isFeasible = false;
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"!=")).evaluate();
-					//Value l2 = new HybridBooleanValue(l1, "not", null);
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "!=")).evaluate();
+					// Value l2 = new HybridBooleanValue(l1, "not", null);
 					formulas.add((new Formula(l1, zf, "and")).evaluate());
 				}
 			}
@@ -1131,15 +1023,14 @@ public class X86ConditionalJumpInterpreter {
 			// Dang xu li, chua hoan hao
 			// Se check sau voi 1 so truong hop cu the
 			Program.getProgram().setTechnique("Encrypt/Decrypt-May");
-			Program.getProgram().setDetailTechnique(
-					"Encrypt/Decrypt-May:" + curState.getLocation() + " ");
+			Program.getProgram().setDetailTechnique("Encrypt/Decrypt-May:" + curState.getLocation() + " ");
 
 			Value ecx = env.getRegister().getRegisterValue("%ecx");
 			Value zf = env.getFlag().getZFlag();
 			if (reverseCond) {
 				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
 					long e = ((LongValue) ecx).getValue();
-					boolean z = ((BooleanValue)zf).getValue();
+					boolean z = ((BooleanValue) zf).getValue();
 
 					if (e == 0 || z)
 						// System.out.println("Loop Right")
@@ -1149,16 +1040,14 @@ public class X86ConditionalJumpInterpreter {
 						isFeasible = false;
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"==")).evaluate();
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "==")).evaluate();
 
-					formulas.add((new Formula(l1, zf, "or"))
-							.evaluate());
+					formulas.add((new Formula(l1, zf, "or")).evaluate());
 				}
 			} else {
 				if (ecx instanceof LongValue && zf instanceof BooleanValue) {
 					long e = ((LongValue) ecx).getValue();
-					boolean z = ((BooleanValue)zf).getValue();
+					boolean z = ((BooleanValue) zf).getValue();
 
 					if (e != 0 && !z) {
 						// System.out.println("Loop Right")
@@ -1171,10 +1060,8 @@ public class X86ConditionalJumpInterpreter {
 						isFeasible = false;
 					}
 				} else {
-					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0),
-							"!=")).evaluate();
-					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false),
-							"==")).evaluate();
+					Value l1 = (new HybridBooleanValue(ecx, new LongValue(0), "!=")).evaluate();
+					Value l2 = (new HybridBooleanValue(zf, new BooleanValue(false), "==")).evaluate();
 					formulas.add((new Formula(l1, l2, "and")).evaluate());
 				}
 			}
@@ -1183,18 +1070,14 @@ public class X86ConditionalJumpInterpreter {
 			// if
 			// ((CF) = 0) or ((ZF) = 0)
 			// Not finished
-			Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==",
-					new BooleanValue(0))).evaluate();
-			Value l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==",
-					new BooleanValue(0))).evaluate();
+			Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==", new BooleanValue(0))).evaluate();
+			Value l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==", new BooleanValue(0))).evaluate();
 
 			if (reverseCond) {
 				// Exp l3 = new OtherBooleanValue(l1, l2, "or");
 				// formulas.add(new Formula(l3, "not"));
-				l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==",
-						new BooleanValue(1))).evaluate();
-				l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==",
-						new BooleanValue(1))).evaluate();
+				l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==", new BooleanValue(1))).evaluate();
+				l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==", new BooleanValue(1))).evaluate();
 				// Exp l3 = new OtherBooleanValue(l1, l2, "and");
 				// formulas.add(new Formula(l1, l2, "or"));
 
@@ -1208,15 +1091,14 @@ public class X86ConditionalJumpInterpreter {
 			// ((CF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!z) {
-						//curState.setFeasiblePath(false);
+						// curState.setFeasiblePath(false);
 						isFeasible = false;
 						// System.out.println("Debug");
 					} else
@@ -1224,30 +1106,26 @@ public class X86ConditionalJumpInterpreter {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(0), "=="))
-							.evaluate();
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(0), "==")).evaluate();
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						//curState.setFeasiblePath(false);
+						// curState.setFeasiblePath(false);
 						isFeasible = false;
 						// System.out.println("Debug");
 					} // else
 						// System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 				// formulas.add(new Formula(env.getFlag().getzFlag(), new
 				// ConstantBooleanValue(0), "=="));
@@ -1257,8 +1135,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((CF) = 1)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1270,15 +1147,12 @@ public class X86ConditionalJumpInterpreter {
 					}// else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (!z) {
 						isFeasible = false;
 						// System.out.println("Debug");
@@ -1288,25 +1162,20 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 		} else if (instName.equals("jbe") || instName.equals("jna")) {
 			// if
 			// ((CF) = 1) or ((ZF) = 1)
 			// Not finished
-			Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==",
-					new BooleanValue(1)).evaluate());
-			Value l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==",
-					new BooleanValue(1)).evaluate());
+			Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), "==", new BooleanValue(1)).evaluate());
+			Value l2 = (new HybridBooleanValue(env.getFlag().getZFlag(), "==", new BooleanValue(1)).evaluate());
 
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue
 						&& env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
-					boolean c = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
+					boolean c = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (z || c) {
 						isFeasible = false;
 						// System.out.println("Debug");
@@ -1319,10 +1188,8 @@ public class X86ConditionalJumpInterpreter {
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue
 						&& env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
-					boolean c = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
+					boolean c = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (!(z || c)) {
 						isFeasible = false;
 						// System.out.println("Debug");
@@ -1341,23 +1208,19 @@ public class X86ConditionalJumpInterpreter {
 			// ((CF) = 1)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (z) {
 						isFeasible = false;
 						// System.out.println("Debug");
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (!z) {
 						isFeasible = false;
 						// System.out.println("Debug");
@@ -1367,16 +1230,14 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 		} else if (instName.equals("jcxz")) {
 			// if
 			// ((CF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (!z) {
 						isFeasible = false;
 						// System.out.println("Debug");
@@ -1384,15 +1245,12 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					if (z) {
 						isFeasible = false;
 						// System.out.println("Debug");
@@ -1400,8 +1258,7 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 			}
 		} else if (instName.equals("je") || instName.equals("jz")) {
@@ -1443,8 +1300,7 @@ public class X86ConditionalJumpInterpreter {
 
 			if (reverseCond) {
 				if (env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1464,13 +1320,11 @@ public class X86ConditionalJumpInterpreter {
 					 * BooleanValue(1), "=="); formulas.add(new Formula(l1,
 					 * "not"));
 					 */
-					formulas.add((new Formula(env.getFlag().getZFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getZFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1486,16 +1340,13 @@ public class X86ConditionalJumpInterpreter {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getZFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getZFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 		} else if (instName.equals("jg") || instName.equals("jnle")) {
 			// if
 			// ((SF) = (OF)) and ((ZF) = 0)
-			Value l1 = (new HybridBooleanValue(env.getFlag().getZFlag(),
-					new BooleanValue(0), "==").evaluate());
-			Value l2 = (new HybridBooleanValue(env.getFlag().getSFlag(), env
-					.getFlag().getOFlag(), "==").evaluate());
+			Value l1 = (new HybridBooleanValue(env.getFlag().getZFlag(), new BooleanValue(0), "==").evaluate());
+			Value l2 = (new HybridBooleanValue(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "==").evaluate());
 
 			if (reverseCond) {
 				Value l3 = (new HybridBooleanValue(l1, l2, "and").evaluate());
@@ -1512,24 +1363,20 @@ public class X86ConditionalJumpInterpreter {
 			// (SF) = (OF)
 
 			if (reverseCond) {
-				Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(),
-						env.getFlag().getOFlag(), "==").evaluate());
+				Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "==").evaluate());
 				formulas.add((new Formula(l1, "not")).evaluate());
 			} else
-				formulas.add((new Formula(env.getFlag().getSFlag(), env
-						.getFlag().getOFlag(), "==")).evaluate());
+				formulas.add((new Formula(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "==")).evaluate());
 		} else if (instName.equals("jl") || instName.equals("jnge")) {
 			// if
 			// (SF) ≠ (OF)
 			// formulas.add(new Formula(env.getFlag().getsFlag(),
 			// env.getFlag().getoFlag(), "!="));
 			if (reverseCond) {
-				Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(),
-						env.getFlag().getOFlag(), "!=").evaluate());
+				Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "!=").evaluate());
 				formulas.add((new Formula(l1, "not")).evaluate());
 			} else
-				formulas.add((new Formula(env.getFlag().getSFlag(), env
-						.getFlag().getOFlag(), "!=")).evaluate());
+				formulas.add((new Formula(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "!=")).evaluate());
 		} else if (instName.equals("jle") || instName.equals("jng")) {
 			// if
 			// ((SF) ≠ (OF)) or ((ZF) = 1)
@@ -1539,8 +1386,7 @@ public class X86ConditionalJumpInterpreter {
 			// OtherExp l1 = new OtherExp(env.getFlag().getzFlag(), new
 			// ConstantBooleanValue(1), "=");
 			Value l1 = env.getFlag().getZFlag();
-			Value l2 = (new HybridBooleanValue(env.getFlag().getSFlag(), env
-					.getFlag().getOFlag(), "xor")).evaluate();
+			Value l2 = (new HybridBooleanValue(env.getFlag().getSFlag(), env.getFlag().getOFlag(), "xor")).evaluate();
 			// OtherExp l3 = new OtherExp(l2, new ConstantLongExp(0), "!=");
 
 			if (reverseCond) {
@@ -1564,8 +1410,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((CF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1577,15 +1422,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getCFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getCFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getCFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getCFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getCFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1597,15 +1439,13 @@ public class X86ConditionalJumpInterpreter {
 					}// else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getCFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getCFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 			}
 		} else if (instName.equals("jne") || instName.equals("jnz")) {
 			if (reverseCond) {
 				if (env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1628,15 +1468,12 @@ public class X86ConditionalJumpInterpreter {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getZFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getZFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getZFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getZFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getZFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1650,8 +1487,7 @@ public class X86ConditionalJumpInterpreter {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getZFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getZFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 				// formulas.add(new Formula(env.getFlag().getzFlag(), new
 				// ConstantBooleanValue(0), "=="));
@@ -1661,8 +1497,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((OF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getOFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getOFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getOFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1674,15 +1509,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getOFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getOFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getOFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getOFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getOFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1694,8 +1526,7 @@ public class X86ConditionalJumpInterpreter {
 					}// else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getOFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getOFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 				// formulas.add(new Formula(env.getFlag().getzFlag(), new
 				// ConstantBooleanValue(0), "=="));
@@ -1714,8 +1545,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((SF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getSFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getSFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getSFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1727,15 +1557,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getSFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getSFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getSFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getSFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1747,8 +1574,7 @@ public class X86ConditionalJumpInterpreter {
 					}// else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getSFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getSFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 				// formulas.add(new Formula(env.getFlag().getzFlag(), new
 				// ConstantBooleanValue(0), "=="));
@@ -1758,8 +1584,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((PF) = 0)
 			if (reverseCond) {
 				if (env.getFlag().getPFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getPFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getPFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1771,15 +1596,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getPFlag(), new BooleanValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getPFlag(), new BooleanValue(0), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getPFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getPFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getPFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1791,8 +1613,7 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					formulas.add((new Formula(env.getFlag().getPFlag(),
-							new BooleanValue(0), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getPFlag(), new BooleanValue(0), "==")).evaluate());
 				}
 			}
 		} else if (instName.equals("jo")) {
@@ -1800,8 +1621,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((OF) = 1)
 			if (reverseCond) {
 				if (env.getFlag().getOFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getOFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getOFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1813,15 +1633,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getOFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getOFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getOFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getOFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getOFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1835,8 +1652,7 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getOFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getOFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -1852,8 +1668,7 @@ public class X86ConditionalJumpInterpreter {
 			// ((PF) = 1)
 			if (reverseCond) {
 				if (env.getFlag().getPFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getPFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getPFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1865,15 +1680,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getPFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getPFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getPFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getPFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getPFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1887,8 +1699,7 @@ public class X86ConditionalJumpInterpreter {
 
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getPFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getPFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -1905,8 +1716,7 @@ public class X86ConditionalJumpInterpreter {
 			// var.add("sFlag", 0);
 			if (reverseCond) {
 				if (env.getFlag().getSFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getSFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getSFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1918,15 +1728,12 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(
-							env.getFlag().getSFlag(), new BooleanValue(1), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getFlag().getSFlag(), new BooleanValue(1), "==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
 				if (env.getFlag().getSFlag() instanceof BooleanValue) {
-					boolean z = ((BooleanValue) env.getFlag().getSFlag())
-							.getValue();
+					boolean z = ((BooleanValue) env.getFlag().getSFlag()).getValue();
 					// Truong hop sai
 					// Je khong dung, nghia la khong the thuc hien lenh nhay
 					// duoc, do dieu kien dang bi sai
@@ -1939,8 +1746,7 @@ public class X86ConditionalJumpInterpreter {
 						// this.curState.setFeasiblePath(false);
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getFlag().getSFlag(),
-							new BooleanValue(1), "==")).evaluate());
+					formulas.add((new Formula(env.getFlag().getSFlag(), new BooleanValue(1), "==")).evaluate());
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -1970,9 +1776,8 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = (new HybridBooleanValue(env.getRegister()
-							.getRegisterValue("ecx"), new LongValue(0), "==")
-							.evaluate());
+					Value l1 = (new HybridBooleanValue(env.getRegister().getRegisterValue("ecx"), new LongValue(0),
+							"==").evaluate());
 					formulas.add((new Formula(l1, "not")).evaluate());
 				}
 			} else {
@@ -1988,15 +1793,14 @@ public class X86ConditionalJumpInterpreter {
 					} // else System.out.println("Right");
 						// Truong hop dung, khong lam gi ca
 				} else
-					formulas.add((new Formula(env.getRegister()
-							.getRegisterValue("ecx"), new LongValue(0), "=="))
+					formulas.add((new Formula(env.getRegister().getRegisterValue("ecx"), new LongValue(0), "=="))
 							.evaluate());
 			}
-		}		
+		}
 
 		if (isFeasible)
 			isFeasible = rule.checkZ3(formulas);
-		//rule.generateNextInstruction(inst, path, pathList, condition);
+		// rule.generateNextInstruction(inst, path, pathList, condition);
 		// Remove later
 		// curState.setFeasiblePath(true);
 

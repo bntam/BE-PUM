@@ -56,7 +56,7 @@ public class MapViewOfFile extends Kernel32API {
 	 * 
 	 */
 	public MapViewOfFile() {
-		
+
 	}
 
 	@Override

@@ -26,8 +26,7 @@ import org.jakstab.util.Logger;
 public class IntervalPrecision implements Precision {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(IntervalPrecision.class);
+	private static final Logger logger = Logger.getLogger(IntervalPrecision.class);
 
 	private int mergeCount = 0;
 

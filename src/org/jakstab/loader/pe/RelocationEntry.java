@@ -28,8 +28,7 @@ import java.io.IOException;
 @SuppressWarnings("unused")
 class RelocationEntry {
 
-	private static final Logger logger = Logger
-			.getLogger(RelocationEntry.class);
+	private static final Logger logger = Logger.getLogger(RelocationEntry.class);
 
 	private static final int IMAGE_REL_I386_ABSOLUTE = 0x0000; // The relocation
 																// is ignored.

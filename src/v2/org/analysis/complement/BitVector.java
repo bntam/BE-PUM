@@ -51,9 +51,8 @@ public class BitVector {
 		}
 
 		// YenNguyen: API Simulator just use unsigned long value
-		result = (BitVector.isAPIHandle()) 
-				? Convert.convetUnsignedValue(result, num * 8) 
-						: Convert.convertSignedValue(result, num * 8);
+		result = (BitVector.isAPIHandle()) ? Convert.convetUnsignedValue(result, num * 8) : Convert.convertSignedValue(
+				result, num * 8);
 
 		return result;
 	}
@@ -70,9 +69,8 @@ public class BitVector {
 		result |= (b1 & 0xFF);
 
 		// YenNguyen: API Simulator just use unsigned long value
-		result = (BitVector.isAPIHandle()) 
-				? Convert.convetUnsignedValue(result, 32) 
-						: Convert.convertSignedValue(result, 32);
+		result = (BitVector.isAPIHandle()) ? Convert.convetUnsignedValue(result, 32) : Convert.convertSignedValue(
+				result, 32);
 
 		return result;
 	}
@@ -85,9 +83,8 @@ public class BitVector {
 		result |= (b1 & 0xFF);
 
 		// YenNguyen: API Simulator just uses unsigned long value
-		result = (BitVector.isAPIHandle()) 
-				? Convert.convetUnsignedValue(result, 16) 
-						: Convert.convertSignedValue(result, 16);
+		result = (BitVector.isAPIHandle()) ? Convert.convetUnsignedValue(result, 16) : Convert.convertSignedValue(
+				result, 16);
 		return result;
 	}
 
@@ -417,11 +414,13 @@ public class BitVector {
 		return result;
 	}
 
-	public static long extend(long t, int i, int opSize) {
+	public static long extend(long t, int i, int opSize1, int opSize2) {
+		t = Convert.convetUnsignedValue(t, opSize1);
+		
 		if (i == 0)
 			return t;
 		else if (i == 1) {
-			switch (opSize) {
+			switch (opSize2) {
 			case 16:
 				return (long) (t + 255 * Math.pow(2, 8));
 			case 32:

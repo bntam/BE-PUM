@@ -48,7 +48,7 @@ public class GetCurrentThread extends Kernel32API {
 
 		HANDLE handle = Kernel32.INSTANCE.GetCurrentThread();
 		long value = Pointer.nativeValue(handle.getPointer());
-		
+
 		program.generageCFG(program.getAbsolutePathFile() + "_test");
 
 		// Store

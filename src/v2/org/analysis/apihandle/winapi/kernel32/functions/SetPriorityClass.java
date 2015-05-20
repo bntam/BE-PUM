@@ -64,7 +64,7 @@ public class SetPriorityClass extends Kernel32API {
 		if (x1 instanceof LongValue && x2 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
-			
+
 			HANDLE hProcess = new HANDLE(new Pointer(t1));
 			DWORD dwPriorityClass = new DWORD(t2);
 			BOOL ret = Kernel32DLL.INSTANCE.SetPriorityClass(hProcess, dwPriorityClass);

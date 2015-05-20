@@ -25,15 +25,14 @@ import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 /**
- * Sets the physical file size for the specified file to the current
- * position of the file pointer. The physical file size is also referred to
- * as the end of the file. The SetEndOfFile function can be used to truncate
- * or extend a file. To set the logical end of a file, use the
- * SetFileValidData function.
+ * Sets the physical file size for the specified file to the current position of
+ * the file pointer. The physical file size is also referred to as the end of
+ * the file. The SetEndOfFile function can be used to truncate or extend a file.
+ * To set the logical end of a file, use the SetFileValidData function.
  * 
  * @param hFile
  *            : A handle to the file to be extended or truncated.
- *            
+ * 
  * @author Yen Nguyen
  *
  */
@@ -43,7 +42,7 @@ public class SetEndOfFile extends Kernel32API {
 	 * 
 	 */
 	public SetEndOfFile() {
-		
+
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class SetEndOfFile extends Kernel32API {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Register register = env.getRegister();
-		
+
 		// HANDLE hFile handle of file whose EOF is to be set
 		Value x1 = stack.pop();
 

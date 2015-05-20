@@ -37,7 +37,7 @@ import v2.org.analysis.value.Value;
 public class GetLocalTime extends Kernel32API {
 
 	public GetLocalTime() {
-		
+
 	}
 
 	@Override
@@ -48,32 +48,31 @@ public class GetLocalTime extends Kernel32API {
 
 		Value x1 = stack.pop();
 		System.out.println("Argument:" + x1);
-		
+
 		if (x1 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
-			
+
 			SYSTEMTIME lpSystemTime = new SYSTEMTIME();
 			Kernel32.INSTANCE.GetLocalTime(lpSystemTime);
-			
-			/*typedef struct _SYSTEMTIME {
-				  WORD wYear;
-				  WORD wMonth;
-				  WORD wDayOfWeek;
-				  WORD wDay;
-				  WORD wHour;
-				  WORD wMinute;
-				  WORD wSecond;
-				  WORD wMilliseconds;
-				} SYSTEMTIME, *PSYSTEMTIME;*/
-			
+
+			/*
+			 * typedef struct _SYSTEMTIME { WORD wYear; WORD wMonth; WORD
+			 * wDayOfWeek; WORD wDay; WORD wHour; WORD wMinute; WORD wSecond;
+			 * WORD wMilliseconds; } SYSTEMTIME, *PSYSTEMTIME;
+			 */
+
 			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1), new LongValue(lpSystemTime.wYear));
 			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(lpSystemTime.wMonth));
-			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(lpSystemTime.wDayOfWeek));
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(
+					lpSystemTime.wDayOfWeek));
 			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(lpSystemTime.wDay));
 			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(lpSystemTime.wHour));
-			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(lpSystemTime.wMinute));
-			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(lpSystemTime.wSecond));
-			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(lpSystemTime.wMilliseconds));
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2),
+					new LongValue(lpSystemTime.wMinute));
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2),
+					new LongValue(lpSystemTime.wSecond));
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 2), new LongValue(
+					lpSystemTime.wMilliseconds));
 		}
 		return false;
 	}

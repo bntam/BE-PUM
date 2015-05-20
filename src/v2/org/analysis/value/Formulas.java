@@ -90,25 +90,25 @@ public class Formulas {
 	 * public String getVariable() { // TODO Auto-generated method stub return
 	 * "(" + "ebx" + " BitVec[32])"; }
 	 */
-	
+
 	private void insertVariableName() {
 		for (Formula x : this.listFormula)
-			addVariableNames(x.getVariable());		
+			addVariableNames(x.getVariable());
 	}
-	
+
 	private void addVariableNames(List<String> variables) {
 		// TODO Auto-generated method stub
 		if (variables == null)
 			return;
-		
-		for (String t: variables)
+
+		for (String t : variables)
 			addVariableName(t);
 	}
 
 	public String getVariableZ3() {
 		insertVariableName();
 		String result = "";
-		for (String var : variableName) {			
+		for (String var : variableName) {
 			result += "(" + var + " BitVec[32])";
 		}
 
@@ -124,21 +124,21 @@ public class Formulas {
 
 	public boolean isBooleanValue() {
 		// TODO Auto-generated method stub
-		for (Formula f: listFormula) {
+		for (Formula f : listFormula) {
 			if (!f.evaluate().isBoolean())
 				return false;
 		}
-		
+
 		return true;
 	}
 
 	public boolean evaluate() {
 		// TODO Auto-generated method stub
 		boolean ret = true;
-		for (Formula f: listFormula) {
+		for (Formula f : listFormula) {
 			ret &= f.evaluate().getBooleanValue();
 		}
-		
+
 		return ret;
 	}
 }

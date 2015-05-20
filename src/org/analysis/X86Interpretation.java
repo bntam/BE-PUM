@@ -29,8 +29,7 @@ public class X86Interpretation {
 	public static final int MISSING_MEMORY = 1;
 	public static final int MISSING_STACK = 2;
 	private static int halt_status = SUCCESS;
-	private final static Logger logger = Logger
-			.getLogger(X86Interpretation.class);
+	private final static Logger logger = Logger.getLogger(X86Interpretation.class);
 
 	private static long startAddress = 0;
 	private static SymbolicValue returnAddress = null;
@@ -85,8 +84,7 @@ public class X86Interpretation {
 	 *            previous state
 	 * @return symbolic value of next address
 	 */
-	public static SymbolicValue X86ArithmeticInterprete(
-			X86ArithmeticInstruction inst, SymbolicState prevState) {
+	public static SymbolicValue X86ArithmeticInterprete(X86ArithmeticInstruction inst, SymbolicState prevState) {
 		Operand dest = inst.getOperand1();
 		Operand src = inst.getOperand2();
 		SymbolicValue result = null;
@@ -94,22 +92,19 @@ public class X86Interpretation {
 		// second operand
 		if (src != null) {
 			if (src.getClass().getSimpleName().equals("Immediate")) {
-				result = new SymbolicValue(((Immediate) src).getNumber()
-						.intValue());
-			} else if (src.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+				result = new SymbolicValue(((Immediate) src).getNumber().intValue());
+			} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				result = prevState.getMemoryValue((X86MemoryOperand) src);
 				if (result == null) {
 					halt_status = MISSING_MEMORY;
 					memoryAddress = (X86MemoryOperand) src;
-					SymbolicExecution.programTrace.setVisited(startAddress,
-							null, inst.toString(startAddress, symFinder));
+					SymbolicExecution.programTrace.setVisited(startAddress, null,
+							inst.toString(startAddress, symFinder));
 					return null;
 				}
 				result = result.clone();
 			} else if (src.getClass().getSimpleName().equals("X86Register")) {
-				result = prevState.getRegValue(((X86Register) src).toString())
-						.clone();
+				result = prevState.getRegValue(((X86Register) src).toString()).clone();
 			}
 		}
 
@@ -120,8 +115,7 @@ public class X86Interpretation {
 			if (destResult == null) {
 				halt_status = MISSING_MEMORY;
 				memoryAddress = (X86MemoryOperand) dest;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
@@ -140,8 +134,7 @@ public class X86Interpretation {
 			} else {
 				logger.error("Instruction not supported: " + inst.getName());
 				halt_status = FAILED;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 			break;
@@ -152,8 +145,7 @@ public class X86Interpretation {
 			} else {
 				logger.error("Instruction not supported: " + inst.getName());
 				halt_status = FAILED;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 			break;
@@ -167,8 +159,7 @@ public class X86Interpretation {
 			} else {
 				logger.error("Instruction not supported: " + inst.getName());
 				halt_status = FAILED;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 			break;
@@ -179,17 +170,14 @@ public class X86Interpretation {
 			} else {
 				logger.error("Instruction not supported: " + inst.getName());
 				halt_status = FAILED;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 			break;
 		default:
-			logger.error("Arithmetic statement not supported: "
-					+ inst.getName());
+			logger.error("Arithmetic statement not supported: " + inst.getName());
 			halt_status = FAILED;
-			SymbolicExecution.programTrace.setVisited(startAddress, null,
-					inst.toString(startAddress, symFinder));
+			SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 			return null;
 		}
 
@@ -201,8 +189,8 @@ public class X86Interpretation {
 		}
 
 		returnAddress = new SymbolicValue(startAddress + inst.getSize());
-		SymbolicExecution.programTrace.setVisited(startAddress,
-				returnAddress.clone(), inst.toString(startAddress, symFinder));
+		SymbolicExecution.programTrace.setVisited(startAddress, returnAddress.clone(),
+				inst.toString(startAddress, symFinder));
 		// store state for next address
 		SymbolicExecution.preservedState = prevState;
 		// reset compare status
@@ -219,8 +207,7 @@ public class X86Interpretation {
 	 *            previous state
 	 * @return symbolic value of next address
 	 */
-	public static SymbolicValue X86CallInterprete(X86CallInstruction inst,
-			SymbolicState prevState) {
+	public static SymbolicValue X86CallInterprete(X86CallInstruction inst, SymbolicState prevState) {
 		// statement supported: call, lcall + AbsoluteAddress/ RelativeAddress
 		Operand dest = inst.getOperand1();
 		// System.out.println("Instruction: " + inst.getName());
@@ -228,32 +215,25 @@ public class X86Interpretation {
 		// call structure: push call next eip to stack, jump to call address
 		// first operand
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
-			returnAddress = new SymbolicValue(
-					((AbsoluteAddress) dest).getValue());
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
-			returnAddress = new SymbolicValue(
-					((X86PCRelativeAddress) dest)
-							.getEffectiveValue(startAddress));
+			returnAddress = new SymbolicValue(((AbsoluteAddress) dest).getValue());
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
+			returnAddress = new SymbolicValue(((X86PCRelativeAddress) dest).getEffectiveValue(startAddress));
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
-			returnAddress = (prevState.getRegValue(((X86Register) dest)
-					.toString())).clone();
+			returnAddress = (prevState.getRegValue(((X86Register) dest).toString())).clone();
 		} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			returnAddress = (prevState.getMemoryValue((X86MemoryOperand) dest));
 			if (returnAddress == null) {
 				halt_status = MISSING_MEMORY;
 				memoryAddress = (X86MemoryOperand) dest;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 			returnAddress = returnAddress.clone();
 		}
 		// push next eip to stack
-		SymbolicExecution.programTrace.setVisited(startAddress,
-				returnAddress.clone(), inst.toString(startAddress, symFinder));
-		prevState.getStack().push(
-				new SymbolicValue(startAddress + inst.getSize()));
+		SymbolicExecution.programTrace.setVisited(startAddress, returnAddress.clone(),
+				inst.toString(startAddress, symFinder));
+		prevState.getStack().push(new SymbolicValue(startAddress + inst.getSize()));
 		// store state for next address
 		SymbolicExecution.preservedState = prevState;
 		// reset compare status
@@ -270,21 +250,15 @@ public class X86Interpretation {
 	 *            previous state
 	 * @return symbolic value of next address
 	 */
-	public static SymbolicValue X86ConditionalJumpInterprete(
-			X86CondJmpInstruction inst, SymbolicState prevState) {
+	public static SymbolicValue X86ConditionalJumpInterprete(X86CondJmpInstruction inst, SymbolicState prevState) {
 		// conditional jump
 		Operand dest = inst.getOperand1();
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
-			returnAddress = new SymbolicValue(
-					((X86AbsoluteAddress) dest).getValue());
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
-			returnAddress = new SymbolicValue(
-					((X86PCRelativeAddress) dest)
-							.getEffectiveValue(startAddress));
+			returnAddress = new SymbolicValue(((X86AbsoluteAddress) dest).getValue());
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
+			returnAddress = new SymbolicValue(((X86PCRelativeAddress) dest).getEffectiveValue(startAddress));
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
-			returnAddress = prevState.getRegValue(
-					((X86Register) dest).toString()).clone();
+			returnAddress = prevState.getRegValue(((X86Register) dest).toString()).clone();
 		}
 
 		// System.out.println("Instruction: " + inst.getName());
@@ -298,8 +272,7 @@ public class X86Interpretation {
 			if (compareStatus == null) {
 				logger.error("Only accept conditional statement after CMP");
 				halt_status = FAILED;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 		}
@@ -336,15 +309,14 @@ public class X86Interpretation {
 			prevState.setRegValue("%ecx", newDest);
 			// set condition
 			compareStatus = new SymbolicCondition();
-			compareStatus.addCondition(prevState.getRegValue("%ecx").clone(),
-					new SymbolicValue(0), SymbolicCondition.B_OP_UNDEFINED);
+			compareStatus.addCondition(prevState.getRegValue("%ecx").clone(), new SymbolicValue(0),
+					SymbolicCondition.B_OP_UNDEFINED);
 			positiveConnector = SymbolicCondition.B_OP_NOT_EQUAL;
 			negativeConnector = SymbolicCondition.B_OP_EQUAL;
 		} else {
 			logger.error("Unsupported instruction: " + inst.getName());
 			halt_status = FAILED;
-			SymbolicExecution.programTrace.setVisited(startAddress, null,
-					inst.toString(startAddress, symFinder));
+			SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 			return null;
 		}
 
@@ -354,36 +326,32 @@ public class X86Interpretation {
 		if (SymbolicExecution.runningMode == SymbolicExecution.NORMAL_EXECUTION
 				|| SymbolicExecution.runningMode == SymbolicExecution.INVARIANT_POPULATING_EXECUTION) {
 			TraceTracker pgmTrace = SymbolicExecution.cloneTraceMap();
-			pgmTrace.setVisited(startAddress, new SymbolicValue(startAddress
-					+ inst.getSize()), inst.toString(startAddress, symFinder));
+			pgmTrace.setVisited(startAddress, new SymbolicValue(startAddress + inst.getSize()),
+					inst.toString(startAddress, symFinder));
 
-			SymbolicValue negativeAddr = new SymbolicValue(startAddress
-					+ inst.getSize());
+			SymbolicValue negativeAddr = new SymbolicValue(startAddress + inst.getSize());
 
 			SymbolicState clonedState = prevState.clone();
 			clonedState.setCompareStatus(null);
 
-			SymbolicWorkList.addWork(negativeAddr, negativeCond,
-					SymbolicExecution.cloneStateMap(), pgmTrace, clonedState);
+			SymbolicWorkList.addWork(negativeAddr, negativeCond, SymbolicExecution.cloneStateMap(), pgmTrace,
+					clonedState);
 
 			prevState.addCondition(positiveCond);
 			// store state for next address
 			SymbolicExecution.preservedState = prevState;
 			// reset compare status
-			SymbolicExecution.programTrace.setVisited(startAddress,
-					returnAddress.clone(),
+			SymbolicExecution.programTrace.setVisited(startAddress, returnAddress.clone(),
 					inst.toString(startAddress, symFinder));
 			prevState.setCompareStatus(null);
 		} else {
 			// invariant finding mode, trace follows previous trace
-			long nextAddress = SymbolicExecution.loopTrace
-					.getLocationInfo(startAddress).getNextAddress()
+			long nextAddress = SymbolicExecution.loopTrace.getLocationInfo(startAddress).getNextAddress()
 					.calculateExprIntVal().longValue();
 			// positive trace
 			Long positiveNextAddr = returnAddress.calculateExprIntVal();
 
-			if (positiveNextAddr == null
-					|| nextAddress != positiveNextAddr.longValue()) {
+			if (positiveNextAddr == null || nextAddress != positiveNextAddr.longValue()) {
 				// follow negative path
 				prevState.addCondition(negativeCond);
 			} else {
@@ -405,8 +373,7 @@ public class X86Interpretation {
 	 *            previous state
 	 * @return symbolic value of next address
 	 */
-	public static SymbolicValue X86JumpInterprete(X86JmpInstruction inst,
-			SymbolicState prevState) {
+	public static SymbolicValue X86JumpInterprete(X86JmpInstruction inst, SymbolicState prevState) {
 		// statement supported: jump, ljump + AbsoluteAddress/ RelativeAddress
 		Operand dest = inst.getOperand1();
 		// System.out.println("Instruction: " + inst.getName());
@@ -414,31 +381,25 @@ public class X86Interpretation {
 		// jump structure: jump to call address
 		// first operand
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
-			returnAddress = new SymbolicValue(
-					((AbsoluteAddress) dest).getValue());
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
-			returnAddress = new SymbolicValue(
-					((X86PCRelativeAddress) dest)
-							.getEffectiveValue(startAddress));
+			returnAddress = new SymbolicValue(((AbsoluteAddress) dest).getValue());
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
+			returnAddress = new SymbolicValue(((X86PCRelativeAddress) dest).getEffectiveValue(startAddress));
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
-			returnAddress = (prevState.getRegValue(((X86Register) dest)
-					.toString())).clone();
+			returnAddress = (prevState.getRegValue(((X86Register) dest).toString())).clone();
 		} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			returnAddress = prevState.getMemoryValue((X86MemoryOperand) dest);
 			if (returnAddress == null) {
 				halt_status = MISSING_MEMORY;
 				memoryAddress = (X86MemoryOperand) dest;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 			returnAddress = returnAddress.clone();
 		}
 		// store state for next address
 		SymbolicExecution.preservedState = prevState;
-		SymbolicExecution.programTrace.setVisited(startAddress,
-				returnAddress.clone(), inst.toString(startAddress, symFinder));
+		SymbolicExecution.programTrace.setVisited(startAddress, returnAddress.clone(),
+				inst.toString(startAddress, symFinder));
 		// reset compare status
 		prevState.setCompareStatus(null);
 		return returnAddress;
@@ -453,8 +414,7 @@ public class X86Interpretation {
 	 *            previous state
 	 * @return symbolic value of next address
 	 */
-	public static SymbolicValue X86MoveInterprete(X86MoveInstruction inst,
-			SymbolicState prevState) {
+	public static SymbolicValue X86MoveInterprete(X86MoveInstruction inst, SymbolicState prevState) {
 		// conditional move, normal move
 		Operand dest = inst.getOperand1();
 		Operand src = inst.getOperand2();
@@ -463,31 +423,26 @@ public class X86Interpretation {
 		SymbolicValue toMoveVal = null;
 
 		if (src.getClass().getSimpleName().equals("Immediate")) {
-			toMoveVal = new SymbolicValue(((Immediate) src).getNumber()
-					.intValue());
+			toMoveVal = new SymbolicValue(((Immediate) src).getNumber().intValue());
 		} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			toMoveVal = prevState.getMemoryValue((X86MemoryOperand) src);
 			if (toMoveVal == null) {
 				halt_status = MISSING_MEMORY;
 				memoryAddress = (X86MemoryOperand) src;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 			toMoveVal = toMoveVal.clone();
 		} else if (src.getClass().getSimpleName().equals("X86Register")) {
-			toMoveVal = prevState.getRegValue(((X86Register) src).toString())
-					.clone();
+			toMoveVal = prevState.getRegValue(((X86Register) src).toString()).clone();
 		}
 
 		if (inst.getName().startsWith("mov")) {
 			// normal move
 			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				prevState.getMemoryValues()
-						.put((MemoryOperand) dest, toMoveVal);
+				prevState.getMemoryValues().put((MemoryOperand) dest, toMoveVal);
 			} else if (dest.getClass().getSimpleName().equals("X86Register")) {
-				prevState.setRegValue(((X86Register) dest).toString(),
-						toMoveVal);
+				prevState.setRegValue(((X86Register) dest).toString(), toMoveVal);
 			}
 		} else {
 			// conditional move
@@ -499,8 +454,7 @@ public class X86Interpretation {
 			if (compareStatus == null) {
 				logger.error("Only accept conditional statement after CMP");
 				halt_status = FAILED;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 
@@ -509,20 +463,16 @@ public class X86Interpretation {
 			SymbolicCondition negativeCond = new SymbolicCondition();
 			int positiveConnector, negativeConnector;
 
-			if (inst.getName().equals("cmova")
-					|| inst.getName().equals("cmovg")) {
+			if (inst.getName().equals("cmova") || inst.getName().equals("cmovg")) {
 				positiveConnector = SymbolicCondition.B_OP_GREATER;
 				negativeConnector = SymbolicCondition.B_OP_NOT_GREATER;
-			} else if (inst.getName().equals("cmovae")
-					|| inst.getName().equals("cmovge")) {
+			} else if (inst.getName().equals("cmovae") || inst.getName().equals("cmovge")) {
 				positiveConnector = SymbolicCondition.B_OP_NOT_LESS;
 				negativeConnector = SymbolicCondition.B_OP_LESS;
-			} else if (inst.getName().equals("cmovb")
-					|| inst.getName().equals("cmovl")) {
+			} else if (inst.getName().equals("cmovb") || inst.getName().equals("cmovl")) {
 				positiveConnector = SymbolicCondition.B_OP_LESS;
 				negativeConnector = SymbolicCondition.B_OP_NOT_LESS;
-			} else if (inst.getName().equals("cmovbe")
-					|| inst.getName().equals("cmovle")) {
+			} else if (inst.getName().equals("cmovbe") || inst.getName().equals("cmovle")) {
 				positiveConnector = SymbolicCondition.B_OP_NOT_GREATER;
 				negativeConnector = SymbolicCondition.B_OP_GREATER;
 			} else if (inst.getName().equals("cmove")) {
@@ -537,8 +487,7 @@ public class X86Interpretation {
 			} else {
 				logger.error("Unsupported instruction: " + inst.getName());
 				halt_status = FAILED;
-				SymbolicExecution.programTrace.setVisited(startAddress, null,
-						inst.toString(startAddress, symFinder));
+				SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 				return null;
 			}
 
@@ -547,38 +496,30 @@ public class X86Interpretation {
 
 			if (SymbolicExecution.runningMode == SymbolicExecution.NORMAL_EXECUTION) {
 				TraceTracker pgmTrace = SymbolicExecution.cloneTraceMap();
-				pgmTrace.setVisited(startAddress, new SymbolicValue(
-						startAddress + inst.getSize()), inst.toString(
-						startAddress, symFinder));
+				pgmTrace.setVisited(startAddress, new SymbolicValue(startAddress + inst.getSize()),
+						inst.toString(startAddress, symFinder));
 
-				SymbolicValue negativeAddr = new SymbolicValue(startAddress
-						+ inst.getSize());
+				SymbolicValue negativeAddr = new SymbolicValue(startAddress + inst.getSize());
 				SymbolicState clonedState = prevState.clone();
 				clonedState.setCompareStatus(null);
 
-				SymbolicWorkList.addWork(negativeAddr, negativeCond,
-						SymbolicExecution.cloneStateMap(), pgmTrace,
+				SymbolicWorkList.addWork(negativeAddr, negativeCond, SymbolicExecution.cloneStateMap(), pgmTrace,
 						clonedState);
 
 				prevState.addCondition(positiveCond);
 				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-					prevState.getMemoryValues().put((MemoryOperand) dest,
-							toMoveVal);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86Register")) {
-					prevState.setRegValue(((X86Register) dest).toString(),
-							toMoveVal);
+					prevState.getMemoryValues().put((MemoryOperand) dest, toMoveVal);
+				} else if (dest.getClass().getSimpleName().equals("X86Register")) {
+					prevState.setRegValue(((X86Register) dest).toString(), toMoveVal);
 				}
 			} else {
 				// invariant finding mode, trace follows previous trace
-				long nextAddress = SymbolicExecution.loopTrace
-						.getLocationInfo(startAddress).getNextAddress()
+				long nextAddress = SymbolicExecution.loopTrace.getLocationInfo(startAddress).getNextAddress()
 						.calculateExprIntVal().longValue();
 				// positive trace
 				Long positiveNextAddr = returnAddress.calculateExprIntVal();
 
-				if (positiveNextAddr == null
-						|| nextAddress != positiveNextAddr.longValue()) {
+				if (positiveNextAddr == null || nextAddress != positiveNextAddr.longValue()) {
 					// follow negative path
 					prevState.addCondition(negativeCond);
 				} else {
@@ -587,13 +528,12 @@ public class X86Interpretation {
 				prevState.setCompareStatus(null);
 				// store state for next address
 				SymbolicExecution.preservedState = prevState;
-				return SymbolicExecution.loopTrace
-						.getLocationInfo(startAddress).getNextAddress();
+				return SymbolicExecution.loopTrace.getLocationInfo(startAddress).getNextAddress();
 			}
 		}
 		returnAddress = new SymbolicValue(startAddress + inst.getSize());
-		SymbolicExecution.programTrace.setVisited(startAddress,
-				returnAddress.clone(), inst.toString(startAddress, symFinder));
+		SymbolicExecution.programTrace.setVisited(startAddress, returnAddress.clone(),
+				inst.toString(startAddress, symFinder));
 		// store state for next address
 		SymbolicExecution.preservedState = prevState;
 		// reset compare status
@@ -610,22 +550,20 @@ public class X86Interpretation {
 	 *            previous state
 	 * @return symbolic value of next address
 	 */
-	public static SymbolicValue X86ReturnInterprete(X86RetInstruction inst,
-			SymbolicState prevState) {
+	public static SymbolicValue X86ReturnInterprete(X86RetInstruction inst, SymbolicState prevState) {
 		// statement supported: iret, lret, ret + <added arguments (ignore)>
 		// System.out.println("Instruction: " + inst.getName());
 		// return structure: pop next value from stack, jump to it
 		// store state for next address
 		if (prevState.getStack().isEmpty()) {
 			halt_status = MISSING_STACK;
-			SymbolicExecution.programTrace.setVisited(startAddress, null,
-					inst.toString(startAddress, symFinder));
+			SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 			return null;
 		}
 		SymbolicExecution.preservedState = prevState;
 		returnAddress = prevState.getStack().pop();
-		SymbolicExecution.programTrace.setVisited(startAddress,
-				returnAddress.clone(), inst.toString(startAddress, symFinder));
+		SymbolicExecution.programTrace.setVisited(startAddress, returnAddress.clone(),
+				inst.toString(startAddress, symFinder));
 		// reset compare status
 		prevState.setCompareStatus(null);
 		return returnAddress;
@@ -640,8 +578,7 @@ public class X86Interpretation {
 	 *            previous state
 	 * @return symbolic value of next address
 	 */
-	public static SymbolicValue X86InstructionInterprete(X86Instruction inst,
-			SymbolicState prevState) {
+	public static SymbolicValue X86InstructionInterprete(X86Instruction inst, SymbolicState prevState) {
 		// general instruction
 		// supported instruction: cmp, pop, push, nop
 		Operand dest = inst.getOperand1();
@@ -649,26 +586,22 @@ public class X86Interpretation {
 
 		// System.out.println("Instruction: " + inst.getName());
 
-		if (inst.getName().startsWith("cmp")
-				|| inst.getName().startsWith("test")) {
+		if (inst.getName().startsWith("cmp") || inst.getName().startsWith("test")) {
 			SymbolicValue lhs = null, rhs = null;
 			if (src.getClass().getSimpleName().equals("Immediate")) {
-				rhs = new SymbolicValue(((Immediate) src).getNumber()
-						.intValue());
-			} else if (src.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+				rhs = new SymbolicValue(((Immediate) src).getNumber().intValue());
+			} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				rhs = prevState.getMemoryValue((X86MemoryOperand) src);
 				if (rhs == null) {
 					halt_status = MISSING_MEMORY;
 					memoryAddress = (X86MemoryOperand) src;
-					SymbolicExecution.programTrace.setVisited(startAddress,
-							null, inst.toString(startAddress, symFinder));
+					SymbolicExecution.programTrace.setVisited(startAddress, null,
+							inst.toString(startAddress, symFinder));
 					return null;
 				}
 				rhs = rhs.clone();
 			} else if (src.getClass().getSimpleName().equals("X86Register")) {
-				rhs = prevState.getRegValue(((X86Register) src).toString())
-						.clone();
+				rhs = prevState.getRegValue(((X86Register) src).toString()).clone();
 			}
 
 			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
@@ -676,41 +609,37 @@ public class X86Interpretation {
 				if (lhs == null) {
 					halt_status = MISSING_MEMORY;
 					memoryAddress = (X86MemoryOperand) dest;
-					SymbolicExecution.programTrace.setVisited(startAddress,
-							null, inst.toString(startAddress, symFinder));
+					SymbolicExecution.programTrace.setVisited(startAddress, null,
+							inst.toString(startAddress, symFinder));
 					return null;
 				}
 				lhs = lhs.clone();
 			} else if (dest.getClass().getSimpleName().equals("X86Register")) {
-				lhs = prevState.getRegValue(((X86Register) dest).toString())
-						.clone();
+				lhs = prevState.getRegValue(((X86Register) dest).toString()).clone();
 			}
 			// set compare status
 			SymbolicCondition compareCond = new SymbolicCondition();
-			compareCond
-					.addCondition(lhs, rhs, SymbolicCondition.B_OP_UNDEFINED);
+			compareCond.addCondition(lhs, rhs, SymbolicCondition.B_OP_UNDEFINED);
 			prevState.setCompareStatus(compareCond);
 		} else if (inst.getName().startsWith("pop")) {
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
 				String regName = ((X86Register) dest).toString();
 				if (prevState.getStack().isEmpty()) {
 					halt_status = MISSING_STACK;
-					SymbolicExecution.programTrace.setVisited(startAddress,
-							null, inst.toString(startAddress, symFinder));
+					SymbolicExecution.programTrace.setVisited(startAddress, null,
+							inst.toString(startAddress, symFinder));
 					return null;
 				}
 				prevState.setRegValue(regName, prevState.getStack().pop());
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+			} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				X86MemoryOperand memoryAddress = (X86MemoryOperand) dest;
 				if (prevState.getStack().isEmpty()) {
 					halt_status = MISSING_STACK;
-					SymbolicExecution.programTrace.setVisited(startAddress,
-							null, inst.toString(startAddress, symFinder));
+					SymbolicExecution.programTrace.setVisited(startAddress, null,
+							inst.toString(startAddress, symFinder));
 					return null;
 				}
-				prevState.getMemoryValues().put(memoryAddress,
-						prevState.getStack().pop());
+				prevState.getMemoryValues().put(memoryAddress, prevState.getStack().pop());
 				// reset compare status
 				prevState.setCompareStatus(null);
 			}
@@ -718,16 +647,14 @@ public class X86Interpretation {
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
 				String regName = ((X86Register) dest).toString();
 				prevState.getStack().push(prevState.getRegValue(regName));
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+			} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				X86MemoryOperand memoryAddress = (X86MemoryOperand) dest;
-				SymbolicValue memoryVal = prevState
-						.getMemoryValue(memoryAddress);
+				SymbolicValue memoryVal = prevState.getMemoryValue(memoryAddress);
 				if (memoryVal == null) {
 					halt_status = MISSING_MEMORY;
 					memoryAddress = (X86MemoryOperand) dest;
-					SymbolicExecution.programTrace.setVisited(startAddress,
-							null, inst.toString(startAddress, symFinder));
+					SymbolicExecution.programTrace.setVisited(startAddress, null,
+							inst.toString(startAddress, symFinder));
 					return null;
 				}
 				prevState.getStack().push(memoryVal);
@@ -739,13 +666,12 @@ public class X86Interpretation {
 		} else {
 			logger.error("General statement not supported: " + inst.getName());
 			halt_status = FAILED;
-			SymbolicExecution.programTrace.setVisited(startAddress, null,
-					inst.toString(startAddress, symFinder));
+			SymbolicExecution.programTrace.setVisited(startAddress, null, inst.toString(startAddress, symFinder));
 			return null;
 		}
 		returnAddress = new SymbolicValue(startAddress + inst.getSize());
-		SymbolicExecution.programTrace.setVisited(startAddress,
-				returnAddress.clone(), inst.toString(startAddress, symFinder));
+		SymbolicExecution.programTrace.setVisited(startAddress, returnAddress.clone(),
+				inst.toString(startAddress, symFinder));
 		// store state for next address
 		SymbolicExecution.preservedState = prevState;
 		return returnAddress;

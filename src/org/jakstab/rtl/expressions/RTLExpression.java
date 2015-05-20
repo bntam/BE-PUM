@@ -87,8 +87,7 @@ public interface RTLExpression extends BitVectorType {
 	 * @throws TypeInferenceException
 	 *             if a bit width conflict is detected.
 	 */
-	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth)
-			throws TypeInferenceException;
+	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth) throws TypeInferenceException;
 
 	/**
 	 * Returns the total number of subexpressions of this expression, including

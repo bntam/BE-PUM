@@ -47,8 +47,7 @@ public class LocalAlloc extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		// Memory memory = env.getMemory();
@@ -67,10 +66,7 @@ public class LocalAlloc extends Kernel32API {
 			SIZE_T uBytes = new SIZE_T(t2);
 			HANDLE ret = Kernel32DLL.INSTANCE.LocalAlloc(uFlags, uBytes);
 
-			register.mov(
-					"eax",
-					new LongValue(ret == null ? 0 : Pointer.nativeValue(ret
-							.getPointer())));
+			register.mov("eax", new LongValue(ret == null ? 0 : Pointer.nativeValue(ret.getPointer())));
 		}
 		return false;
 	}

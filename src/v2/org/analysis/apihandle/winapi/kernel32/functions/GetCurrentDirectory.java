@@ -52,7 +52,7 @@ public class GetCurrentDirectory extends Kernel32API {
 	 * 
 	 */
 	public GetCurrentDirectory() {
-		
+
 	}
 
 	@Override

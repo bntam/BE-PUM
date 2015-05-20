@@ -52,8 +52,7 @@ public class BooleanExp implements Value {
 		else if (exp instanceof SymbolExp)
 			result = new SymbolExp(((SymbolExp) exp).getVarName());
 		else if (exp instanceof HybridExp)
-			result = new HybridExp(((HybridExp) exp).getLeft(),
-					((HybridExp) exp).getConnector(),
+			result = new HybridExp(((HybridExp) exp).getLeft(), ((HybridExp) exp).getConnector(),
 					((HybridExp) exp).getRight());
 		return result;
 	}
@@ -64,10 +63,11 @@ public class BooleanExp implements Value {
 		Value result = null;
 		/*
 		 * if (exp instanceof ConstantBooleanExp) result = new
-		 * ConstantBooleanExp(value && ((ConstantBooleanExp) exp).getValueOperand());
-		 * else if (exp instanceof VarExp) result = new OtherExp(exp, "+", new
-		 * ConstantBooleanExp(this.value)); else if (exp instanceof OtherExp)
-		 * result = new OtherExp(exp, "+", new ConstantBooleanExp(this.value));
+		 * ConstantBooleanExp(value && ((ConstantBooleanExp)
+		 * exp).getValueOperand()); else if (exp instanceof VarExp) result = new
+		 * OtherExp(exp, "+", new ConstantBooleanExp(this.value)); else if (exp
+		 * instanceof OtherExp) result = new OtherExp(exp, "+", new
+		 * ConstantBooleanExp(this.value));
 		 */
 		return result;
 	}
@@ -78,11 +78,11 @@ public class BooleanExp implements Value {
 		Value result = null;
 		/*
 		 * if (exp instanceof ConstantBooleanExp) result = new
-		 * ConstantBooleanExp(value || ((ConstantBooleanExp) exp).getValueOperand());
-		 * else if (exp instanceof VarExp) result = new OtherExp(new
-		 * ConstantBooleanExp(this.value), "-", exp); else if (exp instanceof
-		 * OtherExp) result = new OtherExp(new ConstantBooleanExp(this.value),
-		 * "-", exp);
+		 * ConstantBooleanExp(value || ((ConstantBooleanExp)
+		 * exp).getValueOperand()); else if (exp instanceof VarExp) result = new
+		 * OtherExp(new ConstantBooleanExp(this.value), "-", exp); else if (exp
+		 * instanceof OtherExp) result = new OtherExp(new
+		 * ConstantBooleanExp(this.value), "-", exp);
 		 */
 		return result;
 	}
@@ -93,11 +93,11 @@ public class BooleanExp implements Value {
 		Value result = null;
 		/*
 		 * if (exp instanceof ConstantBooleanExp) result = new
-		 * ConstantBooleanExp(value * ((ConstantBooleanExp) exp).getValueOperand());
-		 * else if (exp instanceof VarExp) result = new OtherExp(new
-		 * ConstantBooleanExp(this.value), "*", exp); else if (exp instanceof
-		 * OtherExp) result = new OtherExp(new ConstantBooleanExp(this.value),
-		 * "*", exp);
+		 * ConstantBooleanExp(value * ((ConstantBooleanExp)
+		 * exp).getValueOperand()); else if (exp instanceof VarExp) result = new
+		 * OtherExp(new ConstantBooleanExp(this.value), "*", exp); else if (exp
+		 * instanceof OtherExp) result = new OtherExp(new
+		 * ConstantBooleanExp(this.value), "*", exp);
 		 */
 		return result;
 	}
@@ -108,11 +108,11 @@ public class BooleanExp implements Value {
 		Value result = null;
 		/*
 		 * if (exp instanceof ConstantBooleanExp) result = new
-		 * ConstantBooleanExp(value / ((ConstantBooleanExp) exp).getValueOperand());
-		 * else if (exp instanceof VarExp) result = new OtherExp(new
-		 * ConstantBooleanExp(this.value), "/", exp); else if (exp instanceof
-		 * OtherExp) result = new OtherExp(new ConstantBooleanExp(this.value),
-		 * "/", exp);
+		 * ConstantBooleanExp(value / ((ConstantBooleanExp)
+		 * exp).getValueOperand()); else if (exp instanceof VarExp) result = new
+		 * OtherExp(new ConstantBooleanExp(this.value), "/", exp); else if (exp
+		 * instanceof OtherExp) result = new OtherExp(new
+		 * ConstantBooleanExp(this.value), "/", exp);
 		 */
 		return result;
 	}

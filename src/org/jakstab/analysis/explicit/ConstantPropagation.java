@@ -42,15 +42,13 @@ public class ConstantPropagation implements ConfigurableProgramAnalysis {
 	}
 
 	@SuppressWarnings("unused")
-	private final static Logger logger = Logger
-			.getLogger(ConstantPropagation.class);
+	private final static Logger logger = Logger.getLogger(ConstantPropagation.class);
 
 	public ConstantPropagation() {
 	}
 
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 		return CPAOperators.mergeJoin(s1, s2, precision);
 	}
 
@@ -60,25 +58,21 @@ public class ConstantPropagation implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Set<AbstractState> post(AbstractState state, CFAEdge cFAEdge,
-			Precision precision) {
-		AbstractState successor = ((NumberValuation) state).abstractPost(
-				cFAEdge.getTransformer(), precision);
+	public Set<AbstractState> post(AbstractState state, CFAEdge cFAEdge, Precision precision) {
+		AbstractState successor = ((NumberValuation) state).abstractPost(cFAEdge.getTransformer(), precision);
 		if (successor == null)
 			return Collections.emptySet();
 		return Collections.singleton(successor);
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 		return s;
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 		return Pair.create(s, precision);
 	}
 
@@ -88,8 +82,7 @@ public class ConstantPropagation implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		return null;
 	}
 

@@ -29,14 +29,14 @@ import v2.org.analysis.value.Value;
  * @param lpString1
  *            : The first null-terminated string. This buffer must be large
  *            enough to contain both strings.
- *            
+ * 
  * @param lpString2
  *            : The null-terminated string to be appended to the string
  *            specified in the lpString1 parameter.
- *            
+ * 
  * @return If the function succeeds, the return value is a pointer to the
  *         buffer.
- *         
+ * 
  * @author Yen Nguyen
  *
  */
@@ -46,7 +46,7 @@ public class lstrcat extends Kernel32API {
 	 * 
 	 */
 	public lstrcat() {
-		
+
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class lstrcat extends Kernel32API {
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
 		Register register = env.getRegister();
-		
+
 		// LPTSTR lpString1, // address of buffer for concatenated strings
 		// LPCTSTR lpString2 // address of string to add to string1
 		Value x1 = stack.pop();
@@ -65,13 +65,14 @@ public class lstrcat extends Kernel32API {
 		if (x1 instanceof LongValue && x2 instanceof LongValue) {
 			long destAddr = ((LongValue) x1).getValue();
 			long scrAddr = ((LongValue) x2).getValue();
-			
+
 			String dest = destAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
 			String src = scrAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
 			System.out.println("Destination Address:" + destAddr + ", Source String:" + src);
-			
-			dest = Kernel32DLL.INSTANCE.lstrcat(dest, src); //= dest.concat(src);
-			
+
+			dest = Kernel32DLL.INSTANCE.lstrcat(dest, src); // =
+															// dest.concat(src);
+
 			memory.setText(new X86MemoryOperand(DataType.INT32, destAddr), dest);
 			register.mov("eax", new LongValue(1));
 		}

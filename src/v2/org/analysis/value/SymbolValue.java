@@ -47,8 +47,7 @@ public class SymbolValue implements Value {
 		else if (exp instanceof SymbolValue)
 			result = new SymbolValue(((SymbolValue) exp).getVarName());
 		else if (exp instanceof HybridValue)
-			result = new HybridValue(((HybridValue) exp).getLeft(),
-					((HybridValue) exp).getConnector(),
+			result = new HybridValue(((HybridValue) exp).getLeft(), ((HybridValue) exp).getConnector(),
 					((HybridValue) exp).getRight());
 		else if (exp instanceof TopValue)
 			return new TopValue();
@@ -60,8 +59,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "+",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "+", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "+", exp);
 		else if (exp instanceof HybridValue)
@@ -76,8 +74,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "-",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "-", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "-", exp);
 		else if (exp instanceof HybridValue)
@@ -92,8 +89,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "*",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "*", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "*", exp);
 		else if (exp instanceof HybridValue)
@@ -107,8 +103,7 @@ public class SymbolValue implements Value {
 	public Value signedMulFunction(Value exp, int size) {
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "*",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "*", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "*", exp);
 		else if (exp instanceof HybridValue)
@@ -122,8 +117,7 @@ public class SymbolValue implements Value {
 	public Value signedMulFunction(Value exp) {
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "*",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "*", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "*", exp);
 		else if (exp instanceof HybridValue)
@@ -143,8 +137,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "/",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "/", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "/", exp);
 		else if (exp instanceof HybridValue)
@@ -158,8 +151,7 @@ public class SymbolValue implements Value {
 	public Value signedDivFunction(Value exp) {
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "/",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "/", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "/", exp);
 		else if (exp instanceof HybridValue)
@@ -174,8 +166,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "and",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "and", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "and", exp);
 		else if (exp instanceof HybridValue)
@@ -190,8 +181,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "or",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "or", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "or", exp);
 		else if (exp instanceof HybridValue)
@@ -212,8 +202,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "xor",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "xor", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "xor", exp);
 		else if (exp instanceof HybridValue)
@@ -228,8 +217,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "xor",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "xor", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "xor", exp);
 		else if (exp instanceof HybridValue)
@@ -244,8 +232,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "xor",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "xor", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "xor", exp);
 		else if (exp instanceof HybridValue)
@@ -272,14 +259,12 @@ public class SymbolValue implements Value {
 			if (var.contains(",")) {
 				int pos1 = var.lastIndexOf("(");
 				int pos2 = var.lastIndexOf(",");
-				var = "op_addr_base2_disp_" + var.substring(0, pos1) + "_"
-						+ var.substring(pos1 + 2, pos2) + "_"
+				var = "op_addr_base2_disp_" + var.substring(0, pos1) + "_" + var.substring(pos1 + 2, pos2) + "_"
 						+ var.substring(pos2 + 2, var.length() - 1);
 			} else if (var.contains("(%")) {
 				// String t[] = var.split("(");
 				int pos = var.lastIndexOf("(");
-				var = "op_addr_base_disp_" + var.substring(0, pos) + "_"
-						+ var.substring(pos + 2, var.length() - 1);
+				var = "op_addr_base_disp_" + var.substring(0, pos) + "_" + var.substring(pos + 2, var.length() - 1);
 			} else
 				var = "op_addr_disp_" + var;
 		else if (var.startsWith("(%")) {
@@ -291,13 +276,11 @@ public class SymbolValue implements Value {
 				var = "op_addr_base_" + var.substring(2, var.length() - 1);
 		} else if (var.startsWith("%") && var.contains(":(%")) {
 			int pos = var.lastIndexOf(":");
-			var = "op_addr_base_index_disp_" + var.substring(1, pos) + "_"
-					+ var.substring(pos + 3, var.length() - 1);
+			var = "op_addr_base_index_disp_" + var.substring(1, pos) + "_" + var.substring(pos + 3, var.length() - 1);
 		} else if (var.contains(",") && var.contains("(%")) {
 			int pos1 = var.lastIndexOf("(");
 			int pos2 = var.lastIndexOf(",");
-			var = "op_addr_base_index_base_" + var.substring(0, pos1 - 1) + "_"
-					+ var.substring(pos1 + 2, pos2) + "_"
+			var = "op_addr_base_index_base_" + var.substring(0, pos1 - 1) + "_" + var.substring(pos1 + 2, pos2) + "_"
 					+ var.substring(pos2 + 2, var.length() - 1);
 		}
 
@@ -348,7 +331,7 @@ public class SymbolValue implements Value {
 	@Override
 	public Value powFunction(int i) {
 		// TODO Auto-generated method stub
-		return new HybridValue(new SymbolValue(varName), "pow",	new LongValue(i));
+		return new HybridValue(new SymbolValue(varName), "pow", new LongValue(i));
 	}
 
 	@Override
@@ -364,8 +347,7 @@ public class SymbolValue implements Value {
 		// TODO Auto-generated method stub
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "mod",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "mod", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "mod", exp);
 		else if (exp instanceof HybridValue)
@@ -379,8 +361,7 @@ public class SymbolValue implements Value {
 	public Value powFunction(Value exp) {
 		Value result = null;
 		if (exp instanceof LongValue)
-			result = new HybridValue(new SymbolValue(varName), "^",
-					new LongValue(((LongValue) exp).getValue()));
+			result = new HybridValue(new SymbolValue(varName), "^", new LongValue(((LongValue) exp).getValue()));
 		else if (exp instanceof SymbolValue)
 			result = new HybridValue(new SymbolValue(varName), "^", exp);
 		else if (exp instanceof HybridValue)

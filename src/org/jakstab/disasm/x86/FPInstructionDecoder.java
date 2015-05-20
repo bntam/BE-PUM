@@ -39,8 +39,7 @@ import org.jakstab.util.Logger;
 // basic float instruction decoder class
 public class FPInstructionDecoder extends InstructionDecoder {
 
-	private final static Logger logger = Logger
-			.getLogger(FPInstructionDecoder.class);
+	private final static Logger logger = Logger.getLogger(FPInstructionDecoder.class);
 
 	public FPInstructionDecoder(String name) {
 		super(name);
@@ -50,18 +49,16 @@ public class FPInstructionDecoder extends InstructionDecoder {
 		super(name, addrMode1, operandType1);
 	}
 
-	public FPInstructionDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2) {
+	public FPInstructionDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2) {
 		super(name, addrMode1, operandType1, addrMode2, operandType2);
 	}
 
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand op1 = getOperand1(bytesArray, operandSize, addrSize);
 
 		if (byteIndex <= instrStartIndex + 1) {
-			logger.warn("Adjusting instruction size of float instruction "
-					+ name);
+			logger.warn("Adjusting instruction size of float instruction " + name);
 			byteIndex = instrStartIndex + 2;
 		}
 

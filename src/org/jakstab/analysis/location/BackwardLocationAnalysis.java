@@ -32,8 +32,7 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class BackwardLocationAnalysis extends LocationAnalysis implements
-		ConfigurableProgramAnalysis {
+public class BackwardLocationAnalysis extends LocationAnalysis implements ConfigurableProgramAnalysis {
 
 	public static void register(AnalysisProperties p) {
 		p.setName("Backward location analysis");
@@ -41,21 +40,18 @@ public class BackwardLocationAnalysis extends LocationAnalysis implements
 	}
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(BackwardLocationAnalysis.class);
+	private static final Logger logger = Logger.getLogger(BackwardLocationAnalysis.class);
 
 	public BackwardLocationAnalysis() {
 		super();
 	}
 
 	@Override
-	public Set<AbstractState> post(AbstractState state, CFAEdge cFAEdge,
-			Precision precision) {
+	public Set<AbstractState> post(AbstractState state, CFAEdge cFAEdge, Precision precision) {
 		LocationState cs = (LocationState) state;
 		if (cs.isBot())
 			return Collections.singleton((AbstractState) LocationState.BOT);
-		return Collections.singleton((AbstractState) new LocationState(cFAEdge
-				.getSource()));
+		return Collections.singleton((AbstractState) new LocationState(cFAEdge.getSource()));
 	}
 
 }

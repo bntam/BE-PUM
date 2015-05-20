@@ -44,10 +44,11 @@ public class EnterCriticalSection extends Kernel32API {
 
 		System.out.println("Argument:" + x1);
 		if (x1 instanceof LongValue) {
-//			long x = ((LongValue) x1).getValue();
-//			System.out.println("Object Handle:" + x);
-//
-//			boolean ret = Kernel32.INSTANCE.CloseHandle(new HANDLE(x != 0 ? new Pointer(x) : Pointer.NULL));
+			// long x = ((LongValue) x1).getValue();
+			// System.out.println("Object Handle:" + x);
+			//
+			// boolean ret = Kernel32.INSTANCE.CloseHandle(new HANDLE(x != 0 ?
+			// new Pointer(x) : Pointer.NULL));
 			register.mov("eax", new LongValue(0));
 
 		}

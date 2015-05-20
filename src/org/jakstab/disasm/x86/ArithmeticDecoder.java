@@ -39,33 +39,29 @@ import org.jakstab.util.BinaryInputBuffer;
 public class ArithmeticDecoder extends InstructionDecoder {
 	private Operation rtlOperation;
 
-	public ArithmeticDecoder(String name, int addrMode1, int operandType1,
-			Operation rtlOperation) {
+	public ArithmeticDecoder(String name, int addrMode1, int operandType1, Operation rtlOperation) {
 		super(name, addrMode1, operandType1);
 		this.rtlOperation = rtlOperation;
 	}
 
-	public ArithmeticDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2, Operation rtlOperation) {
+	public ArithmeticDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2,
+			Operation rtlOperation) {
 		super(name, addrMode1, operandType1, addrMode2, operandType2);
 		this.rtlOperation = rtlOperation;
 	}
 
-	public ArithmeticDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2, int addrMode3, int operandType3,
-			Operation rtlOperation) {
-		super(name, addrMode1, operandType1, addrMode2, operandType2,
-				addrMode3, operandType3);
+	public ArithmeticDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2,
+			int addrMode3, int operandType3, Operation rtlOperation) {
+		super(name, addrMode1, operandType1, addrMode2, operandType2, addrMode3, operandType3);
 		this.rtlOperation = rtlOperation;
 	}
 
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand op1 = getOperand1(bytesArray, operandSize, addrSize);
 		Operand op2 = getOperand2(bytesArray, operandSize, addrSize);
 		Operand op3 = getOperand3(bytesArray, operandSize, addrSize);
 		int size = byteIndex - instrStartIndex;
-		return factory.newArithmeticInstruction(name, rtlOperation, op1, op2,
-				op3, size, prefixes);
+		return factory.newArithmeticInstruction(name, rtlOperation, op1, op2, op3, size, prefixes);
 	}
 }

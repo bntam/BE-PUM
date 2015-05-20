@@ -47,12 +47,11 @@ public class lstrcmp extends Kernel32API {
 	 * 
 	 */
 	public lstrcmp() {
-		
+
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -68,13 +67,10 @@ public class lstrcmp extends Kernel32API {
 			long destAddr = ((LongValue) x1).getValue();
 			long scrAddr = ((LongValue) x2).getValue();
 
-			String dest = destAddr == 0 ? null : memory
-					.getText(new X86MemoryOperand(DataType.INT32, destAddr));
-			String src = scrAddr == 0 ? null : memory
-					.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
+			String dest = destAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
+			String src = scrAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
 
-			System.out.println("Destination String:" + dest
-					+ ", Source String:" + src);
+			System.out.println("Destination String:" + dest + ", Source String:" + src);
 
 			int ret = Kernel32DLL.INSTANCE.lstrcmp(dest, src);
 

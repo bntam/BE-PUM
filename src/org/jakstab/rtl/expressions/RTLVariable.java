@@ -33,8 +33,7 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class RTLVariable extends AbstractRTLExpression implements
-		RTLExpression, Writable, Comparable<RTLVariable> {
+public class RTLVariable extends AbstractRTLExpression implements RTLExpression, Writable, Comparable<RTLVariable> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(RTLVariable.class);
@@ -148,11 +147,10 @@ public class RTLVariable extends AbstractRTLExpression implements
 	 * .ssl.Architecture, int)
 	 */
 	@Override
-	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth)
-			throws TypeInferenceException {
+	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth) throws TypeInferenceException {
 		if (bitWidth != expectedBitWidth) {
-			throw new TypeInferenceException("Expected " + this + " to be "
-					+ expectedBitWidth + " bits, but is " + getBitWidth());
+			throw new TypeInferenceException("Expected " + this + " to be " + expectedBitWidth + " bits, but is "
+					+ getBitWidth());
 		}
 		return this;
 	}

@@ -49,8 +49,7 @@ public class LongValue implements Value {
 		else if (exp instanceof SymbolExp)
 			result = new SymbolExp(((SymbolExp) exp).getVarName());
 		else if (exp instanceof HybridExp)
-			result = new HybridExp(((HybridExp) exp).getLeft(),
-					((HybridExp) exp).getConnector(),
+			result = new HybridExp(((HybridExp) exp).getLeft(), ((HybridExp) exp).getConnector(),
 					((HybridExp) exp).getRight());
 		return result;
 	}

@@ -32,8 +32,7 @@ public class SymbolicExecution {
 	private int loopTotal = 0, loopEach = 0;
 	private long loopAddr = Long.MIN_VALUE;
 
-	private AbsoluteAddress targetTemp, targetIndirect,
-			retAPIAddr = new AbsoluteAddress(0);
+	private AbsoluteAddress targetTemp, targetIndirect, retAPIAddr = new AbsoluteAddress(0);
 	// private Instruction oldInst = null;
 	// private boolean specialTrace = false;
 	private AddressList addrTraceList;
@@ -91,8 +90,7 @@ public class SymbolicExecution {
 		return symbolValueRegisterPart;
 	}
 
-	public void setSymbolValueRegisterPart(
-			SymbolValueRegisterPart symbolValueRegisterPart) {
+	public void setSymbolValueRegisterPart(SymbolValueRegisterPart symbolValueRegisterPart) {
 		this.symbolValueRegisterPart = symbolValueRegisterPart;
 	}
 
@@ -100,8 +98,7 @@ public class SymbolicExecution {
 		return symbolValueMemoryOperand;
 	}
 
-	public void setSymbolValueMemoryOperand(
-			SymbolValueMemoryOperand symbolValueMemoryOperand) {
+	public void setSymbolValueMemoryOperand(SymbolValueMemoryOperand symbolValueMemoryOperand) {
 		this.symbolValueMemoryOperand = symbolValueMemoryOperand;
 	}
 
@@ -189,8 +186,7 @@ public class SymbolicExecution {
 	}
 
 	public SymbolicExecution(AbsoluteAddress target, AddressList addrTraceList,
-			Map<AbsoluteAddress, AbsoluteAddress> neg,
-			Map<AbsoluteAddress, Instruction> assemblyMap, TestCaseValue var) {
+			Map<AbsoluteAddress, AbsoluteAddress> neg, Map<AbsoluteAddress, Instruction> assemblyMap, TestCaseValue var) {
 		super();
 		this.targetTemp = target;
 		this.targetIndirect = target;
@@ -213,20 +209,17 @@ public class SymbolicExecution {
 	}
 
 	public SymbolicExecution(AbsoluteAddress indirectTarget, AddressList trace,
-			Map<AbsoluteAddress, AbsoluteAddress> negConditionList,
-			Map<AbsoluteAddress, Instruction> assemblyMap2, TestCaseValue sv,
-			StubProvider stubLibrary2) {
+			Map<AbsoluteAddress, AbsoluteAddress> negConditionList, Map<AbsoluteAddress, Instruction> assemblyMap2,
+			TestCaseValue sv, StubProvider stubLibrary2) {
 		// TODO Auto-generated constructor stub
 		this(indirectTarget, trace, negConditionList, assemblyMap2, sv);
 		stubLibrary = stubLibrary2;
 	}
 
 	public SymbolicExecution(AbsoluteAddress indirectTarget, AddressList trace,
-			Map<AbsoluteAddress, AbsoluteAddress> negConditionList,
-			TestCaseValue sv, Program program) {
+			Map<AbsoluteAddress, AbsoluteAddress> negConditionList, TestCaseValue sv, Program program) {
 		// TODO Auto-generated constructor stub
-		this(indirectTarget, trace, negConditionList, program.getAssemblyMap(),
-				sv, program.getStubLibrary());
+		this(indirectTarget, trace, negConditionList, program.getAssemblyMap(), sv, program.getStubLibrary());
 		this.program = program;
 	}
 
@@ -234,79 +227,67 @@ public class SymbolicExecution {
 		if (this.stubLibrary == null)
 			return;
 
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088899403), "GetWindowsDirectoryA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088849274), "GetSystemDirectoryA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088980502), "GetCurrentDirectoryA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088984821), "SetCurrentDirectoryA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088843369), "FindFirstFileA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088839186), "SetFileAttributesA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088770088), "CreateFileA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088801518), "CreateFileMappingA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088803287), "CloseHandle");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088980169), "FindNextFileA");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088810901), "MapViewOfFile");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088832030), "SetFilePointer");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088968286), "SetEndOfFile");
-		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(
-				new AbsoluteAddress(2088811012), "UnMapViewOfFile");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088899403),
+				"GetWindowsDirectoryA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088849274),
+				"GetSystemDirectoryA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088980502),
+				"GetCurrentDirectoryA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088984821),
+				"SetCurrentDirectoryA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap()
+				.put(new AbsoluteAddress(2088843369), "FindFirstFileA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088839186),
+				"SetFileAttributesA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088770088), "CreateFileA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088801518),
+				"CreateFileMappingA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088803287), "CloseHandle");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088980169), "FindNextFileA");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088810901), "MapViewOfFile");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap()
+				.put(new AbsoluteAddress(2088832030), "SetFilePointer");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088968286), "SetEndOfFile");
+		((Win32StubLibrary) this.stubLibrary).getAddressStubMap().put(new AbsoluteAddress(2088811012),
+				"UnMapViewOfFile");
 
 	}
 
 	public SymbolicExecution(AbsoluteAddress indirectTarget, AddressList trace,
-			Map<AbsoluteAddress, AbsoluteAddress> negConditionList,
-			TestCaseValue sv, Program program, SystemHandle system) {
+			Map<AbsoluteAddress, AbsoluteAddress> negConditionList, TestCaseValue sv, Program program,
+			SystemHandle system) {
 		// TODO Auto-generated constructor stub
-		this(indirectTarget, trace, negConditionList, program.getAssemblyMap(),
-				sv, program.getStubLibrary());
+		this(indirectTarget, trace, negConditionList, program.getAssemblyMap(), sv, program.getStubLibrary());
 		this.program = program;
 		this.system = system;
 	}
 
-	public SymbolicExecution(AbsoluteAddress indirectTarget, AddressList trace,
-			IntraCFG cfg, TestCaseValue sv, Program program2,
-			SystemHandle system2) {
+	public SymbolicExecution(AbsoluteAddress indirectTarget, AddressList trace, IntraCFG cfg, TestCaseValue sv,
+			Program program2, SystemHandle system2) {
 		// TODO Auto-generated constructor stub
-		this(indirectTarget, trace, cfg.getNegConditionList(), program2
-				.getAssemblyMap(), sv, program2.getStubLibrary());
+		this(indirectTarget, trace, cfg.getNegConditionList(), program2.getAssemblyMap(), sv, program2.getStubLibrary());
 		this.program = program2;
 		this.system = system2;
 		this.cfg = cfg;
 		this.addStubKernel32();
-		this.symbolValueMemoryOperand = new SymbolValueMemoryOperand(sv,
-				program, symbolValueRegister, symbolValueRegisterPart,
-				symbolValueSegment);
-		this.symbolValueRegister
-				.setSymbolValueRegisterPart(this.symbolValueRegisterPart);
-		this.symbolValueRegisterPart
-				.setSymbolValueRegister(this.symbolValueRegister);
+		this.symbolValueMemoryOperand = new SymbolValueMemoryOperand(sv, program, symbolValueRegister,
+				symbolValueRegisterPart, symbolValueSegment);
+		this.symbolValueRegister.setSymbolValueRegisterPart(this.symbolValueRegisterPart);
+		this.symbolValueRegisterPart.setSymbolValueRegister(this.symbolValueRegister);
 	}
 
-	private boolean contain(Map<AbsoluteAddress, String> stub,
-			AbsoluteAddress address) {
+	private boolean contain(Map<AbsoluteAddress, String> stub, AbsoluteAddress address) {
 		// TODO Auto-generated method stub
 		if (address == null || stub == null)
 			return false;
 
-		Iterator<Entry<AbsoluteAddress, String>> it = stub.entrySet()
-				.iterator();
+		Iterator<Entry<AbsoluteAddress, String>> it = stub.entrySet().iterator();
 		long t = 0xFFFFFFFFL & address.getValue();
 		while (it.hasNext()) {
 			@SuppressWarnings("rawtypes")
 			Map.Entry pairs = (Map.Entry) it.next();
-			// if (((String)pairs.getValueOperand()).contains("GetModuleHandleA"))
+			// if
+			// (((String)pairs.getValueOperand()).contains("GetModuleHandleA"))
 			// System.out.println("Debug");
 			AbsoluteAddress addr = ((AbsoluteAddress) pairs.getKey());
 			if (addr.getValue() == t) {
@@ -319,8 +300,7 @@ public class SymbolicExecution {
 
 	public void printInfor() {
 		System.out.println();
-		System.out
-				.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println("Apply the method of Symbolic Execution:");
 		System.out.print("Trace List of Address: ");
 		this.addrTraceList.printInfo();
@@ -338,8 +318,7 @@ public class SymbolicExecution {
 		// long returnValue = 4276551680L;
 		// long returnValue = (long) (Math.random() * Math.pow(2, 31));
 		// long returnValue = 0;
-		symbolStack.push(new LongValue(this.system.getKernel()
-				.getReturnRandomValue()));
+		symbolStack.push(new LongValue(this.system.getKernel().getReturnRandomValue()));
 		symbolValueRegister.mov("%edx", new LongValue(t));
 
 		// trick
@@ -350,14 +329,13 @@ public class SymbolicExecution {
 		 * program.getS if (ins1.getName().startsWith("jmp") && contain(
 		 * ((Win32StubLibrary) stubLibrary) .getAddressStubMap(),
 		 * this.targetIndirect)) { this.evaluateValue =
-		 * this.addrTraceList.getNextLast() .getValueOperand() + 5; return true; } }
-		 * catch (Exception e) { System.out.println(e.toString()); }
+		 * this.addrTraceList.getNextLast() .getValueOperand() + 5; return true;
+		 * } } catch (Exception e) { System.out.println(e.toString()); }
 		 */
 
 		while (running) {
 			if (stop) {
-				System.out.println("Symbolic Execution stops at:"
-						+ targetTemp.toString() + " Indirect Jump:"
+				System.out.println("Symbolic Execution stops at:" + targetTemp.toString() + " Indirect Jump:"
 						+ targetIndirect.toString());
 				return false;
 			}
@@ -385,17 +363,13 @@ public class SymbolicExecution {
 			// " ");
 
 			for (int i = 0; i < ins.getOperandCount(); i++)
-				if (ins.getOperand(i).getClass().getSimpleName()
-						.equals("X86Register"))
+				if (ins.getOperand(i).getClass().getSimpleName().equals("X86Register"))
 					pcValue.add(ins.getOperand(i).toString(), 0);
-				else if (ins.getOperand(i).getClass().getSimpleName()
-						.equals("X86RegisterPart"))
+				else if (ins.getOperand(i).getClass().getSimpleName().equals("X86RegisterPart"))
 					pcValue.add(ins.getOperand(i).toString(), 0);
-				else if (ins.getOperand(i).getClass().getSimpleName()
-						.equals("X86SegmentRegister"))
+				else if (ins.getOperand(i).getClass().getSimpleName().equals("X86SegmentRegister"))
 					pcValue.add(ins.getOperand(i).toString(), 0);
-				else if (ins.getOperand(i).getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				else if (ins.getOperand(i).getClass().getSimpleName().equals("X86MemoryOperand")) {
 					// var.add(((X86MemoryOperand)
 					// ins.getOperand(i)).toString(), generateRandom(0,
 					// Integer.MAX_VALUE));{
@@ -409,9 +383,7 @@ public class SymbolicExecution {
 					 * .toString(), disp);
 					 */
 
-					pcValue.add(
-							((X86MemoryOperand) ins.getOperand(i)).toString(),
-							Long.MIN_VALUE);
+					pcValue.add(((X86MemoryOperand) ins.getOperand(i)).toString(), Long.MIN_VALUE);
 				}
 
 			if (ins instanceof X86ArithmeticInstruction)
@@ -430,8 +402,7 @@ public class SymbolicExecution {
 				this.X86InstructionInterprete((X86Instruction) ins);
 
 			if (this.type instanceof IntegerWeight)
-				this.weightConf.add(new WConf(new AbsoluteAddress(targetTemp
-						.getValue()), ins, new IntegerWeight(1)));
+				this.weightConf.add(new WConf(new AbsoluteAddress(targetTemp.getValue()), ins, new IntegerWeight(1)));
 
 			/*
 			 * EnvWeight ew = new EnvWeight(); ew.setAddress(new
@@ -460,8 +431,7 @@ public class SymbolicExecution {
 	private boolean checkSatPC() {
 		this.writeZ3Input("z3Input.smt");
 		try {
-			Process p = Runtime.getRuntime().exec(
-					"cmd /c start /wait run_z3.bat");
+			Process p = Runtime.getRuntime().exec("cmd /c start /wait run_z3.bat");
 			System.out.println("Running script Z3...");
 			int exitCode = p.waitFor();
 
@@ -480,8 +450,7 @@ public class SymbolicExecution {
 		try {
 			String line = "";
 			fis = new FileInputStream("z3Output.txt");
-			br = new BufferedReader(new InputStreamReader(fis,
-					Charset.forName("UTF-8")));
+			br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
 			line = br.readLine();
 
 			if (line != null || line.equals("sat")) {
@@ -525,8 +494,7 @@ public class SymbolicExecution {
 		// boolean result = false;
 		Instruction ins = assemblyMap.get(targetIndirect);
 		String type = "", destName = "";
-		if (ins.getOperand(0).getClass().getSimpleName()
-				.equals("X86MemoryOperand")) {
+		if (ins.getOperand(0).getClass().getSimpleName().equals("X86MemoryOperand")) {
 			type = "X86MemoryOperand";
 			destName = ins.getOperand(0).toString();
 		}
@@ -536,14 +504,12 @@ public class SymbolicExecution {
 			destName = ins.getOperand(0).toString();
 		}
 
-		if (ins.getOperand(0).getClass().getSimpleName()
-				.equals("X86RegisterPart")) {
+		if (ins.getOperand(0).getClass().getSimpleName().equals("X86RegisterPart")) {
 			type = "X86RegisterPart";
 			destName = ins.getOperand(0).toString();
 		}
 
-		if (ins.getOperand(0).getClass().getSimpleName()
-				.equals("X86SegmentRegister")) {
+		if (ins.getOperand(0).getClass().getSimpleName().equals("X86SegmentRegister")) {
 			type = "X86SegmentRegister";
 			destName = ins.getOperand(0).toString();
 		}
@@ -551,8 +517,7 @@ public class SymbolicExecution {
 
 		while (checkArithmeticTargetExp(type, destName)) {
 			numL++;
-			long vTarget = Long.parseLong(getTargetExp(type, destName)
-					.toString());
+			long vTarget = Long.parseLong(getTargetExp(type, destName).toString());
 			AbsoluteAddress ad = new AbsoluteAddress(vTarget);
 			if (!addrTraceList.contain(ad)) {
 				if (!executeZ3())
@@ -571,19 +536,14 @@ public class SymbolicExecution {
 
 					ins = assemblyMap.get(targetTemp);
 					for (int i = 0; i < ins.getOperandCount(); i++)
-						if (ins.getOperand(i).getClass().getSimpleName()
-								.equals("X86Register"))
+						if (ins.getOperand(i).getClass().getSimpleName().equals("X86Register"))
 							pcValue.add(ins.getOperand(i).toString(), 0);
-						else if (ins.getOperand(i).getClass().getSimpleName()
-								.equals("X86SegmentRegister"))
+						else if (ins.getOperand(i).getClass().getSimpleName().equals("X86SegmentRegister"))
 							pcValue.add(ins.getOperand(i).toString(), 0);
-						else if (ins.getOperand(i).getClass().getSimpleName()
-								.equals("X86RegisterPart"))
+						else if (ins.getOperand(i).getClass().getSimpleName().equals("X86RegisterPart"))
 							pcValue.add(ins.getOperand(i).toString(), 0);
-						else if (ins.getOperand(i).getClass().getSimpleName()
-								.equals("X86MemoryOperand"))
-							pcValue.add(((X86MemoryOperand) ins.getOperand(i))
-									.toString(), 0);
+						else if (ins.getOperand(i).getClass().getSimpleName().equals("X86MemoryOperand"))
+							pcValue.add(((X86MemoryOperand) ins.getOperand(i)).toString(), 0);
 
 					if (ins instanceof X86ArithmeticInstruction)
 						this.X86ArithmeticInterprete((X86ArithmeticInstruction) ins);
@@ -621,8 +581,7 @@ public class SymbolicExecution {
 		// printResult();
 		this.formulaList.printInfo();
 		this.symbolValueRegister.printInfo();
-		System.out
-				.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println();
 
 	}
@@ -643,8 +602,7 @@ public class SymbolicExecution {
 					d = symbolValueRegister.getRegVal(dest.toString());
 					if (d instanceof LongValue) {
 						if (((LongValue) d).getValue() == 0) {
-							evaluateValue = system.getSEHHandler().getStart()
-									.getSehHandler();
+							evaluateValue = system.getSEHHandler().getStart().getSehHandler();
 							running = false;
 							return;
 						}
@@ -652,28 +610,18 @@ public class SymbolicExecution {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						s = symbolValueRegister.getRegVal(src.toString());
 
-						symbolValueRegister.div(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
+						symbolValueRegister.div(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
 
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegister.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegister.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
 						s = symbolValueRegisterPart.getRegVal(src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegister.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegister.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 						s = symbolValueSegment.getRegVal(src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegister.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-						s = new LongValue(((Immediate) src).getNumber()
-								.intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegister.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+						s = new LongValue(((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						/*
 						 * symbolValueRegister .add(dest.toString(),
 						 * symbolValueMemoryOperand
@@ -681,65 +629,39 @@ public class SymbolicExecution {
 						 * symbolValueMemoryOperand
 						 * .getMemoryOperandVal((X86MemoryOperand) src);
 						 */
-						Value t = calculateValueMemoryOperand(
-								(X86MemoryOperand) src, ins);
+						Value t = calculateValueMemoryOperand((X86MemoryOperand) src, ins);
 						symbolValueRegister.add(dest.toString(), t);
 					}
 					// Bo sung them sau
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegisterPart.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegisterPart
-								.add(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueSegment.add(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueSegment.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueSegment.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueSegment.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueSegment.add(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueSegment.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueSegment.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueSegment.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueSegment
-								.add(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 				}
 				if (d != null && s != null)
-					symbolFlag.changeFlagWithADD(symbolValueRegister,
-							symbolValueMemoryOperand, symbolStack, d, s);
+					symbolFlag.changeFlagWithADD(symbolValueRegister, symbolValueMemoryOperand, symbolStack, d, s);
 
 				if (s instanceof LongValue && ((LongValue) s).getValue() == 0) {
 					System.out.println("Error divide to 0");
@@ -751,30 +673,24 @@ public class SymbolicExecution {
 				Operand dest = ins.getOperand1();
 				if (dest.getClass().getSimpleName().equals("X86Register"))
 					symbolValueRegister.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart"))
+				else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
 					symbolValueRegisterPart.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister"))
+				else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 					symbolValueSegment.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					// System.out.println("Information of this X86MemoryOperand");
 					// System.out.println(((X86MemoryOperand)dest).toString());
 					// System.out.println(((X86MemoryOperand)dest).getDisplacement());
 					// System.out.println(((X86MemoryOperand)dest).getScale());
 					// System.out.println(((X86MemoryOperand)dest).);
-					this.symbolValueMemoryOperand.add((X86MemoryOperand) dest,
-							new HybridExp(new SymbolExp(
-									((X86MemoryOperand) dest).toString()), "+",
-									new LongValue(1)));
+					this.symbolValueMemoryOperand.add((X86MemoryOperand) dest, new HybridExp(new SymbolExp(
+							((X86MemoryOperand) dest).toString()), "+", new LongValue(1)));
 				}
 
 				// result = new SymbolicValue(1);
 				// newDest.addExprValue(SymbolicValue.ADD_EXPR, result);
 			} else {
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 				// halt_status = FAILED;
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
@@ -792,28 +708,18 @@ public class SymbolicExecution {
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					d = symbolValueRegister.getRegVal(dest.toString());
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						symbolValueRegister.add(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
+						symbolValueRegister.add(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
 						s = symbolValueRegister.getRegVal(src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegister.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegister.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
 						s = symbolValueRegisterPart.getRegVal(src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegister.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegister.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 						s = symbolValueSegment.getRegVal(src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegister.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-						s = new LongValue(((Immediate) src).getNumber()
-								.intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegister.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+						s = new LongValue(((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						/*
 						 * symbolValueRegister .add(dest.toString(),
 						 * symbolValueMemoryOperand
@@ -821,95 +727,63 @@ public class SymbolicExecution {
 						 * symbolValueMemoryOperand
 						 * .getMemoryOperandVal((X86MemoryOperand) src);
 						 */
-						Value t = calculateValueMemoryOperand(
-								(X86MemoryOperand) src, ins);
+						Value t = calculateValueMemoryOperand((X86MemoryOperand) src, ins);
 						symbolValueRegister.add(dest.toString(), t);
 					}
 					// Bo sung them sau
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegisterPart.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegisterPart
-								.add(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueSegment.add(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueSegment.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueSegment.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueSegment.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueSegment.add(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueSegment.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueSegment.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueSegment.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueSegment
-								.add(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 				}
 				if (d != null && s != null)
-					symbolFlag.changeFlagWithADD(symbolValueRegister,
-							symbolValueMemoryOperand, symbolStack, d, s);
+					symbolFlag.changeFlagWithADD(symbolValueRegister, symbolValueMemoryOperand, symbolStack, d, s);
 
 				// newDest.addExprValue(SymbolicValue.ADD_EXPR, result);
 			} else if (ins.getName().startsWith("inc")) {
 				Operand dest = ins.getOperand1();
 				if (dest.getClass().getSimpleName().equals("X86Register"))
 					symbolValueRegister.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart"))
+				else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
 					symbolValueRegisterPart.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister"))
+				else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 					symbolValueSegment.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					// System.out.println("Information of this X86MemoryOperand");
 					// System.out.println(((X86MemoryOperand)dest).toString());
 					// System.out.println(((X86MemoryOperand)dest).getDisplacement());
 					// System.out.println(((X86MemoryOperand)dest).getScale());
 					// System.out.println(((X86MemoryOperand)dest).);
-					this.symbolValueMemoryOperand.add((X86MemoryOperand) dest,
-							new HybridExp(new SymbolExp(
-									((X86MemoryOperand) dest).toString()), "+",
-									new LongValue(1)));
+					this.symbolValueMemoryOperand.add((X86MemoryOperand) dest, new HybridExp(new SymbolExp(
+							((X86MemoryOperand) dest).toString()), "+", new LongValue(1)));
 				}
 
 				// result = new SymbolicValue(1);
 				// newDest.addExprValue(SymbolicValue.ADD_EXPR, result);
 			} else {
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 				// halt_status = FAILED;
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
@@ -924,77 +798,42 @@ public class SymbolicExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegister.add(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegister.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegister.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegister.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegister.add(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegister.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegister.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegister.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegister
-								.add(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegisterPart.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegisterPart.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegisterPart.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegisterPart
-								.add(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueSegment.add(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueSegment.add(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueSegment.add(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueSegment.add(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueSegment.add(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueSegment.add(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueSegment.add(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueSegment.add(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueSegment
-								.add(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 				}
 
@@ -1003,30 +842,24 @@ public class SymbolicExecution {
 				Operand dest = ins.getOperand1();
 				if (dest.getClass().getSimpleName().equals("X86Register"))
 					symbolValueRegister.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart"))
+				else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
 					symbolValueRegisterPart.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister"))
+				else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 					symbolValueSegment.add(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					// System.out.println("Information of this X86MemoryOperand");
 					// System.out.println(((X86MemoryOperand)dest).toString());
 					// System.out.println(((X86MemoryOperand)dest).getDisplacement());
 					// System.out.println(((X86MemoryOperand)dest).getScale());
 					// System.out.println(((X86MemoryOperand)dest).);
-					this.symbolValueMemoryOperand.add((X86MemoryOperand) dest,
-							new HybridExp(new SymbolExp(
-									((X86MemoryOperand) dest).toString()), "+",
-									new LongValue(1)));
+					this.symbolValueMemoryOperand.add((X86MemoryOperand) dest, new HybridExp(new SymbolExp(
+							((X86MemoryOperand) dest).toString()), "+", new LongValue(1)));
 				}
 
 				// result = new SymbolicValue(1);
 				// newDest.addExprValue(SymbolicValue.ADD_EXPR, result);
 			} else {
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 				// halt_status = FAILED;
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
@@ -1042,77 +875,42 @@ public class SymbolicExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegister.and(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegister.and(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegister.and(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegister.and(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegister.and(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegister.and(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegister.and(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegister.and(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegister
-								.and(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegisterPart.and(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegisterPart.and(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegisterPart.and(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegisterPart.and(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegisterPart.and(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegisterPart.and(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegisterPart.and(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegisterPart.and(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegisterPart
-								.and(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueSegment.and(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueSegment.and(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueSegment.and(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueSegment.and(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueSegment.and(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueSegment.and(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueSegment.and(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueSegment.and(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueSegment
-								.and(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 				}
 
@@ -1122,8 +920,7 @@ public class SymbolicExecution {
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
 				// return null;
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 			}
 			break;
 
@@ -1135,168 +932,98 @@ public class SymbolicExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = calculateMemoryOperand((X86MemoryOperand) dest);
-					Value tVal = calculateValueMemoryOperand(
-							(X86MemoryOperand) dest, ins);
+					Value tVal = calculateValueMemoryOperand((X86MemoryOperand) dest, ins);
 
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						Value val = symbolValueRegister.getRegVal(src
-								.toString());
+						Value val = symbolValueRegister.getRegVal(src.toString());
 						// This is 32 bits so we have to divide it into 4 parts
 						// and
 						// assigns to 4 new memory operands
-						if (val instanceof LongValue && t.getBase() == null
-								&& tVal instanceof LongValue) {
+						if (val instanceof LongValue && t.getBase() == null && tVal instanceof LongValue) {
 							long v = ((LongValue) val).getValue();
 							v = BitVector.xor(v, ((LongValue) tVal).getValue());
 							String x = Convert.longToHex(v, 32);
 							int l = x.length();
 							if (l < 8)
 								return;
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(
-											t,
-											new LongValue(Convert.hexToLong(x
-													.substring(l - 2, l))));
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(
-											new X86MemoryOperand(t
-													.getDataType(), t
-													.getDisplacement() + 1),
-											new LongValue(Convert.hexToLong(x
-													.substring(l - 4, l - 2))));
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(
-											new X86MemoryOperand(t
-													.getDataType(), t
-													.getDisplacement() + 2),
-											new LongValue(Convert.hexToLong(x
-													.substring(l - 6, l - 4))));
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(
-											new X86MemoryOperand(t
-													.getDataType(), t
-													.getDisplacement() + 3),
-											new LongValue(Convert.hexToLong(x
-													.substring(l - 8, l - 6))));
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(t,
+									new LongValue(Convert.hexToLong(x.substring(l - 2, l))));
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(new X86MemoryOperand(t.getDataType(),
+									t.getDisplacement() + 1),
+									new LongValue(Convert.hexToLong(x.substring(l - 4, l - 2))));
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(new X86MemoryOperand(t.getDataType(),
+									t.getDisplacement() + 2),
+									new LongValue(Convert.hexToLong(x.substring(l - 6, l - 4))));
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(new X86MemoryOperand(t.getDataType(),
+									t.getDisplacement() + 3),
+									new LongValue(Convert.hexToLong(x.substring(l - 8, l - 6))));
 
 						} else
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(t, val);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(t, val);
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						symbolValueMemoryOperand.mov((X86MemoryOperand) dest,
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+								symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						symbolValueMemoryOperand.mov((X86MemoryOperand) dest,
 								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						long x1 = ((Immediate) src).getNumber().intValue();
 						if (tVal instanceof LongValue) {
 							long v = ((LongValue) tVal).getValue();
 							v = BitVector.xor(v, x1);
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(t, v, ins);
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(t, v, ins);
 
 						} else
-							symbolValueMemoryOperand.xor(
-									(X86MemoryOperand) dest, new LongValue(x1));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueMemoryOperand
-								.xor((X86MemoryOperand) dest,
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+							symbolValueMemoryOperand.xor((X86MemoryOperand) dest, new LongValue(x1));
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+						symbolValueMemoryOperand.xor((X86MemoryOperand) dest,
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86Register")) {
+				} else if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (dest.toString().equals(src.toString())) {
-						symbolValueRegister.mov(dest.toString(), new LongValue(
-								0));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86Register")) {
+						symbolValueRegister.mov(dest.toString(), new LongValue(0));
+					} else if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegister.xor(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegister.xor(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegister.xor(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegister.xor(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegister.xor(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegister.xor(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegister.xor(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegister.xor(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegister
-								.xor(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (dest.toString().equals(src.toString())) {
-						symbolValueRegisterPart.mov(dest.toString(),
-								new LongValue(0));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86Register")) {
+						symbolValueRegisterPart.mov(dest.toString(), new LongValue(0));
+					} else if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegisterPart.xor(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegisterPart.xor(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegisterPart.xor(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegisterPart.xor(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegisterPart.xor(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegisterPart.xor(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegisterPart.xor(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegisterPart.xor(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegisterPart
-								.xor(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (dest.toString().equals(src.toString())) {
-						symbolValueSegment.mov(dest.toString(),
-								new LongValue(0));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86Register")) {
+						symbolValueSegment.mov(dest.toString(), new LongValue(0));
+					} else if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueSegment.xor(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueSegment.xor(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueSegment.xor(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueSegment.xor(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueSegment.xor(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueSegment.xor(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueSegment.xor(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueSegment.xor(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueSegment
-								.xor(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 				}
 
@@ -1306,8 +1033,7 @@ public class SymbolicExecution {
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
 				// return null;
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 			}
 			break;
 
@@ -1319,77 +1045,42 @@ public class SymbolicExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegister.sub(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegister.sub(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegister.sub(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegister.sub(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegister.sub(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegister.sub(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegister.sub(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegister.sub(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegister
-								.sub(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegisterPart.sub(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegisterPart.sub(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegisterPart.sub(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegisterPart.sub(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegisterPart.sub(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegisterPart.sub(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegisterPart.sub(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegisterPart.sub(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegisterPart
-								.sub(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueSegment.sub(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueSegment.sub(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueSegment.sub(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueSegment.sub(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueSegment.sub(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueSegment.sub(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueSegment.sub(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueSegment.sub(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueSegment
-								.sub(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -1399,16 +1090,12 @@ public class SymbolicExecution {
 				Operand dest = ins.getOperand1();
 				if (dest.getClass().getSimpleName().equals("X86Register"))
 					symbolValueRegister.sub(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart"))
+				else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
 					symbolValueRegisterPart.sub(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister"))
+				else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 					symbolValueSegment.sub(dest.toString(), 1);
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand"))
-					symbolValueMemoryOperand.sub((X86MemoryOperand) dest,
-							new LongValue(1));
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+					symbolValueMemoryOperand.sub((X86MemoryOperand) dest, new LongValue(1));
 			} else {
 				// logger.error("Instruction not supported: " + ins.getName());
 				// halt_status = FAILED;
@@ -1425,65 +1112,36 @@ public class SymbolicExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
+						symbolValueRegister.or(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegister.or(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegister.or(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegister.or(dest.toString(), ((Immediate) src).getNumber().intValue());
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueRegister.or(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegister.or(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegister.or(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegister.or(dest.toString(),
-								((Immediate) src).getNumber().intValue());
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueRegister
-								.or(dest.toString(),
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						symbolValueRegisterPart.or(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueRegisterPart.or(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueRegisterPart.or(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegisterPart.or(dest.toString(),
-								((Immediate) src).getNumber().intValue());
+						symbolValueRegisterPart.or(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueRegisterPart.or(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueRegisterPart.or(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueRegisterPart.or(dest.toString(), ((Immediate) src).getNumber().intValue());
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						symbolValueSegment.or(dest.toString(),
-								symbolValueRegister.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
-						symbolValueSegment.or(dest.toString(),
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
-						symbolValueSegment.or(dest.toString(),
-								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueSegment.or(dest.toString(),
-								((Immediate) src).getNumber().intValue());
+						symbolValueSegment.or(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+						symbolValueSegment.or(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+						symbolValueSegment.or(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueSegment.or(dest.toString(), ((Immediate) src).getNumber().intValue());
 					}
 				}
 				// symbolFlag.changeFlagWithOR(symbolValueRegister,
@@ -1494,8 +1152,7 @@ public class SymbolicExecution {
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
 				// return null;
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 			}
 			break;
 		case SRL:
@@ -1512,28 +1169,23 @@ public class SymbolicExecution {
 
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						long x = (long) Math.pow(2, y);
 						symbolValueRegister.divide(dest.toString(), x);
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						long x = (long) Math.pow(2, y);
 						symbolValueRegisterPart.divide(dest.toString(), x);
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						long x = (long) Math.pow(2, y);
 						symbolValueSegment.divide(dest.toString(), x);
@@ -1551,28 +1203,23 @@ public class SymbolicExecution {
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						// long x = (long) Math.pow(2, y);
 						symbolValueRegister.rr(dest.toString(), y);
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						// long x = (long) Math.pow(2, y);
 						symbolValueRegisterPart.rr(dest.toString(), y);
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						// long x = (long) Math.pow(2, y);
 						symbolValueSegment.rr(dest.toString(), y);
@@ -1590,30 +1237,25 @@ public class SymbolicExecution {
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						symbolValueRegister.rl(dest.toString(), y);
 						// (long) Math.pow(2, ((Immediate)
 						// src).getNumber().intValue()));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						symbolValueRegisterPart.rl(dest.toString(), y);
 						// (long) Math.rl(2, ((Immediate)
 						// src).getNumber().intValue()));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						int y = ((Immediate) src).getNumber().intValue();
 						symbolValueSegment.rl(dest.toString(), y);
 						// (long) Math.pow(2, ((Immediate)
@@ -1630,36 +1272,26 @@ public class SymbolicExecution {
 
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src == null) {
+						symbolValueRegister.mul(dest.toString(), (long) Math.pow(2, 1));
+					} else if (src.getClass().getSimpleName().equals("X86Register")) {
+						// sv.sub(dest.toString(), src.toString());
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						symbolValueRegister.mul(dest.toString(),
-								(long) Math.pow(2, 1));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86Register")) {
-						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueRegister.mul(dest.toString(), (long) Math
-								.pow(2, ((Immediate) src).getNumber()
-										.intValue()));
+								(long) Math.pow(2, ((Immediate) src).getNumber().intValue()));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						symbolValueRegisterPart.mul(dest.toString(),
-								(long) Math.pow(2, ((Immediate) src)
-										.getNumber().intValue()));
+								(long) Math.pow(2, ((Immediate) src).getNumber().intValue()));
 					}
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
-						symbolValueSegment.mul(dest.toString(), (long) Math
-								.pow(2, ((Immediate) src).getNumber()
-										.intValue()));
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueSegment.mul(dest.toString(),
+								(long) Math.pow(2, ((Immediate) src).getNumber().intValue()));
 					}
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -1672,38 +1304,27 @@ public class SymbolicExecution {
 				Value eax = null;
 				if (src.getClass().getSimpleName().equals("X86Register")) {
 					eax = symbolValueRegister.getRegVal(src.toString());
-					symbolValueRegister.setSymbolRegisterValue(src.toString(),
-							new LongValue(0));
+					symbolValueRegister.setSymbolRegisterValue(src.toString(), new LongValue(0));
 					// symbolValueRegister.set
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 					eax = symbolValueRegisterPart.getRegVal(src.toString());
-					symbolValueRegisterPart.setSymbolRegisterPartValue(
-							src.toString(), new LongValue(0));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+					symbolValueRegisterPart.setSymbolRegisterPartValue(src.toString(), new LongValue(0));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					eax = symbolValueSegment.getRegVal(src.toString());
-					symbolValueSegment.setSymbolSegmentValue(src.toString(),
-							new LongValue(0));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
-					eax = symbolValueMemoryOperand.getMemoryOperandVal(src
-							.toString());
-					symbolValueMemoryOperand.setSymbolMemoryOperandValue(
-							(X86MemoryOperand) src, new LongValue(0));
+					symbolValueSegment.setSymbolSegmentValue(src.toString(), new LongValue(0));
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+					eax = symbolValueMemoryOperand.getMemoryOperandVal(src.toString());
+					symbolValueMemoryOperand.setSymbolMemoryOperandValue((X86MemoryOperand) src, new LongValue(0));
 				}
 
 				// Exp eax = symbolValueRegister.getRegVal(src.toString());
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					symbolValueRegister.mul(dest.toString(), eax);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					symbolValueRegisterPart.mul(dest.toString(), eax);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					symbolValueSegment.mul(dest.toString(), eax);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					symbolValueMemoryOperand.mul((X86MemoryOperand) dest, eax);
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -1719,20 +1340,16 @@ public class SymbolicExecution {
 					// symbolValueRegister.setSymbolRegisterValue(dest.toString(),
 					// new ValueLongExp(0));
 					// symbolValueRegister.set
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 					op = symbolValueRegisterPart.getRegVal(src.toString());
 					// symbolValueRegisterPart.setSymbolRegisterPartValue(
 					// src.toString(), new ValueLongExp(0));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					op = symbolValueSegment.getRegVal(src.toString());
 					// symbolValueSegment.setSymbolSegmentValue(src.toString(),
 					// new ValueLongExp(0));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
-					op = symbolValueMemoryOperand.getMemoryOperandVal(src
-							.toString());
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+					op = symbolValueMemoryOperand.getMemoryOperandVal(src.toString());
 					// symbolValueMemoryOperand.setSymbolMemoryOperandValue(
 					// (X86MemoryOperand) src, new ValueLongExp(0));
 				}
@@ -1740,14 +1357,11 @@ public class SymbolicExecution {
 				// Exp eax = symbolValueRegister.getRegVal(src.toString());
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					symbolValueRegister.mul(dest.toString(), op);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 					symbolValueRegisterPart.mul(dest.toString(), op);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					symbolValueSegment.mul(dest.toString(), op);
-				} else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					symbolValueMemoryOperand.mul((X86MemoryOperand) dest, op);
 				}
 				// newDest.addExprValue(SymbolicValue.SUB_EXPR, result);
@@ -1757,8 +1371,7 @@ public class SymbolicExecution {
 			if (ins.getName().startsWith("unsignedDiv")) {
 
 			}
-			System.out.println("Arithmetic statement not supported: "
-					+ ins.getName());
+			System.out.println("Arithmetic statement not supported: " + ins.getName());
 			// halt_status = FAILED;
 			// SymbolicExecution.programTrace.setVisited(startAddress, null,
 			// ins.toString(startAddress, symFinder));
@@ -1770,8 +1383,7 @@ public class SymbolicExecution {
 	private void X86CallInterprete(X86CallInstruction inst) {
 		Operand dest = inst.getOperand1();
 		Value r = null;
-		AbsoluteAddress returnAddress = new AbsoluteAddress(
-				targetTemp.getValue() + inst.getSize());
+		AbsoluteAddress returnAddress = new AbsoluteAddress(targetTemp.getValue() + inst.getSize());
 
 		// if (this.targetTemp.getValueOperand() == 0)
 		// System.out.println("Debug");
@@ -1781,11 +1393,8 @@ public class SymbolicExecution {
 		// first operand
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
 			r = new LongValue(((AbsoluteAddress) dest).getValue());
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
-			r = new LongValue(
-					((X86PCRelativeAddress) dest).getEffectiveValue(targetTemp
-							.getValue()));
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
+			r = new LongValue(((X86PCRelativeAddress) dest).getEffectiveValue(targetTemp.getValue()));
 
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
 			// returnAddress = (prevState.getRegValue(((X86Register)
@@ -1801,22 +1410,17 @@ public class SymbolicExecution {
 				this.evaluateValue = ((LongValue) r).getValue();
 
 			if (stubLibrary != null
-					&& contain(
-							((Win32StubLibrary) stubLibrary)
-									.getAddressStubMap(),
-							new AbsoluteAddress(((LongValue) r).getValue()))) {
+					&& contain(((Win32StubLibrary) stubLibrary).getAddressStubMap(), new AbsoluteAddress(
+							((LongValue) r).getValue()))) {
 				// String funcName
 				// SystemCallStub.executeSymbolic(funcName);
 
 				System.out.println("Address:" + targetTemp.toString());
 				if (APIStub.executeSymbolic(funcName, this, inst)) {
 					funcName = "";
-					retAPIAddr = new AbsoluteAddress(targetTemp.getValue()
-							+ inst.getSize());
+					retAPIAddr = new AbsoluteAddress(targetTemp.getValue() + inst.getSize());
 				} else
-					System.out
-							.println("Symbolic Execution of System Call failed:"
-									+ funcName);
+					System.out.println("Symbolic Execution of System Call failed:" + funcName);
 
 				if (this.targetTemp.getValue() == targetIndirect.getValue())
 					this.evaluateValue = returnAddress.getValue();
@@ -1873,9 +1477,9 @@ public class SymbolicExecution {
 	 * System.out.println("Process Loop with Destination:" + dest.toString());
 	 * return; } // SymbolicCondition positiveCond = new SymbolicCondition(); //
 	 * SymbolicCondition negativeCond = new SymbolicCondition(); // int
-	 * positiveConnector, negativeConnector; if (neg.get(targetTemp).getValueOperand()
-	 * == this.addrTraceList.get(0) .getValueOperand())
-	 * this.formulas.getTop().setOperator(
+	 * positiveConnector, negativeConnector; if
+	 * (neg.get(targetTemp).getValueOperand() == this.addrTraceList.get(0)
+	 * .getValueOperand()) this.formulas.getTop().setOperator(
 	 * CondJump.getReserCondJump((inst.getName()))); else
 	 * this.formulas.getTop().setOperator(
 	 * CondJump.getCondJump((inst.getName()))); // // if
@@ -1885,37 +1489,41 @@ public class SymbolicExecution {
 	 * else if (inst.getName().equals("jae") || // inst.getName().equals("jge"))
 	 * { // // // positiveConnector = SymbolicCondition.B_OP_NOT_LESS; // // //
 	 * negativeConnector = SymbolicCondition.B_OP_LESS; // // if
-	 * (neg.get(target).getValueOperand() == // this.addrTraceList.get(0).getValueOperand())
-	 * // // this.formulas.getTop().setOperator(3); // // else // //
+	 * (neg.get(target).getValueOperand() == //
+	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * this.formulas.getTop().setOperator(3); // // else // //
 	 * this.formulas.getTop().setOperator(6); // // } else if
 	 * (inst.getName().equals("jb") || // inst.getName().equals("jl")) { // //
 	 * // positiveConnector = SymbolicCondition.B_OP_LESS; // // //
 	 * negativeConnector = SymbolicCondition.B_OP_NOT_LESS; // // if
-	 * (neg.get(target).getValueOperand() == // this.addrTraceList.get(0).getValueOperand())
-	 * // // this.formulas.getTop().setOperator(6); // // else // //
+	 * (neg.get(target).getValueOperand() == //
+	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * this.formulas.getTop().setOperator(6); // // else // //
 	 * this.formulas.getTop().setOperator(3); // // } else if
 	 * (inst.getName().equals("jbe") || // inst.getName().equals("jle")) { // //
 	 * // positiveConnector = SymbolicCondition.B_OP_NOT_GREATER; // // //
 	 * negativeConnector = SymbolicCondition.B_OP_GREATER; // // if
-	 * (neg.get(target).getValueOperand() == // this.addrTraceList.get(0).getValueOperand())
-	 * // // this.formulas.getTop().setOperator(3); // // else // //
+	 * (neg.get(target).getValueOperand() == //
+	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * this.formulas.getTop().setOperator(3); // // else // //
 	 * this.formulas.getTop().setOperator(5); // // } else if
 	 * (inst.getName().equals("je")) { // // // positiveConnector =
 	 * SymbolicCondition.B_OP_EQUAL; // // // negativeConnector =
-	 * SymbolicCondition.B_OP_NOT_EQUAL; // // if (neg.get(target).getValueOperand() ==
-	 * // this.addrTraceList.get(0).getValueOperand()) // //
+	 * SymbolicCondition.B_OP_NOT_EQUAL; // // if
+	 * (neg.get(target).getValueOperand() == //
+	 * this.addrTraceList.get(0).getValueOperand()) // //
 	 * this.formulas.getTop().setOperator(4); // // else // //
 	 * this.formulas.getTop().setOperator(1); // // } else if
 	 * (inst.getName().equals("jne")) { // // // positiveConnector =
 	 * SymbolicCondition.B_OP_NOT_EQUAL; // // // negativeConnector =
-	 * SymbolicCondition.B_OP_EQUAL; // // if (neg.get(target).getValueOperand() == //
-	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * SymbolicCondition.B_OP_EQUAL; // // if (neg.get(target).getValueOperand()
+	 * == // this.addrTraceList.get(0).getValueOperand()) // //
 	 * this.formulas.getTop().setOperator(1); // // else // //
 	 * this.formulas.getTop().setOperator(4); // // } else if
 	 * (inst.getName().equals("jnl")) { // // // positiveConnector =
 	 * SymbolicCondition.B_OP_NOT_LESS; // // // negativeConnector =
-	 * SymbolicCondition.B_OP_LESS; // // if (neg.get(target).getValueOperand() == //
-	 * this.addrTraceList.get(0).getValueOperand()) // //
+	 * SymbolicCondition.B_OP_LESS; // // if (neg.get(target).getValueOperand()
+	 * == // this.addrTraceList.get(0).getValueOperand()) // //
 	 * this.formulas.getTop().setOperator(3); // // else // //
 	 * this.formulas.getTop().setOperator(6); // } else if
 	 * (inst.getName().equals("loop")) { // // decrease ecx, check if it is
@@ -1939,8 +1547,9 @@ public class SymbolicExecution {
 		// System.out.println("Conditional Jump:" + instName + " " +
 		// dest.toString());
 		/*
-		 * if (neg.get(targetTemp).getValueOperand() == this.addrTraceList.get(0)
-		 * .getValueOperand()) this.formulas.getTop().setOperator(
+		 * if (neg.get(targetTemp).getValueOperand() ==
+		 * this.addrTraceList.get(0) .getValueOperand())
+		 * this.formulas.getTop().setOperator(
 		 * CondJump.getReserCondJump((inst.getName()))); else
 		 * this.formulas.getTop().setOperator(
 		 * CondJump.getCondJump((inst.getName())));
@@ -1957,11 +1566,8 @@ public class SymbolicExecution {
 		pcValue.add("tFlag", 0);
 		pcValue.add("zFlag", 0);
 
-		if (neg != null
-				&& !neg.isEmpty()
-				&& neg.containsKey(targetTemp)
-				&& neg.get(targetTemp).getValue() == this.addrTraceList.get(0)
-						.getValue()) {
+		if (neg != null && !neg.isEmpty() && neg.containsKey(targetTemp)
+				&& neg.get(targetTemp).getValue() == this.addrTraceList.get(0).getValue()) {
 			// instName = reverseConditionJump(instName);
 			reCond = true;
 			// System.out.println("Reverse Conditional Jump:" + instName);
@@ -1988,29 +1594,25 @@ public class SymbolicExecution {
 						;
 					else {
 						// System.out.println("Debug Loop");
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2034,29 +1636,25 @@ public class SymbolicExecution {
 						;
 					else {
 						// System.out.println("Debug Loop");
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2070,8 +1668,7 @@ public class SymbolicExecution {
 							stop = true;
 					}
 				} else {
-					Value l1 = new HybridBooleanExp(ecx, new BooleanExp(0),
-							"==");
+					Value l1 = new HybridBooleanExp(ecx, new BooleanExp(0), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			}
@@ -2079,18 +1676,14 @@ public class SymbolicExecution {
 			// if
 			// ((CF) = 0) or ((ZF) = 0)
 			// Not finished
-			Value l1 = new HybridExp(symbolFlag.getcFlag(), "==",
-					new BooleanExp(0));
-			Value l2 = new HybridExp(symbolFlag.getzFlag(), "==",
-					new BooleanExp(0));
+			Value l1 = new HybridExp(symbolFlag.getcFlag(), "==", new BooleanExp(0));
+			Value l2 = new HybridExp(symbolFlag.getzFlag(), "==", new BooleanExp(0));
 
 			if (reCond) {
 				// Exp l3 = new OtherBooleanExp(l1, l2, "or");
 				// formulaList.add(new Formula(l3, "not"));
-				l1 = new HybridExp(symbolFlag.getcFlag(), "==", new BooleanExp(
-						1));
-				l2 = new HybridExp(symbolFlag.getzFlag(), "==", new BooleanExp(
-						1));
+				l1 = new HybridExp(symbolFlag.getcFlag(), "==", new BooleanExp(1));
+				l2 = new HybridExp(symbolFlag.getzFlag(), "==", new BooleanExp(1));
 				// Exp l3 = new OtherBooleanExp(l1, l2, "and");
 				formulaList.add(new Formula(l1, l2, "or"));
 			} else
@@ -2107,29 +1700,25 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2150,8 +1739,7 @@ public class SymbolicExecution {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(),
-							new BooleanExp(0), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(), new BooleanExp(0), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -2163,30 +1751,26 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							/*
 							 * this.addrTraceList.pushList(cfg.getCFGVertices()
 							 * .getVertex(this.targetTemp).getListLoop(0));
 							 */
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2205,8 +1789,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulaList.add(new Formula(symbolFlag.getcFlag(),
-							new BooleanExp(0), "=="));
+					formulaList.add(new Formula(symbolFlag.getcFlag(), new BooleanExp(0), "=="));
 				}
 				// formulaList.add(new Formula(symbolFlag.getzFlag(), new
 				// ConstantBooleanExp(0), "=="));
@@ -2231,28 +1814,24 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2271,8 +1850,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(),
-							new BooleanExp(1), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(), new BooleanExp(1), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -2283,28 +1861,24 @@ public class SymbolicExecution {
 					// duoc, do dieu kien dang bi sai
 					// phai tiep tuc thuc hien
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2325,8 +1899,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulaList.add(new Formula(symbolFlag.getcFlag(),
-							new BooleanExp(1), "=="));
+					formulaList.add(new Formula(symbolFlag.getcFlag(), new BooleanExp(1), "=="));
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -2339,14 +1912,11 @@ public class SymbolicExecution {
 			// if
 			// ((CF) = 1) or ((ZF) = 1)
 			// Not finished
-			HybridExp l1 = new HybridExp(symbolFlag.getcFlag(), "==",
-					new BooleanExp(1));
-			HybridExp l2 = new HybridExp(symbolFlag.getzFlag(), "==",
-					new BooleanExp(1));
+			HybridExp l1 = new HybridExp(symbolFlag.getcFlag(), "==", new BooleanExp(1));
+			HybridExp l2 = new HybridExp(symbolFlag.getzFlag(), "==", new BooleanExp(1));
 
 			if (reCond) {
-				if (symbolFlag.getcFlag() instanceof BooleanExp
-						&& symbolFlag.getzFlag() instanceof BooleanExp) {
+				if (symbolFlag.getcFlag() instanceof BooleanExp && symbolFlag.getzFlag() instanceof BooleanExp) {
 					boolean z = ((BooleanExp) symbolFlag.getzFlag()).getValue();
 					boolean c = ((BooleanExp) symbolFlag.getcFlag()).getValue();
 					// Truong hop sai
@@ -2355,10 +1925,8 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z || c) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop())
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop())
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 						// this.specialTrace = true;
 						// targetSpecial = targetTemp;
 						else
@@ -2371,8 +1939,7 @@ public class SymbolicExecution {
 					formulaList.add(new Formula(l3, "not"));
 				}
 			} else {
-				if (symbolFlag.getcFlag() instanceof BooleanExp
-						&& symbolFlag.getzFlag() instanceof BooleanExp) {
+				if (symbolFlag.getcFlag() instanceof BooleanExp && symbolFlag.getzFlag() instanceof BooleanExp) {
 					boolean z = ((BooleanExp) symbolFlag.getzFlag()).getValue();
 					boolean c = ((BooleanExp) symbolFlag.getcFlag()).getValue();
 					// Truong hop sai
@@ -2381,10 +1948,8 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!(z || c)) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop())
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop())
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 						// this.specialTrace = true;
 						// targetSpecial = targetTemp;
 						else
@@ -2412,28 +1977,24 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2452,8 +2013,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(),
-							new BooleanExp(1), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(), new BooleanExp(1), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -2464,28 +2024,24 @@ public class SymbolicExecution {
 					// duoc, do dieu kien dang bi sai
 					// phai tiep tuc thuc hien
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2506,8 +2062,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulaList.add(new Formula(symbolFlag.getcFlag(),
-							new BooleanExp(1), "=="));
+					formulaList.add(new Formula(symbolFlag.getcFlag(), new BooleanExp(1), "=="));
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -2528,29 +2083,25 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2570,8 +2121,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(),
-							new BooleanExp(0), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(), new BooleanExp(0), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -2583,30 +2133,26 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							/*
 							 * this.addrTraceList.pushList(cfg.getCFGVertices()
 							 * .getVertex(this.targetTemp).getListLoop(0));
 							 */
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2625,8 +2171,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulaList.add(new Formula(symbolFlag.getcFlag(),
-							new BooleanExp(0), "=="));
+					formulaList.add(new Formula(symbolFlag.getcFlag(), new BooleanExp(0), "=="));
 				}
 				// formulaList.add(new Formula(symbolFlag.getzFlag(), new
 				// ConstantBooleanExp(0), "=="));
@@ -2656,27 +2201,20 @@ public class SymbolicExecution {
 
 					// || (this.targetIndirect.toString().equals("0x004010b1")
 					// && this.targetTemp.toString().equals("0x004010ce"))
-					(this.targetIndirect.toString().equals("0x0040134b") && this.targetTemp
-							.toString().equals("0x00401198"))
-							|| (this.targetIndirect.toString().equals(
-									"0x0040134b") && this.targetTemp.toString()
+					(this.targetIndirect.toString().equals("0x0040134b") && this.targetTemp.toString().equals(
+							"0x00401198"))
+							|| (this.targetIndirect.toString().equals("0x0040134b") && this.targetTemp.toString()
 									.equals("0x004011a5"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004012bd") && this.targetTemp.toString()
+							|| (this.targetIndirect.toString().equals("0x004012bd") && this.targetTemp.toString()
 									.equals("0x004011a5"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004012dc") && this.targetTemp.toString()
+							|| (this.targetIndirect.toString().equals("0x004012dc") && this.targetTemp.toString()
 									.equals("0x004011a5"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004012d0") && this.targetTemp.toString()
+							|| (this.targetIndirect.toString().equals("0x004012d0") && this.targetTemp.toString()
 									.equals("0x004011a5"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004012d6") && this.targetTemp.toString()
+							|| (this.targetIndirect.toString().equals("0x004012d6") && this.targetTemp.toString()
 									.equals("0x004011a5"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004012d6") && this.targetTemp.toString()
-									.equals("0x0040114e")) || (this.targetIndirect
-							.toString().equals("0x0040111f") && this.targetTemp
+							|| (this.targetIndirect.toString().equals("0x004012d6") && this.targetTemp.toString()
+									.equals("0x0040114e")) || (this.targetIndirect.toString().equals("0x0040111f") && this.targetTemp
 							.toString().equals("0x0040114e"))))
 				return;
 
@@ -2689,22 +2227,19 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
@@ -2712,16 +2247,13 @@ public class SymbolicExecution {
 
 							// Bao dam rang duong di them vao khong nam san
 							// trong duong di san co
-							if (this.addrTraceList.get(0).getValue() == cfg
-									.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0)
-									.get(0).getValue()) {
+							if (this.addrTraceList.get(0).getValue() == cfg.getCFGVertices().getVertex(this.targetTemp)
+									.getListLoop(0).get(0).getValue()) {
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2741,8 +2273,7 @@ public class SymbolicExecution {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getzFlag(),
-							new BooleanExp(1), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getzFlag(), new BooleanExp(1), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -2754,29 +2285,25 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2799,16 +2326,13 @@ public class SymbolicExecution {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulaList.add(new Formula(symbolFlag.getzFlag(),
-							new BooleanExp(1), "=="));
+					formulaList.add(new Formula(symbolFlag.getzFlag(), new BooleanExp(1), "=="));
 			}
 		} else if (instName.equals("jg") || instName.equals("jnle")) {
 			// if
 			// ((SF) = (OF)) and ((ZF) = 0)
-			Value l1 = new HybridBooleanExp(symbolFlag.getzFlag(),
-					new BooleanExp(0), "==");
-			Value l2 = new HybridBooleanExp(symbolFlag.getsFlag(),
-					symbolFlag.getoFlag(), "==");
+			Value l1 = new HybridBooleanExp(symbolFlag.getzFlag(), new BooleanExp(0), "==");
+			Value l2 = new HybridBooleanExp(symbolFlag.getsFlag(), symbolFlag.getoFlag(), "==");
 
 			if (reCond) {
 				Value l3 = new HybridBooleanExp(l1, l2, "and");
@@ -2825,24 +2349,20 @@ public class SymbolicExecution {
 			// (SF) = (OF)
 
 			if (reCond) {
-				Value l1 = new HybridBooleanExp(symbolFlag.getsFlag(),
-						symbolFlag.getoFlag(), "==");
+				Value l1 = new HybridBooleanExp(symbolFlag.getsFlag(), symbolFlag.getoFlag(), "==");
 				formulaList.add(new Formula(l1, "not"));
 			} else
-				formulaList.add(new Formula(symbolFlag.getsFlag(), symbolFlag
-						.getoFlag(), "=="));
+				formulaList.add(new Formula(symbolFlag.getsFlag(), symbolFlag.getoFlag(), "=="));
 		} else if (instName.equals("jl") || instName.equals("jnge")) {
 			// if
 			// (SF) ≠ (OF)
 			// formulaList.add(new Formula(symbolFlag.getsFlag(),
 			// symbolFlag.getoFlag(), "!="));
 			if (reCond) {
-				Value l1 = new HybridBooleanExp(symbolFlag.getsFlag(),
-						symbolFlag.getoFlag(), "!=");
+				Value l1 = new HybridBooleanExp(symbolFlag.getsFlag(), symbolFlag.getoFlag(), "!=");
 				formulaList.add(new Formula(l1, "not"));
 			} else
-				formulaList.add(new Formula(symbolFlag.getsFlag(), symbolFlag
-						.getoFlag(), "!="));
+				formulaList.add(new Formula(symbolFlag.getsFlag(), symbolFlag.getoFlag(), "!="));
 		} else if (instName.equals("jle") || instName.equals("jng")) {
 			// if
 			// ((SF) ≠ (OF)) or ((ZF) = 1)
@@ -2852,8 +2372,7 @@ public class SymbolicExecution {
 			// OtherExp l1 = new OtherExp(symbolFlag.getzFlag(), new
 			// ConstantBooleanExp(1), "=");
 			Value l1 = symbolFlag.getzFlag();
-			Value l2 = new HybridBooleanExp(symbolFlag.getsFlag(),
-					symbolFlag.getoFlag(), "xor");
+			Value l2 = new HybridBooleanExp(symbolFlag.getsFlag(), symbolFlag.getoFlag(), "xor");
 			// OtherExp l3 = new OtherExp(l2, new ConstantLongExp(0), "!=");
 
 			if (reCond) {
@@ -2883,29 +2402,25 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2925,8 +2440,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(),
-							new BooleanExp(0), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getcFlag(), new BooleanExp(0), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -2938,30 +2452,26 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							/*
 							 * this.addrTraceList.pushList(cfg.getCFGVertices()
 							 * .getVertex(this.targetTemp).getListLoop(0));
 							 */
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -2980,8 +2490,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulaList.add(new Formula(symbolFlag.getcFlag(),
-							new BooleanExp(0), "=="));
+					formulaList.add(new Formula(symbolFlag.getcFlag(), new BooleanExp(0), "=="));
 				}
 				// formulaList.add(new Formula(symbolFlag.getzFlag(), new
 				// ConstantBooleanExp(0), "=="));
@@ -3014,21 +2523,16 @@ public class SymbolicExecution {
 					// && this.targetTemp.toString().equals("0x004010ce"))
 					// || (this.targetIndirect.toString().equals("0x004010b1")
 					// && this.targetTemp.toString().equals("0x004010af"))
-					(this.targetIndirect.toString().equals("0x004013b4") && this.targetTemp
-							.toString().equals("0x00401198"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004013c0") && this.targetTemp.toString()
+					(this.targetIndirect.toString().equals("0x004013b4") && this.targetTemp.toString().equals(
+							"0x00401198"))
+							|| (this.targetIndirect.toString().equals("0x004013c0") && this.targetTemp.toString()
 									.equals("0x00401198"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004013c6") && this.targetTemp.toString()
+							|| (this.targetIndirect.toString().equals("0x004013c6") && this.targetTemp.toString()
 									.equals("0x00401198"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004012a5") && this.targetTemp.toString()
+							|| (this.targetIndirect.toString().equals("0x004012a5") && this.targetTemp.toString()
 									.equals("0x00401198"))
-							|| (this.targetIndirect.toString().equals(
-									"0x004012b1") && this.targetTemp.toString()
-									.equals("0x00401198")) || (this.targetIndirect
-							.toString().equals("0x0040111f") && this.targetTemp
+							|| (this.targetIndirect.toString().equals("0x004012b1") && this.targetTemp.toString()
+									.equals("0x00401198")) || (this.targetIndirect.toString().equals("0x0040111f") && this.targetTemp
 							.toString().equals("0x00401198"))))
 				return;
 
@@ -3041,29 +2545,25 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3084,8 +2584,7 @@ public class SymbolicExecution {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getzFlag(),
-							new BooleanExp(0), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getzFlag(), new BooleanExp(0), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -3097,30 +2596,26 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							/*
 							 * this.addrTraceList.pushList(cfg.getCFGVertices()
 							 * .getVertex(this.targetTemp).getListLoop(0));
 							 */
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3140,8 +2635,7 @@ public class SymbolicExecution {
 						;
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulaList.add(new Formula(symbolFlag.getzFlag(),
-							new BooleanExp(0), "=="));
+					formulaList.add(new Formula(symbolFlag.getzFlag(), new BooleanExp(0), "=="));
 				}
 				// formulaList.add(new Formula(symbolFlag.getzFlag(), new
 				// ConstantBooleanExp(0), "=="));
@@ -3158,29 +2652,25 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3200,8 +2690,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getoFlag(),
-							new BooleanExp(0), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getoFlag(), new BooleanExp(0), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -3213,30 +2702,26 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							/*
 							 * this.addrTraceList.pushList(cfg.getCFGVertices()
 							 * .getVertex(this.targetTemp).getListLoop(0));
 							 */
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3255,8 +2740,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulaList.add(new Formula(symbolFlag.getoFlag(),
-							new BooleanExp(0), "=="));
+					formulaList.add(new Formula(symbolFlag.getoFlag(), new BooleanExp(0), "=="));
 				}
 				// formulaList.add(new Formula(symbolFlag.getzFlag(), new
 				// ConstantBooleanExp(0), "=="));
@@ -3282,29 +2766,25 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3324,8 +2804,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getsFlag(),
-							new BooleanExp(0), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getsFlag(), new BooleanExp(0), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -3337,30 +2816,26 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							/*
 							 * this.addrTraceList.pushList(cfg.getCFGVertices()
 							 * .getVertex(this.targetTemp).getListLoop(0));
 							 */
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3379,8 +2854,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulaList.add(new Formula(symbolFlag.getsFlag(),
-							new BooleanExp(0), "=="));
+					formulaList.add(new Formula(symbolFlag.getsFlag(), new BooleanExp(0), "=="));
 				}
 				// formulaList.add(new Formula(symbolFlag.getzFlag(), new
 				// ConstantBooleanExp(0), "=="));
@@ -3406,29 +2880,25 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()
 						// && loopTotal <= MAX_NUM_LOOP_TOTAL && loopEach <=
 						// MAX_NUM_LOOP_EACH
 						) {
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3448,8 +2918,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getpFlag(),
-							new BooleanExp(0), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getpFlag(), new BooleanExp(0), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -3461,30 +2930,26 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							/*
 							 * this.addrTraceList.pushList(cfg.getCFGVertices()
 							 * .getVertex(this.targetTemp).getListLoop(0));
 							 */
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3503,8 +2968,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					formulaList.add(new Formula(symbolFlag.getpFlag(),
-							new BooleanExp(0), "=="));
+					formulaList.add(new Formula(symbolFlag.getpFlag(), new BooleanExp(0), "=="));
 				}
 				// formulaList.add(new Formula(symbolFlag.getzFlag(), new
 				// ConstantBooleanExp(0), "=="));
@@ -3530,28 +2994,24 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3570,8 +3030,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getoFlag(),
-							new BooleanExp(1), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getoFlag(), new BooleanExp(1), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -3582,28 +3041,24 @@ public class SymbolicExecution {
 					// duoc, do dieu kien dang bi sai
 					// phai tiep tuc thuc hien
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3624,8 +3079,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulaList.add(new Formula(symbolFlag.getoFlag(),
-							new BooleanExp(1), "=="));
+					formulaList.add(new Formula(symbolFlag.getoFlag(), new BooleanExp(1), "=="));
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -3648,28 +3102,24 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3688,8 +3138,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getpFlag(),
-							new BooleanExp(1), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getpFlag(), new BooleanExp(1), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -3700,28 +3149,24 @@ public class SymbolicExecution {
 					// duoc, do dieu kien dang bi sai
 					// phai tiep tuc thuc hien
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3742,8 +3187,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulaList.add(new Formula(symbolFlag.getpFlag(),
-							new BooleanExp(1), "=="));
+					formulaList.add(new Formula(symbolFlag.getpFlag(), new BooleanExp(1), "=="));
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -3767,28 +3211,24 @@ public class SymbolicExecution {
 					// phai tiep tuc thuc hien
 					// Can phai chinh sua them
 					if (z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3807,8 +3247,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else {
-					Value l1 = new HybridBooleanExp(symbolFlag.getsFlag(),
-							new BooleanExp(1), "==");
+					Value l1 = new HybridBooleanExp(symbolFlag.getsFlag(), new BooleanExp(1), "==");
 					formulaList.add(new Formula(l1, "not"));
 				}
 			} else {
@@ -3819,28 +3258,24 @@ public class SymbolicExecution {
 					// duoc, do dieu kien dang bi sai
 					// phai tiep tuc thuc hien
 					if (!z) {
-						if (cfg.getCFGVertices().getVertex(this.targetTemp)
-								.isLoop()) {
+						if (cfg.getCFGVertices().getVertex(this.targetTemp).isLoop()) {
 							// this.addrTraceList.pushList(cfg.getCFGVertices()
 							// .getVertex(this.targetTemp).getListLoop(0));
 							if (loopTotal > MAX_NUM_LOOP_TOTAL) {
-								System.out.println("Outside Loop Total: "
-										+ loopTotal + " Address: "
+								System.out.println("Outside Loop Total: " + loopTotal + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
 							if (loopEach > MAX_NUM_LOOP_EACH) {
-								System.out.println("Outside Loop Each: "
-										+ loopEach + " Address: "
+								System.out.println("Outside Loop Each: " + loopEach + " Address: "
 										+ targetTemp.toString());
 								this.stop = true;
 								return;
 							}
 
-							this.addrTraceList.pushList(cfg.getCFGVertices()
-									.getVertex(this.targetTemp).getListLoop(0));
+							this.addrTraceList.pushList(cfg.getCFGVertices().getVertex(this.targetTemp).getListLoop(0));
 							loopTotal++;
 
 							if (targetTemp.getValue() == loopAddr)
@@ -3861,8 +3296,7 @@ public class SymbolicExecution {
 						System.out.println("Right");
 					// Truong hop dung, khong lam gi ca
 				} else
-					formulaList.add(new Formula(symbolFlag.getsFlag(),
-							new BooleanExp(1), "=="));
+					formulaList.add(new Formula(symbolFlag.getsFlag(), new BooleanExp(1), "=="));
 			}
 			/*
 			 * if (reCond) { Exp l1 = new
@@ -3972,13 +3406,9 @@ public class SymbolicExecution {
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
 			// returnAddress = new SymbolicValue(((AbsoluteAddress)
 			// dest).getValueOperand());
-			jumpAddress = new AbsoluteAddress(
-					((AbsoluteAddress) dest).getValue());
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
-			jumpAddress = new AbsoluteAddress(
-					((X86PCRelativeAddress) dest).getEffectiveValue(targetTemp
-							.getValue()));
+			jumpAddress = new AbsoluteAddress(((AbsoluteAddress) dest).getValue());
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
+			jumpAddress = new AbsoluteAddress(((X86PCRelativeAddress) dest).getEffectiveValue(targetTemp.getValue()));
 			// System.out.println("RelativeAddress:" + jumpAddress.toString());
 
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
@@ -3990,28 +3420,21 @@ public class SymbolicExecution {
 			}
 
 		} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-			jumpAddress = new AbsoluteAddress(
-					((X86MemoryOperand) dest).getDisplacement());
+			jumpAddress = new AbsoluteAddress(((X86MemoryOperand) dest).getDisplacement());
 			System.out.println("MemoryOperand:" + jumpAddress.toString());
 		}
 
-		if (stubLibrary != null
-				&& contain(
-						((Win32StubLibrary) stubLibrary).getAddressStubMap(),
-						targetTemp)) {
+		if (stubLibrary != null && contain(((Win32StubLibrary) stubLibrary).getAddressStubMap(), targetTemp)) {
 			// String funcName
 			// SystemCallStub.executeSymbolic(funcName);
 			System.out.println("Address:" + targetTemp.toString());
 			if (APIStub.executeSymbolic(funcName, this, inst)) {
 				funcName = "";
 			} else
-				System.out.println("Symbolic Execution of System Call failed:"
-						+ funcName);
+				System.out.println("Symbolic Execution of System Call failed:" + funcName);
 			this.evaluateValue = retAPIAddr.getValue();
 		} else {
-			if (jumpAddress != null
-					&& this.targetTemp.getValue() == this.targetIndirect
-							.getValue())
+			if (jumpAddress != null && this.targetTemp.getValue() == this.targetIndirect.getValue())
 				this.evaluateValue = jumpAddress.getValue();
 			else
 				this.evaluateValue = Long.MIN_VALUE;
@@ -4024,13 +3447,10 @@ public class SymbolicExecution {
 		long r = val;
 		if (r < 0)
 			r += Math.pow(2, 32);
-		if (dest.contains("al") || dest.contains("bl") || dest.contains("cl")
-				|| dest.contains("dl") || dest.contains("ah")
-				|| dest.contains("bh") || dest.contains("ch")
-				|| dest.contains("dh"))
+		if (dest.contains("al") || dest.contains("bl") || dest.contains("cl") || dest.contains("dl")
+				|| dest.contains("ah") || dest.contains("bh") || dest.contains("ch") || dest.contains("dh"))
 			r = (long) (r % Math.pow(2, 8));
-		else if (dest.equals("%ax") || dest.equals("%bx") || dest.equals("%cx")
-				|| dest.equals("%dx"))
+		else if (dest.equals("%ax") || dest.equals("%bx") || dest.equals("%cx") || dest.equals("%dx"))
 			r = (long) (r % Math.pow(2, 16));
 		return r;
 	}
@@ -4074,36 +3494,27 @@ public class SymbolicExecution {
 					b = true;
 				else {
 					if (y.getBase() != null) {
-						Value v = symbolValueRegister.getRegVal(y.getBase()
-								.toString());
+						Value v = symbolValueRegister.getRegVal(y.getBase().toString());
 						if (v instanceof LongValue)
 							b = ((LongValue) v).getValue() == 0;
 					}
 				}
 
-				if (y.getSegmentRegister() != null
-						&& y.getSegmentRegister().toString() == "%fs" && b) {
+				if (y.getSegmentRegister() != null && y.getSegmentRegister().toString() == "%fs" && b) {
 					System.out.println("SEH Exploit:" + inst.toString());
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						if (((X86Register) src).toString().equals("%esp")) {
-							system.getSEHHandler()
-									.getStart()
-									.setNextSEHRecord(
-											((LongValue) symbolStack.get(0))
-													.getValue());
-							system.getSEHHandler()
-									.getStart()
-									.setSEHHandler(
-											((LongValue) symbolStack.get(4))
-													.getValue());
+							system.getSEHHandler().getStart()
+									.setNextSEHRecord(((LongValue) symbolStack.get(0)).getValue());
+							system.getSEHHandler().getStart()
+									.setSEHHandler(((LongValue) symbolStack.get(4)).getValue());
 						}
 					}
 				} else {
 					X86MemoryOperand t = calculateMemoryOperand((X86MemoryOperand) dest);
 
 					if (src.getClass().getSimpleName().equals("X86Register")) {
-						Value val = symbolValueRegister.getRegVal(src
-								.toString());
+						Value val = symbolValueRegister.getRegVal(src.toString());
 						// This is 32 bits so we have to divide it into 4 parts
 						// and
 						// assigns to 4 new memory operands
@@ -4113,148 +3524,91 @@ public class SymbolicExecution {
 							int l = x.length();
 							if (l < 8)
 								return;
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(
-											t,
-											new LongValue(Convert.hexToLong(x
-													.substring(l - 2, l))));
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(
-											new X86MemoryOperand(t
-													.getDataType(), t
-													.getDisplacement() + 1),
-											new LongValue(Convert.hexToLong(x
-													.substring(l - 4, l - 2))));
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(
-											new X86MemoryOperand(t
-													.getDataType(), t
-													.getDisplacement() + 2),
-											new LongValue(Convert.hexToLong(x
-													.substring(l - 6, l - 4))));
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(
-											new X86MemoryOperand(t
-													.getDataType(), t
-													.getDisplacement() + 3),
-											new LongValue(Convert.hexToLong(x
-													.substring(l - 8, l - 6))));
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(t,
+									new LongValue(Convert.hexToLong(x.substring(l - 2, l))));
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(new X86MemoryOperand(t.getDataType(),
+									t.getDisplacement() + 1),
+									new LongValue(Convert.hexToLong(x.substring(l - 4, l - 2))));
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(new X86MemoryOperand(t.getDataType(),
+									t.getDisplacement() + 2),
+									new LongValue(Convert.hexToLong(x.substring(l - 6, l - 4))));
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(new X86MemoryOperand(t.getDataType(),
+									t.getDisplacement() + 3),
+									new LongValue(Convert.hexToLong(x.substring(l - 8, l - 6))));
 
 						} else
-							symbolValueMemoryOperand
-									.setSymbolMemoryOperandValue(t, val);
-					} else if (src.getClass().getSimpleName()
-							.equals("X86RegisterPart")) {
+							symbolValueMemoryOperand.setSymbolMemoryOperandValue(t, val);
+					} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 						symbolValueMemoryOperand.mov((X86MemoryOperand) dest,
-								symbolValueRegisterPart.getRegVal(src
-										.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86SegmentRegister")) {
+								symbolValueRegisterPart.getRegVal(src.toString()));
+					} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						symbolValueMemoryOperand.mov((X86MemoryOperand) dest,
 								symbolValueSegment.getRegVal(src.toString()));
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
+						symbolValueMemoryOperand.mov((X86MemoryOperand) dest, new LongValue(((Immediate) src)
+								.getNumber().intValue()));
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						symbolValueMemoryOperand.mov((X86MemoryOperand) dest,
-								new LongValue(((Immediate) src).getNumber()
-										.intValue()));
-					} else if (src.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						symbolValueMemoryOperand
-								.mov((X86MemoryOperand) dest,
-										symbolValueMemoryOperand
-												.getMemoryOperandValByte((X86MemoryOperand) src));
+								symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 					}
 
 				}
 			} else if (dest.getClass().getSimpleName().equals("X86Register")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					symbolValueRegister.mov(dest.toString(),
-							symbolValueRegister.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					symbolValueRegister.mov(dest.toString(),
-							symbolValueRegisterPart.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					symbolValueRegister.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+					symbolValueRegister.mov(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					symbolValueRegister.mov(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					symbolValueRegister.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					symbolValueRegister.mov(dest.toString(), ((Immediate) src)
-							.getNumber().intValue());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+					symbolValueRegister.mov(dest.toString(), ((Immediate) src).getNumber().intValue());
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = (X86MemoryOperand) src;
 					long desp = t.getDisplacement();
 					// Xu ly cho van de MemoryOperand la [esp + 24]
 					if (t.getBase() != null && t.getBase().toString() == "%esp") {
-						symbolValueRegister.mov(dest.toString(),
-								symbolStack.get(desp));
+						symbolValueRegister.mov(dest.toString(), symbolStack.get(desp));
 					} else if (t.getBase() != null) {
 						// Xy li cho van de MemoryOperand la [eax + 0x401201]
-						Value v = symbolValueRegister.getRegVal(t.getBase()
-								.toString());
+						Value v = symbolValueRegister.getRegVal(t.getBase().toString());
 
 						if (v instanceof LongValue) {
-							symbolValueRegister
-									.mov(dest.toString(),
-											calculateValueMemoryOperand(
-													new X86MemoryOperand(
-															t.getDataType(),
-															desp
-																	+ ((LongValue) v)
-																			.getValue()),
-													inst));
+							symbolValueRegister.mov(
+									dest.toString(),
+									calculateValueMemoryOperand(new X86MemoryOperand(t.getDataType(), desp
+											+ ((LongValue) v).getValue()), inst));
 						}
 
 					} else
 						// Xu li cho van de MemoryOperand la 0x401020
-						symbolValueRegister.mov(
-								dest.toString(),
-								calculateValueMemoryOperand(
-										new X86MemoryOperand(t.getDataType(),
-												desp), inst));
+						symbolValueRegister.mov(dest.toString(),
+								calculateValueMemoryOperand(new X86MemoryOperand(t.getDataType(), desp), inst));
 				}
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86RegisterPart")) {
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueRegister.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueRegisterPart.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+					symbolValueRegisterPart.mov(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					symbolValueRegisterPart.mov(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					symbolValueRegisterPart.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
 					int v = ((Immediate) src).getNumber().intValue();
 					v = (int) getValue(dest.toString(), v);
 					symbolValueRegisterPart.mov(dest.toString(), v);
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
-					symbolValueRegisterPart
-							.mov(dest.toString(),
-									symbolValueMemoryOperand
-											.getMemoryOperandValByte((X86MemoryOperand) src));
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+					symbolValueRegisterPart.mov(dest.toString(),
+							symbolValueMemoryOperand.getMemoryOperandValByte((X86MemoryOperand) src));
 				}
 
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister")) {
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					symbolValueSegment.mov(dest.toString(), ((Immediate) src)
-							.getNumber().intValue());
+					symbolValueSegment.mov(dest.toString(), ((Immediate) src).getNumber().intValue());
 				}
 			}
 
@@ -4264,8 +3618,7 @@ public class SymbolicExecution {
 				X86MemoryOperand t = calculateMemoryOperand((X86MemoryOperand) dest);
 				System.out.println(t.getDisplacement());
 
-				if (!program.checkAddress(new AbsoluteAddress(t
-						.getDisplacement()))) {
+				if (!program.checkAddress(new AbsoluteAddress(t.getDisplacement()))) {
 					// SEH Exploit
 					evaluateValue = system.getSEHHandler().getStart().getSehHandler();
 					running = false;
@@ -4273,77 +3626,53 @@ public class SymbolicExecution {
 			} else if (dest.getClass().getSimpleName().equals("X86Register")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
 					Value t = symbolValueRegister.getRegVal(dest.toString());
-					symbolValueRegister.mov(dest.toString(),
-							symbolValueRegister.getRegVal(src.toString()));
+					symbolValueRegister.mov(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
 					symbolValueRegister.mov(src.toString(), t);
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 					// symbolValueRegister.mov(dest.toString(),
 					// symbolValueRegisterPart.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 					Value t = symbolValueRegister.getRegVal(dest.toString());
-					symbolValueRegister.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+					symbolValueRegister.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 					symbolValueSegment.mov(src.toString(), t);
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
 					// symbolValueRegister.mov(dest.toString(), ((Immediate)
 					// src).getNumber().intValue());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					Value t = symbolValueRegister.getRegVal(dest.toString());
 					symbolValueRegister.mov(dest.toString(),
-							symbolValueMemoryOperand.getMemoryOperandVal(src
-									.toString()));
+							symbolValueMemoryOperand.getMemoryOperandVal(src.toString()));
 					symbolValueMemoryOperand.mov((X86MemoryOperand) src, t);
 				}
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86RegisterPart")) {
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
 					// symbolValueRegisterPart.mov(dest.toString(),
 					// symbolValueRegister.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					Value t = symbolValueRegisterPart
-							.getRegVal(dest.toString());
-					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueRegisterPart.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					Value t = symbolValueRegisterPart.getRegVal(dest.toString());
+					symbolValueRegisterPart.mov(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
 					symbolValueRegisterPart.mov(src.toString(), t);
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					Value t = symbolValueRegisterPart
-							.getRegVal(dest.toString());
-					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					Value t = symbolValueRegisterPart.getRegVal(dest.toString());
+					symbolValueRegisterPart.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 					symbolValueSegment.mov(src.toString(), t);
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					symbolValueRegister.mov(dest.toString(), ((Immediate) src)
-							.getNumber().intValue());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
-					Value t = symbolValueRegisterPart
-							.getRegVal(dest.toString());
+					symbolValueRegister.mov(dest.toString(), ((Immediate) src).getNumber().intValue());
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+					Value t = symbolValueRegisterPart.getRegVal(dest.toString());
 					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueMemoryOperand.getMemoryOperandVal(src
-									.toString()));
+							symbolValueMemoryOperand.getMemoryOperandVal(src.toString()));
 					symbolValueMemoryOperand.mov((X86MemoryOperand) src, t);
 				}
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister")) {
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					symbolValueSegment.mov(dest.toString(), ((Immediate) src)
-							.getNumber().intValue());
+					symbolValueSegment.mov(dest.toString(), ((Immediate) src).getNumber().intValue());
 				}
 			}
 
@@ -4367,20 +3696,16 @@ public class SymbolicExecution {
 			// SymbolicCondition negativeCond = new SymbolicCondition();
 			// int positiveConnector, negativeConnector;
 
-			if (inst.getName().equals("cmova")
-					|| inst.getName().equals("cmovg")) {
+			if (inst.getName().equals("cmova") || inst.getName().equals("cmovg")) {
 				// positiveConnector = SymbolicCondition.B_OP_GREATER;
 				// negativeConnector = SymbolicCondition.B_OP_NOT_GREATER;
-			} else if (inst.getName().equals("cmovae")
-					|| inst.getName().equals("cmovge")) {
+			} else if (inst.getName().equals("cmovae") || inst.getName().equals("cmovge")) {
 				// positiveConnector = SymbolicCondition.B_OP_NOT_LESS;
 				// negativeConnector = SymbolicCondition.B_OP_LESS;
-			} else if (inst.getName().equals("cmovb")
-					|| inst.getName().equals("cmovl")) {
+			} else if (inst.getName().equals("cmovb") || inst.getName().equals("cmovl")) {
 				// positiveConnector = SymbolicCondition.B_OP_LESS;
 				// negativeConnector = SymbolicCondition.B_OP_NOT_LESS;
-			} else if (inst.getName().equals("cmovbe")
-					|| inst.getName().equals("cmovle")) {
+			} else if (inst.getName().equals("cmovbe") || inst.getName().equals("cmovle")) {
 				// positiveConnector = SymbolicCondition.B_OP_NOT_GREATER;
 				// negativeConnector = SymbolicCondition.B_OP_GREATER;
 			} else if (inst.getName().equals("cmove")) {
@@ -4406,8 +3731,7 @@ public class SymbolicExecution {
 	public boolean executeZ3() {
 		this.writeZ3Input("z3Input.smt");
 		try {
-			Process p = Runtime.getRuntime().exec(
-					"cmd /c start /wait run_z3.bat");
+			Process p = Runtime.getRuntime().exec("cmd /c start /wait run_z3.bat");
 			System.out.println("Running script Z3...");
 			int exitCode = p.waitFor();
 
@@ -4453,8 +3777,7 @@ public class SymbolicExecution {
 				// inst.getName());
 
 				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")
-						&& src.getClass().getSimpleName()
-								.equals("X86MemoryOperand")) {
+						&& src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand edi = calculateMemoryOperand((X86MemoryOperand) dest);
 					X86MemoryOperand esi = calculateMemoryOperand((X86MemoryOperand) src);
 
@@ -4466,12 +3789,10 @@ public class SymbolicExecution {
 					if (ecx instanceof LongValue) {
 						int t = (int) ((LongValue) ecx).getValue();
 						for (int i = 0; i < t; i++) {
-							Value ediValue = this.calculateValueMemoryOperand(
-									new X86MemoryOperand(edi.getDataType(), edi
-											.getDisplacement() + i), inst);
-							Value esiValue = this.calculateValueMemoryOperand(
-									new X86MemoryOperand(esi.getDataType(), esi
-											.getDisplacement() + i), inst);
+							Value ediValue = this.calculateValueMemoryOperand(new X86MemoryOperand(edi.getDataType(),
+									edi.getDisplacement() + i), inst);
+							Value esiValue = this.calculateValueMemoryOperand(new X86MemoryOperand(esi.getDataType(),
+									esi.getDisplacement() + i), inst);
 
 							if (!ediValue.equal(esiValue)) {
 								this.symbolFlag.setzFlag(new BooleanExp(false));
@@ -4535,10 +3856,8 @@ public class SymbolicExecution {
 					x = symbolValueRegister.getRegVal("%eax");
 					// FlagRelationship.totalChangePart(symbolValueRegisterPart,
 					// symbolValueRegister, "%eax");
-					if (dest.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = this
-								.calculateMemoryOperand((X86MemoryOperand) dest);
+					if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+						X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 
 						long disp = t.getDisplacement();
 						if (t.getBase() == null) {
@@ -4548,40 +3867,34 @@ public class SymbolicExecution {
 							 */
 
 							if (ecx instanceof LongValue) {
-								// long b = ((ValueLongExp) base).getValueOperand();
+								// long b = ((ValueLongExp)
+								// base).getValueOperand();
 								long cx = ((LongValue) ecx).getValue();
 								// b1 = calculateValueMemoryOperand(new
 								// X86MemoryOperand(inst.getDataType(), b +
 								// disp),
 								// inst);
 								for (long i = 0; i < cx;) {
-									symbolValueMemoryOperand.movDoubleWord(
-											new X86MemoryOperand(inst
-													.getDataType(), i + disp),
-											x);
+									symbolValueMemoryOperand.movDoubleWord(new X86MemoryOperand(inst.getDataType(), i
+											+ disp), x);
 									i += 4;
 								}
 
-								symbolValueRegister.add("%edi", new LongValue(
-										cx));
-								symbolValueRegister.mov("%ecx",
-										new LongValue(0));
+								symbolValueRegister.add("%edi", new LongValue(cx));
+								symbolValueRegister.mov("%ecx", new LongValue(0));
 							}
 						}
 					}
 
 					// symbolValueRegister.add("%edi", new ValueLongExp(4));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 
 					if (src.toString().equals("%al")) {
 						x = symbolValueRegisterPart.getRegVal("%al");
 						// FlagRelationship.partChangeTotal(symbolValueRegisterPart,
 						// symbolValueRegister, "%ax");
-						if (dest.getClass().getSimpleName()
-								.equals("X86MemoryOperand")) {
-							X86MemoryOperand t = this
-									.calculateMemoryOperand((X86MemoryOperand) dest);
+						if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+							X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 
 							long disp = t.getDisplacement();
 							if (t.getBase() == null) {
@@ -4598,15 +3911,11 @@ public class SymbolicExecution {
 									// inst);
 
 									for (long i = 0; i < cx; i++) {
-										symbolValueMemoryOperand.movByte(
-												new X86MemoryOperand(inst
-														.getDataType(), disp
-														+ i), x);
+										symbolValueMemoryOperand.movByte(new X86MemoryOperand(inst.getDataType(), disp
+												+ i), x);
 									}
-									symbolValueRegister.add("%edi",
-											new LongValue(cx));
-									symbolValueRegister.mov("%ecx",
-											new LongValue(0));
+									symbolValueRegister.add("%edi", new LongValue(cx));
+									symbolValueRegister.mov("%ecx", new LongValue(0));
 								}
 							}
 						}
@@ -4615,8 +3924,7 @@ public class SymbolicExecution {
 				}
 
 			} else if (inst.hasPrefixREPNZ()) {
-				System.out.println("Debug Instruction REPNZ STOS:"
-						+ inst.toString());
+				System.out.println("Debug Instruction REPNZ STOS:" + inst.toString());
 			} else {
 				// System.out.println("Debug Instruction stos:" +
 				// inst.toString());
@@ -4625,10 +3933,8 @@ public class SymbolicExecution {
 					x = symbolValueRegister.getRegVal(src.toString());
 					// FlagRelationship.totalChangePart(symbolValueRegisterPart,
 					// symbolValueRegister, "%eax");
-					if (dest.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = this
-								.calculateMemoryOperand((X86MemoryOperand) dest);
+					if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+						X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 						symbolValueMemoryOperand.movDoubleWord(t, x);
 						symbolValueRegister.add("%edi", new LongValue(4));
 						// X86MemoryOperand t1 = this.calculateMemoryOperand(t);
@@ -4651,20 +3957,16 @@ public class SymbolicExecution {
 					}
 
 					// symbolValueRegister.add("%edi", new ValueLongExp(4));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 					x = symbolValueRegisterPart.getRegVal(src.toString());
 					// FlagRelationship.partChangeTotal(symbolValueRegisterPart,
 					// symbolValueRegister, "%ax");
-					if (dest.getClass().getSimpleName()
-							.equals("X86MemoryOperand")) {
-						X86MemoryOperand t = this
-								.calculateMemoryOperand((X86MemoryOperand) dest);
+					if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+						X86MemoryOperand t = this.calculateMemoryOperand((X86MemoryOperand) dest);
 						if (src.toString().endsWith("x")) {
 							symbolValueMemoryOperand.movWord(t, x);
 							symbolValueRegister.add("%edi", new LongValue(2));
-						} else if (src.toString().endsWith("l")
-								|| src.toString().endsWith("h")) {
+						} else if (src.toString().endsWith("l") || src.toString().endsWith("h")) {
 							symbolValueMemoryOperand.movByte(t, x);
 							symbolValueRegister.add("%edi", new LongValue(1));
 						}
@@ -4701,29 +4003,23 @@ public class SymbolicExecution {
 
 				long disp = t.getDisplacement();
 				if (t.getBase() != null) {
-					Value base = symbolValueRegister.getRegVal(t.getBase()
-							.toString());
+					Value base = symbolValueRegister.getRegVal(t.getBase().toString());
 
 					if (inst.getName().toString().endsWith("b")) {
-						symbolValueRegister.add(t.getBase().toString(),
-								new LongValue(4));
+						symbolValueRegister.add(t.getBase().toString(), new LongValue(4));
 					} else if (inst.getName().toString().endsWith("s")) {
-						symbolValueRegister.add(t.getBase().toString(),
-								new LongValue(4));
+						symbolValueRegister.add(t.getBase().toString(), new LongValue(4));
 					} else if (inst.getName().toString().endsWith("w")) {
-						symbolValueRegister.add(t.getBase().toString(),
-								new LongValue(4));
+						symbolValueRegister.add(t.getBase().toString(), new LongValue(4));
 					} else if (inst.getName().toString().endsWith("l")) {
-						symbolValueRegister.add(t.getBase().toString(),
-								new LongValue(4));
+						symbolValueRegister.add(t.getBase().toString(), new LongValue(4));
 					}
 					// if (this.targetTemp.getValueOperand() == 4199303)
 					// System.out.println("Debug");
 
 					if (base instanceof LongValue) {
 						long b = ((LongValue) base).getValue();
-						b1 = calculateValueMemoryOperand(new X86MemoryOperand(
-								inst.getDataType(), b + disp), inst);
+						b1 = calculateValueMemoryOperand(new X86MemoryOperand(inst.getDataType(), b + disp), inst);
 					}
 				}
 			}
@@ -4732,8 +4028,7 @@ public class SymbolicExecution {
 				symbolValueRegister.mov("%eax", b1);
 				// RegisterRelationship.totalChangePart(symbolValueRegisterPart,
 				// symbolValueRegister, "%eax");
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86RegisterPart")) {
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 				symbolValueRegisterPart.mov("%ax", b1);
 				// RegisterRelationship.partChangeTotal(symbolValueRegisterPart,
 				// symbolValueRegister, "%ax");
@@ -4759,21 +4054,16 @@ public class SymbolicExecution {
 					// Check if AH = 2A
 					// Return: CX = year (1980-2099) DH = month DL = day AL =
 					// day of week (00h=Sunday)
-					if (symbolValueRegisterPart.getRegVal("%ah").equal(
-							new LongValue(42))) {
-						symbolValueRegisterPart.setSymbolRegisterPartValue(
-								"%cx", new LongValue(Calendar.getInstance()
-										.get(Calendar.YEAR)));
+					if (symbolValueRegisterPart.getRegVal("%ah").equal(new LongValue(42))) {
+						symbolValueRegisterPart.setSymbolRegisterPartValue("%cx", new LongValue(Calendar.getInstance()
+								.get(Calendar.YEAR)));
 						// int z = Calendar.getInstance().get(Calendar.MONTH);
-						symbolValueRegisterPart.setSymbolRegisterPartValue(
-								"%dh", new LongValue(Calendar.getInstance()
-										.get(Calendar.MONTH) + 1));
-						symbolValueRegisterPart.setSymbolRegisterPartValue(
-								"%dl", new LongValue(Calendar.getInstance()
-										.get(Calendar.DATE)));
-						symbolValueRegisterPart.setSymbolRegisterPartValue(
-								"%al", new LongValue(Calendar.getInstance()
-										.get(Calendar.DAY_OF_WEEK)));
+						symbolValueRegisterPart.setSymbolRegisterPartValue("%dh", new LongValue(Calendar.getInstance()
+								.get(Calendar.MONTH) + 1));
+						symbolValueRegisterPart.setSymbolRegisterPartValue("%dl", new LongValue(Calendar.getInstance()
+								.get(Calendar.DATE)));
+						symbolValueRegisterPart.setSymbolRegisterPartValue("%al", new LongValue(Calendar.getInstance()
+								.get(Calendar.DAY_OF_WEEK)));
 					}
 				}
 
@@ -4785,98 +4075,64 @@ public class SymbolicExecution {
 			// http://stackoverflow.com/questions/1699748/what-is-the-difference-between-mov-and-lea
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					symbolValueRegister.mov(dest.toString(),
-							symbolValueRegister.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					symbolValueRegister.mov(dest.toString(),
-							symbolValueRegisterPart.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					symbolValueRegister.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+					symbolValueRegister.mov(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					symbolValueRegister.mov(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					symbolValueRegister.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					symbolValueRegister.mov(dest.toString(), ((Immediate) src)
-							.getNumber().intValue());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+					symbolValueRegister.mov(dest.toString(), ((Immediate) src).getNumber().intValue());
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = (X86MemoryOperand) src;
 					// X86MemoryOperand t =
 					// calculateMemoryOperand((X86MemoryOperand) src);
 					// symbolValueRegister.mov(dest.toString(), regVal)
 
 					if (t.getBase() != null) {
-						symbolValueRegister.mov(dest.toString(),
-								symbolValueRegister.getRegVal(t.getBase()
-										.toString()));
+						symbolValueRegister.mov(dest.toString(), symbolValueRegister.getRegVal(t.getBase().toString()));
 						if (t.getDisplacement() != 0)
-							symbolValueRegister.add(dest.toString(),
-									new LongValue(t.getDisplacement()));
+							symbolValueRegister.add(dest.toString(), new LongValue(t.getDisplacement()));
 					} else if (t.getDisplacement() != 0)
-						symbolValueRegister.mov(dest.toString(), new LongValue(
-								t.getDisplacement()));
+						symbolValueRegister.mov(dest.toString(), new LongValue(t.getDisplacement()));
 				}
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86RegisterPart")) {
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueRegister.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueRegisterPart.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					symbolValueRegisterPart.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+					symbolValueRegisterPart.mov(dest.toString(), symbolValueRegister.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					symbolValueRegisterPart.mov(dest.toString(), symbolValueRegisterPart.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					symbolValueRegisterPart.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					symbolValueRegisterPart.mov(dest.toString(),
-							((Immediate) src).getNumber().intValue());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+					symbolValueRegisterPart.mov(dest.toString(), ((Immediate) src).getNumber().intValue());
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = (X86MemoryOperand) src;
 					if (t.getBase() != null)
 						symbolValueRegisterPart.mov(dest.toString(),
-								symbolValueRegister.getRegVal(t.getBase()
-										.toString()));
+								symbolValueRegister.getRegVal(t.getBase().toString()));
 					if (t.getDisplacement() != 0)
-						symbolValueRegisterPart.add(dest.toString(),
-								new LongValue(t.getDisplacement()));
+						symbolValueRegisterPart.add(dest.toString(), new LongValue(t.getDisplacement()));
 				}
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister")) {
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86RegisterPart")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
-				} else if (src.getClass().getSimpleName()
-						.equals("X86SegmentRegister")) {
-					symbolValueSegment.mov(dest.toString(),
-							symbolValueSegment.getRegVal(src.toString()));
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
+				} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+					symbolValueSegment.mov(dest.toString(), symbolValueSegment.getRegVal(src.toString()));
 				} else if (src.getClass().getSimpleName().equals("Immediate")) {
-					symbolValueSegment.mov(dest.toString(), ((Immediate) src)
-							.getNumber().intValue());
-				} else if (src.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+					symbolValueSegment.mov(dest.toString(), ((Immediate) src).getNumber().intValue());
+				} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					X86MemoryOperand t = (X86MemoryOperand) src;
 					if (t.getBase() != null) {
-						symbolValueSegment.mov(dest.toString(),
-								symbolValueRegister.getRegVal(t.getBase()
-										.toString()));
+						symbolValueSegment.mov(dest.toString(), symbolValueRegister.getRegVal(t.getBase().toString()));
 						if (t.getDisplacement() != 0)
-							symbolValueSegment.add(dest.toString(),
-									new LongValue(t.getDisplacement()));
+							symbolValueSegment.add(dest.toString(), new LongValue(t.getDisplacement()));
 					} else if (t.getDisplacement() != 0)
-						symbolValueSegment.mov(dest.toString(),
-								new LongValue(t.getDisplacement()));
+						symbolValueSegment.mov(dest.toString(), new LongValue(t.getDisplacement()));
 				}
 			}
 
-		} else if (inst.getName().startsWith("cmp")
-				|| inst.getName().startsWith("test")) {
+		} else if (inst.getName().startsWith("cmp") || inst.getName().startsWith("test")) {
 			// SymbolicValue lhs = null, rhs = null;
 			// if (this.targetTemp.getValueOperand() == 4199181)
 			// System.out.println("Debug CMP");
@@ -4884,8 +4140,7 @@ public class SymbolicExecution {
 				d = symbolValueRegister.getRegVal(dest.toString());
 			else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
 				d = symbolValueRegisterPart.getRegVal(dest.toString());
-			else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister"))
+			else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 				d = symbolValueSegment.getRegVal(dest.toString());
 			else if (dest.getClass().getSimpleName().equals("Immediate"))
 				d = new LongValue(((Immediate) dest).getNumber().intValue());
@@ -4897,8 +4152,7 @@ public class SymbolicExecution {
 				s = symbolValueRegister.getRegVal(src.toString());
 			else if (src.getClass().getSimpleName().equals("X86RegisterPart"))
 				s = symbolValueRegisterPart.getRegVal(src.toString());
-			else if (src.getClass().getSimpleName()
-					.equals("X86SegmentRegister"))
+			else if (src.getClass().getSimpleName().equals("X86SegmentRegister"))
 				s = symbolValueSegment.getRegVal(src.toString());
 			else if (src.getClass().getSimpleName().equals("Immediate")) {
 				if (inst.getName().endsWith("b")) {
@@ -4906,8 +4160,7 @@ public class SymbolicExecution {
 					s = new LongValue(t);
 				} else
 					s = new LongValue(((Immediate) src).getNumber().intValue());
-			} else if (src.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+			} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				// s = symbolValueMemoryOperand
 				// .getMemoryOperandVal((X86MemoryOperand) src);
 				X86MemoryOperand t = (X86MemoryOperand) src;
@@ -4917,29 +4170,22 @@ public class SymbolicExecution {
 					if (t.getBase().toString().equals("%esp"))
 						base = symbolStack.get(0);
 					else
-						base = symbolValueRegister.getRegVal(t.getBase()
-								.toString());
+						base = symbolValueRegister.getRegVal(t.getBase().toString());
 
 					if (base instanceof LongValue)
-						s = symbolValueMemoryOperand
-								.getMemoryOperandValByte(new X86MemoryOperand(t
-										.getDataType(), desp
-										+ ((LongValue) base).getValue()));
+						s = symbolValueMemoryOperand.getMemoryOperandValByte(new X86MemoryOperand(t.getDataType(), desp
+								+ ((LongValue) base).getValue()));
 					else
 						s = symbolValueMemoryOperand.getMemoryOperandValByte(t);
 				} else
-					s = symbolValueMemoryOperand
-							.getMemoryOperandValByte(new X86MemoryOperand(t
-									.getDataType(), desp));
+					s = symbolValueMemoryOperand.getMemoryOperandValByte(new X86MemoryOperand(t.getDataType(), desp));
 			}
 
 			// this.formulas.add(new Formula(d.clone(), s.clone()));
 			if (inst.getName().startsWith("cmp"))
-				symbolFlag.changeFlagWithCMP(symbolValueRegister,
-						symbolValueMemoryOperand, symbolStack, d, s);
+				symbolFlag.changeFlagWithCMP(symbolValueRegister, symbolValueMemoryOperand, symbolStack, d, s);
 			else
-				symbolFlag.changeFlagWithTEST(symbolValueRegister,
-						symbolValueMemoryOperand, symbolStack, d, s);
+				symbolFlag.changeFlagWithTEST(symbolValueRegister, symbolValueMemoryOperand, symbolStack, d, s);
 			// set compare status
 
 		} else if (inst.getName().startsWith("pop")) {
@@ -4947,27 +4193,21 @@ public class SymbolicExecution {
 				return;
 
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
-				if (!symbolValueRegister.setSymbolRegisterValue(
-						dest.toString(), symbolStack.pop()))
+				if (!symbolValueRegister.setSymbolRegisterValue(dest.toString(), symbolStack.pop()))
 					System.out.println("Error");
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86RegisterPart")) {
-				if (!symbolValueRegisterPart.setSymbolRegisterPartValue(
-						dest.toString(), symbolStack.pop()))
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
+				if (!symbolValueRegisterPart.setSymbolRegisterPartValue(dest.toString(), symbolStack.pop()))
 					System.out.println("Error");
 				symbolValueRegister.add("%esp", new LongValue(2));
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister")) {
-				if (!symbolValueSegment.setSymbolSegmentValue(dest.toString(),
-						symbolStack.pop()))
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
+				if (!symbolValueSegment.setSymbolSegmentValue(dest.toString(), symbolStack.pop()))
 					System.out.println("Error");
 			} else if (dest.getClass().getSimpleName().equals("Immediate"))
 				// d = new ConstantExp(((Immediate)
 				// dest).getNumber().intValue());
 				;
 			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
-				if (!symbolValueMemoryOperand.setSymbolMemoryOperandValue(
-						(X86MemoryOperand) dest, symbolStack.pop()))
+				if (!symbolValueMemoryOperand.setSymbolMemoryOperandValue((X86MemoryOperand) dest, symbolStack.pop()))
 					System.out.println("Error");
 			}
 
@@ -4995,16 +4235,13 @@ public class SymbolicExecution {
 				// Immediate t = (Immediate) dest;
 				// long x = t.getNumber().longValue();
 				d = new LongValue(((Immediate) dest).getNumber().longValue());
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+			} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				// d = symbolValueMemoryOperand
 				// .getMemoryOperandVal((X86MemoryOperand) dest);
 				X86MemoryOperand t = (X86MemoryOperand) dest;
-				if (t.getSegmentRegister() != null
-						&& t.getSegmentRegister().toString() == "%fs"
+				if (t.getSegmentRegister() != null && t.getSegmentRegister().toString() == "%fs"
 						&& t.getDisplacement() == 0) {
-					d = new LongValue(system.getSEHHandler().getStart()
-							.getNextSEHRecord());
+					d = new LongValue(system.getSEHHandler().getStart().getNextSEHRecord());
 				} else if (t.getBase() != null) {
 					d = symbolValueRegister.getRegVal(t.getBase().toString());
 					if (t.getDisplacement() != 0)
@@ -5015,18 +4252,17 @@ public class SymbolicExecution {
 				 * if (inst.getName().endsWith("l")) d =
 				 * symbolValueMemoryOperand .getMemoryOperandValDoubleWord(new
 				 * X86MemoryOperand( t.getDataType(), ((ValueLongExp) d)
-				 * .getValueOperand())); else if (inst.getName().endsWith("w")) d =
-				 * symbolValueMemoryOperand .getMemoryOperandValWord(new
+				 * .getValueOperand())); else if (inst.getName().endsWith("w"))
+				 * d = symbolValueMemoryOperand .getMemoryOperandValWord(new
 				 * X86MemoryOperand(t .getDataType(), ((ValueLongExp) d)
-				 * .getValueOperand())); else if (inst.getName().endsWith("b")) d =
-				 * symbolValueMemoryOperand .getMemoryOperandValByte(new
+				 * .getValueOperand())); else if (inst.getName().endsWith("b"))
+				 * d = symbolValueMemoryOperand .getMemoryOperandValByte(new
 				 * X86MemoryOperand(t .getDataType(), ((ValueLongExp) d)
 				 * .getValueOperand()));
 				 */
 				d = this.calculateValueMemoryOperand(t, inst);
 
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86SegmentRegister"))
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
 				d = symbolValueSegment.getRegVal(dest.toString());
 
 			symbolStack.push(d);
@@ -5037,8 +4273,7 @@ public class SymbolicExecution {
 		}
 	}
 
-	private Value calculateValueMemoryOperand(X86MemoryOperand t,
-			Instruction inst) {
+	private Value calculateValueMemoryOperand(X86MemoryOperand t, Instruction inst) {
 		// TODO Auto-generated method stub
 		Value d = null;
 		// X86MemoryOperand t = (X86MemoryOperand) dest;
@@ -5061,48 +4296,33 @@ public class SymbolicExecution {
 					} else if (inst.getName().toString().endsWith("w")) {
 						d = new LongValue(system.getKernel().readWord((int) ad));
 					} else if (inst.getName().toString().endsWith("l")) {
-						d = new LongValue(system.getKernel().readDoubleWord(
-								(int) ad));
+						d = new LongValue(system.getKernel().readDoubleWord((int) ad));
 					}
 				} else if (system.checkAddrInFile(ad)) {
 					if (inst.getName().toString().endsWith("b")) {
-						d = new LongValue(system.getFileHandle().readByte(
-								(int) ad));
+						d = new LongValue(system.getFileHandle().readByte((int) ad));
 					} else if (inst.getName().toString().endsWith("s")) {
-						d = new LongValue(system.getFileHandle().readWord(
-								(int) ad));
+						d = new LongValue(system.getFileHandle().readWord((int) ad));
 					} else if (inst.getName().toString().endsWith("w")) {
-						d = new LongValue(system.getFileHandle().readWord(
-								(int) ad));
+						d = new LongValue(system.getFileHandle().readWord((int) ad));
 					} else if (inst.getName().toString().endsWith("l")) {
-						d = new LongValue(system.getFileHandle()
-								.readDoubleWord((int) ad));
+						d = new LongValue(system.getFileHandle().readDoubleWord((int) ad));
 					}
 				} else {
 					if (inst.getName().toString().endsWith("b")) {
 						if (inst.getName().toString().startsWith("cmp")
-								&& !symbolValueMemoryOperand
-										.contain(new X86MemoryOperand(t
-												.getDataType(), desp))) {
-							d = new LongValue(
-									program.getByteValueMemory(new AbsoluteAddress(
-											ad)));
+								&& !symbolValueMemoryOperand.contain(new X86MemoryOperand(t.getDataType(), desp))) {
+							d = new LongValue(program.getByteValueMemory(new AbsoluteAddress(ad)));
 						} else
-							d = symbolValueMemoryOperand
-									.getMemoryOperandValByte(new X86MemoryOperand(
-											t.getDataType(), ad));
+							d = symbolValueMemoryOperand.getMemoryOperandValByte(new X86MemoryOperand(t.getDataType(),
+									ad));
 					} else if (inst.getName().toString().endsWith("s")) {
-						d = symbolValueMemoryOperand
-								.getMemoryOperandValWord(new X86MemoryOperand(t
-										.getDataType(), ad));
+						d = symbolValueMemoryOperand.getMemoryOperandValWord(new X86MemoryOperand(t.getDataType(), ad));
 					} else if (inst.getName().toString().endsWith("w")) {
-						d = symbolValueMemoryOperand
-								.getMemoryOperandValWord(new X86MemoryOperand(t
-										.getDataType(), ad));
+						d = symbolValueMemoryOperand.getMemoryOperandValWord(new X86MemoryOperand(t.getDataType(), ad));
 					} else if (inst.getName().toString().endsWith("l")) {
-						d = symbolValueMemoryOperand
-								.getMemoryOperandValDoubleWord(new X86MemoryOperand(
-										t.getDataType(), ad));
+						d = symbolValueMemoryOperand.getMemoryOperandValDoubleWord(new X86MemoryOperand(
+								t.getDataType(), ad));
 					}
 
 					/*
@@ -5125,49 +4345,34 @@ public class SymbolicExecution {
 				} else if (inst.getName().toString().endsWith("w")) {
 					d = new LongValue(system.getKernel().readWord((int) desp));
 				} else if (inst.getName().toString().endsWith("l")) {
-					d = new LongValue(system.getKernel().readDoubleWord(
-							(int) desp));
+					d = new LongValue(system.getKernel().readDoubleWord((int) desp));
 				}
 			} else if (system.checkAddrInFile(desp)) {
 				if (inst.getName().toString().endsWith("b")) {
-					d = new LongValue(system.getFileHandle().readByte(
-							(int) desp));
+					d = new LongValue(system.getFileHandle().readByte((int) desp));
 				} else if (inst.getName().toString().endsWith("s")) {
-					d = new LongValue(system.getFileHandle().readWord(
-							(int) desp));
+					d = new LongValue(system.getFileHandle().readWord((int) desp));
 				} else if (inst.getName().toString().endsWith("w")) {
-					d = new LongValue(system.getFileHandle().readWord(
-							(int) desp));
+					d = new LongValue(system.getFileHandle().readWord((int) desp));
 				} else if (inst.getName().toString().endsWith("l")) {
-					d = new LongValue(system.getFileHandle().readDoubleWord(
-							(int) desp));
+					d = new LongValue(system.getFileHandle().readDoubleWord((int) desp));
 				}
 			} else {
 				if (inst.getName().toString().endsWith("b")) {
 					if (inst.getName().toString().startsWith("cmps")
-							&& !symbolValueMemoryOperand
-									.contain(new X86MemoryOperand(t
-											.getDataType(), desp))) {
-						d = new LongValue(
-								program.getByteValueMemory(new AbsoluteAddress(
-										desp)));
+							&& !symbolValueMemoryOperand.contain(new X86MemoryOperand(t.getDataType(), desp))) {
+						d = new LongValue(program.getByteValueMemory(new AbsoluteAddress(desp)));
 					} else
 						d = symbolValueMemoryOperand
-								.getMemoryOperandValByte(new X86MemoryOperand(t
-										.getDataType(), desp));
+								.getMemoryOperandValByte(new X86MemoryOperand(t.getDataType(), desp));
 
 				} else if (inst.getName().toString().endsWith("s")) {
-					d = symbolValueMemoryOperand
-							.getMemoryOperandValWord(new X86MemoryOperand(t
-									.getDataType(), desp));
+					d = symbolValueMemoryOperand.getMemoryOperandValWord(new X86MemoryOperand(t.getDataType(), desp));
 				} else if (inst.getName().toString().endsWith("w")) {
-					d = symbolValueMemoryOperand
-							.getMemoryOperandValWord(new X86MemoryOperand(t
-									.getDataType(), desp));
+					d = symbolValueMemoryOperand.getMemoryOperandValWord(new X86MemoryOperand(t.getDataType(), desp));
 				} else if (inst.getName().toString().endsWith("l")) {
-					d = symbolValueMemoryOperand
-							.getMemoryOperandValDoubleWord(new X86MemoryOperand(
-									t.getDataType(), desp));
+					d = symbolValueMemoryOperand.getMemoryOperandValDoubleWord(new X86MemoryOperand(t.getDataType(),
+							desp));
 				}
 			}
 		}
@@ -5189,8 +4394,7 @@ public class SymbolicExecution {
 
 		if (base != null) {
 			if (base instanceof LongValue) {
-				return new X86MemoryOperand(t.getDataType(), disp
-						+ ((LongValue) base).getValue());
+				return new X86MemoryOperand(t.getDataType(), disp + ((LongValue) base).getValue());
 			}
 		}
 		return t;
@@ -5270,8 +4474,7 @@ public class SymbolicExecution {
 		String line;
 		try {
 			fis = new FileInputStream(fileName);
-			br = new BufferedReader(new InputStreamReader(fis,
-					Charset.forName("UTF-8")));
+			br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
 			line = br.readLine();
 
 			if (line != null && line.equals("sat")) {
@@ -5281,8 +4484,7 @@ public class SymbolicExecution {
 					long val = getValueZ3Result(line);
 					name = reverseName(name);
 					pcValue.add(name, val);
-					System.out.println(name + " --> " + val + " = "
-							+ getValueZ3(line));
+					System.out.println(name + " --> " + val + " = " + getValueZ3(line));
 				}
 				br.close();
 				/*
@@ -5362,14 +4564,12 @@ public class SymbolicExecution {
 		}
 
 		if (result[2].startsWith("(")) {
-			val = Long
-					.parseLong(result[3].substring(0, result[3].length() - 1));
+			val = Long.parseLong(result[3].substring(0, result[3].length() - 1));
 			// if (val > 100000) val = 0;
 			if (result[2].substring(1).equals("-"))
 				val = -val;
 		} else {
-			val = Long
-					.parseLong(result[2].substring(2, result[2].length() - 4));
+			val = Long.parseLong(result[2].substring(2, result[2].length() - 4));
 			if (val >= Math.pow(2, 31))
 				val = (long) (val - Math.pow(2, 32));
 		}
@@ -5389,14 +4589,12 @@ public class SymbolicExecution {
 		}
 
 		if (result[2].startsWith("(")) {
-			val = Long
-					.parseLong(result[3].substring(0, result[3].length() - 1));
+			val = Long.parseLong(result[3].substring(0, result[3].length() - 1));
 			// if (val > 100000) val = 0;
 			if (result[2].substring(1).equals("-"))
 				val = -val;
 		} else {
-			val = Long
-					.parseLong(result[2].substring(2, result[2].length() - 4));
+			val = Long.parseLong(result[2].substring(2, result[2].length() - 4));
 			// if (val >= Math.pow(2, 31))
 			// val = (long) (val - Math.pow(2, 32));
 		}

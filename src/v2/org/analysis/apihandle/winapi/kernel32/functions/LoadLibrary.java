@@ -28,17 +28,16 @@ import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 /**
- * Loads the specified module into the address space of the calling process.
- * The specified module may cause other modules to be loaded.
+ * Loads the specified module into the address space of the calling process. The
+ * specified module may cause other modules to be loaded.
  * 
  * @param lpFileName
  *            The name of the module. This can be either a library module (a
  *            .dll file) or an executable module (an .exe file). The name
- *            specified is the file name of the module and is not related to
- *            the name stored in the library module itself, as specified by
- *            the LIBRARY keyword in the module-definition (.def) file.
- * @return If the function succeeds, the return value is a handle to the
- *         module.
+ *            specified is the file name of the module and is not related to the
+ *            name stored in the library module itself, as specified by the
+ *            LIBRARY keyword in the module-definition (.def) file.
+ * @return If the function succeeds, the return value is a handle to the module.
  * 
  * @author Yen Nguyen
  *
@@ -49,7 +48,7 @@ public class LoadLibrary extends Kernel32API {
 	 * 
 	 */
 	public LoadLibrary() {
-		
+
 	}
 
 	@Override
@@ -74,7 +73,7 @@ public class LoadLibrary extends Kernel32API {
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 			register.mov("eax", new LongValue(value));
 			System.out.println("Return Value: " + value);
-			
+
 			value = ((LongValue) register.getRegisterValue("eax")).getValue();
 			APIHandle.libraryHandle.put(value, libraryName);
 		}

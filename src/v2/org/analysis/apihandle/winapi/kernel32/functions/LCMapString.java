@@ -89,8 +89,7 @@ public class LCMapString extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -102,11 +101,9 @@ public class LCMapString extends Kernel32API {
 		Value x4 = stack.pop();
 		Value x5 = stack.pop();
 		Value x6 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4
-				+ " " + x5 + " " + x6);
+		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue
-				&& x3 instanceof LongValue && x4 instanceof LongValue
+		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
 				&& x5 instanceof LongValue && x6 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
@@ -117,19 +114,16 @@ public class LCMapString extends Kernel32API {
 
 			LCID Locale = new LCID(t1);
 			DWORD dwMapFlags = new DWORD(t2);
-			WString lpSrcStr = new WString(memory.getText(new X86MemoryOperand(
-					DataType.INT32, t3)));
+			WString lpSrcStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
 			int cchSrc = (int) t4;
 			char[] lpDestStr = (t5 != 0L && t6 != 0L) ? new char[(int) t6] : null;
 			int cchDest = (int) t6;
-			int ret = Kernel32DLL.INSTANCE.LCMapString(Locale, dwMapFlags,
-					lpSrcStr, cchSrc, lpDestStr, cchDest);
+			int ret = Kernel32DLL.INSTANCE.LCMapString(Locale, dwMapFlags, lpSrcStr, cchSrc, lpDestStr, cchDest);
 
 			register.mov("eax", new LongValue(ret));
 
 			if (lpDestStr != null)
-				memory.setText(new X86MemoryOperand(DataType.INT32, t5),
-						new String(lpDestStr));
+				memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpDestStr));
 		}
 		return false;
 	}

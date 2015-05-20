@@ -12,8 +12,8 @@ public class HybridBooleanValue implements Value {
 	private int connector;
 	public static int MAX_CON = 16;
 	public Map<String, Long> valueMap = new HashMap<String, Long>();
-	String[] con_mean = new String[] { "Undefined", "+", "-", "*", "/", "and",
-			"or", "not", "xor", "=", ">", "<", ">=", "<=", "!=", "==" };
+	String[] con_mean = new String[] { "Undefined", "+", "-", "*", "/", "and", "or", "not", "xor", "=", ">", "<", ">=",
+			"<=", "!=", "==" };
 
 	@Override
 	public String getName() {
@@ -46,53 +46,53 @@ public class HybridBooleanValue implements Value {
 	// this.left = left;
 	// this.connector = 0;
 	// this.right = right;
-	// }	
-	
+	// }
+
 	public Value evaluate() {
 		// TODO Auto-generated method stub
 		if (left instanceof BooleanValue && right instanceof BooleanValue) {
-			boolean l = ((BooleanValue)left).getValue();
-			boolean r = ((BooleanValue)right).getValue();
-			
+			boolean l = ((BooleanValue) left).getValue();
+			boolean r = ((BooleanValue) right).getValue();
+
 			if (getConnector().equals("and"))
 				return new BooleanValue(l & r);
-			
+
 			if (getConnector().equals("or"))
 				return new BooleanValue(l | r);
-			
+
 			if (getConnector().equals("xor"))
 				return new BooleanValue(l ^ r);
-			
+
 			if (getConnector().equals("="))
 				return new BooleanValue(l == r);
-			
+
 			if (getConnector().equals("=="))
 				return new BooleanValue(l == r);
-			
+
 			if (getConnector().equals("!="))
 				return new BooleanValue(l != r);
 		}
-		
+
 		if (left instanceof LongValue && right instanceof LongValue) {
-			long l = ((LongValue)left).getValue();
-			long r = ((LongValue)right).getValue();
-			
+			long l = ((LongValue) left).getValue();
+			long r = ((LongValue) right).getValue();
+
 			if (getConnector().equals("=="))
 				return new BooleanValue(l == r);
-			
+
 			if (getConnector().equals(">"))
 				return new BooleanValue(l > r);
-			
+
 			if (getConnector().equals("<"))
 				return new BooleanValue(l < r);
-			
+
 			if (getConnector().equals(">="))
 				return new BooleanValue(l >= r);
-			
+
 			if (getConnector().equals("<="))
 				return new BooleanValue(l <= r);
 		}
-		
+
 		return this;
 	}
 
@@ -134,13 +134,11 @@ public class HybridBooleanValue implements Value {
 
 	@Override
 	public String toString() {
-		return "(" + left.toString() + " " + this.getConnector() + " "
-				+ right.toString() + ")";
+		return "(" + left.toString() + " " + this.getConnector() + " " + right.toString() + ")";
 	}
 
 	public String toStringZ3() {
-		return "( " + this.getConnector() + " " + left.toString() + " "
-				+ right.toString() + ")";
+		return "( " + this.getConnector() + " " + left.toString() + " " + right.toString() + ")";
 	}
 
 	@Override
@@ -152,10 +150,8 @@ public class HybridBooleanValue implements Value {
 		else if (exp instanceof SymbolValue)
 			result = new SymbolValue(((SymbolValue) exp).getVarName());
 		else if (exp instanceof HybridBooleanValue)
-			result = new HybridBooleanValue(
-					((HybridBooleanValue) exp).getLeft(),
-					((HybridBooleanValue) exp).getConnector(),
-					((HybridBooleanValue) exp).getRight());
+			result = new HybridBooleanValue(((HybridBooleanValue) exp).getLeft(),
+					((HybridBooleanValue) exp).getConnector(), ((HybridBooleanValue) exp).getRight());
 		else if (exp instanceof TopValue)
 			return new TopValue();
 		return result;
@@ -352,10 +348,8 @@ public class HybridBooleanValue implements Value {
 	public String toStringPreFix() {
 		// TODO Auto-generated method stub
 		if (getConnector().equals("!="))
-			return "(not(=" + " " + left.toStringPreFix() + " "
-					+ right.toStringPreFix() + "))";
-		return "(" + getBVConnector() + " " + left.toStringPreFix() + " "
-				+ right.toStringPreFix() + ")";
+			return "(not(=" + " " + left.toStringPreFix() + " " + right.toStringPreFix() + "))";
+		return "(" + getBVConnector() + " " + left.toStringPreFix() + " " + right.toStringPreFix() + ")";
 	}
 
 	private String getBVConnector() {
@@ -424,20 +418,16 @@ public class HybridBooleanValue implements Value {
 			return new BooleanValue(l1.getValue() ^ r1.getValue());
 
 		if (getConnector().equals(">"))
-			return new BooleanValue(BitVector.gt(((LongValue) l).getValue(),
-					((LongValue) r).getValue()));
+			return new BooleanValue(BitVector.gt(((LongValue) l).getValue(), ((LongValue) r).getValue()));
 
 		if (getConnector().equals(">="))
-			return new BooleanValue(BitVector.ge(((LongValue) l).getValue(),
-					((LongValue) r).getValue()));
+			return new BooleanValue(BitVector.ge(((LongValue) l).getValue(), ((LongValue) r).getValue()));
 
 		if (getConnector().equals("<"))
-			return new BooleanValue(BitVector.lt(((LongValue) l).getValue(),
-					((LongValue) r).getValue()));
+			return new BooleanValue(BitVector.lt(((LongValue) l).getValue(), ((LongValue) r).getValue()));
 
 		if (getConnector().equals("<="))
-			return new BooleanValue(BitVector.le(((LongValue) l).getValue(),
-					((LongValue) r).getValue()));
+			return new BooleanValue(BitVector.le(((LongValue) l).getValue(), ((LongValue) r).getValue()));
 
 		return this;
 	}
@@ -492,13 +482,13 @@ public class HybridBooleanValue implements Value {
 			if (temp != null)
 				result.addAll(temp);
 		}
-		
+
 		if (right != null) {
 			List<String> temp = right.getVariable();
 			if (temp != null)
 				result.addAll(temp);
 		}
-		
+
 		return result;
 	}
 

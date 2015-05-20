@@ -1,16 +1,16 @@
 package v2.org.phong.structure.ex;
 
 public class SECURITY_ATTRIBUTES {
-	
+
 	private int nLength;
 	private String securityDesciptor;
 	private boolean inheritHandle;
-	
+
 	public SECURITY_ATTRIBUTES() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public SECURITY_ATTRIBUTES(int nLength,String securityDescriptor, boolean inheritHandle) {
+
+	public SECURITY_ATTRIBUTES(int nLength, String securityDescriptor, boolean inheritHandle) {
 		this.setnLength(nLength);
 		this.setSecurityDesciptor(securityDescriptor);
 		this.setInheritHandle(inheritHandle);
@@ -39,5 +39,5 @@ public class SECURITY_ATTRIBUTES {
 	public void setInheritHandle(boolean inheritHandle) {
 		this.inheritHandle = inheritHandle;
 	}
-	
+
 }

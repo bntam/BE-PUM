@@ -29,8 +29,7 @@ import org.jakstab.ssl.Architecture;
 
 import java.util.Set;
 
-public interface RTLStatement extends Comparable<RTLStatement>,
-		StateTransformer {
+public interface RTLStatement extends Comparable<RTLStatement>, StateTransformer {
 
 	public void setNextLabel(Location nextLabel);
 

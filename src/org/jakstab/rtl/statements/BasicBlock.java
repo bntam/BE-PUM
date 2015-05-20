@@ -28,8 +28,7 @@ import java.util.LinkedList;
 /**
  * @author Johannes Kinder
  */
-public class BasicBlock extends LinkedList<RTLStatement> implements
-		StateTransformer {
+public class BasicBlock extends LinkedList<RTLStatement> implements StateTransformer {
 
 	private static final long serialVersionUID = -386757961616953550L;
 

@@ -29,6 +29,16 @@ public class X86InstructionInterpreter {
 		Value d = null, s = null;
 		int opSize = rule.getBitCount(inst);
 		// System.out.println("Instruction: " + inst.getName());
+		
+		if (inst.getName().startsWith("rdtsc")){
+			//System.out.println("rdtsc");
+			long time_stamp = System.nanoTime();
+			AnalysisBit analysisBit = new AnalysisBit();
+			long rdtsc_eax = analysisBit.RDTSC_EAX(time_stamp);
+			long rdtsc_edx = analysisBit.RDTSC_EDX(time_stamp);
+			env.getRegister().setRegisterValue("eax",new LongValue(rdtsc_eax));
+			env.getRegister().setRegisterValue("edx",new LongValue(rdtsc_edx));		
+		} else
 		// Khanh
 		if (inst.getName().startsWith("cmpxchg8b")) {
 			Value EAX = env.getRegister().getRegisterValue("eax");

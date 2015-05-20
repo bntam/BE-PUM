@@ -34,7 +34,7 @@ public interface Value {
 	public Value andFunction(Value exp);
 
 	public Value orFunction(Value exp);
-	
+
 	public Value modFunction(Value v);
 
 	public Value powFunction(Value v);
@@ -66,6 +66,5 @@ public interface Value {
 	public Value powFunction(int i);
 
 	public List<String> getVariable();
-
 
 }

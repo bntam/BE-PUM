@@ -50,12 +50,10 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 		p.setDescription("Default composition of multiple CPAs.");
 	}
 
-	public static JOption<Boolean> ignoreCallingContext = JOption
-			.create("ignore-context",
-					"Allow merging of different calling contexts even with call stack analysis enabled.");
+	public static JOption<Boolean> ignoreCallingContext = JOption.create("ignore-context",
+			"Allow merging of different calling contexts even with call stack analysis enabled.");
 
-	private static final Logger logger = Logger
-			.getLogger(CompositeProgramAnalysis.class);
+	private static final Logger logger = Logger.getLogger(CompositeProgramAnalysis.class);
 
 	protected final ConfigurableProgramAnalysis[] cpas;
 
@@ -67,8 +65,7 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 		cpas[0] = locationAnalysis;
 	}
 
-	public CompositeProgramAnalysis(LocationAnalysis locationAnalysis,
-			ConfigurableProgramAnalysis... otherCPAs) {
+	public CompositeProgramAnalysis(LocationAnalysis locationAnalysis, ConfigurableProgramAnalysis... otherCPAs) {
 		cpas = new ConfigurableProgramAnalysis[otherCPAs.length + 1];
 		cpas[0] = locationAnalysis;
 		System.arraycopy(otherCPAs, 0, cpas, 1, otherCPAs.length);
@@ -91,8 +88,7 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 		// Cartesian merge
 		CompositeState cs1 = (CompositeState) s1;
 		CompositeState cs2 = (CompositeState) s2;
@@ -100,25 +96,21 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 
 		// If analysis is context sensitive, never merge different calling
 		// contexts
-		if (callStackAnalysisIndex >= 0
-				&& !ignoreCallingContext.getValue().booleanValue()) {
-			if (!cs1.getComponent(callStackAnalysisIndex).equals(
-					cs2.getComponent(callStackAnalysisIndex))) {
+		if (callStackAnalysisIndex >= 0 && !ignoreCallingContext.getValue().booleanValue()) {
+			if (!cs1.getComponent(callStackAnalysisIndex).equals(cs2.getComponent(callStackAnalysisIndex))) {
 				return CPAOperators.mergeSep(cs1, cs2, precision);
 			}
 		}
 
 		for (int i = 0; i < cpas.length; i++) {
-			mergedComponents[i] = cpas[i].merge(cs1.getComponent(i),
-					cs2.getComponent(i),
+			mergedComponents[i] = cpas[i].merge(cs1.getComponent(i), cs2.getComponent(i),
 					((CompositePrecision) precision).getComponent(i));
 		}
 		return createCompositeState(mergedComponents);
 	}
 
 	@Override
-	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge,
-			Precision precision) {
+	public Set<AbstractState> post(AbstractState state, CFAEdge cfaEdge, Precision precision) {
 
 		// Handle single statement transformers
 		if (cfaEdge.getTransformer() instanceof RTLStatement) {
@@ -138,10 +130,8 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 				// states
 				for (AbstractState lastState : lastSuccs) {
 					try {
-						newSuccs.addAll(postSingleStatement(
-								lastState,
-								new CFAEdge(stmt.getLabel(), stmt
-										.getNextLabel(), stmt), precision));
+						newSuccs.addAll(postSingleStatement(lastState, new CFAEdge(stmt.getLabel(),
+								stmt.getNextLabel(), stmt), precision));
 					} catch (UnknownPointerAccessException e) {
 						e.setState(lastState);
 						throw e;
@@ -154,23 +144,19 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 
 		} else
 			throw new UnsupportedOperationException("Transformers of class "
-					+ cfaEdge.getTransformer().getClass().getName()
-					+ " not supported!");
+					+ cfaEdge.getTransformer().getClass().getName() + " not supported!");
 	}
 
-	protected Set<AbstractState> postSingleStatement(AbstractState state,
-			CFAEdge cfaEdge, Precision precision) {
+	protected Set<AbstractState> postSingleStatement(AbstractState state, CFAEdge cfaEdge, Precision precision) {
 		CompositeState c = (CompositeState) state;
 
 		// If expression substitution is active, substitute expression in CFA
 		// edge passed to post methods
 		CFAEdge origCFAEdge = cfaEdge;
 		if (expressionSubstitutionIndex >= 0) {
-			cfaEdge = new CFAEdge(cfaEdge.getSource(), cfaEdge.getTarget(),
-					ExpressionSubstitution.substituteStatement(
-							((RTLStatement) cfaEdge.getTransformer()),
-							(SubstitutionState) c
-									.getComponent(expressionSubstitutionIndex)));
+			cfaEdge = new CFAEdge(cfaEdge.getSource(), cfaEdge.getTarget(), ExpressionSubstitution.substituteStatement(
+					((RTLStatement) cfaEdge.getTransformer()),
+					(SubstitutionState) c.getComponent(expressionSubstitutionIndex)));
 		}
 
 		// Check for requests for debug messages. Currently only used for
@@ -179,8 +165,7 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 		RTLStatement stmt = (RTLStatement) cfaEdge.getTransformer();
 		if (stmt instanceof RTLDebugPrint) {
 			RTLDebugPrint debug = (RTLDebugPrint) stmt;
-			Set<Tuple<RTLNumber>> values = c.projectionFromConcretization(debug
-					.getExpression());
+			Set<Tuple<RTLNumber>> values = c.projectionFromConcretization(debug.getExpression());
 			boolean generatedOutput = false;
 			for (Tuple<RTLNumber> tuple : values) {
 				// Only print DebugMsg if there is a concrete value other than 0
@@ -194,59 +179,46 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 			// Print informational message in any case (can be used for
 			// signaling)
 			if (!generatedOutput)
-				logger.info("DEBUG: Reached statement at "
-						+ cfaEdge.getSource());
+				logger.info("DEBUG: Reached statement at " + cfaEdge.getSource());
 
 		}
 		// Check assertions in the concretization of the composite state
 		else if (stmt instanceof RTLAssert) {
-			Set<Tuple<RTLNumber>> cAssertionResult = state
-					.projectionFromConcretization(((RTLAssert) stmt)
-							.getAssertion());
+			Set<Tuple<RTLNumber>> cAssertionResult = state.projectionFromConcretization(((RTLAssert) stmt)
+					.getAssertion());
 			if (cAssertionResult.size() > 1) {
-				logger.error("Found possible assertion violation at "
-						+ state.getLocation() + "! " + stmt + " evaluated to "
-						+ Characters.TOP + " in state:");
+				logger.error("Found possible assertion violation at " + state.getLocation() + "! " + stmt
+						+ " evaluated to " + Characters.TOP + " in state:");
 				logger.error(state);
 				// if (Options.errorTrace)
-				throw new AssertionViolationException(state, "Assertion "
-						+ stmt + " might have failed!");
-			} else if (cAssertionResult.iterator().next().get(0)
-					.equals(ExpressionFactory.FALSE)) {
-				logger.error("Found assertion violation at "
-						+ state.getLocation() + "! " + stmt
-						+ " failed in state:");
+				throw new AssertionViolationException(state, "Assertion " + stmt + " might have failed!");
+			} else if (cAssertionResult.iterator().next().get(0).equals(ExpressionFactory.FALSE)) {
+				logger.error("Found assertion violation at " + state.getLocation() + "! " + stmt + " failed in state:");
 				logger.error(state);
 				// if (Options.errorTrace)
-				throw new AssertionViolationException(state, "Assertion "
-						+ stmt + " failed!");
+				throw new AssertionViolationException(state, "Assertion " + stmt + " failed!");
 			}
 		}
 
 		// Now pass transformer down to individual CPAs
-		Tuple<Set<AbstractState>> sComponents = new Tuple<Set<AbstractState>>(
-				cpas.length);
+		Tuple<Set<AbstractState>> sComponents = new Tuple<Set<AbstractState>>(cpas.length);
 		for (int i = 0; i < cpas.length; i++) {
 			// For forward expression substitution, use the original cfa edge,
 			// it takes care of substitutions itself. Also for
 			// CallStackAnalysis.
 			Set<AbstractState> succs;
 			if (i == expressionSubstitutionIndex || i == callStackAnalysisIndex) {
-				succs = cpas[i].post(c.getComponent(i), origCFAEdge,
-						((CompositePrecision) precision).getComponent(i));
+				succs = cpas[i].post(c.getComponent(i), origCFAEdge, ((CompositePrecision) precision).getComponent(i));
 			} else {
-				succs = cpas[i].post(c.getComponent(i), cfaEdge,
-						((CompositePrecision) precision).getComponent(i));
+				succs = cpas[i].post(c.getComponent(i), cfaEdge, ((CompositePrecision) precision).getComponent(i));
 			}
 			// If one analysis reports no successors, there is no composite
 			// successor
 
 			if (succs.isEmpty()) {
-				System.out
-						.println("Has return address but not continue to follo:"
-								+ cfaEdge.getSource().getAddress().toString()
-								+ " "
-								+ cfaEdge.getTarget().getAddress().toString());
+				System.out.println("Has return address but not continue to follo:"
+						+ cfaEdge.getSource().getAddress().toString() + " "
+						+ cfaEdge.getTarget().getAddress().toString());
 				return Collections.emptySet();
 			}
 
@@ -272,24 +244,20 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 		CompositeState cs = (CompositeState) s;
 		AbstractState[] newComponents = new AbstractState[cpas.length];
 		Precision[] newPrecComponents = new Precision[cpas.length];
 
 		for (int i = 0; i < cpas.length; i++) {
-			Pair<AbstractState, Precision> pair = cpas[i].prec(cs
-					.getComponent(i), ((CompositePrecision) precision)
-					.getComponent(i),
-					reached.select(i).where(0, cs.getComponent(0)));
+			Pair<AbstractState, Precision> pair = cpas[i].prec(cs.getComponent(i),
+					((CompositePrecision) precision).getComponent(i), reached.select(i).where(0, cs.getComponent(0)));
 			newComponents[i] = pair.getLeft();
 			newPrecComponents[i] = pair.getRight();
 		}
 
-		return Pair.create(
-				(AbstractState) (createCompositeState(newComponents)),
-				(Precision) (new CompositePrecision(newPrecComponents)));
+		return Pair.create((AbstractState) (createCompositeState(newComponents)), (Precision) (new CompositePrecision(
+				newPrecComponents)));
 	}
 
 	@Override
@@ -299,8 +267,7 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 
 		// cartesian stop
 		for (int i = 0; i < cpas.length; i++) {
-			if (!cpas[i].stop(cs.getComponent(i),
-					reached.select(i).where(0, cs.getComponent(0)),
+			if (!cpas[i].stop(cs.getComponent(i), reached.select(i).where(0, cs.getComponent(0)),
 					((CompositePrecision) precision).getComponent(i))) {
 				// logger.error(cs.getComponent(i).getClass().getSimpleName() +
 				// " says continue");
@@ -317,8 +284,7 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		Precision[] precisions = new Precision[cpas.length];
 		for (int i = 0; i < cpas.length; i++) {
 			precisions[i] = cpas[i].initPrecision(location, transformer);
@@ -327,11 +293,9 @@ public class CompositeProgramAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
-		throw new UnsupportedOperationException(
-				"Strengthening should never be called on composite analysis!");
+		throw new UnsupportedOperationException("Strengthening should never be called on composite analysis!");
 	}
 
 	protected CompositeState createCompositeState(Tuple<AbstractState> tuple) {

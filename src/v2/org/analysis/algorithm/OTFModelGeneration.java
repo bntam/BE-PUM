@@ -28,8 +28,6 @@ import v2.org.analysis.environment.StackV2;
 import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.Formulas;
-import v2.org.analysis.value.LongValue;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,17 +35,18 @@ public class OTFModelGeneration implements Algorithm {
 
 	// private static final Logger logger =
 	// Logger.getLogger(CPAAlgorithm.class);
-	private static long maxTimeProgram = 2500000;
+	private static long maxTimeProgam = 2500000;
 	private static long maxTimePath = 1500000;
-	//For Debug
-	private int num = 1, loopCount = 1;;
-	private boolean compare = false, check = false;
-	private long count = 1; 
+	// For Debug
+	private int num = 12, loopCount = 1;;
+	private boolean isCompareOlly = false, isChecked = false, isRestored = false;
+	private long count = 1;
 	private AbsoluteAddress checkedAddr = new AbsoluteAddress(0);
 	private AbsoluteAddress endAddr = new AbsoluteAddress(0);
 	private String fileName = "out_themida_";
-	private FileProcess file = null;
+	private FileProcess compareOllyResult = null;
 	private OllyCompare ollyCompare = null;
+	private FileProcess fileState = new FileProcess("data/stateValue.txt");
 
 	private final Program program;
 
@@ -57,9 +56,9 @@ public class OTFModelGeneration implements Algorithm {
 	}
 
 	@Override
-	public void run() {	
+	public void run() {
 		// --------------------------
-		FileProcess fileState = new FileProcess("data/stateValue.txt");
+		FileProcess bkFile = new FileProcess("data/restore.txt");;
 		fileState.clearContentFile();
 		long overallStartTime = System.currentTimeMillis();
 		long overallStartTemp = overallStartTime;
@@ -72,22 +71,30 @@ public class OTFModelGeneration implements Algorithm {
 		Environment env = new Environment();
 		AbsoluteAddress location = Program.getProgram().getEntryPoint();
 		Instruction inst = Program.getProgram().getInstruction(location, env);
-
-		BPVertex startNode = new BPVertex(location, inst);
-		startNode.setType(0);
-		cfg.insertVertex(startNode);
-		BPState curState = new BPState(env, location, inst);
-		BPPath path = new BPPath(curState, new PathList(), new Formulas());
-		path.setCurrentState(curState);
 		List<BPPath> pathList = new ArrayList<BPPath>();
-		pathList.add(path);
+		BPVertex startNode = null;
+		BPState curState = null;
+		BPPath path = null;
+
+		if (isRestored) {
+			bkFile = new FileProcess("data/restore.txt");
+			pathList = restoreState();
+		} else {
+			startNode = new BPVertex(location, inst);
+			startNode.setType(0);
+			cfg.insertVertex(startNode);
+			curState = new BPState(env, location, inst);
+			path = new BPPath(curState, new PathList(), new Formulas());
+			path.setCurrentState(curState);
+			pathList.add(path);
+		}
 
 		while (!pathList.isEmpty()) {
-			if (System.currentTimeMillis() - overallStartTime > maxTimeProgram) {
+			/*if (System.currentTimeMillis() - overallStartTime > maxTimeProgram) {
 				System.out.println("Stop Program after " + maxTimeProgram);
 				overallStartTime = System.currentTimeMillis();
 				// break;
-			}
+			}*/
 
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
@@ -95,33 +102,20 @@ public class OTFModelGeneration implements Algorithm {
 			// --------------------------------------
 			TIB.updateTIB(curState);
 			// --------------------------------------------------------------------
-			long overallStartTimePath = System.currentTimeMillis();
+			//long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
 				long overallEndTimeTemp = System.currentTimeMillis();
 				// Output file each 60s
 				if (overallEndTimeTemp - overallStartTemp > 120000) {
 
 					// Stop running one paths after maxTimePath
-					if (overallEndTimeTemp - overallStartTimePath > maxTimePath) {
+					/*if (overallEndTimeTemp - overallStartTimePath > maxTimePath) {
 						Program.getProgram().getLog()
 								.info("Stop Path after " + maxTimePath + " at " + curState.getLocation());
 						// break;
-					}
+					}*/
 
-					fileState.appendFile("Address = " + location.toString() + ":");
-					// COMPARE HERE
-					String result = " Register: " + curState.getEnvironement().getRegister() + "\n";
-					result += " Flag: " + curState.getEnvironement().getFlag() + "\n";
-					result += " Stack: " + ((StackV2) curState.getEnvironement().getStack()).getString() + "\n";
-					fileState.appendFile(result);
-					// System.out
-					// .println("*************************************************************");
-					fileState.appendFile("*************************************************************");
-
-					program.generageCFG("asm/cfg/" + program.getFileName() + "_test");
-					program.getResultFileTemp().appendInLine(
-							program.getDetailTechnique() + " Nodes:" + program.getBPCFG().getVertexCount() + " Edges:"
-									+ program.getBPCFG().getEdgeCount() + " ");
+					backupState(curState, fileState, bkFile);					
 					overallStartTemp = overallEndTimeTemp;
 				}
 
@@ -131,8 +125,8 @@ public class OTFModelGeneration implements Algorithm {
 
 				inst = curState.getInstruction();
 				location = curState.getLocation();
-				//debugProgram(location, curState);
-				//compareOlly(curState);
+				debugProgram(location, curState);
+				compareOlly(curState);
 
 				if (inst == null || location == null)
 					break;
@@ -151,153 +145,155 @@ public class OTFModelGeneration implements Algorithm {
 		}
 	}
 
+	private List<BPPath> restoreState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private void backupState(BPState curState, FileProcess fileState, FileProcess bkFile) {
+		// TODO Auto-generated method stub
+		bkFile.clearContentFile();
+		
+		String result = "Address=" + curState.getLocation().toString() + "\n";
+		result += "Register: " + curState.getEnvironement().getRegister() + "\n";
+		result += "Flag: " + curState.getEnvironement().getFlag() + "\n";
+		result += "Stack: " + ((StackV2)curState.getEnvironement().getStack()).toString() + "\n";
+		result += "SEH: " + curState.getEnvironement().getSystem().getSEHHandler().toString() + "\n";
+		result += "*************************************************************";
+
+		//bkFile.appendFile(result);
+		fileState.appendFile(result);
+
+		program.generageCFG("asm/cfg/" + program.getFileName() + "_test");
+		program.getResultFileTemp().appendInLine(
+				program.getDetailTechnique() + " Nodes:" + program.getBPCFG().getVertexCount() + " Edges:"
+						+ program.getBPCFG().getEdgeCount() + " ");
+	}
+
 	private void compareOlly(BPState state) {
 		// TODO Auto-generated method stub
 		// -------------------------------------------------------------------
 		// OLLY DEBUG HERE
 		// checkedAddr = new AbsoluteAddress(0x40818C);
-		// endAddr = new AbsoluteAddress(0x4085B2);			
-		if (compare) {
+		// endAddr = new AbsoluteAddress(0x4085B2);
+		if (isCompareOlly) {
 			AbsoluteAddress location = state.getLocation();
 			Environment env = state.getEnvironement();
 			if (ollyCompare == null) {
-				long memoryStartAddr = 0x401000;
-				long memoryEndAddr = 0x401210;
+				long memoryStartAddr = 0x40EDCF;
+				long memoryEndAddr = 0x40EDFF;
 				long stackIndex = 0x8c;
 				ollyCompare = new OllyCompare("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
 						memoryEndAddr, stackIndex);
 				ollyCompare.importOllyData(checkedAddr, endAddr);
 			}
 
-			if (file == null) {
-				file = new FileProcess("data/compareWithOlly_" + fileName + "" + num + ".txt");
-				file.clearContentFile();
+			if (compareOllyResult == null) {
+				compareOllyResult = new FileProcess("data/compareWithOlly_" + fileName + "" + num + ".txt");
+				compareOllyResult.clearContentFile();
 			}
 
 			if (location != null && location.getValue() == checkedAddr.getValue()) {
-				check = true;
+				isChecked = true;
 			}
 
-			if (check & location != null && (location.getValue() != endAddr.getValue() || loopCount != ollyCompare.getLoopCount())) {
-				//System.out.println("Loop = " + count + " , Address = " + location.toString() + ":");
-				file.appendFile("Loop = " + count + " , Address = " + location.toString() + ":");
+			if (isChecked & location != null
+					&& (location.getValue() != endAddr.getValue() || loopCount != ollyCompare.getLoopCount())) {
+				// System.out.println("Loop = " + count + " , Address = " +
+				// location.toString() + ":");
+				compareOllyResult.appendFile("Loop = " + count + " , Address = " + location.toString() + ":");
 				// COMPARE HERE
 				String result = ollyCompare.compareBEPUM(env, count, location);
 				count = ollyCompare.getNextCheck();
-				//if (result.contains("Unequal")) {
-				//	System.out.println("Bug");
-				//}
-				file.appendFile(result);
-				//System.out.println("*************************************************************");
-				file.appendFile("*************************************************************");
-				loopCount ++;
+				// if (result.contains("Unequal")) {
+				// System.out.println("Bug");
+				// }
+				compareOllyResult.appendFile(result);
+				// System.out.println("*************************************************************");
+				compareOllyResult.appendFile("*************************************************************");
+				loopCount++;
 			}
 
-			if (check && location != null && location.getValue() == endAddr.getValue() && loopCount == ollyCompare.getLoopCount()) {
+			if (isChecked && location != null && location.getValue() == endAddr.getValue()
+					&& loopCount == ollyCompare.getLoopCount()) {
 				System.out.println("Stop Check: " + fileName + "" + num + ".txt");
 				ollyCompare = null;
 				loopCount = 1;
-				file = null;
+				compareOllyResult = null;
 				num++;
-				check = false;
+				isChecked = false;
 				count = 1;
 
 				if (num >= 12) {
-					compare = false;
+					isCompareOlly = false;
 					System.out.println("Finish Checking");
 				}
 			}
-		}
-
-		/*
-		 * if (debug) { if (location != null && location.getValue() ==
-		 * checkedAddr.getValue()){ System.out.println("Loop = " + count +
-		 * " , Address = " + location.toString() + ":");
-		 * file.appendFile("Loop = " + count + " , Address = " +
-		 * location.toString() + ":"); // COMPARE HERE String result =
-		 * ollyCompare.compareBEPUM(env, count, location); count =
-		 * ollyCompare.getNextCheck(); if (result.contains("Unequal")) {
-		 * System.out.println("Bug"); } file.appendFile(result); System.out
-		 * .println
-		 * ("*************************************************************");
-		 * file.appendFile(
-		 * "*************************************************************"); }
-		 * 
-		 * if (location != null && count == numChecked && check) {
-		 * System.out.println("Stop Check"); check = false; } }
-		 */
-		// ----------------------------------------------------------
+		}	
 	}
 
 	private void debugProgram(AbsoluteAddress location, BPState curState) {
 		// TODO Auto-generated method stub
 		String fileName = Program.getProgram().getFileName();
-		if (location != null && (location.toString().contains("FFFFFFFFF")
-		// ******************************************
-		// Virus.Win32.HLLO.Momac.a
-				|| (fileName.equals("Virus.Win32.HLLO.Momac.a") && (location.toString().contains("40130c")))
+		if (location != null
+				&& (location.toString().contains("FFFFFFFFF")
 				// ******************************************
-				// Email-Worm.Win32.Atak.e
-				|| (fileName.equals("Email-Worm.Win32.Atak.e") && (location.toString().contains("404cf0")))
+				// Virus.Win32.HLLO.Momac.a
+						|| (fileName.equals("Virus.Win32.HLLO.Momac.a") && (location.toString().contains("40130c")))
+						// ******************************************
+						// Email-Worm.Win32.Atak.e
+						|| (fileName.equals("Email-Worm.Win32.Atak.e") && (location.toString().contains("404cf0")))
+						// ******************************************
+						// Virus.Win32.ZMist
+						|| (fileName.equals("Virus.Win32.ZMist") && (location.toString().contains("402d01")))
+						// ******************************************
+						// api_test_pespin.exe
+						|| (fileName.equals("api_test_pespin.exe") && (location.toString().contains("40669e")))
+						// ******************************************
+						// api_test_yoda.exe
+						|| (fileName.equals("api_test_yoda.exe") && (location.toString().contains("4045fb")))
+						// ******************************************
+						// api_test_vmprotect.exe
+						|| (fileName.equals("api_test_vmprotect.exe") && (
+						// location.toString().contains("4c11b0")
+						location.toString().contains("4b9da5")))
+						// ******************************************
+						// api_test_yc1.2.exe
+						|| (fileName.equals("api_test_v2.3_lvl1.exe") && (
+						location.toString().contains("01")
+						//|| location.toString().contains("4329b0")	
+						//|| location.toString().contains("407ac6") // RDTSC
+						//|| location.toString().contains("40797e") // RDTSC
+						//|| location.toString().contains("4360e9") // RDTSC
+						//|| location.toString().contains("436107") // RDTSC
+						//|| location.toString().contains("43610f") // RDTSC
+						//|| location.toString().contains("432220") // RDTSC
+						//|| location.toString().contains("4094da") // RDTSC
+						//|| location.toString().contains("4094df") // RDTSC
+						|| location.toString().contains("41c896") // SEH
+						|| location.toString().contains("4199c3") // Target
+						|| location.toString().contains("4197c7") // Wrong 
+						))
+						// ******************************************
+						// api_test_aspack.exe
+						|| (fileName.equals("api_test_aspack.exe") && (location.toString().contains("4043c2")
+						// || location.toString().contains("408184")
+						))
 				// ******************************************
-				// Virus.Win32.ZMist
-				|| (fileName.equals("Virus.Win32.ZMist") && (location.toString().contains("402d01")))
-				// ******************************************
-				// api_test_pespin.exe
-				|| (fileName.equals("api_test_pespin.exe") && (location.toString().contains("40669e")))
-				// ******************************************
-				// api_test_yoda.exe
-				|| (fileName.equals("api_test_yoda.exe") && (location.toString().contains("4045fb")))
-				// ******************************************
-				// api_test_vmprotect.exe
-				|| (fileName.equals("api_test_vmprotect.exe") && (
-				// location.toString().contains("4c11b0")
-				location.toString().contains("4b9da5")))
-				// ******************************************
-				// api_test_yc1.2.exe
-				|| (fileName.equals("api_test_v2.3_lvl1.exe") && (
-						location.toString().contains("4329b0")
-				|| location.toString().contains("4360e9") // RDTSC
-				|| location.toString().contains("436107") // RDTSC
-				|| location.toString().contains("43610f") // RDTSC
-				|| location.toString().contains("432220") // RDTSC
-				|| location.toString().contains("4094da") // RDTSC
-				|| location.toString().contains("4094df") // RDTSC
-				|| location.toString().contains("41c896") // SEH
-				|| location.toString().contains("4199c3") // Target
-				))
-				// ******************************************
-				// api_test_aspack.exe
-				|| (fileName.equals("api_test_aspack.exe") && (location.toString().contains("4043c2")
-				// || location.toString().contains("408184")
-				))
-		// ******************************************
-		// Virus.Win32.Aztec.01
+				// Virus.Win32.Aztec.01
 				|| (fileName.equals("Virus.Win32.Aztec.01") && (location.toString().contains("40118d")
 				// || location.toString().contains("401317")
 				)))) {
-			num++;
-			System.out.println("Debug at:" + location.toString());
-			// System.out.println("Loop: " + num + " Memory Operand Value: " +
-			// curState.getEnvironement().getMemory().getDoubleWordMemoryValue(1638076)
-			// );
-			// System.out.println("Loop: " + num + " Memory Operand Value: " +
-			// curState.getEnvironement().getMemory().getDoubleWordMemoryValue(1638268)
-			// );
-			System.out.println(" Register: " + curState.getEnvironement().getRegister());
-			System.out.println(" Flag: " + curState.getEnvironement().getFlag());
-			System.out.println(" Stack: "
-			 + ((StackV2) curState.getEnvironement().getStack()).getString());
-			// System.out.println(" Memory: 0x4047E3 = "
-			// +
-			// curState.getEnvironement().getMemory().getDoubleWordMemoryValue(0x4047e3));
-			System.out.println("******************************************************************");
+			System.out.println("Debug at:" + location.toString());		
+			String result = "Address=" + curState.getLocation().toString() + "\n";
+			result += "Register: " + curState.getEnvironement().getRegister() + "\n";
+			result += "Flag: " + curState.getEnvironement().getFlag() + "\n";
+			result += "Memory: " + curState.getEnvironement().getMemory() + "\n";
+			result += "SEH: " + curState.getEnvironement().getSystem().getSEHHandler().toString() + "\n";
+			result += "*************************************************************";
+			fileState.appendFile(result);
 			program.generageCFG(program.getAbsolutePathFile() + "_test");
-		}
-
-		// if (location != null && location.toString().contains("40403a"))
-		// System.out.println(curState.getEnvironement().getRegister().getRegisterValue("ecx"));
-
+		}	
 		/*
 		 * if (location != null && location.toString().contains("0040481b") &&
 		 * Program.getProgram().getFileName()
@@ -321,14 +317,5 @@ public class OTFModelGeneration implements Algorithm {
 	public boolean isSound() {
 		// TODO Auto-generated method stub
 		return true;
-	}
-
-	/*
-	 * private static String getExtractBaseFileName(String baseFileName) { //
-	 * TODO Auto-generated method stub
-	 * 
-	 * String r = baseFileName.replace("vx.netlux.org", "cfg");
-	 * 
-	 * return r; }
-	 */
+	}	
 }

@@ -15,15 +15,13 @@ public class FileProcess {
 		this.filePath = filePath;
 	}
 
-	public boolean containFinalExtract(String data, FileProcess nJ,
-			FileProcess nC, FileProcess eJ, FileProcess eC, FileProcess tJ,
-			FileProcess tC) {
+	public boolean containFinalExtract(String data, FileProcess nJ, FileProcess nC, FileProcess eJ, FileProcess eC,
+			FileProcess tJ, FileProcess tC) {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
 			// clearContentFile(unprocessedFile);
-			BufferedReader br = new BufferedReader(
-					new FileReader(this.filePath));
+			BufferedReader br = new BufferedReader(new FileReader(this.filePath));
 			// StringBuilder sb = new StringBuilder();
 			String d[] = data.split(",");
 			tC.appendFile(d[1]);
@@ -46,10 +44,8 @@ public class FileProcess {
 					br.close();
 					result = true;
 
-					if (Math.abs(Integer.parseInt(d[2])
-							- Integer.parseInt(t[2])) > 2
-							|| Math.abs(Integer.parseInt(d[3])
-									- Integer.parseInt(t[3])) > 2)
+					if (Math.abs(Integer.parseInt(d[2]) - Integer.parseInt(t[2])) > 2
+							|| Math.abs(Integer.parseInt(d[3]) - Integer.parseInt(t[3])) > 2)
 						// System.out.println(d[0]);
 
 						break;
@@ -68,8 +64,7 @@ public class FileProcess {
 	public void readFile(StringArrayList n) {
 		try {
 			// clearContentFile(unprocessedFile);
-			BufferedReader br = new BufferedReader(
-					new FileReader(this.filePath));
+			BufferedReader br = new BufferedReader(new FileReader(this.filePath));
 			// StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			while (line != null) {
@@ -87,8 +82,7 @@ public class FileProcess {
 		boolean result = false;
 		try {
 			// clearContentFile(unprocessedFile);
-			BufferedReader br = new BufferedReader(
-					new FileReader(this.filePath));
+			BufferedReader br = new BufferedReader(new FileReader(this.filePath));
 			// StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			while (line != null) {
@@ -117,8 +111,7 @@ public class FileProcess {
 		boolean result = false;
 		try {
 			// clearContentFile(unprocessedFile);
-			BufferedReader br = new BufferedReader(
-					new FileReader(this.filePath));
+			BufferedReader br = new BufferedReader(new FileReader(this.filePath));
 			// StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			while (line != null) {
@@ -167,7 +160,7 @@ public class FileProcess {
 		}
 		return true;
 	}
-	
+
 	public boolean appendInLine(String data) {
 		try {
 			// String data = " This content will append to the end of the file";
@@ -190,7 +183,6 @@ public class FileProcess {
 		return true;
 	}
 
-
 	public void listFileInDir(String path) {
 		File folder = new File(path);
 		for (File fileEntry : folder.listFiles()) {
@@ -199,8 +191,7 @@ public class FileProcess {
 			) {
 				// if (!check(fileEntry.getName())) {
 				String t = fileEntry.getName();
-				if (t.contains(".png") || t.contains("_asmcfg.dot")
-						|| t.contains("_cfa.dot") || t.contains("_jak.asm"))
+				if (t.contains(".png") || t.contains("_asmcfg.dot") || t.contains("_cfa.dot") || t.contains("_jak.asm"))
 					continue;
 				this.appendFile(t);
 				// if (numFile > 5)
@@ -232,8 +223,7 @@ public class FileProcess {
 
 		try {
 			// clearContentFile(unprocessedFile);
-			BufferedReader br = new BufferedReader(
-					new FileReader(this.filePath));
+			BufferedReader br = new BufferedReader(new FileReader(this.filePath));
 			// StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 
@@ -285,8 +275,7 @@ public class FileProcess {
 		boolean result = false;
 		try {
 			// clearContentFile(unprocessedFile);
-			BufferedReader br = new BufferedReader(
-					new FileReader(this.filePath));
+			BufferedReader br = new BufferedReader(new FileReader(this.filePath));
 			// StringBuilder sb = new StringBuilder();
 			String d[] = data.split(",");
 			String line = br.readLine();
@@ -303,10 +292,8 @@ public class FileProcess {
 					br.close();
 					result = true;
 
-					if (Math.abs(Integer.parseInt(d[2])
-							- Integer.parseInt(t[2])) > 2
-							|| Math.abs(Integer.parseInt(d[3])
-									- Integer.parseInt(t[3])) > 2)
+					if (Math.abs(Integer.parseInt(d[2]) - Integer.parseInt(t[2])) > 2
+							|| Math.abs(Integer.parseInt(d[3]) - Integer.parseInt(t[3])) > 2)
 						System.out.println(d[0]);
 
 					break;

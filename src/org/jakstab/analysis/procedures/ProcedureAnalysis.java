@@ -42,8 +42,7 @@ public class ProcedureAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(ProcedureAnalysis.class);
+	private static final Logger logger = Logger.getLogger(ProcedureAnalysis.class);
 
 	private final Set<Pair<Location, Location>> callSites;
 	private final Set<Location> callees;
@@ -54,8 +53,7 @@ public class ProcedureAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		return null;
 	}
 
@@ -65,14 +63,12 @@ public class ProcedureAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 		return CPAOperators.mergeJoin(s1, s2, precision);
 	}
 
 	@Override
-	public Set<AbstractState> post(AbstractState state, CFAEdge edge,
-			Precision precision) {
+	public Set<AbstractState> post(AbstractState state, CFAEdge edge, Precision precision) {
 
 		if (edge.getTransformer() instanceof RTLAssume) {
 			RTLAssume assume = (RTLAssume) edge.getTransformer();
@@ -80,11 +76,9 @@ public class ProcedureAnalysis implements ConfigurableProgramAnalysis {
 				AbstractState post;
 				switch (assume.getSource().getType()) {
 				case CALL:
-					callSites.add(Pair.create(edge.getSource(),
-							edge.getTarget()));
+					callSites.add(Pair.create(edge.getSource(), edge.getTarget()));
 					callees.add(edge.getTarget());
-					post = new ProcedureState(new FastSet<Location>(
-							edge.getTarget()));
+					post = new ProcedureState(new FastSet<Location>(edge.getTarget()));
 					return Collections.singleton(post);
 				case RETURN:
 					// post = new ProcedureState(new
@@ -107,15 +101,13 @@ public class ProcedureAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 		return s;
 	}
 
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 		return Pair.create(s, precision);
 	}
 

@@ -24,13 +24,13 @@ import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 /**
- * Retrieves the contents of the STARTUPINFO structure that was specified
- * when the calling process was created.
+ * Retrieves the contents of the STARTUPINFO structure that was specified when
+ * the calling process was created.
  * 
  * @param lpStartupInfo
- *            : A pointer to a STARTUPINFO structure that receives the
- *            startup information.
- *            
+ *            : A pointer to a STARTUPINFO structure that receives the startup
+ *            information.
+ * 
  * @author Yen Nguyen
  *
  */
@@ -40,7 +40,7 @@ public class GetStartupInfo extends Kernel32API {
 	 * 
 	 */
 	public GetStartupInfo() {
-		
+
 	}
 
 	@Override
@@ -62,18 +62,20 @@ public class GetStartupInfo extends Kernel32API {
 			Kernel32DLL.INSTANCE.GetStartupInfo(lpStartupInfo);
 
 			memory.setDoubleWordMemoryValue(t, new LongValue(lpStartupInfo.cb.longValue()));
-			
+
 			pointer = Pointer.nativeValue(lpStartupInfo.lpReserved);
 			memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
-			//memory.setText(new X86MemoryOperand(DataType.INT32, pointer), lpStartupInfo.lpReserved.getWideString(0));
-			
+			// memory.setText(new X86MemoryOperand(DataType.INT32, pointer),
+			// lpStartupInfo.lpReserved.getWideString(0));
+
 			pointer = Pointer.nativeValue(lpStartupInfo.lpDesktop);
 			memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
-			//memory.setText(new X86MemoryOperand(DataType.INT32, pointer), lpStartupInfo.lpDesktop.toString());
-			
+			// memory.setText(new X86MemoryOperand(DataType.INT32, pointer),
+			// lpStartupInfo.lpDesktop.toString());
+
 			pointer = Pointer.nativeValue(lpStartupInfo.lpTitle);
 			memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
-			
+
 			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwX.longValue()));
 			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwY.longValue()));
 			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwXSize.longValue()));
@@ -84,13 +86,28 @@ public class GetStartupInfo extends Kernel32API {
 			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwFlags.longValue()));
 			memory.setWordMemoryValue(t += 4, new LongValue(lpStartupInfo.wShowWindow.longValue()));
 			memory.setWordMemoryValue(t += 2, new LongValue(lpStartupInfo.cbReserved2.longValue()));
-			memory.setDoubleWordMemoryValue(t += 2, new LongValue(0/*Pointer.nativeValue(lpStartupInfo.lpReserved2.getPointer())*/));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(Pointer.nativeValue(lpStartupInfo.hStdInput.getPointer())));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(Pointer.nativeValue(lpStartupInfo.hStdOutput.getPointer())));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(Pointer.nativeValue(lpStartupInfo.hStdError.getPointer())));
+			memory.setDoubleWordMemoryValue(t += 2, new LongValue(0/*
+																	 * Pointer.
+																	 * nativeValue
+																	 * (
+																	 * lpStartupInfo
+																	 * .
+																	 * lpReserved2
+																	 * .
+																	 * getPointer
+																	 * ())
+																	 */));
+			memory.setDoubleWordMemoryValue(t += 4,
+					new LongValue(Pointer.nativeValue(lpStartupInfo.hStdInput.getPointer())));
+			memory.setDoubleWordMemoryValue(t += 4,
+					new LongValue(Pointer.nativeValue(lpStartupInfo.hStdOutput.getPointer())));
+			memory.setDoubleWordMemoryValue(t += 4,
+					new LongValue(Pointer.nativeValue(lpStartupInfo.hStdError.getPointer())));
 
-//			String sInfo = "D...Â¨Â¡^.ÃˆÂ¡^.Ã°Â¡^.l).*.dll.Any file (*.*).*.*.Â�...........Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿";
-//			memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()), sInfo);
+			// String sInfo =
+			// "D...Â¨Â¡^.ÃˆÂ¡^.Ã°Â¡^.l).*.dll.Any file (*.*).*.*.Â�...........Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿";
+			// memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue)
+			// x1).getValue()), sInfo);
 		}
 
 		return false;

@@ -96,8 +96,7 @@ public class CompositeState implements AbstractState {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 		AbsoluteAddress target = null;
 		Set<Tuple<RTLNumber>> result = null;
 
@@ -120,7 +119,8 @@ public class CompositeState implements AbstractState {
 		 * (op.getClass().getSimpleName() .equals("Immediate")) t = ((Immediate)
 		 * op).getNumber().intValue(); if
 		 * (op.getClass().getSimpleName().equals("X86PCRelativeAddress")) t =
-		 * ((X86PCRelativeAddress) op).getEffectiveValue(addr .getValueOperand());
+		 * ((X86PCRelativeAddress) op).getEffectiveValue(addr
+		 * .getValueOperand());
 		 * 
 		 * if (t != 0) { result = new FastSet<Tuple<RTLNumber>>(); RTLNumber[]
 		 * numbers = new RTLNumber[expressions.length]; numbers[0] = new
@@ -145,8 +145,7 @@ public class CompositeState implements AbstractState {
 			// if (addr.toString().equals("0x0040106c"))
 			// break;
 
-			Set<Tuple<RTLNumber>> concreteTuples = components[i]
-					.projectionFromConcretization(expressions);
+			Set<Tuple<RTLNumber>> concreteTuples = components[i].projectionFromConcretization(expressions);
 			// logger.info(concreteTuples);
 			/*
 			 * Return value of null represents the whole set of tuples of
@@ -183,9 +182,7 @@ public class CompositeState implements AbstractState {
 							RTLNumber rNumber = rTuple.get(j);
 							// if the component is no wildcard and not equal,
 							// don't match, try next new tuple for match
-							if (cNumber != RTLNumber.WILDCARD
-									&& rNumber != null
-									&& !cNumber.equals(rNumber)) {
+							if (cNumber != RTLNumber.WILDCARD && rNumber != null && !cNumber.equals(rNumber)) {
 								continue cTuplesLoop;
 							} else {
 								// handle wildcards on both sides:
@@ -219,16 +216,14 @@ public class CompositeState implements AbstractState {
 		String fileName = "";
 
 		try {
-			fileName = ((PEModule) Program.getProgram().getMainModule())
-					.getFileName();
+			fileName = ((PEModule) Program.getProgram().getMainModule()).getFileName();
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 
 		// Truong hop dac biet, xu li van de nay sau.
 		if (check(fileName, addr) && result.iterator().next().get(1) != null) {
-			result.iterator().next().get(1)
-					.setValue(addr.getValue() + ins.getSize());
+			result.iterator().next().get(1).setValue(addr.getValue() + ins.getSize());
 
 			return result;
 		}
@@ -244,14 +239,12 @@ public class CompositeState implements AbstractState {
 		 * Map<AbsoluteAddress, List<AbsoluteAddress>> n = Program.getProgram()
 		 * .getPreservedExecutionMap();
 		 */
-		Map<AbsoluteAddress, List<AbsoluteAddress>> m = Program.getProgram()
-				.getPreservedExecutionMap();
+		Map<AbsoluteAddress, List<AbsoluteAddress>> m = Program.getProgram().getPreservedExecutionMap();
 		if (result == null
 				|| result.iterator().next().get(1) == null
 				|| result.iterator().next().get(1).intValue() == 0
-				|| (Other.checkLocation(fileName, components[0].getLocation()
-						.getAddress().toString()) && !Program.getProgram()
-						.getPreservedExecutionMap().containsKey(addr))) {
+				|| (Other.checkLocation(fileName, components[0].getLocation().getAddress().toString()) && !Program
+						.getProgram().getPreservedExecutionMap().containsKey(addr))) {
 			// result.iterator().next().set(1, value)
 
 			if (contain(fileName, m, addr))
@@ -288,23 +281,20 @@ public class CompositeState implements AbstractState {
 
 						// result.iterator().next().get(1).setValue(target.getValueOperand());
 					} else {
-						result.iterator().next().get(1)
-								.setValue(target.getValue());
+						result.iterator().next().get(1).setValue(target.getValue());
 					}
 
 					System.out.println("Chosen Result (from " + addr.toString()
-							+ ") of Concolic Approach (previous processed) :"
-							+ target.getValue() + " Hex value:" + target + " "
-							+ result.toString());
+							+ ") of Concolic Approach (previous processed) :" + target.getValue() + " Hex value:"
+							+ target + " " + result.toString());
 
 					return result;
 				}
 			}
 
 			System.out.println();
-			System.out
-					.println("Integration of Dynamic Testing and Static Analysis to resolve the indirect jump "
-							+ addr.toString());
+			System.out.println("Integration of Dynamic Testing and Static Analysis to resolve the indirect jump "
+					+ addr.toString());
 			// Map<AbsoluteAddress, Instruction> asmMap =
 			// Program.getProgram().getAssemblyMap();
 			Program program = Program.getProgram();
@@ -314,8 +304,7 @@ public class CompositeState implements AbstractState {
 			// Program.getProgram().getArchitecture().
 			target = ha.resolveIndirectJump();
 
-			if (Program.getProgram().getFileName()
-					.equals("Flooder.Win32.AngryPing")
+			if (Program.getProgram().getFileName().equals("Flooder.Win32.AngryPing")
 					&& addr.toString().equals("0x0040d86f"))
 				target = new AbsoluteAddress(addr.getValue() + ins.getSize());
 
@@ -328,8 +317,7 @@ public class CompositeState implements AbstractState {
 
 			// target = new AbsoluteAddress(targetAddr);
 
-			if (result != null && result.iterator().next().get(1) != null
-					&& target != null && target.getValue() >= 0) {
+			if (result != null && result.iterator().next().get(1) != null && target != null && target.getValue() >= 0) {
 				result.iterator().next().get(1).setValue(target.getValue());
 			} else if (target != null && target.getValue() >= 0) {
 				result = new FastSet<Tuple<RTLNumber>>();
@@ -342,12 +330,11 @@ public class CompositeState implements AbstractState {
 		} else
 			// Program.putPreservedExecutionMap(addr, new
 			// AbsoluteAddress(result.iterator().next().get(1).intValue()));
-			target = new AbsoluteAddress(result.iterator().next().get(1)
-					.intValue());
+			target = new AbsoluteAddress(result.iterator().next().get(1).intValue());
 
 		if (fileName.equals("Virus.Win32.Aztec.01")
-				&& (addr.toString().equals("0x00401168") || addr.toString()
-						.equals("0x00401181")) && !m.containsKey(addr)) {
+				&& (addr.toString().equals("0x00401168") || addr.toString().equals("0x00401181"))
+				&& !m.containsKey(addr)) {
 			AbsoluteAddress target1 = new AbsoluteAddress(addr.getValue()
 					+ Program.getProgram().getAssemblyMap().get(addr).getSize());
 			// System.out.println("Debug");
@@ -360,26 +347,19 @@ public class CompositeState implements AbstractState {
 
 		// Xu li cac cau lenh Conditional Jump vi Jakstab thuong xuyen gap loi
 		// khi xu li nhung cau lenh nay
-		if (ins instanceof X86CondJmpInstruction
-				&& ins.getName().startsWith("j") && fileName.equals("1")
-				&& !fileName.equals("Virus.Win32.Aztec.01")
-				&& !fileName.equals("Virus.Win32.Cabanas.Release")
-				&& !fileName.equals("Virus.Win32.Enumiacs.8192.b")
-				&& !fileName.equals("Virus.Win32.Wit.a")
-				&& !fileName.equals("Virus.Win32.Wit.b")
-				&& !fileName.equals("Virus.Win32.Sankei.3380")) {
+		if (ins instanceof X86CondJmpInstruction && ins.getName().startsWith("j") && fileName.equals("1")
+				&& !fileName.equals("Virus.Win32.Aztec.01") && !fileName.equals("Virus.Win32.Cabanas.Release")
+				&& !fileName.equals("Virus.Win32.Enumiacs.8192.b") && !fileName.equals("Virus.Win32.Wit.a")
+				&& !fileName.equals("Virus.Win32.Wit.b") && !fileName.equals("Virus.Win32.Sankei.3380")) {
 			Operand op = ins.getOperand(0);
-			System.out.println("Address:" + addr.toString() + " "
-					+ result.toString());
+			System.out.println("Address:" + addr.toString() + " " + result.toString());
 			long f = addr.getValue() + ins.getSize();
 			long t = 0;
 			if (op.getClass().getSimpleName().equals("Immediate"))
 				t = ((Immediate) op).getNumber().intValue();
 			if (op.getClass().getSimpleName().equals("X86PCRelativeAddress"))
-				t = ((X86PCRelativeAddress) op).getEffectiveValue(addr
-						.getValue());
-			AbsoluteAddress a = new AbsoluteAddress(result.iterator().next()
-					.get(1));
+				t = ((X86PCRelativeAddress) op).getEffectiveValue(addr.getValue());
+			AbsoluteAddress a = new AbsoluteAddress(result.iterator().next().get(1));
 
 			// if (fileName.contains("Virus.Win32.Sankei") && (
 			// addr.toString().equals("0x00402115") ||
@@ -396,8 +376,7 @@ public class CompositeState implements AbstractState {
 				numbers1[0] = new RTLNumber(1, 1);
 				numbers1[1] = new RTLNumber(a.getValue(), 32);
 				result.add(Tuple.create(numbers1));
-				System.out.println("Address Changed Size:" + addr.toString()
-						+ " " + result.toString());
+				System.out.println("Address Changed Size:" + addr.toString() + " " + result.toString());
 			}
 
 			if (m.containsKey(addr)) {
@@ -409,8 +388,7 @@ public class CompositeState implements AbstractState {
 					else if (a.getValue() == t)
 						result.iterator().next().get(1).setValue(f);
 
-					System.out.println("Address Changed:" + addr.toString()
-							+ " " + result.toString());
+					System.out.println("Address Changed:" + addr.toString() + " " + result.toString());
 				}
 			}
 			// }
@@ -438,8 +416,7 @@ public class CompositeState implements AbstractState {
 				|| result.iterator().next().get(1).intValue() == 0) {
 			// System.out.println("Debug " + addr.toString());
 
-			if (ins.getName().startsWith("call")
-					|| ins.getName().startsWith("ret")) {
+			if (ins.getName().startsWith("call") || ins.getName().startsWith("ret")) {
 				long f = addr.getValue() + ins.getSize();
 				if (result != null && result.iterator().next().get(1) != null)
 					result.iterator().next().get(1).setValue(f);
@@ -451,8 +428,7 @@ public class CompositeState implements AbstractState {
 					result.add(Tuple.create(numbers1));
 				}
 
-				System.out.println("LS Special at Address:" + addr.toString()
-						+ " Instruction:" + ins.getName());
+				System.out.println("LS Special at Address:" + addr.toString() + " Instruction:" + ins.getName());
 			}
 		}
 
@@ -461,15 +437,11 @@ public class CompositeState implements AbstractState {
 
 	private boolean check(String fileName, AbsoluteAddress addr) {
 		// TODO Auto-generated method stub
-		if ((fileName.equals("Virus.Win32.Wit.a") && (addr.toString().equals(
-				"0x0040107d")
-				|| addr.toString().equals("0x00401219")
-				|| addr.toString().equals("0x0040107d") || addr.toString()
+		if ((fileName.equals("Virus.Win32.Wit.a") && (addr.toString().equals("0x0040107d")
+				|| addr.toString().equals("0x00401219") || addr.toString().equals("0x0040107d") || addr.toString()
 				.equals("0x0040122f")))
-				|| (fileName.equals("Virus.Win32.Wit.b") && (addr.toString()
-						.equals("0x00401088")
-						|| addr.toString().equals("0x00401098")
-						|| addr.toString().equals("0x004010d2") || addr
+				|| (fileName.equals("Virus.Win32.Wit.b") && (addr.toString().equals("0x00401088")
+						|| addr.toString().equals("0x00401098") || addr.toString().equals("0x004010d2") || addr
 						.toString().equals("0x004010e1")))
 		/*
 		 * || (fileName.equals("Virus.Win32.Belial.a") &&
@@ -517,23 +489,19 @@ public class CompositeState implements AbstractState {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private boolean contain(String fileName,
-			Map<AbsoluteAddress, List<AbsoluteAddress>> n, AbsoluteAddress addr) {
+	private boolean contain(String fileName, Map<AbsoluteAddress, List<AbsoluteAddress>> n, AbsoluteAddress addr) {
 		// TODO Auto-generated method stub
 
 		if (fileName.equals("Virus.Win32.Enumiacs.8192.b")
 				// || fileName.equals("Virus.Win32.Wit.a")
-				|| fileName.equals("Virus.Win32.Enumiacs.6656")
-				|| fileName.equals("Trojan-Dropper.Win32.Troman.b2")
-				|| fileName.equals("Virus.Win32.Belial.a")
-				|| fileName.equals("Email-Worm.Win32.Coronex.a")) {
+				|| fileName.equals("Virus.Win32.Enumiacs.6656") || fileName.equals("Trojan-Dropper.Win32.Troman.b2")
+				|| fileName.equals("Virus.Win32.Belial.a") || fileName.equals("Email-Worm.Win32.Coronex.a")) {
 			Iterator it = n.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry pairs = (Map.Entry) it.next();
 				// System.out.println(pairs.getKey() + " = " +
 				// pairs.getValueOperand());
-				if (((AbsoluteAddress) pairs.getKey()).getValue() == addr
-						.getValue())
+				if (((AbsoluteAddress) pairs.getKey()).getValue() == addr.getValue())
 					return true;
 				// it.remove(); // avoids a ConcurrentModificationException
 			}
@@ -545,26 +513,18 @@ public class CompositeState implements AbstractState {
 		 * addr.toString().equals("0x004012bd")) &&
 		 * fileName.equals("Trojan-Dropper.Win32.Troman.b2"))) return true;
 		 */
-		if ((addr.toString().equals("0x00403846") && fileName
-				.equals("Trojan-Dropper.Win32.Troman.a"))
+		if ((addr.toString().equals("0x00403846") && fileName.equals("Trojan-Dropper.Win32.Troman.a"))
 				// || (addr.toString().equals("0x004013c0") && fileName
 				// .equals("Virus.Win32.Aztec.01"))
-				|| (addr.toString().equals("0x004039e2") && fileName
-						.equals("Trojan-Dropper.Win32.Troman.b2"))
-				|| (addr.toString().equals("0x00406b02") && fileName
-						.equals("Virus.Win32.Cabanas.Release"))
+				|| (addr.toString().equals("0x004039e2") && fileName.equals("Trojan-Dropper.Win32.Troman.b2"))
+				|| (addr.toString().equals("0x00406b02") && fileName.equals("Virus.Win32.Cabanas.Release"))
 				// || (addr.toString().equals("0x00401d53") && fileName
 				// .equals("Virus.Win32.Sankei.3480"))
-				|| (addr.toString().equals("0x00401dbd") && fileName
-						.equals("Virus.Win32.Sankei.3586"))
-				|| (addr.toString().equals("0x0040b8b2") && fileName
-						.equals("Email-Worm.Win32.Bagle.ag"))
-				|| (addr.toString().equals("0x0040b9a2") && fileName
-						.equals("Email-Worm.Win32.Bagle.aj"))
-				|| (addr.toString().equals("0x0040b9a2") && fileName
-						.equals("Email-Worm.Win32.Bagle.ak"))
-				|| (addr.toString().equals("0x0040116e") && fileName
-						.equals("Virus.Win32.Champ.5430"))
+				|| (addr.toString().equals("0x00401dbd") && fileName.equals("Virus.Win32.Sankei.3586"))
+				|| (addr.toString().equals("0x0040b8b2") && fileName.equals("Email-Worm.Win32.Bagle.ag"))
+				|| (addr.toString().equals("0x0040b9a2") && fileName.equals("Email-Worm.Win32.Bagle.aj"))
+				|| (addr.toString().equals("0x0040b9a2") && fileName.equals("Email-Worm.Win32.Bagle.ak"))
+				|| (addr.toString().equals("0x0040116e") && fileName.equals("Virus.Win32.Champ.5430"))
 		// 0x0040b9a2
 		// || (addr.toString().equals("0x0040111f") && fileName
 		// .equals("Virus.Win32.Aztec.01"))
@@ -643,8 +603,7 @@ public class CompositeState implements AbstractState {
 		for (int i = 0; i < components.length; i++) {
 			if (components[i] instanceof BasedNumberValuation) {
 				BasedNumberValuation b = (BasedNumberValuation) components[1];
-				BasedNumberElement temp = b.getValue(new RTLVariable(3,
-						regName, 32));
+				BasedNumberElement temp = b.getValue(new RTLVariable(3, regName, 32));
 				// System.out.println(temp.toString() + " " +
 				// temp.getNumber().intValue());
 				return temp.getNumber().intValue();

@@ -28,8 +28,7 @@ import java.util.Arrays;
 public class CompositePrecision implements Precision {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(CompositePrecision.class);
+	private static final Logger logger = Logger.getLogger(CompositePrecision.class);
 
 	private Precision[] precisions;
 

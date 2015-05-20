@@ -8,8 +8,8 @@ public class HybridBooleanExp implements Value {
 	private int connector;
 	public static int MAX_CON = 16;
 	public Map<String, Long> valueMap = new HashMap<String, Long>();
-	String[] con_mean = new String[] { "Undefined", "+", "-", "*", "/", "and",
-			"or", "not", "xor", "=", ">", "<", ">=", "<=", "!=", "==" };
+	String[] con_mean = new String[] { "Undefined", "+", "-", "*", "/", "and", "or", "not", "xor", "=", ">", "<", ">=",
+			"<=", "!=", "==" };
 
 	@Override
 	public String getName() {
@@ -82,13 +82,11 @@ public class HybridBooleanExp implements Value {
 
 	@Override
 	public String toString() {
-		return "(" + left.toString() + " " + this.getConnector() + " "
-				+ right.toString() + ")";
+		return "(" + left.toString() + " " + this.getConnector() + " " + right.toString() + ")";
 	}
 
 	public String toStringZ3() {
-		return "( " + this.getConnector() + " " + left.toString() + " "
-				+ right.toString() + ")";
+		return "( " + this.getConnector() + " " + left.toString() + " " + right.toString() + ")";
 	}
 
 	@Override
@@ -100,8 +98,7 @@ public class HybridBooleanExp implements Value {
 		else if (exp instanceof SymbolExp)
 			result = new SymbolExp(((SymbolExp) exp).getVarName());
 		else if (exp instanceof HybridBooleanExp)
-			result = new HybridBooleanExp(((HybridBooleanExp) exp).getLeft(),
-					((HybridBooleanExp) exp).getConnector(),
+			result = new HybridBooleanExp(((HybridBooleanExp) exp).getLeft(), ((HybridBooleanExp) exp).getConnector(),
 					((HybridBooleanExp) exp).getRight());
 		return result;
 	}
@@ -237,10 +234,8 @@ public class HybridBooleanExp implements Value {
 	public String toStringPreFix() {
 		// TODO Auto-generated method stub
 		if (getConnector().equals("!="))
-			return "(not(=" + " " + left.toStringPreFix() + " "
-					+ right.toStringPreFix() + "))";
-		return "(" + getBVConnector() + " " + left.toStringPreFix() + " "
-				+ right.toStringPreFix() + ")";
+			return "(not(=" + " " + left.toStringPreFix() + " " + right.toStringPreFix() + "))";
+		return "(" + getBVConnector() + " " + left.toStringPreFix() + " " + right.toStringPreFix() + ")";
 	}
 
 	private String getBVConnector() {

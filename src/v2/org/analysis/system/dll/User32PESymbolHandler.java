@@ -20,13 +20,12 @@ public class User32PESymbolHandler implements SymbolFinder {
 		this.module = user32peHandler;
 		symbols = new HashMap<AbsoluteAddress, String>();
 		// System.out.println("Import Symbols");
-		for (Map.Entry<AbsoluteAddress, Pair<String, String>> e : this.module
-				.getImportTable().entrySet()) {
-			symbols.put(e.getKey(), e.getValue().getRight() + "@"
-					+ e.getValue().getLeft());
+		for (Map.Entry<AbsoluteAddress, Pair<String, String>> e : this.module.getImportTable().entrySet()) {
+			symbols.put(e.getKey(), e.getValue().getRight() + "@" + e.getValue().getLeft());
 			// System.out.println("Addr: 0x" +
 			// Long.toHexString(e.getKey().getValueOperand()) +
-			// " - " + e.getValueOperand().getRight() + "@" + e.getValueOperand().getLeft());
+			// " - " + e.getValueOperand().getRight() + "@" +
+			// e.getValueOperand().getLeft());
 		}
 
 		// System.out.println("Export Symbols");

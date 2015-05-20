@@ -43,7 +43,7 @@ import v2.org.analysis.value.Value;
 public class FreeLibrary extends Kernel32API {
 
 	public FreeLibrary() {
-		
+
 	}
 
 	@Override

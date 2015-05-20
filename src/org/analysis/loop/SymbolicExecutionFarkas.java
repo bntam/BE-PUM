@@ -24,8 +24,7 @@ public class SymbolicExecutionFarkas {
 	// SymbolValue var;
 	// SymbolVariable sv;
 
-	public SymbolicExecutionFarkas(AddressList first,
-			Map<AbsoluteAddress, Instruction> assemblyMap2) {
+	public SymbolicExecutionFarkas(AddressList first, Map<AbsoluteAddress, Instruction> assemblyMap2) {
 		// TODO Auto-generated constructor stub
 		this.traceList = first;
 		this.assemblyMap = assemblyMap2;
@@ -88,8 +87,7 @@ public class SymbolicExecutionFarkas {
 						 * sv.add(dest.toString().substring(1), src.toString()
 						 * .substring(1));
 						 */
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						/*
 						 * sv.add(dest.toString().substring(1), ((Immediate)
 						 * src) .getNumber().intValue());
@@ -102,8 +100,7 @@ public class SymbolicExecutionFarkas {
 				Operand dest = ins.getOperand1();
 				if (dest.getClass().getSimpleName().equals("X86Register"))
 					/* sv.add(dest.toString().substring(1), 1) */;
-				else if (dest.getClass().getSimpleName()
-						.equals("X86MemoryOperand")) {
+				else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					// System.out.println("Information of this X86MemoryOperand");
 					// System.out.println(((X86MemoryOperand)dest).toString());
 					// System.out.println(((X86MemoryOperand)dest).getDisplacement());
@@ -119,8 +116,7 @@ public class SymbolicExecutionFarkas {
 				// result = new SymbolicValue(1);
 				// newDest.addExprValue(SymbolicValue.ADD_EXPR, result);
 			} else {
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 				// halt_status = FAILED;
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
@@ -139,8 +135,7 @@ public class SymbolicExecutionFarkas {
 						 * sv.and(dest.toString().substring(1), src.toString()
 						 * .substring(1))
 						 */;
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						/*
 						 * sv.and(dest.toString().substring(1), ((Immediate)
 						 * src) .getNumber().intValue())
@@ -154,8 +149,7 @@ public class SymbolicExecutionFarkas {
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
 				// return null;
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 			}
 			break;
 		case SUB:
@@ -170,8 +164,7 @@ public class SymbolicExecutionFarkas {
 						 * sv.sub(dest.toString().substring(1), src.toString()
 						 * .substring(1))
 						 */;
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						/*
 						 * sv.sub(dest.toString().substring(1), ((Immediate)
 						 * src) .getNumber().intValue())
@@ -205,8 +198,7 @@ public class SymbolicExecutionFarkas {
 						 * sv.or(dest.toString().substring(1), src.toString()
 						 * .substring(1))
 						 */;
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						/*
 						 * sv.or(dest.toString().substring(1), ((Immediate) src)
 						 * .getNumber().intValue())
@@ -219,8 +211,7 @@ public class SymbolicExecutionFarkas {
 				// SymbolicExecution.programTrace.setVisited(startAddress, null,
 				// ins.toString(startAddress, symFinder));
 				// return null;
-				System.out.println("Instruction not supported: "
-						+ ins.getName());
+				System.out.println("Instruction not supported: " + ins.getName());
 			}
 			break;
 		case SRL:
@@ -231,8 +222,7 @@ public class SymbolicExecutionFarkas {
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						/* int y = ((Immediate) src).getNumber().intValue(); */
 						/* long x = (long) Math.pow(2, y); */
 						/* sv.divide(dest.toString().substring(1), x) */;
@@ -249,8 +239,7 @@ public class SymbolicExecutionFarkas {
 				if (dest.getClass().getSimpleName().equals("X86Register")) {
 					if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
-					} else if (src.getClass().getSimpleName()
-							.equals("Immediate")) {
+					} else if (src.getClass().getSimpleName().equals("Immediate")) {
 						/*
 						 * sv.unsignedMul(dest.toString().substring(1), (long)
 						 * Math.pow(2, ((Immediate)
@@ -262,8 +251,7 @@ public class SymbolicExecutionFarkas {
 			}
 			break;
 		default:
-			System.out.println("Arithmetic statement not supported: "
-					+ ins.getName());
+			System.out.println("Arithmetic statement not supported: " + ins.getName());
 			// halt_status = FAILED;
 			// SymbolicExecution.programTrace.setVisited(startAddress, null,
 			// ins.toString(startAddress, symFinder));
@@ -281,8 +269,7 @@ public class SymbolicExecutionFarkas {
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
 			// returnAddress = new SymbolicValue(((AbsoluteAddress)
 			// dest).getValueOperand());
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
 			// returnAddress = new SymbolicValue(((X86PCRelativeAddress)
 			// dest).getEffectiveValue(startAddress));
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
@@ -309,8 +296,7 @@ public class SymbolicExecutionFarkas {
 		// long returnAddress = 0;
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
 			// returnAddress = ((X86AbsoluteAddress) dest).getValueOperand();
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
 			// returnAddress = ((X86PCRelativeAddress) dest)
 			// .getEffectiveValue(target.getValueOperand());
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
@@ -334,10 +320,8 @@ public class SymbolicExecutionFarkas {
 			// return null;
 			// }
 			// FormulaSet f = resolveLoop(inst);
-			this.formulas.add(new FarkasAlgorithm(target, assemblyMap,
-					traceList).resolve());
-			System.out.println("Process Loop with Destination:"
-					+ dest.toString());
+			this.formulas.add(new FarkasAlgorithm(target, assemblyMap, traceList).resolve());
+			System.out.println("Process Loop with Destination:" + dest.toString());
 			return;
 		}
 		// SymbolicCondition positiveCond = new SymbolicCondition();
@@ -345,8 +329,8 @@ public class SymbolicExecutionFarkas {
 		// int positiveConnector, negativeConnector;
 
 		/*
-		 * if (neg.get(target).getValueOperand() == this.traceList.get(0) .getValueOperand())
-		 * this.formulas.getTop().setOperator(
+		 * if (neg.get(target).getValueOperand() == this.traceList.get(0)
+		 * .getValueOperand()) this.formulas.getTop().setOperator(
 		 * CondJump.getReserCondJump((inst.getName()))); else
 		 * this.formulas.getTop().setOperator(
 		 * CondJump.getCondJump((inst.getName())));
@@ -439,8 +423,7 @@ public class SymbolicExecutionFarkas {
 		if (dest.getClass().getSimpleName().equals("X86AbsoluteAddress")) {
 			// returnAddress = new SymbolicValue(((AbsoluteAddress)
 			// dest).getValueOperand());
-		} else if (dest.getClass().getSimpleName()
-				.equals("X86PCRelativeAddress")) {
+		} else if (dest.getClass().getSimpleName().equals("X86PCRelativeAddress")) {
 			// returnAddress = new SymbolicValue(((X86PCRelativeAddress)
 			// dest).getEffectiveValue(startAddress));
 		} else if (dest.getClass().getSimpleName().equals("X86Register")) {
@@ -530,20 +513,16 @@ public class SymbolicExecutionFarkas {
 			// SymbolicCondition negativeCond = new SymbolicCondition();
 			// int positiveConnector, negativeConnector;
 
-			if (inst.getName().equals("cmova")
-					|| inst.getName().equals("cmovg")) {
+			if (inst.getName().equals("cmova") || inst.getName().equals("cmovg")) {
 				// positiveConnector = SymbolicCondition.B_OP_GREATER;
 				// negativeConnector = SymbolicCondition.B_OP_NOT_GREATER;
-			} else if (inst.getName().equals("cmovae")
-					|| inst.getName().equals("cmovge")) {
+			} else if (inst.getName().equals("cmovae") || inst.getName().equals("cmovge")) {
 				// positiveConnector = SymbolicCondition.B_OP_NOT_LESS;
 				// negativeConnector = SymbolicCondition.B_OP_LESS;
-			} else if (inst.getName().equals("cmovb")
-					|| inst.getName().equals("cmovl")) {
+			} else if (inst.getName().equals("cmovb") || inst.getName().equals("cmovl")) {
 				// positiveConnector = SymbolicCondition.B_OP_LESS;
 				// negativeConnector = SymbolicCondition.B_OP_NOT_LESS;
-			} else if (inst.getName().equals("cmovbe")
-					|| inst.getName().equals("cmovle")) {
+			} else if (inst.getName().equals("cmovbe") || inst.getName().equals("cmovle")) {
 				// positiveConnector = SymbolicCondition.B_OP_NOT_GREATER;
 				// negativeConnector = SymbolicCondition.B_OP_GREATER;
 			} else if (inst.getName().equals("cmove")) {
@@ -576,8 +555,7 @@ public class SymbolicExecutionFarkas {
 
 		// System.out.println("Instruction: " + inst.getName());
 
-		if (inst.getName().startsWith("cmp")
-				|| inst.getName().startsWith("test")) {
+		if (inst.getName().startsWith("cmp") || inst.getName().startsWith("test")) {
 			// SymbolicValue lhs = null, rhs = null;
 
 			Value d = null, s = null;
@@ -603,8 +581,7 @@ public class SymbolicExecutionFarkas {
 		} else if (inst.getName().startsWith("pop")) {
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
 
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+			} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				// X86MemoryOperand memoryAddress = (X86MemoryOperand) dest;
 
 			}
@@ -612,8 +589,7 @@ public class SymbolicExecutionFarkas {
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
 				// String regName = ((X86Register) dest).toString();
 
-			} else if (dest.getClass().getSimpleName()
-					.equals("X86MemoryOperand")) {
+			} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				// X86MemoryOperand memoryAddress = (X86MemoryOperand) dest;
 
 			}

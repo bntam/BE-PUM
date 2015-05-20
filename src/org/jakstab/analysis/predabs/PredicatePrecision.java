@@ -26,7 +26,6 @@ import org.jakstab.util.Logger;
 public class PredicatePrecision implements Precision {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(PredicatePrecision.class);
+	private static final Logger logger = Logger.getLogger(PredicatePrecision.class);
 
 }

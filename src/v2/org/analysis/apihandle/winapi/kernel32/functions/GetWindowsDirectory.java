@@ -53,7 +53,7 @@ public class GetWindowsDirectory extends Kernel32API {
 	 * 
 	 */
 	public GetWindowsDirectory() {
-		
+
 	}
 
 	@Override

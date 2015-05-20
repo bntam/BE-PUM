@@ -53,7 +53,7 @@ public class SetFileAttributes extends Kernel32API {
 	 * 
 	 */
 	public SetFileAttributes() {
-		
+
 	}
 
 	@Override

@@ -269,8 +269,7 @@ public class Main_WPDS {
 
 				// If we are processing drivers, use the driver's name as base
 				// name
-				if (Options.wdm.getValue()
-						&& moduleFile.getName().toLowerCase().endsWith(".sys")) {
+				if (Options.wdm.getValue() && moduleFile.getName().toLowerCase().endsWith(".sys")) {
 					baseFileName = getBaseFileName(moduleFile);
 				}
 			}
@@ -299,15 +298,12 @@ public class Main_WPDS {
 
 		// Change entry point if requested
 		if (Options.startAddress.getValue() > 0) {
-			logger.verbose("Setting start address to 0x"
-					+ Long.toHexString(Options.startAddress.getValue()));
-			program.setEntryAddress(new AbsoluteAddress(Options.startAddress
-					.getValue()));
+			logger.verbose("Setting start address to 0x" + Long.toHexString(Options.startAddress.getValue()));
+			program.setEntryAddress(new AbsoluteAddress(Options.startAddress.getValue()));
 		}
 
 		// Add surrounding "%DF := 1; call entrypoint; halt;"
-		program.installHarness(Options.heuristicEntryPoints.getValue() ? new HeuristicHarness()
-				: new DefaultHarness());
+		program.installHarness(Options.heuristicEntryPoints.getValue() ? new HeuristicHarness() : new DefaultHarness());
 
 		int slashIdx = baseFileName.lastIndexOf('\\');
 		if (slashIdx < 0)
@@ -363,8 +359,7 @@ public class Main_WPDS {
 
 			// ///////////////////////
 			// Reconstruct Control Flow
-			ControlFlowReconstruction cfr = new ControlFlowReconstruction(
-					program);
+			ControlFlowReconstruction cfr = new ControlFlowReconstruction(program);
 			long customTime = System.currentTimeMillis();
 			// Execute the algorithm
 			try {
@@ -381,13 +376,11 @@ public class Main_WPDS {
 				logger.fatal("=================");
 				logger.fatal(" Reached states:");
 				logger.fatal("=================");
-				AbstractState[] stateArray = reached
-						.toArray(new AbstractState[reached.size()]);
+				AbstractState[] stateArray = reached.toArray(new AbstractState[reached.size()]);
 				Arrays.sort(stateArray, new Comparator<AbstractState>() {
 					@Override
 					public int compare(AbstractState o1, AbstractState o2) {
-						return ((CompositeState) o1).getLocation().compareTo(
-								((CompositeState) o2).getLocation());
+						return ((CompositeState) o1).getLocation().compareTo(((CompositeState) o2).getLocation());
 					}
 				});
 				Location lastLoc = null;
@@ -406,13 +399,11 @@ public class Main_WPDS {
 				reached.logHighestStateCounts(10);
 
 			if (!cfr.isCompleted()) {
-				logger.error(Characters
-						.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
+				logger.error(Characters.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
 			}
 
 			if (!cfr.isSound()) {
-				logger.error(Characters
-						.starredBox("WARNING: Analysis was unsound!"));
+				logger.error(Characters.starredBox("WARNING: Analysis was unsound!"));
 			}
 
 			/*
@@ -431,29 +422,21 @@ public class Main_WPDS {
 			logger.info("   Statistics for Control Flow Reconstruction");
 			logger.info(Characters.DOUBLE_LINE_FULL_WIDTH);
 			logger.info("   Runtime:                     "
-					+ String.format("%8dms",
-							(overallEndTime - overallStartTime)));
+					+ String.format("%8dms", (overallEndTime - overallStartTime)));
 			logger.info("   Instructions:                        "
 					+ String.format("%8d", program.getInstructionCount()));
-			logger.info("   RTL Statements:                      "
-					+ String.format("%8d", program.getStatementCount()));
-			logger.info("   CFA Edges:                           "
-					+ String.format("%8d", program.getCFA().size()));
+			logger.info("   RTL Statements:                      " + String.format("%8d", program.getStatementCount()));
+			logger.info("   CFA Edges:                           " + String.format("%8d", program.getCFA().size()));
 			logger.info("   States visited:                      "
 					+ String.format("%8d", cfr.getNumberOfStatesVisited()));
-			logger.info("   Final state space:                   "
-					+ String.format("%8d", stateCount));
-			logger.info("   Finished normally:                   "
-					+ String.format("%8b", cfr.isCompleted()));
-			logger.info("   Analysis result:                     "
-					+ cfr.getStatus());
+			logger.info("   Final state space:                   " + String.format("%8d", stateCount));
+			logger.info("   Finished normally:                   " + String.format("%8b", cfr.isCompleted()));
+			logger.info("   Analysis result:                     " + cfr.getStatus());
 			// logger.error( "   Sound:                               " +
 			// String.format("%8b", cfr.isSound()));
-			logger.info("   Indirect Branches (no import calls): "
-					+ String.format("%8d", indirectBranches));
+			logger.info("   Indirect Branches (no import calls): " + String.format("%8d", indirectBranches));
 			logger.info("   Unresolved Branches:                 "
-					+ String.format("%8d", program.getUnresolvedBranches()
-							.size()));
+					+ String.format("%8d", program.getUnresolvedBranches().size()));
 			logger.debug("   FastSet conversions:                 "
 					+ String.format("%8d", FastSet.getConversionCount()));
 			logger.debug("   Variable count:                      "
@@ -467,8 +450,7 @@ public class Main_WPDS {
 			stats.record(program.getUnresolvedBranches().size());
 			stats.record(cfr.getNumberOfStatesVisited());
 			stats.record(stateCount);
-			stats.record(Math
-					.round((overallEndTime - overallStartTime) / 1000.0));
+			stats.record(Math.round((overallEndTime - overallStartTime) / 1000.0));
 			stats.record(cfr.getStatus());
 			stats.record(Options.cpas.getValue());
 			stats.record(BoundedAddressTracking.varThreshold.getValue());
@@ -486,11 +468,9 @@ public class Main_WPDS {
 
 			graphWriter.writeDisassembly(program, baseFileName1 + "_jak.asm");
 
-			if (!(cfr.isCompleted() && Options.secondaryCPAs.getValue()
-					.length() > 0)) {
+			if (!(cfr.isCompleted() && Options.secondaryCPAs.getValue().length() > 0)) {
 				if (!Options.noGraphs.getValue()) {
-					graphWriter.writeControlFlowAutomaton(baseFileName1
-							+ "_cfa");
+					graphWriter.writeControlFlowAutomaton(baseFileName1 + "_cfa");
 					graphWriter.writeAssemblyCFG(baseFileName1 + "_asmcfg");
 				}
 				// if (Options.errorTrace) graphWriter.writeART(baseFileName +
@@ -509,23 +489,19 @@ public class Main_WPDS {
 					runAlgorithm(dce);
 					totalRemoved += dce.getRemovalCount();
 				} while (dce.getRemovalCount() > 0);
-				logger.info("=== Finished CFA simplification, removed "
-						+ totalRemoved + " edges. ===");
+				logger.info("=== Finished CFA simplification, removed " + totalRemoved + " edges. ===");
 
 				AnalysisManager mgr = AnalysisManager.getInstance();
 				List<ConfigurableProgramAnalysis> secondaryCPAs = new LinkedList<ConfigurableProgramAnalysis>();
 				for (int i = 0; i < Options.secondaryCPAs.getValue().length(); i++) {
-					ConfigurableProgramAnalysis cpa = mgr
-							.createAnalysis(Options.secondaryCPAs.getValue()
-									.charAt(i));
+					ConfigurableProgramAnalysis cpa = mgr.createAnalysis(Options.secondaryCPAs.getValue().charAt(i));
 					if (cpa != null) {
 						AnalysisProperties p = mgr.getProperties(cpa);
 						logger.info("--- Using " + p.getName());
 						secondaryCPAs.add(cpa);
 					} else {
 						logger.fatal("No analysis corresponds to letter \""
-								+ Options.secondaryCPAs.getValue().charAt(i)
-								+ "\"!");
+								+ Options.secondaryCPAs.getValue().charAt(i) + "\"!");
 						System.exit(1);
 					}
 				}
@@ -533,52 +509,40 @@ public class Main_WPDS {
 				long customAnalysisStartTime = System.currentTimeMillis();
 				CPAAlgorithm cpaAlg;
 				ConfigurableProgramAnalysis[] cpaArray = secondaryCPAs
-						.toArray(new ConfigurableProgramAnalysis[secondaryCPAs
-								.size()]);
+						.toArray(new ConfigurableProgramAnalysis[secondaryCPAs.size()]);
 				if (Options.backward.getValue()) {
-					cpaAlg = CPAAlgorithm.createBackwardAlgorithm(program,
-							cpaArray);
+					cpaAlg = CPAAlgorithm.createBackwardAlgorithm(program, cpaArray);
 				} else {
-					cpaAlg = CPAAlgorithm.createForwardAlgorithm(program,
-							cpaArray);
+					cpaAlg = CPAAlgorithm.createForwardAlgorithm(program, cpaArray);
 				}
 				activeAlgorithm = cpaAlg;
 				cpaAlg.run();
 				long customAnalysisEndTime = System.currentTimeMillis();
 
 				if (!Options.noGraphs.getValue())
-					graphWriter.writeControlFlowAutomaton(
-							baseFileName + "_cfa", cpaAlg.getReachedStates()
-									.select(1));
+					graphWriter.writeControlFlowAutomaton(baseFileName + "_cfa", cpaAlg.getReachedStates().select(1));
 
 				logger.error(Characters.DOUBLE_LINE_FULL_WIDTH);
-				logger.error("   Statistics for "
-						+ Options.secondaryCPAs.getValue());
+				logger.error("   Statistics for " + Options.secondaryCPAs.getValue());
 				logger.error(Characters.DOUBLE_LINE_FULL_WIDTH);
 				logger.error("   Runtime:                "
-						+ String.format(
-								"%8dms",
-								(customAnalysisEndTime - customAnalysisStartTime)));
-				logger.error("   States:                   "
-						+ String.format("%8d", cpaAlg.getReachedStates().size()));
+						+ String.format("%8dms", (customAnalysisEndTime - customAnalysisStartTime)));
+				logger.error("   States:                   " + String.format("%8d", cpaAlg.getReachedStates().size()));
 				logger.error(Characters.DOUBLE_LINE_FULL_WIDTH);
 
 			}
 
 			// If procedure abstraction is active, detect procedures now
-			if (cfr.isCompleted()
-					&& Options.procedureAbstraction.getValue() == 2) {
+			if (cfr.isCompleted() && Options.procedureAbstraction.getValue() == 2) {
 				cfr = null;
 				reached = null;
 				ProcedureAnalysis procedureAnalysis = new ProcedureAnalysis();
-				CPAAlgorithm cpaAlg = CPAAlgorithm.createForwardAlgorithm(
-						program, procedureAnalysis);
+				CPAAlgorithm cpaAlg = CPAAlgorithm.createForwardAlgorithm(program, procedureAnalysis);
 				runAlgorithm(cpaAlg);
 				reached = cpaAlg.getReachedStates().select(1);
 				Set<Location> procedures = procedureAnalysis.getCallees();
 
-				SetMultimap<Location, Location> callGraph = HashMultimap
-						.create();
+				SetMultimap<Location, Location> callGraph = HashMultimap.create();
 
 				// Procedure analysis and thus this callgraph only works with
 				// --procedures 2
@@ -586,21 +550,17 @@ public class Main_WPDS {
 				// as all
 				// procedures are checked without any interprocedural
 				// abstraction anyway
-				for (Pair<Location, Location> callSite : procedureAnalysis
-						.getCallSites()) {
+				for (Pair<Location, Location> callSite : procedureAnalysis.getCallSites()) {
 					ProcedureState procedureState = (ProcedureState) Lattices
 							.joinAll(reached.where(callSite.getLeft()));
-					for (Location procedure : procedureState
-							.getProcedureEntries()) {
+					for (Location procedure : procedureState.getProcedureEntries()) {
 						callGraph.put(procedure, callSite.getRight());
 					}
 				}
-				logger.info("Found " + procedures.size()
-						+ " function entry points from procedure analysis.");
+				logger.info("Found " + procedures.size() + " function entry points from procedure analysis.");
 
 				if (!Options.noGraphs.getValue())
-					graphWriter.writeCallGraph(baseFileName + "_callgraph",
-							callGraph);
+					graphWriter.writeCallGraph(baseFileName + "_callgraph", callGraph);
 			}
 			// System.out.println("Number of nodes " + program.);
 			System.out.println(Characters.DOUBLE_LINE_FULL_WIDTH);
@@ -609,31 +569,23 @@ public class Main_WPDS {
 			System.out.println("   Filename:                     " + in);
 
 			System.out.println("   Runtime:                     "
-					+ String.format("%8dms",
-							(overallEndTime - overallStartTime)));
+					+ String.format("%8dms", (overallEndTime - overallStartTime)));
 			System.out.println("   Instructions:                        "
 					+ String.format("%8d", program.getInstructionCount()));
-			System.out.println("   Nodes:                        "
-					+ String.format("%8d", graphWriter.getNodesCount()));
-			System.out.println("   Edges:                        "
-					+ String.format("%8d", graphWriter.getEdgesCount()));
+			System.out.println("   Nodes:                        " + String.format("%8d", graphWriter.getNodesCount()));
+			System.out.println("   Edges:                        " + String.format("%8d", graphWriter.getEdgesCount()));
 			System.out.println("   RTL Statements:                      "
 					+ String.format("%8d", program.getStatementCount()));
 			System.out.println("   CFA Edges:                           "
 					+ String.format("%8d", program.getCFA().size()));
 			System.out.println("   States visited:                      "
 					+ String.format("%8d", cfr.getNumberOfStatesVisited()));
-			System.out.println("   Final state space:                   "
-					+ String.format("%8d", stateCount));
-			System.out.println("   Finished normally:                   "
-					+ String.format("%8b", cfr.isCompleted()));
-			System.out.println("   Analysis result:                     "
-					+ cfr.getStatus());
+			System.out.println("   Final state space:                   " + String.format("%8d", stateCount));
+			System.out.println("   Finished normally:                   " + String.format("%8b", cfr.isCompleted()));
+			System.out.println("   Analysis result:                     " + cfr.getStatus());
 			System.out.println("Finished parsing binary codes!");
 			// Processing Time
-			System.out.println("Processing Time: "
-					+ String.format("%8dms",
-							(System.currentTimeMillis() - customTime)));
+			System.out.println("Processing Time: " + String.format("%8dms", (System.currentTimeMillis() - customTime)));
 
 			SystemHandle system = new SystemHandle();
 			// if (this.indirectTarget.toString().equals("0x00401142"))
@@ -648,8 +600,7 @@ public class Main_WPDS {
 			// sr.setAddr(indirectTarget);
 			// sr.setInst(program.getAssemblyMap().get(indirectTarget));
 			List<AddressList> traceList = cfg.getTraceList(targetAddr);
-			MinPathMOPV mopv = new MinPathMOPV(new IntegerWeight(0),
-					new MinPathSemiRing());
+			MinPathMOPV mopv = new MinPathMOPV(new IntegerWeight(0), new MinPathSemiRing());
 			mopv.setTrace(traceList);
 			if (traceList == null)
 				return;
@@ -667,8 +618,7 @@ public class Main_WPDS {
 				// SymbolicExecution se = new
 				// SymbolicExecution(this.indirectTarget,
 				// trace, cfg.getNegConditionList(), sv, program, system);
-				SymbolicExecution se = new SymbolicExecution(targetAddr,
-						trace.clone(), cfg, sv, program, system);
+				SymbolicExecution se = new SymbolicExecution(targetAddr, trace.clone(), cfg, sv, program, system);
 				se.setWeightConf(conf, new IntegerWeight(0));
 				// se.printInfor();
 				se.execute();
@@ -679,8 +629,7 @@ public class Main_WPDS {
 			System.out.println("WPDS information:");
 
 			mopv.setConfigurationList(conf);
-			mopv.setTarget(new State(program.getAssemblyMap().get(targetAddr),
-					targetAddr));
+			mopv.setTarget(new State(program.getAssemblyMap().get(targetAddr), targetAddr));
 			mopv.computeMOPV();
 			// sr.printOutput();
 			// Log.d("","");

@@ -11,8 +11,8 @@ public class Convert {
 	}
 
 	public static long convetUnsignedValue(long v, int numCount) {
-		//if (v == 4294967295l)
-		//	System.out.println("Debug " + 4294967295l);
+		// if (v == 4294967295l)
+		// System.out.println("Debug " + 4294967295l);
 
 		if (numCount == 8)
 			return v & 0x0FF;
@@ -142,21 +142,15 @@ public class Convert {
 
 	public static int getBitCount(String regName) {
 		// TODO Auto-generated method stub
-		if (regName.contains("eax") || regName.contains("ebx")
-				|| regName.contains("ecx") || regName.contains("edx")
-				|| regName.contains("esi") || regName.contains("edi")
-				|| regName.contains("esp") || regName.contains("ebp")
-				|| regName.contains("efl"))
+		if (regName.contains("eax") || regName.contains("ebx") || regName.contains("ecx") || regName.contains("edx")
+				|| regName.contains("esi") || regName.contains("edi") || regName.contains("esp")
+				|| regName.contains("ebp") || regName.contains("efl"))
 			return 32;
-		else if (regName.contains("ax") || regName.contains("bx")
-				|| regName.contains("cx") || regName.contains("dx")
-				|| regName.contains("si") || regName.contains("di")
-				|| regName.contains("sp") || regName.contains("bp"))
+		else if (regName.contains("ax") || regName.contains("bx") || regName.contains("cx") || regName.contains("dx")
+				|| regName.contains("si") || regName.contains("di") || regName.contains("sp") || regName.contains("bp"))
 			return 16;
-		else if (regName.contains("al") || regName.contains("ah")
-				|| regName.contains("bh") || regName.contains("bl")
-				|| regName.contains("cl") || regName.contains("ch")
-				|| regName.contains("dl") || regName.contains("dh")
+		else if (regName.contains("al") || regName.contains("ah") || regName.contains("bh") || regName.contains("bl")
+				|| regName.contains("cl") || regName.contains("ch") || regName.contains("dl") || regName.contains("dh")
 		// || regName.contains("sp") || regName.contains("bp")
 		)
 			return 8;
@@ -166,11 +160,10 @@ public class Convert {
 
 	public static int getSignBit(long d, int num) {
 		// TODO Auto-generated method stub
-		if ((num == 8 && d >= Math.pow(2, 7))
-				|| (num == 16 && d >= Math.pow(2, 15))
+		if ((num == 8 && d >= Math.pow(2, 7)) || (num == 16 && d >= Math.pow(2, 15))
 				|| (num == 32 && d >= Math.pow(2, 31)))
-			return 1; 
-		
+			return 1;
+
 		return 0;
 	}
 

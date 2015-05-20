@@ -39,11 +39,9 @@ import org.jakstab.asm.CallInstruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.PCRelativeAddress;
 
-public class X86CallInstruction extends X86Instruction implements
-		CallInstruction {
+public class X86CallInstruction extends X86Instruction implements CallInstruction {
 
-	public X86CallInstruction(String name, Operand target, int size,
-			int prefixes) {
+	public X86CallInstruction(String name, Operand target, int size, int prefixes) {
 		super(name, target, size, prefixes);
 		if (target instanceof X86PCRelativeAddress) {
 			((X86PCRelativeAddress) target).setInstructionSize(getSize());

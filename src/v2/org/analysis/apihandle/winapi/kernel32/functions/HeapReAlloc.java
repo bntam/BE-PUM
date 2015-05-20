@@ -36,7 +36,7 @@ public class HeapReAlloc extends Kernel32API {
 	 * 
 	 */
 	public HeapReAlloc() {
-		
+
 	}
 
 	@Override
@@ -61,12 +61,13 @@ public class HeapReAlloc extends Kernel32API {
 			long t2 = ((LongValue) x2).getValue();
 			long t3 = ((LongValue) x3).getValue();
 			long t4 = ((LongValue) x4).getValue();
-			
-			LPVOID ret = Kernel32DLL.INSTANCE.HeapReAlloc(new HANDLE(new Pointer(t1)), new DWORD(t2), new LPVOID(t3), new SIZE_T(t4));
+
+			LPVOID ret = Kernel32DLL.INSTANCE.HeapReAlloc(new HANDLE(new Pointer(t1)), new DWORD(t2), new LPVOID(t3),
+					new SIZE_T(t4));
 
 			register.mov("eax", new LongValue(Pointer.nativeValue(ret.toPointer())));
 		}
-		
+
 		return false;
 	}
 

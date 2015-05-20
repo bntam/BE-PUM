@@ -221,21 +221,23 @@ public class Test {
 		// }
 		// }
 
-//		HANDLE hSnapshot = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new DWORD(2), new DWORD(0));
-//		PROCESSENTRY32 lppe = new PROCESSENTRY32();
-//		BOOL ret = Kernel32DLL.INSTANCE.Process32First(hSnapshot, lppe );
-//		if (ret.booleanValue()) {
-//			System.out.println(lppe.toString(false));
-//			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
-//		}
-//		while (Kernel32DLL.INSTANCE.Process32Next(hSnapshot, lppe).booleanValue()) {
-//			System.out.println(lppe.toString(false));
-//			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
-//		}
-		
-		System.out.println((int)Convert.convertSignedValue(0xfffffff0, 32));
-		System.out.println(User32DLL.INSTANCE.GetWindowLong(new HWND(new Pointer(0x901f4L)), (int) Convert.convertSignedValue(0xfffffff0, 32)));
+		// HANDLE hSnapshot = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new
+		// DWORD(2), new DWORD(0));
+		// PROCESSENTRY32 lppe = new PROCESSENTRY32();
+		// BOOL ret = Kernel32DLL.INSTANCE.Process32First(hSnapshot, lppe );
+		// if (ret.booleanValue()) {
+		// System.out.println(lppe.toString(false));
+		// System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+		// }
+		// while (Kernel32DLL.INSTANCE.Process32Next(hSnapshot,
+		// lppe).booleanValue()) {
+		// System.out.println(lppe.toString(false));
+		// System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+		// }
 
+		System.out.println((int) Convert.convertSignedValue(0xfffffff0, 32));
+		System.out.println(User32DLL.INSTANCE.GetWindowLong(new HWND(new Pointer(0x901f4L)),
+				(int) Convert.convertSignedValue(0xfffffff0, 32)));
 
 		// String pMessage = new String("%1!*.*s! %4 %5!*s!");
 		// String pArgs[] = { "4", "2", "Bill", // %1!*.*s! refers back to the

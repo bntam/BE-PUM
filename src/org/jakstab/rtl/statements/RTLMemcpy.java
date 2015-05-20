@@ -99,8 +99,7 @@ public class RTLMemcpy extends AbstractRTLStatement implements RTLStatement {
 	@Override
 	public void inferTypes(Architecture arch) throws TypeInferenceException {
 		source = source.inferBitWidth(arch, arch.getAddressBitWidth());
-		destination = destination
-				.inferBitWidth(arch, arch.getAddressBitWidth());
+		destination = destination.inferBitWidth(arch, arch.getAddressBitWidth());
 		size = size.inferBitWidth(arch, arch.getAddressBitWidth());
 	}
 

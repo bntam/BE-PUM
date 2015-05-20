@@ -40,8 +40,8 @@ public class CallDecoder extends InstructionDecoder {
 		super(name, addrMode1, operandType1);
 	}
 
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand operand = getOperand1(bytesArray, operandSize, addrSize);
 		int size = byteIndex - instrStartIndex;
 		return factory.newCallInstruction(name, operand, size, prefixes);

@@ -39,8 +39,7 @@ import org.jakstab.asm.Immediate;
 import org.jakstab.asm.ReturnInstruction;
 import org.jakstab.asm.SymbolFinder;
 
-public class X86RetInstruction extends X86Instruction implements
-		ReturnInstruction {
+public class X86RetInstruction extends X86Instruction implements ReturnInstruction {
 
 	public X86RetInstruction(String name, Immediate op1, int size, int prefixes) {
 		super(name, op1, size, prefixes);

@@ -4,112 +4,112 @@ import org.jakstab.asm.AbsoluteAddress;
 import v2.org.analysis.environment.*;
 
 public class OllyLoop {
-    public long getLoopID() {
-        return loopID;
-    }
+	public long getLoopID() {
+		return loopID;
+	}
 
-    public void setLoopID(long loop) {
-        this.loopID = loop;
-    }
+	public void setLoopID(long loop) {
+		this.loopID = loop;
+	}
 
-    private long loopID;
+	private long loopID;
 
-    public AbsoluteAddress getAddress() {
-        return address;
-    }
+	public AbsoluteAddress getAddress() {
+		return address;
+	}
 
-    public void setAddress(AbsoluteAddress ins_address) {
-        this.address = ins_address;
-    }
+	public void setAddress(AbsoluteAddress ins_address) {
+		this.address = ins_address;
+	}
 
-    private AbsoluteAddress address;
-    private OllyRegister regs;
-    private OllyFlag flags;
+	private AbsoluteAddress address;
+	private OllyRegister regs;
+	private OllyFlag flags;
 
-    public OllyMemory getMems() {
-        return mems;
-    }
+	public OllyMemory getMems() {
+		return mems;
+	}
 
-    private OllyMemory mems;
+	private OllyMemory mems;
 
-    public OllyMemory getStack() {
-        return stack;
-    }
+	public OllyMemory getStack() {
+		return stack;
+	}
 
-    private OllyMemory stack;
+	private OllyMemory stack;
 
-    public OllyLoop(long loop, long ins_address, OllyRegister regs, OllyFlag flags, OllyMemory mems, OllyMemory stack) {
-        this.loopID = loop;
-        this.address = new AbsoluteAddress(ins_address);
-        this.regs = regs;
-        this.flags = flags;
-        this.mems = mems;
-        this.stack = stack;
-    }
+	public OllyLoop(long loop, long ins_address, OllyRegister regs, OllyFlag flags, OllyMemory mems, OllyMemory stack) {
+		this.loopID = loop;
+		this.address = new AbsoluteAddress(ins_address);
+		this.regs = regs;
+		this.flags = flags;
+		this.mems = mems;
+		this.stack = stack;
+	}
 
-   /* public boolean compareRegister(Register bpreg){
-        return this.regs.compare(bpreg);
-    }*/
+	/*
+	 * public boolean compareRegister(Register bpreg){ return
+	 * this.regs.compare(bpreg); }
+	 */
 
-    /*public boolean compareFlag(Flag bpflag){
-        return this.flags.compare(bpflag);
-    }
+	/*
+	 * public boolean compareFlag(Flag bpflag){ return
+	 * this.flags.compare(bpflag); }
+	 * 
+	 * public boolean compareMemory(Memory bpmem){ return
+	 * this.mems.compare(bpmem); }
+	 * 
+	 * public boolean compareStack(Memory bpmem){ return
+	 * this.stack.compare(bpmem); }
+	 */
 
-    public boolean compareMemory(Memory bpmem){
-        return this.mems.compare(bpmem);
-    }
+	public String compareBEPUM(Environment env, OllyLoop l, long memoryStartAddr, long memoryEndAddr, long stackIndex) {
+		String ret = "";
+		Register r = env.getRegister();
+		Flag f = env.getFlag();
+		Memory m = env.getMemory();
+		Stack s = env.getStack();
+		String compare = compareBEPUMRegister(l, r);
+		if (compare == "")
+			ret += "Register: Equal\n";
+		else
+			ret += "Register: Bug " + compare + "\n";
 
-    public boolean compareStack(Memory bpmem){
-        return this.stack.compare(bpmem);
-    }*/
+		compare = compareBEPUMFlag(l, f);
+		if (compare == "")
+			ret += "Flag: Equal\n";
+		else
+			ret += "Flag: Bug " + compare + "\n";
 
-    public String compareBEPUM(Environment env, OllyLoop l, long memoryStartAddr, long memoryEndAddr, long stackIndex) {
-        String ret = "";
-        Register r = env.getRegister();
-        Flag f = env.getFlag();
-        Memory m = env.getMemory();
-        Stack s = env.getStack();
-        String compare = compareBEPUMRegister(l, r);
-        if (compare == "")
-            ret += "Register: Equal\n";
-        else
-            ret += "Register: Bug " + compare + "\n";
+		compare = compareBEPUMMemory(l, m, memoryStartAddr, memoryEndAddr);
 
-        compare = compareBEPUMFlag(l, f);
-        if (compare == "")
-            ret += "Flag: Equal\n";
-        else
-            ret += "Flag: Bug " + compare + "\n";
+		if (compare == "")
+			ret += "Memory: Equal\n";
+		else
+			ret += "Memory: Unequal " + compare + "\n";
 
-        compare = compareBEPUMMemory(l, m, memoryStartAddr, memoryEndAddr);
+		long esp = regs.getRegisterValue("esp");
+		compare = compareBEPUMStack(l, m, esp, stackIndex);
+		if (compare == "")
+			ret += "Stack: Equal\n";
+		else
+			ret += "Stack: Unequal " + compare + "\n";
+		return ret;
+	}
 
-        if (compare == "")
-            ret += "Memory: Equal\n";
-        else
-            ret += "Memory: Unequal " + compare + "\n";
+	private String compareBEPUMStack(OllyLoop l, Memory s, long esp, long stackIndex) {
+		return stack.compareStack(l, s, esp, stackIndex);
+	}
 
-        long esp = regs.getRegisterValue("esp");
-        compare = compareBEPUMStack(l, m, esp, stackIndex);
-        if (compare == "")
-            ret += "Stack: Equal\n";
-        else
-            ret += "Stack: Unequal " + compare + "\n";
-        return ret;
-    }
+	private String compareBEPUMMemory(OllyLoop l, Memory m, long memoryStartAddr, long memoryEndAddr) {
+		return mems.compareMemory(l, m, memoryStartAddr, memoryEndAddr);
+	}
 
-    private String compareBEPUMStack(OllyLoop l, Memory s, long esp, long stackIndex) {
-        return stack.compareStack(l, s, esp, stackIndex);
-    }
+	private String compareBEPUMFlag(OllyLoop l, Flag f) {
+		return flags.compare(f);
+	}
 
-    private String compareBEPUMMemory(OllyLoop l, Memory m, long memoryStartAddr, long memoryEndAddr) {
-        return mems.compareMemory(l, m, memoryStartAddr, memoryEndAddr);
-    }
-
-    private String compareBEPUMFlag(OllyLoop l, Flag f) {
-        return flags.compare(f);
-    }
-
-    private String compareBEPUMRegister(OllyLoop l, Register r) {
-        return regs.compare(r);
-    }
+	private String compareBEPUMRegister(OllyLoop l, Register r) {
+		return regs.compare(r);
+	}
 }

@@ -63,12 +63,9 @@ public class CPAAlgorithm implements Algorithm {
 	 * @param cpas
 	 *            The list of analyses to be performed
 	 */
-	public static CPAAlgorithm createForwardAlgorithm(Program program,
-			ConfigurableProgramAnalysis... cpas) {
-		ConfigurableProgramAnalysis cpa = new CompositeProgramAnalysis(
-				new LocationAnalysis(), cpas);
-		return new CPAAlgorithm(program, cpa, new CFATransformerFactory(
-				program.getCFA()), new FastSet<AbstractState>());
+	public static CPAAlgorithm createForwardAlgorithm(Program program, ConfigurableProgramAnalysis... cpas) {
+		ConfigurableProgramAnalysis cpa = new CompositeProgramAnalysis(new LocationAnalysis(), cpas);
+		return new CPAAlgorithm(program, cpa, new CFATransformerFactory(program.getCFA()), new FastSet<AbstractState>());
 	}
 
 	/**
@@ -81,22 +78,18 @@ public class CPAAlgorithm implements Algorithm {
 	 * @param cpas
 	 *            The list of backward analyses to be performed
 	 */
-	public static CPAAlgorithm createBackwardAlgorithm(Program program,
-			ConfigurableProgramAnalysis... cpas) {
-		ConfigurableProgramAnalysis cpa = new CompositeProgramAnalysis(
-				new BackwardLocationAnalysis(), cpas);
-		return new CPAAlgorithm(program, cpa, new ReverseCFATransformerFactory(
-				program.getCFA()), new FastSet<AbstractState>());
+	public static CPAAlgorithm createBackwardAlgorithm(Program program, ConfigurableProgramAnalysis... cpas) {
+		ConfigurableProgramAnalysis cpa = new CompositeProgramAnalysis(new BackwardLocationAnalysis(), cpas);
+		return new CPAAlgorithm(program, cpa, new ReverseCFATransformerFactory(program.getCFA()),
+				new FastSet<AbstractState>());
 	}
 
-	public CPAAlgorithm(Program program, ConfigurableProgramAnalysis cpa,
-			StateTransformerFactory transformerFactory,
+	public CPAAlgorithm(Program program, ConfigurableProgramAnalysis cpa, StateTransformerFactory transformerFactory,
 			Worklist<AbstractState> worklist) {
 		this(program, cpa, transformerFactory, worklist, false);
 	}
 
-	public CPAAlgorithm(Program program, ConfigurableProgramAnalysis cpa,
-			StateTransformerFactory transformerFactory,
+	public CPAAlgorithm(Program program, ConfigurableProgramAnalysis cpa, StateTransformerFactory transformerFactory,
 			Worklist<AbstractState> worklist, boolean failFast) {
 		super();
 		this.program = program;
@@ -156,16 +149,14 @@ public class CPAAlgorithm implements Algorithm {
 		Runtime runtime = Runtime.getRuntime();
 		// Jakstab Algorithm
 		System.out.println("Starting CPA algorithm.");
-		AbstractState start = cpa.initStartState(transformerFactory
-				.getInitialLocation());
+		AbstractState start = cpa.initStartState(transformerFactory.getInitialLocation());
 		worklist.add(start);
 		reached.add(start);
 		if (art != null)
 			art.setRoot(start);
 
 		// Set up precisions
-		Precision precision = cpa.initPrecision(
-				transformerFactory.getInitialLocation(), null);
+		Precision precision = cpa.initPrecision(transformerFactory.getInitialLocation(), null);
 		Map<Location, Precision> precisionMap = new HashMap<Location, Precision>();
 		precisionMap.put(start.getLocation(), precision);
 
@@ -201,14 +192,10 @@ public class CPAAlgorithm implements Algorithm {
 						+ speed
 						+ " states/second"
 						+ (transformerFactory instanceof ResolvingTransformerFactory ? ", "
-								+ program.getInstructionCount()
-								+ " instructions."
-								: "."));
+								+ program.getInstructionCount() + " instructions." : "."));
 
-				logger.info(String.format(
-						"    Allocated heap memory: %.2f MByte",
-						(runtime.totalMemory() - runtime.freeMemory())
-								/ (1024.0 * 1024.0)));
+				logger.info(String.format("    Allocated heap memory: %.2f MByte",
+						(runtime.totalMemory() - runtime.freeMemory()) / (1024.0 * 1024.0)));
 
 				steps = 0;
 
@@ -220,10 +207,8 @@ public class CPAAlgorithm implements Algorithm {
 				lastTime = now;
 
 				if (Options.timeout.getValue() > 0
-						&& (System.currentTimeMillis() - startTime > Options.timeout
-								.getValue() * 1000)) {
-					logger.error("Timeout after " + Options.timeout.getValue()
-							+ "s!");
+						&& (System.currentTimeMillis() - startTime > Options.timeout.getValue() * 1000)) {
+					logger.error("Timeout after " + Options.timeout.getValue() + "s!");
 					stop = true;
 				}
 			}
@@ -247,8 +232,7 @@ public class CPAAlgorithm implements Algorithm {
 
 			precision = precisionMap.get(unadjustedState.getLocation());
 
-			Pair<AbstractState, Precision> pair = cpa.prec(unadjustedState,
-					precision, reached);
+			Pair<AbstractState, Precision> pair = cpa.prec(unadjustedState, precision, reached);
 
 			// Warning: The refined a is not stored in "reached", only used for
 			// successor calculation
@@ -286,11 +270,9 @@ public class CPAAlgorithm implements Algorithm {
 				// a.getLocation().getAddress().toString());
 				for (CFAEdge cfaEdge : transformerFactory.getTransformers(a)) {
 
-					Precision targetPrecision = precisionMap.get(cfaEdge
-							.getTarget());
+					Precision targetPrecision = precisionMap.get(cfaEdge.getTarget());
 					if (targetPrecision == null) {
-						targetPrecision = cpa.initPrecision(
-								cfaEdge.getTarget(), cfaEdge.getTransformer());
+						targetPrecision = cpa.initPrecision(cfaEdge.getTarget(), cfaEdge.getTransformer());
 						precisionMap.put(cfaEdge.getTarget(), targetPrecision);
 					}
 
@@ -303,12 +285,10 @@ public class CPAAlgorithm implements Algorithm {
 					// cfaEdge.getTarget().getAddress().toString().equals("0x0040102e"))
 					// System.out.println("Debug Edge");
 					// Calculate the set of abstract successors
-					Set<AbstractState> successors = cpa.post(a, cfaEdge,
-							targetPrecision);
+					Set<AbstractState> successors = cpa.post(a, cfaEdge, targetPrecision);
 
 					if (successors.isEmpty()) {
-						logger.debug("No successors along edge " + cfaEdge
-								+ ", reached halt?");
+						logger.debug("No successors along edge " + cfaEdge + ", reached halt?");
 						continue;
 					}
 
@@ -324,10 +304,8 @@ public class CPAAlgorithm implements Algorithm {
 						Set<AbstractState> statesToRemove = new FastSet<AbstractState>();
 						Set<AbstractState> statesToAdd = new FastSet<AbstractState>();
 
-						for (AbstractState r : reached.where(0,
-								((CompositeState) succ).getComponent(0))) {
-							AbstractState merged = cpa.merge(succ, r,
-									targetPrecision);
+						for (AbstractState r : reached.where(0, ((CompositeState) succ).getComponent(0))) {
+							AbstractState merged = cpa.merge(succ, r, targetPrecision);
 							if (!merged.equals(r)) {
 								// logger.debug("Merge of " +
 								// succ.getIdentifier() + " and " +
@@ -358,9 +336,7 @@ public class CPAAlgorithm implements Algorithm {
 
 						// if not stopped add to worklist
 						if (!cpa.stop(succ, reached, targetPrecision)
-								|| this.program
-										.checkSMPos(((CompositeState) succ)
-												.getLocation().getAddress())) {
+								|| this.program.checkSMPos(((CompositeState) succ).getLocation().getAddress())) {
 							worklist.add(succ);
 							reached.add(succ);
 							if (art != null)
@@ -380,20 +356,17 @@ public class CPAAlgorithm implements Algorithm {
 		}
 		long endTime = System.currentTimeMillis();
 		if (endTime - startTime > 0) {
-			logger.info("Processed " + statesVisited + " states at "
-					+ (1000L * statesVisited / (endTime - startTime))
+			logger.info("Processed " + statesVisited + " states at " + (1000L * statesVisited / (endTime - startTime))
 					+ " states/second");
 			logger.info(String.format("Allocated heap memory: %.2f MByte",
-					(runtime.totalMemory() - runtime.freeMemory())
-							/ (1024.0 * 1024.0)));
+					(runtime.totalMemory() - runtime.freeMemory()) / (1024.0 * 1024.0)));
 		}
 
 		completed = worklist.isEmpty();
 	}
 
 	public void stop() {
-		logger.fatal(Characters
-				.starredBox("Interrupt! Stopping CPA Algorithm!"));
+		logger.fatal(Characters.starredBox("Interrupt! Stopping CPA Algorithm!"));
 		stop = true;
 	}
 

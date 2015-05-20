@@ -124,8 +124,7 @@ public class Main_ExtractFiles {
 
 					System.out.println(line);
 
-					String[] arg = SplitUsingTokenizer(
-							"-m " + pathVirus + line, " ");
+					String[] arg = SplitUsingTokenizer("-m " + pathVirus + line, " ");
 					// String[] arg = SplitUsingTokenizer(pathFile, " ");
 					// String[] arg =
 					// SplitUsingTokenizer("-s -m asm/chosenFile/processing/"
@@ -161,8 +160,7 @@ public class Main_ExtractFiles {
 
 					Program program = Program.createProgram(arch);
 
-					File mainFile = new File(Options.mainFilename)
-							.getAbsoluteFile();
+					File mainFile = new File(Options.mainFilename).getAbsoluteFile();
 
 					String baseFileName = null;
 
@@ -170,22 +168,18 @@ public class Main_ExtractFiles {
 						// Load additional modules
 						for (String moduleName : Options.moduleFilenames) {
 							logger.fatal("Parsing " + moduleName + "...");
-							File moduleFile = new File(moduleName)
-									.getAbsoluteFile();
+							File moduleFile = new File(moduleName).getAbsoluteFile();
 							program.loadModule(moduleFile);
 
 							// If we are processing drivers, use the driver's
 							// name as base
 							// name
-							if (Options.wdm.getValue()
-									&& moduleFile.getName().toLowerCase()
-											.endsWith(".sys")) {
+							if (Options.wdm.getValue() && moduleFile.getName().toLowerCase().endsWith(".sys")) {
 								baseFileName = getBaseFileName(moduleFile);
 							}
 						}
 						// Load main module last
-						logger.error("Parsing main module "
-								+ Options.mainFilename + "...");
+						logger.error("Parsing main module " + Options.mainFilename + "...");
 						program.loadMainModule(mainFile);
 
 						// Use main module as base name if we have none yet
@@ -210,15 +204,12 @@ public class Main_ExtractFiles {
 					// Change entry point if requested
 					if (Options.startAddress.getValue() > 0) {
 						logger.verbose("Setting start address to 0x"
-								+ Long.toHexString(Options.startAddress
-										.getValue()));
-						program.setEntryAddress(new AbsoluteAddress(
-								Options.startAddress.getValue()));
+								+ Long.toHexString(Options.startAddress.getValue()));
+						program.setEntryAddress(new AbsoluteAddress(Options.startAddress.getValue()));
 					}
 
 					// Add surrounding "%DF := 1; call entrypoint; halt;"
-					program.installHarness(Options.heuristicEntryPoints
-							.getValue() ? new HeuristicHarness()
+					program.installHarness(Options.heuristicEntryPoints.getValue() ? new HeuristicHarness()
 							: new DefaultHarness());
 
 					int slashIdx = baseFileName.lastIndexOf('\\');
@@ -251,8 +242,7 @@ public class Main_ExtractFiles {
 					Runtime.getRuntime().addShutdownHook(shutdownThread);
 
 					// Add shutdown on return pressed for eclipse
-					if (!Options.background.getValue()
-							&& System.console() == null) {
+					if (!Options.background.getValue() && System.console() == null) {
 						logger.info("No console detected (eclipse?). Press return to terminate analysis and print statistics.");
 						Thread eclipseShutdownThread = new Thread() {
 							public void run() {
@@ -279,8 +269,7 @@ public class Main_ExtractFiles {
 
 						// ///////////////////////
 						// Reconstruct Control Flow
-						ControlFlowReconstruction cfr = new ControlFlowReconstruction(
-								program);
+						ControlFlowReconstruction cfr = new ControlFlowReconstruction(program);
 						long customTime = System.currentTimeMillis();
 						// Execute the algorithm
 						try {
@@ -297,20 +286,14 @@ public class Main_ExtractFiles {
 							logger.fatal("=================");
 							logger.fatal(" Reached states:");
 							logger.fatal("=================");
-							AbstractState[] stateArray = reached
-									.toArray(new AbstractState[reached.size()]);
-							Arrays.sort(stateArray,
-									new Comparator<AbstractState>() {
-										@Override
-										public int compare(AbstractState o1,
-												AbstractState o2) {
-											return ((CompositeState) o1)
-													.getLocation()
-													.compareTo(
-															((CompositeState) o2)
-																	.getLocation());
-										}
-									});
+							AbstractState[] stateArray = reached.toArray(new AbstractState[reached.size()]);
+							Arrays.sort(stateArray, new Comparator<AbstractState>() {
+								@Override
+								public int compare(AbstractState o1, AbstractState o2) {
+									return ((CompositeState) o1).getLocation().compareTo(
+											((CompositeState) o2).getLocation());
+								}
+							});
 							Location lastLoc = null;
 							for (AbstractState s : stateArray) {
 								if (!s.getLocation().equals(lastLoc)) {
@@ -332,8 +315,7 @@ public class Main_ExtractFiles {
 						}
 
 						if (!cfr.isSound()) {
-							logger.error(Characters
-									.starredBox("WARNING: Analysis was unsound!"));
+							logger.error(Characters.starredBox("WARNING: Analysis was unsound!"));
 						}
 
 						/*
@@ -404,37 +386,27 @@ public class Main_ExtractFiles {
 						stats.record(program.getUnresolvedBranches().size());
 						stats.record(cfr.getNumberOfStatesVisited());
 						stats.record(stateCount);
-						stats.record(Math
-								.round((overallEndTime - overallStartTime) / 1000.0));
+						stats.record(Math.round((overallEndTime - overallStartTime) / 1000.0));
 						stats.record(cfr.getStatus());
 						stats.record(Options.cpas.getValue());
-						stats.record(BoundedAddressTracking.varThreshold
-								.getValue());
-						stats.record(BoundedAddressTracking.heapThreshold
-								.getValue());
+						stats.record(BoundedAddressTracking.varThreshold.getValue());
+						stats.record(BoundedAddressTracking.heapThreshold.getValue());
 						stats.record(Options.basicBlocks.getValue() ? "y" : "n");
-						stats.record(Options.summarizeRep.getValue() ? "y"
-								: "n");
+						stats.record(Options.summarizeRep.getValue() ? "y" : "n");
 						stats.record(BasedNumberValuation.ExplicitPrintfArgs);
 						stats.record(BasedNumberValuation.OverAppPrintfArgs);
 
 						stats.print();
 
-						ProgramGraphWriter graphWriter = new ProgramGraphWriter(
-								program);
+						ProgramGraphWriter graphWriter = new ProgramGraphWriter(program);
 						String baseFileName1 = getExtractBaseFileName(baseFileName);
 
-						graphWriter.writeDisassembly(program, baseFileName1
-								+ "_jak.asm");
+						graphWriter.writeDisassembly(program, baseFileName1 + "_jak.asm");
 
-						if (!(cfr.isCompleted() && Options.secondaryCPAs
-								.getValue().length() > 0)) {
+						if (!(cfr.isCompleted() && Options.secondaryCPAs.getValue().length() > 0)) {
 							if (!Options.noGraphs.getValue()) {
-								graphWriter
-										.writeControlFlowAutomaton(baseFileName1
-												+ "_cfa");
-								graphWriter.writeAssemblyCFG(baseFileName1
-										+ "_asmcfg");
+								graphWriter.writeControlFlowAutomaton(baseFileName1 + "_cfa");
+								graphWriter.writeAssemblyCFG(baseFileName1 + "_asmcfg");
 							}
 							// if (Options.errorTrace)
 							// graphWriter.writeART(baseFileName +
@@ -454,84 +426,64 @@ public class Main_ExtractFiles {
 								runAlgorithm(dce);
 								totalRemoved += dce.getRemovalCount();
 							} while (dce.getRemovalCount() > 0);
-							logger.info("=== Finished CFA simplification, removed "
-									+ totalRemoved + " edges. ===");
+							logger.info("=== Finished CFA simplification, removed " + totalRemoved + " edges. ===");
 
 							AnalysisManager mgr = AnalysisManager.getInstance();
 							List<ConfigurableProgramAnalysis> secondaryCPAs = new LinkedList<ConfigurableProgramAnalysis>();
-							for (int i = 0; i < Options.secondaryCPAs
-									.getValue().length(); i++) {
-								ConfigurableProgramAnalysis cpa = mgr
-										.createAnalysis(Options.secondaryCPAs
-												.getValue().charAt(i));
+							for (int i = 0; i < Options.secondaryCPAs.getValue().length(); i++) {
+								ConfigurableProgramAnalysis cpa = mgr.createAnalysis(Options.secondaryCPAs.getValue()
+										.charAt(i));
 								if (cpa != null) {
-									AnalysisProperties p = mgr
-											.getProperties(cpa);
+									AnalysisProperties p = mgr.getProperties(cpa);
 									logger.info("--- Using " + p.getName());
 									secondaryCPAs.add(cpa);
 								} else {
 									logger.fatal("No analysis corresponds to letter \""
-											+ Options.secondaryCPAs.getValue()
-													.charAt(i) + "\"!");
+											+ Options.secondaryCPAs.getValue().charAt(i) + "\"!");
 									System.exit(1);
 								}
 							}
 							// Do custom analysis
-							long customAnalysisStartTime = System
-									.currentTimeMillis();
+							long customAnalysisStartTime = System.currentTimeMillis();
 							CPAAlgorithm cpaAlg;
 							ConfigurableProgramAnalysis[] cpaArray = secondaryCPAs
-									.toArray(new ConfigurableProgramAnalysis[secondaryCPAs
-											.size()]);
+									.toArray(new ConfigurableProgramAnalysis[secondaryCPAs.size()]);
 							if (Options.backward.getValue()) {
-								cpaAlg = CPAAlgorithm.createBackwardAlgorithm(
-										program, cpaArray);
+								cpaAlg = CPAAlgorithm.createBackwardAlgorithm(program, cpaArray);
 							} else {
-								cpaAlg = CPAAlgorithm.createForwardAlgorithm(
-										program, cpaArray);
+								cpaAlg = CPAAlgorithm.createForwardAlgorithm(program, cpaArray);
 							}
 							activeAlgorithm = cpaAlg;
 							cpaAlg.run();
-							long customAnalysisEndTime = System
-									.currentTimeMillis();
+							long customAnalysisEndTime = System.currentTimeMillis();
 
 							if (!Options.noGraphs.getValue())
-								graphWriter.writeControlFlowAutomaton(
-										baseFileName + "_cfa", cpaAlg
-												.getReachedStates().select(1));
+								graphWriter.writeControlFlowAutomaton(baseFileName + "_cfa", cpaAlg.getReachedStates()
+										.select(1));
 
 							logger.error(Characters.DOUBLE_LINE_FULL_WIDTH);
-							logger.error("   Statistics for "
-									+ Options.secondaryCPAs.getValue());
+							logger.error("   Statistics for " + Options.secondaryCPAs.getValue());
 							logger.error(Characters.DOUBLE_LINE_FULL_WIDTH);
 							logger.error("   Runtime:                "
-									+ String.format(
-											"%8dms",
-											(customAnalysisEndTime - customAnalysisStartTime)));
+									+ String.format("%8dms", (customAnalysisEndTime - customAnalysisStartTime)));
 							logger.error("   States:                   "
-									+ String.format("%8d", cpaAlg
-											.getReachedStates().size()));
+									+ String.format("%8d", cpaAlg.getReachedStates().size()));
 							logger.error(Characters.DOUBLE_LINE_FULL_WIDTH);
 
 						}
 
 						// If procedure abstraction is active, detect procedures
 						// now
-						if (cfr.isCompleted()
-								&& Options.procedureAbstraction.getValue() == 2) {
+						if (cfr.isCompleted() && Options.procedureAbstraction.getValue() == 2) {
 							cfr = null;
 							reached = null;
 							ProcedureAnalysis procedureAnalysis = new ProcedureAnalysis();
-							CPAAlgorithm cpaAlg = CPAAlgorithm
-									.createForwardAlgorithm(program,
-											procedureAnalysis);
+							CPAAlgorithm cpaAlg = CPAAlgorithm.createForwardAlgorithm(program, procedureAnalysis);
 							runAlgorithm(cpaAlg);
 							reached = cpaAlg.getReachedStates().select(1);
-							Set<Location> procedures = procedureAnalysis
-									.getCallees();
+							Set<Location> procedures = procedureAnalysis.getCallees();
 
-							SetMultimap<Location, Location> callGraph = HashMultimap
-									.create();
+							SetMultimap<Location, Location> callGraph = HashMultimap.create();
 
 							// Procedure analysis and thus this callgraph only
 							// works with
@@ -542,91 +494,66 @@ public class Main_ExtractFiles {
 							// procedures are checked without any
 							// interprocedural
 							// abstraction anyway
-							for (Pair<Location, Location> callSite : procedureAnalysis
-									.getCallSites()) {
-								ProcedureState procedureState = (ProcedureState) Lattices
-										.joinAll(reached.where(callSite
-												.getLeft()));
-								for (Location procedure : procedureState
-										.getProcedureEntries()) {
-									callGraph.put(procedure,
-											callSite.getRight());
+							for (Pair<Location, Location> callSite : procedureAnalysis.getCallSites()) {
+								ProcedureState procedureState = (ProcedureState) Lattices.joinAll(reached
+										.where(callSite.getLeft()));
+								for (Location procedure : procedureState.getProcedureEntries()) {
+									callGraph.put(procedure, callSite.getRight());
 								}
 							}
-							logger.info("Found "
-									+ procedures.size()
+							logger.info("Found " + procedures.size()
 									+ " function entry points from procedure analysis.");
 
 							if (!Options.noGraphs.getValue())
-								graphWriter.writeCallGraph(baseFileName
-										+ "_callgraph", callGraph);
+								graphWriter.writeCallGraph(baseFileName + "_callgraph", callGraph);
 						}
 
 						logger.error("Finished parsing binary codes!");
 						// Processing Time
-						System.out
-								.println("Processing Time: "
-										+ String.format(
-												"%8dms",
-												(System.currentTimeMillis() - customTime)));
+						System.out.println("Processing Time: "
+								+ String.format("%8dms", (System.currentTimeMillis() - customTime)));
 
 						// logger.error("Applying symbolic execution to find statement constraints...");
 						long runtime = overallEndTime - overallStartTime;
-						rFile.appendFile(line + "," + runtime + ","
-								+ graphWriter.getNodesCount() + ","
+						rFile.appendFile(line + "," + runtime + "," + graphWriter.getNodesCount() + ","
 								+ graphWriter.getEdgesCount());
 
 						rFFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
 						rFFile.appendFile("   Statistics for Control Flow Reconstruction");
 						rFFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
-						rFFile.appendFile("   Filename:                     "
-								+ line);
+						rFFile.appendFile("   Filename:                     " + line);
 
-						rFFile.appendFile("   Runtime:                     "
-								+ String.format("%8dms", runtime));
+						rFFile.appendFile("   Runtime:                     " + String.format("%8dms", runtime));
 						rFFile.appendFile("   Nodes:                        "
-								+ String.format("%8d",
-										graphWriter.getNodesCount()));
+								+ String.format("%8d", graphWriter.getNodesCount()));
 						rFFile.appendFile("   Edges:                        "
-								+ String.format("%8d",
-										graphWriter.getEdgesCount()));
+								+ String.format("%8d", graphWriter.getEdgesCount()));
 						rFFile.appendFile("   Instructions:                        "
-								+ String.format("%8d",
-										program.getInstructionCount()));
+								+ String.format("%8d", program.getInstructionCount()));
 
 						rFFile.appendFile("   RTL Statements:                      "
-								+ String.format("%8d",
-										program.getStatementCount()));
+								+ String.format("%8d", program.getStatementCount()));
 						rFFile.appendFile("   CFA Edges:                           "
 								+ String.format("%8d", program.getCFA().size()));
 						rFFile.appendFile("   States visited:                      "
-								+ String.format("%8d",
-										cfr.getNumberOfStatesVisited()));
-						rFFile.appendFile("   Final state space:                   "
-								+ String.format("%8d", stateCount));
+								+ String.format("%8d", cfr.getNumberOfStatesVisited()));
+						rFFile.appendFile("   Final state space:                   " + String.format("%8d", stateCount));
 						rFFile.appendFile("   Finished normally:                   "
 								+ String.format("%8b", cfr.isCompleted()));
-						rFFile.appendFile("   Analysis result:                     "
-								+ cfr.getStatus());
+						rFFile.appendFile("   Analysis result:                     " + cfr.getStatus());
 						rFFile.appendFile("   Indirect Branches (no import calls): "
 								+ String.format("%8d", indirectBranches));
 						rFFile.appendFile("   Unresolved Branches:                 "
-								+ String.format("%8d", program
-										.getUnresolvedBranches().size()));
+								+ String.format("%8d", program.getUnresolvedBranches().size()));
 						rFFile.appendFile("   FastSet conversions:                 "
-								+ String.format("%8d",
-										FastSet.getConversionCount()));
+								+ String.format("%8d", FastSet.getConversionCount()));
 						rFFile.appendFile("   Variable count:                      "
-								+ String.format("%8d",
-										ExpressionFactory.getVariableCount()));
+								+ String.format("%8d", ExpressionFactory.getVariableCount()));
 						rFFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
 						System.out.println("Finished parsing binary codes!");
 						// Processing Time
-						System.out
-								.println("Processing Time: "
-										+ String.format(
-												"%8dms",
-												(System.currentTimeMillis() - customTime)));
+						System.out.println("Processing Time: "
+								+ String.format("%8dms", (System.currentTimeMillis() - customTime)));
 						// InterPCFG cfg = new InterPCFG(program);
 						// if (!cfg.constructCFG())
 						// System.out.println("Construct CFG error");
@@ -641,8 +568,7 @@ public class Main_ExtractFiles {
 
 						// Kills the keypress-monitor-thread.
 						try {
-							Runtime.getRuntime().removeShutdownHook(
-									shutdownThread);
+							Runtime.getRuntime().removeShutdownHook(shutdownThread);
 							System.exit(0);
 						} catch (IllegalStateException e) {
 							// Happens when shutdown has already been initiated

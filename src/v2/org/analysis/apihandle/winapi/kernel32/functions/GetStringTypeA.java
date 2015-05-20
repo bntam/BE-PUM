@@ -107,7 +107,7 @@ public class GetStringTypeA extends Kernel32API {
 			long t3 = ((LongValue) x3).getValue();
 			long t4 = ((LongValue) x4).getValue();
 			long t5 = ((LongValue) x5).getValue();
-			
+
 			LCID Locale = new LCID(t1);
 			DWORD dwInfoType = new DWORD(t2);
 			String lpSrcStr = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
@@ -116,8 +116,9 @@ public class GetStringTypeA extends Kernel32API {
 			BOOL ret = Kernel32DLL.INSTANCE.GetStringTypeA(Locale, dwInfoType, lpSrcStr, cchSrc, lpCharType);
 
 			register.mov("eax", new LongValue(ret.longValue()));
-			
-			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(lpCharType.getValue().longValue()));
+
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(lpCharType.getValue()
+					.longValue()));
 		}
 		return false;
 	}

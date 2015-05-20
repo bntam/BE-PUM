@@ -27,8 +27,7 @@ public class APIStub {
 	 * System.out.println(funcName); }
 	 */
 
-	public static boolean executeSymbolic(String funcName,
-			SymbolicExecution se, Instruction inst) {
+	public static boolean executeSymbolic(String funcName, SymbolicExecution se, Instruction inst) {
 		// TODO Auto-generated method stub
 		long returnValue;
 		boolean ret = true;
@@ -36,8 +35,7 @@ public class APIStub {
 		// FormulaSet formulaList = se.getFormulas();
 		// SymbolFlag symbolFlag = se.getSymbolFlag();
 		SymbolStack symbolStack = se.getSymbolStack();
-		SymbolValueMemoryOperand symbolValueMemoryOperand = se
-				.getSymbolValueMemoryOperand();
+		SymbolValueMemoryOperand symbolValueMemoryOperand = se.getSymbolValueMemoryOperand();
 		SymbolValueRegister symbolValueRegister = se.getSymbolValueRegister();
 		// SymbolValueRegisterPart symbolValueRegisterPart =
 		// se.getSymbolValueRegisterPart();
@@ -59,18 +57,16 @@ public class APIStub {
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
-					String commandLine = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()));
-					System.out.println("Command Line:" + commandLine
-							+ ", Window Style:" + ((LongValue) x2).getValue());
+					String commandLine = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x1).getValue()));
+					System.out.println("Command Line:" + commandLine + ", Window Style:" + ((LongValue) x2).getValue());
 					symbolValueRegister.mov(
 							"%eax",
-							new LongValue(system.getWindowHandle()
-									.createWindow(commandLine,
-											((LongValue) x2).getValue())));
+							new LongValue(system.getWindowHandle().createWindow(commandLine,
+									((LongValue) x2).getValue())));
 
 				}
 			} else if (funcName.startsWith("CreateProcess")) {
@@ -98,18 +94,17 @@ public class APIStub {
 				Value x8 = symbolStack.pop();
 				Value x9 = symbolStack.pop();
 				Value x10 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6 + " " + x7 + " " + x8 + " "
-						+ x9 + " " + x10);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6 + " " + x7
+						+ " " + x8 + " " + x9 + " " + x10);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue
-						&& x5 instanceof LongValue && x6 instanceof LongValue
-						&& x7 instanceof LongValue && x8 instanceof LongValue
-						&& x9 instanceof LongValue && x10 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue && x5 instanceof LongValue && x6 instanceof LongValue
+						&& x7 instanceof LongValue && x8 instanceof LongValue && x9 instanceof LongValue
+						&& x10 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
@@ -122,29 +117,19 @@ public class APIStub {
 					long t9 = ((LongValue) x4).getValue();
 					long t10 = ((LongValue) x5).getValue();
 
-					String moduleFileName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t1));
-					String commandLine = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t2));
-					String curDir = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t8));
-					String pStarupInfo = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t9));
-					System.out.println("Module File Name:" + moduleFileName
-							+ ", Command Line:" + commandLine
-							+ ", Process Attribute Security:" + t3
-							+ ", Thread Attribute Security:" + t4
-							+ ", Handle Flag:" + t5 + ", Creation Flag:" + t6
-							+ ", Environemnt Block:" + t7
-							+ ", Current Directory:" + curDir
-							+ ", Process Starup Info:" + pStarupInfo
+					String moduleFileName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t1));
+					String commandLine = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t2));
+					String curDir = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t8));
+					String pStarupInfo = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t9));
+					System.out.println("Module File Name:" + moduleFileName + ", Command Line:" + commandLine
+							+ ", Process Attribute Security:" + t3 + ", Thread Attribute Security:" + t4
+							+ ", Handle Flag:" + t5 + ", Creation Flag:" + t6 + ", Environemnt Block:" + t7
+							+ ", Current Directory:" + curDir + ", Process Starup Info:" + pStarupInfo
 							+ ", Process Information:" + t10);
 					symbolValueRegister.mov(
 							"%eax",
-							new LongValue(system.getProcessHandle()
-									.createProcess(moduleFileName, commandLine,
-											t3, t4, t5, t6, t7, curDir,
-											pStarupInfo, t10)));
+							new LongValue(system.getProcessHandle().createProcess(moduleFileName, commandLine, t3, t4,
+									t5, t6, t7, curDir, pStarupInfo, t10)));
 				}
 			} else if (funcName.startsWith("GetFileAttributes")) {
 				// HANDLE hFindFile // file search handle
@@ -152,9 +137,8 @@ public class APIStub {
 				System.out.println("Argument:" + x1);
 
 				if (x1 instanceof LongValue) {
-					String fName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()));
+					String fName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x1).getValue()));
 					long attr = system.getFileAttribute(fName);
 					symbolValueRegister.mov("%eax", new LongValue(attr));
 
@@ -171,18 +155,14 @@ public class APIStub {
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
-					String functionName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x2).getValue()));
-					System.out.println("Function Name:" + functionName
-							+ ", Library Handle:" + x1);
-					symbolValueRegister
-							.mov("%eax",
-									new LongValue(system.getProcAddress(
-											((LongValue) x1).getValue(),
-											functionName)));
+					String functionName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x2).getValue()));
+					System.out.println("Function Name:" + functionName + ", Library Handle:" + x1);
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getProcAddress(((LongValue) x1).getValue(), functionName)));
 
 				}
 
@@ -196,15 +176,11 @@ public class APIStub {
 					 * returnValue = APIHandler.loadLibraryA( ((ValueLongExp)
 					 * x1).getValueOperand(), program);
 					 */
-					String libraryName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()));
+					String libraryName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x1).getValue()));
 					System.out.println(" Library Name:" + libraryName);
 
-					symbolValueRegister
-							.mov("%eax",
-									new LongValue(system
-											.getLibraryHandle(libraryName)));
+					symbolValueRegister.mov("%eax", new LongValue(system.getLibraryHandle(libraryName)));
 				}
 			} else if (funcName.startsWith("SetFilePointer")) {
 				/*
@@ -217,14 +193,14 @@ public class APIStub {
 				Value x2 = symbolStack.pop();
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " ");
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " ");
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
@@ -233,12 +209,10 @@ public class APIStub {
 
 					// String str = symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32, t2));
-					System.out.println("Handle File:" + t1
-							+ ", Number of Bytes:" + t2
-							+ ", Address of High-Order:" + t3 + ", Move Type:"
-							+ t4);
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getFileHandle().setFilePointer(t1, t2, t3, t4)));
+					System.out.println("Handle File:" + t1 + ", Number of Bytes:" + t2 + ", Address of High-Order:"
+							+ t3 + ", Move Type:" + t4);
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getFileHandle().setFilePointer(t1, t2, t3, t4)));
 				}
 
 			} else if (funcName.startsWith("FindClose")) {
@@ -249,8 +223,7 @@ public class APIStub {
 				if (x1 instanceof LongValue) {
 					long t = ((LongValue) x1).getValue();
 
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getFileHandle().closeFind(t)));
+					symbolValueRegister.mov("%eax", new LongValue(system.getFileHandle().closeFind(t)));
 				}
 
 			} else if (funcName.startsWith("DeleteFileA")) {
@@ -259,11 +232,9 @@ public class APIStub {
 				System.out.println("Argument:" + x1);
 
 				if (x1 instanceof LongValue) {
-					String fName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()));
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getFileHandle().deleteFile(fName)));
+					String fName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x1).getValue()));
+					symbolValueRegister.mov("%eax", new LongValue(system.getFileHandle().deleteFile(fName)));
 				}
 
 			} else if (funcName.startsWith("GetSystemTime")) {
@@ -274,9 +245,8 @@ public class APIStub {
 				if (x1 instanceof LongValue) {
 					LongValue x = (LongValue) x1;
 
-					symbolValueMemoryOperand.setText(new X86MemoryOperand(
-							DataType.INT32, x.getValue()), new AnyExp()
-							.toString());
+					symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x.getValue()),
+							new AnyExp().toString());
 					// symbolValueMemoryOperand.setText(new
 					// X86MemoryOperand(DataType.INT32, x.getValueOperand()),
 					// String.valueOf(System.currentTimeMillis()));
@@ -303,16 +273,15 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
 				Value x5 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
 				// symbolValueRegister.mov("%eax", 1);
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue
-						&& x5 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue && x5 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
@@ -322,12 +291,10 @@ public class APIStub {
 
 					// String str = symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32, t2));
-					System.out.println("Handle File:" + t1 + ", Access Mode:"
-							+ t2 + ", High-order 32 bits of file offset:" + t3
-							+ ", Low-order 32 bits of file offset :" + t4
+					System.out.println("Handle File:" + t1 + ", Access Mode:" + t2
+							+ ", High-order 32 bits of file offset:" + t3 + ", Low-order 32 bits of file offset :" + t4
 							+ ", Number of bytes to map:" + t5);
-					long v = system.getFileHandle().mapViewOfFile(t1, t2, t3,
-							t4, t5);
+					long v = system.getFileHandle().mapViewOfFile(t1, t2, t3, t4, t5);
 					System.out.println("Base Address: " + v);
 					symbolValueRegister.mov("%eax", new LongValue(v));
 				}
@@ -345,15 +312,14 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
 				Value x5 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue
-						&& x5 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue && x5 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
@@ -363,15 +329,11 @@ public class APIStub {
 
 					// String str = symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32, t2));
-					System.out.println("Handle File:" + t1
-							+ ", Address of Buffer:" + t2 + ", Number of Byte:"
-							+ t3 + ", Number of Actual Read Bytes:" + t4
-							+ ", Overlapped:" + t5);
-					String str = system.getFileHandle().readFile(t1, t2, t3,
-							t4, t5);
+					System.out.println("Handle File:" + t1 + ", Address of Buffer:" + t2 + ", Number of Byte:" + t3
+							+ ", Number of Actual Read Bytes:" + t4 + ", Overlapped:" + t5);
+					String str = system.getFileHandle().readFile(t1, t2, t3, t4, t5);
 					if (str != null) {
-						symbolValueMemoryOperand.setText(new X86MemoryOperand(
-								DataType.INT32, t2), str);
+						symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, t2), str);
 						symbolValueRegister.mov("%eax", new LongValue(1));
 					} else
 						symbolValueRegister.mov("%eax", new LongValue(0));
@@ -395,15 +357,14 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
 				Value x5 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue
-						&& x5 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue && x5 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
@@ -411,13 +372,11 @@ public class APIStub {
 					long t4 = ((LongValue) x4).getValue();
 					long t5 = ((LongValue) x5).getValue();
 
-					String str = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t2));
-					System.out.println("Handle File:" + t1
-							+ ", String written:" + str + ", Number of Byte:"
-							+ t3 + ", Pointer:" + t4 + ", Overlapped:" + t5);
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getFileHandle().writeFile(t1, str, t3, t4, t5)));
+					String str = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t2));
+					System.out.println("Handle File:" + t1 + ", String written:" + str + ", Number of Byte:" + t3
+							+ ", Pointer:" + t4 + ", Overlapped:" + t5);
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getFileHandle().writeFile(t1, str, t3, t4, t5)));
 				}
 			} else if (funcName.startsWith("RegSetValueExA")) {
 				/*
@@ -434,8 +393,7 @@ public class APIStub {
 				Value x4 = symbolStack.pop();
 				Value x5 = symbolStack.pop();
 				Value x6 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
 
 			} else if (funcName.startsWith("SetEndOfFile")) {
 				// HANDLE hFile // handle of file whose EOF is to be set
@@ -447,8 +405,7 @@ public class APIStub {
 					long t1 = ((LongValue) x1).getValue();
 
 					System.out.println("Handle of file:" + t1);
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getFileHandle().setEndOfFile(t1)));
+					symbolValueRegister.mov("%eax", new LongValue(system.getFileHandle().setEndOfFile(t1)));
 				}
 
 			} else if (funcName.startsWith("WaitForSingleObject")) {
@@ -470,29 +427,26 @@ public class APIStub {
 				Value x2 = symbolStack.pop();
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 					long t3 = ((LongValue) x3).getValue();
 					long t4 = ((LongValue) x4).getValue();
 
-					String str = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t2));
-					String str1 = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t1));
-					System.out.println("Handle Window:" + t1 + " " + str1
-							+ ", Post Message:" + str + ", First Param:" + t3
-							+ ", Second Param:" + t4);
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getWindowHandle().postMessage(t1, str, t3, t4)));
+					String str = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t2));
+					String str1 = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t1));
+					System.out.println("Handle Window:" + t1 + " " + str1 + ", Post Message:" + str + ", First Param:"
+							+ t3 + ", Second Param:" + t4);
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getWindowHandle().postMessage(t1, str, t3, t4)));
 				}
 
 			} else if (funcName.startsWith("lstrcatA")) {
@@ -506,20 +460,17 @@ public class APIStub {
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long destAddr = ((LongValue) x1).getValue();
-					String dest = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()));
-					String src = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x2).getValue()));
+					String dest = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x1).getValue()));
+					String src = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2)
+							.getValue()));
 					dest = dest.concat(src);
-					System.out.println("Destination Address:" + destAddr
-							+ ", Source String:" + src);
-					symbolValueMemoryOperand.setText(new X86MemoryOperand(
-							DataType.INT32, destAddr), dest);
+					System.out.println("Destination Address:" + destAddr + ", Source String:" + src);
+					symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, destAddr), dest);
 					symbolValueRegister.mov("%eax", new LongValue(1));
 				}
 
@@ -533,22 +484,19 @@ public class APIStub {
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					// long destAddr = ((ValueLongExp) x1).getValueOperand();
-					String dest = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()));
-					String src = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x2).getValue()));
+					String dest = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x1).getValue()));
+					String src = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2)
+							.getValue()));
 					// dest += src;
-					System.out.println("Destination String:" + dest
-							+ ", Source String:" + src);
+					System.out.println("Destination String:" + dest + ", Source String:" + src);
 					// symbolValueMemoryOperand.setText(new
 					// X86MemoryOperand(DataType.INT32, destAddr), dest);
-					symbolValueRegister.mov("%eax",
-							new LongValue(dest.compareTo(src)));
+					symbolValueRegister.mov("%eax", new LongValue(dest.compareTo(src)));
 				}
 
 			} else if (funcName.startsWith("lstrlenA")) {
@@ -558,12 +506,10 @@ public class APIStub {
 				System.out.println("Argument:" + x1);
 
 				if (x1 instanceof LongValue) {
-					String dest = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()));
+					String dest = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x1).getValue()));
 					System.out.println("Destination String:" + dest);
-					symbolValueRegister.mov("%eax",
-							new LongValue(dest.length()));
+					symbolValueRegister.mov("%eax", new LongValue(dest.length()));
 				}
 
 			} else if (funcName.startsWith("MoveFileA")) {
@@ -578,17 +524,12 @@ public class APIStub {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 
-					String fileNameOld = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t1));
-					String fileNameNew = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t2));
-					System.out.println("Old File:" + fileNameOld
-							+ ", New File:" + fileNameNew);
+					String fileNameOld = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t1));
+					String fileNameNew = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t2));
+					System.out.println("Old File:" + fileNameOld + ", New File:" + fileNameNew);
 
-					symbolValueRegister.mov(
-							"%eax",
-							new LongValue(system.getFileHandle().moveFile(
-									fileNameOld, fileNameNew)));
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getFileHandle().moveFile(fileNameOld, fileNameNew)));
 
 				}
 
@@ -610,8 +551,7 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
 				Value x5 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
 			} else if (funcName.startsWith("SendMessageA")) {
 				/*
@@ -624,14 +564,14 @@ public class APIStub {
 				Value x2 = symbolStack.pop();
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
@@ -640,14 +580,12 @@ public class APIStub {
 
 					// String str = symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32, t2));
-					String msg = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t2));
+					String msg = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t2));
 
-					System.out.println("Window Handle:" + t1
-							+ ", Message Sent:" + msg + ", First Param:" + t3
+					System.out.println("Window Handle:" + t1 + ", Message Sent:" + msg + ", First Param:" + t3
 							+ ", Second Param:" + t4);
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getWindowHandle().sendMessage(t1, msg, t3, t4)));
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getWindowHandle().sendMessage(t1, msg, t3, t4)));
 				}
 
 			} else
@@ -663,23 +601,17 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 					long t3 = ((LongValue) x3).getValue();
 
-					String fileNameOld = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t1));
-					String fileNameNew = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t2));
-					System.out.println("Old File:" + fileNameOld
-							+ ", New File:" + fileNameNew + ", Flag:" + t3);
+					String fileNameOld = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t1));
+					String fileNameNew = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t2));
+					System.out.println("Old File:" + fileNameOld + ", New File:" + fileNameNew + ", Flag:" + t3);
 
-					symbolValueRegister.mov(
-							"%eax",
-							new LongValue(system.getFileHandle().copyFile(
-									fileNameOld, fileNameNew, t3)));
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getFileHandle().copyFile(fileNameOld, fileNameNew, t3)));
 
 				}
 
@@ -699,8 +631,7 @@ public class APIStub {
 				Value x4 = symbolStack.pop();
 				Value x5 = symbolStack.pop();
 				Value x6 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
 
 			} else if (funcName.startsWith("ExitProcess")) {
 				// UINT uExitCode // exit code for all threads
@@ -718,23 +649,18 @@ public class APIStub {
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
-					String className = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()));
+					String className = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x1).getValue()));
 
-					String windowName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x2).getValue()));
-					System.out.println("Class Name:" + className
-							+ ", Window Name Address:"
-							+ ((LongValue) x2).getValue() + ", Window Name:"
-							+ windowName);
-					symbolValueRegister.mov(
-							"%eax",
-							new LongValue(system.getWindowHandle().findWindow(
-									className, ((LongValue) x2).getValue())));
+					String windowName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32,
+							((LongValue) x2).getValue()));
+					System.out.println("Class Name:" + className + ", Window Name Address:"
+							+ ((LongValue) x2).getValue() + ", Window Name:" + windowName);
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getWindowHandle().findWindow(className, ((LongValue) x2).getValue())));
 
 				}
 
@@ -756,10 +682,8 @@ public class APIStub {
 
 				long disp = 4796200;
 				String commandLine = "C:/Windows/" + program.getFileName();
-				System.out.println("Argument MemoryOperand:" + disp
-						+ ", Command Line:" + commandLine);
-				symbolValueMemoryOperand.setText(new X86MemoryOperand(
-						DataType.INT32, disp), commandLine);
+				System.out.println("Argument MemoryOperand:" + disp + ", Command Line:" + commandLine);
+				symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, disp), commandLine);
 
 			} else if (funcName.startsWith("GetEnvironmentStrings")) {
 				// This function has no parameters.
@@ -793,9 +717,8 @@ public class APIStub {
 				if (x1 != null && x1 instanceof LongValue) {
 					// String sInfo = "Info";
 					String sInfo = "D...Â¨Â¡^.ÃˆÂ¡^.Ã°Â¡^.l).*.dll.Any file (*.*).*.*.Â�...........Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿";
-					symbolValueMemoryOperand
-							.setText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x1).getValue()), sInfo);
+					symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()),
+							sInfo);
 				}
 
 			} else if (funcName.startsWith("GetStdHandle")) {
@@ -829,8 +752,7 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 					long t3 = ((LongValue) x3).getValue();
@@ -839,11 +761,9 @@ public class APIStub {
 					// X86MemoryOperand(DataType.INT32, t1));
 					// String fileNameNew = symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32, t2));
-					System.out.println("fOption:" + t1 + ", Initial Size:" + t2
-							+ ", Maximum Size:" + t3);
+					System.out.println("fOption:" + t1 + ", Initial Size:" + t2 + ", Maximum Size:" + t3);
 
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getHeapHandle().creatHeap(t2, t3, t1)));
+					symbolValueRegister.mov("%eax", new LongValue(system.getHeapHandle().creatHeap(t2, t3, t1)));
 
 				}
 			} else if (funcName.startsWith("HeapDestroy")) {
@@ -873,8 +793,7 @@ public class APIStub {
 				Value x2 = symbolStack.pop();
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 			} else if (funcName.startsWith("lstrcpyA")) {
 				// LPTSTR lpString1, // address of buffer
 				// LPCTSTR lpString2 // address of string to copy
@@ -885,16 +804,14 @@ public class APIStub {
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long dest = ((LongValue) x1).getValue();
-					String src = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32,
-									((LongValue) x2).getValue()));
-					System.out.println("Destination Address:" + dest
-							+ ", Source String:" + src);
-					symbolValueMemoryOperand.setText(new X86MemoryOperand(
-							DataType.INT32, dest), src);
+					String src = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2)
+							.getValue()));
+					System.out.println("Destination Address:" + dest + ", Source String:" + src);
+					symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, dest), src);
 					symbolValueRegister.mov("%eax", new LongValue(1));
 				}
 
@@ -908,27 +825,22 @@ public class APIStub {
 				Value x2 = symbolStack.pop();
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 				System.out.print("Handle:" + x1.toString());
 				if (x2 instanceof LongValue) {
 					System.out.print(", Address of Text:"
 							+ x2.toString()
 							+ ", Text:"
-							+ symbolValueMemoryOperand
-									.getText(new X86MemoryOperand(
-											DataType.INT32, ((LongValue) x2)
-													.getValue())));
+							+ symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2)
+									.getValue())));
 				}
 
 				if (x3 instanceof LongValue) {
 					System.out.print(", Address of Title Text:"
 							+ x3.toString()
 							+ ", Title Text:"
-							+ symbolValueMemoryOperand
-									.getText(new X86MemoryOperand(
-											DataType.INT32, ((LongValue) x3)
-													.getValue())));
+							+ symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x3)
+									.getValue())));
 				}
 
 				System.out.println(", Style:" + x4.toString());
@@ -944,8 +856,7 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
 				Value x5 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
 			} else if (funcName.startsWith("SetHandleCount")) {
 				// UINT uNumber // number of file handles needed
@@ -965,10 +876,9 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				Value x4 = symbolStack.pop();
 				// Exp x5 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue) {
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue) {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 					long t3 = ((LongValue) x3).getValue();
@@ -976,12 +886,10 @@ public class APIStub {
 
 					// String fileName = symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32, t1));
-					System.out.println("Address:" + t1 + ", Size:" + t2
-							+ ", Allocation Type:" + t3 + ", Protection Type:"
-							+ t4);
+					System.out.println("Address:" + t1 + ", Size:" + t2 + ", Allocation Type:" + t3
+							+ ", Protection Type:" + t4);
 
-					long t = system.getVirtualHandle().virtualAllocate(t1, t2,
-							t3, t4);
+					long t = system.getVirtualHandle().virtualAllocate(t1, t2, t3, t4);
 					symbolValueRegister.mov("%eax", new LongValue(t));
 				}
 			} else if (funcName.startsWith("VirtualFree")) {
@@ -995,16 +903,14 @@ public class APIStub {
 				Value x3 = symbolStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 					long t3 = ((LongValue) x3).getValue();
 
 					// String fileName = symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32, t1));
-					System.out.println("Base Address:" + t1 + ", Size:" + t2
-							+ ", Free Type:" + t3);
+					System.out.println("Base Address:" + t1 + ", Size:" + t2 + ", Free Type:" + t3);
 
 					long t = system.getVirtualHandle().freeVirtual(t1, t2, t3);
 					symbolValueRegister.mov("%eax", new LongValue(t));
@@ -1020,10 +926,8 @@ public class APIStub {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 
-					String searchName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t1));
-					System.out.println("Search File:" + searchName
-							+ ", Memory Operand:" + t2);
+					String searchName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t1));
+					System.out.println("Search File:" + searchName + ", Memory Operand:" + t2);
 
 					/*
 					 * symbolValueRegister.mov( "%eax", new
@@ -1031,8 +935,7 @@ public class APIStub {
 					 * .findFirstFile(searchName, symbolValueMemoryOperand,
 					 * t2)));
 					 */
-					long t = system.getFileHandle().findFirstFile(searchName,
-							symbolValueMemoryOperand, t2);
+					long t = system.getFileHandle().findFirstFile(searchName, symbolValueMemoryOperand, t2);
 					System.out.println("Search Handle:" + t);
 					symbolValueRegister.mov("%eax", new LongValue(t));
 				}
@@ -1045,12 +948,10 @@ public class APIStub {
 				if (x1 instanceof LongValue) {
 					long t1 = ((LongValue) x1).getValue();
 
-					String path = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t1));
+					String path = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t1));
 					System.out.println("Path File:" + path);
 
-					symbolValueRegister.mov("%eax",
-							new LongValue(system.setPath(path)));
+					symbolValueRegister.mov("%eax", new LongValue(system.setPath(path)));
 				}
 
 			} else if (funcName.startsWith("FindNextFileA")) {
@@ -1063,10 +964,8 @@ public class APIStub {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 
-					symbolValueRegister.mov(
-							"%eax",
-							new LongValue(system.getFileHandle().findNextFile(
-									t1, symbolValueMemoryOperand, t2)));
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getFileHandle().findNextFile(t1, symbolValueMemoryOperand, t2)));
 				}
 
 			} else if (funcName.startsWith("CloseHandle")) {
@@ -1091,15 +990,14 @@ public class APIStub {
 				Value x5 = symbolStack.pop();
 				Value x6 = symbolStack.pop();
 				// Exp x7 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue
-						&& x5 instanceof LongValue && x6 instanceof LongValue) {
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue && x5 instanceof LongValue && x6 instanceof LongValue) {
 					/*
 					 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-					 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(), program);
+					 * x1).getValueOperand(), ((ValueLongExp)
+					 * x2).getValueOperand(), program);
 					 */
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
@@ -1114,13 +1012,9 @@ public class APIStub {
 					 */
 					// String str = symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32, t2));
-					System.out.println("Handle File:" + t1
-							+ ", Security Attribute:" + t2
-							+ ", Object Protection:" + t3 + ", High-Order:"
-							+ t4 + ", High-Order:" + t5
-							+ ", File Mapping Name Address:" + t6);
-					long t = system.getFileHandle().createFileMapping(t1, t2,
-							t3, t4, t5, t6);
+					System.out.println("Handle File:" + t1 + ", Security Attribute:" + t2 + ", Object Protection:" + t3
+							+ ", High-Order:" + t4 + ", High-Order:" + t5 + ", File Mapping Name Address:" + t6);
+					long t = system.getFileHandle().createFileMapping(t1, t2, t3, t4, t5, t6);
 					symbolValueRegister.mov("%eax", new LongValue(t));
 					System.out.println("Return Value:" + t);
 				}
@@ -1133,12 +1027,10 @@ public class APIStub {
 				Value x5 = symbolStack.pop();
 				Value x6 = symbolStack.pop();
 				Value x7 = symbolStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6 + " " + x7);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6 + " " + x7);
 
-				if (x1 instanceof LongValue && x2 instanceof LongValue
-						&& x3 instanceof LongValue && x4 instanceof LongValue
-						&& x5 instanceof LongValue && x6 instanceof LongValue
+				if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue
+						&& x4 instanceof LongValue && x5 instanceof LongValue && x6 instanceof LongValue
 						&& x7 instanceof LongValue) {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
@@ -1147,15 +1039,11 @@ public class APIStub {
 					long t5 = ((LongValue) x5).getValue();
 					long t6 = ((LongValue) x6).getValue();
 					long t7 = ((LongValue) x7).getValue();
-					String fileName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t1));
-					System.out.println("FileName:" + fileName + ", Access:"
-							+ t2 + ", ShareMode:" + t3 + ", pSecurity:" + t4
-							+ ", Mode:" + t5 + ", Attributes:" + t6
-							+ ", hTemplate:" + t7);
+					String fileName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t1));
+					System.out.println("FileName:" + fileName + ", Access:" + t2 + ", ShareMode:" + t3 + ", pSecurity:"
+							+ t4 + ", Mode:" + t5 + ", Attributes:" + t6 + ", hTemplate:" + t7);
 
-					long t = system
-							.createFile(fileName, t2, t3, t4, t5, t6, t7);
+					long t = system.createFile(fileName, t2, t3, t4, t5, t6, t7);
 					symbolValueRegister.mov("%eax", new LongValue(t));
 					System.out.println("Return value:" + t);
 
@@ -1169,28 +1057,23 @@ public class APIStub {
 					long t1 = ((LongValue) x1).getValue();
 					long t2 = ((LongValue) x2).getValue();
 
-					String fileName = symbolValueMemoryOperand
-							.getText(new X86MemoryOperand(DataType.INT32, t1));
-					System.out.println("FileName:" + fileName + ", Attribute:"
-							+ t2);
+					String fileName = symbolValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, t1));
+					System.out.println("FileName:" + fileName + ", Attribute:" + t2);
 
-					symbolValueRegister.mov("%eax", new LongValue(system
-							.getFileHandle().setFileAttribute(fileName, t2)));
-					long t = system.getFileHandle().setFileAttribute(fileName,
-							t2);
+					symbolValueRegister.mov("%eax",
+							new LongValue(system.getFileHandle().setFileAttribute(fileName, t2)));
+					long t = system.getFileHandle().setFileAttribute(fileName, t2);
 					System.out.println("Return Value:" + t);
 				}
 
 			} else if (funcName.startsWith("GetCurrentDirectoryA")) {
 				Value x1 = symbolStack.pop();
 				Value x2 = symbolStack.pop();
-				System.out.println("Argument: Length:" + x1
-						+ ", Memory Operand:" + x2);
+				System.out.println("Argument: Length:" + x1 + ", Memory Operand:" + x2);
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					String curDir = "C:/Test";
 					long size = symbolValueMemoryOperand.setText(
-							new X86MemoryOperand(DataType.INT32,
-									((LongValue) x2).getValue()), curDir,
+							new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()), curDir,
 							((LongValue) x1).getValue());
 					System.out.println("Current Directory:" + curDir);
 					symbolValueRegister.mov("%eax", new LongValue(size));
@@ -1205,13 +1088,11 @@ public class APIStub {
 				Value x2 = symbolStack.pop();
 				Value x1 = symbolStack.pop();
 
-				System.out.println("Argument: Length:" + x1
-						+ ", Memory Operand:" + x2);
+				System.out.println("Argument: Length:" + x1 + ", Memory Operand:" + x2);
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					String curDir = "C:/Windows/system32";
 					long size = symbolValueMemoryOperand.setText(
-							new X86MemoryOperand(DataType.INT32,
-									((LongValue) x2).getValue()), curDir,
+							new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()), curDir,
 							((LongValue) x1).getValue());
 					System.out.println("System Directory:" + curDir);
 					symbolValueRegister.mov("%eax", new LongValue(size));
@@ -1225,14 +1106,12 @@ public class APIStub {
 			} else if (funcName.startsWith("GetWindowsDirectoryA")) {
 				Value x2 = symbolStack.pop();
 				Value x1 = symbolStack.pop();
-				System.out.println("Argument: Length:" + x1
-						+ ", Memory Operand:" + x2);
+				System.out.println("Argument: Length:" + x1 + ", Memory Operand:" + x2);
 				if (x1 instanceof LongValue && x2 instanceof LongValue) {
 					String curDir = "C:/Windows";
 					System.out.println("WindowDirectory:" + curDir);
 					long size = symbolValueMemoryOperand.setText(
-							new X86MemoryOperand(DataType.INT32,
-									((LongValue) x2).getValue()), curDir,
+							new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()), curDir,
 							((LongValue) x1).getValue());
 					symbolValueRegister.mov("%eax", new LongValue(size));
 
@@ -1248,8 +1127,7 @@ public class APIStub {
 				if (lpModuleName instanceof LongValue) {
 					if (((LongValue) lpModuleName).getValue() == 0) {
 						returnValue = APIHandler.getModuleHandleA(0, program);
-						symbolValueRegister.mov("%eax", new LongValue(
-								returnValue));
+						symbolValueRegister.mov("%eax", new LongValue(returnValue));
 						// symbolStack.pop();
 					}
 				}
@@ -1258,28 +1136,26 @@ public class APIStub {
 				Value hModule = symbolStack.pop();
 				Value lpFilename = symbolStack.pop();
 				Value nSize = symbolStack.pop();
-				System.out.println("Argument:" + hModule.toString() + " "
-						+ lpFilename.toString() + " " + nSize.toString());
+				System.out.println("Argument:" + hModule.toString() + " " + lpFilename.toString() + " "
+						+ nSize.toString());
 
-				if (hModule instanceof LongValue
-						&& lpFilename instanceof LongValue
-						&& nSize instanceof LongValue) {
+				if (hModule instanceof LongValue && lpFilename instanceof LongValue && nSize instanceof LongValue) {
 					/*
 					 * long returnValue = APIHandler.getModuleFileNameA(
-					 * ((ValueLongExp) hModule).getValueOperand(), ((ValueLongExp)
-					 * lpFilename).getValueOperand(), ((ValueLongExp)
-					 * nSize).getValueOperand(), program);
+					 * ((ValueLongExp) hModule).getValueOperand(),
+					 * ((ValueLongExp) lpFilename).getValueOperand(),
+					 * ((ValueLongExp) nSize).getValueOperand(), program);
 					 */
 					String s = "C:/Windows/" + program.getFileName();
 					symbolValueMemoryOperand.setText(
-							new X86MemoryOperand(DataType.INT32,
-									((LongValue) lpFilename).getValue()), s);
+							new X86MemoryOperand(DataType.INT32, ((LongValue) lpFilename).getValue()), s);
 					symbolValueRegister.mov("%eax", new LongValue(s.length()));
 
 					// System.out.println("Result " + funcName + ":" +
 					// symbolValueMemoryOperand.getText(new
 					// X86MemoryOperand(DataType.INT32,
-					// ((ValueLongExp)lpFilename).getValueOperand()), s.length()) +
+					// ((ValueLongExp)lpFilename).getValueOperand()),
+					// s.length()) +
 					// "!");
 					// symbolStack.pop();
 
@@ -1307,8 +1183,9 @@ public class APIStub {
 			 * if (hModule instanceof ValueLongExp && lpFilename instanceof
 			 * ValueLongExp && nSize instanceof ValueLongExp) { long returnValue
 			 * = APIHandler.getModuleFileNameA( ((ValueLongExp)
-			 * hModule).getValueOperand(), ((ValueLongExp) lpFilename).getValueOperand(),
-			 * ((ValueLongExp) nSize).getValueOperand(), program);
+			 * hModule).getValueOperand(), ((ValueLongExp)
+			 * lpFilename).getValueOperand(), ((ValueLongExp)
+			 * nSize).getValueOperand(), program);
 			 * symbolValueRegister.mov("%eax", new ValueLongExp( returnValue));
 			 * // symbolStack.pop();
 			 * 
@@ -1322,34 +1199,27 @@ public class APIStub {
 		Value v = symbolValueRegister.getRegVal("%eax");
 		AddressList l = se.getAddrTraceList().clone();
 
-		if (checkCondLookAhead(l, se.getAssemblyMap(), se.getNeg()) == 1
-				&& v instanceof LongValue) {
+		if (checkCondLookAhead(l, se.getAssemblyMap(), se.getNeg()) == 1 && v instanceof LongValue) {
 			long v1 = ((LongValue) v).getValue();
 			if (v1 == 0) {
 				symbolValueRegister.mov("%eax", new LongValue(1));
 				se.getPcValue().add("api_" + funcName, 0);
-				se.getFormulas().add(
-						new Formula(new SymbolExp("api_" + funcName),
-								new LongValue(1), "="));
+				se.getFormulas().add(new Formula(new SymbolExp("api_" + funcName), new LongValue(1), "="));
 			}
 
-		} else if (checkCondLookAhead(l, se.getAssemblyMap(), se.getNeg()) == 1
-				&& v instanceof LongValue) {
+		} else if (checkCondLookAhead(l, se.getAssemblyMap(), se.getNeg()) == 1 && v instanceof LongValue) {
 			long v1 = ((LongValue) v).getValue();
 			if (v1 != 0) {
 				symbolValueRegister.mov("%eax", new LongValue(0));
 				se.getPcValue().add("api_" + funcName, 0);
-				se.getFormulas().add(
-						new Formula(new SymbolExp("api_" + funcName),
-								new LongValue(0), "="));
+				se.getFormulas().add(new Formula(new SymbolExp("api_" + funcName), new LongValue(0), "="));
 			}
 		}
 
 		return ret;
 	}
 
-	private static int checkCondLookAhead(AddressList l,
-			Map<AbsoluteAddress, Instruction> map,
+	private static int checkCondLookAhead(AddressList l, Map<AbsoluteAddress, Instruction> map,
 			Map<AbsoluteAddress, AbsoluteAddress> neg) {
 		if (l.length() == 2) {
 			AbsoluteAddress t1 = l.pop();
@@ -1362,8 +1232,7 @@ public class APIStub {
 			if (i1 instanceof X86CondJmpInstruction) {
 				boolean reCond = false;
 
-				if (neg != null && !neg.isEmpty() && neg.containsKey(t1)
-						&& neg.get(t1).getValue() == t2.getValue()) {
+				if (neg != null && !neg.isEmpty() && neg.containsKey(t1) && neg.get(t1).getValue() == t2.getValue()) {
 					// instName = reverseConditionJump(instName);
 					reCond = true;
 					// System.out.println("Reverse Conditional Jump:" +
@@ -1395,8 +1264,7 @@ public class APIStub {
 			if (i2 instanceof X86CondJmpInstruction) {
 				boolean reCond = false;
 
-				if (neg != null && !neg.isEmpty() && neg.containsKey(t1)
-						&& neg.get(t2).getValue() == t3.getValue()) {
+				if (neg != null && !neg.isEmpty() && neg.containsKey(t1) && neg.get(t2).getValue() == t3.getValue()) {
 					// instName = reverseConditionJump(instName);
 					reCond = true;
 					// System.out.println("Reverse Conditional Jump:" +
@@ -1419,8 +1287,7 @@ public class APIStub {
 			} else if (i1 instanceof X86CondJmpInstruction) {
 				boolean reCond = false;
 
-				if (neg != null && !neg.isEmpty() && neg.containsKey(t1)
-						&& neg.get(t1).getValue() == t2.getValue()) {
+				if (neg != null && !neg.isEmpty() && neg.containsKey(t1) && neg.get(t1).getValue() == t2.getValue()) {
 					// instName = reverseConditionJump(instName);
 					reCond = true;
 					// System.out.println("Reverse Conditional Jump:" +
@@ -1447,16 +1314,13 @@ public class APIStub {
 		return 3;
 	}
 
-	public static boolean executeConcrete(String funcName,
-			ConcreteExecution ce, Instruction inst) {
+	public static boolean executeConcrete(String funcName, ConcreteExecution ce, Instruction inst) {
 		// TODO Auto-generated method stub
 		// FormulaSet formulaList = ce.getFormulas();
 		// ConcreteFlag concreteFlag = ce.getConcreteFlag();
 		ConcreteStack concreteStack = ce.getConcreteStack();
-		ConcreteValueMemoryOperand concreteValueMemoryOperand = ce
-				.getConcreteValueMemoryOperand();
-		ConcreteValueRegister concreteValueRegister = ce
-				.getConcreteValueRegister();
+		ConcreteValueMemoryOperand concreteValueMemoryOperand = ce.getConcreteValueMemoryOperand();
+		ConcreteValueRegister concreteValueRegister = ce.getConcreteValueRegister();
 		// ConcreteValueRegisterPart concreteValueRegisterPart =
 		// ce.getConcreteValueRegisterPart();
 		// ConcreteValueSegment concreteValueSegment =
@@ -1476,12 +1340,9 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " ");
 
-				String commandLine = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				System.out.println("Command Line:" + commandLine
-						+ ", Window Style:" + x2);
-				concreteValueRegister.mov("%eax", system.getWindowHandle()
-						.createWindow(commandLine, x2));
+				String commandLine = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				System.out.println("Command Line:" + commandLine + ", Window Style:" + x2);
+				concreteValueRegister.mov("%eax", system.getWindowHandle().createWindow(commandLine, x2));
 			} else if (funcName.startsWith("CreateProcess")) {
 				/*
 				 * HANDLE hFile, // handle to file to write to LPCVOID lpBuffer,
@@ -1501,42 +1362,30 @@ public class APIStub {
 				long x8 = concreteStack.pop();
 				long x9 = concreteStack.pop();
 				long x10 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6 + " " + x7 + " " + x8 + " "
-						+ x9 + " " + x10);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6 + " " + x7
+						+ " " + x8 + " " + x9 + " " + x10);
 
-				String moduleFileName = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				String commandLine = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
-				String curDir = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x8));
-				String pStarupInfo = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x9));
-				System.out.println("Module File Name:" + moduleFileName
-						+ ", Command Line:" + commandLine
-						+ ", Process Attribute Security:" + x3
-						+ ", Thread Attribute Security:" + x4
-						+ ", Handle Flag:" + x5 + ", Creation Flag:" + x6
-						+ ", Environemnt Block:" + x7 + ", Current Directory:"
-						+ curDir + ", Process Starup Info:" + pStarupInfo
-						+ ", Process Information:" + x10);
+				String moduleFileName = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				String commandLine = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
+				String curDir = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x8));
+				String pStarupInfo = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x9));
+				System.out.println("Module File Name:" + moduleFileName + ", Command Line:" + commandLine
+						+ ", Process Attribute Security:" + x3 + ", Thread Attribute Security:" + x4 + ", Handle Flag:"
+						+ x5 + ", Creation Flag:" + x6 + ", Environemnt Block:" + x7 + ", Current Directory:" + curDir
+						+ ", Process Starup Info:" + pStarupInfo + ", Process Information:" + x10);
 				concreteValueRegister.mov(
 						"%eax",
-						system.getProcessHandle().createProcess(moduleFileName,
-								commandLine, x3, x4, x5, x6, x7, curDir,
-								pStarupInfo, x10));
+						system.getProcessHandle().createProcess(moduleFileName, commandLine, x3, x4, x5, x6, x7,
+								curDir, pStarupInfo, x10));
 
 			} else if (funcName.startsWith("GetFileAttributes")) {
 				// HANDLE hFindFile // file search handle
 				long x1 = concreteStack.pop();
 				System.out.println("Argument:" + x1);
 
-				String fName = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
+				String fName = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
 
-				concreteValueRegister.mov("%eax",
-						system.getFileAttribute(fName));
+				concreteValueRegister.mov("%eax", system.getFileAttribute(fName));
 
 			} else if (funcName.startsWith("GetProcAddress")) {
 				// HMODULE hModule, handle to DLL module
@@ -1545,13 +1394,10 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " ");
 
-				String functionName = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
-				System.out.println("Function Name:" + functionName
-						+ ", Library Handle:" + x1);
+				String functionName = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
+				System.out.println("Function Name:" + functionName + ", Library Handle:" + x1);
 
-				concreteValueRegister.mov("%eax",
-						system.getProcAddress(x1, functionName));
+				concreteValueRegister.mov("%eax", system.getProcAddress(x1, functionName));
 
 			} else if (funcName.startsWith("LoadLibraryA")) {
 				// LPCTSTR lpLibFileName // address of filename of executable
@@ -1559,12 +1405,10 @@ public class APIStub {
 				long x1 = concreteStack.pop();
 				System.out.println("Argument:" + x1);
 
-				String libraryName = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
+				String libraryName = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
 				System.out.println(" Library Name:" + libraryName);
 
-				concreteValueRegister.mov("%eax",
-						system.getLibraryHandle(libraryName));
+				concreteValueRegister.mov("%eax", system.getLibraryHandle(libraryName));
 
 			} else if (funcName.startsWith("SetFilePointer")) {
 				/*
@@ -1577,40 +1421,33 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " ");
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " ");
 
-				System.out.println("Handle File:" + x1 + ", Number of Bytes:"
-						+ x2 + ", Address of High-Order:" + x3 + ", Move Type:"
-						+ x4);
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.setFilePointer(x1, x2, x3, x4));
+				System.out.println("Handle File:" + x1 + ", Number of Bytes:" + x2 + ", Address of High-Order:" + x3
+						+ ", Move Type:" + x4);
+				concreteValueRegister.mov("%eax", system.getFileHandle().setFilePointer(x1, x2, x3, x4));
 
 			} else if (funcName.startsWith("FindClose")) {
 				// HANDLE hFindFile // file search handle
 				long x1 = concreteStack.pop();
 				System.out.println("Argument:" + x1);
 
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.closeFind(x1));
+				concreteValueRegister.mov("%eax", system.getFileHandle().closeFind(x1));
 
 			} else if (funcName.startsWith("DeleteFileA")) {
 				// LPCTSTR lpFileName // pointer to name of file to delete
 				long x1 = concreteStack.pop();
 				System.out.println("Argument:" + x1);
 
-				String fName = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.deleteFile(fName));
+				String fName = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				concreteValueRegister.mov("%eax", system.getFileHandle().deleteFile(fName));
 
 			} else if (funcName.startsWith("GetSystemTime")) {
 				// LPSYSTEMTIME lpSystemTime // address of system time structure
 				long x1 = concreteStack.pop();
 				System.out.println("MemoryOperand:" + x1);
 
-				concreteValueMemoryOperand.setText(new X86MemoryOperand(
-						DataType.INT32, x1), "AnyTime");
+				concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x1), "AnyTime");
 				// concreteValueMemoryOperand.setText(new
 				// X86MemoryOperand(DataType.INT32, x1),
 				// System.currentTimeMillis());
@@ -1634,16 +1471,12 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
 				long x5 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
 				// concreteValueRegister.mov("%eax", 1);
-				System.out.println("Handle File:" + x1 + ", Access Mode:" + x2
-						+ ", High-order 32 bits of file offset:" + x3
-						+ ", Low-order 32 bits of file offset :" + x4
-						+ ", Number of bytes to map:" + x5);
-				long v = system.getFileHandle().mapViewOfFile(x1, x2, x3, x4,
-						x5);
+				System.out.println("Handle File:" + x1 + ", Access Mode:" + x2 + ", High-order 32 bits of file offset:"
+						+ x3 + ", Low-order 32 bits of file offset :" + x4 + ", Number of bytes to map:" + x5);
+				long v = system.getFileHandle().mapViewOfFile(x1, x2, x3, x4, x5);
 				System.out.println("Base Address: " + v);
 				concreteValueRegister.mov("%eax", v);
 
@@ -1660,18 +1493,13 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
 				long x5 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
-				System.out.println("Handle File:" + x1 + ", Address of Buffer:"
-						+ x2 + ", Number of Byte:" + x3
-						+ ", Number of Actual Read Bytes:" + x4
-						+ ", Overlapped:" + x5);
-				String str = system.getFileHandle()
-						.readFile(x1, x2, x3, x4, x5);
+				System.out.println("Handle File:" + x1 + ", Address of Buffer:" + x2 + ", Number of Byte:" + x3
+						+ ", Number of Actual Read Bytes:" + x4 + ", Overlapped:" + x5);
+				String str = system.getFileHandle().readFile(x1, x2, x3, x4, x5);
 				if (str != null) {
-					concreteValueMemoryOperand.setText(new X86MemoryOperand(
-							DataType.INT32, x2), str);
+					concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x2), str);
 					concreteValueRegister.mov("%eax", 1);
 				} else
 					concreteValueRegister.mov("%eax", 0);
@@ -1695,16 +1523,12 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
 				long x5 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
-				String str = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
-				System.out.println("Handle File:" + x1 + ", String written:"
-						+ str + ", Number of Byte:" + x3 + ", Pointer:" + x4
-						+ ", Overlapped:" + x5);
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.writeFile(x1, str, x3, x4, x5));
+				String str = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
+				System.out.println("Handle File:" + x1 + ", String written:" + str + ", Number of Byte:" + x3
+						+ ", Pointer:" + x4 + ", Overlapped:" + x5);
+				concreteValueRegister.mov("%eax", system.getFileHandle().writeFile(x1, str, x3, x4, x5));
 
 			} else if (funcName.startsWith("RegSetValueExA")) {
 				/*
@@ -1721,8 +1545,7 @@ public class APIStub {
 				long x4 = concreteStack.pop();
 				long x5 = concreteStack.pop();
 				long x6 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
 
 			} else if (funcName.startsWith("SetEndOfFile")) {
 				// HANDLE hFile // handle of file whose EOF is to be set
@@ -1730,8 +1553,7 @@ public class APIStub {
 
 				System.out.println("Argument:" + x1);
 				System.out.println("Handle of file:" + x1);
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.setEndOfFile(x1));
+				concreteValueRegister.mov("%eax", system.getFileHandle().setEndOfFile(x1));
 
 			} else if (funcName.startsWith("WaitForSingleObject")) {
 				/*
@@ -1752,14 +1574,11 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
-				String str = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
-				System.out.println("Handle Window:" + x1 + ", Post Message:"
-						+ str + ", First Param:" + x3 + ", Second Param:" + x4);
-				concreteValueRegister.mov("%eax", system.getWindowHandle()
-						.postMessage(x1, str, x3, x4));
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
+				String str = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
+				System.out.println("Handle Window:" + x1 + ", Post Message:" + str + ", First Param:" + x3
+						+ ", Second Param:" + x4);
+				concreteValueRegister.mov("%eax", system.getWindowHandle().postMessage(x1, str, x3, x4));
 
 			} else if (funcName.startsWith("lstrcatA")) {
 				// LPTSTR lpString1, // address of buffer for concatenated
@@ -1769,15 +1588,11 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " ");
 
-				String dest = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				String src = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
+				String dest = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				String src = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
 				dest = dest.concat(src);
-				System.out.println("Destination Address:" + x1
-						+ ", Source String:" + src);
-				concreteValueMemoryOperand.setText(new X86MemoryOperand(
-						DataType.INT32, x1), dest);
+				System.out.println("Destination Address:" + x1 + ", Source String:" + src);
+				concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x1), dest);
 				concreteValueRegister.mov("%eax", 1);
 
 			} else if (funcName.startsWith("lstrcmpA")) {
@@ -1787,13 +1602,10 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " ");
 
-				String dest = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				String src = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
+				String dest = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				String src = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
 				// dest += src;
-				System.out.println("Destination String:" + dest
-						+ ", Source String:" + src);
+				System.out.println("Destination String:" + dest + ", Source String:" + src);
 				// concreteValueMemoryOperand.setText(new
 				// X86MemoryOperand(DataType.INT32, x1), dest);
 				concreteValueRegister.mov("%eax", dest.compareTo(src));
@@ -1812,15 +1624,11 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " ");
 
-				String fileNameOld = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				String fileNameNew = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
-				System.out.println("Old File:" + fileNameOld + ", New File:"
-						+ fileNameNew);
+				String fileNameOld = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				String fileNameNew = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
+				System.out.println("Old File:" + fileNameOld + ", New File:" + fileNameNew);
 
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.moveFile(fileNameOld, fileNameNew));
+				concreteValueRegister.mov("%eax", system.getFileHandle().moveFile(fileNameOld, fileNameNew));
 
 			} else if (funcName.startsWith("RegCloseKey")) {
 				// HKEY hKey // handle of key to close
@@ -1840,8 +1648,7 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
 				long x5 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
 			} else if (funcName.startsWith("SendMessageA")) {
 				/*
@@ -1854,16 +1661,13 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 
-				String msg = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
+				String msg = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
 
-				System.out.println("Window Handle:" + x1 + ", Message Sent:"
-						+ msg + ", First Param:" + x3 + ", Second Param:" + x4);
-				concreteValueRegister.mov("%eax", system.getWindowHandle()
-						.sendMessage(x1, msg, x3, x4));
+				System.out.println("Window Handle:" + x1 + ", Message Sent:" + msg + ", First Param:" + x3
+						+ ", Second Param:" + x4);
+				concreteValueRegister.mov("%eax", system.getWindowHandle().sendMessage(x1, msg, x3, x4));
 			} else
 			// insert API them
 			if (funcName.startsWith("CopyFileA")) {
@@ -1877,15 +1681,11 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-				String fileNameOld = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				String fileNameNew = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
-				System.out.println("Old File:" + fileNameOld + ", New File:"
-						+ fileNameNew + ", Flag:" + x3);
+				String fileNameOld = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				String fileNameNew = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
+				System.out.println("Old File:" + fileNameOld + ", New File:" + fileNameNew + ", Flag:" + x3);
 
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.copyFile(fileNameOld, fileNameNew, x3));
+				concreteValueRegister.mov("%eax", system.getFileHandle().copyFile(fileNameOld, fileNameNew, x3));
 
 			} else if (funcName.startsWith("CreateThread")) {
 				/*
@@ -1903,8 +1703,7 @@ public class APIStub {
 				long x4 = concreteStack.pop();
 				long x5 = concreteStack.pop();
 				long x6 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
 
 			} else if (funcName.startsWith("ExitProcess")) {
 				// UINT uExitCode // exit code for all threads
@@ -1919,12 +1718,9 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " ");
 
-				String className = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				System.out.println("Command Line:" + className
-						+ ", Window Name:" + x2);
-				concreteValueRegister.mov("%eax", system.getWindowHandle()
-						.findWindow(className, x2));
+				String className = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				System.out.println("Command Line:" + className + ", Window Name:" + x2);
+				concreteValueRegister.mov("%eax", system.getWindowHandle().findWindow(className, x2));
 
 			} else if (funcName.startsWith("FreeEnvironmentStringsA")) {
 				// LPTSTR lpszEnvironmentBlock // pointer to a block of
@@ -1943,10 +1739,8 @@ public class APIStub {
 				// This function has no parameters.
 				long disp = 4796200;
 				String commandLine = "C:/Windows/" + program.getFileName();
-				System.out.println("Argument MemoryOperand:" + disp
-						+ ", Command Line:" + commandLine);
-				concreteValueMemoryOperand.setText(new X86MemoryOperand(
-						DataType.INT32, disp), commandLine);
+				System.out.println("Argument MemoryOperand:" + disp + ", Command Line:" + commandLine);
+				concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, disp), commandLine);
 
 			} else if (funcName.startsWith("GetEnvironmentStrings")) {
 				// This function has no parameters.
@@ -1978,8 +1772,7 @@ public class APIStub {
 
 				System.out.println("Argument:" + x1);
 				String sInfo = "D...Â¨Â¡^.ÃˆÂ¡^.Ã°Â¡^.l).*.dll.Any file (*.*).*.*.Â�...........Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿";
-				concreteValueMemoryOperand.setText(new X86MemoryOperand(
-						DataType.INT32, x1), sInfo);
+				concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x1), sInfo);
 
 			} else if (funcName.startsWith("GetStdHandle")) {
 				// DWORD nStdHandle // input, output, or error device
@@ -2012,11 +1805,9 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-				System.out.println("fOption:" + x1 + ", Initial Size:" + x2
-						+ ", Maximum Size:" + x3);
+				System.out.println("fOption:" + x1 + ", Initial Size:" + x2 + ", Maximum Size:" + x3);
 
-				concreteValueRegister.mov("%eax", system.getHeapHandle()
-						.creatHeap(x2, x3, x1));
+				concreteValueRegister.mov("%eax", system.getHeapHandle().creatHeap(x2, x3, x1));
 			} else if (funcName.startsWith("HeapDestroy")) {
 				// HANDLE hHeap // handle to the heap
 				long x1 = concreteStack.pop();
@@ -2044,8 +1835,7 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 			} else if (funcName.startsWith("lstrcpyA")) {
 				// LPTSTR lpString1, // address of buffer
 				// LPCTSTR lpString2 // address of string to copy
@@ -2054,12 +1844,9 @@ public class APIStub {
 				System.out.println("Argument:" + x1 + " " + x2 + " ");
 
 				// long dest = ((ValueLongExp) x1).getValueOperand();
-				String src = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x2));
-				System.out.println("Destination Address:" + x1
-						+ ", Source String:" + src);
-				concreteValueMemoryOperand.setText(new X86MemoryOperand(
-						DataType.INT32, x1), src);
+				String src = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2));
+				System.out.println("Destination Address:" + x1 + ", Source String:" + src);
+				concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x1), src);
 				concreteValueRegister.mov("%eax", 1);
 
 			} else if (funcName.startsWith("MessageBoxA")) {
@@ -2072,22 +1859,13 @@ public class APIStub {
 				long x2 = concreteStack.pop();
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 
-				System.out.print(", Address of Text:"
-						+ x2
-						+ ", Text:"
-						+ concreteValueMemoryOperand
-								.getText(new X86MemoryOperand(DataType.INT32,
-										x2)));
+				System.out.print(", Address of Text:" + x2 + ", Text:"
+						+ concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2)));
 
-				System.out.print(", Address of Title Text:"
-						+ x3
-						+ ", Title Text:"
-						+ concreteValueMemoryOperand
-								.getText(new X86MemoryOperand(DataType.INT32,
-										x3)));
+				System.out.print(", Address of Title Text:" + x3 + ", Title Text:"
+						+ concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x3)));
 
 				System.out.println(", Style:" + x4);
 
@@ -2103,8 +1881,7 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
 				long x5 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
 
 			} else if (funcName.startsWith("SetHandleCount")) {
 				// UINT uNumber // number of file handles needed
@@ -2124,15 +1901,11 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				long x4 = concreteStack.pop();
 				// long x5 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
 
-				System.out
-						.println("Address:" + x1 + ", Size:" + x2
-								+ ", Allocation Type:" + x3
-								+ ", Protection Type:" + x4);
-				long t = system.getVirtualHandle().virtualAllocate(x1, x2, x3,
-						x4);
+				System.out.println("Address:" + x1 + ", Size:" + x2 + ", Allocation Type:" + x3 + ", Protection Type:"
+						+ x4);
+				long t = system.getVirtualHandle().virtualAllocate(x1, x2, x3, x4);
 				concreteValueRegister.mov("%eax", t);
 
 			} else if (funcName.startsWith("VirtualFree")) {
@@ -2146,8 +1919,7 @@ public class APIStub {
 				long x3 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
 
-				System.out.println("Base Address:" + x1 + ", Size:" + x2
-						+ ", Free Type:" + x3);
+				System.out.println("Base Address:" + x1 + ", Size:" + x2 + ", Free Type:" + x3);
 
 				long t = system.getVirtualHandle().freeVirtual(x1, x2, x3);
 				concreteValueRegister.mov("%eax", t);
@@ -2157,16 +1929,11 @@ public class APIStub {
 				long x1 = concreteStack.pop();
 				long x2 = concreteStack.pop();
 
-				String fileName = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				System.out.println("Search File:" + fileName
-						+ ", Memory Operand:" + x2);
-				long t = system.getFileHandle().findFirstFile(fileName,
-						concreteValueMemoryOperand, x2);
-				concreteValueRegister.mov(
-						"%eax",
-						system.getFileHandle().findFirstFile(fileName,
-								concreteValueMemoryOperand, x2));
+				String fileName = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				System.out.println("Search File:" + fileName + ", Memory Operand:" + x2);
+				long t = system.getFileHandle().findFirstFile(fileName, concreteValueMemoryOperand, x2);
+				concreteValueRegister.mov("%eax",
+						system.getFileHandle().findFirstFile(fileName, concreteValueMemoryOperand, x2));
 
 				System.out.println("Search Handle:" + t);
 
@@ -2176,8 +1943,7 @@ public class APIStub {
 
 				System.out.println("Argument:" + x1);
 
-				String path = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
+				String path = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
 				System.out.println("Path File:" + path);
 
 				concreteValueRegister.mov("%eax", system.setPath(path));
@@ -2186,10 +1952,9 @@ public class APIStub {
 				long x1 = concreteStack.pop();
 				long x2 = concreteStack.pop();
 
-				System.out.println("Argument, Search Handle:" + x1
-						+ ", MemoryOperand:" + x2);
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.findNextFile(x1, concreteValueMemoryOperand, x2));
+				System.out.println("Argument, Search Handle:" + x1 + ", MemoryOperand:" + x2);
+				concreteValueRegister.mov("%eax",
+						system.getFileHandle().findNextFile(x1, concreteValueMemoryOperand, x2));
 
 			} else if (funcName.startsWith("CloseHandle")) {
 				long x1 = concreteStack.pop();
@@ -2209,8 +1974,7 @@ public class APIStub {
 				long x6 = concreteStack.pop();
 				// long x7 = concreteStack.pop();
 				// long x3 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
 
 				/*
 				 * String fileMapName = concreteValueMemoryOperand .getText(new
@@ -2218,12 +1982,9 @@ public class APIStub {
 				 */
 				// String str = symbolValueMemoryOperand.getText(new
 				// X86MemoryOperand(DataType.INT32, t2));
-				System.out.println("Handle File:" + x1
-						+ ", Security Attribute:" + x2 + ", Object Protection:"
-						+ x3 + ", High-Order:" + x4 + ", High-Order:" + x5
-						+ ", File Mapping Name Address:" + x6);
-				long t = system.getFileHandle().createFileMapping(x1, x2, x3,
-						x4, x5, x6);
+				System.out.println("Handle File:" + x1 + ", Security Attribute:" + x2 + ", Object Protection:" + x3
+						+ ", High-Order:" + x4 + ", High-Order:" + x5 + ", File Mapping Name Address:" + x6);
+				long t = system.getFileHandle().createFileMapping(x1, x2, x3, x4, x5, x6);
 				concreteValueRegister.mov("%eax", t);
 				System.out.println("Return Value:" + t);
 
@@ -2236,14 +1997,11 @@ public class APIStub {
 				long x6 = concreteStack.pop();
 				long x7 = concreteStack.pop();
 				// long x3 = concreteStack.pop();
-				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " "
-						+ x4 + " " + x5 + " " + x6 + " " + x7);
+				System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6 + " " + x7);
 
-				String fileName = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				System.out.println("FileName:" + fileName + ", Access:" + x2
-						+ ", ShareMode:" + x3 + ", pSecurity:" + x4 + ", Mode:"
-						+ x5 + ", Attributes:" + x6 + ", hTemplate:" + x7);
+				String fileName = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				System.out.println("FileName:" + fileName + ", Access:" + x2 + ", ShareMode:" + x3 + ", pSecurity:"
+						+ x4 + ", Mode:" + x5 + ", Attributes:" + x6 + ", hTemplate:" + x7);
 
 				long t = system.createFile(fileName, x2, x3, x4, x5, x6, x7);
 				concreteValueRegister.mov("%eax", t);
@@ -2256,13 +2014,10 @@ public class APIStub {
 				// long x3 = concreteStack.pop();
 				System.out.println("Argument:" + x1 + " " + x2);
 
-				String fileName = concreteValueMemoryOperand
-						.getText(new X86MemoryOperand(DataType.INT32, x1));
-				System.out
-						.println("FileName:" + fileName + ", Attribute:" + x2);
+				String fileName = concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x1));
+				System.out.println("FileName:" + fileName + ", Attribute:" + x2);
 
-				concreteValueRegister.mov("%eax", system.getFileHandle()
-						.setFileAttribute(fileName, x2));
+				concreteValueRegister.mov("%eax", system.getFileHandle().setFileAttribute(fileName, x2));
 				long t = system.getFileHandle().setFileAttribute(fileName, x2);
 				System.out.println("Return Value:" + t);
 
@@ -2272,13 +2027,11 @@ public class APIStub {
 				// long x3 = concreteStack.pop();
 				// System.out.println("Argument:" + x1 + " " + x2);
 
-				System.out.println("Argument: Length:" + x1
-						+ ", Memory Operand:" + x2);
+				System.out.println("Argument: Length:" + x1 + ", Memory Operand:" + x2);
 
 				String curDir = "C:/Test";
 				System.out.println("Current Directory:" + curDir);
-				long size = concreteValueMemoryOperand.setText(
-						new X86MemoryOperand(DataType.INT32, x2), curDir, x1);
+				long size = concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x2), curDir, x1);
 				concreteValueRegister.mov("%eax", size);
 
 			} else if (funcName.startsWith("GetSystemDirectoryA")) {
@@ -2287,28 +2040,22 @@ public class APIStub {
 
 				String curDir = "C:/Windows/sytem32";
 				System.out.println("System Directory:" + curDir);
-				long size = concreteValueMemoryOperand.setText(
-						new X86MemoryOperand(DataType.INT32, x2), curDir, x1);
+				long size = concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x2), curDir, x1);
 				concreteValueRegister.mov("%eax", size);
 
-				System.out
-						.println("Result SystemDirectoryA:"
-								+ concreteValueMemoryOperand
-										.getText(new X86MemoryOperand(
-												DataType.INT32, x2), size));
+				System.out.println("Result SystemDirectoryA:"
+						+ concreteValueMemoryOperand.getText(new X86MemoryOperand(DataType.INT32, x2), size));
 
 			} else if (funcName.startsWith("GetWindowsDirectoryA")) {
 				long x2 = concreteStack.pop();
 				long x1 = concreteStack.pop();
 				// System.out.println("Argument:" + x1 + " " + x2);
 
-				System.out.println("Argument: Length:" + x1
-						+ ", Memory Operand:" + x2);
+				System.out.println("Argument: Length:" + x1 + ", Memory Operand:" + x2);
 
 				String curDir = "C:/Windows";
 				System.out.println("WindowDirectory:" + curDir);
-				long size = concreteValueMemoryOperand.setText(
-						new X86MemoryOperand(DataType.INT32, x2), curDir, x1);
+				long size = concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x2), curDir, x1);
 				concreteValueRegister.mov("%eax", size);
 
 			} else if (funcName.startsWith("GetModuleHandleA")) {
@@ -2322,11 +2069,9 @@ public class APIStub {
 				long lpFilename = concreteStack.pop();
 				long nSize = concreteStack.pop();
 
-				System.out.println("Argument: " + hModule + " " + lpFilename
-						+ " " + nSize);
+				System.out.println("Argument: " + hModule + " " + lpFilename + " " + nSize);
 				String s = "C:/Windows/" + program.getFileName();
-				concreteValueMemoryOperand.setText(new X86MemoryOperand(
-						DataType.INT32, lpFilename), s);
+				concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, lpFilename), s);
 				concreteValueRegister.mov("%eax", s.length());
 			}
 

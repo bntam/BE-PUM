@@ -75,8 +75,10 @@ public final class Program {
 	public enum TargetOS {
 		WINDOWS, LINUX, UNKNOWN
 	}
-	//private final static Logger logger = Logger.getLogger(Program.class);
+
+	// private final static Logger logger = Logger.getLogger(Program.class);
 	private final static Logging logger = Logging.getLogger(Program.class);
+
 	/**
 	 * Initially creates the Program object.
 	 * 
@@ -89,26 +91,26 @@ public final class Program {
 		programInstance = new Program(arch);
 		return programInstance;
 	}
-	
+
 	public String generatePathFileName(String baseFileName) {
 		// TODO Auto-generated method stub
-		
+
 		String r[] = baseFileName.split("\\\\");
 		String ret = "";
-		for (int i=0; i<r.length; i++ ) {
+		for (int i = 0; i < r.length; i++) {
 			if (i == r.length - 2)
 				ret += "cfg" + "\\";
 			else if (i == r.length - 1)
 				ret += r[i];
-			else 
+			else
 				ret += r[i] + "\\";
 		}
 
 		return ret;
 	}
-	
+
 	private String technique = "";
-	private String fileName ="";
+	private String fileName = "";
 	private String detail_technique = "";
 	private static Program programInstance;
 	private String absolutePath = "";
@@ -116,6 +118,7 @@ public final class Program {
 	final static String resultFileTempTXT = "data/Result_Temp.txt";
 	final static String fullResultFileTXT = "data/fullResult.txt";
 	static final int MAX_BYTE_PER_INSTRUCTION = 15;
+
 	/**
 	 * Get the singleton Program object.
 	 * 
@@ -124,6 +127,7 @@ public final class Program {
 	public static Program getProgram() {
 		return programInstance;
 	}
+
 	private ReachedSet reached = null;
 	private final Architecture arch;
 	private Location start;
@@ -171,11 +175,12 @@ public final class Program {
 		unresolvedBranches = new FastSet<Location>();
 		smPos = new ArrayList<AbsoluteAddress>();
 		bpCFG = new BPCFG();
-		
+
 		setResultFile(new FileProcess(resultFileTXT));
 		setFullResultFile(new FileProcess(fullResultFileTXT));
 		setResultFileTemp(new FileProcess(resultFileTempTXT));
 	}
+
 	public void addByteSMPos(AbsoluteAddress addr) {
 		this.smPos.add(addr);
 		this.smPos.add(new AbsoluteAddress(addr.getValue() + 1));
@@ -258,28 +263,20 @@ public final class Program {
 	public boolean checkAddress(AbsoluteAddress address) {
 		// boolean ret = true;
 		return mainModule.insideFileArea(address);
-		/*if (harness.contains(address)
-				|| address.getValueOperand() >= StubProvider.STUB_BASE)
-			return false;		
-		
-		ExecutableImage module = getModule(address);
-
-		long fp = -1;
-		if (module == null) {
-			byte[] opcodes = new byte[10];
-			return getOpcodeArray(address, opcodes);
-			
-		} else {
-			fp = module.getFilePointer(address);
-			// Also check whether fp is out of the int range, since the
-			// X86Disassembler actually
-			// performs this cast in its implementation.
-			if (fp < 0 || (int) fp < 0) {
-				return false;
-			}
-		}
-		return true;
-*/	}
+		/*
+		 * if (harness.contains(address) || address.getValueOperand() >=
+		 * StubProvider.STUB_BASE) return false;
+		 * 
+		 * ExecutableImage module = getModule(address);
+		 * 
+		 * long fp = -1; if (module == null) { byte[] opcodes = new byte[10];
+		 * return getOpcodeArray(address, opcodes);
+		 * 
+		 * } else { fp = module.getFilePointer(address); // Also check whether
+		 * fp is out of the int range, since the // X86Disassembler actually //
+		 * performs this cast in its implementation. if (fp < 0 || (int) fp < 0)
+		 * { return false; } } return true;
+		 */}
 
 	public String checkAPI(long value, Environment env) {
 		// TODO Auto-generated method stub
@@ -290,7 +287,7 @@ public final class Program {
 
 		if (api == "")
 			api = env.getSystem().getKernel().getProcName(value);
-		
+
 		if (api == "")
 			api = env.getSystem().getUser32().getProcName(value);
 
@@ -305,8 +302,7 @@ public final class Program {
 			Operand dest = instr.getOperand(0);
 			Operand src = instr.getOperand(1);
 
-			return (dest.toString().contains("fs:") && src.toString().contains(
-					"esp"));
+			return (dest.toString().contains("fs:") && src.toString().contains("esp"));
 		}
 
 		return false;
@@ -327,39 +323,31 @@ public final class Program {
 		 * }
 		 */
 
-		if (!address.toString().equals("0x00404819")
-				&& this.getFileName().equals("Virus.Win32.Cabanas.2999"))
+		if (!address.toString().equals("0x00404819") && this.getFileName().equals("Virus.Win32.Cabanas.2999"))
 			return false;
 
 		if (instr instanceof X86CondJmpInstruction) {
 			if (instr.getName().startsWith("loop")) {
-				System.out.println("Debug Decryption Method:"
-						+ address.toString());
+				System.out.println("Debug Decryption Method:" + address.toString());
 				String decryptionString = "";
 				String curAPI = "";
-				if (address.toString().equals("0x00404819")
-						&& this.getFileName()
-								.equals("Virus.Win32.Cabanas.2999")) {
-					System.out.println("Debug Special Decryption Method "
-							+ address.toString());
+				if (address.toString().equals("0x00404819") && this.getFileName().equals("Virus.Win32.Cabanas.2999")) {
+					System.out.println("Debug Special Decryption Method " + address.toString());
 					long ecx = getRegVal(address, "ecx");
 					long esi = getRegVal(address, "esi");
 					long edi = getRegVal(address, "edi");
 
 					while (ecx > 0) {
-						int al = (int) getByteValueMemory(new AbsoluteAddress(
-								esi));
+						int al = (int) getByteValueMemory(new AbsoluteAddress(esi));
 						esi++;
 
 						int cl = (int) (ecx & 0xFF);
 						// al = Integer.rotateLeft((int) al, (int)cl) & 0xFF;
 						al = (int) OldBitVector.rl8(al, cl);
 						al = al ^ 0xB5;
-						long fp1 = module.getFilePointer(new AbsoluteAddress(
-								edi));
+						long fp1 = module.getFilePointer(new AbsoluteAddress(edi));
 						if (fp1 >= 0)
-							module.getDisassembler().setMemoryByteValue(
-									(int) fp1, al);
+							module.getDisassembler().setMemoryByteValue((int) fp1, al);
 						else if (al > 177) {
 							al += 128;
 							al = al & 0xFF;
@@ -391,9 +379,7 @@ public final class Program {
 						} else {
 							// char t = (char)
 							// (()curAPI.charAt(curAPI.length()-1) - 0xEA);
-							decryptionString += (char) 0
-									+ curAPI.substring(0, curAPI.length() - 1)
-									+ "W" + (char) 0;
+							decryptionString += (char) 0 + curAPI.substring(0, curAPI.length() - 1) + "W" + (char) 0;
 							edi += curAPI.length() + 2;
 							ecx--;
 							esi++;
@@ -420,8 +406,7 @@ public final class Program {
 				if (dest.toString().startsWith("%fs"))
 					return false;
 
-				System.out.println("Debug Self Modify Code: "
-						+ address.toString());
+				System.out.println("Debug Self Modify Code: " + address.toString());
 
 				long pos = getOperandValue1(address, instr, dest);
 
@@ -429,18 +414,14 @@ public final class Program {
 				long value = getOperandValue2(address, instr, src);
 				long fp1 = module.getFilePointer(new AbsoluteAddress(pos));
 				if (instr.getName().endsWith("b")) {
-					module.getDisassembler().setMemoryByteValue((int) fp1,
-							value);
+					module.getDisassembler().setMemoryByteValue((int) fp1, value);
 					this.addByteSMPos(new AbsoluteAddress(pos));
-				} else if (instr.getName().endsWith("w")
-						|| instr.getName().endsWith("s")) {
-					module.getDisassembler().setMemoryWordValue((int) fp1,
-							value);
+				} else if (instr.getName().endsWith("w") || instr.getName().endsWith("s")) {
+					module.getDisassembler().setMemoryWordValue((int) fp1, value);
 					this.addWordSMPos(new AbsoluteAddress(pos));
 				} else if (instr.getName().endsWith("l")) {
 
-					module.getDisassembler().setMemoryDoubleWordValue(
-							(int) fp1, value);
+					module.getDisassembler().setMemoryDoubleWordValue((int) fp1, value);
 					this.addDoubleWordSMPos(new AbsoluteAddress(pos));
 				}
 
@@ -456,8 +437,7 @@ public final class Program {
 				if (!dest.getClass().getSimpleName().equals("X86MemoryOperand"))
 					return false;
 
-				System.out.println("Debug Self Modify Code: "
-						+ address.toString());
+				System.out.println("Debug Self Modify Code: " + address.toString());
 
 				long pos = getOperandValue1(address, instr, dest);
 
@@ -465,8 +445,7 @@ public final class Program {
 				long value = 1;
 				long fp1 = module.getFilePointer(new AbsoluteAddress(pos));
 				if (instr.getName().endsWith("b")) {
-					module.getDisassembler().addMemoryByteValue((int) fp1,
-							value);
+					module.getDisassembler().addMemoryByteValue((int) fp1, value);
 					this.addByteSMPos(new AbsoluteAddress(pos));
 				}
 
@@ -480,8 +459,7 @@ public final class Program {
 				if (!dest.getClass().getSimpleName().equals("X86MemoryOperand"))
 					return false;
 
-				System.out.println("Debug Self Modify Code: "
-						+ address.toString());
+				System.out.println("Debug Self Modify Code: " + address.toString());
 
 				long pos = getOperandValue1(address, instr, dest);
 
@@ -489,17 +467,13 @@ public final class Program {
 				long value = getOperandValue2(address, instr, src);
 				long fp1 = module.getFilePointer(new AbsoluteAddress(pos));
 				if (instr.getName().endsWith("b")) {
-					module.getDisassembler().addMemoryByteValue((int) fp1,
-							value);
+					module.getDisassembler().addMemoryByteValue((int) fp1, value);
 					this.addByteSMPos(new AbsoluteAddress(pos));
 				} else if (instr.getName().endsWith("l")) {
-					module.getDisassembler().addMemoryDoubleWordValue(
-							(int) fp1, value);
+					module.getDisassembler().addMemoryDoubleWordValue((int) fp1, value);
 					this.addDoubleWordSMPos(new AbsoluteAddress(pos));
-				} else if (instr.getName().endsWith("s")
-						|| instr.getName().endsWith("w")) {
-					module.getDisassembler().addMemoryWordValue((int) fp1,
-							value);
+				} else if (instr.getName().endsWith("s") || instr.getName().endsWith("w")) {
+					module.getDisassembler().addMemoryWordValue((int) fp1, value);
 					this.addDoubleWordSMPos(new AbsoluteAddress(pos));
 				}
 
@@ -512,21 +486,17 @@ public final class Program {
 				Operand dest = instr.getOperand(0);
 				Operand src = instr.getOperand(1);
 
-				if (Program.getProgram().getFileName().toString()
-						.equals("Flooder.Win32.AngryPing"))
+				if (Program.getProgram().getFileName().toString().equals("Flooder.Win32.AngryPing"))
 					return false;
 
-				if (Program.getProgram().getFileName().toString()
-						.equals("Virus.Win32.Cabanas.2999"))
+				if (Program.getProgram().getFileName().toString().equals("Virus.Win32.Cabanas.2999"))
 					return false;
 
 				// System.out.println("Debug SMC MOVS:" + address.toString());
-				System.out.println("Debug Self Modify Code: "
-						+ address.toString());
+				System.out.println("Debug Self Modify Code: " + address.toString());
 
 				if (!dest.getClass().getSimpleName().equals("X86MemoryOperand")
-						|| !src.getClass().getSimpleName()
-								.equals("X86MemoryOperand"))
+						|| !src.getClass().getSimpleName().equals("X86MemoryOperand"))
 					return false;
 
 				long pos1 = getRegVal(address, "edi");
@@ -539,21 +509,16 @@ public final class Program {
 						if (instr.getName().endsWith("b")) {
 
 						} else if (instr.getName().endsWith("l")) {
-							long value = this
-									.getDoubleWordValueMemory(new AbsoluteAddress(
-											pos2));
+							long value = this.getDoubleWordValueMemory(new AbsoluteAddress(pos2));
 							// long value2 = this.get32Value(new
 							// AbsoluteAddress(pos1));
-							long fp1 = module
-									.getFilePointer(new AbsoluteAddress(pos1));
+							long fp1 = module.getFilePointer(new AbsoluteAddress(pos1));
 							// long fp2 = module.getFilePointer(new
 							// AbsoluteAddress(pos2));
 							pos2 += 4;
-							module.getDisassembler().setMemoryDoubleWordValue(
-									(int) fp1, value);
+							module.getDisassembler().setMemoryDoubleWordValue((int) fp1, value);
 							pos1 += 4;
-						} else if (instr.getName().endsWith("s")
-								|| instr.getName().endsWith("w")) {
+						} else if (instr.getName().endsWith("s") || instr.getName().endsWith("w")) {
 
 						}
 					}
@@ -563,8 +528,7 @@ public final class Program {
 				Operand dest = instr.getOperand(0);
 				Operand src = instr.getOperand(1);
 
-				if (Program.getProgram().getFileName().toString()
-						.equals("Virus.Win32.Seppuku.1606")
+				if (Program.getProgram().getFileName().toString().equals("Virus.Win32.Seppuku.1606")
 						&& address.toString().equals("0x0040106c"))
 					return false;
 
@@ -574,8 +538,7 @@ public final class Program {
 				if (!dest.getClass().getSimpleName().equals("X86MemoryOperand"))
 					return false;
 
-				System.out.println("Debug Self Modify Code: "
-						+ address.toString());
+				System.out.println("Debug Self Modify Code: " + address.toString());
 
 				long pos = getOperandValue1(address, instr, dest);
 
@@ -583,17 +546,13 @@ public final class Program {
 				long value = getOperandValue2(address, instr, src);
 				long fp1 = module.getFilePointer(new AbsoluteAddress(pos));
 				if (instr.getName().endsWith("b")) {
-					module.getDisassembler().setMemoryByteValue((int) fp1,
-							value);
+					module.getDisassembler().setMemoryByteValue((int) fp1, value);
 					this.addByteSMPos(new AbsoluteAddress(pos));
 				} else if (instr.getName().endsWith("l")) {
-					module.getDisassembler().setMemoryDoubleWordValue(
-							(int) fp1, value);
+					module.getDisassembler().setMemoryDoubleWordValue((int) fp1, value);
 					this.addDoubleWordSMPos(new AbsoluteAddress(pos));
-				} else if (instr.getName().endsWith("s")
-						|| instr.getName().endsWith("w")) {
-					module.getDisassembler().setMemoryWordValue((int) fp1,
-							value);
+				} else if (instr.getName().endsWith("s") || instr.getName().endsWith("w")) {
+					module.getDisassembler().setMemoryWordValue((int) fp1, value);
 					this.addWordSMPos(new AbsoluteAddress(pos));
 				}
 
@@ -629,8 +588,7 @@ public final class Program {
 
 	public int countIndirectBranches() {
 		int res = 0;
-		for (Map.Entry<AbsoluteAddress, Instruction> entry : assemblyMap
-				.entrySet()) {
+		for (Map.Entry<AbsoluteAddress, Instruction> entry : assemblyMap.entrySet()) {
 			Instruction instr = entry.getValue();
 
 			if (instr instanceof BranchInstruction) {
@@ -639,18 +597,14 @@ public final class Program {
 					// if branch target is not a memory operand pointing into a
 					// static data area of the binary (imports)
 					if (branch.getBranchDestination() instanceof MemoryOperand) {
-						MemoryOperand memOp = (MemoryOperand) branch
-								.getBranchDestination();
+						MemoryOperand memOp = (MemoryOperand) branch.getBranchDestination();
 						// Import calls have only displacement
 						if (memOp.getBase() == null && memOp.getIndex() == null) {
-							AbsoluteAddress disp = new AbsoluteAddress(
-									memOp.getDisplacement());
+							AbsoluteAddress disp = new AbsoluteAddress(memOp.getDisplacement());
 							// Check whether displacement points into import
 							// table
 							ExecutableImage module = getModule(disp);
-							if (module instanceof PEModule
-									&& ((PEModule) module).getImportTable()
-											.containsKey(disp))
+							if (module instanceof PEModule && ((PEModule) module).getImportTable().containsKey(disp))
 								continue;
 						}
 					}
@@ -666,12 +620,10 @@ public final class Program {
 	public void generageCFG(String baseFileName) {
 		// TODO Auto-generated method stub
 		ProgramGraphWriter graphWriter = new ProgramGraphWriter(this);
-		graphWriter.writeDisassembly(getBPCFG(),
-				generatePathFileName(baseFileName) + "_code.asm");
-		graphWriter.writeAssemblyCFG(getBPCFG(),
-				generatePathFileName(baseFileName) + "_model");
-	}	
-		
+		graphWriter.writeDisassembly(getBPCFG(), generatePathFileName(baseFileName) + "_code.asm");
+		graphWriter.writeAssemblyCFG(getBPCFG(), generatePathFileName(baseFileName) + "_model");
+	}
+
 	/**
 	 * @return the absolutePath
 	 */
@@ -711,19 +663,18 @@ public final class Program {
 	public final long getByteValueMemory(AbsoluteAddress address) {
 		// TODO Auto-generated method stub
 		long result = 0;
-		
+
 		try {
-			if (harness.contains(address)
-					|| address.getValue() >= StubProvider.STUB_BASE)
+			if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
 				return 0;
 
 			ExecutableImage module = getModule(address);
 
 			long fp = -1;
 			if (module == null) {
-				//logger.error("No module for address " + address
-				//		+ ". Cannot disassemble instruction!");
-				
+				// logger.error("No module for address " + address
+				// + ". Cannot disassemble instruction!");
+
 				result = Long.MIN_VALUE;
 			} else {
 				fp = module.getFilePointer(address);
@@ -731,8 +682,7 @@ public final class Program {
 				// X86Disassembler actually
 				// performs this cast in its implementation.
 				if (fp < 0 || (int) fp < 0) {
-					logger.error("Requested instruction outside of file area: "
-							+ address);
+					logger.error("Requested instruction outside of file area: " + address);
 				}
 				// else {
 				// if (!module.isCodeArea(address)) {
@@ -742,8 +692,7 @@ public final class Program {
 				// }
 				// Disassembler dis = module.getDisassembler();
 				// instr =
-				X86Disassembler dis = (X86Disassembler) module
-						.getDisassembler();
+				X86Disassembler dis = (X86Disassembler) module.getDisassembler();
 				int byteIndex = (int) fp;
 				result = InstructionDecoder.readByte(dis.getCode(), byteIndex);
 				/*
@@ -762,33 +711,31 @@ public final class Program {
 	// PHONG: debug here
 	public final long getByteValueMemoryPhong(AbsoluteAddress address, Environment env) {
 		// TODO Auto-generated method stub
-		int result = 0;		
+		int result = 0;
 		try {
-			if (harness.contains(address)
-					|| address.getValue() >= StubProvider.STUB_BASE)
+			if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
 				return 0;
 
 			ExecutableImage module = getModule(address);
 
 			long fp = -1;
 			if (module == null) {
-				//logger.error("No module for address " + address
-				//		+ ". Cannot disassemble instruction!")
+				// logger.error("No module for address " + address
+				// + ". Cannot disassemble instruction!")
 				;
 				// PHONG: 20150501 ------------------------------------------
 				if (mainModule instanceof PEModule) {
-					if (((PEModule)mainModule).isInside(address.getValue()))
-						result = (int) ((PEModule)mainModule).getByteValue(address.getValue());
+					if (((PEModule) mainModule).isInside(address.getValue()))
+						result = (int) ((PEModule) mainModule).getByteValue(address.getValue());
 				}
-				//------------------------------------------------------------
+				// ------------------------------------------------------------
 			} else {
 				fp = module.getFilePointer(address);
 				// Also check whether fp is out of the int range, since the
 				// X86Disassembler actually
 				// performs this cast in its implementation.
 				if (fp < 0 || (int) fp < 0) {
-					logger.error("Requested instruction outside of file area: "
-							+ address);
+					logger.error("Requested instruction outside of file area: " + address);
 				}
 				// else {
 				// if (!module.isCodeArea(address)) {
@@ -798,8 +745,7 @@ public final class Program {
 				// }
 				// Disassembler dis = module.getDisassembler();
 				// instr =
-				X86Disassembler dis = (X86Disassembler) module
-						.getDisassembler();
+				X86Disassembler dis = (X86Disassembler) module.getDisassembler();
 				int byteIndex = (int) fp;
 				result = InstructionDecoder.readByte(dis.getCode(), byteIndex);
 				/*
@@ -826,23 +772,22 @@ public final class Program {
 	public String getDetailTechnique() {
 		return detail_technique;
 	}
-	
+
 	public final int getDoubleWordValueMemory(AbsoluteAddress address) {
 		int result = 0;
-		
+
 		try {
-			if (harness.contains(address)
-					|| address.getValue() >= StubProvider.STUB_BASE)
+			if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
 				return 0;
-			
+
 			ExecutableImage module = getModule(address);
 			long fp = -1;
-			if (module == null) {				
-				//logger.error("No module for address " + address
-					//	+ ". Cannot disassemble instruction!");
+			if (module == null) {
+				// logger.error("No module for address " + address
+				// + ". Cannot disassemble instruction!");
 				if (mainModule instanceof PEModule) {
-					if (((PEModule)mainModule).isInside(address.getValue()))
-						result = (int) ((PEModule)mainModule).getDoubleWordValue(address.getValue());					
+					if (((PEModule) mainModule).isInside(address.getValue()))
+						result = (int) ((PEModule) mainModule).getDoubleWordValue(address.getValue());
 				}
 				//
 			} else {
@@ -851,8 +796,7 @@ public final class Program {
 				// X86Disassembler actually
 				// performs this cast in its implementation.
 				if (fp < 0 || (int) fp < 0) {
-					logger.error("Requested instruction outside of file area "
-							+ address);
+					logger.error("Requested instruction outside of file area " + address);
 				}
 				// else {
 				// if (!module.isCodeArea(address)) {
@@ -862,8 +806,7 @@ public final class Program {
 				// }
 				// Disassembler dis = module.getDisassembler();
 				// instr =
-				X86Disassembler dis = (X86Disassembler) module
-						.getDisassembler();
+				X86Disassembler dis = (X86Disassembler) module.getDisassembler();
 				int byteIndex = (int) fp;
 				result = InstructionDecoder.readInt32(dis.getCode(), byteIndex);
 				/*
@@ -875,8 +818,8 @@ public final class Program {
 
 		} catch (Exception e) {
 			System.out.println(e.toString());
-		}	
-		
+		}
+
 		return result;
 	}
 
@@ -916,9 +859,9 @@ public final class Program {
 	}
 
 	public String getFileName() {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 		return fileName;
-	}	
+	}
 
 	/**
 	 * @return the fullResultFile
@@ -956,24 +899,21 @@ public final class Program {
 		// return instr;
 		// } else {
 		// No real instructions in prologue/epilogue
-		if (harness.contains(address)
-				|| address.getValue() >= StubProvider.STUB_BASE)
+		if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
 			return null;
 
 		ExecutableImage module = getModule(address);
 
 		long fp = -1;
 		if (module == null) {
-			logger.error("Instruction is Null. No module for address " + address
-					+ ". Cannot disassemble instruction!");
+			logger.error("Instruction is Null. No module for address " + address + ". Cannot disassemble instruction!");
 		} else {
 			fp = module.getFilePointer(address);
 			// Also check whether fp is out of the int range, since the
 			// X86Disassembler actually
 			// performs this cast in its implementation.
 			if (fp < 0 || (int) fp < 0) {
-				logger.error("Requested instruction outside of file area: "
-						+ address);
+				logger.error("Requested instruction outside of file area: " + address);
 			} else {
 				if (!module.isCodeArea(address)) {
 					// logger.error("Requested instruction outside code section: "
@@ -986,8 +926,7 @@ public final class Program {
 
 				instr = module.getDisassembler().decodeInstruction(fp);
 				if (instr == null) {
-					logger.error("Instruction could not be disassembled at: "
-							+ address);
+					logger.error("Instruction could not be disassembled at: " + address);
 				}
 
 			}
@@ -1000,8 +939,7 @@ public final class Program {
 				if (!technique.contains("SEH"))
 					technique += "SEH ";
 
-				setDetailTechnique(getDetailTechnique() + "SEH:"
-						+ address.toString() + " ");
+				setDetailTechnique(getDetailTechnique() + "SEH:" + address.toString() + " ");
 			}
 
 			if (checkSelfModify(address, instr)) {
@@ -1009,8 +947,7 @@ public final class Program {
 				if (!technique.contains("SMC"))
 					technique += "SMC ";
 
-				setDetailTechnique(getDetailTechnique() + "SMC:"
-						+ address.toString() + " ");
+				setDetailTechnique(getDetailTechnique() + "SMC:" + address.toString() + " ");
 				// System.out.println(instr.compareInstruction(instr));
 				// }
 			}
@@ -1020,46 +957,42 @@ public final class Program {
 		// }
 	}
 
-	public final Instruction getInstruction(AbsoluteAddress address,
-			Environment env) {
+	public final Instruction getInstruction(AbsoluteAddress address, Environment env) {
 		// Instruction instr = assemblyMap.get(address);
-		Instruction instr = null;		
-		
-		//if (!mainModule.insideFileArea(address))
-		//	return null;
-		
-		Memory m = env.getMemory();		
-		
+		Instruction instr = null;
+
+		// if (!mainModule.insideFileArea(address))
+		// return null;
+
+		Memory m = env.getMemory();
+
 		// if (instr != null) {
 		// return instr;
 		// } else {
 		// No real instructions in prologue/epilogue
-		if (harness.contains(address)
-				|| address.getValue() >= StubProvider.STUB_BASE)
+		if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
 			return null;
 
 		ExecutableImage module = getModule(address);
 
 		long fp = -1;
 		if (module == null) {
-			//Special Case
+			// Special Case
 			byte[] opcodes = getOpcode(address, env, MAX_BYTE_PER_INSTRUCTION);
 			if (opcodes != null)
 				instr = getInstruction(opcodes, env);
-			
+
 			if (instr == null)
-				logger.error("Instr is Null. No module for address " + address
-						+ ". Cannot disassemble instruction!");
-			
+				logger.error("Instr is Null. No module for address " + address + ". Cannot disassemble instruction!");
+
 		} else {
 			fp = module.getFilePointer(address);
 			// Also check whether fp is out of the int range, since the
 			// X86Disassembler actually
 			// performs this cast in its implementation.
 			if (fp < 0 || (int) fp < 0) {
-				logger.error("Requested instruction outside of file area: "
-						+ address);
-			} else {				
+				logger.error("Requested instruction outside of file area: " + address);
+			} else {
 				if (!module.isCodeArea(address)) {
 					setTechnique("EPO");
 					setDetailTechnique("EPO:" + address + " ");
@@ -1068,18 +1001,22 @@ public final class Program {
 				// Disassembler dis = module.getDisassembler();
 
 				// PHONG: debug here
-				//m.changeValuePhong(address, env);
-				// ORIGINAL				
-				/*m.changeValue(address);
-				instr = module.getDisassembler().decodeInstruction(fp);
-				m.resetValue(address, instr);*/
-				
+				// m.changeValuePhong(address, env);
+				// ORIGINAL
+				/*
+				 * m.changeValue(address); instr =
+				 * module.getDisassembler().decodeInstruction(fp);
+				 * m.resetValue(address, instr);
+				 */
+
 				byte[] opcodes = getOpcode(address, env, MAX_BYTE_PER_INSTRUCTION);
 				if (opcodes != null)
 					instr = getInstruction(opcodes, env);
-				/*if (instr1 != null && !instr1.compareInstruction(instr1))
-					System.out.println("Debug");*/
-				
+				/*
+				 * if (instr1 != null && !instr1.compareInstruction(instr1))
+				 * System.out.println("Debug");
+				 */
+
 				if (instr == null) {
 					m.changeValue(address);
 					instr = module.getDisassembler().decodeInstruction(fp);
@@ -1088,9 +1025,8 @@ public final class Program {
 						FileProcess fileProcess = new FileProcess("data/error.txt");
 						fileProcess.appendFile("FileName:" + fileName + " decode Instruction Error at " + address);
 					}
-					 
-					logger.error("Instruction could not be disassembled at: "
-							+ address);
+
+					logger.error("Instruction could not be disassembled at: " + address);
 				}
 			}
 		}
@@ -1102,15 +1038,15 @@ public final class Program {
 		int num = 0;
 		long addr = address.getValue();
 		opcodes = env.getMemory().getBytesArray(address, n);
-		
-		for (int i=0; i<opcodes.length; i++) {			
-			num ++;
+
+		for (int i = 0; i < opcodes.length; i++) {
+			num++;
 			if (opcodes[i] == Long.MIN_VALUE) {
 				long temp = readByte(new AbsoluteAddress(addr + i));
 
 				if (temp == Long.MIN_VALUE) {
 					ExternalMemoryReturnData ret = ExternalMemory.getByte(address.getValue() + i);
-					if (ret != null && ret.isValidAddress) 
+					if (ret != null && ret.isValidAddress)
 						opcodes[i] = ret.value.getValue();
 					else {
 						num = i;
@@ -1119,11 +1055,11 @@ public final class Program {
 				} else
 					opcodes[i] = temp;
 			}
-		}		
+		}
 
 		if (num > 0) {
 			byte[] ret = new byte[num];
-			for (int i=0; i<num; i++)
+			for (int i = 0; i < num; i++)
 				ret[i] = (byte) opcodes[i];
 
 			return ret;
@@ -1140,7 +1076,7 @@ public final class Program {
 
 			long fp = -1;
 			if (module == null) {
-				//result = Long.MIN_VALUE;
+				// result = Long.MIN_VALUE;
 				if (mainModule instanceof PEModule) {
 					PEModule pe = (PEModule) mainModule;
 					result = pe.getByteValue(address.getValue());
@@ -1151,12 +1087,10 @@ public final class Program {
 				// X86Disassembler actually
 				// performs this cast in its implementation.
 				if (fp < 0 || (int) fp < 0) {
-					logger.error("Requested instruction outside of file area: "
-							+ address);
+					logger.error("Requested instruction outside of file area: " + address);
 				}
 
-				X86Disassembler dis = (X86Disassembler) module
-						.getDisassembler();
+				X86Disassembler dis = (X86Disassembler) module.getDisassembler();
 				int byteIndex = (int) fp;
 				result = InstructionDecoder.readByte(dis.getCode(), byteIndex);
 			}
@@ -1169,15 +1103,14 @@ public final class Program {
 	}
 
 	// PHONG: get instruction here
-	public Instruction getInstruction(byte[] opcodes,
-			Environment env) {
+	public Instruction getInstruction(byte[] opcodes, Environment env) {
 		Instruction instr = null;
 		BinaryFileInputBuffer binBuff = new BinaryFileInputBuffer(opcodes);
 		X86Disassembler dis = new X86Disassembler(binBuff);
 		instr = dis.decodeInstruction();
 		return instr;
 	}
-	
+
 	public final Instruction getInstruction1(AbsoluteAddress address) {
 		Instruction instr = assemblyMap.get(address);
 		// Instruction instr = null;
@@ -1185,8 +1118,7 @@ public final class Program {
 			return instr;
 		} else {
 			// No real instructions in prologue/epilogue
-			if (harness.contains(address)
-					|| address.getValue() >= StubProvider.STUB_BASE)
+			if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
 				return null;
 
 			ExecutableImage module = getModule(address);
@@ -1194,10 +1126,10 @@ public final class Program {
 			long fp = -1;
 			if (module == null) {
 				// PHONG: debug
-				//System.out.println();
-				
-				//logger.error("No module for address " + address
-				//		+ ". Cannot disassemble instruction!")
+				// System.out.println();
+
+				// logger.error("No module for address " + address
+				// + ". Cannot disassemble instruction!")
 				;
 			} else {
 				fp = module.getFilePointer(address);
@@ -1205,12 +1137,10 @@ public final class Program {
 				// X86Disassembler actually
 				// performs this cast in its implementation.
 				if (fp < 0 || (int) fp < 0) {
-					logger.error("Requested instruction outside of file area: "
-							+ address);
+					logger.error("Requested instruction outside of file area: " + address);
 				} else {
 					if (!module.isCodeArea(address)) {
-						logger.error("Requested instruction outside code section: "
-								+ address);
+						logger.error("Requested instruction outside code section: " + address);
 						return null;
 					}
 
@@ -1218,8 +1148,7 @@ public final class Program {
 
 					instr = module.getDisassembler().decodeInstruction(fp);
 					if (instr == null) {
-						logger.error("Instruction could not be disassembled at: "
-								+ address);
+						logger.error("Instruction could not be disassembled at: " + address);
 					}
 
 					// if (checkSelfModify(address, instr)) {
@@ -1234,10 +1163,11 @@ public final class Program {
 			return instr;
 		}
 	}
+
 	public final int getInstructionCount() {
 		return assemblyMap.size();
 	}
-	
+
 	/**
 	 * Get the string representation of the assembly instruction at the given
 	 * address.
@@ -1289,7 +1219,7 @@ public final class Program {
 		}
 		return num;
 	}
-	
+
 	public final int getNodesCount1() {
 		int num = 0;
 		// Set<CFAEdge> edges = new HashSet<CFAEdge>();
@@ -1306,26 +1236,25 @@ public final class Program {
 	private boolean getOpcodeArray(AbsoluteAddress address, byte[] opcodes, Environment env) {
 		// TODO Auto-generated method stub
 		long addr = address.getValue();
-		for (int i=0; i<opcodes.length; i++) {
+		for (int i = 0; i < opcodes.length; i++) {
 			long t;
 			Value temp = null;
-			//System.out.println();
+			// System.out.println();
 			if (env.getMemory().contains(new AbsoluteAddress(addr + i)))
 				temp = env.getMemory().getByteMemoryValue(addr + i);
 			if (temp != null && temp instanceof LongValue)
-				t = ((LongValue)temp).getValue();
-			else 
+				t = ((LongValue) temp).getValue();
+			else
 				t = getByteValueMemory(new AbsoluteAddress(addr + i));
 			if (t == Long.MIN_VALUE)
-				return false; 
-			opcodes[i] = (byte) t;			
+				return false;
+			opcodes[i] = (byte) t;
 		}
-		
+
 		return true;
 	}
 
-	private long getOperandValue2(AbsoluteAddress address, Instruction instr,
-			Operand src) {
+	private long getOperandValue2(AbsoluteAddress address, Instruction instr, Operand src) {
 		// TODO Auto-generated method stub
 		// Operand src = ((X86MoveInstruction)instr).getOperand2();
 		if (src.getClass().getSimpleName().equals("Immediate")) {
@@ -1352,22 +1281,21 @@ public final class Program {
 		return preservedExecutionMap;
 	}
 
-	private long getOperandValue1(AbsoluteAddress address, Instruction instr,
-			Operand dest) {
+	private long getOperandValue1(AbsoluteAddress address, Instruction instr, Operand dest) {
 		// TODO Auto-generated method stub
 		// Operand dest = ((X86MoveInstruction)instr).getOperand1();
 		if (this.getFileName().equals("Virus.Win32.Seppuku.1606")
 		// && dest.equals("edi")
 				&& address.toString().equals("0x004010eb"))
 			return 4200007;
-	
+
 		X86MemoryOperand y = (X86MemoryOperand) dest;
 		long base = 0;
-	
+
 		if (y.getBase() != null) {
 			base = getRegVal(address, y.getBase().toString());
 		}
-	
+
 		return base + y.getDisplacement();
 	}
 
@@ -1395,16 +1323,14 @@ public final class Program {
 
 	private long getRegVal(AbsoluteAddress address, String regName) {
 		// TODO Auto-generated method stub
-		if (getFileName().equals("Virus.Win32.Cabanas.2999")
-				&& address.toString().equals("0x00404819")) {
+		if (getFileName().equals("Virus.Win32.Cabanas.2999") && address.toString().equals("0x00404819")) {
 			if (regName.contains("ecx"))
 				return 417;
 			else if (regName.contains("esi"))
 				return 4212242;
 			else if (regName.contains("edi"))
 				return 4215362;
-		} else if (getFileName().equals("Flooder.Win32.AngryPing")
-				&& address.toString().equals("0x0040d86c")) {
+		} else if (getFileName().equals("Flooder.Win32.AngryPing") && address.toString().equals("0x0040d86c")) {
 			if (regName.contains("esi"))
 				return 4249712;
 			else if (regName.contains("edi"))
@@ -1412,8 +1338,7 @@ public final class Program {
 			else if (regName.contains("ecx"))
 				return 1109;
 		} else if (getFileName().equals("Flooder.Win32.AngryPing")
-				&& (address.toString().equals("0x0040d82a")
-						|| address.toString().equals("0x0040d830") || address
+				&& (address.toString().equals("0x0040d82a") || address.toString().equals("0x0040d830") || address
 						.toString().equals("0x0040d839")
 
 				)) {
@@ -1423,8 +1348,7 @@ public final class Program {
 				return 4194304;
 			else if (regName.contains("ecx"))
 				return 1109;
-		} else if (getFileName().equals("Flooder.Win32.AngryPing")
-				&& address.toString().equals("0x0040d85a")) {
+		} else if (getFileName().equals("Flooder.Win32.AngryPing") && address.toString().equals("0x0040d85a")) {
 			if (regName.contains("ebp"))
 				return 14336;
 			else if (regName.contains("eax"))
@@ -1440,11 +1364,9 @@ public final class Program {
 		// entries.
 		// int i = 0;
 		// this.reached.where(l);
-		for (Iterator<AbstractState> iterator = this.reached.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<AbstractState> iterator = this.reached.iterator(); iterator.hasNext();) {
 			AbstractState state = (AbstractState) iterator.next();
-			if (state.getLocation().getAddress().getValue() == address
-					.getValue()) {
+			if (state.getLocation().getAddress().getValue() == address.getValue()) {
 				// System.out.println("Debug");
 				if (state instanceof CompositeState) {
 					CompositeState cState = (CompositeState) state;
@@ -1463,10 +1385,8 @@ public final class Program {
 			// value.get
 			if (value instanceof RTLVariableAssignment) {
 
-				if (((RTLVariableAssignment) value).getLeftHandSide()
-						.toString().equals(regName.replace("%", ""))) {
-					RTLExpression right = ((RTLVariableAssignment) value)
-							.getRightHandSide();
+				if (((RTLVariableAssignment) value).getLeftHandSide().toString().equals(regName.replace("%", ""))) {
+					RTLExpression right = ((RTLVariableAssignment) value).getRightHandSide();
 					if (right instanceof RTLNumber) {
 						v = ((RTLNumber) right).intValue();
 					} else
@@ -1519,8 +1439,7 @@ public final class Program {
 	 * @return The statement object at label.
 	 */
 	public final RTLStatement getStatement(Location label) {
-		if (!statementMap.containsKey(label)
-				|| this.checkSMPos(label.getAddress())
+		if (!statementMap.containsKey(label) || this.checkSMPos(label.getAddress())
 		// || label.getAddress().toString().equals("0x00401003")
 		) {
 			/*
@@ -1544,23 +1463,20 @@ public final class Program {
 				putStatement(halt);
 				logger.error("ERROR: Replacing unknown instruction with HALT.");
 				if (Options.debug.getValue())
-					throw new DisassemblyException("Disassembly failed at "
-							+ address);
+					throw new DisassemblyException("Disassembly failed at " + address);
 			} else {
 				StatementSequence seq = arch.getRTLEquivalent(address, instr);
 				for (RTLStatement s : seq) {
 					putStatement(s, instr);
 				}
-				assert statementMap.containsKey(label) : "Disassembly did not produce label: "
-						+ label;
+				assert statementMap.containsKey(label) : "Disassembly did not produce label: " + label;
 			}
 		}
 		return statementMap.get(label);
 	}
 
 	public final RTLStatement getStatement1(Location label) {
-		if (!statementMap.containsKey(label)
-				|| label.getAddress().toString().equals("0x00401003")) {
+		if (!statementMap.containsKey(label) || label.getAddress().toString().equals("0x00401003")) {
 			AbsoluteAddress address = label.getAddress();
 			Instruction instr = getInstruction1(address);
 			// If we did not get an instruction, add an artificial Halt for
@@ -1571,23 +1487,20 @@ public final class Program {
 				putStatement(halt);
 				logger.error("ERROR: Replacing unknown instruction with HALT.");
 				if (Options.debug.getValue())
-					throw new DisassemblyException("Disassembly failed at "
-							+ address);
+					throw new DisassemblyException("Disassembly failed at " + address);
 			} else {
 				StatementSequence seq = arch.getRTLEquivalent(address, instr);
 				for (RTLStatement s : seq) {
 					putStatement(s);
 				}
-				assert statementMap.containsKey(label) : "Disassembly did not produce label: "
-						+ label;
+				assert statementMap.containsKey(label) : "Disassembly did not produce label: " + label;
 			}
 		}
 		return statementMap.get(label);
 	}
 
 	public final RTLStatement getStatement1(PMLocation label) {
-		if (!statementMap1.containsKey(label)
-				|| label.getAddress().toString().equals("0x00401003")) {
+		if (!statementMap1.containsKey(label) || label.getAddress().toString().equals("0x00401003")) {
 			AbsoluteAddress address = label.getAddress();
 			Instruction instr = getInstruction1(address);
 			// If we did not get an instruction, add an artificial Halt for
@@ -1598,15 +1511,13 @@ public final class Program {
 				putStatement(halt);
 				logger.error("ERROR: Replacing unknown instruction with HALT.");
 				if (Options.debug.getValue())
-					throw new DisassemblyException("Disassembly failed at "
-							+ address);
+					throw new DisassemblyException("Disassembly failed at " + address);
 			} else {
 				StatementSequence seq = arch.getRTLEquivalent(address, instr);
 				for (RTLStatement s : seq) {
 					putStatement(s);
 				}
-				assert statementMap.containsKey(label) : "Disassembly did not produce label: "
-						+ label;
+				assert statementMap.containsKey(label) : "Disassembly did not produce label: " + label;
 			}
 		}
 		return statementMap1.get(label);
@@ -1674,8 +1585,7 @@ public final class Program {
 	public SetOfVariables getUsedVariables() {
 		SetOfVariables result = new SetOfVariables();
 		for (CFAEdge edge : cfa)
-			result.addAll(((RTLStatement) edge.getTransformer())
-					.getUsedVariables());
+			result.addAll(((RTLStatement) edge.getTransformer()).getUsedVariables());
 		return result;
 	}
 
@@ -1690,16 +1600,15 @@ public final class Program {
 		// TODO Auto-generated method stub
 		int result = 0;
 		try {
-			if (harness.contains(address)
-					|| address.getValue() >= StubProvider.STUB_BASE)
+			if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
 				return 0;
 
 			ExecutableImage module = getModule(address);
 
 			long fp = -1;
 			if (module == null) {
-				//logger.error("No module for address " + address
-				//		+ ". Cannot disassemble instruction!");
+				// logger.error("No module for address " + address
+				// + ". Cannot disassemble instruction!");
 				if (mainModule instanceof PEModule) {
 					PEModule pe = (PEModule) mainModule;
 					long t = pe.getWordValue(address.getValue());
@@ -1716,8 +1625,7 @@ public final class Program {
 				// X86Disassembler actually
 				// performs this cast in its implementation.
 				if (fp < 0 || (int) fp < 0) {
-					logger.error("Requested instruction outside of file area: "
-							+ address);
+					logger.error("Requested instruction outside of file area: " + address);
 				}
 				// else {
 				// if (!module.isCodeArea(address)) {
@@ -1727,8 +1635,7 @@ public final class Program {
 				// }
 				// Disassembler dis = module.getDisassembler();
 				// instr =
-				X86Disassembler dis = (X86Disassembler) module
-						.getDisassembler();
+				X86Disassembler dis = (X86Disassembler) module.getDisassembler();
 				int byteIndex = (int) fp;
 				result = InstructionDecoder.readInt16(dis.getCode(), byteIndex);
 				/*
@@ -1769,8 +1676,7 @@ public final class Program {
 		Iterator<UnresolvedSymbol> sIter = unresolvedSymbols.iterator();
 		while (sIter.hasNext()) {
 			UnresolvedSymbol unresolvedSymbol = sIter.next();
-			AbsoluteAddress address = stubLibrary.resolveSymbol(
-					unresolvedSymbol.getFromLibrary(),
+			AbsoluteAddress address = stubLibrary.resolveSymbol(unresolvedSymbol.getFromLibrary(),
 					unresolvedSymbol.getName());
 			if (address != null) {
 				// logger.debug("Installing stack height stub for " +
@@ -1787,17 +1693,16 @@ public final class Program {
 	public boolean isInside(AbsoluteAddress address) {
 		boolean result = false;
 		try {
-			if (harness.contains(address)
-					|| address.getValue() >= StubProvider.STUB_BASE)
+			if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
 				return false;
-			
+
 			ExecutableImage module = getModule(address);
 			long fp = -1;
-			if (module == null) {				
-				//logger.error("No module for address " + address
-				//		+ ". Cannot disassemble instruction!");
+			if (module == null) {
+				// logger.error("No module for address " + address
+				// + ". Cannot disassemble instruction!");
 				if (mainModule instanceof PEModule) {
-					return ((PEModule)mainModule).isInside(address.getValue());					
+					return ((PEModule) mainModule).isInside(address.getValue());
 				}
 				//
 			} else {
@@ -1806,8 +1711,7 @@ public final class Program {
 				// X86Disassembler actually
 				// performs this cast in its implementation.
 				if (fp < 0 || (int) fp < 0) {
-					logger.error("Requested instruction outside of file area "
-							+ address);
+					logger.error("Requested instruction outside of file area " + address);
 				}
 				// else {
 				// if (!module.isCodeArea(address)) {
@@ -1816,7 +1720,7 @@ public final class Program {
 				// return 0;
 				// }
 				// Disassembler dis = module.getDisassembler();
-				// instr =				
+				// instr =
 				result = true;
 				/*
 				 * if (instr == null) {
@@ -1827,8 +1731,8 @@ public final class Program {
 
 		} catch (Exception e) {
 			System.out.println(e.toString());
-		}	
-		
+		}
+
 		return result;
 	}
 
@@ -1842,9 +1746,8 @@ public final class Program {
 	 * @throws IOException
 	 * @throws BinaryParseException
 	 */
-	public ExecutableImage loadMainModule(File moduleFile) throws IOException,
-			BinaryParseException {
-		ExecutableImage module = loadModule(moduleFile);		
+	public ExecutableImage loadMainModule(File moduleFile) throws IOException, BinaryParseException {
+		ExecutableImage module = loadModule(moduleFile);
 		mainModule = module;
 		setEntryAddress(module.getEntryPoint());
 		fileName = moduleFile.getName();
@@ -1862,8 +1765,7 @@ public final class Program {
 	 * @throws IOException
 	 * @throws BinaryParseException
 	 */
-	public ExecutableImage loadModule(File moduleFile) throws IOException,
-			BinaryParseException {
+	public ExecutableImage loadModule(File moduleFile) throws IOException, BinaryParseException {
 		// First try to load it as a PE file, then object file, ELF and finally
 		// raw binary code
 		// The right thing to do would be some smart IDing of the file type, but
@@ -1886,12 +1788,9 @@ public final class Program {
 		}
 
 		for (ExecutableImage existingModule : modules) {
-			if (existingModule.getMaxAddress().getValue() >= module
-					.getMinAddress().getValue()
-					&& existingModule.getMinAddress().getValue() <= module
-							.getMaxAddress().getValue()) {
-				throw new RuntimeException(
-						"Virtual addresses of modules overlap!");
+			if (existingModule.getMaxAddress().getValue() >= module.getMinAddress().getValue()
+					&& existingModule.getMinAddress().getValue() <= module.getMaxAddress().getValue()) {
+				throw new RuntimeException("Virtual addresses of modules overlap!");
 			}
 		}
 
@@ -1921,8 +1820,8 @@ public final class Program {
 		/*
 		 * if (assemblyMap.containsKey(addr)) { Instruction i =
 		 * assemblyMap.get(addr); if (!i.equals(instr)) { AbsoluteAddress nAddr
-		 * = new AbsoluteAddress(addr.getValueOperand()); return assemblyMap.put(nAddr,
-		 * instr) == null; } }
+		 * = new AbsoluteAddress(addr.getValueOperand()); return
+		 * assemblyMap.put(nAddr, instr) == null; } }
 		 */
 		this.addPMState(addr, instr);
 
@@ -1944,8 +1843,7 @@ public final class Program {
 			logger.debug("Replacing statement at " + stmt.getLabel());
 		}
 
-		this.statementMap1.put(new PMLocation(stmt.getLabel().getAddress(),
-				stmt.getLabel().getIndex()), stmt);
+		this.statementMap1.put(new PMLocation(stmt.getLabel().getAddress(), stmt.getLabel().getIndex()), stmt);
 
 		statementMap.put(stmt.getLabel(), stmt);
 	}
@@ -1959,8 +1857,7 @@ public final class Program {
 			logger.debug("Replacing statement at " + stmt.getLabel());
 		}
 
-		this.statementMap1.put(new PMLocation(stmt.getLabel().getAddress(),
-				stmt.getLabel().getIndex(), instr), stmt);
+		this.statementMap1.put(new PMLocation(stmt.getLabel().getAddress(), stmt.getLabel().getIndex(), instr), stmt);
 
 		statementMap.put(stmt.getLabel(), stmt);
 	}
@@ -1991,8 +1888,7 @@ public final class Program {
 		Iterator<UnresolvedSymbol> sIter = unresolvedSymbols.iterator();
 		while (sIter.hasNext()) {
 			UnresolvedSymbol unresolvedSymbol = sIter.next();
-			ExportedSymbol symbol = exportedSymbols
-					.get(removeDecoration(unresolvedSymbol.getName()));
+			ExportedSymbol symbol = exportedSymbols.get(removeDecoration(unresolvedSymbol.getName()));
 
 			if (symbol != null) {
 				logger.debug("Resolving symbol " + unresolvedSymbol.getName());
@@ -2025,7 +1921,8 @@ public final class Program {
 	public void setDetailTechnique(String detail_tech) {
 		if (!this.detail_technique.contains(detail_tech)) {
 			this.detail_technique += " " + detail_tech;
-			//resultFile_Temp.appendInLine(detail_tech + " Nodes:" + getBPCFG().getVertexCount() + " ");
+			// resultFile_Temp.appendInLine(detail_tech + " Nodes:" +
+			// getBPCFG().getVertexCount() + " ");
 		}
 	}
 
@@ -2040,7 +1937,8 @@ public final class Program {
 	}
 
 	/**
-	 * @param fullResultFile the fullResultFile to set
+	 * @param fullResultFile
+	 *            the fullResultFile to set
 	 */
 	public void setFullResultFile(FileProcess fullResultFile) {
 		this.fullResultFile = fullResultFile;
@@ -2055,7 +1953,8 @@ public final class Program {
 	}
 
 	/**
-	 * @param resultFile the resultFile to set
+	 * @param resultFile
+	 *            the resultFile to set
 	 */
 	public void setResultFile(FileProcess resultFile) {
 		this.resultFile = resultFile;
@@ -2087,7 +1986,8 @@ public final class Program {
 		// TODO Auto-generated method stub
 		if (!technique.contains(str)) {
 			technique += " " + str;
-			//resultFile_Temp.appendInLine(str + " Nodes:" + getBPCFG().getVertexCount() + " ");
+			// resultFile_Temp.appendInLine(str + " Nodes:" +
+			// getBPCFG().getVertexCount() + " ");
 		}
 	}
 
@@ -2097,8 +1997,7 @@ public final class Program {
 
 	private long specialCase() {
 		// TODO Auto-generated method stub
-		if (this.getFileName().equals("smc.obj")
-				|| this.absolutePath.contains("smc.obj"))
+		if (this.getFileName().equals("smc.obj") || this.absolutePath.contains("smc.obj"))
 			return 192;
 
 		return 0;
@@ -2109,14 +2008,14 @@ public final class Program {
 			return stubLibrary.getSymbolFinder();
 
 		ExecutableImage module = getModule(addr);
-		return (module == null) ? new DummySymbolFinder() : module
-				.getSymbolFinder();
+		return (module == null) ? new DummySymbolFinder() : module.getSymbolFinder();
 	}
+
 	public void setDebugLevel(int i) {
 		// TODO Auto-generated method stub
 		logger.setDebugLevel(i);
 	}
-	
+
 	public Logging getLog() {
 		return logger;
 	}

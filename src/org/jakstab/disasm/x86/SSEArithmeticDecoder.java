@@ -39,24 +39,22 @@ import org.jakstab.util.BinaryInputBuffer;
 public class SSEArithmeticDecoder extends SSEInstructionDecoder {
 	private Operation rtlOperation;
 
-	public SSEArithmeticDecoder(String name, int addrMode1, int operandType1,
-			Operation rtlOperation) {
+	public SSEArithmeticDecoder(String name, int addrMode1, int operandType1, Operation rtlOperation) {
 		super(name, addrMode1, operandType1);
 		this.rtlOperation = rtlOperation;
 	}
 
-	public SSEArithmeticDecoder(String name, int addrMode1, int operandType1,
-			int addrMode2, int operandType2, Operation rtlOperation) {
+	public SSEArithmeticDecoder(String name, int addrMode1, int operandType1, int addrMode2, int operandType2,
+			Operation rtlOperation) {
 		super(name, addrMode1, operandType1, addrMode2, operandType2);
 		this.rtlOperation = rtlOperation;
 	}
 
-	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray,
-			boolean operandSize, boolean addrSize, X86InstructionFactory factory) {
+	protected Instruction decodeInstruction(BinaryInputBuffer bytesArray, boolean operandSize, boolean addrSize,
+			X86InstructionFactory factory) {
 		Operand op1 = getOperand1(bytesArray, operandSize, addrSize);
 		Operand op2 = getOperand2(bytesArray, operandSize, addrSize);
 		int size = byteIndex - instrStartIndex;
-		return factory.newArithmeticInstruction(name, rtlOperation, op1, op2,
-				size, prefixes);
+		return factory.newArithmeticInstruction(name, rtlOperation, op1, op2, size, prefixes);
 	}
 }

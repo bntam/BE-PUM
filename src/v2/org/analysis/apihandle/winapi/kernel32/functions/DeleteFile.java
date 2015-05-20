@@ -44,7 +44,7 @@ public class DeleteFile extends Kernel32API {
 	 * 
 	 */
 	public DeleteFile() {
-		
+
 	}
 
 	@Override
@@ -54,22 +54,21 @@ public class DeleteFile extends Kernel32API {
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
 		Register register = env.getRegister();
-		
+
 		// LPCTSTR lpFileName // pointer to name of file to delete
 		Value x1 = stack.pop();
 		System.out.println("Argument:" + x1);
 
 		if (x1 instanceof LongValue) {
-			String fName = memory.getText(new X86MemoryOperand(
-					DataType.INT32, ((LongValue) x1).getValue()));
+			String fName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
 			fName = Storage.getMappingPath(fName);
 
 			System.out.println("Delete file: " + fName);
 			boolean ret = Kernel32.INSTANCE.DeleteFile(fName);
-			
+
 			register.mov("eax", new LongValue((ret) ? 1 : 0));
 		}
-		
+
 		return false;
 	}
 }

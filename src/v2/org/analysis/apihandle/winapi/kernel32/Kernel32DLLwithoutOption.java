@@ -13,11 +13,13 @@ import com.sun.jna.win32.W32APIOptions;
  */
 public interface Kernel32DLLwithoutOption extends StdCallLibrary {
 
-//	int getValue(int value);
-//	int GetProcAddressBP(String lpProcName, HMODULE hM);
-//	HMODULE GetModuleHandleBP(WString lpModuleName);
+	// int getValue(int value);
+	// int GetProcAddressBP(String lpProcName, HMODULE hM);
+	// HMODULE GetModuleHandleBP(WString lpModuleName);
 
-	Kernel32DLLwithoutOption INSTANCE = (Kernel32DLLwithoutOption) Native.loadLibrary("kernel32", Kernel32DLLwithoutOption.class);
+	Kernel32DLLwithoutOption INSTANCE = (Kernel32DLLwithoutOption) Native.loadLibrary("kernel32",
+			Kernel32DLLwithoutOption.class);
 	Kernel32DLLwithoutOption SYNC_INSTANCE = (Kernel32DLLwithoutOption) Native.synchronizedLibrary(INSTANCE);
+
 	int GetProcAddress(HMODULE hM, String lpProcName);
 }

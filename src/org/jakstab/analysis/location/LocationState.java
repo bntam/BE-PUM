@@ -142,8 +142,7 @@ public class LocationState implements AbstractState, Comparable<LocationState> {
 	}
 
 	@Override
-	public Set<Tuple<RTLNumber>> projectionFromConcretization(
-			RTLExpression... expressions) {
+	public Set<Tuple<RTLNumber>> projectionFromConcretization(RTLExpression... expressions) {
 		return null;
 	}
 

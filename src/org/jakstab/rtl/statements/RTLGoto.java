@@ -88,8 +88,7 @@ public class RTLGoto extends AbstractRTLStatement implements RTLStatement {
 		if (targetExpression == null)
 			return SetOfVariables.EMPTY_SET;
 		else {
-			SetOfVariables usedVars = new SetOfVariables(
-					targetExpression.getUsedVariables());
+			SetOfVariables usedVars = new SetOfVariables(targetExpression.getUsedVariables());
 			usedVars.addAll(condition.getUsedVariables());
 			return usedVars;
 		}
@@ -127,8 +126,7 @@ public class RTLGoto extends AbstractRTLStatement implements RTLStatement {
 					AbsoluteAddress va = new AbsoluteAddress(v);
 					ExecutableImage module = Program.getProgram().getModule(va);
 					if (module != null) {
-						String symbol = module.getSymbolFinder().getSymbolFor(
-								va);
+						String symbol = module.getSymbolFinder().getSymbolFor(va);
 						if (!symbol.equals(""))
 							res.append("(" + symbol + ")");
 					} else {
@@ -149,16 +147,14 @@ public class RTLGoto extends AbstractRTLStatement implements RTLStatement {
 	@Override
 	public void inferTypes(Architecture arch) throws TypeInferenceException {
 		condition = condition.inferBitWidth(arch, 1);
-		targetExpression = targetExpression.inferBitWidth(arch,
-				arch.getAddressBitWidth());
+		targetExpression = targetExpression.inferBitWidth(arch, arch.getAddressBitWidth());
 	}
 
 	@Override
 	public void setLabel(AbsoluteAddress addr, int rtlId) {
 		super.setLabel(addr, rtlId);
 		if (targetExpression == null)
-			targetExpression = ExpressionFactory.createNumber(addr.getValue(),
-					addr.getBitWidth());
+			targetExpression = ExpressionFactory.createNumber(addr.getValue(), addr.getBitWidth());
 	}
 
 	@Override
@@ -174,11 +170,8 @@ public class RTLGoto extends AbstractRTLStatement implements RTLStatement {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((condition == null) ? 0 : condition.hashCode());
-		result = prime
-				* result
-				+ ((targetExpression == null) ? 0 : targetExpression.hashCode());
+		result = prime * result + ((condition == null) ? 0 : condition.hashCode());
+		result = prime * result + ((targetExpression == null) ? 0 : targetExpression.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}

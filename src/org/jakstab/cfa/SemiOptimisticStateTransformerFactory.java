@@ -39,11 +39,9 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class SemiOptimisticStateTransformerFactory extends
-		ResolvingTransformerFactory {
+public class SemiOptimisticStateTransformerFactory extends ResolvingTransformerFactory {
 
-	private static final Logger logger = Logger
-			.getLogger(SemiOptimisticStateTransformerFactory.class);
+	private static final Logger logger = Logger.getLogger(SemiOptimisticStateTransformerFactory.class);
 
 	@Override
 	public Set<CFAEdge> resolveGoto(final AbstractState a, final RTLGoto stmt) {
@@ -52,16 +50,15 @@ public class SemiOptimisticStateTransformerFactory extends
 
 		Set<CFAEdge> results = new FastSet<CFAEdge>();
 
-		Set<Tuple<RTLNumber>> valuePairs = a.projectionFromConcretization(
-				stmt.getCondition(), stmt.getTargetExpression());
+		Set<Tuple<RTLNumber>> valuePairs = a.projectionFromConcretization(stmt.getCondition(),
+				stmt.getTargetExpression());
 		for (Tuple<RTLNumber> pair : valuePairs) {
 			RTLNumber conditionValue = pair.get(0);
 			RTLNumber targetValue = pair.get(1);
 			Location nextLabel;
 			// assume correct condition case
 			assert conditionValue != null;
-			RTLExpression assumption = ExpressionFactory.createEqual(
-					stmt.getCondition(), conditionValue);
+			RTLExpression assumption = ExpressionFactory.createEqual(stmt.getCondition(), conditionValue);
 			if (conditionValue.equals(ExpressionFactory.FALSE)) {
 				// assume (condition = false), and set next statement to
 				// fallthrough
@@ -72,24 +69,18 @@ public class SemiOptimisticStateTransformerFactory extends
 					if (stmt.getType() == RTLGoto.Type.CALL) {
 						// if it's a call TOP, add an unknown call edge if we're
 						// allowing unsound analysis
-						RTLUnknownProcedureCall unknownCallEdge = new RTLUnknownProcedureCall(
-								stmt);
+						RTLUnknownProcedureCall unknownCallEdge = new RTLUnknownProcedureCall(stmt);
 						unknownCallEdge.setLabel(stmt.getLabel());
 						unknownCallEdge.setNextLabel(stmt.getNextLabel());
-						results.add(new CFAEdge(stmt.getLabel(), stmt
-								.getNextLabel(), unknownCallEdge));
-						logger.info(stmt.getLabel()
-								+ ": Cannot resolve target expression "
-								+ stmt.getTargetExpression()
-								+ " of call. Adding unknown call edge.");
+						results.add(new CFAEdge(stmt.getLabel(), stmt.getNextLabel(), unknownCallEdge));
+						logger.info(stmt.getLabel() + ": Cannot resolve target expression "
+								+ stmt.getTargetExpression() + " of call. Adding unknown call edge.");
 						logger.debug("State is: " + a);
 					} else {
 						// if target could not be resolved, just leave the edge
 						// out for now
-						logger.info(stmt.getLabel()
-								+ ": Cannot resolve target expression "
-								+ stmt.getTargetExpression()
-								+ ". Continuing with unsound underapproximation.");
+						logger.info(stmt.getLabel() + ": Cannot resolve target expression "
+								+ stmt.getTargetExpression() + ". Continuing with unsound underapproximation.");
 						logger.debug("State is: " + a);
 						unresolvedBranches.add(stmt.getLabel());
 					}
@@ -99,10 +90,8 @@ public class SemiOptimisticStateTransformerFactory extends
 				} else {
 					// assume (condition = true AND targetExpression =
 					// targetValue)
-					assumption = ExpressionFactory.createAnd(
-							assumption,
-							ExpressionFactory.createEqual(
-									stmt.getTargetExpression(), targetValue));
+					assumption = ExpressionFactory.createAnd(assumption,
+							ExpressionFactory.createEqual(stmt.getTargetExpression(), targetValue));
 					// set next label to jump target
 					nextLabel = new Location(new AbsoluteAddress(targetValue));
 				}

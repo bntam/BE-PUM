@@ -33,8 +33,7 @@ import java.util.List;
 
 public class HeuristicHarness implements Harness {
 
-	private static final Logger logger = Logger
-			.getLogger(HeuristicHarness.class);
+	private static final Logger logger = Logger.getLogger(HeuristicHarness.class);
 
 	private static int CALL_INSTR_DISTANCE = 1;
 
@@ -50,8 +49,7 @@ public class HeuristicHarness implements Harness {
 	private AbsoluteAddress epilogueAddress = new AbsoluteAddress(EPILOGUE_BASE);
 	private AbsoluteAddress lastAddress;
 
-	private RTLVariable esp = Program.getProgram().getArchitecture()
-			.stackPointer();
+	private RTLVariable esp = Program.getProgram().getArchitecture().stackPointer();
 
 	private List<AbsoluteAddress> entryPoints;
 
@@ -61,8 +59,7 @@ public class HeuristicHarness implements Harness {
 		Program program = Program.getProgram();
 
 		if (program.getMainModule() instanceof AbstractCOFFModule) {
-			byte[] data = ((AbstractCOFFModule) program.getMainModule())
-					.getByteArray();
+			byte[] data = ((AbstractCOFFModule) program.getMainModule()).getByteArray();
 			for (int filePtr = 0; filePtr < data.length; filePtr++) {
 				patternLoop: for (int patternIdx = 0; patternIdx < procedureHeads.length; patternIdx++) {
 					for (int i = 0; i < procedureHeads[patternIdx].length; i++) {
@@ -70,11 +67,9 @@ public class HeuristicHarness implements Harness {
 							continue patternLoop;
 					}
 					// Pattern matched!
-					AbsoluteAddress newEntryPoint = program.getMainModule()
-							.getVirtualAddress(filePtr);
+					AbsoluteAddress newEntryPoint = program.getMainModule().getVirtualAddress(filePtr);
 					entryPoints.add(newEntryPoint);
-					logger.verbose("Found possible procedure entry at "
-							+ newEntryPoint);
+					logger.verbose("Found possible procedure entry at " + newEntryPoint);
 					filePtr += procedureHeads[patternIdx].length;
 					break;
 				}
@@ -86,40 +81,32 @@ public class HeuristicHarness implements Harness {
 	public void install(Program program) {
 
 		StatementSequence seq = new StatementSequence();
-		seq.addLast(new RTLVariableAssignment(1, ExpressionFactory
-				.createVariable("%DF", 1), ExpressionFactory.FALSE));
+		seq.addLast(new RTLVariableAssignment(1, ExpressionFactory.createVariable("%DF", 1), ExpressionFactory.FALSE));
 
 		AbsoluteAddress currentAddress = prologueAddress;
-		AbsoluteAddress fallthroughAddress = new AbsoluteAddress(
-				currentAddress.getValue() + CALL_INSTR_DISTANCE);
+		AbsoluteAddress fallthroughAddress = new AbsoluteAddress(currentAddress.getValue() + CALL_INSTR_DISTANCE);
 
 		// Call the entry point of the executable
-		push32(seq, ExpressionFactory.createNumber(
-				fallthroughAddress.getValue(), 32));
-		seq.addLast(new RTLGoto(ExpressionFactory.createNumber(program
-				.getStart().getAddress().getValue(), 32), RTLGoto.Type.CALL));
+		push32(seq, ExpressionFactory.createNumber(fallthroughAddress.getValue(), 32));
+		seq.addLast(new RTLGoto(ExpressionFactory.createNumber(program.getStart().getAddress().getValue(), 32),
+				RTLGoto.Type.CALL));
 		putSequence(program, seq, currentAddress);
 		program.setEntryAddress(currentAddress);
 
 		// Now call all procedures that were heuristically detected
 
-		for (Iterator<AbsoluteAddress> iter = entryPoints.iterator(); iter
-				.hasNext();) {
+		for (Iterator<AbsoluteAddress> iter = entryPoints.iterator(); iter.hasNext();) {
 			AbsoluteAddress entryPoint = iter.next();
 			currentAddress = fallthroughAddress;
-			fallthroughAddress = iter.hasNext() ? new AbsoluteAddress(
-					currentAddress.getValue() + 1) : prologueAddress;
+			fallthroughAddress = iter.hasNext() ? new AbsoluteAddress(currentAddress.getValue() + 1) : prologueAddress;
 			seq = new StatementSequence();
 
 			for (RTLVariable v : program.getArchitecture().getRegisters()) {
 				if (!v.equals(esp))
 					clearReg(seq, v);
 			}
-			push32(seq,
-					ExpressionFactory.createNumber(
-							fallthroughAddress.getValue(), 32));
-			seq.addLast(new RTLGoto(ExpressionFactory.createNumber(
-					entryPoint.getValue(), 32), RTLGoto.Type.CALL));
+			push32(seq, ExpressionFactory.createNumber(fallthroughAddress.getValue(), 32));
+			seq.addLast(new RTLGoto(ExpressionFactory.createNumber(entryPoint.getValue(), 32), RTLGoto.Type.CALL));
 			putSequence(program, seq, currentAddress);
 		}
 
@@ -133,22 +120,18 @@ public class HeuristicHarness implements Harness {
 	}
 
 	private void push32(StatementSequence seq, RTLExpression value) {
-		seq.addLast(new RTLVariableAssignment(esp.getBitWidth(), esp,
-				ExpressionFactory.createPlus(esp,
-						ExpressionFactory.createNumber(-4, esp.getBitWidth()))));
+		seq.addLast(new RTLVariableAssignment(esp.getBitWidth(), esp, ExpressionFactory.createPlus(esp,
+				ExpressionFactory.createNumber(-4, esp.getBitWidth()))));
 		if (value != null) {
-			seq.addLast(new RTLMemoryAssignment(ExpressionFactory
-					.createMemoryLocation(esp, 32), value));
+			seq.addLast(new RTLMemoryAssignment(ExpressionFactory.createMemoryLocation(esp, 32), value));
 		}
 	}
 
 	private void clearReg(StatementSequence seq, RTLVariable v) {
-		seq.addLast(new RTLVariableAssignment(v.getBitWidth(), v,
-				ExpressionFactory.nondet(v.getBitWidth())));
+		seq.addLast(new RTLVariableAssignment(v.getBitWidth(), v, ExpressionFactory.nondet(v.getBitWidth())));
 	}
 
-	private void putSequence(Program program, StatementSequence seq,
-			AbsoluteAddress address) {
+	private void putSequence(Program program, StatementSequence seq, AbsoluteAddress address) {
 		int rtlId = 0;
 		for (RTLStatement stmt : seq) {
 			stmt.setLabel(address, rtlId++);
@@ -163,14 +146,12 @@ public class HeuristicHarness implements Harness {
 
 	@Override
 	public boolean contains(AbsoluteAddress a) {
-		return a.getValue() >= PROLOGUE_BASE
-				&& a.getValue() <= lastAddress.getValue();
+		return a.getValue() >= PROLOGUE_BASE && a.getValue() <= lastAddress.getValue();
 	}
 
 	@Override
 	public AbsoluteAddress getFallthroughAddress(AbsoluteAddress a) {
-		if (a.getValue() >= PROLOGUE_BASE
-				&& a.getValue() < lastAddress.getValue())
+		if (a.getValue() >= PROLOGUE_BASE && a.getValue() < lastAddress.getValue())
 			return new AbsoluteAddress(a.getValue() + CALL_INSTR_DISTANCE);
 		else if (a.equals(lastAddress))
 			return epilogueAddress;

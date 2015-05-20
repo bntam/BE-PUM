@@ -89,8 +89,7 @@ public class PE_Header {
 	/**
 	 * Parses a PE_Header from an input stream
 	 */
-	public PE_Header(BinaryInputBuffer in) throws java.io.IOException,
-			BinaryParseException {
+	public PE_Header(BinaryInputBuffer in) throws java.io.IOException, BinaryParseException {
 		Magic = in.readWORD();
 		MajorLinkerVersion = in.readBYTE();
 		MinorLinkerVersion = in.readBYTE();
@@ -172,20 +171,15 @@ public class PE_Header {
 		logger.debug("  SizeOfCode = " + SizeOfCode);
 		logger.debug("  SizeOfInitializedData = " + SizeOfInitializedData);
 		logger.debug("  SizeOfUninitializedData = " + SizeOfUninitializedData);
-		logger.debug("  AddressOfEntryPoint = " + "0x"
-				+ Long.toHexString(AddressOfEntryPoint));
+		logger.debug("  AddressOfEntryPoint = " + "0x" + Long.toHexString(AddressOfEntryPoint));
 		logger.debug("  BaseOfCode = " + "0x" + Long.toHexString(BaseOfCode));
 		logger.debug("  BaseOfData = " + "0x" + Long.toHexString(BaseOfData));
 		logger.debug("  /// NT Additional fields ////////");
 		logger.debug("  ImageBase = " + "0x" + Long.toHexString(ImageBase));
-		logger.debug("  SectionAlignment = " + "0x"
-				+ Long.toHexString(SectionAlignment));
-		logger.debug("  FileAlignment = " + "0x"
-				+ Long.toHexString(FileAlignment));
-		logger.debug("  MajorOperatingSystemVersion = "
-				+ MajorOperatingSystemVersion);
-		logger.debug("  MinorOperatingSystemVersion = "
-				+ MinorOperatingSystemVersion);
+		logger.debug("  SectionAlignment = " + "0x" + Long.toHexString(SectionAlignment));
+		logger.debug("  FileAlignment = " + "0x" + Long.toHexString(FileAlignment));
+		logger.debug("  MajorOperatingSystemVersion = " + MajorOperatingSystemVersion);
+		logger.debug("  MinorOperatingSystemVersion = " + MinorOperatingSystemVersion);
 		logger.debug("  MajorImageVersion = " + MajorImageVersion);
 		logger.debug("  MinorImageVersion = " + MinorImageVersion);
 		logger.debug("  MajorSubsystemVersion = " + MajorSubsystemVersion);
@@ -195,21 +189,18 @@ public class PE_Header {
 		logger.debug("  SizeOfHeaders = " + SizeOfHeaders);
 		logger.debug("  CheckSum = " + "0x" + Long.toHexString(CheckSum));
 		logger.debug("  Subsystem = " + Subsystem);
-		logger.debug("  DllCharacteristics = " + "0x"
-				+ Integer.toBinaryString(DllCharacteristics));
+		logger.debug("  DllCharacteristics = " + "0x" + Integer.toBinaryString(DllCharacteristics));
 		logger.debug("  SizeOfStackReserve = " + SizeOfStackReserve);
 		logger.debug("  SizeOfStackCommit = " + SizeOfStackCommit);
 		logger.debug("  SizeOfHeapReserve = " + SizeOfHeapReserve);
 		logger.debug("  SizeOfHeapCommit = " + SizeOfHeapCommit);
-		logger.debug("  LoaderFlags = " + "0x"
-				+ Long.toBinaryString(LoaderFlags));
+		logger.debug("  LoaderFlags = " + "0x" + Long.toBinaryString(LoaderFlags));
 		logger.debug("  NumberOfRvaAndSizes = " + NumberOfRvaAndSizes);
 
 		logger.debug("  DataDirectory[" + NumberOfRvaAndSizes + "] = \n  {");
 
 		for (int i = 0; i < NumberOfRvaAndSizes; i++) {
-			logger.debug("    {\n      VirtualAddress = " + "0x"
-					+ Long.toHexString(DataDirectory[i].VirtualAddress)
+			logger.debug("    {\n      VirtualAddress = " + "0x" + Long.toHexString(DataDirectory[i].VirtualAddress)
 					+ "\n      Size = " + DataDirectory[i].Size + "\n    }");
 			if (i < 16)
 				logger.debug(ImageDataDirectory.STRINGS[i]);

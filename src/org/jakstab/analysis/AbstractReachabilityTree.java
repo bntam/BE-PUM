@@ -30,8 +30,7 @@ import java.util.*;
  */
 public class AbstractReachabilityTree {
 
-	private static final Logger logger = Logger
-			.getLogger(AbstractReachabilityTree.class);
+	private static final Logger logger = Logger.getLogger(AbstractReachabilityTree.class);
 
 	private AbstractState root;
 	private SetMultimap<AbstractState, AbstractState> parentChildrenMap;
@@ -79,14 +78,12 @@ public class AbstractReachabilityTree {
 	}
 
 	public void addCovered(AbstractState s, AbstractState coveringState) {
-		logger.debug(coveringState.getIdentifier() + " covers state "
-				+ s.getIdentifier());
+		logger.debug(coveringState.getIdentifier() + " covers state " + s.getIdentifier());
 		coveredMap.put(s, coveringState);
 		coveringMap.put(coveringState, s);
 	}
 
-	public void addCovered(AbstractState s,
-			Collection<AbstractState> coveringStates) {
+	public void addCovered(AbstractState s, Collection<AbstractState> coveringStates) {
 		coveredMap.putAll(s, coveringStates);
 		for (AbstractState coveringState : coveringStates)
 			coveringMap.put(coveringState, s);
@@ -109,8 +106,7 @@ public class AbstractReachabilityTree {
 	public void remove(AbstractState s) {
 		logger.debug("Removing " + s.getIdentifier());
 
-		List<AbstractState> children = new LinkedList<AbstractState>(
-				getChildren(s));
+		List<AbstractState> children = new LinkedList<AbstractState>(getChildren(s));
 		for (AbstractState child : children) {
 			remove(child);
 		}
@@ -128,8 +124,7 @@ public class AbstractReachabilityTree {
 		// not pass through stop, so we can ignore the new state.
 
 		if (!getChildren(newState).isEmpty() || getParent(newState) != null) {
-			logger.debug("State " + newState.getIdentifier()
-					+ " has been produced before, not adding to ART.");
+			logger.debug("State " + newState.getIdentifier() + " has been produced before, not adding to ART.");
 			return;
 		}
 
@@ -139,8 +134,7 @@ public class AbstractReachabilityTree {
 		// since the worklist is a set.
 		assert (getChildren(oldState).isEmpty());
 
-		logger.debug("Replacing " + oldState.getIdentifier() + " with "
-				+ newState.getIdentifier());
+		logger.debug("Replacing " + oldState.getIdentifier() + " with " + newState.getIdentifier());
 
 		// We have to be careful not to introduce loops. Replacing means merging
 		// incoming and outgoing edges
@@ -202,8 +196,7 @@ public class AbstractReachabilityTree {
 		while (!worklist.isEmpty()) {
 			AbstractState a = worklist.pop();
 			if (visited.contains(a)) {
-				logger.debug("State " + a.getIdentifier()
-						+ " has multiple paths in tree!");
+				logger.debug("State " + a.getIdentifier() + " has multiple paths in tree!");
 				return false;
 			}
 			visited.add(a);

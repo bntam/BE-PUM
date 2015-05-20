@@ -87,28 +87,28 @@ public class Main_AutomaticDetection {
 	 * "Virus.DOS.BadBoy.1001.a"; in = "Virus.DOS.BadBoy.1001.b"; in =
 	 * "Email-Worm.Win32.Bagle.a"; in = "Exploit.Linux.Local.c";
 	 */
-	//final static String targetPath = "C:/Software/Virus/API/";
+	// final static String targetPath = "C:/Software/Virus/API/";
 	final static String targetPath = "asm/vx.netlux.org/";
 	final static String targetListTXT = "data/listFile.txt";
 	// final static String targetFileList = "UnresolveTargetJmp.txt";
-	//final static String targetFileList = "UnresolveTargetFiles.txt";
+	// final static String targetFileList = "UnresolveTargetFiles.txt";
 	final static String processedFileListTXT = "data/processedListFile.txt";
-	
+
 	public static void main(String[] args) {
 
-		//FileProcess targetList = new FileProcess(targetListTXT);
-		//targetList.clearContentFile();
-		//targetList.listFileInDir(targetPath);
+		// FileProcess targetList = new FileProcess(targetListTXT);
+		// targetList.clearContentFile();
+		// targetList.listFileInDir(targetPath);
 
 		FileProcess processedFileList = new FileProcess(processedFileListTXT);
-		//FileProcess tFileList = new FileProcess(targetFileList);
-		
+		// FileProcess tFileList = new FileProcess(targetFileList);
+
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(targetListTXT));
 			// StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 
-			while (line != null) {				
+			while (line != null) {
 				if (!processedFileList.contain(line) && checkTargetFile(line)) {
 					// && tFileList.containFN(line)
 					System.out.println("Process file: " + line);
@@ -121,17 +121,16 @@ public class Main_AutomaticDetection {
 					System.out.print("Enter file name:");
 					System.out.println(line);
 
-					String[] arg = SplitUsingTokenizer(
-							"-m " + targetPath + line, " ");
-					
+					String[] arg = SplitUsingTokenizer("-m " + targetPath + line, " ");
+
 					Options.parseOptions(arg);
-					
+
 					logger.info(Characters.DOUBLE_LINE_FULL_WIDTH);
 					logger.info("                         Jakstab " + version);
 					logger.info(Characters.DOUBLE_LINE_FULL_WIDTH);
 
 					logger.error("Start analyzing with Jakstab!");
-					
+
 					Architecture arch;
 					try {
 						arch = new Architecture(Options.sslFilename.getValue());
@@ -152,8 +151,7 @@ public class Main_AutomaticDetection {
 					Program program = Program.createProgram(arch);
 					program.setDebugLevel(0);
 
-					File mainFile = new File(Options.mainFilename)
-							.getAbsoluteFile();
+					File mainFile = new File(Options.mainFilename).getAbsoluteFile();
 
 					String baseFileName = null;
 
@@ -161,22 +159,18 @@ public class Main_AutomaticDetection {
 						// Load additional modules
 						for (String moduleName : Options.moduleFilenames) {
 							logger.fatal("Parsing " + moduleName + "...");
-							File moduleFile = new File(moduleName)
-									.getAbsoluteFile();
+							File moduleFile = new File(moduleName).getAbsoluteFile();
 							program.loadModule(moduleFile);
 
 							// If we are processing drivers, use the driver's
 							// name as base
 							// name
-							if (Options.wdm.getValue()
-									&& moduleFile.getName().toLowerCase()
-											.endsWith(".sys")) {
+							if (Options.wdm.getValue() && moduleFile.getName().toLowerCase().endsWith(".sys")) {
 								baseFileName = getBaseFileName(moduleFile);
 							}
 						}
 						// Load main module last
-						logger.error("Parsing main module "
-								+ Options.mainFilename + "...");
+						logger.error("Parsing main module " + Options.mainFilename + "...");
 						program.loadMainModule(mainFile);
 
 						// Use main module as base name if we have none yet
@@ -201,15 +195,12 @@ public class Main_AutomaticDetection {
 					// Change entry point if requested
 					if (Options.startAddress.getValue() > 0) {
 						logger.verbose("Setting start address to 0x"
-								+ Long.toHexString(Options.startAddress
-										.getValue()));
-						program.setEntryAddress(new AbsoluteAddress(
-								Options.startAddress.getValue()));
+								+ Long.toHexString(Options.startAddress.getValue()));
+						program.setEntryAddress(new AbsoluteAddress(Options.startAddress.getValue()));
 					}
 
 					// Add surrounding "%DF := 1; call entrypoint; halt;"
-					program.installHarness(Options.heuristicEntryPoints
-							.getValue() ? new HeuristicHarness()
+					program.installHarness(Options.heuristicEntryPoints.getValue() ? new HeuristicHarness()
 							: new DefaultHarness());
 
 					int slashIdx = baseFileName.lastIndexOf('\\');
@@ -242,8 +233,7 @@ public class Main_AutomaticDetection {
 					Runtime.getRuntime().addShutdownHook(shutdownThread);
 
 					// Add shutdown on return pressed for eclipse
-					if (!Options.background.getValue()
-							&& System.console() == null) {
+					if (!Options.background.getValue() && System.console() == null) {
 						logger.info("No console detected (eclipse?). Press return to terminate analysis and print statistics.");
 						Thread eclipseShutdownThread = new Thread() {
 							public void run() {
@@ -276,43 +266,41 @@ public class Main_AutomaticDetection {
 						try {
 							runAlgorithm(otfMG);
 						} catch (RuntimeException r) {
-							program.getFullResultFile().appendFile("!! Runtime exception during Control Flow Reconstruction! Trying to shut down gracefully.");
+							program.getFullResultFile()
+									.appendFile(
+											"!! Runtime exception during Control Flow Reconstruction! Trying to shut down gracefully.");
 							logger.error("!! Runtime exception during Control Flow Reconstruction! Trying to shut down gracefully.");
 							r.printStackTrace();
 						}
 						// long overallEndTime = System.currentTimeMillis();
-						// ProgramGraphWriter graphWriter = new ProgramGraphWriter(program);
+						// ProgramGraphWriter graphWriter = new
+						// ProgramGraphWriter(program);
 
 						if (!otfMG.isCompleted()) {
-							program.getFullResultFile().appendFile(Characters
-									.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
-							System.out
-									.println(Characters
-											.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
-						} else {
-							program.getFullResultFile().appendFile(Characters
-									.starredBox("Analysis finished, CFG is complete!"));
+							program.getFullResultFile().appendFile(
+									Characters.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
 							System.out.println(Characters
-									.starredBox("Analysis finished, CFG is complete!"));
+									.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
+						} else {
+							program.getFullResultFile().appendFile(
+									Characters.starredBox("Analysis finished, CFG is complete!"));
+							System.out.println(Characters.starredBox("Analysis finished, CFG is complete!"));
 						}
 
 						if (!otfMG.isSound()) {
-							program.getFullResultFile().appendFile(Characters
-									.starredBox("WARNING: Analysis was unsound!"));
-							logger.error(Characters
-									.starredBox("WARNING: Analysis was unsound!"));
+							program.getFullResultFile().appendFile(
+									Characters.starredBox("WARNING: Analysis was unsound!"));
+							logger.error(Characters.starredBox("WARNING: Analysis was unsound!"));
 						}
 						program.generageCFG(getExtractBaseFileName(baseFileName));
-						
+
 						BPCFG cfg = program.getBPCFG();
-						
+
 						long overallEndTime = System.currentTimeMillis();
 						System.out.println(Characters.DOUBLE_LINE_FULL_WIDTH);
-						System.out
-								.println("   Statistics for On-The-Fly Model Generation of BE-PUM");
+						System.out.println("   Statistics for On-The-Fly Model Generation of BE-PUM");
 						System.out.println(Characters.DOUBLE_LINE_FULL_WIDTH);
-						System.out.println("   Filename:                     "
-								+ program.getFileName());
+						System.out.println("   Filename:                     " + program.getFileName());
 						System.out.println("   Runtime:                     "
 								+ String.format("%8dms", (overallEndTime - overallStartTime)));
 						System.out.println("   Instructions:                        "
@@ -321,13 +309,12 @@ public class Main_AutomaticDetection {
 								+ String.format("%8d", cfg.getVertexCount()));
 						System.out.println("   Edges:                        "
 								+ String.format("%8d", cfg.getEdgeCount()));
-						FileProcess fullResultFile = program.getFullResultFile();	
-						
+						FileProcess fullResultFile = program.getFullResultFile();
+
 						fullResultFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
 						fullResultFile.appendFile("   Statistics for On-The-Fly Model Generation of BE-PUM");
 						fullResultFile.appendFile(Characters.DOUBLE_LINE_FULL_WIDTH);
-						fullResultFile.appendFile("   Filename:                     "
-								+ program.getFileName());
+						fullResultFile.appendFile("   Filename:                     " + program.getFileName());
 						fullResultFile.appendFile("   Runtime:                     "
 								+ String.format("%8dms", (overallEndTime - overallStartTime)));
 						fullResultFile.appendFile("   Instructions:                        "
@@ -336,19 +323,21 @@ public class Main_AutomaticDetection {
 								+ String.format("%8d", cfg.getVertexCount()));
 						fullResultFile.appendFile("   Edges:                        "
 								+ String.format("%8d", cfg.getEdgeCount()));
-						
+
 						FileProcess resultFile = program.getResultFile();
-						resultFile.appendFile(program.getFileName() + "\t" + String.format("%8dms", (overallEndTime - overallStartTime))
-								+ "\t" + String.format("%8d", cfg.getVertexCount()) + "\t"
-								+ String.format("%8d", cfg.getEdgeCount()) + "\t"
-								+ program.getTechnique() + "\t" + program.getDetailTechnique());
-						
+						resultFile.appendFile(program.getFileName() + "\t"
+								+ String.format("%8dms", (overallEndTime - overallStartTime)) + "\t"
+								+ String.format("%8d", cfg.getVertexCount()) + "\t"
+								+ String.format("%8d", cfg.getEdgeCount()) + "\t" + program.getTechnique() + "\t"
+								+ program.getDetailTechnique());
+
 						program.getResultFileTemp().appendInLine(program.getDetailTechnique());
-						program.getResultFileTemp().appendInLine('\t' + String.format("%8dms", (overallEndTime - overallStartTime))
-								+ "\t" + String.format("%8d", cfg.getVertexCount()) + "\t"
-								+ String.format("%8d", cfg.getEdgeCount()));
-						
-						//new DOTComparison().exportComparison(baseFileName);
+						program.getResultFileTemp().appendInLine(
+								'\t' + String.format("%8dms", (overallEndTime - overallStartTime)) + "\t"
+										+ String.format("%8d", cfg.getVertexCount()) + "\t"
+										+ String.format("%8d", cfg.getEdgeCount()));
+
+						// new DOTComparison().exportComparison(baseFileName);
 						// System.out.println("Vertex List:");
 						// System.out.println(Program.getProgram().getBPCFG().getVertecesList().toString());
 						// System.out.println("Edges List:");
@@ -357,7 +346,8 @@ public class Main_AutomaticDetection {
 							Runtime.getRuntime().removeShutdownHook(shutdownThread);
 							System.exit(0);
 						} catch (IllegalStateException e) {
-							// Happens when shutdown has already been initiated by Ctrl-C or
+							// Happens when shutdown has already been initiated
+							// by Ctrl-C or
 							// Return
 						}
 					} catch (Throwable e) {
@@ -380,8 +370,7 @@ public class Main_AutomaticDetection {
 
 	private static boolean checkTargetFile(String line) {
 		// TODO Auto-generated method stub
-		if (line.contains("null") || line.endsWith(".asm")
-				|| line.endsWith(".dot"))
+		if (line.contains("null") || line.endsWith(".asm") || line.endsWith(".dot"))
 			return false;
 		return true;
 	}
@@ -419,8 +408,7 @@ public class Main_AutomaticDetection {
 	private static String getExtractBaseFileName(String baseFileName) {
 		// TODO Auto-generated method stub
 
-		String r = baseFileName.replace("vx.netlux.org",
-				"cfg");
+		String r = baseFileName.replace("vx.netlux.org", "cfg");
 
 		return r;
 	}

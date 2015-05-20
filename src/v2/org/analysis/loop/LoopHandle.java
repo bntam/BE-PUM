@@ -15,15 +15,15 @@ import java.util.List;
 public class LoopHandle {
 	private int loop_num = 0;
 	private List<Long> loopTrace;
-	//private Instruction entryInst = null;	
+	// private Instruction entryInst = null;
 	private BPVertex loopHead = null;
-	private boolean check = false; 
+	private boolean check = false;
 	private boolean stop = false;
-	
+
 	public LoopHandle() {
 		setLoopTrace(new ArrayList<Long>());
 	}
-	
+
 	public int getNumLoop() {
 		return loop_num;
 	}
@@ -35,18 +35,18 @@ public class LoopHandle {
 	public void setLoopTrace(List<Long> loopTrace) {
 		this.loopTrace = loopTrace;
 	}
-	
+
 	public void addLoopNode(Long l) {
 		if (!containLoopNode(l))
 			loopTrace.add(l);
-	}	
+	}
 
 	public boolean containLoopNode(Long node) {
-		for (Long t: loopTrace) {
+		for (Long t : loopTrace) {
 			if (t.longValue() == node.longValue())
 				return true;
 		}
-		
+
 		return false;
 	}
 
@@ -61,8 +61,8 @@ public class LoopHandle {
 	public void setNumLoop(int i) {
 		// TODO Auto-generated method stub
 		this.loop_num = i;
-	}		
-	
+	}
+
 	public LoopHandle clone() {
 		LoopHandle ret = new LoopHandle();
 		ret.setNumLoop(loop_num);
@@ -70,26 +70,26 @@ public class LoopHandle {
 		ret.setCheck(check);
 		ret.setStop(stop);
 		List<Long> ltrace = new ArrayList<Long>();
-		
+
 		if (loopTrace == null)
-			return ret; 
-		
-		for (Long t: loopTrace)
+			return ret;
+
+		for (Long t : loopTrace)
 			ltrace.add(t);
-		
+
 		ret.setLoopTrace(ltrace);
-				
+
 		return ret;
 	}
-	
+
 	@Override
 	public String toString() {
 		String ret = "Trace Loop: ";
-		for (Long t: loopTrace)
+		for (Long t : loopTrace)
 			ret += new AbsoluteAddress(t.longValue()) + ", ";
-		
+
 		ret += "Loop Num:" + loop_num + ", " + "Loop Head: " + loopHead.getAddress();
-		
+
 		return ret;
 	}
 
@@ -114,7 +114,7 @@ public class LoopHandle {
 		// TODO Auto-generated method stub
 		stop = b;
 	}
-	
+
 	public boolean isStop() {
 		return stop;
 	}
@@ -126,31 +126,29 @@ public class LoopHandle {
 			// Dang xu li, chua hoan hao
 			// Se check sau voi 1 so truong hop cu the
 			Value ecx = env.getRegister().getRegisterValue("ecx");
-			if (ecx instanceof LongValue) 					
-				return false;			
+			if (ecx instanceof LongValue)
+				return false;
 		} else if (instName.equals("ja") || instName.equals("jnbe")) {
 			// if
 			// ((CF) = 0) or ((ZF) = 0)
 			// Not finished
-			if (env.getFlag().getCFlag() instanceof BooleanValue || 
-					env.getFlag().getZFlag() instanceof BooleanValue)
+			if (env.getFlag().getCFlag() instanceof BooleanValue || env.getFlag().getZFlag() instanceof BooleanValue)
 				return false;
 		} else if (instName.equals("jae") || instName.equals("jnb")) {
 			// if
 			// ((CF) = 0)
-			if (env.getFlag().getCFlag() instanceof BooleanValue) 
+			if (env.getFlag().getCFlag() instanceof BooleanValue)
 				return false;
 		} else if (instName.equals("jb") || instName.equals("jnae")) {
 			// if
 			// ((CF) = 1)
-			if (env.getFlag().getCFlag() instanceof BooleanValue) 
+			if (env.getFlag().getCFlag() instanceof BooleanValue)
 				return false;
 		} else if (instName.equals("jbe") || instName.equals("jna")) {
 			// if
 			// ((CF) = 1) or ((ZF) = 1)
 			// Not finished
-			if (env.getFlag().getCFlag() instanceof BooleanValue || 
-					env.getFlag().getZFlag() instanceof BooleanValue)
+			if (env.getFlag().getCFlag() instanceof BooleanValue || env.getFlag().getZFlag() instanceof BooleanValue)
 				return false;
 		} else if (instName.equals("jc")) {
 			// if
@@ -170,23 +168,20 @@ public class LoopHandle {
 		} else if (instName.equals("jg") || instName.equals("jnle")) {
 			// if
 			// ((SF) = (OF)) and ((ZF) = 0)
-			if (env.getFlag().getSFlag() instanceof BooleanValue && 
-					env.getFlag().getOFlag() instanceof BooleanValue
+			if (env.getFlag().getSFlag() instanceof BooleanValue && env.getFlag().getOFlag() instanceof BooleanValue
 					&& env.getFlag().getZFlag() instanceof BooleanValue)
 				return false;
 		} else if (instName.equals("jge") || instName.equals("jnl")) {
 			// if
 			// (SF) = (OF)
-			if (env.getFlag().getSFlag() instanceof BooleanValue && 
-					env.getFlag().getOFlag() instanceof BooleanValue)
+			if (env.getFlag().getSFlag() instanceof BooleanValue && env.getFlag().getOFlag() instanceof BooleanValue)
 				return false;
 		} else if (instName.equals("jl") || instName.equals("jnge")) {
 			// if
 			// (SF) ≠ (OF)
 			// formulas.add(new Formula(env.getFlag().getsFlag(),
 			// env.getFlag().getoFlag(), "!="));
-			if (env.getFlag().getSFlag() instanceof BooleanValue && 
-					env.getFlag().getOFlag() instanceof BooleanValue)
+			if (env.getFlag().getSFlag() instanceof BooleanValue && env.getFlag().getOFlag() instanceof BooleanValue)
 				return false;
 		} else if (instName.equals("jle") || instName.equals("jng")) {
 			// if
@@ -194,8 +189,7 @@ public class LoopHandle {
 			// Focus on ZF = 1
 			// not finished
 			// Change due to Demo1
-			if (env.getFlag().getSFlag() instanceof BooleanValue && 
-					env.getFlag().getOFlag() instanceof BooleanValue
+			if (env.getFlag().getSFlag() instanceof BooleanValue && env.getFlag().getOFlag() instanceof BooleanValue
 					|| (env.getFlag().getZFlag() instanceof BooleanValue))
 				return false;
 		} else if (instName.equals("jnc")) {
@@ -245,8 +239,9 @@ public class LoopHandle {
 			if (ecx instanceof LongValue)
 				return false;
 		}
-		
-		Program.getProgram().getLog().infoString("LoopHandle: Stop path True with " + instName + " at " + curState.getLocation() + "\n");
+
+		Program.getProgram().getLog()
+				.infoString("LoopHandle: Stop path True with " + instName + " at " + curState.getLocation() + "\n");
 		return true;
 	}
-} 
+}

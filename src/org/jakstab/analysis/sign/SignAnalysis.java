@@ -52,8 +52,7 @@ public class SignAnalysis implements ConfigurableProgramAnalysis {
 	 * @see org.jakstab.analysis.ConfigurableProgramAnalysis#initPrecision()
 	 */
 	@Override
-	public Precision initPrecision(Location location,
-			StateTransformer transformer) {
+	public Precision initPrecision(Location location, StateTransformer transformer) {
 		return null;
 	}
 
@@ -74,8 +73,7 @@ public class SignAnalysis implements ConfigurableProgramAnalysis {
 	 * org.jakstab.analysis.Precision)
 	 */
 	@Override
-	public AbstractState merge(AbstractState s1, AbstractState s2,
-			Precision precision) {
+	public AbstractState merge(AbstractState s1, AbstractState s2, Precision precision) {
 		if (s2.lessOrEqual(s1))
 			return s1;
 		else
@@ -84,207 +82,173 @@ public class SignAnalysis implements ConfigurableProgramAnalysis {
 	}
 
 	@Override
-	public Set<AbstractState> post(final AbstractState state, CFAEdge edge,
-			Precision precision) {
+	public Set<AbstractState> post(final AbstractState state, CFAEdge edge, Precision precision) {
 		final RTLStatement statement = (RTLStatement) edge.getTransformer();
 		final SignState s = (SignState) state;
 
-		return statement
-				.accept(new DefaultStatementVisitor<Set<AbstractState>>() {
+		return statement.accept(new DefaultStatementVisitor<Set<AbstractState>>() {
 
-					protected final Set<AbstractState> visitDefault(
-							RTLStatement stmt) {
-						return Collections.singleton(state);
-					}
+			protected final Set<AbstractState> visitDefault(RTLStatement stmt) {
+				return Collections.singleton(state);
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLVariableAssignment stmt) {
-						SignState post = new SignState(s);
-						SignElement evaledRhs = s.abstractEval(stmt
-								.getRightHandSide());
-						post.setValue(stmt.getLeftHandSide(), evaledRhs);
-						if (post.equals(s))
-							return Collections.singleton(state);
-						return Collections.singleton((AbstractState) post);
-					}
+			@Override
+			public Set<AbstractState> visit(RTLVariableAssignment stmt) {
+				SignState post = new SignState(s);
+				SignElement evaledRhs = s.abstractEval(stmt.getRightHandSide());
+				post.setValue(stmt.getLeftHandSide(), evaledRhs);
+				if (post.equals(s))
+					return Collections.singleton(state);
+				return Collections.singleton((AbstractState) post);
+			}
 
-					@Override
-					public Set<AbstractState> visit(RTLAssume stmt) {
+			@Override
+			public Set<AbstractState> visit(RTLAssume stmt) {
 
-						RTLExpression assumption = stmt.getAssumption();
+				RTLExpression assumption = stmt.getAssumption();
 
-						// First analysis to use yices, demo implementation
+				// First analysis to use yices, demo implementation
 
-						Solver solver = Solver.createSolver();
-						solver.addAssertion(s.getStateFormula());
-						solver.addAssertion(assumption);
+				Solver solver = Solver.createSolver();
+				solver.addAssertion(s.getStateFormula());
+				solver.addAssertion(assumption);
 
+				if (!solver.isSatisfiable()) {
+					logger.info("Infeasible CFA edge: " + stmt);
+					return Collections.emptySet();
+				}
+
+				SignState post = new SignState(s);
+				for (RTLVariable v : assumption.getUsedVariables()) {
+					// Check if we can restrict this variable
+					if (s.getValue(v).isTop()) {
+
+						solver.push();
+						RTLExpression f = ExpressionFactory.createLessOrEqual(v,
+								ExpressionFactory.createNumber(0, v.getBitWidth()));
+						solver.addAssertion(f);
 						if (!solver.isSatisfiable()) {
-							logger.info("Infeasible CFA edge: " + stmt);
-							return Collections.emptySet();
-						}
-
-						SignState post = new SignState(s);
-						for (RTLVariable v : assumption.getUsedVariables()) {
-							// Check if we can restrict this variable
-							if (s.getValue(v).isTop()) {
-
+							post.setValue(v, SignElement.POSITIVE);
+							logger.debug("Restricting state from " + s + " through " + assumption + " to " + post);
+						} else {
+							solver.pop();
+							solver.push();
+							f = ExpressionFactory.createNot(ExpressionFactory.createEqual(v,
+									ExpressionFactory.createNumber(0, v.getBitWidth())));
+							solver.addAssertion(f);
+							if (!solver.isSatisfiable()) {
+								post.setValue(v, SignElement.ZERO);
+								logger.debug("Restricting state from " + s + " through " + assumption + " to " + post);
+							} else {
+								solver.pop();
 								solver.push();
-								RTLExpression f = ExpressionFactory
-										.createLessOrEqual(v, ExpressionFactory
-												.createNumber(0,
-														v.getBitWidth()));
+								f = ExpressionFactory.createLessOrEqual(
+										ExpressionFactory.createNumber(0, v.getBitWidth()), v);
 								solver.addAssertion(f);
 								if (!solver.isSatisfiable()) {
-									post.setValue(v, SignElement.POSITIVE);
-									logger.debug("Restricting state from " + s
-											+ " through " + assumption + " to "
+									post.setValue(v, SignElement.NEGATIVE);
+									logger.debug("Restricting state from " + s + " through " + assumption + " to "
 											+ post);
-								} else {
-									solver.pop();
-									solver.push();
-									f = ExpressionFactory.createNot(ExpressionFactory
-											.createEqual(v, ExpressionFactory
-													.createNumber(0,
-															v.getBitWidth())));
-									solver.addAssertion(f);
-									if (!solver.isSatisfiable()) {
-										post.setValue(v, SignElement.ZERO);
-										logger.debug("Restricting state from "
-												+ s + " through " + assumption
-												+ " to " + post);
-									} else {
-										solver.pop();
-										solver.push();
-										f = ExpressionFactory.createLessOrEqual(
-												ExpressionFactory.createNumber(
-														0, v.getBitWidth()), v);
-										solver.addAssertion(f);
-										if (!solver.isSatisfiable()) {
-											post.setValue(v,
-													SignElement.NEGATIVE);
-											logger.debug("Restricting state from "
-													+ s
-													+ " through "
-													+ assumption
-													+ " to "
-													+ post);
-										}
-									}
 								}
-								solver.pop();
 							}
 						}
-						return Collections.singleton((AbstractState) post);
-
-						/*
-						 * // Modify state so that it respects the assumption //
-						 * We should really enumerate all solutions and create
-						 * the corresponding states (requires different return
-						 * type) // Currently works only for simple assumptions
-						 * // Correct handling would be: // build state formula
-						 * // add assumption formula // abstract all satisfying
-						 * assignments of this formula into new state(s) // or
-						 * // get new state that most closely overapproximates
-						 * the combined formula // (i) generate DNF from
-						 * combined formula (ii) 1 state per clause // (iii)
-						 * overapproximate each literal // or // (i) abstract
-						 * assumption into sign-logic, (ii) build new state from
-						 * intersection
-						 * 
-						 * if (assumption instanceof RTLOperation) {
-						 * RTLOperation operation = (RTLOperation)assumption;
-						 * 
-						 * switch (operation.getOperator()) {
-						 * 
-						 * // assume(var = value) case EQUAL: if
-						 * (operation.getOperands()[0] instanceof RTLVariable) {
-						 * RTLVariable var =
-						 * (RTLVariable)operation.getOperands()[0];
-						 * 
-						 * if (operation.getOperands()[1] instanceof RTLNumber)
-						 * { SignElement value =
-						 * ((SignState)state).abstractEval(
-						 * operation.getOperands()[1]); if
-						 * (value.lessOrEqual(s.getValueOperand(var))) {
-						 * logger.debug("Restricting state to " + var + " = " +
-						 * value); SignState post = new
-						 * SignState((SignState)state); post.setValue(var,
-						 * value); return
-						 * Collections.singleton((AbstractState)post); } else {
-						 * logger.debug("Assume " + assumption +
-						 * " infeasible at " + stmt.getLabel()); return
-						 * Collections.emptySet(); } } } break;
-						 * 
-						 * // assume(var < value) case LESS: if
-						 * (operation.getOperands()[0] instanceof RTLVariable) {
-						 * RTLVariable var =
-						 * (RTLVariable)operation.getOperands()[0];
-						 * 
-						 * if (operation.getOperands()[1] instanceof RTLNumber)
-						 * { SignElement value =
-						 * ((SignState)state).abstractEval(
-						 * operation.getOperands()[1]); if
-						 * (value.equals(SignElement.NEGATIVE) ||
-						 * value.equals(SignElement.ZERO)) { if
-						 * (s.getValueOperand(var).isTop() ||
-						 * s.getValueOperand(var).equals(SignElement.NEGATIVE)) {
-						 * logger.debug("Restricting state to " + var + " = " +
-						 * value); SignState post = new SignState(s);
-						 * post.setValue(var, SignElement.NEGATIVE); return
-						 * Collections.singleton((AbstractState)post); } else {
-						 * logger.debug("Assume " + assumption +
-						 * " infeasible at " + stmt.getLabel());
-						 * logger.debug("State is " + s); return
-						 * Collections.emptySet(); } } } } break;
-						 * 
-						 * // assume (!something) case NOT: if
-						 * (operation.getOperands()[0] instanceof RTLOperation)
-						 * { operation =
-						 * (RTLOperation)operation.getOperands()[0];
-						 * 
-						 * switch (operation.getOperator()) { case LESS: if
-						 * (operation.getOperands()[0] instanceof RTLVariable) {
-						 * RTLVariable var =
-						 * (RTLVariable)operation.getOperands()[0];
-						 * 
-						 * if (operation.getOperands()[1] instanceof RTLNumber)
-						 * { SignElement value =
-						 * ((SignState)state).abstractEval(
-						 * operation.getOperands()[1]); if
-						 * (value.equals(SignElement.NEGATIVE) ||
-						 * value.equals(SignElement.ZERO)) { if
-						 * (s.getValueOperand(var).isTop() ||
-						 * s.getValueOperand(var).equals(SignElement.NEGATIVE)) {
-						 * logger.debug("Restricting state to " + var + " != " +
-						 * value); Set<AbstractState> posts = new
-						 * FastSet<AbstractState>(); SignState post = new
-						 * SignState(s); post.setValue(var, SignElement.ZERO);
-						 * posts.add(post); post = new SignState(s);
-						 * post.setValue(var, SignElement.POSITIVE);
-						 * posts.add(post); return posts; } else {
-						 * logger.debug("Assume " + assumption +
-						 * " infeasible at " + stmt.getLabel()); return
-						 * Collections.emptySet(); } } } } break; }
-						 * 
-						 * } break; }
-						 * 
-						 * } return fallThroughState();
-						 */
+						solver.pop();
 					}
+				}
+				return Collections.singleton((AbstractState) post);
 
-					@Override
-					public Set<AbstractState> visit(RTLUnknownProcedureCall stmt) {
-						// Remove all information
-						return Collections
-								.singleton((AbstractState) SignState.TOP);
-					}
-				});
+				/*
+				 * // Modify state so that it respects the assumption // We
+				 * should really enumerate all solutions and create the
+				 * corresponding states (requires different return type) //
+				 * Currently works only for simple assumptions // Correct
+				 * handling would be: // build state formula // add assumption
+				 * formula // abstract all satisfying assignments of this
+				 * formula into new state(s) // or // get new state that most
+				 * closely overapproximates the combined formula // (i) generate
+				 * DNF from combined formula (ii) 1 state per clause // (iii)
+				 * overapproximate each literal // or // (i) abstract assumption
+				 * into sign-logic, (ii) build new state from intersection
+				 * 
+				 * if (assumption instanceof RTLOperation) { RTLOperation
+				 * operation = (RTLOperation)assumption;
+				 * 
+				 * switch (operation.getOperator()) {
+				 * 
+				 * // assume(var = value) case EQUAL: if
+				 * (operation.getOperands()[0] instanceof RTLVariable) {
+				 * RTLVariable var = (RTLVariable)operation.getOperands()[0];
+				 * 
+				 * if (operation.getOperands()[1] instanceof RTLNumber) {
+				 * SignElement value = ((SignState)state).abstractEval(
+				 * operation.getOperands()[1]); if
+				 * (value.lessOrEqual(s.getValueOperand(var))) {
+				 * logger.debug("Restricting state to " + var + " = " + value);
+				 * SignState post = new SignState((SignState)state);
+				 * post.setValue(var, value); return
+				 * Collections.singleton((AbstractState)post); } else {
+				 * logger.debug("Assume " + assumption + " infeasible at " +
+				 * stmt.getLabel()); return Collections.emptySet(); } } } break;
+				 * 
+				 * // assume(var < value) case LESS: if
+				 * (operation.getOperands()[0] instanceof RTLVariable) {
+				 * RTLVariable var = (RTLVariable)operation.getOperands()[0];
+				 * 
+				 * if (operation.getOperands()[1] instanceof RTLNumber) {
+				 * SignElement value = ((SignState)state).abstractEval(
+				 * operation.getOperands()[1]); if
+				 * (value.equals(SignElement.NEGATIVE) ||
+				 * value.equals(SignElement.ZERO)) { if
+				 * (s.getValueOperand(var).isTop() ||
+				 * s.getValueOperand(var).equals(SignElement.NEGATIVE)) {
+				 * logger.debug("Restricting state to " + var + " = " + value);
+				 * SignState post = new SignState(s); post.setValue(var,
+				 * SignElement.NEGATIVE); return
+				 * Collections.singleton((AbstractState)post); } else {
+				 * logger.debug("Assume " + assumption + " infeasible at " +
+				 * stmt.getLabel()); logger.debug("State is " + s); return
+				 * Collections.emptySet(); } } } } break;
+				 * 
+				 * // assume (!something) case NOT: if
+				 * (operation.getOperands()[0] instanceof RTLOperation) {
+				 * operation = (RTLOperation)operation.getOperands()[0];
+				 * 
+				 * switch (operation.getOperator()) { case LESS: if
+				 * (operation.getOperands()[0] instanceof RTLVariable) {
+				 * RTLVariable var = (RTLVariable)operation.getOperands()[0];
+				 * 
+				 * if (operation.getOperands()[1] instanceof RTLNumber) {
+				 * SignElement value = ((SignState)state).abstractEval(
+				 * operation.getOperands()[1]); if
+				 * (value.equals(SignElement.NEGATIVE) ||
+				 * value.equals(SignElement.ZERO)) { if
+				 * (s.getValueOperand(var).isTop() ||
+				 * s.getValueOperand(var).equals(SignElement.NEGATIVE)) {
+				 * logger.debug("Restricting state to " + var + " != " + value);
+				 * Set<AbstractState> posts = new FastSet<AbstractState>();
+				 * SignState post = new SignState(s); post.setValue(var,
+				 * SignElement.ZERO); posts.add(post); post = new SignState(s);
+				 * post.setValue(var, SignElement.POSITIVE); posts.add(post);
+				 * return posts; } else { logger.debug("Assume " + assumption +
+				 * " infeasible at " + stmt.getLabel()); return
+				 * Collections.emptySet(); } } } } break; }
+				 * 
+				 * } break; }
+				 * 
+				 * } return fallThroughState();
+				 */
+			}
+
+			@Override
+			public Set<AbstractState> visit(RTLUnknownProcedureCall stmt) {
+				// Remove all information
+				return Collections.singleton((AbstractState) SignState.TOP);
+			}
+		});
 	}
 
 	@Override
-	public AbstractState strengthen(AbstractState s,
-			Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
+	public AbstractState strengthen(AbstractState s, Iterable<AbstractState> otherStates, CFAEdge cfaEdge,
 			Precision precision) {
 		return s;
 	}
@@ -296,8 +260,7 @@ public class SignAnalysis implements ConfigurableProgramAnalysis {
 	 * org.jakstab.analysis.ReachedSet)
 	 */
 	@Override
-	public Pair<AbstractState, Precision> prec(AbstractState s,
-			Precision precision, ReachedSet reached) {
+	public Pair<AbstractState, Precision> prec(AbstractState s, Precision precision, ReachedSet reached) {
 		return Pair.create(s, precision);
 	}
 

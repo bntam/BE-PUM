@@ -39,8 +39,7 @@ import java.util.Iterator;
  */
 public abstract class AbstractCOFFModule implements ExecutableImage {
 
-	private static final Logger logger = Logger
-			.getLogger(AbstractCOFFModule.class);
+	private static final Logger logger = Logger.getLogger(AbstractCOFFModule.class);
 
 	protected BinaryFileInputBuffer inBuf;
 	protected COFF_Header coff_header;
@@ -49,15 +48,15 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 
 	public long getByteValue(long va) {
 		long t = va - getBaseAddress();
-		if (t >= 0 && t<inBuf.getSize())
+		if (t >= 0 && t < inBuf.getSize())
 			return inBuf.getByteAt((int) t);
 
 		return Long.MIN_VALUE;
 	}
-	
+
 	public boolean isInside(long va) {
 		long z = getBaseAddress();
-		long t = (va & 0xFFFFFFFF)- z;
+		long t = (va & 0xFFFFFFFF) - z;
 		return t >= 0 && t < inBuf.getSize() * 8;
 	}
 
@@ -85,7 +84,7 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 		else
 			return -1;
 	}
-	
+
 	public int get32ValueMemory(AbsoluteAddress address) {
 		return 0;
 	}
@@ -121,8 +120,7 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 
 		if (rva - getSectionHeader(sct).VirtualAddress > getSectionHeader(sct).SizeOfRawData)
 			return -1;
-		return (rva - getSectionHeader(sct).VirtualAddress)
-				+ getSectionHeader(sct).PointerToRawData;
+		return (rva - getSectionHeader(sct).VirtualAddress) + getSectionHeader(sct).PointerToRawData;
 	}
 
 	/**
@@ -203,8 +201,7 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 	public AbsoluteAddress getMaxAddress() {
 		long highAddress = Long.MIN_VALUE;
 		for (int i = 0; i < getNumberOfSections(); i++) {
-			highAddress = Math.max(getSectionHeader(i).VirtualAddress
-					+ getSectionHeader(i).SizeOfRawData, highAddress);
+			highAddress = Math.max(getSectionHeader(i).VirtualAddress + getSectionHeader(i).SizeOfRawData, highAddress);
 		}
 		highAddress += getBaseAddress();
 		return new AbsoluteAddress(highAddress);
@@ -213,8 +210,7 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 	public AbsoluteAddress getMinAddress() {
 		long lowAddress = Long.MAX_VALUE;
 		for (int i = 0; i < getNumberOfSections(); i++) {
-			lowAddress = Math.min(getSectionHeader(i).VirtualAddress,
-					lowAddress);
+			lowAddress = Math.min(getSectionHeader(i).VirtualAddress, lowAddress);
 		}
 		lowAddress += getBaseAddress();
 		return new AbsoluteAddress(lowAddress);
@@ -287,8 +283,7 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 
 				fp++;
 
-				if (fp >= getSectionHeader(sec).PointerToRawData
-						+ getSectionHeader(sec).SizeOfRawData) {
+				if (fp >= getSectionHeader(sec).PointerToRawData + getSectionHeader(sec).SizeOfRawData) {
 					moveToNextCodeSection();
 					if (sec < 0) {
 						return;

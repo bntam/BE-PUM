@@ -78,8 +78,7 @@ public class HashMapMap<K, L, V> implements MapMap<K, L, V> {
 
 	@Override
 	public void putAll(MapMap<K, L, V> other) {
-		for (EntryIterator<K, L, V> it = entryIterator(); it.hasEntry(); it
-				.next()) {
+		for (EntryIterator<K, L, V> it = entryIterator(); it.hasEntry(); it.next()) {
 			put(it.getLeftKey(), it.getRightKey(), it.getValue());
 		}
 	}

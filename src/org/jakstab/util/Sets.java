@@ -41,8 +41,7 @@ public class Sets {
 	 * ALL_NUMBERS, since it will assign the single element of ALL_NUMBERS, the
 	 * WILDCARD, to all generated tuples
 	 */
-	private static final <T> Set<Tuple<T>> crossProductToIndex(
-			Tuple<Set<T>> tupleOfSets, int pos) {
+	private static final <T> Set<Tuple<T>> crossProductToIndex(Tuple<Set<T>> tupleOfSets, int pos) {
 		Set<Tuple<T>> setOfTuples = new FastSet<Tuple<T>>();
 
 		if (pos < 0) {
@@ -52,8 +51,7 @@ public class Sets {
 		} else {
 			// first recursively generate the cross-product of all earlier
 			// positions
-			Set<Tuple<T>> setOfEarlierTuples = crossProductToIndex(tupleOfSets,
-					pos - 1);
+			Set<Tuple<T>> setOfEarlierTuples = crossProductToIndex(tupleOfSets, pos - 1);
 
 			// then extend each of these for each element at this position
 			for (Tuple<T> earlierTuple : setOfEarlierTuples) {

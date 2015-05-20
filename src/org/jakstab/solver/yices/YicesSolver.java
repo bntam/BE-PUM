@@ -64,16 +64,14 @@ public class YicesSolver extends Solver {
 			String v = nondet.getLeft();
 			if (!declaredVars.contains(v)) {
 				declaredVars.add(v);
-				ctx.declareVariable(v,
-						YicesWrapper.makeBVType(nondet.getRight()));
+				ctx.declareVariable(v, YicesWrapper.makeBVType(nondet.getRight()));
 			}
 		}
 
 		for (int i = 0; i <= yicesConversionVisitor.usedMemoryStates(); i++) {
 			String memState = "m" + i;
 			if (!declaredVars.contains(memState)) {
-				ctx.readCommand("(define " + memState
-						+ "::(-> (bitvector 32) (bitvector 8)))");
+				ctx.readCommand("(define " + memState + "::(-> (bitvector 32) (bitvector 8)))");
 				declaredVars.add(memState);
 			}
 		}
@@ -82,8 +80,7 @@ public class YicesSolver extends Solver {
 		// ctx.putAssertion(YicesWrapper.makeEquality(formulaString, yTrue));
 
 		// Never generates inconsistent contexts this way?
-		ctx.putRetractableAssertion(YicesWrapper.makeEquality(formulaString,
-				yTrue));
+		ctx.putRetractableAssertion(YicesWrapper.makeEquality(formulaString, yTrue));
 	}
 
 	@Override

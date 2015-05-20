@@ -28,8 +28,7 @@ import java.util.*;
  * 
  * @author Johannes Kinder
  */
-public class SetOfVariables extends AbstractSet<RTLVariable> implements
-		Set<RTLVariable>, Serializable {
+public class SetOfVariables extends AbstractSet<RTLVariable> implements Set<RTLVariable>, Serializable {
 
 	public static final SetOfVariables EMPTY_SET = new SetOfVariables();
 

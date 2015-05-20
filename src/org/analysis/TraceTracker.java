@@ -85,8 +85,7 @@ public class TraceTracker {
 	 *            address to check
 	 * @return true if address visited, false otherwise (mark it)
 	 */
-	public boolean setVisited(long address, SymbolicValue nextAddress,
-			String statement) {
+	public boolean setVisited(long address, SymbolicValue nextAddress, String statement) {
 		for (int i = 0; i < addressTracker.size(); i++) {
 			if (addressTracker.get(i).address == address) {
 				if (addressTracker.get(i).visited) {
@@ -94,8 +93,7 @@ public class TraceTracker {
 				} else {
 					addressTracker.get(i).visited = true;
 					addressTracker.get(i).nextAddress = nextAddress;
-					addressTracker.get(i).statement = statement.replaceAll(
-							"\t", " ");
+					addressTracker.get(i).statement = statement.replaceAll("\t", " ");
 				}
 			}
 		}
@@ -114,8 +112,7 @@ public class TraceTracker {
 	 * @param statement
 	 *            instruction stored in program point
 	 */
-	public void setLocationInfo(long address, boolean isVisited,
-			SymbolicValue nextAddress, String statement) {
+	public void setLocationInfo(long address, boolean isVisited, SymbolicValue nextAddress, String statement) {
 		for (int i = 0; i < addressTracker.size(); i++) {
 			if (addressTracker.get(i).address == address) {
 				addressTracker.get(i).nextAddress = nextAddress;
@@ -169,8 +166,7 @@ public class TraceTracker {
 		for (int i = 0; i < addressTracker.size(); i++) {
 			res += "[" + addressTracker.get(i).statement + "]" + "$0x"
 					+ Long.toHexString(addressTracker.get(i).address) + " -- ";
-			retAddress = addressTracker.get(i).nextAddress
-					.calculateExprIntVal();
+			retAddress = addressTracker.get(i).nextAddress.calculateExprIntVal();
 			if (retAddress == null) {
 				System.out.println("UNRESOLVED");
 			} else {
@@ -196,10 +192,8 @@ public class TraceTracker {
 					res = "[" + addressTracker.get(i).statement + "]";
 					if (addressTracker.get(i).visited) {
 						if (addressTracker.get(i).nextAddress != null) {
-							addr = "$0x"
-									+ Long.toHexString(addressTracker.get(i).nextAddress
-											.getIntValue()) + " <----- ["
-									+ addr;
+							addr = "$0x" + Long.toHexString(addressTracker.get(i).nextAddress.getIntValue())
+									+ " <----- [" + addr;
 						} else {
 							addr = "UNRESOLVED" + " <----- [" + addr;
 						}
@@ -231,10 +225,8 @@ public class TraceTracker {
 		TraceTracker res = new TraceTracker();
 		for (int i = 0; i < addressTracker.size(); i++) {
 			res.addTraceAddress(addressTracker.get(i).address);
-			res.setLocationInfo(addressTracker.get(i).address,
-					addressTracker.get(i).visited,
-					addressTracker.get(i).nextAddress,
-					addressTracker.get(i).statement);
+			res.setLocationInfo(addressTracker.get(i).address, addressTracker.get(i).visited,
+					addressTracker.get(i).nextAddress, addressTracker.get(i).statement);
 		}
 		return res;
 	}

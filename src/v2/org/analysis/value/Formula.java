@@ -15,19 +15,19 @@ public class Formula {
 	 * operator = 3; NOT_EQUAL operator = 4; NOT_GREATER operator = 5; NOT_LESS
 	 * operator = 6; ASSIGNMENT oprerator = 7;
 	 */
-	
+
 	public boolean isBoolean() {
-		return (rightExp == null && leftExp != null && leftExp instanceof BooleanValue) 
+		return (rightExp == null && leftExp != null && leftExp instanceof BooleanValue)
 				|| (leftExp == null && rightExp != null && rightExp instanceof BooleanValue);
 	}
-	
+
 	public boolean getBooleanValue() {
 		if (leftExp != null && leftExp instanceof BooleanValue)
-			return ((BooleanValue)leftExp).getValue();
-		
+			return ((BooleanValue) leftExp).getValue();
+
 		if (rightExp != null && rightExp instanceof BooleanValue)
-			return ((BooleanValue)rightExp).getValue();
-		
+			return ((BooleanValue) rightExp).getValue();
+
 		return false;
 	}
 
@@ -43,8 +43,7 @@ public class Formula {
 		if (operator.equals(""))
 			return "( " + " " + leftExp.toStringPreFix() + ")";
 
-		return "(" + leftExp.toString() + " " + operator + " "
-				+ rightExp.toString() + ")";
+		return "(" + leftExp.toString() + " " + operator + " " + rightExp.toString() + ")";
 	}
 
 	public String toStringPrefix() {
@@ -53,15 +52,12 @@ public class Formula {
 		if (operator.equals(""))
 			return "( " + " " + leftExp.toStringPreFix() + ")";
 
-		String result = "(" + operator + " " + leftExp.toStringPreFix() + " "
-				+ rightExp.toStringPreFix() + ")";
+		String result = "(" + operator + " " + leftExp.toStringPreFix() + " " + rightExp.toStringPreFix() + ")";
 
 		if (operator.equals("=="))
-			result = "( = " + " " + leftExp.toStringPreFix() + " "
-					+ rightExp.toStringPreFix() + ")";
+			result = "( = " + " " + leftExp.toStringPreFix() + " " + rightExp.toStringPreFix() + ")";
 		else if (operator.equals("!="))
-			result = "(not ( =" + " " + leftExp.toStringPreFix() + " "
-					+ rightExp.toStringPreFix() + ") )";
+			result = "(not ( =" + " " + leftExp.toStringPreFix() + " " + rightExp.toStringPreFix() + ") )";
 
 		return result;
 	}
@@ -124,15 +120,16 @@ public class Formula {
 
 	public boolean equal(Formula sf) {
 		return this.getOperator() == sf.getOperator()
-				&& this.getLeftExp() != null && sf.getLeftExp() != null
+				&& this.getLeftExp() != null
+				&& sf.getLeftExp() != null
 				&& this.getLeftExp().equal(sf.getLeftExp())
-				&& ((this.getRightExp() != null && sf.getRightExp() != null
-				&& this.getRightExp().equal(sf.getRightExp())) || (this.getRightExp() == null && sf.getRightExp() == null));
+				&& ((this.getRightExp() != null && sf.getRightExp() != null && this.getRightExp().equal(
+						sf.getRightExp())) || (this.getRightExp() == null && sf.getRightExp() == null));
 	}
 
 	public Formula clone() {
 		if (operator.equals("not") || operator.equals(""))
-			return new Formula(leftExp.clone(), operator);		
+			return new Formula(leftExp.clone(), operator);
 
 		return new Formula(leftExp.clone(), rightExp.clone(), operator);
 	}
@@ -141,31 +138,31 @@ public class Formula {
 		// TODO Auto-generated method stub
 		if (operator.equals("not")) {
 			if (leftExp instanceof BooleanValue) {
-				boolean l = ((BooleanValue)leftExp).getValue();
+				boolean l = ((BooleanValue) leftExp).getValue();
 				return new Formula(new BooleanValue(!l), "");
 			}
 		}
 		if (operator.equals("")) {
 			return this;
 		}
-		
+
 		if (leftExp instanceof BooleanValue && rightExp instanceof BooleanValue) {
-			boolean l = ((BooleanValue)leftExp).getValue();
-			boolean r = ((BooleanValue)rightExp).getValue();
-			
+			boolean l = ((BooleanValue) leftExp).getValue();
+			boolean r = ((BooleanValue) rightExp).getValue();
+
 			if (operator.equals("and"))
 				return new Formula(new BooleanValue(l & r), "");
-			
+
 			if (operator.equals("or"))
 				return new Formula(new BooleanValue(l | r), "");
-			
+
 			if (operator.equals("xor"))
 				return new Formula(new BooleanValue(l ^ r), "");
-			
+
 			if (operator.equals("="))
 				return new Formula(new BooleanValue(l = r), "");
 		}
-				
+
 		return this;
 	}
 
@@ -177,13 +174,13 @@ public class Formula {
 			if (temp != null)
 				result.addAll(temp);
 		}
-		
+
 		if (rightExp != null) {
 			List<String> temp = rightExp.getVariable();
 			if (temp != null)
 				result.addAll(temp);
 		}
-		
+
 		return result;
 	}
 }

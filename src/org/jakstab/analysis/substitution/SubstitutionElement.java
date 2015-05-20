@@ -35,8 +35,7 @@ public class SubstitutionElement implements AbstractValue {
 	public static SubstitutionElement BOT = new SubstitutionElement(null);
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(SubstitutionElement.class);
+	private static final Logger logger = Logger.getLogger(SubstitutionElement.class);
 
 	private final RTLExpression expression;
 
@@ -120,8 +119,7 @@ public class SubstitutionElement implements AbstractValue {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((expression == null) ? 0 : expression.hashCode());
+		result = prime * result + ((expression == null) ? 0 : expression.hashCode());
 		return result;
 	}
 

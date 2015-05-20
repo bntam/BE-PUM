@@ -14,8 +14,7 @@ public class CFGEdges {
 		if (edge == null)
 			return false;
 		for (CFGEdge e : edges)
-			if (e.getSource().equal(edge.getSource())
-					&& e.getDestination().equal(edge.getDestination()))
+			if (e.getSource().equal(edge.getSource()) && e.getDestination().equal(edge.getDestination()))
 				// && e.getCond().equal(edge.getCond()))
 				return true;
 		return false;

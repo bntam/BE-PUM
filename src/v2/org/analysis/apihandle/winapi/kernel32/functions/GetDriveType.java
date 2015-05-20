@@ -42,7 +42,7 @@ import v2.org.analysis.value.Value;
 public class GetDriveType extends Kernel32API {
 
 	public GetDriveType() {
-		
+
 	}
 
 	@Override

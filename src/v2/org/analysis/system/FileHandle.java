@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * 
  */
 
-public class FileHandle {	
+public class FileHandle {
 	private List<File> fList;
 	private long baseAddress = 2415919104l;
 	// private long handle = 0;
@@ -55,8 +55,7 @@ public class FileHandle {
 		return 0;
 	}
 
-	public long createFile(String fileName, long t2, long t3, long t4, long t5,
-			long t6, long t7) {
+	public long createFile(String fileName, long t2, long t3, long t4, long t5, long t6, long t7) {
 		// TODO Auto-generated method stub
 		for (File file : fList) {
 			if (file.getFileName().equals(fileName.toLowerCase())) {
@@ -105,18 +104,15 @@ public class FileHandle {
 		return 0;
 	}
 
-	public long findFirstFile(String search,
-			SymbolValueMemoryOperand symbolValueMemoryOperand, long t2) {
+	public long findFirstFile(String search, SymbolValueMemoryOperand symbolValueMemoryOperand, long t2) {
 		// TODO Auto-generated method stub
 		long sH = 0;
 		for (File f : fList) {
 			if (f.getFileName().equals(search)) {
 				sH = Math.round(Math.random() * Math.pow(10, 6));
 				f.setSearchHandle(sH);
-				String t = "...Dz����Dz����s./'��............../.."
-						+ f.getFileName();
-				symbolValueMemoryOperand.setText(new X86MemoryOperand(
-						DataType.INT32, t2), t);
+				String t = "...Dz����Dz����s./'��............../.." + f.getFileName();
+				symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, t2), t);
 
 				return sH;
 			}
@@ -133,14 +129,12 @@ public class FileHandle {
 		f.readFile();
 		fList.add(f);
 		String t = "...Dz����Dz����s./'��............../.." + fileName;
-		symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32,
-				t2), t);
+		symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, t2), t);
 
 		return sH;
 	}
 
-	public long findNextFile(long sHandle,
-			SymbolValueMemoryOperand symbolValueMemoryOperand, long t2) {
+	public long findNextFile(long sHandle, SymbolValueMemoryOperand symbolValueMemoryOperand, long t2) {
 		return 1;
 	}
 
@@ -152,16 +146,14 @@ public class FileHandle {
 		return 0;
 	}
 
-	public long findFirstFile(String search, ConcreteValueMemoryOperand s,
-			long t2) {
+	public long findFirstFile(String search, ConcreteValueMemoryOperand s, long t2) {
 		// TODO Auto-generated method stub
 		long sH = 0;
 		for (File f : fList) {
 			if (f.getFileName().equals(search)) {
 				sH = Math.round(Math.random() * Math.pow(10, 6));
 				f.setSearchHandle(sH);
-				String t = "...Dz����Dz����s./'��............../.."
-						+ f.getFileName();
+				String t = "...Dz����Dz����s./'��............../.." + f.getFileName();
 				s.setText(new X86MemoryOperand(DataType.INT32, t2), t);
 			}
 		}
@@ -189,8 +181,7 @@ public class FileHandle {
 		if (s == null)
 			return 0;
 		if (d == null) {
-			d = new File(dest, s.getAccess(), s.getShareMode(),
-					s.getpSecurity(), s.getMode(), s.getAttribute(),
+			d = new File(dest, s.getAccess(), s.getShareMode(), s.getpSecurity(), s.getMode(), s.getAttribute(),
 					s.gethTemplateFile(), 0);
 			d.setPathFile(path);
 			fList.add(d);
@@ -265,12 +256,10 @@ public class FileHandle {
 		return 0;
 	}
 
-	public long setFilePointer(long handle, long numberByte, long address,
-			long moveType) {
+	public long setFilePointer(long handle, long numberByte, long address, long moveType) {
 		for (File f : fList) {
 			if (f.getFileHandle() == handle) {
-				FilePointer fPointer = new FilePointer(numberByte, address,
-						moveType);
+				FilePointer fPointer = new FilePointer(numberByte, address, moveType);
 				f.setFilePointer(fPointer);
 				return f.getFilePointer().getLowOrderAddress();
 			}
@@ -279,8 +268,7 @@ public class FileHandle {
 		return 0;
 	}
 
-	public long createFileMapping(long t1, long t2, long t3, long t4, long t5,
-			String fileMapName) {
+	public long createFileMapping(long t1, long t2, long t3, long t4, long t5, String fileMapName) {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
 			if (f.getFileHandle() == t1) {
@@ -305,8 +293,7 @@ public class FileHandle {
 	public long mapViewOfFile(long t1, long t3, long t4, long t5, long x5) {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
-			if (f != null && f.getMapView() != null
-					&& f.getMapView().getMapViewHandle() == t1) {
+			if (f != null && f.getMapView() != null && f.getMapView().getMapViewHandle() == t1) {
 				return f.getFileImage().getBaseAddress() + baseAddress;
 			}
 		}
@@ -325,8 +312,7 @@ public class FileHandle {
 		return null;
 	}
 
-	public long createFileMapping(long t1, long t2, long t3, long t4, long t5,
-			long t6) {
+	public long createFileMapping(long t1, long t2, long t3, long t4, long t5, long t6) {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
 			if (f.getFileHandle() == t1) {
@@ -378,8 +364,7 @@ public class FileHandle {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
 			if (f.getStatus()) {
-				return f.getFileImage()
-						.readDoubleWord((int) (ad - baseAddress));
+				return f.getFileImage().readDoubleWord((int) (ad - baseAddress));
 			}
 		}
 
@@ -389,8 +374,7 @@ public class FileHandle {
 	public boolean containFileMappingHandle(long x) {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
-			if (f != null && f.getMapView() != null
-					&& f.getMapView().getMapViewHandle() == x)
+			if (f != null && f.getMapView() != null && f.getMapView().getMapViewHandle() == x)
 				return true;
 		}
 
@@ -409,8 +393,7 @@ public class FileHandle {
 			if (f.getFileName().equals(search)) {
 				sH = Math.round(Math.random() * Math.pow(10, 6));
 				f.setSearchHandle(sH);
-				String t = "...Dz����Dz����s./'��............../.."
-						+ f.getFileName();
+				String t = "...Dz����Dz����s./'��............../.." + f.getFileName();
 				memory.setText(new X86MemoryOperand(DataType.INT32, t2), t);
 
 				return sH;
@@ -440,8 +423,7 @@ public class FileHandle {
 
 		for (File f : fList) {
 			if (f.getStatus()) {
-				if (f.getFileImage().getLength() > (addr.getValue()
-						- f.getFileImage().getBaseAddress() - this.baseAddress))
+				if (f.getFileImage().getLength() > (addr.getValue() - f.getFileImage().getBaseAddress() - this.baseAddress))
 					return true;
 			}
 		}

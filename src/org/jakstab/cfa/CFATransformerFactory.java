@@ -34,8 +34,7 @@ import java.util.Set;
 public class CFATransformerFactory implements StateTransformerFactory {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(CFATransformerFactory.class);
+	private static final Logger logger = Logger.getLogger(CFATransformerFactory.class);
 
 	private SetMultimap<Location, CFAEdge> cfa;
 

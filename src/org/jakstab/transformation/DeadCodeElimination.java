@@ -45,8 +45,7 @@ import java.util.TreeSet;
  */
 public class DeadCodeElimination implements CFATransformation {
 
-	private final static Logger logger = Logger
-			.getLogger(DeadCodeElimination.class);
+	private final static Logger logger = Logger.getLogger(DeadCodeElimination.class);
 
 	private Map<Location, SetOfVariables> liveVars;
 	private SetOfVariables liveInSinks;
@@ -70,8 +69,7 @@ public class DeadCodeElimination implements CFATransformation {
 	private boolean isDeadEdge(CFAEdge edge) {
 		StateTransformer t = edge.getTransformer();
 		if (t instanceof RTLVariableAssignment) {
-			RTLVariableAssignment a = (RTLVariableAssignment) edge
-					.getTransformer();
+			RTLVariableAssignment a = (RTLVariableAssignment) edge.getTransformer();
 			RTLVariable lhs = a.getLeftHandSide();
 			if (!liveVars.get(edge.getTarget()).contains(lhs))
 				return true;
@@ -134,8 +132,7 @@ public class DeadCodeElimination implements CFATransformation {
 				SetOfVariables newLive = null;
 				for (CFAEdge outEdge : outEdges.get(node)) {
 					RTLStatement stmt = (RTLStatement) outEdge.getTransformer();
-					SetOfVariables sLVin = new SetOfVariables(
-							liveVars.get(outEdge.getTarget()));
+					SetOfVariables sLVin = new SetOfVariables(liveVars.get(outEdge.getTarget()));
 
 					// Fast remove with bitsets
 					sLVin.removeAll(stmt.getDefinedVariables());
@@ -189,8 +186,7 @@ public class DeadCodeElimination implements CFATransformation {
 					cfa.remove(deadEdge);
 					// Make all edges pointing to the source of the edge point
 					// to it's target
-					Set<CFAEdge> edgesToDeadSource = new FastSet<CFAEdge>(
-							inEdges.get(deadEdge.getSource()));
+					Set<CFAEdge> edgesToDeadSource = new FastSet<CFAEdge>(inEdges.get(deadEdge.getSource()));
 					for (CFAEdge inEdge : edgesToDeadSource) {
 						inEdges.remove(deadEdge.getSource(), inEdge);
 						inEdge.setTarget(deadEdge.getTarget());
@@ -209,17 +205,15 @@ public class DeadCodeElimination implements CFATransformation {
 		logger.info();
 
 		long endTime = System.currentTimeMillis();
-		logger.verbose("Removed " + removalCount + " edges, finished after "
-				+ (endTime - startTime) + "ms and " + iterations
-				+ " iterations.");
+		logger.verbose("Removed " + removalCount + " edges, finished after " + (endTime - startTime) + "ms and "
+				+ iterations + " iterations.");
 
 		program.setCFA(cfa);
 	}
 
 	public void stop() {
 		logger.fatal("");
-		logger.fatal(Characters
-				.starredBox("Interrupt! Stopping Dead Code Elimination!"));
+		logger.fatal(Characters.starredBox("Interrupt! Stopping Dead Code Elimination!"));
 		stop = true;
 	}
 

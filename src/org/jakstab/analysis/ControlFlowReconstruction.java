@@ -120,8 +120,7 @@ public class ControlFlowReconstruction implements Algorithm {
 
 	}
 
-	private static final Logger logger = Logger
-			.getLogger(ControlFlowReconstruction.class);
+	private static final Logger logger = Logger.getLogger(ControlFlowReconstruction.class);
 
 	private Program program;
 	private ResolvingTransformerFactory transformerFactory;
@@ -148,8 +147,7 @@ public class ControlFlowReconstruction implements Algorithm {
 			// multiple CPAs
 			if (shortHand == 't') {
 				logger.info("--- Using trace replay analysis.");
-				for (String fileName : TraceReplayAnalysis.traceFiles
-						.getValue().split(",")) {
+				for (String fileName : TraceReplayAnalysis.traceFiles.getValue().split(",")) {
 					cpas.add(new TraceReplayAnalysis(fileName));
 				}
 				addedExplicitAnalysis = true;
@@ -164,8 +162,7 @@ public class ControlFlowReconstruction implements Algorithm {
 				addedExplicitAnalysis |= p.isExplicit();
 				cpas.add(cpa);
 			} else {
-				logger.fatal("No analysis corresponds to letter \"" + shortHand
-						+ "\"!");
+				logger.fatal("No analysis corresponds to letter \"" + shortHand + "\"!");
 				System.exit(1);
 			}
 		}
@@ -180,8 +177,8 @@ public class ControlFlowReconstruction implements Algorithm {
 			cpa = new CompositeProgramAnalysis(new LocationAnalysis(),
 					cpas.toArray(new ConfigurableProgramAnalysis[cpas.size()]));
 		} else {
-			cpa = new DualCompositeAnalysis(new LocationAnalysis(),
-					cpas.toArray(new ConfigurableProgramAnalysis[cpas.size()]));
+			cpa = new DualCompositeAnalysis(new LocationAnalysis(), cpas.toArray(new ConfigurableProgramAnalysis[cpas
+					.size()]));
 		}
 
 		// Init State transformer factory
@@ -209,9 +206,7 @@ public class ControlFlowReconstruction implements Algorithm {
 				transformerFactory = new OptimisticStateTransformerFactory();
 				break;
 			default:
-				throw new RuntimeException(
-						"Invalid procedure abstraction level: "
-								+ Options.procedureAbstraction);
+				throw new RuntimeException("Invalid procedure abstraction level: " + Options.procedureAbstraction);
 			}
 		}
 
@@ -219,8 +214,7 @@ public class ControlFlowReconstruction implements Algorithm {
 		Worklist<AbstractState> worklist = new PriorityWorklist();
 		// Worklist<AbstractState> worklist = new FastSet<AbstractState>();
 
-		cpaAlgorithm = new CPAAlgorithm(program, cpa, transformerFactory,
-				worklist, Options.failFast.getValue());
+		cpaAlgorithm = new CPAAlgorithm(program, cpa, transformerFactory, worklist, Options.failFast.getValue());
 	}
 
 	public ReachedSet getReachedStates() {
@@ -240,8 +234,7 @@ public class ControlFlowReconstruction implements Algorithm {
 	}
 
 	public boolean isSound() {
-		return !Options.ignoreWeakUpdates.getValue()
-				&& transformerFactory.isSound();
+		return !Options.ignoreWeakUpdates.getValue() && transformerFactory.isSound();
 	}
 
 	public void run() {
@@ -270,15 +263,12 @@ public class ControlFlowReconstruction implements Algorithm {
 
 						// If we use basic blocks, don't attempt to print last
 						// edge (is probably a split block)
-						if (transformerFactory instanceof PessimisticBasicBlockFactory
-								&& state == e.getState())
+						if (transformerFactory instanceof PessimisticBasicBlockFactory && state == e.getState())
 							break;
 
 						if (last != null) {
-							for (CFAEdge edge : transformerFactory
-									.getExistingOutEdges(last.getLocation())) {
-								if (edge.getTarget()
-										.equals(state.getLocation())) {
+							for (CFAEdge edge : transformerFactory.getExistingOutEdges(last.getLocation())) {
+								if (edge.getTarget().equals(state.getLocation())) {
 									logger.warn(edge.getTransformer());
 									break;
 								}
@@ -293,12 +283,10 @@ public class ControlFlowReconstruction implements Algorithm {
 
 					// Replay basic block up to the error state location
 					if (transformerFactory instanceof PessimisticBasicBlockFactory) {
-						for (CFAEdge edge : transformerFactory
-								.getExistingOutEdges(last.getLocation())) {
+						for (CFAEdge edge : transformerFactory.getExistingOutEdges(last.getLocation())) {
 							BasicBlock bb = (BasicBlock) edge.getTransformer();
 							if (bb.containsLocation(e.getState().getLocation())) {
-								logger.warn(bb.toStringUntil(e.getState()
-										.getLocation()));
+								logger.warn(bb.toStringUntil(e.getState().getLocation()));
 								break;
 							}
 						}
@@ -309,8 +297,7 @@ public class ControlFlowReconstruction implements Algorithm {
 					// possibly failed
 					else {
 						logger.warn("Edges from error state: ");
-						for (CFAEdge edge : transformerFactory
-								.getExistingOutEdges(e.getState().getLocation()))
+						for (CFAEdge edge : transformerFactory.getExistingOutEdges(e.getState().getLocation()))
 							logger.warn(edge.getTransformer());
 					}
 
@@ -339,25 +326,18 @@ public class ControlFlowReconstruction implements Algorithm {
 
 						lastAddr = addr;
 						addr = s.getLocation().getAddress();
-						if (!addr.equals(lastAddr)
-								&& program.getModule(addr) != null) {
+						if (!addr.equals(lastAddr) && program.getModule(addr) != null) {
 							StringBuilder sb = new StringBuilder();
-							SymbolFinder symFinder = program.getModule(addr)
-									.getSymbolFinder();
+							SymbolFinder symFinder = program.getModule(addr).getSymbolFinder();
 							sb.append(symFinder.getSymbolFor(addr));
 							sb.append(":\t");
 							Instruction instr = program.getInstruction(addr);
 							if (instr != null) {
-								if (instr instanceof X86Instruction
-										&& ((X86Instruction) instr)
-												.hasPrefixLOCK()
-										&& ((X86Instruction) instr)
-												.hasPrefixREPZ()) {
-									sb.append(program.getStatement(s
-											.getLocation()));
+								if (instr instanceof X86Instruction && ((X86Instruction) instr).hasPrefixLOCK()
+										&& ((X86Instruction) instr).hasPrefixREPZ()) {
+									sb.append(program.getStatement(s.getLocation()));
 								} else {
-									sb.append(instr.toString(addr.getValue(),
-											symFinder));
+									sb.append(instr.toString(addr.getValue(), symFinder));
 								}
 							}
 							if (symFinder.hasSymbolFor(addr))
@@ -379,8 +359,7 @@ public class ControlFlowReconstruction implements Algorithm {
 		} finally {
 			program.setCFA(transformerFactory.getCFA());
 			program.setCFGState(transformerFactory.getCFG());
-			program.setUnresolvedBranches(transformerFactory
-					.getUnresolvedBranches());
+			program.setUnresolvedBranches(transformerFactory.getUnresolvedBranches());
 		}
 	}
 

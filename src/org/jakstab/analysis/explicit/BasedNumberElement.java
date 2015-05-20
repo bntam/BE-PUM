@@ -40,21 +40,17 @@ import java.util.Set;
  */
 public class BasedNumberElement implements AbstractDomainElement, BitVectorType {
 
-	private static final Logger logger = Logger
-			.getLogger(BasedNumberElement.class);
+	private static final Logger logger = Logger.getLogger(BasedNumberElement.class);
 
 	private static BasedNumberElement[] TOPS = new BasedNumberElement[128];
 	static {
 		for (int bitWidth = 1; bitWidth <= 128; bitWidth++) {
-			TOPS[bitWidth - 1] = new BasedNumberElement(MemoryRegion.TOP,
-					NumberElement.getTop(bitWidth));
+			TOPS[bitWidth - 1] = new BasedNumberElement(MemoryRegion.TOP, NumberElement.getTop(bitWidth));
 		}
 	}
 
-	public static final BasedNumberElement TRUE = new BasedNumberElement(
-			MemoryRegion.GLOBAL, NumberElement.TRUE);
-	public static final BasedNumberElement FALSE = new BasedNumberElement(
-			MemoryRegion.GLOBAL, NumberElement.FALSE);
+	public static final BasedNumberElement TRUE = new BasedNumberElement(MemoryRegion.GLOBAL, NumberElement.TRUE);
+	public static final BasedNumberElement FALSE = new BasedNumberElement(MemoryRegion.GLOBAL, NumberElement.FALSE);
 
 	public static BasedNumberElement getTop(int bitWidth) {
 		return TOPS[bitWidth - 1];
@@ -68,12 +64,9 @@ public class BasedNumberElement implements AbstractDomainElement, BitVectorType 
 		this.value = value;
 		assert value != null;
 		assert region != null;
-		if (!region.isBot()
-				&& !region.isTop()
-				&& value.getBitWidth() != Program.getProgram()
-						.getArchitecture().getAddressBitWidth())
-			logger.verbose("Created based number element " + this
-					+ " with non-address-sized bitwidth!");
+		if (!region.isBot() && !region.isTop()
+				&& value.getBitWidth() != Program.getProgram().getArchitecture().getAddressBitWidth())
+			logger.verbose("Created based number element " + this + " with non-address-sized bitwidth!");
 	}
 
 	public BasedNumberElement(MemoryRegion region, RTLNumber number) {
@@ -142,13 +135,8 @@ public class BasedNumberElement implements AbstractDomainElement, BitVectorType 
 		BasedNumberElement other = (BasedNumberElement) l;
 		// Can happen for memory cells at same offset but of different size - no
 		// it shouldn't!
-		assert other.getBitWidth() == this.getBitWidth() : "Different bitwidths: "
-				+ other
-				+ " with "
-				+ other.getBitWidth()
-				+ " and "
-				+ this
-				+ " with " + this.getBitWidth();
+		assert other.getBitWidth() == this.getBitWidth() : "Different bitwidths: " + other + " with "
+				+ other.getBitWidth() + " and " + this + " with " + this.getBitWidth();
 		// if (other.getBitWidth() > this.getBitWidth()) return
 		// getTop(other.getBitWidth());
 		// if (this.getBitWidth() > other.getBitWidth()) return
@@ -206,19 +194,16 @@ public class BasedNumberElement implements AbstractDomainElement, BitVectorType 
 		if (getRegion() != MemoryRegion.GLOBAL)
 			return getTop(getBitWidth());
 		else
-			return new BasedNumberElement(getRegion(), getNumber().bitExtract(
-					first, last));
+			return new BasedNumberElement(getRegion(), getNumber().bitExtract(first, last));
 	}
 
 	@Override
 	public BasedNumberElement multiply(AbstractDomainElement op) {
 		BasedNumberElement other = (BasedNumberElement) op;
-		if (other.getRegion() != MemoryRegion.GLOBAL
-				|| getRegion() != MemoryRegion.GLOBAL) {
+		if (other.getRegion() != MemoryRegion.GLOBAL || getRegion() != MemoryRegion.GLOBAL) {
 			return getTop(Math.max(getBitWidth(), other.getBitWidth()));
 		}
-		return new BasedNumberElement(getRegion(), getNumber().multiply(
-				other.getNumber()));
+		return new BasedNumberElement(getRegion(), getNumber().multiply(other.getNumber()));
 	}
 
 	@Override
@@ -236,18 +221,15 @@ public class BasedNumberElement implements AbstractDomainElement, BitVectorType 
 		MemoryRegion resultRegion = region.join(other.getRegion());
 
 		if (resultRegion != MemoryRegion.TOP) {
-			return new BasedNumberElement(resultRegion, getNumber().plus(
-					other.getNumber()));
+			return new BasedNumberElement(resultRegion, getNumber().plus(other.getNumber()));
 		} else {
 			return getTop(Math.max(getBitWidth(), other.getBitWidth()));
 		}
 	}
 
 	@Override
-	public BasedNumberElement readStore(int bitWidth,
-			PartitionedMemory<? extends AbstractDomainElement> store) {
-		return (BasedNumberElement) store.get(getRegion(), getNumber()
-				.longValue(), bitWidth);
+	public BasedNumberElement readStore(int bitWidth, PartitionedMemory<? extends AbstractDomainElement> store) {
+		return (BasedNumberElement) store.get(getRegion(), getNumber().longValue(), bitWidth);
 	}
 
 	@Override
@@ -257,8 +239,7 @@ public class BasedNumberElement implements AbstractDomainElement, BitVectorType 
 	}
 
 	@Override
-	public <A extends AbstractDomainElement> void writeStore(int bitWidth,
-			PartitionedMemory<A> store, A value) {
+	public <A extends AbstractDomainElement> void writeStore(int bitWidth, PartitionedMemory<A> store, A value) {
 		if (isTop())
 			store.setTop();
 		else if (isNumberTop())
@@ -272,8 +253,7 @@ public class BasedNumberElement implements AbstractDomainElement, BitVectorType 
 		if (region != MemoryRegion.GLOBAL)
 			return getTop(getBitWidth());
 		else
-			return new BasedNumberElement(getRegion(), getNumber().signExtend(
-					first, last));
+			return new BasedNumberElement(getRegion(), getNumber().signExtend(first, last));
 	}
 
 	@Override
@@ -281,7 +261,6 @@ public class BasedNumberElement implements AbstractDomainElement, BitVectorType 
 		if (region != MemoryRegion.GLOBAL)
 			return getTop(getBitWidth());
 		else
-			return new BasedNumberElement(getRegion(), getNumber().zeroFill(
-					first, last));
+			return new BasedNumberElement(getRegion(), getNumber().zeroFill(first, last));
 	}
 }

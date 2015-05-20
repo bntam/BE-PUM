@@ -24,12 +24,10 @@ import org.jakstab.util.Logger;
 /**
  * @author Johannes Kinder
  */
-public class DefaultExpressionVisitor<T extends AbstractValue> implements
-		ExpressionVisitor<T> {
+public class DefaultExpressionVisitor<T extends AbstractValue> implements ExpressionVisitor<T> {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(DefaultExpressionVisitor.class);
+	private static final Logger logger = Logger.getLogger(DefaultExpressionVisitor.class);
 
 	protected AbstractValueFactory<T> valueFactory;
 
@@ -51,8 +49,7 @@ public class DefaultExpressionVisitor<T extends AbstractValue> implements
 		} else if (aCondition.equals(valueFactory.createFalse())) {
 			return e.getFalseExpression().accept(this);
 		} else {
-			return (T) e.getTrueExpression().accept(this)
-					.join(e.getFalseExpression().accept(this));
+			return (T) e.getTrueExpression().accept(this).join(e.getFalseExpression().accept(this));
 		}
 	}
 

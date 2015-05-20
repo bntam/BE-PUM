@@ -6,14 +6,14 @@ import java.util.List;
 public class CFG {
 	List<Vertex> vertices = new ArrayList<Vertex>();
 	List<Edge> edges = new ArrayList<Edge>();
-	private Vertex startPoint = null; 
+	private Vertex startPoint = null;
 
 	public void insertVertex(Vertex t) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 		if (!contain(t))
 			vertices.add(t);
 	}
-	
+
 	public void insertEdge(Edge t) {
 		// TODO Auto-generated method stub
 		if (!contain(t))
@@ -26,7 +26,7 @@ public class CFG {
 				return true;
 		return false;
 	}
-	
+
 	public boolean contain(Edge t) {
 		for (Edge temp : edges)
 			if (temp.equals(t))
@@ -47,20 +47,20 @@ public class CFG {
 		// TODO Auto-generated method stub
 		return vertices;
 	}
-	
+
 	public List<Edge> getEdgesList() {
 		// TODO Auto-generated method stub
 		return edges;
-	}	
+	}
 
 	public Vertex getVertex(String id) {
 		// TODO Auto-generated method stub
-		for (Vertex v: vertices) {
+		for (Vertex v : vertices) {
 			if (v.getID().equals(id))
 				return v;
 		}
-		
-		Vertex t = new Vertex ();
+
+		Vertex t = new Vertex();
 		t.setID(id);
 		vertices.add(t);
 		return t;
@@ -74,7 +74,8 @@ public class CFG {
 	}
 
 	/**
-	 * @param startPoint the startPoint to set
+	 * @param startPoint
+	 *            the startPoint to set
 	 */
 	public void setStartPoint(Vertex startPoint) {
 		this.startPoint = startPoint;
@@ -82,6 +83,6 @@ public class CFG {
 
 	public void insert(String line) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

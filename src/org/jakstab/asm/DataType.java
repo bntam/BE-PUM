@@ -32,8 +32,7 @@ package org.jakstab.asm;
 
 public enum DataType {
 
-	INT8(8), UINT8(8), INT16(16), UINT16(16), INT32(32), UINT32(32), INT64(64), UINT64(
-			64), INT128(128), UINT128(128),
+	INT8(8), UINT8(8), INT16(16), UINT16(16), INT32(32), UINT32(32), INT64(64), UINT64(64), INT128(128), UINT128(128),
 
 	// float is 4 bytes, double is 8 bytes, extended double is 10 bytes
 	// and quad is 16 bytes.

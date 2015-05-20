@@ -74,8 +74,7 @@ public class ConcolicApproach {
 
 			// SymbolicExecution se = new SymbolicExecution(this.indirectTarget,
 			// trace, cfg.getNegConditionList(), sv, program, system);
-			SymbolicExecution se = new SymbolicExecution(this.indirectTarget,
-					trace.clone(), cfg, sv, program, system1);
+			SymbolicExecution se = new SymbolicExecution(this.indirectTarget, trace.clone(), cfg, sv, program, system1);
 			// se.setSr(sr);
 			// se.printInfor();
 			if (!se.execute()) {
@@ -85,21 +84,15 @@ public class ConcolicApproach {
 			if (se.getEvaluateValue() != Long.MIN_VALUE) {
 				result = new AbsoluteAddress(se.getEvaluateValue());
 				// AbsoluteAddress a = new AbsoluteAddress(result);
-				System.out.println("Result of Evaluate: " + result.getValue()
-						+ " Hex value:" + result.toString());
+				System.out.println("Result of Evaluate: " + result.getValue() + " Hex value:" + result.toString());
 				if (program.getAssemblyMap().containsKey(result))
-					System.out.println("This is not new area: "
-							+ result.getValue() + " Hex value:"
-							+ result.toString());
+					System.out
+							.println("This is not new area: " + result.getValue() + " Hex value:" + result.toString());
 				else {
 					// result = temp;
-					System.out
-							.println("The new area of Hybrid Approach from Symbolic Execution Part:"
-									+ result.getValue()
-									+ " Hex value:"
-									+ result);
-					System.out
-							.println("**********************************************");
+					System.out.println("The new area of Hybrid Approach from Symbolic Execution Part:"
+							+ result.getValue() + " Hex value:" + result);
+					System.out.println("**********************************************");
 					/*
 					 * if (!indirectTarget.toString().equals("0x0040111f"))
 					 * break; else
@@ -112,8 +105,8 @@ public class ConcolicApproach {
 			// sv.printString();
 			// se.printResult();
 			SystemHandle system2 = new SystemHandle();
-			ConcreteExecution ce = new ConcreteExecution(this.indirectTarget,
-					concreteTrace.clone(), cfg, sv, program, system2);
+			ConcreteExecution ce = new ConcreteExecution(this.indirectTarget, concreteTrace.clone(), cfg, sv, program,
+					system2);
 			temp = ce.execute();
 			// result = ce.execute();
 
@@ -145,15 +138,12 @@ public class ConcolicApproach {
 				continue;
 
 			if (program.getAssemblyMap().containsKey(temp))
-				System.out.println("This is not new area: " + temp.getValue()
-						+ " Hex value:" + temp.toString());
+				System.out.println("This is not new area: " + temp.getValue() + " Hex value:" + temp.toString());
 			else {
 				result = temp;
-				System.out
-						.println("The new area of Hybrid Approach from Concrete Execution Part:"
-								+ result.getValue() + " Hex value:" + result);
-				System.out
-						.println("**********************************************");
+				System.out.println("The new area of Hybrid Approach from Concrete Execution Part:" + result.getValue()
+						+ " Hex value:" + result);
+				System.out.println("**********************************************");
 				break;
 
 			}
@@ -177,8 +167,7 @@ public class ConcolicApproach {
 			result = temp;
 
 		if (result != null) {
-			System.out.println("Chosen Result (from "
-					+ this.indirectTarget.toString() + ") of Hybrid Approach:"
+			System.out.println("Chosen Result (from " + this.indirectTarget.toString() + ") of Hybrid Approach:"
 					+ result.getValue() + " Hex value:" + result);
 
 			FileProcess t = new FileProcess(this.indirectResolvedFile);

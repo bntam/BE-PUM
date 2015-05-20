@@ -41,11 +41,9 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class OptimisticStateTransformerFactory extends
-		ResolvingTransformerFactory {
+public class OptimisticStateTransformerFactory extends ResolvingTransformerFactory {
 
-	private static final Logger logger = Logger
-			.getLogger(OptimisticStateTransformerFactory.class);
+	private static final Logger logger = Logger.getLogger(OptimisticStateTransformerFactory.class);
 
 	@Override
 	public Set<CFAEdge> resolveGoto(final AbstractState a, final RTLGoto stmt) {
@@ -58,17 +56,14 @@ public class OptimisticStateTransformerFactory extends
 			Location nextLabel = stmt.getNextLabel();
 
 			if (Program.getProgram().getHarness().contains(stmt.getAddress())) {
-				nextLabel = new Location(Program.getProgram().getHarness()
-						.getFallthroughAddress(stmt.getAddress()));
+				nextLabel = new Location(Program.getProgram().getHarness().getFallthroughAddress(stmt.getAddress()));
 			}
 
 			if (nextLabel != null) {
-				RTLUnknownProcedureCall unknownCallEdge = new RTLUnknownProcedureCall(
-						stmt);
+				RTLUnknownProcedureCall unknownCallEdge = new RTLUnknownProcedureCall(stmt);
 				unknownCallEdge.setLabel(stmt.getLabel());
 				unknownCallEdge.setNextLabel(nextLabel);
-				results.add(new CFAEdge(stmt.getLabel(), nextLabel,
-						unknownCallEdge));
+				results.add(new CFAEdge(stmt.getLabel(), nextLabel, unknownCallEdge));
 				sound = false;
 			}
 		}
@@ -78,16 +73,15 @@ public class OptimisticStateTransformerFactory extends
 			return Collections.emptySet();
 		}
 
-		Set<Tuple<RTLNumber>> valuePairs = a.projectionFromConcretization(
-				stmt.getCondition(), stmt.getTargetExpression());
+		Set<Tuple<RTLNumber>> valuePairs = a.projectionFromConcretization(stmt.getCondition(),
+				stmt.getTargetExpression());
 		for (Tuple<RTLNumber> pair : valuePairs) {
 			RTLNumber conditionValue = pair.get(0);
 			RTLNumber targetValue = pair.get(1);
 			Location nextLabel;
 			// assume correct condition case
 			assert conditionValue != null;
-			RTLExpression assumption = ExpressionFactory.createEqual(
-					stmt.getCondition(), conditionValue);
+			RTLExpression assumption = ExpressionFactory.createEqual(stmt.getCondition(), conditionValue);
 			if (conditionValue.equals(ExpressionFactory.FALSE)) {
 				// assume (condition = false), and set next statement to
 				// fallthrough
@@ -97,9 +91,8 @@ public class OptimisticStateTransformerFactory extends
 					// if target could not be resolved, just leave the edge out
 					// for now
 					// Can only happen here with indirect jumps
-					logger.info(stmt.getLabel()
-							+ ": Cannot resolve target expression "
-							+ stmt.getTargetExpression() + ".");
+					logger.info(stmt.getLabel() + ": Cannot resolve target expression " + stmt.getTargetExpression()
+							+ ".");
 					logger.debug("State is: " + a);
 					sound = false;
 					unresolvedBranches.add(stmt.getLabel());
@@ -107,10 +100,8 @@ public class OptimisticStateTransformerFactory extends
 				} else {
 					// assume (condition = true AND targetExpression =
 					// targetValue)
-					assumption = ExpressionFactory.createAnd(
-							assumption,
-							ExpressionFactory.createEqual(
-									stmt.getTargetExpression(), targetValue));
+					assumption = ExpressionFactory.createAnd(assumption,
+							ExpressionFactory.createEqual(stmt.getTargetExpression(), targetValue));
 					// set next label to jump target
 					nextLabel = new Location(new AbsoluteAddress(targetValue));
 				}
@@ -119,8 +110,7 @@ public class OptimisticStateTransformerFactory extends
 			RTLAssume assume = new RTLAssume(assumption, stmt);
 			assume.setLabel(stmt.getLabel());
 			assume.setNextLabel(nextLabel);
-			results.add(new CFAEdge(assume.getLabel(), assume.getNextLabel(),
-					assume));
+			results.add(new CFAEdge(assume.getLabel(), assume.getNextLabel(), assume));
 		}
 		return results;
 	}

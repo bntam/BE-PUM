@@ -32,8 +32,7 @@ import java.util.Set;
  * 
  * @author Johannes Kinder
  */
-public class RTLSpecialExpression extends AbstractRTLExpression implements
-		RTLExpression {
+public class RTLSpecialExpression extends AbstractRTLExpression implements RTLExpression {
 
 	public static final String FTRUNC = "ftrunc";
 	public static final String LOG2 = "log2";
@@ -42,8 +41,7 @@ public class RTLSpecialExpression extends AbstractRTLExpression implements
 	public static final String DBG_PRINTF = "dbgPrintf";
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(RTLSpecialExpression.class);
+	private static final Logger logger = Logger.getLogger(RTLSpecialExpression.class);
 	protected Set<RTLMemoryLocation> usedMemoryLocations = null;
 
 	private final String operation;
@@ -113,8 +111,7 @@ public class RTLSpecialExpression extends AbstractRTLExpression implements
 		if (obj == null || obj.getClass() != this.getClass())
 			return false;
 		RTLSpecialExpression other = (RTLSpecialExpression) obj;
-		return other.operation.equals(this.operation)
-				&& Arrays.equals(this.operands, other.operands);
+		return other.operation.equals(this.operation) && Arrays.equals(this.operands, other.operands);
 	}
 
 	/*
@@ -149,8 +146,7 @@ public class RTLSpecialExpression extends AbstractRTLExpression implements
 		for (int i = 0; i < operandCount; i++)
 			evaledOperands[i] = operands[i].evaluate(context);
 
-		return ExpressionFactory.createSpecialExpression(operation,
-				evaledOperands);
+		return ExpressionFactory.createSpecialExpression(operation, evaledOperands);
 	}
 
 	@Override
@@ -169,8 +165,7 @@ public class RTLSpecialExpression extends AbstractRTLExpression implements
 		if (usedMemoryLocations == null) {
 			usedMemoryLocations = new FastSet<RTLMemoryLocation>();
 			for (int i = 0; i < operandCount; i++) {
-				usedMemoryLocations
-						.addAll(operands[i].getUsedMemoryLocations());
+				usedMemoryLocations.addAll(operands[i].getUsedMemoryLocations());
 			}
 		}
 		return usedMemoryLocations;
@@ -187,8 +182,7 @@ public class RTLSpecialExpression extends AbstractRTLExpression implements
 	}
 
 	@Override
-	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth)
-			throws TypeInferenceException {
+	public RTLExpression inferBitWidth(Architecture arch, int expectedBitWidth) throws TypeInferenceException {
 		// TODO: implement this
 		return this;
 	}

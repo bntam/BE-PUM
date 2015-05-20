@@ -57,10 +57,8 @@ public class Pair<L, R> {
 		if (!(o instanceof Pair<?, ?>))
 			return false;
 		Pair<?, ?> other = (Pair<?, ?>) o;
-		return ((getLeft() == null && other.getLeft() == null) || (getLeft()
-				.equals(other.getLeft())))
-				&& ((getRight() == null && other.getRight() == null) || (getRight()
-						.equals(other.getRight())));
+		return ((getLeft() == null && other.getLeft() == null) || (getLeft().equals(other.getLeft())))
+				&& ((getRight() == null && other.getRight() == null) || (getRight().equals(other.getRight())));
 	}
 
 	@Override

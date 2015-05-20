@@ -20,8 +20,7 @@ import java.util.List;
 
 public class X86ReturnInterpreter {
 
-	public BPState execute(X86RetInstruction inst, BPPath path,
-			List<BPPath> pathList, X86TransitionRule rule) {
+	public BPState execute(X86RetInstruction inst, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
 		// TODO Auto-generated method stub
 		BPState curState = path.getCurrentState();
 		// Formulas l = path.getPathCondition();
@@ -45,25 +44,22 @@ public class X86ReturnInterpreter {
 
 				long r = ((LongValue) ret).getValue();
 				if (r == 0x7c9032A8) {
-					//if (Program.getProgram().getFileName().equals("api_test_yc1.2.exe")) 
-					//		ret = new LongValue(0x401000) ;
-					//else 
+					// if
+					// (Program.getProgram().getFileName().equals("api_test_yc1.2.exe"))
+					// ret = new LongValue(0x401000) ;
+					// else
 					return rule.specialProcessSEH(curState);
 				}
 
-				AbsoluteAddress nextAddr = new AbsoluteAddress(
-						((LongValue) ret).getValue());
-				Instruction nextIns = Program.getProgram().getInstruction(
-						nextAddr, env);
+				AbsoluteAddress nextAddr = new AbsoluteAddress(((LongValue) ret).getValue());
+				Instruction nextIns = Program.getProgram().getInstruction(nextAddr, env);
 
 				Program.getProgram().setTechnique("Ret-Indirect Jump");
-				Program.getProgram().setDetailTechnique(
-						"Ret-Indirect Jump:" + curState.getLocation() + " ");
+				Program.getProgram().setDetailTechnique("Ret-Indirect Jump:" + curState.getLocation() + " ");
 
 				if (nextIns == null) {
 					BPCFG cfg = Program.getProgram().getBPCFG();
-					BPVertex s1 = cfg.getVertex(curState.getLocation(),
-							curState.getInstruction());
+					BPVertex s1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 					BPVertex s2 = new BPVertex();
 
 					if (env.getSystem().getKernel().isInside(nextAddr))
@@ -84,21 +80,17 @@ public class X86ReturnInterpreter {
 
 				if (inst.getOperandCount() == 1) {
 					Operand op = inst.getOperand(0);
-					long t = Convert.convetUnsignedValue(((Immediate) op).getNumber()
-							.intValue(), rule.getBitCount(inst));
+					long t = Convert.convetUnsignedValue(((Immediate) op).getNumber().intValue(),
+							rule.getBitCount(inst));
 
 					env.getStack().pop(t);
 				}
 			}
 		} else {
-			Program.getProgram().getLog().error("Instruction not supported" + inst + " at " 
-					+ curState.getLocation());
+			Program.getProgram().getLog().error("Instruction not supported" + inst + " at " + curState.getLocation());
 		}
 
 		return curState;
 	}
 
-	
-
-	
 }

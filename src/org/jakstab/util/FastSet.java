@@ -28,8 +28,7 @@ import java.util.*;
  * 
  * @author Johannes Kinder
  */
-public class FastSet<E> extends AbstractSet<E> implements Set<E>, Serializable,
-		Worklist<E> {
+public class FastSet<E> extends AbstractSet<E> implements Set<E>, Serializable, Worklist<E> {
 	private static final long serialVersionUID = -7387536630587627888L;
 	private static final int SMALL_CAPACITY = 15;
 	private static final int LARGE_CAPACITY = 100;
@@ -112,10 +111,8 @@ public class FastSet<E> extends AbstractSet<E> implements Set<E>, Serializable,
 		 * The first time we hit the small capacity threshold, convert the
 		 * collection to a hashset.
 		 */
-		if (collection.size() - 1 == SMALL_CAPACITY
-				&& capacity <= SMALL_CAPACITY) {
-			LinkedHashSet<E> newCollection = new LinkedHashSet<E>(
-					LARGE_CAPACITY);
+		if (collection.size() - 1 == SMALL_CAPACITY && capacity <= SMALL_CAPACITY) {
+			LinkedHashSet<E> newCollection = new LinkedHashSet<E>(LARGE_CAPACITY);
 			newCollection.addAll(collection);
 			collection = newCollection;
 			capacity = LARGE_CAPACITY;

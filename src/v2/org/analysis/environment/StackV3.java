@@ -12,8 +12,7 @@ import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 /**
- * @author NMHai 
- * 2-Order Recursion Scheme
+ * @author NMHai 2-Order Recursion Scheme
  * 
  */
 public class StackV3 extends Stack {
@@ -49,8 +48,7 @@ public class StackV3 extends Stack {
 	public boolean equals(Stack s) {
 		// TODO Auto-generated method stub
 		if (s instanceof StackV3)
-			return baseAddr == ((StackV3) s).getBaseAddress()
-					&& topAddr == ((StackV3) s).getTopAddress();
+			return baseAddr == ((StackV3) s).getBaseAddress() && topAddr == ((StackV3) s).getTopAddress();
 		return false;
 	}
 
@@ -85,8 +83,7 @@ public class StackV3 extends Stack {
 		// TODO Auto-generated method stub
 		Value esp = env.getRegister().getRegisterValue("esp");
 		if (esp instanceof LongValue)
-			return env.getMemory().getDoubleWordMemoryValue(
-					desp + ((LongValue) esp).getValue());
+			return env.getMemory().getDoubleWordMemoryValue(desp + ((LongValue) esp).getValue());
 
 		return null;
 	}
@@ -95,8 +92,7 @@ public class StackV3 extends Stack {
 		// TODO Auto-generated method stub
 		Value esp = env.getRegister().getRegisterValue("esp");
 		if (esp instanceof LongValue)
-			env.getMemory().setDoubleWordMemoryValue(
-					desp + ((LongValue) esp).getValue(), v);
+			env.getMemory().setDoubleWordMemoryValue(desp + ((LongValue) esp).getValue(), v);
 	}
 
 	@Override
@@ -203,17 +199,17 @@ public class StackV3 extends Stack {
 		// TODO Auto-generated method stub
 		baseAddr = Convert.hexToLong("12FFCC");
 		topAddr = Convert.hexToLong("12FFD0");
-		//oldBaseAddr = Convert.hexToLong("12FFD0");
+		// oldBaseAddr = Convert.hexToLong("12FFD0");
 
 		env.getRegister().mov("esp", new LongValue(getTopAddress()));
 		env.getRegister().mov("ebp", new LongValue(getBaseAddress()));
 
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		//push(new LongValue((long) (Math.random() * Math.pow(10, 5))));		
-		
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
+
 		push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
 		push(new LongValue((long) (Math.random() * Math.pow(10, 7))));
 		push(longValue);
@@ -267,13 +263,12 @@ public class StackV3 extends Stack {
 	private Value normalizeValue(Value v, Instruction inst) {
 		if (v instanceof LongValue) {
 			long t = ((LongValue) v).getValue();
-			return new LongValue((long)Convert.convetUnsignedValue(t,
-					Convert.getBitCount(inst)));
+			return new LongValue((long) Convert.convetUnsignedValue(t, Convert.getBitCount(inst)));
 		}
 
 		return v;
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "";
@@ -281,12 +276,12 @@ public class StackV3 extends Stack {
 		while (index >= topAddr) {
 			result += env.getMemory().getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index)) + ",";
 			index -= 4;
-		}		
-		
+		}
+
 		Value e = env.getRegister().getRegisterValue("esp");
 		if (e instanceof LongValue)
-			return result + " " + (topAddr == ((LongValue)e).getValue());
-		
+			return result + " " + (topAddr == ((LongValue) e).getValue());
+
 		return result;
 	}
 
@@ -305,6 +300,6 @@ public class StackV3 extends Stack {
 	@Override
 	public void push16(Value pushedElement) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

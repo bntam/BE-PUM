@@ -97,8 +97,7 @@ public class RTLMemset extends AbstractRTLStatement implements RTLStatement {
 
 	@Override
 	public void inferTypes(Architecture arch) throws TypeInferenceException {
-		destination = destination
-				.inferBitWidth(arch, arch.getAddressBitWidth());
+		destination = destination.inferBitWidth(arch, arch.getAddressBitWidth());
 		count = count.inferBitWidth(arch, arch.getAddressBitWidth());
 	}
 

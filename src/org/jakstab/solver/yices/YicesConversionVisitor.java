@@ -31,8 +31,7 @@ import java.util.Set;
 public class YicesConversionVisitor implements ExpressionVisitor<String> {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(YicesConversionVisitor.class);
+	private static final Logger logger = Logger.getLogger(YicesConversionVisitor.class);
 
 	private SetOfVariables variables = new SetOfVariables();
 	private Set<Pair<String, Integer>> nondets = new FastSet<Pair<String, Integer>>();
@@ -52,21 +51,18 @@ public class YicesConversionVisitor implements ExpressionVisitor<String> {
 
 	@Override
 	public String visit(RTLBitRange e) {
-		return YicesWrapper.makeBVExtract(e.getOperand().accept(this),
-				((RTLNumber) e.getFirstBitIndex()).intValue(),
+		return YicesWrapper.makeBVExtract(e.getOperand().accept(this), ((RTLNumber) e.getFirstBitIndex()).intValue(),
 				((RTLNumber) e.getLastBitIndex()).intValue());
 	}
 
 	@Override
 	public String visit(RTLConditionalExpression e) {
-		return YicesWrapper.makeITE(YicesWrapper.makeEquality(e.getCondition()
-				.accept(this), YicesSolver.yTrue), e.getTrueExpression()
-				.accept(this), e.getFalseExpression().accept(this));
+		return YicesWrapper.makeITE(YicesWrapper.makeEquality(e.getCondition().accept(this), YicesSolver.yTrue), e
+				.getTrueExpression().accept(this), e.getFalseExpression().accept(this));
 	}
 
 	private String addOffset(String address, int offset) {
-		return YicesWrapper.makeBVAdd(address,
-				YicesWrapper.makeBVConstant(32, offset));
+		return YicesWrapper.makeBVAdd(address, YicesWrapper.makeBVConstant(32, offset));
 	}
 
 	@Override
@@ -79,24 +75,17 @@ public class YicesConversionVisitor implements ExpressionVisitor<String> {
 			String curCase;
 			switch (e.getBitWidth()) {
 			case 32:
-				curCase = YicesWrapper
-						.makeOperation(mem, addOffset(address, 3));
-				result = result != null ? YicesWrapper.makeBVConcat(result,
-						curCase) : curCase;
+				curCase = YicesWrapper.makeOperation(mem, addOffset(address, 3));
+				result = result != null ? YicesWrapper.makeBVConcat(result, curCase) : curCase;
 			case 24:
-				curCase = YicesWrapper
-						.makeOperation(mem, addOffset(address, 2));
-				result = result != null ? YicesWrapper.makeBVConcat(result,
-						curCase) : curCase;
+				curCase = YicesWrapper.makeOperation(mem, addOffset(address, 2));
+				result = result != null ? YicesWrapper.makeBVConcat(result, curCase) : curCase;
 			case 16:
-				curCase = YicesWrapper
-						.makeOperation(mem, addOffset(address, 1));
-				result = result != null ? YicesWrapper.makeBVConcat(result,
-						curCase) : curCase;
+				curCase = YicesWrapper.makeOperation(mem, addOffset(address, 1));
+				result = result != null ? YicesWrapper.makeBVConcat(result, curCase) : curCase;
 			case 8:
 				curCase = YicesWrapper.makeOperation(mem, address);
-				result = result != null ? YicesWrapper.makeBVConcat(result,
-						curCase) : curCase;
+				result = result != null ? YicesWrapper.makeBVConcat(result, curCase) : curCase;
 				return result;
 
 				/*
@@ -129,13 +118,11 @@ public class YicesConversionVisitor implements ExpressionVisitor<String> {
 				 * address) )))))));
 				 */
 			default:
-				throw new UnrepresentableElementException(
-						"Unsupported memory access width: " + e.getBitWidth());
+				throw new UnrepresentableElementException("Unsupported memory access width: " + e.getBitWidth());
 			}
 
 		} else {
-			throw new UnrepresentableElementException(
-					"Segments not yet supported");
+			throw new UnrepresentableElementException("Segments not yet supported");
 		}
 	}
 
@@ -149,8 +136,7 @@ public class YicesConversionVisitor implements ExpressionVisitor<String> {
 	@Override
 	public String visit(RTLNumber e) {
 		if (e.longValue() < 0) {
-			return YicesWrapper.makeBVNeg(YicesWrapper.makeBVConstant(
-					e.getBitWidth(), -e.longValue()));
+			return YicesWrapper.makeBVNeg(YicesWrapper.makeBVConstant(e.getBitWidth(), -e.longValue()));
 		} else {
 			return YicesWrapper.makeBVConstant(e.getBitWidth(), e.longValue());
 		}
@@ -209,22 +195,19 @@ public class YicesConversionVisitor implements ExpressionVisitor<String> {
 
 		// Operations with non-bitvector operands
 		case SIGN_EXTEND:
-			int signBits = ((RTLNumber) e.getOperands()[1]).intValue()
-					- ((RTLNumber) e.getOperands()[0]).intValue() + 1;
+			int signBits = ((RTLNumber) e.getOperands()[1]).intValue() - ((RTLNumber) e.getOperands()[0]).intValue()
+					+ 1;
 			return YicesWrapper.makeBVSignExtend(yicesOperands[2], signBits);
 
 		case ZERO_FILL:
-			int zeroes = ((RTLNumber) e.getOperands()[1]).intValue()
-					- ((RTLNumber) e.getOperands()[0]).intValue() + 1;
+			int zeroes = ((RTLNumber) e.getOperands()[1]).intValue() - ((RTLNumber) e.getOperands()[0]).intValue() + 1;
 			return YicesWrapper.makeBVZeroExtend(yicesOperands[2], zeroes);
 
 		case SHR:
-			return YicesWrapper.makeBVShiftRight(
-					e.getOperands()[0].accept(this),
+			return YicesWrapper.makeBVShiftRight(e.getOperands()[0].accept(this),
 					((RTLNumber) e.getOperands()[1]).intValue());
 		case SHL:
-			return YicesWrapper.makeBVShiftLeft(
-					e.getOperands()[0].accept(this),
+			return YicesWrapper.makeBVShiftLeft(e.getOperands()[0].accept(this),
 					((RTLNumber) e.getOperands()[1]).intValue());
 
 			// In Jakstab, booleans are represented as 1-bit bitvectors, so here
@@ -235,21 +218,18 @@ public class YicesConversionVisitor implements ExpressionVisitor<String> {
 		case UNSIGNED_LESS:
 		case UNSIGNED_LESS_OR_EQUAL:
 		case EQUAL:
-			return YicesWrapper.makeITE(
-					YicesWrapper.makeOperation(yicesOp, yicesOperands),
-					YicesSolver.yTrue, YicesSolver.yFalse);
+			return YicesWrapper.makeITE(YicesWrapper.makeOperation(yicesOp, yicesOperands), YicesSolver.yTrue,
+					YicesSolver.yFalse);
 
 		case AND:
 		case OR:
 		case PLUS:
 		case MUL:
-			String result = YicesWrapper.makeOperation(yicesOp,
-					yicesOperands[e.getOperandCount() - 2],
+			String result = YicesWrapper.makeOperation(yicesOp, yicesOperands[e.getOperandCount() - 2],
 					yicesOperands[e.getOperandCount() - 1]);
 
 			for (int i = e.getOperandCount() - 3; i >= 0; i--) {
-				result = YicesWrapper.makeOperation(yicesOp, yicesOperands[i],
-						result);
+				result = YicesWrapper.makeOperation(yicesOp, yicesOperands[i], result);
 			}
 			return result;
 

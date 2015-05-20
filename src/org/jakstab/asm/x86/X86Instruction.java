@@ -36,8 +36,7 @@ import org.analysis.SymbolicValue;
 import org.analysis.X86Interpretation;
 import org.jakstab.asm.*;
 
-public class X86Instruction extends AbstractInstruction implements Instruction,
-		X86Opcodes, MemoryInstruction {
+public class X86Instruction extends AbstractInstruction implements Instruction, X86Opcodes, MemoryInstruction {
 
 	final private int size;
 	final private int prefixes;
@@ -106,17 +105,16 @@ public class X86Instruction extends AbstractInstruction implements Instruction,
 	}
 
 	public boolean hasEsiBasedMemorySource() {
-		return (getOperand2() instanceof X86MemoryOperand && ((X86MemoryOperand) getOperand2())
-				.getBase().equals(X86Registers.ESI));
+		return (getOperand2() instanceof X86MemoryOperand && ((X86MemoryOperand) getOperand2()).getBase().equals(
+				X86Registers.ESI));
 	}
 
 	public boolean hasEdiBasedMemoryTarget() {
-		return (getOperand1() instanceof X86MemoryOperand && ((X86MemoryOperand) getOperand1())
-				.getBase().equals(X86Registers.EDI));
+		return (getOperand1() instanceof X86MemoryOperand && ((X86MemoryOperand) getOperand1()).getBase().equals(
+				X86Registers.EDI));
 	}
 
-	public X86Instruction(String name, Operand op1, Operand op2, Operand op3,
-			DataType dataType, int size, int prefixes) {
+	public X86Instruction(String name, Operand op1, Operand op2, Operand op3, DataType dataType, int size, int prefixes) {
 		super(name);
 		this.size = size;
 		this.prefixes = prefixes;
@@ -153,18 +151,15 @@ public class X86Instruction extends AbstractInstruction implements Instruction,
 		}
 	}
 
-	public X86Instruction(String name, Operand op1, Operand op2, Operand op3,
-			int size, int prefixes) {
+	public X86Instruction(String name, Operand op1, Operand op2, Operand op3, int size, int prefixes) {
 		this(name, op1, op2, op3, DataType.UNKNOWN, size, prefixes);
 	}
 
-	public X86Instruction(String name, Operand op1, Operand op2,
-			DataType dataType, int size, int prefixes) {
+	public X86Instruction(String name, Operand op1, Operand op2, DataType dataType, int size, int prefixes) {
 		this(name, op1, op2, (Operand) null, dataType, size, prefixes);
 	}
 
-	public X86Instruction(String name, Operand op1, Operand op2, int size,
-			int prefixes) {
+	public X86Instruction(String name, Operand op1, Operand op2, int size, int prefixes) {
 		this(name, op1, op2, (Operand) null, size, prefixes);
 	}
 
@@ -173,8 +168,7 @@ public class X86Instruction extends AbstractInstruction implements Instruction,
 	}
 
 	public X86Instruction(String name, int size, int prefixes) {
-		this(name, (Operand) null, (Operand) null, (Operand) null, size,
-				prefixes);
+		this(name, (Operand) null, (Operand) null, (Operand) null, size, prefixes);
 	}
 
 	protected String initDescription(long currentPc, SymbolFinder symFinder) {
@@ -219,14 +213,12 @@ public class X86Instruction extends AbstractInstruction implements Instruction,
 		// TODO Auto-generated method stub
 		if (instr instanceof X86Instruction) {
 			X86Instruction i = (X86Instruction) instr;
-			if (this.getName().equals(instr.getName())
-					&& this.getOperandCount() == i.getOperandCount()) {
+			if (this.getName().equals(instr.getName()) && this.getOperandCount() == i.getOperandCount()) {
 				for (int j = 0; j < this.getOperandCount(); j++) {
 					Operand d = this.getOperand(j);
 					Operand s = i.getOperand(j);
 
-					if ((d != null && s == null) || (d == null && s != null)
-							|| (!d.toString().equals(s.toString())))
+					if ((d != null && s == null) || (d == null && s != null) || (!d.toString().equals(s.toString())))
 						return false;
 				}
 

@@ -35,16 +35,14 @@ import org.jakstab.util.Logger;
  */
 public class ExpressionSubstitution implements CFATransformation {
 
-	private static final Logger logger = Logger
-			.getLogger(ExpressionSubstitution.class);
+	private static final Logger logger = Logger.getLogger(ExpressionSubstitution.class);
 
 	private Program program;
 	private CPAAlgorithm cpaAlgo;
 
 	public ExpressionSubstitution(Program program) {
 		this.program = program;
-		cpaAlgo = CPAAlgorithm.createForwardAlgorithm(program,
-				new ExpressionSubstitutionAnalysis());
+		cpaAlgo = CPAAlgorithm.createForwardAlgorithm(program, new ExpressionSubstitutionAnalysis());
 	}
 
 	public static void substituteCFAEdge(CFAEdge edge, SubstitutionState s) {
@@ -54,8 +52,7 @@ public class ExpressionSubstitution implements CFATransformation {
 			edge.setTransformer(newStmt);
 	}
 
-	public static RTLStatement substituteStatement(RTLStatement stmt,
-			SubstitutionState s) {
+	public static RTLStatement substituteStatement(RTLStatement stmt, SubstitutionState s) {
 		Context substCtx = new Context();
 		for (RTLVariable v : stmt.getUsedVariables()) {
 			SubstitutionElement el = s.getValue(v);
@@ -90,8 +87,7 @@ public class ExpressionSubstitution implements CFATransformation {
 
 		for (CFAEdge edge : program.getCFA()) {
 			assert exprSubstStates.where(edge.getSource()).size() == 1;
-			SubstitutionState s = (SubstitutionState) exprSubstStates
-					.where(edge.getSource()).iterator().next();
+			SubstitutionState s = (SubstitutionState) exprSubstStates.where(edge.getSource()).iterator().next();
 			substituteCFAEdge(edge, s);
 		}
 

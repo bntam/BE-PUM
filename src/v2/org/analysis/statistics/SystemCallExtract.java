@@ -22,8 +22,7 @@ public class SystemCallExtract {
 	public void extract() {
 		File folder = new File(pathFile);
 		FileProcess fp = new FileProcess("listFile_1700.txt");
-		System.out.println("Begin to collect data of Systam Call in:"
-				+ pathFile);
+		System.out.println("Begin to collect data of Systam Call in:" + pathFile);
 		SystemCallList sList = new SystemCallList();
 		for (File fileEntry : folder.listFiles()) {
 			if (!fileEntry.isDirectory()
@@ -45,18 +44,15 @@ public class SystemCallExtract {
 		// TODO Auto-generated method stub
 		try {
 			// clearContentFile(unprocessedFile);
-			BufferedReader br = new BufferedReader(new FileReader(pathFile
-					+ "/" + file));
+			BufferedReader br = new BufferedReader(new FileReader(pathFile + "/" + file));
 			// StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			while (line != null) {
-				if (line.contains("kernel32.dll")
-						|| line.contains("user32.dll")) {
+				if (line.contains("kernel32.dll") || line.contains("user32.dll")) {
 					System.out.println(file);
 					String t[] = line.split("\t");
 					for (int i = 0; i < t.length; i++) {
-						if (t[i].contains("kernel32.dll")
-								|| t[i].contains("user32.dll")) {
+						if (t[i].contains("kernel32.dll") || t[i].contains("user32.dll")) {
 							String x = t[i];
 							if (x.contains(",")) {
 								String[] y = x.split(",");

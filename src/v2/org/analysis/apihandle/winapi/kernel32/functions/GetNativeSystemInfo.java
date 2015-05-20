@@ -36,7 +36,7 @@ import v2.org.analysis.value.Value;
 public class GetNativeSystemInfo extends Kernel32API {
 
 	public GetNativeSystemInfo() {
-		
+
 	}
 
 	@Override

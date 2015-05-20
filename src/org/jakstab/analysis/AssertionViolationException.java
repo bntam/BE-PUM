@@ -25,8 +25,7 @@ import org.jakstab.util.Logger;
 public class AssertionViolationException extends StateException {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(AssertionViolationException.class);
+	private static final Logger logger = Logger.getLogger(AssertionViolationException.class);
 	private static final long serialVersionUID = 3088642516812744460L;
 
 	public AssertionViolationException(AbstractState s, String msg) {

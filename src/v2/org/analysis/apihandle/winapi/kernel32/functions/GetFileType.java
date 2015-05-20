@@ -45,7 +45,7 @@ public class GetFileType extends Kernel32API {
 	 * 
 	 */
 	public GetFileType() {
-		
+
 	}
 
 	@Override

@@ -55,10 +55,9 @@ public class SymbolicWorkList {
 		 * @param toAppendState
 		 *            state to be added (in case of conjuctions)
 		 */
-		public SymbolicWork(SymbolicValue nextAddress,
-				SymbolicCondition toAppendCond,
-				TreeMap<AbsoluteAddress, SymbolicState> currentStateMap,
-				TraceTracker programTrace, SymbolicState toAppendState) {
+		public SymbolicWork(SymbolicValue nextAddress, SymbolicCondition toAppendCond,
+				TreeMap<AbsoluteAddress, SymbolicState> currentStateMap, TraceTracker programTrace,
+				SymbolicState toAppendState) {
 			workId = index++;
 			this.nextAddress = nextAddress;
 			condition = toAppendCond;
@@ -247,15 +246,13 @@ public class SymbolicWorkList {
 	 * @param toAppendState
 	 *            state to be added (in case of conjuctions)
 	 */
-	public static void addWork(SymbolicValue nextAddress,
-			SymbolicCondition toAppendCond,
-			TreeMap<AbsoluteAddress, SymbolicState> currentStateMap,
-			TraceTracker programTrace, SymbolicState toAppendState) {
+	public static void addWork(SymbolicValue nextAddress, SymbolicCondition toAppendCond,
+			TreeMap<AbsoluteAddress, SymbolicState> currentStateMap, TraceTracker programTrace,
+			SymbolicState toAppendState) {
 		if (workList == null) {
 			initWorkList();
 		}
-		SymbolicWork newJob = new SymbolicWork(nextAddress, toAppendCond,
-				currentStateMap, programTrace, toAppendState);
+		SymbolicWork newJob = new SymbolicWork(nextAddress, toAppendCond, currentStateMap, programTrace, toAppendState);
 		workList.add(newJob);
 		return;
 	}

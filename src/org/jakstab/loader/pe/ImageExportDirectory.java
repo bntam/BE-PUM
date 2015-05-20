@@ -46,8 +46,7 @@ public class ImageExportDirectory {
 	public long AddressOfNames; // RVA of ENT.
 	public long AddressOfNameOrdinals; // RVA of export ordinal table.
 
-	public ImageExportDirectory(BinaryInputBuffer in)
-			throws java.io.IOException {
+	public ImageExportDirectory(BinaryInputBuffer in) throws java.io.IOException {
 		Characteristics = in.readDWORD();
 		TimeDateStamp = in.readDWORD();
 		MajorVersion = in.readWORD();
@@ -62,23 +61,16 @@ public class ImageExportDirectory {
 	}
 
 	public void output() {
-		System.out.println("Characteristics: 0x"
-				+ Long.toHexString(Characteristics));
-		System.out.println("TimeDateStamp: 0x"
-				+ Long.toHexString(TimeDateStamp));
+		System.out.println("Characteristics: 0x" + Long.toHexString(Characteristics));
+		System.out.println("TimeDateStamp: 0x" + Long.toHexString(TimeDateStamp));
 		System.out.println("MajorVersion: 0x" + Long.toHexString(MajorVersion));
 		System.out.println("MinorVersion: 0x" + Long.toHexString(MinorVersion));
 		System.out.println("Name: 0x" + Long.toHexString(Name));
 		System.out.println("Base: 0x" + Long.toHexString(Base));
-		System.out.println("NumberOfFunctions: 0x"
-				+ Long.toHexString(NumberOfFunctions));
-		System.out.println("NumberOfNames: 0x"
-				+ Long.toHexString(NumberOfNames));
-		System.out.println("AddressOfFunctions: 0x"
-				+ Long.toHexString(AddressOfFunctions));
-		System.out.println("AddressOfNames: 0x"
-				+ Long.toHexString(AddressOfNames));
-		System.out.println("AddressOfNameOrdinals: 0x"
-				+ Long.toHexString(AddressOfNameOrdinals));
+		System.out.println("NumberOfFunctions: 0x" + Long.toHexString(NumberOfFunctions));
+		System.out.println("NumberOfNames: 0x" + Long.toHexString(NumberOfNames));
+		System.out.println("AddressOfFunctions: 0x" + Long.toHexString(AddressOfFunctions));
+		System.out.println("AddressOfNames: 0x" + Long.toHexString(AddressOfNames));
+		System.out.println("AddressOfNameOrdinals: 0x" + Long.toHexString(AddressOfNameOrdinals));
 	}
 }
