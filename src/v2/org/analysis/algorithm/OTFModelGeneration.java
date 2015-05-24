@@ -38,12 +38,12 @@ public class OTFModelGeneration implements Algorithm {
 	private static long maxTimeProgam = 2500000;
 	private static long maxTimePath = 1500000;
 	// For Debug
-	private int num = 12, loopCount = 1;;
-	private boolean isCompareOlly = false, isChecked = false, isRestored = false;
+	private int num = 1, loopCount = 1;;
+	private boolean isCompareOlly = true, isChecked = false, isRestored = false;
 	private long count = 1;
 	private AbsoluteAddress checkedAddr = new AbsoluteAddress(0);
 	private AbsoluteAddress endAddr = new AbsoluteAddress(0);
-	private String fileName = "out_themida_";
+	private String fileName = "out_Email-Worm.Win32.Apbost.c_";
 	private FileProcess compareOllyResult = null;
 	private OllyCompare ollyCompare = null;
 	private FileProcess fileState = new FileProcess("data/stateValue.txt");
@@ -125,8 +125,8 @@ public class OTFModelGeneration implements Algorithm {
 
 				inst = curState.getInstruction();
 				location = curState.getLocation();
-				debugProgram(location, curState);
-				compareOlly(curState);
+				//debugProgram(location, curState);
+				//compareOlly(curState);
 
 				if (inst == null || location == null)
 					break;
@@ -180,11 +180,14 @@ public class OTFModelGeneration implements Algorithm {
 			AbsoluteAddress location = state.getLocation();
 			Environment env = state.getEnvironement();
 			if (ollyCompare == null) {
-				long memoryStartAddr = 0x40EDCF;
-				long memoryEndAddr = 0x40EDFF;
+				long memoryStartAddr = 0x429000;
+				long memoryEndAddr = 0x429028;
 				long stackIndex = 0x8c;
+				
 				ollyCompare = new OllyCompare("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
 						memoryEndAddr, stackIndex);
+				//ollyCompare = new OllyCompare("asm/olly/" + fileName + ".txt", memoryStartAddr,
+				//		memoryEndAddr, stackIndex);
 				ollyCompare.importOllyData(checkedAddr, endAddr);
 			}
 
@@ -224,7 +227,7 @@ public class OTFModelGeneration implements Algorithm {
 				isChecked = false;
 				count = 1;
 
-				if (num >= 12) {
+				if (num >= 3) {
 					isCompareOlly = false;
 					System.out.println("Finish Checking");
 				}
@@ -277,6 +280,18 @@ public class OTFModelGeneration implements Algorithm {
 						// ******************************************
 						// api_test_aspack.exe
 						|| (fileName.equals("api_test_aspack.exe") && (location.toString().contains("4043c2")
+						// || location.toString().contains("408184")
+						))
+						// ******************************************
+						// api_test_aspack.exe
+						|| (fileName.equals("Virus.Win32.Cabanas.2999") 
+						&& (location.toString().contains("40497b")
+						// || location.toString().contains("408184")
+						))
+						// ******************************************
+						// Email-Worm.Win32.Apbost.c
+						|| (fileName.equals("Email-Worm.Win32.Apbost.c") 
+						&& (location.toString().contains("4046e8")
 						// || location.toString().contains("408184")
 						))
 				// ******************************************

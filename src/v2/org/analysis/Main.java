@@ -86,7 +86,7 @@ public class Main {
 		pathVirus = "asm/packer/";
 		// pathVirus = "D:/Temp/Test_week_6/";
 		// pathVirus = "asm/mcvecto/";
-		// pathVirus = "asm/vx.netlux.org/";
+		//pathVirus = "asm/vx.netlux.org/";
 		// pathVirus = "C:/Software/Virus/API/";
 		// pathVirus = "asm/WindowsXP/";
 		// pathVirus = "asm/demo1/";
@@ -203,12 +203,7 @@ public class Main {
 		in = "Email-Worm.Win32.Lassorm";
 		in = "Email-Worm.Win32.Locksky.r";
 
-		in = "test.exe";
-		in = "ws2_32.exe"; // 258 262 33229
-		in = "seh.exe";
-		in = "seh_pack.exe"; // 74 75
 		in = "Virus.Win32.Aztec.01"; // 265 282 4s x
-		// in = "unpacking.exe"; // 93 104 657
 		// in = "Email-Worm.Win32.Coronex.a"; // 231 245 x
 		// 244 260 with MAX_LOOP = 50
 		// in = "Trojan-PSW.Win32.QQRob.16.d"; // 104 121
@@ -226,26 +221,25 @@ public class Main {
 		// in = "Email-Worm.Win32.Avron.a"; // 81 81 0.1s
 
 		// ICFEM
-		in = "Worm.Win32.Deborm.ah"; // Fail due to MOVS with too high loop
-		in = "Virus.Win32.HLLO.Momac.a"; // Fail due to MOVS with too high loop
-		in = "Virus.Win32.Donut"; // 4542 4543 truy cap 77e60000
-		in = "Email-Worm.Win32.Atak.e"; // 40000
-		in = "Email-Worm.Win32.Atak.c"; // 40000
-		in = "Email-Worm.Win32.Kipis.p"; // 40 41 Done
-		in = "Worm.Win32.Leebad.a"; // 206 209 API Argument
-		in = "Email-Worm.Win32.Bagle.am"; // Check later
-		in = "Virus.Win32.ZMist"; // Check later
-		in = "Virus.Win32.Henky.772.b";
-		in = "Virus.Win32.Champ.5495"; // 1057 1105 285 Checked later
-		in = "Email-Worm.Win32.Navidad.b"; // 526 568 1502
-		in = "Email-Worm.Win32.Nohoper.7397"; // 746 741 165 x
-		in = "Email-Worm.Win32.Apbost.c"; // StackOverflow 1018 1023
-		in = "Email-Worm.Win32.Zeynep.j"; // Check Error
-		in = "Virus.Win32.Cabanas.2999";
+		in = "Worm.Win32.Deborm.ah"; // Fail due to MOVS with too high loop SEH
+		//in = "Virus.Win32.HLLO.Momac.a"; // Fail due to MOVS with too high loop
+		//in = "Virus.Win32.Donut"; // 4542 4543 truy cap 77e60000
+		//in = "Email-Worm.Win32.Atak.e"; // 5654 5653 2
+		//in = "Email-Worm.Win32.Atak.c"; // 6132 6131 2
+		//in = "Email-Worm.Win32.Kipis.p"; // 40 41 Done
+		//in = "Worm.Win32.Leebad.a"; // 206 209; 49 48 0.7s
+		//in = "Email-Worm.Win32.Bagle.am"; // loop too long
+		//in = "Virus.Win32.ZMist"; // 158 190 0.9s x
+		//in = "Virus.Win32.Henky.772.b"; // 16 16 0.5
+		//in = "Virus.Win32.Champ.5495"; // 1057 1105 285 825 865 576s
+		//in = "Email-Worm.Win32.Navidad.b"; // 639 688 7161 x
+		//in = "Email-Worm.Win32.Nohoper.7397"; // 746 741 165 x 648 671
+		//in = "Email-Worm.Win32.Apbost.c"; // 317 345 SEH
+		//in = "Email-Worm.Win32.Mydoom.az"; // 952 981 47s
+		//in = "Email-Worm.Win32.Zeynep.j"; // 442 470 317s
+		//in = "Virus.Win32.Cabanas.2999"; // 385 404 45s;
 
-		// in = "hostname.exe"; // 289 304 3s
-		// in = "diskcopy.com"; // 417 457 2s
-		// in = "winver.exe"; // 184 171 5s
+		//Windows
 		// in = "cmd.exe"; // 484 493 273s
 		// in = "systray.exe"; // 146 134
 		// in = "regedt32.exe"; // 59 64 Done
@@ -260,11 +254,11 @@ public class Main {
 		// in = "Packed_IczEdit.exe";
 
 		// Undone
-		in = "api_test_pelock.exe";
-		in = "api_test_pespin.exe";
-		in = "api_test_upack.exe"; // Header
-		in = "api_test_mew.exe"; // Header
-		in = "api_test_mpess.exe"; // 149 166 50
+		//in = "api_test_pelock.exe";
+		//in = "api_test_pespin.exe";
+		//in = "api_test_upack.exe"; // Header
+		//in = "api_test_mew.exe"; // Header
+		//in = "api_test_mpess.exe"; // 149 166 50
 		// in = "demo1_fastpack.exe"; // 47 49 98s
 		// in = "api_test_armadillo.exe";
 		// in = "api_test_asprotect.exe";
@@ -284,7 +278,7 @@ public class Main {
 		//in = "api_test_aspack.exe"; // 1047 1112 101s x
 
 		// in = "api_test_yoda.exe"; // 962 1038 257s
-		in = "api_test_v2.3_lvl1.exe"; // 879 887 165
+		//in = "api_test_v2.3_lvl1.exe"; // 879 887 165
 
 		// in = "Virus.Win32.Aztec.01"; // 312 330 Done
 

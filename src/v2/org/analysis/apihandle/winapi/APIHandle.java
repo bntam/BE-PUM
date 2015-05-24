@@ -102,6 +102,8 @@ public class APIHandle {
 		init();
 		String fullClassName = null;
 		HashMap<String, String> apiMap = libMapping.get(libName);
+		if (apiMap == null)
+			return null;
 		fullClassName = apiMap.get(funcName);
 		return fullClassName;
 	}
@@ -202,7 +204,50 @@ public class APIHandle {
 
 			curState.setLocation(addr);
 			curState.setInstruction(newInst);
+		} else if (inst.getName().toString().contains("ret")) {
+			System.out.println("RET API:" + funcName);
+
+			BPVertex v1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
+			v1.setProperty(api);
+			BPVertex v2 = new BPVertex();
+			// v2.setAddress(address);
+			v2.setProperty(api);
+
+			if (funcName.equals("ExitProcess") || funcName.equals("exit")) {
+				v2.setType(BPVertex.ExitNode);
+				v2 = cfg.insertVertex(v2);
+				// v2.setProperty(api);
+				cfg.insertEdge(new BPEdge(v1, v2));
+				curState.setLocation(null);
+				curState.setInstruction(null);
+				return;
+			}
+
+			v2.setType(BPVertex.APINode);
+			v2 = cfg.insertVertex(v2);
+			cfg.insertEdge(new BPEdge(v1, v2));
+			
+			Value ret = env.getStack().pop();  
+			long r = 0;
+			if (ret != null && ret instanceof LongValue)
+				r = ((LongValue)ret).getValue();
+			AbsoluteAddress addr = new AbsoluteAddress(r);
+			// PHONG: change here for virtual memory
+			Instruction newInst;
+			if (curState.getEnvironement().getSystem().isInVirtualMemory() == true) {
+				byte[] opcodes = getOpcodesArray(curState, addr.getValue());
+				// NEXT INSTRUCTION FOR CALL
+				newInst = Program.getProgram().getInstruction(opcodes, env);
+			} else
+				newInst = program.getInstruction(addr, env);
+
+			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
+			cfg.insertEdge(new BPEdge(v2, v1));
+
+			curState.setLocation(addr);
+			curState.setInstruction(newInst);
 		}
+
 
 		Memory memory = env.getMemory();
 		Register register = env.getRegister();
@@ -407,7 +452,88 @@ public class APIHandle {
 				Value x3 = stack.pop();
 				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else {
+			} else if (funcName.startsWith("__p___initenv")) {
+				System.out.println("Argument: No");
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			} else if (funcName.startsWith("_chkesp")) {
+				System.out.println("Argument: No");
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			} else if (funcName.startsWith("strncmp")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			} else if (funcName.startsWith("strncat")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			} else if (funcName.startsWith("fopen")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else if (funcName.startsWith("fprintf")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				Value x4 = stack.pop();
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3 + ", " + x4);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else if (funcName.startsWith("fprintf")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				Value x4 = stack.pop();
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3 + ", " + x4);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else if (funcName.startsWith("fprintf")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				Value x4 = stack.pop();
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3 + ", " + x4);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else if (funcName.startsWith("strncat")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else if (funcName.startsWith("printf")) {
+				Value x1 = stack.pop();
+				System.out.println("Argument: " + x1);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else if (funcName.startsWith("fclose")) {
+				Value x1 = stack.pop();
+				System.out.println("Argument: " + x1);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else  if (funcName.startsWith("strlen")) {
+				Value x1 = stack.pop();
+				System.out.println("Argument: " + x1);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else if (funcName.startsWith("strncat")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else if (funcName.startsWith("strncat")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}else{
 				System.out.println("No Handling of this API");
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
 			}

@@ -2,6 +2,7 @@ package v2.org.analysis.environment;
 
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.Value;
 
 public class ContextRecord {
 	// CONTEXT RECORD pointer
@@ -62,17 +63,69 @@ public class ContextRecord {
 		this.fs_register = 0x53;
 		this.es_register = 0x2b;
 		this.ds_register = 0x2b;
-		this.edi_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("edi")).getValue();
-		this.esi_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esi")).getValue();
-		this.ebx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ebx")).getValue();
-		this.edx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("edx")).getValue();
-		this.ecx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ecx")).getValue();
-		this.eax_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("eax")).getValue();
-		this.ebp_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ebp")).getValue();
+		Value edi = curState.getEnvironement().getRegister().getRegisterValue("edi");
+		if (edi instanceof LongValue)
+			this.edi_register = ((LongValue) edi).getValue();
+		else 
+			this.edi_register = 0;
+		
+		//this.esi_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esi")).getValue();
+		Value esi = curState.getEnvironement().getRegister().getRegisterValue("esi");
+		if (esi instanceof LongValue)
+			this.esi_register = ((LongValue) esi).getValue();
+		else 
+			this.esi_register = 0;
+		
+		//this.ebx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ebx")).getValue();
+		Value ebx = curState.getEnvironement().getRegister().getRegisterValue("ebx");
+		if (ebx instanceof LongValue)
+			this.ebx_register = ((LongValue) ebx).getValue();
+		else 
+			this.ebx_register = 0;
+		
+		//this.edx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("edx")).getValue();
+		Value edx = curState.getEnvironement().getRegister().getRegisterValue("edx");
+		if (edx instanceof LongValue)
+			this.edx_register = ((LongValue) edx).getValue();
+		else 
+			this.edx_register = 0;
+		
+		//this.ecx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ecx")).getValue();
+		Value ecx = curState.getEnvironement().getRegister().getRegisterValue("ecx");
+		if (ecx instanceof LongValue)
+			this.ecx_register = ((LongValue) ecx).getValue();
+		else 
+			this.ecx_register = 0;
+		
+		//this.eax_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("eax")).getValue();
+		Value eax = curState.getEnvironement().getRegister().getRegisterValue("eax");
+		if (eax instanceof LongValue)
+			this.eax_register = ((LongValue) eax).getValue();
+		else 
+			this.eax_register = 0;
+		
+		//this.ebp_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ebp")).getValue();
+		Value ebp = curState.getEnvironement().getRegister().getRegisterValue("ebp");
+		if (ebp instanceof LongValue)
+			this.ebp_register = ((LongValue) ebp).getValue();
+		else 
+			this.ebp_register = 0;
+		
 		this.eip_register = curState.getLocation().getValue();
-		this.cs_register = 0x23;
+		/*Value eip = curState.getEnvironement().getRegister().getRegisterValue("eip");
+		if (eip instanceof LongValue)
+			this.eip_register = ((LongValue) eip).getValue();
+		else 
+			this.eip_register = 0;*/
+		
+		this.cs_register = 0x23;		
 		this.efl_register = curState.getEnvironement().getFlag().geteflags();
-		this.esp_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp")).getValue();
+		//this.esp_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp")).getValue();
+		Value esp = curState.getEnvironement().getRegister().getRegisterValue("esp");
+		if (esp instanceof LongValue)
+			this.esp_register = ((LongValue) esp).getValue();
+		else 
+			this.esp_register = 0;
 		this.ss_register = 0x2b;
 	}
 

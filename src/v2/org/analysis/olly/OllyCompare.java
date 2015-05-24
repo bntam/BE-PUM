@@ -151,12 +151,21 @@ public class OllyCompare {
 
 			if (l != null)
 				nextCheck = (int) (l.getLoopID() + 1);
+			else {
+				return "Olly does not contain address " + addr + " Bug";
+			}
 		}
 
 		if (count == 1)
 			ret += l.compareBEPUM(env, l, memoryStartAddr, memoryEndAddr, stackIndex);
-		else
-			ret += l.compareBEPUM(env, get(count - 1), memoryStartAddr, memoryEndAddr, stackIndex);
+		else {
+			OllyLoop l1 = get(count - 1);
+			
+			if (l1 == null || l == null)
+				System.out.println("debug");
+			
+			ret += l.compareBEPUM(env, l1, memoryStartAddr, memoryEndAddr, stackIndex);
+		}
 		return ret;
 	}
 
@@ -172,7 +181,7 @@ public class OllyCompare {
 		for (OllyLoop l : ollyLoop)
 			if (l.getLoopID() == count)
 				return l;
-		return null;
+		return ollyLoop.get(0);
 	}
 
 	public long getNextCheck() {

@@ -165,8 +165,8 @@ public class LoopAlgorithm {
 						|| fileName.contains("smc.exe") || fileName.contains("ex.exe") || fileName
 							.contains("fib-reach-0.exe")))
 			return 10;
-		if (fileName.equals("Virus.Win32.Cabanas.2999"))
-			return 1000;
+		//if (fileName.equals("Virus.Win32.Cabanas.2999"))
+		//	return 1000;
 
 		return this.MAX_LOOP;
 	}

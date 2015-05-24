@@ -50,6 +50,13 @@ public class X86ReturnInterpreter {
 					// else
 					return rule.specialProcessSEH(curState);
 				}
+				
+				String api = rule.checkAPICall(ret, curState);
+				if (api != null/* !api.equals("") */) {
+					rule.getAPIHandle().executeAPI(new AbsoluteAddress(r), api, inst, path, pathList);
+					rule.setCFG(true);
+					return curState;
+				}
 
 				AbsoluteAddress nextAddr = new AbsoluteAddress(((LongValue) ret).getValue());
 				Instruction nextIns = Program.getProgram().getInstruction(nextAddr, env);

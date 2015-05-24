@@ -878,3 +878,19 @@
    Instructions:                             133
    Nodes:                             135
    Edges:                             154
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     api_test_pecompact.exe
+   Runtime:                          746ms
+   Instructions:                               1
+   Nodes:                               1
+   Edges:                               0
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     api_test_pecompact.exe
+   Runtime:                        18187ms
+   Instructions:                             724
+   Nodes:                             727
+   Edges:                             765

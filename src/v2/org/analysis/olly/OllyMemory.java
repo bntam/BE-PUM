@@ -47,7 +47,7 @@ public class OllyMemory {
 		if (l == null)
 			return "OllyDbg does not provide this loop \n";
 		
-		if (offset < endaddr)
+		if (offset > endaddr)
 			return "Start Addr is not right \n";
 
 		while (offset < endaddr) {

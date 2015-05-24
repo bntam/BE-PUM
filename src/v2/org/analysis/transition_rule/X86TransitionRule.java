@@ -51,7 +51,10 @@ public class X86TransitionRule extends TransitionRule {
 		// TODO Auto-generated method stub
 		if (!env.getSystem().getSEHHandler().isSet())
 			return true;
-
+		
+		if (env.getSystem().getLibraryHandle().getAPIName(t) != "")
+			return true;				
+		
 		AbsoluteAddress addr = new AbsoluteAddress(t);
 
 		if (addr.getValue() == 0)
