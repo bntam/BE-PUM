@@ -308,4 +308,23 @@ public class FileProcess {
 		}
 		return result;
 	}
+
+	public String getLineAt(int t) {
+		// TODO Auto-generated method stub
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(this.filePath));
+			String line = br.readLine();
+			while (line != null) {
+				if (t==0)
+					return line;
+				line = br.readLine();
+				t--;
+			}
+			br.close();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		return "";
+	}
 }

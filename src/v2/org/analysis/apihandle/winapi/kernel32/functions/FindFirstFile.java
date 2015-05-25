@@ -14,6 +14,7 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
+import v2.org.analysis.complement.Convert;
 
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
@@ -98,11 +99,13 @@ public class FindFirstFile extends Kernel32API {
 			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved1.longValue()));
 
 			memory.setText(new X86MemoryOperand(DataType.INT32, pFind += 4), new String(lpFindFileData.cFileName));
-			memory.setText(new X86MemoryOperand(DataType.INT32, pFind += (2 * lpFindFileData.cFileName.length)),
+			String t = new String(lpFindFileData.cFileName);
+			t = Convert.reduceText(t); 
+			
+			memory.setText(new X86MemoryOperand(DataType.INT32, pFind += (2 * t.length())),
 					new String(lpFindFileData.cAlternateFileName));
 		}
 
 		return false;
 	}
-
 }

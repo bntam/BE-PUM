@@ -861,8 +861,8 @@ public class Memory {
 			X86MemoryOperand m = (X86MemoryOperand) entry.getKey();
 
 			if (evaluateAddress(m) == address) {
-				// if (address == 4198435)
-				// System.out.println("Debug");
+				if (address == 4344187)
+					System.out.println("Debug Me");
 				entry.setValue(v);
 				return;
 			}

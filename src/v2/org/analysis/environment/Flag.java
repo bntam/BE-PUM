@@ -969,7 +969,7 @@ public class Flag {
 
 			// Leave Auxilarry Flag undefined
 			// if (t == 0)
-			aFlag = new BooleanValue(false);
+			aFlag = new BooleanValue(false);			
 		} else {
 			// Clear Carry Flag
 			cFlag = new BooleanValue(false);
@@ -983,6 +983,8 @@ public class Flag {
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
 			zFlag = new HybridBooleanValue(temp, "=", new LongValue(0));
+			
+			aFlag = new BooleanValue(false);
 		}
 
 		if (((LongValue) temp).getValue() == 0x0) {
@@ -2053,7 +2055,7 @@ public class Flag {
 	}
 
 	// PHONG - 21/04/2015: EFLAG -----------------------------------------------
-	public long geteflags() {
+	public long getEFlags() {
 		long efl = 0x0;
 		efl |= 1 << 1;
 		// Set bit for flag
@@ -2262,5 +2264,29 @@ public class Flag {
 		return "cf=" + cFlag.toString() + ", " + "pf=" + pFlag.toString() + ", " + "af=" + aFlag.toString() + ", "
 				+ "zf=" + zFlag.toString() + ", " + "sf=" + sFlag.toString() + ", " + "tf=" + tFlag.toString() + ", "
 				+ "df=" + dFlag.toString() + ", " + "of=" + oFlag.toString() + ", " + "if=" + iFlag.toString();
+	}
+
+	public void setFlagValue(String flag, BooleanValue value) {
+		// TODO Auto-generated method stub
+		String temp = flag.toLowerCase();
+		
+		if (temp.contains("cf"))
+			cFlag = value; 
+		else if (temp.contains("pf"))
+			pFlag = value;
+		else if (temp.contains("af"))
+			aFlag = value;
+		else if (temp.contains("zf"))
+			zFlag = value;
+		else if (temp.contains("sf"))
+			sFlag = value;
+		else if (temp.contains("tf"))
+			tFlag = value;
+		else if (temp.contains("df"))
+			dFlag = value;
+		else if (temp.contains("of"))
+			oFlag = value;
+		else if (temp.contains("if"))
+			iFlag = value;
 	}
 }

@@ -202,7 +202,7 @@ public class Main {
 		in = "Constructor.Win32.A2Vbs.a";
 		in = "Email-Worm.Win32.Lassorm";
 		in = "Email-Worm.Win32.Locksky.r";
-
+		
 		in = "Virus.Win32.Aztec.01"; // 265 282 4s x
 		// in = "Email-Worm.Win32.Coronex.a"; // 231 245 x
 		// 244 260 with MAX_LOOP = 50
@@ -219,9 +219,38 @@ public class Main {
 		in = "Virus.Win32.Seppuku.1606"; // 41 40 0.3s
 		// in = "Email-Worm.Win32.Klez.a"; // 347 351 25s x
 		// in = "Email-Worm.Win32.Avron.a"; // 81 81 0.1s
+		
+		//SEFM 2015
+		in = "Virus.Win32.Seppuku.3426";
+		in = "Virus.Win32.Seppuku.3291";
+		in = "%Virus.Win32.Savior.1832";
+		in = "%Virus.Win32.Savior.1740";
+		in = "Virus.Win32.Canabas.2999";
+		in = "Virus.Win32.Cabanas.b";
+		in = "Virus.Win32.Cabanas.a";
+		in = "Email-Worm.Win32.Bagle.af";
+		in = "Virus.Win32.Wit.a";
+		in = "Virus.Win32.Htrip.a";
+		in = "Virus.Win32.Eva.a";
+		in = "Virus.Win32.Cornad";
+		in = "Virus.Win32.Compan.a";
+		in = "Virus.Win32.Cerebrus.1482";
+		in = "Virus.Win32.Bogus.4096";
+		in = "Virus.Win32.Brof.a";
+		in = "Virus.Win32.Benny.3223";
+		in = "Virus.Win32.Benny.3219.a";
+		in = "Virus.Win32.Belial.a";
+		in = "Virus.Win32.Aztec";
+		in = "Trojan-PSW.Win32.QQRob.16.d";
+		in = "Email-Worm.Win32.Coronex.a";
+		in = "Email-Worm.Win32.Klez.h";
+		in = "Virus.Win32.Artelad.2173"; // 220 228 70
+		in = "Email-Worm.Win32.Apbost.c"; // 432 462 3
+		//in = "Email-Worm.Win32.LoveLetter.b"; //> 7000
+		//in = "Virus.Win32.Pulkfer.a"; // 14 14 124 Maximum Loop
 
 		// ICFEM
-		in = "Worm.Win32.Deborm.ah"; // Fail due to MOVS with too high loop SEH
+		//in = "Worm.Win32.Deborm.ah"; // Fail due to MOVS with too high loop SEH
 		//in = "Virus.Win32.HLLO.Momac.a"; // Fail due to MOVS with too high loop
 		//in = "Virus.Win32.Donut"; // 4542 4543 truy cap 77e60000
 		//in = "Email-Worm.Win32.Atak.e"; // 5654 5653 2
@@ -270,7 +299,7 @@ public class Main {
 		// in = "api_test.exe"; // 158 160 0.1s x
 		//in = "api_test_upx.exe"; // 323 353 21s x
 		//in = "api_test_fsg.exe"; // 244 268 5s x
-		//in = "api_test_pecompact.exe"; // 1127 1178 35s x
+		in = "api_test_pecompact.exe"; // 1127 1178 35s x
 		//in = "api_test_npack.exe"; // 602 639 10s x
 		//in = "api_test_yoda.1.2.exe"; // 622 659 80s x
 		//in = "api_test_yoda.1.3.exe"; // 909 945 54s x
@@ -278,7 +307,7 @@ public class Main {
 		//in = "api_test_aspack.exe"; // 1047 1112 101s x
 
 		// in = "api_test_yoda.exe"; // 962 1038 257s
-		//in = "api_test_v2.3_lvl1.exe"; // 879 887 165
+		//in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
 
 		// in = "Virus.Win32.Aztec.01"; // 312 330 Done
 

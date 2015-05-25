@@ -538,6 +538,8 @@ public class APIHandle {
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
 			}
 		}
+		
+		System.out.println("EAX=" + env.getRegister().getRegisterValue("eax"));
 	}
 
 	// PHONG: insert here

@@ -135,4 +135,9 @@ public class BPCFG {
 
 		return null;
 	}
+
+	public void removeVertex(int i) {
+		// TODO Auto-generated method stub
+		verteces.remove(i);
+	}
 }

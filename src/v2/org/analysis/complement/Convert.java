@@ -167,4 +167,16 @@ public class Convert {
 		return 0;
 	}
 
+	public static String reduceText(String t) {
+		// TODO Auto-generated method stub
+		String ret = "";
+		for (int i = 0; i<t.length(); i++) { 
+			if (t.charAt(i) == ' ' || t.charAt(i) == '\0')
+				break;
+			ret += t.charAt(i);
+		}
+		
+		return ret;
+	}
+
 }

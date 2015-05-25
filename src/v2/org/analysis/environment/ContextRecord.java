@@ -119,7 +119,7 @@ public class ContextRecord {
 			this.eip_register = 0;*/
 		
 		this.cs_register = 0x23;		
-		this.efl_register = curState.getEnvironement().getFlag().geteflags();
+		this.efl_register = curState.getEnvironement().getFlag().getEFlags();
 		//this.esp_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp")).getValue();
 		Value esp = curState.getEnvironement().getRegister().getRegisterValue("esp");
 		if (esp instanceof LongValue)
