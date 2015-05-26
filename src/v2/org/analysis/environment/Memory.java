@@ -1225,6 +1225,9 @@ public class Memory {
 
 			for (Map.Entry<AbsoluteAddress, Pair<String, String>> entry : importTable.entrySet()) {
 				// ret += entry.getKey() + "\t" + entry.getValue() + "\n";
+				//if (entry.getValue().getRight().contains("RegSetValueExA"))
+				//	System.out.println("Debug");
+				
 				long temp = env.getSystem().getProcAddress(entry.getValue().getLeft(), entry.getValue().getRight());
 				setDoubleWordMemoryValue(entry.getKey().getValue(), new LongValue(temp));
 			}

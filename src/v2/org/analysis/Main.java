@@ -86,7 +86,7 @@ public class Main {
 		pathVirus = "asm/packer/";
 		// pathVirus = "D:/Temp/Test_week_6/";
 		// pathVirus = "asm/mcvecto/";
-		//pathVirus = "asm/vx.netlux.org/";
+		pathVirus = "asm/vx.netlux.org/";
 		// pathVirus = "C:/Software/Virus/API/";
 		// pathVirus = "asm/WindowsXP/";
 		// pathVirus = "asm/demo1/";
@@ -243,11 +243,11 @@ public class Main {
 		in = "Virus.Win32.Aztec";
 		in = "Trojan-PSW.Win32.QQRob.16.d";
 		in = "Email-Worm.Win32.Coronex.a";
-		in = "Email-Worm.Win32.Klez.h";
-		in = "Virus.Win32.Artelad.2173"; // 220 228 70
-		in = "Email-Worm.Win32.Apbost.c"; // 432 462 3
+		//in = "Email-Worm.Win32.Klez.h"; // Header false
+		//in = "Virus.Win32.Artelad.2173"; // 220 228 70 - Checked later
+		//in = "Email-Worm.Win32.Apbost.c"; // 432 462 3
 		//in = "Email-Worm.Win32.LoveLetter.b"; //> 7000
-		//in = "Virus.Win32.Pulkfer.a"; // 14 14 124 Maximum Loop
+		//in = "Virus.Win32.Pulkfer.a"; // 14 14 124 FS Phong checked
 
 		// ICFEM
 		//in = "Worm.Win32.Deborm.ah"; // Fail due to MOVS with too high loop SEH
@@ -299,7 +299,7 @@ public class Main {
 		// in = "api_test.exe"; // 158 160 0.1s x
 		//in = "api_test_upx.exe"; // 323 353 21s x
 		//in = "api_test_fsg.exe"; // 244 268 5s x
-		in = "api_test_pecompact.exe"; // 1127 1178 35s x
+		//in = "api_test_pecompact.exe"; // 1127 1178 35s x
 		//in = "api_test_npack.exe"; // 602 639 10s x
 		//in = "api_test_yoda.1.2.exe"; // 622 659 80s x
 		//in = "api_test_yoda.1.3.exe"; // 909 945 54s x

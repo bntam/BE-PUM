@@ -50,7 +50,7 @@ public class Environment {
 		flag.init();
 		memory = new Memory();
 		memory.setEnvironment(this);
-		memory.resetImportTable(Program.getProgram());
+		//memory.resetImportTable(Program.getProgram());
 
 		register = new Register();
 		// register.mov("edx", new

@@ -75,6 +75,7 @@ public class OTFModelGeneration implements Algorithm {
 		X86TransitionRule rule = new X86TransitionRule();
 		BPCFG cfg = Program.getProgram().getBPCFG();
 		Environment env = new Environment();
+		env.getMemory().resetImportTable(program);
 		AbsoluteAddress location = Program.getProgram().getEntryPoint();
 		Instruction inst = Program.getProgram().getInstruction(location, env);
 		List<BPPath> pathList = new ArrayList<BPPath>();
@@ -150,6 +151,9 @@ public class OTFModelGeneration implements Algorithm {
 
 				inst = curState.getInstruction();
 				location = curState.getLocation();
+				
+				if (location == null || location.toString().contains("401129"))
+					System.out.println("Debug");
 								
 				debugProgram(location, curState, fileState, bkFile);
 				compareOlly(curState);

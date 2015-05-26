@@ -64,7 +64,7 @@ public class Library {
 
 	public long getAPIAddr(String api) {
 		for (Entry<String, Long> entry : exportTable.entrySet()) {
-			if (entry.getKey().equals(api.toLowerCase()))
+			if (entry.getKey().toLowerCase().equals(api.toLowerCase()))
 				return entry.getValue();
 		}
 		long ret = (long) (getBaseAddress() + Math.random() * getBaseAddress());
@@ -80,5 +80,10 @@ public class Library {
 		}
 
 		return "";
+	}
+	
+	@Override
+	public String toString() {
+		return libraryName;		
 	}
 }

@@ -110,11 +110,17 @@ public class X86TransitionRule extends TransitionRule {
 	public String checkAPICall(Value r, BPState curState) {
 		// YenNguyen: Check address in JNA memory
 		String api = APIHandle.checkAPI(((LongValue) r).getValue());
-		if (api == null) {
+		
+		if (api == null || api == "") {
+			api = curState.getEnvironement().getSystem().getLibraryHandle().getAPIName(((LongValue) r).getValue());
+		}
+		
+		if (api == null || api == "") {
 			api = Program.getProgram().checkAPI(((LongValue) r).getValue(), curState.getEnvironement());
 			if (api != null && api.equals(""))
 				api = null;
-		}
+		}	
+		
 		return api;
 	}
 
