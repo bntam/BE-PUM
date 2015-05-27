@@ -100,10 +100,10 @@ public class FindFirstFile extends Kernel32API {
 
 			memory.setText(new X86MemoryOperand(DataType.INT32, pFind += 4), new String(lpFindFileData.cFileName));
 			String t = new String(lpFindFileData.cFileName);
-			t = Convert.reduceText(t); 
-			
+			t = Convert.reduceText(t); 			
 			memory.setText(new X86MemoryOperand(DataType.INT32, pFind += (2 * t.length())),
 					new String(lpFindFileData.cAlternateFileName));
+			env.getRegister().setRegisterValue("edx", new LongValue(0));
 		}
 
 		return false;

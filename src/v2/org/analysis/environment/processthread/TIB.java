@@ -1,10 +1,16 @@
 package v2.org.analysis.environment.processthread;
 
+import org.jakstab.asm.Instruction;
+import org.jakstab.asm.Operand;
+import org.jakstab.asm.x86.X86MemoryOperand;
+
 import com.sun.jna.platform.win32.Kernel32;
+
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 public class TIB {
+	private static boolean beUpdated;
 	private static final long TIB_Base_Address = 0x7EFDD000;
 	private static long FS_0; // SEH frame *
 	private static long FS_4; // EBP *
@@ -56,10 +62,32 @@ public class TIB {
 
 	// Initialization
 	static {
-
+		beUpdated = false;
 	}
-
+	
+	public static void updateChecking(BPState curState){
+		Instruction ins = curState.getInstruction();
+		if (ins == null)
+			return;
+		int i = 0;
+		while (i < ins.getOperandCount()){
+			Operand op = ins.getOperand(i);
+			if (op.getClass().getSimpleName().equals("X86MemoryOperand")){
+				X86MemoryOperand mop = (X86MemoryOperand)op;
+				if (mop.getSegmentRegister() != null
+						&& mop.getSegmentRegister().toString() == "%fs"){
+					beUpdated = true;
+					break;
+				}
+			}
+			i++;
+		}
+	}
+	
 	public static void updateTIB(BPState curState) {
+		if (!beUpdated){
+			return;
+		}
 		// Update SEH frame
 		FS_0 = curState.getEnvironement().getSystem().getSEHHandler().getStart().getAddrSEHRecord();
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address, new LongValue(FS_0));
@@ -86,6 +114,7 @@ public class TIB {
 		// Update PEB
 		// /////////////////////////////////////////////////////////
 		PEB.updatePEB(curState);
+		beUpdated = false;
 	}
 
 	public static long getTIB_Base_Address() {

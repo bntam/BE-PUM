@@ -23,6 +23,13 @@ public class SEHLinkedList {
 		this.nextSEHRecord = nextSEHRecord;
 	}
 
+	public SEHLinkedList(long addrSEHRecord, long nextSEHRecord, long sehHandler){
+		super();
+		this.addrSEHRecord = addrSEHRecord;
+		this.nextSEHRecord = nextSEHRecord;
+		this.sehHandler = sehHandler;
+	}
+
 	public SEHLinkedList(long nextSEHRecord, long sehHandler) {
 		super();
 		this.nextSEHRecord = nextSEHRecord;

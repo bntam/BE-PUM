@@ -13,7 +13,10 @@ public class SEHHandle {
 	}
 
 	public SEHHandle() {
-		start = new SEHLinkedList(1638372, 2002594307);
+		long addrSEH = 0x12FFE0;
+		long nextSEH = 0xFFFFFFFF;
+		long sehHandler = 0x7C839AA8;
+		start = new SEHLinkedList(addrSEH, nextSEH, sehHandler);
 		isSet = false;
 	}
 

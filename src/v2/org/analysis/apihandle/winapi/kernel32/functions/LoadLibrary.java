@@ -72,6 +72,8 @@ public class LoadLibrary extends Kernel32API {
 
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 			register.mov("eax", new LongValue(value));
+			//register.mov("edx", new LongValue(0x140608));
+			//register.mov("ecx", new LongValue(0x7c801bfa));
 			System.out.println("Return Value: " + value);
 
 			value = ((LongValue) register.getRegisterValue("eax")).getValue();

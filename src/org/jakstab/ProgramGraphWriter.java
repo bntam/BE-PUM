@@ -19,6 +19,7 @@ package org.jakstab;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
+
 import org.analysis.complement.CFGState;
 import org.analysis.complement.PMLocation;
 import org.jakstab.analysis.AbstractReachabilityTree;
@@ -33,6 +34,7 @@ import org.jakstab.loader.ExecutableImage;
 import org.jakstab.rtl.statements.RTLHalt;
 import org.jakstab.rtl.statements.RTLStatement;
 import org.jakstab.util.*;
+
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
 import v2.org.analysis.cfg.BPVertex;
@@ -164,7 +166,7 @@ public class ProgramGraphWriter {
 	public void writeDisassembly(BPCFG l, String filename) {
 		// System.out.println("Writing assembly file to " + filename);
 		try {
-			FileWriter out = new FileWriter(filename);
+			FileWriter out = new FileWriter(System.getProperty("user.dir") + filename);
 			for (BPVertex vertex : l.getVertecesList()) {
 				AbsoluteAddress pc = vertex.getAddress();
 				// SymbolicExecution.setStartAddress(pc);
@@ -749,7 +751,7 @@ public class ProgramGraphWriter {
 		// Create dot file
 		List<BPEdge> edges = cfg.getEdgesList();
 		List<BPVertex> verteces = cfg.getVertecesList();
-		GraphWriter gwriter = createGraphWriter(fileName);
+		GraphWriter gwriter = createGraphWriter(System.getProperty("user.dir") + fileName);
 		if (gwriter == null)
 			return;
 

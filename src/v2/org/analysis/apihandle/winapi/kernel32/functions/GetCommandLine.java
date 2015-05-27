@@ -46,7 +46,9 @@ public class GetCommandLine extends Kernel32API {
 		// This function has no parameters.
 		long disp = 4796200;
 		// String commandLine = Kernel32DLL.INSTANCE.GetCommandLine();
-		String commandLine = "C:/Windows/" + program.getFileName();
+		//String commandLine = "\"C:/Windows/" + program.getFileName()+"\"";
+		
+		 String commandLine = "\"" + program.getAbsolutePathFile() + "\"";
 
 		System.out.println("Argument MemoryOperand:" + disp + ", Command Line:" + commandLine);
 

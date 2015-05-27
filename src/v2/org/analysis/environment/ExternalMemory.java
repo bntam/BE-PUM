@@ -22,18 +22,27 @@ public class ExternalMemory {
 	}
 
 	public synchronized static ExternalMemoryReturnData getByte(long address) {
-		/*
-		 * ExternalMemoryReturnData ret = (new ExternalMemory()).new
-		 * ExternalMemoryReturnData(); ret.address = address;
-		 * 
-		 * if (address == 0) { ret.isValidAddress = false; ret.value = new
-		 * LongValue(0); return ret; }
-		 * 
-		 * Thread pointer = new Thread(new AccessPointerThread(ret));
-		 * pointer.start(); try { pointer.join(); } catch (InterruptedException
-		 * e) { // TODO Auto-generated catch block // e.printStackTrace(); }
-		 * return ret;
-		 */
+		
+		 /*ExternalMemoryReturnData ret = (new ExternalMemory()).new ExternalMemoryReturnData(); 
+		 ret.address = address;
+		 
+		 if (address == 0) { 
+			 ret.isValidAddress = false; 
+			 ret.value = new LongValue(0); 
+			 return ret; 
+		 }
+		 
+		 Thread pointer = new Thread(new AccessPointerThread(ret));
+		 pointer.start(); 
+		 try { 
+			 pointer.join(); 
+		 } catch (InterruptedException e) {
+			 e.printStackTrace();
+		 }
+		 
+		 // TODO Auto-generated catch block // e.printStackTrace(); }
+		 return ret;*/
+		 
 		return null;
 	}
 
