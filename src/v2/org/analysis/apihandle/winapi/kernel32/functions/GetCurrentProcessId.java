@@ -38,6 +38,7 @@ public class GetCurrentProcessId extends Kernel32API {
 		Environment env = curState.getEnvironement();
 		Register register = env.getRegister();
 		int ret = Kernel32.INSTANCE.GetCurrentProcessId();
+		System.out.println("Return Value: " + ret);
 		register.mov("eax", new LongValue(ret));
 		return false;
 	}

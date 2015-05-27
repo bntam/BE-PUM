@@ -99,9 +99,7 @@ public class RegSetValueEx extends Advapi32API {
 			String lpValueName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
 			String lpData = memory.getText(new X86MemoryOperand(DataType.INT32, t5));
 
-			int ret = 0;// Advapi32.INSTANCE.RegSetValueEx(new HKEY((int) t1),
-						// lpValueName, (int) t3, (int) t4, lpData.getBytes(),
-						// (int) t6);
+			int ret = 0;// Advapi32.INSTANCE.RegSetValueEx(new HKEY((int) t1), lpValueName, (int) t3, (int) t4, lpData.getBytes(), (int) t6);
 			register.mov("eax", new LongValue(ret));
 		}
 		return false;

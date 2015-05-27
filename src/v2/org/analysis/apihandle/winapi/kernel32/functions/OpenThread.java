@@ -65,7 +65,7 @@ public class OpenThread extends Kernel32API {
 		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x2).getValue();
+			long t3 = ((LongValue) x3).getValue();
 
 			DWORD dwDesiredAccess = new DWORD(t1);
 			BOOL bInheritHandle = new BOOL(t2);

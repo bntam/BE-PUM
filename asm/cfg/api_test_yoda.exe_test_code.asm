@@ -1085,6 +1085,22 @@ Thread32Next@Kernel32.dll: API Node
 OpenThread@Kernel32.dll: API Node	
 0x004057b4:	testl %eax, %eax
 0x004057b6:	je 0x004057e9
+0x004057b8:	movl %ecx, %eax
+0x004057ba:	testl %ebx, %ebx
+0x004057bc:	je 17
+0x004057be:	pushl %ecx
+0x004057bf:	movl %eax, %ecx
+0x004057c1:	pushl %eax
+0x004057c2:	movl %edx, %ebp
+0x004057c4:	addl %edx, $0x4272b3<UINT32>
+0x004057ca:	call SuspendThread@Kernel32.dll
+SuspendThread@Kernel32.dll: API Node	
+0x004057cc:	popl %ecx
+0x004057cd:	jmp 0x004057de
+0x004057de:	pushl %ecx
+0x004057df:	movl %edx, %ebp
+0x004057e1:	addl %edx, $0x42725b<UINT32>
+0x004057e7:	call CloseHandle@Kernel32.dll
 0x00405808:	movl %eax, $0x55555555<UINT32>
 0x0040580d:	movl %edx, %ebp
 0x0040580f:	addl %edx, $0x4285fe<UINT32>

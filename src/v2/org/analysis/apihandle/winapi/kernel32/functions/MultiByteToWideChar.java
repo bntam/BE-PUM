@@ -73,7 +73,8 @@ public class MultiByteToWideChar extends Kernel32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName,
+			BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -86,9 +87,11 @@ public class MultiByteToWideChar extends Kernel32API {
 		Value x5 = stack.pop();
 		Value x6 = stack.pop();
 
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
+		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4
+				+ " " + x5 + " " + x6);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
+		if (x1 instanceof LongValue && x2 instanceof LongValue
+				&& x3 instanceof LongValue && x4 instanceof LongValue
 				&& x5 instanceof LongValue && x6 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
@@ -99,18 +102,22 @@ public class MultiByteToWideChar extends Kernel32API {
 
 			UINT CodePage = new UINT(t1);
 			DWORD dwFlags = new DWORD(t2);
-			String lpMultiByteStr = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
+			String lpMultiByteStr = memory.getText(new X86MemoryOperand(
+					DataType.INT32, t3));
 			int cbMultiByte = (int) t4;
-			char[] lpWideCharStr = (t5 != 0L && t6 > 0) ? new char[(int) t6] : null;
+			char[] lpWideCharStr = (t5 != 0L && t6 > 0) ? new char[(int) t6]
+					: null;
 			int cchWideChar = (int) t6;
 
-			int ret = Kernel32DLL.INSTANCE.MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte,
-					lpWideCharStr, cchWideChar);
+			int ret = Kernel32DLL.INSTANCE.MultiByteToWideChar(CodePage,
+					dwFlags, lpMultiByteStr, cbMultiByte, lpWideCharStr,
+					cchWideChar);
 
 			register.mov("eax", new LongValue(ret));
 
 			if (lpWideCharStr != null)
-				memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpWideCharStr));
+				memory.setText(new X86MemoryOperand(DataType.INT32, t5),
+						new String(lpWideCharStr));
 		}
 		return false;
 	}

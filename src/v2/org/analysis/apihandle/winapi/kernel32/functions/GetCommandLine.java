@@ -18,7 +18,6 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.Memory;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves the command-line string for the current process.
@@ -47,12 +46,11 @@ public class GetCommandLine extends Kernel32API {
 		// This function has no parameters.
 		long disp = 4796200;
 		// String commandLine = Kernel32DLL.INSTANCE.GetCommandLine();
-		String commandLine = "\"C:/Windows/" + program.getFileName()+"\"";
+		String commandLine = "C:/Windows/" + program.getFileName();
 
 		System.out.println("Argument MemoryOperand:" + disp + ", Command Line:" + commandLine);
 
 		memory.setText(new X86MemoryOperand(DataType.INT32, disp), commandLine);
-		env.getRegister().setRegisterValue("eax", new LongValue(disp));
 		return false;
 	}
 

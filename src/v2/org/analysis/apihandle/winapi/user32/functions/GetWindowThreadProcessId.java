@@ -48,7 +48,8 @@ public class GetWindowThreadProcessId extends User32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName,
+			BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -64,13 +65,16 @@ public class GetWindowThreadProcessId extends User32API {
 			long t2 = ((LongValue) x2).getValue();
 
 			HWND hWnd = new HWND(new Pointer(t1));
-			DWORDByReference lpdwProcessId = (t2 == 0L) ? null : new DWORDByReference(new DWORD(t2));
-			DWORD ret = User32DLL.INSTANCE.GetWindowThreadProcessId(hWnd, lpdwProcessId);
+			DWORDByReference lpdwProcessId = (t2 == 0L) ? null
+					: new DWORDByReference(new DWORD(t2));
+			DWORD ret = User32DLL.INSTANCE.GetWindowThreadProcessId(hWnd,
+					lpdwProcessId);
 
 			register.mov("eax", new LongValue(ret.longValue()));
 
 			if (t2 != 0L)
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(lpdwProcessId
+				memory.setDoubleWordMemoryValue(new X86MemoryOperand(
+						DataType.INT32, t2), new LongValue(lpdwProcessId
 						.getValue().longValue()));
 		}
 		return false;

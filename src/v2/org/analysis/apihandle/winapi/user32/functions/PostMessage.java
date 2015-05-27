@@ -31,13 +31,13 @@ import v2.org.analysis.value.Value;
 
 /**
  * This function places a message in the message queue associated with the
- * thread that created the specified window and then returns without waiting for
- * the thread to process the message. Messages in a message queue are retrieved
- * by calls to the GetMessage or PeekMessage function.
+ * thread that created the specified window and then returns without waiting
+ * for the thread to process the message. Messages in a message queue are
+ * retrieved by calls to the GetMessage or PeekMessage function.
  * 
  * @param hWnd
- *            : Handle to the window whose window procedure is to receive the
- *            message.
+ *            : Handle to the window whose window procedure is to receive
+ *            the message.
  * @param msg
  *            : Specifies the message to be posted.
  * @param wParam
@@ -88,9 +88,8 @@ public class PostMessage extends User32API {
 			System.out.println("Handle Window:" + t1 + " " + str1 + ", Post Message:" + msg + ", First Param:" + t3
 					+ ", Second Param:" + t4);
 
-			BOOL ret = User32DLL.INSTANCE.PostMessage(new HWND(new Pointer(t1)), (int) t2, new WPARAM(t3), new LPARAM(
-					t4));
-
+			BOOL ret = User32DLL.INSTANCE.PostMessage(new HWND(new Pointer(t1)), (int)t2, new WPARAM(t3), new LPARAM(t4));
+			
 			register.mov("eax", new LongValue(ret.longValue()));
 		}
 		return false;

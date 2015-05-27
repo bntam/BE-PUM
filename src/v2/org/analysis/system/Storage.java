@@ -38,6 +38,11 @@ public class Storage {
 			String directoryName = workingDirectory + String.valueOf(drive); // path.getPath().replace(":\\",
 																				// "");
 			createMappingDir(directoryName);
+			// Some directory had just existed in old Windows OS
+			if (drive == 'C') {
+				directoryName += "/My Downloads";
+				createMappingDir(directoryName);
+			}
 			createdPaths.add(String.valueOf(drive) + ":\\");
 		}
 

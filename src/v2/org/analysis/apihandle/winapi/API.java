@@ -21,12 +21,13 @@ import v2.org.analysis.path.BPState;
 public abstract class API {
 	protected String libraryName;
 
-	public abstract boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst);
+	public abstract boolean execute(AbsoluteAddress address, String funcName,
+			BPState curState, Instruction inst);
 
 	public String getLibraryName() {
 		return this.libraryName;
 	}
-
+	
 	public String getAPIName() {
 		return getClass().getSimpleName();
 	}

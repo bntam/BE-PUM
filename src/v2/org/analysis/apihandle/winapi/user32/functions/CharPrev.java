@@ -61,9 +61,9 @@ public class CharPrev extends User32API {
 			long t2 = ((LongValue) x2).getValue();
 
 			String lpszStart = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-
+			
 			long ret;
-
+			
 			if (t1 == t2) {
 				ret = t1;
 			} else if ((t1 + 2) <= t2 && t2 <= (t1 + lpszStart.length() * 2)) {
@@ -71,7 +71,7 @@ public class CharPrev extends User32API {
 			} else {
 				ret = t2 - 2;
 			}
-
+			
 			register.mov("eax", new LongValue(ret));
 		}
 		return false;

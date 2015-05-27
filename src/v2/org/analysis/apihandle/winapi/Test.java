@@ -24,6 +24,7 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
+import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 import v2.org.analysis.complement.BitVector;
@@ -221,23 +222,41 @@ public class Test {
 		// }
 		// }
 
-		// HANDLE hSnapshot = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new
-		// DWORD(2), new DWORD(0));
-		// PROCESSENTRY32 lppe = new PROCESSENTRY32();
-		// BOOL ret = Kernel32DLL.INSTANCE.Process32First(hSnapshot, lppe );
-		// if (ret.booleanValue()) {
-		// System.out.println(lppe.toString(false));
-		// System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
-		// }
-		// while (Kernel32DLL.INSTANCE.Process32Next(hSnapshot,
-		// lppe).booleanValue()) {
-		// System.out.println(lppe.toString(false));
-		// System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
-		// }
+//		HANDLE hSnapshot = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new DWORD(2), new DWORD(0));
+//		PROCESSENTRY32 lppe = new PROCESSENTRY32();
+//		BOOL ret = Kernel32DLL.INSTANCE.Process32First(hSnapshot, lppe );
+//		if (ret.booleanValue()) {
+//			System.out.println(lppe.toString(false));
+//			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+//		}
+//		while (Kernel32DLL.INSTANCE.Process32Next(hSnapshot, lppe).booleanValue()) {
+//			System.out.println(lppe.toString(false));
+//			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+//		}
+		
+		int currentID = Kernel32.INSTANCE.GetCurrentProcessId();
 
-		System.out.println((int) Convert.convertSignedValue(0xfffffff0, 32));
-		System.out.println(User32DLL.INSTANCE.GetWindowLong(new HWND(new Pointer(0x901f4L)),
-				(int) Convert.convertSignedValue(0xfffffff0, 32)));
+		HANDLE snap = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new DWORD(4), new DWORD(0));
+
+		THREADENTRY32 lpte = new THREADENTRY32();
+		lpte.dwSize = new DWORD(lpte.size());
+		if (Kernel32DLL.INSTANCE.Thread32First(snap, lpte).booleanValue()) {
+			while (Kernel32DLL.INSTANCE.Thread32Next(snap, lpte).booleanValue())
+			{
+				if (lpte.th32OwnerProcessID.intValue() == currentID)
+				{
+					DWORD dwDesiredAccess = new DWORD(2);
+					BOOL bInheritHandle = new BOOL(0);
+					DWORD dwThreadId = new DWORD(lpte.th32ThreadID.longValue());
+					HANDLE rezz = Kernel32DLL.INSTANCE.OpenThread(dwDesiredAccess, bInheritHandle, dwThreadId);
+
+					long value = (rezz == null) ? 0 : Pointer.nativeValue(rezz.getPointer());
+					System.out.println("Return Value: " + value);
+					System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
+				}
+			}
+		} else {
+		}
 
 		// String pMessage = new String("%1!*.*s! %4 %5!*s!");
 		// String pArgs[] = { "4", "2", "Bill", // %1!*.*s! refers back to the

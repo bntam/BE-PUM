@@ -1,0 +1,720 @@
+Address=0x004045fb
+Register: eax=0, ebx=54, ecx=12ffb0, edx=7c90e4f4, esp=12ffb4, ebp=12fff0, esi=ffffffff, edi=7c910208
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012ffb4 : 18ffe4, 0x0012ffb8 : 404563, 0x0012ffbc : 40455b, 0x0012ffc0 : 40454e, 0x0012ffc4 : 7c817067, 0x0012ffc8 : 7c910208, 0x0012ffcc : ffffffffffffffff, 0x0012ffd0 : 0, 0x0012ffd4 : 0, 0x0012ffd8 : 0, 0x0012ffdc : 0, 0x0012ffe0 : 0, 0x0012ffe4 : 0, 0x0012ffe8 : 0, 0x0012ffec : 0, 0x0012fff0 : 0, 0x0012fff4 : 0, 0x0012fff8 : 0, 0x0012fffc : 0, 0x00130000 : 0, 0x00130004 : 0, 0x00130008 : 0, 0x0013000c : 0, 0x00130010 : 0, 0x00130014 : 0, 0x00130018 : 0, 0x0013001c : 0, 0x00130020 : 0, 0x00130024 : 0, 0x00130028 : 0, 0x0013002c : 0, 0x00130030 : 0, 0x00130034 : 0, 0x00130038 : 0, 0x0013003c : 0, 0x00130040 : 0, EBP: 0
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x004045fb
+Register: eax=0, ebx=ffffffff, ecx=404563, edx=7c90e4f4, esp=12fea4, ebp=12fff0, esi=ffffffff, edi=7c910208
+Flag: cf=false, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012fea4 : 12ffb4, 0x0012fea8 : 404570, 0x0012feac : 404568, 0x0012feb0 : 7c9032a8, 0x0012feb4 : 12fecc, 0x0012feb8 : 12ffb4, 0x0012febc : 12fee8, 0x0012fec0 : 12ffb4, 0x0012fec4 : 7c, 0x0012fec8 : 12ffb4, 0x0012fecc : ffffffffc0000005, 0x0012fed0 : 0, 0x0012fed4 : 0, 0x0012fed8 : 4045fb, 0x0012fedc : 0, 0x0012fee0 : 0, 0x0012fee4 : 0, 0x0012fee8 : 1007f, 0x0012feec : 0, 0x0012fef0 : 0, 0x0012fef4 : 0, 0x0012fef8 : 0, 0x0012fefc : 0, 0x0012ff00 : 0, 0x0012ff04 : 27f, 0x0012ff08 : 0, 0x0012ff0c : ffff, 0x0012ff10 : 0, 0x0012ff14 : 0, 0x0012ff18 : 0, 0x0012ff1c : 0, 0x0012ff20 : 0, 0x0012ff24 : 0, 0x0012ff28 : 0, 0x0012ff2c : 0, 0x0012ff30 : 0, EBP: 0
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d02
+Register: eax=0, ebx=8020, ecx=405664, edx=1fd, esp=12f900, ebp=4056b8, esi=5080, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 1fd, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00404683
+Register: eax=22, ebx=0, ecx=a69, edx=4046a8, esp=12fa3c, ebp=fffdd21a, esi=406c71, edi=406c70
+Flag: cf=true, pf=true, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012fa3c : 40462d, 0x0012fa40 : 404625, 0x0012fa44 : 404602, 0x0012fa48 : 7c910208, 0x0012fa4c : ffffffffffffffff, 0x0012fa50 : 12fff0, 0x0012fa54 : 12fa68, 0x0012fa58 : 0, 0x0012fa5c : 7c90e4f4, 0x0012fa60 : 4045d2, 0x0012fa64 : 0, 0x0012fa68 : 4045d7, 0x0012fa6c : 7c9032a8, 0x0012fa70 : 12fa88, 0x0012fa74 : 12fb70, 0x0012fa78 : 12faa4, 0x0012fa7c : 12fb70, 0x0012fa80 : 7c, 0x0012fa84 : 12fb70, 0x0012fa88 : ffffffffc0000005, 0x0012fa8c : 0, 0x0012fa90 : 0, 0x0012fa94 : 4045e8, 0x0012fa98 : 0, 0x0012fa9c : 0, 0x0012faa0 : 0, 0x0012faa4 : 1007f, 0x0012faa8 : 0, 0x0012faac : 0, 0x0012fab0 : 0, 0x0012fab4 : 0, 0x0012fab8 : 0, 0x0012fabc : 0, 0x0012fac0 : 27f, 0x0012fac4 : 0, 0x0012fac8 : ffff, EBP: 0
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d0b
+Register: eax=0, ebx=8020, ecx=405664, edx=658, esp=12f900, ebp=4056b8, esi=feb8, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 658, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x004055ec
+Register: eax=75, ebx=4f013, ecx=1b68, edx=0, esp=12fa0c, ebp=12fa20, esi=404549, edi=405295
+Flag: cf=false, pf=false, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012fa0c : 404549, 0x0012fa10 : 404549, 0x0012fa14 : 4046e3, 0x0012fa18 : 28b4, 0x0012fa1c : 0, 0x0012fa20 : fffffffffffdd21a, 0x0012fa24 : 40478f, 0x0012fa28 : 404549, 0x0012fa2c : 28b4, 0x0012fa30 : 404752, 0x0012fa34 : 4046d0, 0x0012fa38 : 4046ad, 0x0012fa3c : 40462d, 0x0012fa40 : 404625, 0x0012fa44 : 404602, 0x0012fa48 : 7c910208, 0x0012fa4c : ffffffffffffffff, 0x0012fa50 : 12fff0, 0x0012fa54 : 12fa68, 0x0012fa58 : 0, 0x0012fa5c : 7c90e4f4, 0x0012fa60 : 4045d2, 0x0012fa64 : 0, 0x0012fa68 : 4045d7, 0x0012fa6c : 7c9032a8, 0x0012fa70 : 12fa88, 0x0012fa74 : 12fb70, 0x0012fa78 : 12faa4, 0x0012fa7c : 12fb70, 0x0012fa80 : 7c, 0x0012fa84 : 12fb70, 0x0012fa88 : ffffffffc0000005, 0x0012fa8c : 0, 0x0012fa90 : 0, 0x0012fa94 : 4045e8, 0x0012fa98 : 0, EBP: fffffffffffdd21a
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=a8c, esp=12f904, ebp=4056b8, esi=1a700, edi=0
+Flag: cf=false, pf=true, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : a8c, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405780
+Register: eax=1, ebx=1, ecx=407709, edx=40449d, esp=12f918, ebp=fffdd21a, esi=298, edi=407709
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f918 : 40536d, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, 0x0012f998 : 404bdd, 0x0012f99c : 404bc4, 0x0012f9a0 : 404bab, 0x0012f9a4 : 404b92, EBP: 0
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cdc
+Register: eax=0, ebx=8020, ecx=405664, edx=f09, esp=12f900, ebp=4056b8, esi=25a60, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : f09, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ccc
+Register: eax=0, ebx=8020, ecx=405664, edx=151f, esp=12f900, ebp=4056b8, esi=34dd0, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 151f, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ccc
+Register: eax=0, ebx=8020, ecx=405664, edx=1b33, esp=12f900, ebp=4056b8, esi=440f0, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 1b33, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=210e, esp=12f908, ebp=4056b8, esi=52b28, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ccb
+Register: eax=0, ebx=8020, ecx=405664, edx=26ac, esp=12f904, ebp=4056b8, esi=60bd8, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 26ac, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405800
+Register: eax=1, ebx=1, ecx=407709, edx=40449d, esp=12f918, ebp=fffdd21a, esi=298, edi=407709
+Flag: cf=true, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f918 : 40536d, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, 0x0012f998 : 404bdd, 0x0012f99c : 404bc4, 0x0012f9a0 : 404bab, 0x0012f9a4 : 404b92, EBP: 0
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cd3
+Register: eax=0, ebx=8020, ecx=405664, edx=2aab, esp=12f900, ebp=4056b8, esi=6abb0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 2aab, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x004055ea
+Register: eax=39, ebx=42674, ecx=3460, edx=0, esp=12f8ec, ebp=12f900, esi=4099, edi=6a93a1
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f8ec : 2b0, 0x0012f8f0 : 4099, 0x0012f8f4 : 427253, 0x0012f8f8 : 4099, 0x0012f8fc : 6a8768, 0x0012f900 : fffffffffffdd21a, 0x0012f904 : 40555d, 0x0012f908 : 6a8768, 0x0012f90c : 4099, 0x0012f910 : 2b0, 0x0012f914 : 6a8768, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, EBP: fffffffffffdd21a
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cf7
+Register: eax=0, ebx=8020, ecx=405664, edx=2e75, esp=12f900, ebp=4056b8, esi=74340, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 2e75, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x004055ed
+Register: eax=b9, ebx=122ecc, ecx=17e6, edx=1, esp=12f8ec, ebp=12f900, esi=4099, edi=6ab01b
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f8ec : 2b0, 0x0012f8f0 : 4099, 0x0012f8f4 : 427253, 0x0012f8f8 : 4099, 0x0012f8fc : 6a8768, 0x0012f900 : fffffffffffdd21a, 0x0012f904 : 40555d, 0x0012f908 : 6a8768, 0x0012f90c : 4099, 0x0012f910 : 2b0, 0x0012f914 : 6a8768, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, EBP: fffffffffffdd21a
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cf0
+Register: eax=0, ebx=8020, ecx=405664, edx=329e, esp=12f900, ebp=4056b8, esi=7e9a8, edi=0
+Flag: cf=true, pf=false, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 329e, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00406199
+Register: eax=ec, ebx=0, ecx=226, edx=0, esp=12f8a4, ebp=12f8b4, esi=4011c3, edi=6cc3eb
+Flag: cf=false, pf=true, af=false, zf=true, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f8a4 : 6cc228, 0x0012f8a8 : 401000, 0x0012f8ac : 6cc228, 0x0012f8b0 : 200, 0x0012f8b4 : fffffffffffdd21a, 0x0012f8b8 : 405d9c, 0x0012f8bc : 6cc228, 0x0012f8c0 : 401000, 0x0012f8c4 : 3e8, 0x0012f8c8 : 0, 0x0012f8cc : 401000, 0x0012f8d0 : 6cc228, 0x0012f8d4 : 401000, 0x0012f8d8 : 4000b8, 0x0012f8dc : 400000, 0x0012f8e0 : 0, 0x0012f8e4 : 200, 0x0012f8e8 : 405d30, 0x0012f8ec : 4075ee, 0x0012f8f0 : 0, 0x0012f8f4 : 4000b8, 0x0012f8f8 : 4001b0, 0x0012f8fc : 400000, 0x0012f900 : 0, 0x0012f904 : 40564c, 0x0012f908 : 40563e, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, EBP: fffffffffffdd21a
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d09
+Register: eax=0, ebx=8020, ecx=405664, edx=36a9, esp=12f900, ebp=4056b8, esi=88b60, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 36a9, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405840
+Register: eax=400039, ebx=0, ecx=10c, edx=1, esp=12f8e4, ebp=fffdd21a, esi=4020f5, edi=4020f4
+Flag: cf=false, pf=true, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f8e4 : 405b69, 0x0012f8e8 : 4075ee, 0x0012f8ec : 0, 0x0012f8f0 : 4000b8, 0x0012f8f4 : 4001d8, 0x0012f8f8 : 400000, 0x0012f8fc : 1, 0x0012f900 : 40565f, 0x0012f904 : 405651, 0x0012f908 : 40563e, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, EBP: 0
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=3aac, esp=12f904, ebp=4056b8, esi=92c00, edi=0
+Flag: cf=false, pf=true, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 3aac, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00406a44
+Register: eax=1, ebx=4, ecx=407709, edx=40448d, esp=12f8e8, ebp=fffdd21a, esi=2b0, edi=4076b0
+Flag: cf=true, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f8e8 : 4067fe, 0x0012f8ec : 4067f6, 0x0012f8f0 : 4056b8, 0x0012f8f4 : 4056ab, 0x0012f8f8 : 40568a, 0x0012f8fc : 405677, 0x0012f900 : 405664, 0x0012f904 : 405651, 0x0012f908 : 40563e, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, EBP: 0
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=3ed1, esp=12f904, ebp=4056b8, esi=9d1c8, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 3ed1, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x004068cc
+Register: eax=1e2394, ebx=0, ecx=261, edx=402984, esp=12f8e0, ebp=fffdd21a, esi=4072e2, edi=407709
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f8e0 : 4072e2, 0x0012f8e4 : 0, 0x0012f8e8 : 406803, 0x0012f8ec : 4067f6, 0x0012f8f0 : 4056b8, 0x0012f8f4 : 4056ab, 0x0012f8f8 : 8020, 0x0012f8fc : 405677, 0x0012f900 : 405664, 0x0012f904 : 406f50, 0x0012f908 : 40563e, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, EBP: 0
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d09
+Register: eax=0, ebx=8020, ecx=405664, edx=42d4, esp=12f900, ebp=4056b8, esi=a7218, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 42d4, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cf7
+Register: eax=0, ebx=8020, ecx=405664, edx=113, esp=12f900, ebp=4056b8, esi=2bf0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 113, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ccc
+Register: eax=0, ebx=8020, ecx=405664, edx=46d0, esp=12f900, ebp=4056b8, esi=b1178, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 46d0, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cf7
+Register: eax=0, ebx=8020, ecx=405664, edx=4da, esp=12f900, ebp=4056b8, esi=c308, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 4da, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cf7
+Register: eax=0, ebx=8020, ecx=405664, edx=4af5, esp=12f900, ebp=4056b8, esi=bb740, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 4af5, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d49
+Register: eax=0, ebx=8020, ecx=405664, edx=899, esp=12f908, ebp=4056b8, esi=15908, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cd3
+Register: eax=0, ebx=8020, ecx=405664, edx=4f0e, esp=12f900, ebp=4056b8, esi=c5b28, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 4f0e, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=c65, esp=12f908, ebp=4056b8, esi=1f0c0, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d0b
+Register: eax=0, ebx=8020, ecx=405664, edx=5348, esp=12f900, ebp=4056b8, esi=d0438, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 5348, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ccb
+Register: eax=0, ebx=8020, ecx=405664, edx=103f, esp=12f904, ebp=4056b8, esi=28ad0, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 103f, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d4a
+Register: eax=0, ebx=8020, ecx=405664, edx=574c, esp=12f908, ebp=4056b8, esi=da4d8, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d0b
+Register: eax=0, ebx=8020, ecx=405664, edx=13e4, esp=12f900, ebp=4056b8, esi=31c98, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 13e4, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ce5
+Register: eax=0, ebx=8020, ecx=405664, edx=5b63, esp=12f900, ebp=4056b8, esi=e4870, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 5b63, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=17ac, esp=12f904, ebp=4056b8, esi=3b400, edi=0
+Flag: cf=false, pf=true, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 17ac, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=5f76, esp=12f904, ebp=4056b8, esi=eeb90, edi=0
+Flag: cf=false, pf=true, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 5f76, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cf7
+Register: eax=0, ebx=8020, ecx=405664, edx=1b2d, esp=12f900, ebp=4056b8, esi=44000, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 1b2d, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cee
+Register: eax=0, ebx=8020, ecx=405664, edx=6335, esp=12f900, ebp=4056b8, esi=f8140, edi=0
+Flag: cf=true, pf=false, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 6335, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d4a
+Register: eax=0, ebx=8020, ecx=405664, edx=1f02, esp=12f908, ebp=4056b8, esi=4d948, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ccb
+Register: eax=0, ebx=8020, ecx=405664, edx=67a3, esp=12f904, ebp=4056b8, esi=103270, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 67a3, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d49
+Register: eax=0, ebx=8020, ecx=405664, edx=231b, esp=12f908, ebp=4056b8, esi=57d58, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d44
+Register: eax=0, ebx=8020, ecx=405664, edx=6c35, esp=12f900, ebp=4056b8, esi=10e940, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 6c35, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cd5
+Register: eax=0, ebx=8020, ecx=405664, edx=2749, esp=12f900, ebp=4056b8, esi=62460, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 2749, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=70c0, esp=12f908, ebp=4056b8, esi=119ef8, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cdc
+Register: eax=0, ebx=8020, ecx=405664, edx=2b75, esp=12f900, ebp=4056b8, esi=6cb40, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 2b75, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cf7
+Register: eax=0, ebx=8020, ecx=405664, edx=7551, esp=12f900, ebp=4056b8, esi=1255a0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 7551, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ccb
+Register: eax=0, ebx=8020, ecx=405664, edx=2f95, esp=12f904, ebp=4056b8, esi=77040, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 2f95, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d49
+Register: eax=0, ebx=8020, ecx=405664, edx=79de, esp=12f908, ebp=4056b8, esi=130bd0, edi=0
+Flag: cf=false, pf=false, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cde
+Register: eax=0, ebx=8020, ecx=405664, edx=33a3, esp=12f900, ebp=4056b8, esi=81270, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 33a3, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=7e7b, esp=12f904, ebp=4056b8, esi=13c458, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 7e7b, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=37c0, esp=12f904, ebp=4056b8, esi=8b720, edi=0
+Flag: cf=false, pf=false, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 37c0, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ccb
+Register: eax=0, ebx=8020, ecx=405664, edx=8319, esp=12f904, ebp=4056b8, esi=147ce0, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 8319, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d44
+Register: eax=0, ebx=8020, ecx=405664, edx=3bf3, esp=12f900, ebp=4056b8, esi=95ef0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 3bf3, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=87a5, esp=12f904, ebp=4056b8, esi=1532e8, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 87a5, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=4012, esp=12f908, ebp=4056b8, esi=a03c8, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ccb
+Register: eax=0, ebx=8020, ecx=405664, edx=8c3e, esp=12f904, ebp=4056b8, esi=15eaa8, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 8c3e, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cde
+Register: eax=0, ebx=8020, ecx=405664, edx=4442, esp=12f900, ebp=4056b8, esi=aab48, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 4442, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cee
+Register: eax=0, ebx=8020, ecx=405664, edx=90b0, esp=12f900, ebp=4056b8, esi=169c78, edi=0
+Flag: cf=true, pf=false, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 90b0, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ccc
+Register: eax=0, ebx=8020, ecx=405664, edx=4802, esp=12f900, ebp=4056b8, esi=b4148, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 4802, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d09
+Register: eax=0, ebx=8020, ecx=405664, edx=942f, esp=12f900, ebp=4056b8, esi=172850, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 942f, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cd5
+Register: eax=0, ebx=8020, ecx=405664, edx=4b78, esp=12f900, ebp=4056b8, esi=bcbb8, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 4b78, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cd5
+Register: eax=0, ebx=8020, ecx=405664, edx=9836, esp=12f900, ebp=4056b8, esi=17c968, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 9836, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ce7
+Register: eax=0, ebx=8020, ecx=405664, edx=4f4d, esp=12f900, ebp=4056b8, esi=c6500, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 4f4d, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d02
+Register: eax=0, ebx=8020, ecx=405664, edx=9c42, esp=12f900, ebp=4056b8, esi=186b48, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 9c42, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ce5
+Register: eax=0, ebx=8020, ecx=405664, edx=5316, esp=12f900, ebp=4056b8, esi=cfc68, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 5316, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d49
+Register: eax=0, ebx=8020, ecx=405664, edx=a05d, esp=12f908, ebp=4056b8, esi=190fa8, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ccc
+Register: eax=0, ebx=8020, ecx=405664, edx=570f, esp=12f900, ebp=4056b8, esi=d9b50, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 570f, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=a49d, esp=12f904, ebp=4056b8, esi=19b9a8, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : a49d, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ce5
+Register: eax=0, ebx=8020, ecx=405664, edx=5b03, esp=12f900, ebp=4056b8, esi=e3970, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 5b03, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cd3
+Register: eax=0, ebx=8020, ecx=405664, edx=a8ca, esp=12f900, ebp=4056b8, esi=1a6088, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : a8ca, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=5ef5, esp=12f904, ebp=4056b8, esi=ed768, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 5ef5, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d00
+Register: eax=0, ebx=8020, ecx=405664, edx=ad2d, esp=12f900, ebp=4056b8, esi=1b1000, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : ad2d, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ce5
+Register: eax=0, ebx=8020, ecx=405664, edx=62f4, esp=12f900, ebp=4056b8, esi=f7718, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 62f4, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cf0
+Register: eax=0, ebx=8020, ecx=405664, edx=b17b, esp=12f900, ebp=4056b8, esi=1bbc30, edi=0
+Flag: cf=true, pf=false, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : b17b, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=66f5, esp=12f908, ebp=4056b8, esi=101740, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d00
+Register: eax=0, ebx=8020, ecx=405664, edx=b5d5, esp=12f900, ebp=4056b8, esi=1c6a40, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : b5d5, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cca
+Register: eax=0, ebx=8020, ecx=405664, edx=6af7, esp=12f908, ebp=4056b8, esi=10b790, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ce5
+Register: eax=0, ebx=8020, ecx=405664, edx=ba30, esp=12f900, ebp=4056b8, esi=1d1878, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : ba30, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=6f09, esp=12f908, ebp=4056b8, esi=115a60, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cf0
+Register: eax=0, ebx=8020, ecx=405664, edx=be9c, esp=12f900, ebp=4056b8, esi=1dc958, edi=0
+Flag: cf=true, pf=false, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : be9c, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=72f8, esp=12f904, ebp=4056b8, esi=11f7e0, edi=0
+Flag: cf=false, pf=false, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 72f8, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d09
+Register: eax=0, ebx=8020, ecx=405664, edx=c284, esp=12f900, ebp=4056b8, esi=1e6598, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : c284, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cdc
+Register: eax=0, ebx=8020, ecx=405664, edx=7663, esp=12f900, ebp=4056b8, esi=128070, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 7663, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=c627, esp=12f908, ebp=4056b8, esi=1ef710, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d00
+Register: eax=0, ebx=8020, ecx=405664, edx=7a06, esp=12f900, ebp=4056b8, esi=1311e8, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 7a06, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d0b
+Register: eax=0, ebx=8020, ecx=405664, edx=ca49, esp=12f900, ebp=4056b8, esi=1f9c60, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : ca49, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=7df3, esp=12f904, ebp=4056b8, esi=13af18, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 7df3, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d00
+Register: eax=0, ebx=8020, ecx=405664, edx=ce69, esp=12f900, ebp=4056b8, esi=204160, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : ce69, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cf7
+Register: eax=0, ebx=8020, ecx=405664, edx=81c0, esp=12f900, ebp=4056b8, esi=1446f8, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 81c0, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d02
+Register: eax=0, ebx=8020, ecx=405664, edx=d299, esp=12f900, ebp=4056b8, esi=20e8e0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : d299, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cf7
+Register: eax=0, ebx=8020, ecx=405664, edx=85d0, esp=12f900, ebp=4056b8, esi=14e978, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 85d0, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=d6e4, esp=12f908, ebp=4056b8, esi=219498, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d49
+Register: eax=0, ebx=8020, ecx=405664, edx=89d4, esp=12f908, ebp=4056b8, esi=158a40, edi=0
+Flag: cf=false, pf=false, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ccb
+Register: eax=0, ebx=8020, ecx=405664, edx=db13, esp=12f904, ebp=4056b8, esi=223bf0, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : db13, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405cee
+Register: eax=0, ebx=8020, ecx=405664, edx=8db9, esp=12f900, ebp=4056b8, esi=1625e0, edi=0
+Flag: cf=true, pf=false, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 8db9, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d4f
+Register: eax=0, ebx=8020, ecx=405664, edx=decc, esp=12f908, ebp=4056b8, esi=22d0d8, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ce5
+Register: eax=0, ebx=8020, ecx=405664, edx=90e9, esp=12f900, ebp=4056b8, esi=16a560, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 90e9, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ce7
+Register: eax=0, ebx=8020, ecx=405664, edx=e296, esp=12f900, ebp=4056b8, esi=236868, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : e296, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d00
+Register: eax=0, ebx=8020, ecx=405664, edx=94c4, esp=12f900, ebp=4056b8, esi=173f98, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 94c4, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ce5
+Register: eax=0, ebx=8020, ecx=405664, edx=e6a5, esp=12f900, ebp=4056b8, esi=240ac0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : e6a5, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ce7
+Register: eax=0, ebx=8020, ecx=405664, edx=9858, esp=12f900, ebp=4056b8, esi=17ceb8, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 9858, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cd3
+Register: eax=0, ebx=8020, ecx=405664, edx=ea1d, esp=12f900, ebp=4056b8, esi=249580, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : ea1d, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d47
+Register: eax=0, ebx=8020, ecx=405664, edx=9bd1, esp=12f900, ebp=4056b8, esi=1859c8, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : 9bd1, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ce5
+Register: eax=0, ebx=8020, ecx=405664, edx=ee11, esp=12f900, ebp=4056b8, esi=2533a0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : ee11, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=9fb1, esp=12f904, ebp=4056b8, esi=18f4c8, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 9fb1, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405d00
+Register: eax=0, ebx=8020, ecx=405664, edx=f291, esp=12f900, ebp=4056b8, esi=25e7a0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : f291, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ccc
+Register: eax=0, ebx=8020, ecx=405664, edx=a3e4, esp=12f900, ebp=4056b8, esi=199c98, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : a3e4, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cdc
+Register: eax=0, ebx=8020, ecx=405664, edx=f714, esp=12f900, ebp=4056b8, esi=269c18, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : f714, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=a812, esp=12f904, ebp=4056b8, esi=1a43f0, edi=0
+Flag: cf=false, pf=true, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : a812, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405ccc
+Register: eax=0, ebx=8020, ecx=405664, edx=fb83, esp=12f900, ebp=4056b8, esi=274d70, edi=0
+Flag: cf=false, pf=false, af=false, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : fb83, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405ce7
+Register: eax=0, ebx=8020, ecx=405664, edx=ac33, esp=12f900, ebp=4056b8, esi=1ae8f0, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : ac33, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cdc
+Register: eax=0, ebx=8020, ecx=405664, edx=ffde, esp=12f900, ebp=4056b8, esi=27fba8, edi=0
+Flag: cf=true, pf=true, af=true, zf=false, sf=true, tf=false, df=false, of=false, if=true
+Stack: 0x0012f900 : 0, 0x0012f904 : ffde, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d48
+Register: eax=0, ebx=8020, ecx=405664, edx=b017, esp=12f904, ebp=4056b8, esi=1b84b8, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : b017, 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************
+Address=0x00405cae
+Register: eax=0, ebx=8020, ecx=405664, edx=389, esp=12f904, ebp=4056b8, esi=8e88, edi=0
+Flag: cf=false, pf=true, af=false, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f904 : 40565f, 0x0012f908 : 405651, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@10c8785
+*************************************************************
+Address=0x00405d49
+Register: eax=0, ebx=8020, ecx=405664, edx=b40c, esp=12f908, ebp=4056b8, esi=1c2300, edi=0
+Flag: cf=false, pf=true, af=true, zf=false, sf=false, tf=false, df=false, of=false, if=true
+Stack: 0x0012f908 : 40564c, 0x0012f90c : 40562b, 0x0012f910 : 40561e, 0x0012f914 : 40556d, 0x0012f918 : 405438, 0x0012f91c : 4051c2, 0x0012f920 : 405132, 0x0012f924 : 404f54, 0x0012f928 : 404e9f, 0x0012f92c : 404e82, 0x0012f930 : 404e69, 0x0012f934 : 404e50, 0x0012f938 : 404e37, 0x0012f93c : 404e1e, 0x0012f940 : 404e05, 0x0012f944 : 404dec, 0x0012f948 : 404dd3, 0x0012f94c : 404dba, 0x0012f950 : 404da1, 0x0012f954 : 404d88, 0x0012f958 : 404d6f, 0x0012f95c : 404d56, 0x0012f960 : 404d3d, 0x0012f964 : 404d24, 0x0012f968 : 404d0a, 0x0012f96c : 404cf1, 0x0012f970 : 404cd8, 0x0012f974 : 404cbf, 0x0012f978 : 404ca6, 0x0012f97c : 404c8d, 0x0012f980 : 404c74, 0x0012f984 : 404c5b, 0x0012f988 : 404c42, 0x0012f98c : 404c29, 0x0012f990 : 404c0f, 0x0012f994 : 404bf6, EBP: ffffffff8de901eb
+SEH: v2.org.analysis.system.SEHHandle@1b2797e
+*************************************************************

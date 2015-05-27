@@ -53,7 +53,8 @@ public class LoadBitmap extends User32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName,
+			BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -69,8 +70,10 @@ public class LoadBitmap extends User32API {
 
 			HINSTANCE hInstance = new HINSTANCE();
 			hInstance.setPointer(new Pointer(t1));
-			WString lpBitmapName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
-			HBITMAP ret = User32DLL.INSTANCE.LoadBitmap(hInstance, lpBitmapName);
+			WString lpBitmapName = new WString(
+					memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+			HBITMAP ret = User32DLL.INSTANCE
+					.LoadBitmap(hInstance, lpBitmapName);
 
 			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 			register.mov("eax", new LongValue(value));

@@ -60,7 +60,8 @@ public class LoadString extends User32API {
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public boolean execute(AbsoluteAddress address, String funcName,
+			BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
@@ -71,7 +72,8 @@ public class LoadString extends User32API {
 		Value x3 = stack.pop();
 		Value x4 = stack.pop();
 		System.out.print("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
+		if (x1 instanceof LongValue && x2 instanceof LongValue
+				&& x3 instanceof LongValue && x4 instanceof LongValue) {
 
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
@@ -86,12 +88,14 @@ public class LoadString extends User32API {
 			UINT uID = new UINT(t2);
 			char[] lpBuffer = new char[(int) t4];
 			int nBufferMax = (int) t4;
-			int ret = User32DLL.INSTANCE.LoadString(hInstance, uID, lpBuffer, nBufferMax);
+			int ret = User32DLL.INSTANCE.LoadString(hInstance, uID, lpBuffer,
+					nBufferMax);
 
 			register.mov("eax", new LongValue(ret));
 
 			if (ret != 0L)
-				memory.setText(new X86MemoryOperand(DataType.INT32, t3), new String(lpBuffer));
+				memory.setText(new X86MemoryOperand(DataType.INT32, t3),
+						new String(lpBuffer));
 		}
 		return false;
 	}

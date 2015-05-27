@@ -94,15 +94,13 @@ public class CryptAcquireContext extends Advapi32API {
 			long t5 = ((LongValue) x5).getValue();
 
 			ULONG_PTRByReference phProv = new ULONG_PTRByReference();
-			WString pszContainer = (t2 == 0L) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32,
-					t2)));
-			WString pszProvider = (t3 == 0L) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32,
-					t3)));
+			WString pszContainer = (t2 == 0L) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+			WString pszProvider = (t3 == 0L) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
 			DWORD dwProvType = new DWORD(t4);
 			DWORD dwFlags = new DWORD(t5);
-
+			
 			System.out.println("pszContainer: " + pszContainer + " ,pszProvider: " + pszProvider);
-
+			
 			BOOL ret = Advapi32DLL.INSTANCE.CryptAcquireContext(phProv, pszContainer, pszProvider, dwProvType, dwFlags);
 
 			long value = ret.longValue();

@@ -162,7 +162,6 @@ public class CreateFile extends Kernel32API {
 					new HANDLE(new Pointer(t7)));
 			register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
 			System.out.println("Return value:" + Pointer.nativeValue(ret.getPointer()));
-			//System.out.println("EAX:" + register.getRegisterValue("eax"));
 		}
 
 		return false;

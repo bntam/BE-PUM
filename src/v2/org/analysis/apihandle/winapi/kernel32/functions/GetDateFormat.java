@@ -122,15 +122,14 @@ public class GetDateFormat extends Kernel32API {
 				lpDate.wMilliseconds = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(
 						DataType.INT32, t3 += 2))).getValue();
 			}
-			WString lpFormat = (t4 == 0L) ? null
-					: new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t4)));
+			WString lpFormat = (t4 == 0L) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t4)));
 			char[] lpDateStr = (t5 == 0L) ? null : new char[(int) t6 + 1];
 			int cchDate = (int) t6;
-
+			
 			int ret = Kernel32DLL.INSTANCE.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, lpDateStr, cchDate);
 
 			register.mov("eax", new LongValue(ret));
-
+			
 			if (t5 != 0L && cchDate != 0) {
 				memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpDateStr), ret);
 			}

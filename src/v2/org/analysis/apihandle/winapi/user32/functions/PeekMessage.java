@@ -93,22 +93,22 @@ public class PeekMessage extends User32API {
 			int wMsgFilterMin = (int) t3;
 			int wMsgFilterMax = (int) t4;
 			int wRemoveMsg = (int) t5;
-
+			
 			boolean ret = User32.INSTANCE.PeekMessage(lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax, wRemoveMsg);
 			register.mov("eax", new LongValue((ret) ? 1 : 0));
-
+			
 			long value = Pointer.nativeValue(lpMsg.hWnd.getPointer());
 			memory.setDoubleWordMemoryValue(t1, new LongValue(value));
-
+			
 			value = lpMsg.message;
 			memory.setDoubleWordMemoryValue(t1 += 4, new LongValue(value));
-
+			
 			value = lpMsg.wParam.longValue();
 			memory.setDoubleWordMemoryValue(t1 += 4, new LongValue(value));
-
+			
 			value = lpMsg.lParam.longValue();
 			memory.setDoubleWordMemoryValue(t1 += 4, new LongValue(value));
-
+			
 			value = lpMsg.time;
 			memory.setDoubleWordMemoryValue(t1 += 4, new LongValue(value));
 
