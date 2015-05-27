@@ -171,7 +171,7 @@ public class Convert {
 		// TODO Auto-generated method stub
 		String ret = "";
 		for (int i = 0; i<t.length(); i++) { 
-			if (t.charAt(i) == ' ' || t.charAt(i) == '\0')
+			if (t.charAt(i) == '\0')
 				break;
 			ret += t.charAt(i);
 		}

@@ -109,10 +109,6 @@ public class OTFModelGeneration implements Algorithm {
 
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
-			// PHONG: 20150506 - Update TIB
-			// --------------------------------------
-			TIB.updateTIB(curState);
-			// --------------------------------------------------------------------
 			// long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
 				long overallEndTimeTemp = System.currentTimeMillis();
@@ -152,11 +148,17 @@ public class OTFModelGeneration implements Algorithm {
 				inst = curState.getInstruction();
 				location = curState.getLocation();
 				
-				if (location == null || location.toString().contains("401129"))
-					System.out.println("Debug");
+				//if (location == null || location.toString().contains("4202d0"))
+				//	System.out.println("Debug " + location);
 								
-				debugProgram(location, curState, fileState, bkFile);
+				//debugProgram(location, curState, fileState, bkFile);
 				compareOlly(curState);
+				
+				// PHONG: 20150506 - Update TIB
+				// --------------------------------------
+				TIB.updateTIB(curState);
+				TIB.updateChecking(curState);
+				// --------------------------------------
 
 				if (inst == null || location == null)
 					break;
@@ -290,10 +292,11 @@ public class OTFModelGeneration implements Algorithm {
 		// bkFile.appendFile(result);
 		fileState.appendFile(result);
 
-		program.generageCFG("asm/cfg/" + program.getFileName() + "_test");
+		program.generageCFG("/asm/cfg/" + program.getFileName() + "_test");
 		program.getResultFileTemp().appendInLine(
 				program.getDetailTechnique() + " Nodes:" + program.getBPCFG().getVertexCount() + " Edges:"
 						+ program.getBPCFG().getEdgeCount() + " ");
+		//System.out.println();
 	}
 
 	private void compareOlly(BPState state) {
@@ -306,8 +309,8 @@ public class OTFModelGeneration implements Algorithm {
 			AbsoluteAddress location = state.getLocation();
 			Environment env = state.getEnvironement();
 			if (ollyCompare == null) {
-				long memoryStartAddr = 0x4245d0;
-				long memoryEndAddr = 0x4245e0;
+				long memoryStartAddr = 0x404098;
+				long memoryEndAddr = 0x4040A0;
 				long stackIndex = 0x8c;
 
 				ollyCompare = new OllyCompare("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
@@ -354,7 +357,7 @@ public class OTFModelGeneration implements Algorithm {
 				isChecked = false;
 				count = 1;
 
-				if (num >= 2) {
+				if (num >= 3) {
 					isCompareOlly = false;
 					System.out.println("Finish Checking");
 				}
@@ -417,8 +420,10 @@ public class OTFModelGeneration implements Algorithm {
 				))
 		// ******************************************
 		// Virus.Win32.Aztec.01
-				|| (fileName.equals("Virus.Win32.Aztec.01") && (location.toString().contains("40118d")
-				// || location.toString().contains("401317")
+				|| (fileName.equals("Virus.Win32.Aztec.01") && 
+				(location.toString().contains("40134e")
+				|| location.toString().contains("401312")
+				|| location.toString().contains("40106c")
 				)))) {
 			System.out.println("Debug at:" + location.toString());
 			backupState(curState, fileState);

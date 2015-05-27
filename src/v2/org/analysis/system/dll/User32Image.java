@@ -246,4 +246,9 @@ public class User32Image {
 		 */
 		return peHandler.getExportName(v);
 	}
+
+	public boolean isInside(AbsoluteAddress addr) {
+		// TODO Auto-generated method stub
+		return addr.getValue() >= this.baseAddress && addr.getValue() < (this.baseAddress + getLength());
+	}
 }

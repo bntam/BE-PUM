@@ -50,10 +50,11 @@ public class LibraryHandle {
 	public boolean isInside(AbsoluteAddress addr) {
 		// Hai: Special Case when this address is API Address
 		// Change later
-		for (Library l : libraryName)
+		for (Library l : libraryName) {
 			if (!l.getLibraryName().equals("kernel32.dll") && !l.getLibraryName().equals("user32.dll")
 					&& l.getExportTable().containsKey(addr))
-				return true;
+				return true;			
+		}
 
 		return false;
 	}

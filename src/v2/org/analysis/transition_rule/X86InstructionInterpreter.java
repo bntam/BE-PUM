@@ -963,6 +963,7 @@ public class X86InstructionInterpreter {
 
 				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")
 						&& src.getClass().getSimpleName().equals("X86MemoryOperand")) {
+					//System.out.println();
 					X86MemoryOperand edi = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
 					X86MemoryOperand esi = env.getMemory().evaluateAddress((X86MemoryOperand) src, env);
 
@@ -1506,7 +1507,9 @@ public class X86InstructionInterpreter {
 				X86MemoryOperand t = (X86MemoryOperand) dest;
 				if (t.getSegmentRegister() != null && t.getSegmentRegister().toString() == "%fs"
 						&& t.getDisplacement() == 0) {
-					d = new LongValue(env.getSystem().getSEHHandler().getStart().getNextSEHRecord());
+					// PHONG: update 20150526-----------------
+					d = new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
+					//---------------------------------------
 				} else
 					d = env.getMemory().getMemoryValue(t, inst);
 

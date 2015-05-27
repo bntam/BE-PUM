@@ -38,6 +38,10 @@ public class Storage {
 			String directoryName = workingDirectory + String.valueOf(drive); // path.getPath().replace(":\\",
 																				// "");
 			createMappingDir(directoryName);
+			if (drive == 'C') {
+				directoryName += "/My Downloads";
+				createMappingDir(directoryName);
+			}
 			createdPaths.add(String.valueOf(drive) + ":\\");
 		}
 

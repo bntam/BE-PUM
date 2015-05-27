@@ -142,7 +142,7 @@ public class FileProcess {
 	public boolean appendFile(String data) {
 		try {
 			// String data = " This content will append to the end of the file";
-			File file = new File(this.filePath);
+			File file = new File(System.getProperty("user.dir") + "/" + this.filePath);
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
@@ -164,7 +164,7 @@ public class FileProcess {
 	public boolean appendInLine(String data) {
 		try {
 			// String data = " This content will append to the end of the file";
-			File file = new File(this.filePath);
+			File file = new File(System.getProperty("user.dir") + "/" + this.filePath);
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();

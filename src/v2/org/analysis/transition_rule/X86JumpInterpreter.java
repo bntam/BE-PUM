@@ -79,8 +79,7 @@ public class X86JumpInterpreter {
 					byte[] opcodes = rule.getOpcodesArray(curState, nextAddr.getValue());
 					nextInst = Program.getProgram().getInstruction(opcodes, env);
 				} else
-					nextInst = Program.getProgram().getInstruction(nextAddr, env);
-
+					nextInst = Program.getProgram().getInstruction(nextAddr, env);				
 				curState.setInstruction(nextInst);
 				curState.setLocation(nextAddr);
 			}

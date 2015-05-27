@@ -41,16 +41,28 @@ public class Memory {
 		memory = new NewHashMap<X86MemoryOperand, Value>();
 		reset = new NewHashMap<Long, Value>();
 		program = Program.getProgram();
+		initSEHMemory();
 	}
 
 	public Memory(Environment env) {
 		memory = new NewHashMap<X86MemoryOperand, Value>();
 		program = Program.getProgram();
 		this.env = env;
+		initSEHMemory();
 	}
 
+	/////////////// PHONG: 20150526/////////////////////////////////////
+	public void initSEHMemory(){
+		long addrSEH = 0x12FFE0;
+		long nextSEH = 0xFFFFFFFF;
+		long sehHandler = 0x7C839AA8;
+		setDoubleWordMemoryValue(addrSEH, new LongValue(nextSEH));
+		setDoubleWordMemoryValue(addrSEH + 4, new LongValue(sehHandler));
+	}
+	////////////////////////////////////////////////////////////////////
+
 	public String outputMemory() {
-		FileProcess fp = new FileProcess(System.getProperty("user.dir") + "/data/memory.txt");
+		FileProcess fp = new FileProcess("/data/memory.txt");
 		String ret = "";
 		for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
 			ret += entry.getKey() + "\t" + entry.getValue() + "\n";
@@ -321,8 +333,11 @@ public class Memory {
 		 * 
 		 * return new X86MemoryOperand(t.getDataType(), val); } } return t;
 		 */
-		if (m.getSegmentRegister() != null)
-			return m;
+		if (m.getSegmentRegister() != null) {
+			String temp = m.getSegmentRegister().toString();
+			if (!temp.contains("es") && !temp.contains("ds"))
+				return m;
+		}
 
 		long val = (int) m.getDisplacement();
 		if (m.getBase() != null) {
@@ -354,6 +369,10 @@ public class Memory {
 	public Value getByteMemoryValue(long address) {
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getKernel().readByte((int) address));
+		}
+		
+		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getUser32().readByte((int) address));
 		}
 
 		if (env.getSystem().getFileHandle().isInsideFIle(new AbsoluteAddress(address))) {
@@ -408,10 +427,20 @@ public class Memory {
 		/*
 		 * if (address==2420113468l) System.out.println("Debug");
 		 */
-
+		//if (address == 2118189056)
+		//	System.out.println("Debug Memory: " + address);
+		
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getKernel().readDoubleWord((int) address));
 		}
+		
+		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getUser32().readDoubleWord((int) address));
+		}
+		
+		/*if (env.getSystem().getLibraryHandle().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getLi.readDoubleWord((int) address));
+		}*/
 
 		if (env.getSystem().getFileHandle().isInsideFIle(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getFileHandle().readDoubleWord((int) address));
@@ -650,6 +679,10 @@ public class Memory {
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getKernel().readWord((int) address));
 		}
+		
+		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getUser32().readWord((int) address));
+		}
 
 		if (env.getSystem().getFileHandle().isInsideFIle(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getFileHandle().readWord((int) address));
@@ -857,12 +890,13 @@ public class Memory {
 	}
 
 	public void setByteMemoryValue(long address, Value v) {
+//		if (address == 4202923)
+//			System.out.println("Debug Me");
+		
 		for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
 			X86MemoryOperand m = (X86MemoryOperand) entry.getKey();
 
-			if (evaluateAddress(m) == address) {
-				if (address == 4344187)
-					System.out.println("Debug Me");
+			if (evaluateAddress(m) == address) {				
 				entry.setValue(v);
 				return;
 			}
@@ -1011,6 +1045,8 @@ public class Memory {
 
 	public void setText(X86MemoryOperand m, String str) {
 		// TODO Auto-generated method stub
+		
+		str = Convert.reduceText(str);
 		char[] t = str.toCharArray();
 		long disp = evaluateAddress(m);
 
