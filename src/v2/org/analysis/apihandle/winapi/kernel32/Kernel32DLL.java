@@ -286,7 +286,7 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 * @return The return value is a pointer to the command-line string for the
 	 *         current process.
 	 */
-	String GetCommandLine();
+	Pointer GetCommandLine();
 
 	/**
 	 * Determines whether the calling process is being debugged by a user-mode

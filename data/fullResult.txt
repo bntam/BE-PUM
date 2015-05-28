@@ -918,3 +918,27 @@
    Instructions:                               1
    Nodes:                               1
    Edges:                               0
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     api_test_yoda.exe
+   Runtime:                       191430ms
+   Instructions:                             579
+   Nodes:                             590
+   Edges:                             655
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     api_test_yoda.exe
+   Runtime:                       205479ms
+   Instructions:                             579
+   Nodes:                             590
+   Edges:                             655
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     api_test_yoda.exe
+   Runtime:                       139150ms
+   Instructions:                             579
+   Nodes:                             590
+   Edges:                             655

@@ -8,6 +8,7 @@
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
@@ -15,9 +16,13 @@ import org.jakstab.asm.DataType;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
+import com.sun.jna.Pointer;
+
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.Memory;
+import v2.org.analysis.environment.Register;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves the command-line string for the current process.
@@ -26,7 +31,7 @@ import v2.org.analysis.path.BPState;
  *         current process.
  * 
  * @author Yen Nguyen
- *
+ * 
  */
 public class GetCommandLine extends Kernel32API {
 
@@ -41,18 +46,20 @@ public class GetCommandLine extends Kernel32API {
 	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
 		Environment env = curState.getEnvironement();
 		Memory memory = env.getMemory();
+		Register register = env.getRegister();
 		Program program = Program.getProgram();
 
 		// This function has no parameters.
-		long disp = 4796200;
-		// String commandLine = Kernel32DLL.INSTANCE.GetCommandLine();
-		//String commandLine = "\"C:/Windows/" + program.getFileName()+"\"";
-		
-		 String commandLine = "\"" + program.getAbsolutePathFile() + "\"";
+		// long disp = 4796200;
+		// String commandLine = "\"C:/Windows/" + program.getFileName()+"\"";
+		Pointer ret = Kernel32DLL.INSTANCE.GetCommandLine();
 
-		System.out.println("Argument MemoryOperand:" + disp + ", Command Line:" + commandLine);
+		String commandLine = "\"" + program.getAbsolutePathFile() + "\"";
+		long ptr = Pointer.nativeValue(ret);
+		System.out.println("Memory Operand:" + ptr + ", Command Line:" + commandLine);
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, disp), commandLine);
+		memory.setText(new X86MemoryOperand(DataType.INT32, ptr), commandLine);
+		register.mov("eax", new LongValue(ptr));
 		return false;
 	}
 
