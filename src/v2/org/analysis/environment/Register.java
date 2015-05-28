@@ -14,7 +14,7 @@ import v2.org.analysis.value.Value;
  */
 public class Register {
 	private Value eax, ebx, ecx, edx, esi, edi, esp, ebp, eip, ax, ah, al, bx, bh, bl, cx, ch, cl, dx, dh, dl, si, di,
-			sp, bp, ds;
+			sp, bp, ds, es, fs, cs, ss, gs;
 
 	public Register clone() {
 		Register ret = new Register();
@@ -57,7 +57,12 @@ public class Register {
 		ret.setRegisterValue("bp", bp.clone());
 
 		ret.setRegisterValue("eip", eip.clone());
+		ret.setRegisterValue("cs", cs.clone());
 		ret.setRegisterValue("ds", ds.clone());
+		ret.setRegisterValue("es", es.clone());
+		ret.setRegisterValue("fs", fs.clone());
+		ret.setRegisterValue("ss", ss.clone());
+		ret.setRegisterValue("gs", gs.clone());
 
 		return ret;
 	}
@@ -96,7 +101,12 @@ public class Register {
 		bp = new SymbolValue("bp");
 
 		eip = new SymbolValue("eip");
+		cs = new SymbolValue("cs");
 		ds = new SymbolValue("ds");
+		es = new SymbolValue("es");
+		fs = new SymbolValue("fs");
+		gs = new SymbolValue("gs");
+		ss = new SymbolValue("ss");
 	}
 
 	public Value getRegisterValue(String registerName) {
@@ -161,8 +171,23 @@ public class Register {
 		if (reg.equals("eip"))
 			return eip;
 
+		if (reg.equals("cs"))
+			return cs;
+		
 		if (reg.equals("ds"))
 			return ds;
+		
+		if (reg.equals("es"))
+			return es;
+		
+		if (reg.equals("fs"))
+			return fs;
+		
+		if (reg.equals("gs"))
+			return gs;
+		
+		if (reg.equals("ss"))
+			return ss;
 
 		return null;
 	}
@@ -170,13 +195,25 @@ public class Register {
 	public void setRegisterValue(String registerName, Value value) {
 		String reg = checkRegisterName(registerName);
 		Value v = this.normalizeValue(value, registerName);
+		
+
+		if (reg.equals("cs")) {
+			cs = v;
+		} else if (reg.equals("ds")) {
+			ds = v;
+		} else if (reg.equals("es")) {
+			es = v;
+		} else if (reg.equals("fs")) {
+			fs = v;
+		} else if (reg.equals("gs")) {
+			gs = v;
+		} else if (reg.equals("ss")) {
+			ss = v;
+		} 
 
 		if (v instanceof LongValue) {
 			long p = ((LongValue) v).getValue();
-			
-			if (reg.equals("ds")) {
-				ds = v;
-			} else if (reg.equals("bp")) {
+			if (reg.equals("bp")) {
 				bp = v;
 				Value t = getRegisterValue("ebp");
 				if (t instanceof LongValue) {
@@ -527,12 +564,8 @@ public class Register {
 				// bp = v.modFunction(new LongValue((long) Math.pow(2, 16)));
 			} else if (reg.equals("bp"))
 				bp = v;
-
 			else if (reg.equals("eip"))
-				eip = v;
-
-			else if (reg.equals("ds"))
-				ds = v;
+				eip = v;			
 		}
 	}
 
