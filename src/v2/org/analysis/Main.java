@@ -250,14 +250,14 @@ public class Main {
 		in = "Virus.Win32.Wit.a";
 		in = "Virus.Win32.Htrip.a";
 		// in = "Virus.Win32.Eva.a";
-		in = "Virus.Win32.Cornad";
+		// in = "Virus.Win32.Cornad";
 		// in = "Virus.Win32.Compan.a"; // 79 87
 		// in = "Virus.Win32.Cerebrus.1482";
 		// in = "Virus.Win32.Bogus.4096"; // 97 107 45s
 		// in = "Virus.Win32.Brof.a"; // 190 210 4s 
 		// in = "Virus.Win32.Benny.3223"; //210 226 4s
 		// in = "Virus.Win32.Benny.3219.a"; // 210 226 5s
-		// in = "Virus.Win32.Belial.a"; // 130 134 307s Yen
+		 in = "Virus.Win32.Belial.a"; // 86 86 5s Yen
 		// in = "Virus.Win32.Aztec.01"; //243 252 11s
 		// in = "Trojan-PSW.Win32.QQRob.16.d"; // 348 382 2618
 		// in = "Email-Worm.Win32.Coronex.a"; // 219 229 11s

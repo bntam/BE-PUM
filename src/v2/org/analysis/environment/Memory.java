@@ -286,6 +286,17 @@ public class Memory {
 				return UNKNOWN;
 		}
 
+		if (m.getSegmentRegister() != null) {
+			Value r = env.getRegister().getRegisterValue(m.getSegmentRegister().toString());
+			if (r != null && r instanceof LongValue) {
+				// PHONG: change long address here to int address
+				val += (int) ((LongValue) r).getValue();
+				// return ret + m.getDisplacement() + ((LongValue)
+				// r).getValueOperand();
+			} else
+				return UNKNOWN;
+		}
+
 		return val;
 	}
 
@@ -416,9 +427,11 @@ public class Memory {
 
 		// PHONG: 20150605
 		// -----------------------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 
 		if (d == UNKNOWN)
@@ -546,9 +559,11 @@ public class Memory {
 
 		// PHONG: 20150506 If segment is FS
 		// ------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 		if (d == UNKNOWN) {
 			return new SymbolValue(Convert.generateString(dest));
@@ -777,9 +792,11 @@ public class Memory {
 
 		// PHONG: 20150605
 		// -----------------------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 
 		if (d == UNKNOWN)
