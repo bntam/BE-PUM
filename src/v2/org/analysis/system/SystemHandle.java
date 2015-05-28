@@ -1,11 +1,13 @@
 package v2.org.analysis.system;
 
+import v2.org.analysis.system.dll.Advapi32Image;
 import v2.org.analysis.system.dll.Kernel32Image;
 import v2.org.analysis.system.dll.User32Image;
 
 public class SystemHandle {
 	private Kernel32Image kernelHandle;
 	private User32Image userHandle;
+	private Advapi32Image advapiHandle;
 	private FileHandle fileHandle;
 	private RegistryHandle registryHandle;
 	private HeapHandle heapHandle;
@@ -50,6 +52,7 @@ public class SystemHandle {
 	public SystemHandle() {
 		kernelHandle = new Kernel32Image("data/kernel32.dll");
 		userHandle = new User32Image("data/user32.dll");
+		advapiHandle = new Advapi32Image("data/advapi32.dll");
 		seh = new SEHHandle();
 		fileHandle = new FileHandle();
 		fileHandle.setPath(path);
@@ -74,6 +77,9 @@ public class SystemHandle {
 
 		if (libName.equals("user32.dll") || libName.contains("user32"))
 			return getUser32().getBaseAddress();
+		
+		if (libName.equals("advapi32.dll") || libName.contains("advapi32"))
+			return getAdvapi32Handle().getBaseAddress();
 
 		Library l = libraryHandle.getLibrary(libName);
 
@@ -93,6 +99,11 @@ public class SystemHandle {
 		User32Image user = getUser32();
 		if (user.getBaseAddress() == libraryHandle) {
 			return user.getProcAddress(functionName);
+		}
+		
+		Advapi32Image advapi = getAdvapi32Handle();
+		if (advapi.getBaseAddress() == libraryHandle) {
+			return advapi.getProcAddress(functionName);
 		}
 
 		Library l = this.libraryHandle.getLibrary(libraryHandle);
@@ -262,6 +273,9 @@ public class SystemHandle {
 
 		if (libraryName.toLowerCase().contains("user32.dll"))
 			return getUser32().getProcAddress(functionName);
+		
+		if (libraryName.toLowerCase().contains("advapi32.dll"))
+			return getAdvapi32Handle().getProcAddress(functionName);
 
 		Library l = this.libraryHandle.getLibrary(libraryName);
 
@@ -269,5 +283,13 @@ public class SystemHandle {
 			return l.getAPIAddr(functionName);
 
 		return 0;
+	}
+
+	public Advapi32Image getAdvapi32Handle() {
+		return advapiHandle;
+	}
+
+	public void setAdvapi32Handle(Advapi32Image advapiHandle) {
+		this.advapiHandle = advapiHandle;
 	}
 }

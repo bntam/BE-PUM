@@ -20,7 +20,7 @@ public class Storage {
 	private static boolean init = false;
 	public static final StringBuilder workingDirectory = (new StringBuilder(System.getProperty("user.dir")))
 			.append('\\').append("Storage").append('\\');
-	public static String CurrentDirectory = "";
+	public static String CurrentDirectory = System.getProperty("user.dir");
 	private static HashSet<String> createdPaths = new HashSet<String>();
 
 	/**
@@ -119,7 +119,7 @@ public class Storage {
 			File pathFile = new File(path);
 			if (!pathFile.isAbsolute()) {
 				if (CurrentDirectory.length() > 1
-						&& (CurrentDirectory.charAt(CurrentDirectory.length() - 1) != '\\' || CurrentDirectory
+						&& (CurrentDirectory.charAt(CurrentDirectory.length() - 1) != '\\' && CurrentDirectory
 								.charAt(CurrentDirectory.length() - 1) != '/'))
 					CurrentDirectory += '\\';
 				pathFile = new File(CurrentDirectory + path);
@@ -140,7 +140,7 @@ public class Storage {
 				createMappingDir(parentDir);
 			}
 
-			// If path exists and the virtual storage has not process it
+			// If path exists and the virtual storage is not, copy it
 			if (pathFile.exists() && !createdPaths.contains(path)) {
 
 				if (mappingPathFile.isDirectory()) {

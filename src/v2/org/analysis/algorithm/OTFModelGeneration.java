@@ -272,12 +272,22 @@ public class OTFModelGeneration implements Algorithm {
 					String r[] = reg[i].split("=");
 					String addr = r[0].replace("0x", "");
 					long x = Long.parseLong(addr, 16);
-					byte y = (byte) Long.parseLong(r[1], 16);
+					byte y = (byte) Long.parseLong(reduce(r[1], 8), 16);
 					env.getMemory().setByteMemoryValue(x, new LongValue(y));
 				}
 			}
 			t++;
 		}
+	}
+
+	private String reduce(String str, int i) {
+		// TODO Auto-generated method stub
+		String ret = str;
+		if (i == 8)
+			if (str.length() > 2)
+				ret = str.substring(str.length()-2);
+		
+		return ret;
 	}
 
 	private void backupState(BPState curState, FileProcess fileState) {
