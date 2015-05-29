@@ -265,13 +265,10 @@ public class Memory {
 		long val = (int) m.getDisplacement();
 		if (m.getBase() != null) {
 			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
-<<<<<<< HEAD
 			
 			if (r == null || !(r instanceof LongValue))
 				return UNKNOWN; 
-			
-=======
->>>>>>> branch 'master' of https://github.com/SmallSAVE/BE-PUMv2.git
+	
 			Value s = null;
 			long r_s = ((LongValue) r).getValue();
 			if (m.getSegmentRegister() != null){
