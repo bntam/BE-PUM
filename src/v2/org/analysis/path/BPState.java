@@ -5,7 +5,9 @@ package v2.org.analysis.path;
 
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
+
 import v2.org.analysis.environment.Environment;
+import v2.org.analysis.value.Formulas;
 
 /**
  * @author NMHai
@@ -15,7 +17,9 @@ public class BPState {
 	private Environment env;
 	private AbsoluteAddress location;
 	private Instruction inst;
+	private Formulas pathCondition;
 	private boolean feasible = true;
+	private int index = 0; // Binh usage
 
 	/**
 	 * @param env
@@ -83,6 +87,24 @@ public class BPState {
 	 */
 	public void setFeasiblePath(boolean fesible) {
 		this.feasible = fesible;
+	}
+
+	public Formulas getPathCondition() {
+		return pathCondition;
+	}
+
+	public void setPathCondition(Formulas pathCondition) {
+		this.pathCondition = pathCondition;
+	}
+
+	// Binh usage
+	public int getIndex() {
+		return index;
+	}
+	
+	// Binh usage
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 }

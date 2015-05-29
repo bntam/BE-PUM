@@ -401,7 +401,7 @@ public class X86TransitionRule extends TransitionRule {
 			setCFG = false;
 		// return curState;
 		if (path.getCurrentState().checkFeasiblePath())
-			LoopAlgorithm.getInstance().checkLoop(path, this);
+			LoopAlgorithm.getInstance().halt(path, this);
 	}
 
 	// Generate new Path Condition and check for feasibility with Z3
@@ -409,7 +409,7 @@ public class X86TransitionRule extends TransitionRule {
 		// TODO Auto-generated method stub
 		new X86ConditionalJumpInterpreter().execute(inst, path, pathList, condition, this);
 		if (path.getCurrentState().checkFeasiblePath())
-			LoopAlgorithm.getInstance().checkLoop(path, this);
+			LoopAlgorithm.getInstance().halt(path, this);
 	}
 
 	// PHONG: insert here
@@ -967,7 +967,7 @@ public class X86TransitionRule extends TransitionRule {
 				pathList.add(newP);
 				newP.getCurrentState().setFeasiblePath(true);
 
-				LoopAlgorithm.getInstance().checkLoop(newP, this);
+				LoopAlgorithm.getInstance().halt(newP, this);
 			}
 
 			if (path.getLoopHandle().isCheck())
@@ -978,7 +978,7 @@ public class X86TransitionRule extends TransitionRule {
 			path.setPathCondition(p1);
 			path.getCurrentState().setFeasiblePath(true);
 
-			LoopAlgorithm.getInstance().checkLoop(path, this);
+			LoopAlgorithm.getInstance().halt(path, this);
 		} else {
 			if (new X86ConditionalJumpInterpreter().execute(inst, p2, path, false, this)) {
 				path.setPathCondition(p2);
@@ -991,7 +991,7 @@ public class X86TransitionRule extends TransitionRule {
 				this.generateNextInstruction(inst, path, pathList, false);
 				path.getCurrentState().setFeasiblePath(true);
 
-				LoopAlgorithm.getInstance().checkLoop(path, this);
+				LoopAlgorithm.getInstance().halt(path, this);
 			} else
 				path.getCurrentState().setFeasiblePath(false);
 		}

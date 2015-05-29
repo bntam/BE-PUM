@@ -157,14 +157,17 @@ public class OTFModelGeneration implements Algorithm {
 				//	System.out.println("Debug " + location);
 								
 				//debugProgram(location, curState, fileState, bkFile);
-				compareOlly(curState);
+				//compareOlly(curState);
 				
 				// PHONG: 20150506 - Update TIB
 				// --------------------------------------
 				TIB.updateTIB(curState);
 				TIB.updateChecking(curState);
 				// --------------------------------------
-
+				
+				if (path.getPathCondition().getListFormula().size() > 2)
+					System.out.println("Debug");
+				
 				if (inst == null || location == null)
 					break;
 				path.addTrace(curState.getLocation());

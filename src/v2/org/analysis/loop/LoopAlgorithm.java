@@ -37,7 +37,7 @@ public class LoopAlgorithm {
 		MAX_LOOP = num;
 	}
 
-	public boolean checkLoop(BPPath path, X86TransitionRule rule) {
+	public boolean halt(BPPath path, X86TransitionRule rule) {
 		// TODO Auto-generated method stub
 		PathList trace = path.getTrace();
 		BPState curState = path.getCurrentState();

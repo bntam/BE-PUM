@@ -67,6 +67,7 @@ public class BPPath {
 		this.pathCondition = pathCondition;
 		processedAPI = new ArrayList<ProcessedAPI>();
 		l = new LoopHandle();
+		this.curState.setPathCondition(this.pathCondition);
 	}
 
 	public BPState getCurrentState() {
@@ -75,6 +76,7 @@ public class BPPath {
 
 	public void setCurrentState(BPState curState) {
 		this.curState = curState;
+		this.curState.setPathCondition(this.pathCondition);
 	}
 
 	public PathList getTrace() {
@@ -91,6 +93,7 @@ public class BPPath {
 
 	public void setPathCondition(Formulas pathCondition) {
 		this.pathCondition = pathCondition;
+		this.curState.setPathCondition(this.pathCondition);
 	}
 
 	public BPPath clone() {
