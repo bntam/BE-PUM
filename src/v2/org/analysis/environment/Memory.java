@@ -294,6 +294,17 @@ public class Memory {
 				return UNKNOWN;
 		}
 
+		if (m.getSegmentRegister() != null) {
+			Value r = env.getRegister().getRegisterValue(m.getSegmentRegister().toString());
+			if (r != null && r instanceof LongValue) {
+				// PHONG: change long address here to int address
+				val += (int) ((LongValue) r).getValue();
+				// return ret + m.getDisplacement() + ((LongValue)
+				// r).getValueOperand();
+			} else
+				return UNKNOWN;
+		}
+
 		return val;
 	}
 

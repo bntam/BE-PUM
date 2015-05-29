@@ -101,10 +101,11 @@ public class Main {
 		pathVirus = "asm/api/";
 		// pathVirus = "asm/APLAS14/";
 		// pathVirus = "asm/virus/";
-		pathVirus = "asm/packer/";
+		//pathVirus = "asm/packer/";
 		// pathVirus = "D:/Temp/Test_week_6/";
 		// pathVirus = "asm/mcvecto/";
 		//pathVirus = "asm/vx.netlux.org/";
+		pathVirus = "asm/vx.netlux.org/";
 		// pathVirus = "C:/Software/Virus/API/";
 		// pathVirus = "asm/WindowsXP/";
 		// pathVirus = "asm/demo1/";
