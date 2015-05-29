@@ -265,9 +265,17 @@ public class Memory {
 		long val = (int) m.getDisplacement();
 		if (m.getBase() != null) {
 			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
+			Value s = null;
+			long r_s = ((LongValue) r).getValue();
+			if (m.getSegmentRegister() != null){
+				s = env.getRegister().getRegisterValue(m.getSegmentRegister().toString());
+			}
+			if (s != null && s instanceof LongValue){
+				r_s += ((LongValue) s).getValue(); 
+			}
 			if (r != null && r instanceof LongValue) {
 				// PHONG: change long address here to int address
-				val += (int) ((LongValue) r).getValue();
+				val += (int) r_s;
 				// return ret + m.getDisplacement() + ((LongValue)
 				// r).getValueOperand();
 			} else
@@ -374,6 +382,10 @@ public class Memory {
 		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getUser32().readByte((int) address));
 		}
+		
+		if (env.getSystem().getAdvapi32Handle().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getAdvapi32Handle().readByte((int) address));
+		}
 
 		if (env.getSystem().getFileHandle().isInsideFIle(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getFileHandle().readByte((int) address));
@@ -412,9 +424,11 @@ public class Memory {
 
 		// PHONG: 20150605
 		// -----------------------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 
 		if (d == UNKNOWN)
@@ -436,6 +450,10 @@ public class Memory {
 		
 		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getUser32().readDoubleWord((int) address));
+		}
+		
+		if (env.getSystem().getAdvapi32Handle().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getAdvapi32Handle().readDoubleWord((int) address));
 		}
 		
 		/*if (env.getSystem().getLibraryHandle().isInside(new AbsoluteAddress(address))) {
@@ -538,9 +556,11 @@ public class Memory {
 
 		// PHONG: 20150506 If segment is FS
 		// ------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 		if (d == UNKNOWN) {
 			return new SymbolValue(Convert.generateString(dest));
@@ -683,6 +703,10 @@ public class Memory {
 		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getUser32().readWord((int) address));
 		}
+		
+		if (env.getSystem().getAdvapi32Handle().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getAdvapi32Handle().readWord((int) address));
+		}
 
 		if (env.getSystem().getFileHandle().isInsideFIle(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getFileHandle().readWord((int) address));
@@ -765,9 +789,11 @@ public class Memory {
 
 		// PHONG: 20150605
 		// -----------------------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 
 		if (d == UNKNOWN)
@@ -1052,8 +1078,8 @@ public class Memory {
 
 		for (int i = 0; i < t.length; i++) {
 			int x = (int) t[i];
-			if (x == 47)
-				x = 92;
+			//if (x == 47)
+			//	x = 92;
 
 			this.setByteMemoryValue(new X86MemoryOperand(m.getDataType(), disp), new LongValue(x));
 			disp++;
