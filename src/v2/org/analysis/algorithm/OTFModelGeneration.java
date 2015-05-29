@@ -99,6 +99,11 @@ public class OTFModelGeneration implements Algorithm {
 			System.out.println("Finished!");
 		}
 
+		// Update at first -----------------------------
+		TIB.setBeUpdated(true);
+		TIB.updateTIB(curState);
+		// ---------------------------------------------
+
 		while (!pathList.isEmpty()) {
 			/*
 			 * if (System.currentTimeMillis() - overallStartTime >

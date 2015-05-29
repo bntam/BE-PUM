@@ -50,8 +50,8 @@ public class LoopAlgorithm {
 			if (entry != null && curState.getLocation().getValue() == entry.getAddress().getValue()
 					&& curState.getInstruction().compareInstruction(entry.getInstruction())) {
 				System.out.println("Path reaches to Entry Point!!!");
-				path.setStop(true);
-				return true;
+				//path.setStop(true);
+				//return true;
 			}
 
 			LoopHandle temp = path.getLoopHandle();

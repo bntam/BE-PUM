@@ -64,18 +64,22 @@ public class TIB {
 	static {
 		beUpdated = false;
 	}
-	
-	public static void updateChecking(BPState curState){
+
+	public static void setBeUpdated(boolean updated){
+		beUpdated = updated;
+	}
+
+	public static void updateChecking(BPState curState) {
 		Instruction ins = curState.getInstruction();
 		if (ins == null)
 			return;
 		int i = 0;
-		while (i < ins.getOperandCount()){
+		while (i < ins.getOperandCount()) {
 			Operand op = ins.getOperand(i);
-			if (op.getClass().getSimpleName().equals("X86MemoryOperand")){
-				X86MemoryOperand mop = (X86MemoryOperand)op;
+			if (op.getClass().getSimpleName().equals("X86MemoryOperand")) {
+				X86MemoryOperand mop = (X86MemoryOperand) op;
 				if (mop.getSegmentRegister() != null
-						&& mop.getSegmentRegister().toString() == "%fs"){
+						&& mop.getSegmentRegister().toString() == "%fs") {
 					beUpdated = true;
 					break;
 				}
@@ -83,7 +87,7 @@ public class TIB {
 			i++;
 		}
 	}
-	
+
 	public static void updateTIB(BPState curState) {
 		if (!beUpdated){
 			return;

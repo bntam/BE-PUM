@@ -112,6 +112,9 @@ public class APIHandle {
 			List<BPPath> pathList) {
 		System.out.println("\n\tCall api: " + api);
 		String t[] = api.split("@");
+		
+		if (api.contains("HeapAlloc"))
+			System.out.println("Debug");
 
 		// long returnValue = 0;
 		String funcName = t[0];
@@ -561,7 +564,7 @@ public class APIHandle {
 				
 				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else if (funcName.startsWith("Beep")) {
+			} if (funcName.startsWith("Beep")) {
 				Value x1 = stack.pop();
 				Value x2 = stack.pop();
 				//Value x3 = stack.pop();

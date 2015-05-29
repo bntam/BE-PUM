@@ -265,9 +265,21 @@ public class Memory {
 		long val = (int) m.getDisplacement();
 		if (m.getBase() != null) {
 			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
+			
+			if (r == null || !(r instanceof LongValue))
+				return UNKNOWN; 
+			
+			Value s = null;
+			long r_s = ((LongValue) r).getValue();
+			if (m.getSegmentRegister() != null){
+				s = env.getRegister().getRegisterValue(m.getSegmentRegister().toString());
+			}
+			if (s != null && s instanceof LongValue){
+				r_s += ((LongValue) s).getValue(); 
+			}
 			if (r != null && r instanceof LongValue) {
 				// PHONG: change long address here to int address
-				val += (int) ((LongValue) r).getValue();
+				val += (int) r_s;
 				// return ret + m.getDisplacement() + ((LongValue)
 				// r).getValueOperand();
 			} else
@@ -416,9 +428,11 @@ public class Memory {
 
 		// PHONG: 20150605
 		// -----------------------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 
 		if (d == UNKNOWN)
@@ -546,9 +560,11 @@ public class Memory {
 
 		// PHONG: 20150506 If segment is FS
 		// ------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 		if (d == UNKNOWN) {
 			return new SymbolValue(Convert.generateString(dest));
@@ -777,9 +793,11 @@ public class Memory {
 
 		// PHONG: 20150605
 		// -----------------------------------------------------------------------
+		/*
 		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs") {
 			d = TIB.getTIB_Base_Address() + d;
 		}
+		*/
 		// ---------------------------------------------------------------------------------------
 
 		if (d == UNKNOWN)
