@@ -561,6 +561,13 @@ public class APIHandle {
 				
 				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			} else if (funcName.startsWith("Beep")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				//Value x3 = stack.pop();
+				
+				System.out.println("Argument: " + x1 + ", " + x2);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
 			} 
 			else{
 				System.out.println("No Handling of this API");

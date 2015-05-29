@@ -2,5 +2,5 @@
  :status sat
  :logic QF_LIA
 :extrafuns ((TOP BitVec[32]))
-:formula(not ( = false false) )
+:formula(and (  true)( =  false false)( =  true false) )
 )
