@@ -1523,8 +1523,13 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	void GlobalMemoryStatus(/* _Out_ */MEMORYSTATUS lpBuffer);
 
-	void InitializeCriticalSection(
-	/* _Out_ */RTL_CRITICAL_SECTION lpCriticalSection);
+	/**
+	 * Initializes a critical section object.
+	 * 
+	 * @param lpCriticalSection
+	 *            A pointer to the critical section object.
+	 */
+	void InitializeCriticalSection(/* _Out_ */RTL_CRITICAL_SECTION lpCriticalSection);
 
 	LONG InterlockedDecrement(/* _Inout_ */LONGByReference /* volatile * */Addend);
 
@@ -2901,4 +2906,24 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *            The exit code for the thread.
 	 */
 	void ExitThread(/* _In_ */DWORD dwExitCode);
+
+	/**
+	 * Generates simple tones on the speaker. The function is synchronous; it
+	 * performs an alertable wait and does not return control to its caller
+	 * until the sound finishes.
+	 * 
+	 * @param dwFreq
+	 *            The frequency of the sound, in hertz. This parameter must be
+	 *            in the range 37 through 32,767 (0x25 through 0x7FFF).
+	 * 
+	 * @param dwDuration
+	 *            The duration of the sound, in milliseconds.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL Beep(/* _In_ */DWORD dwFreq, /* _In_ */DWORD dwDuration);
+	
+	int strlen(String str);
 }

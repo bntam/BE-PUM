@@ -7,7 +7,10 @@ import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.DWORDByReference;
+import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinDef.UINT;
+import com.sun.jna.platform.win32.WinReg.HKEY;
+import com.sun.jna.platform.win32.WinReg.HKEYByReference;
 import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
@@ -257,4 +260,34 @@ public interface Advapi32DLL extends StdCallLibrary {
 	 */
 	BOOL CryptReleaseContext(/* _In_ *//* HCRYPTPROV */ULONG_PTR hProv, /* _In_ */DWORD dwFlags);
 
+	/**
+	 * Opens the specified registry key.
+	 * 
+	 * @param hKey
+	 *            A handle to an open registry key. This handle is returned by
+	 *            the RegCreateKeyEx or RegOpenKeyEx function, or it can be one
+	 *            of the following predefined keys: HKEY_CLASSES_ROOT
+	 *            HKEY_CURRENT_CONFIG HKEY_CURRENT_USER HKEY_LOCAL_MACHINE
+	 *            HKEY_USERS
+	 * 
+	 * @param lpSubKey
+	 *            The name of the registry key to be opened. This key must be a
+	 *            subkey of the key identified by the hKey parameter. Key names
+	 *            are not case sensitive. If this parameter is NULL or a pointer
+	 *            to an empty string, the function returns the same handle that
+	 *            was passed in.
+	 * 
+	 * @param phkResult
+	 *            A pointer to a variable that receives a handle to the opened
+	 *            key. If the key is not one of the predefined registry keys,
+	 *            call the RegCloseKey function after you have finished using
+	 *            the handle.
+	 * 
+	 * @return If the function succeeds, the return value is ERROR_SUCCESS. If
+	 *         the function fails, the return value is a nonzero error code
+	 *         defined in Winerror.h. You can use the FormatMessage function
+	 *         with the FORMAT_MESSAGE_FROM_SYSTEM flag to get a generic
+	 *         description of the error.
+	 */
+	LONG RegOpenKey(/* _In_ */HKEY hKey, /* _In_opt_ */String lpSubKey, /* _Out_ */HKEYByReference phkResult);
 }

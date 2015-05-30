@@ -84,7 +84,6 @@ public class CreateFile extends Kernel32API {
 		Stack stack = env.getStack();
 		Memory memory = env.getMemory();
 		Register register = env.getRegister();
-		Register register2 = env.getRegister();
 
 		Value x1 = stack.pop();
 		Value x2 = stack.pop();

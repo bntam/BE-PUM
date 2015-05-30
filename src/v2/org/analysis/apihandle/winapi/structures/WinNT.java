@@ -10,6 +10,8 @@ import com.sun.jna.win32.StdCallLibrary;
 import java.util.Arrays;
 import java.util.List;
 
+import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
+
 /**
  * Ported from WinNT.h (kernel32.dll/kernel services).
  * 
@@ -56,7 +58,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 	}
 
 	public class RTL_CRITICAL_SECTION extends Structure {
-		public LPVOID /* PRTL_CRITICAL_SECTION_DEBUG */DebugInfo;
+		public LPVOID /* PRTL_CRITICAL_SECTION_DEBUG */DebugInfo = null;
 		public LONG LockCount;
 		public LONG RecursionCount;
 		public HANDLE OwningThread; // from the thread's ClientId->UniqueThread
@@ -66,6 +68,23 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "DebugInfo", "LockCount", "RecursionCount", "OwningThread",
 					"LockSemaphore", "SpinCount" });
+		}
+
+		public RTL_CRITICAL_SECTION() {
+		}
+		
+		public static class ByReference extends RTL_CRITICAL_SECTION implements Structure.ByReference {
+			public ByReference() {
+			}
+
+			public ByReference(Pointer memory) {
+				super(memory);
+			}
+		}
+
+		public RTL_CRITICAL_SECTION(Pointer memory) {
+			super(memory);
+			read();
 		}
 	}
 

@@ -12,6 +12,9 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.Shell32;
+import com.sun.jna.platform.win32.Shell32Util;
+import com.sun.jna.platform.win32.ShellAPI;
 import com.sun.jna.platform.win32.Tlhelp32.PROCESSENTRY32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
@@ -19,6 +22,7 @@ import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.LONG;
+import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
@@ -234,29 +238,29 @@ public class Test {
 //			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
 //		}
 		
-		int currentID = Kernel32.INSTANCE.GetCurrentProcessId();
-
-		HANDLE snap = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new DWORD(4), new DWORD(0));
-
-		THREADENTRY32 lpte = new THREADENTRY32();
-		lpte.dwSize = new DWORD(lpte.size());
-		if (Kernel32DLL.INSTANCE.Thread32First(snap, lpte).booleanValue()) {
-			while (Kernel32DLL.INSTANCE.Thread32Next(snap, lpte).booleanValue())
-			{
-				if (lpte.th32OwnerProcessID.intValue() == currentID)
-				{
-					DWORD dwDesiredAccess = new DWORD(2);
-					BOOL bInheritHandle = new BOOL(0);
-					DWORD dwThreadId = new DWORD(lpte.th32ThreadID.longValue());
-					HANDLE rezz = Kernel32DLL.INSTANCE.OpenThread(dwDesiredAccess, bInheritHandle, dwThreadId);
-
-					long value = (rezz == null) ? 0 : Pointer.nativeValue(rezz.getPointer());
-					System.out.println("Return Value: " + value);
-					System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
-				}
-			}
-		} else {
-		}
+//		int currentID = Kernel32.INSTANCE.GetCurrentProcessId();
+//
+//		HANDLE snap = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new DWORD(4), new DWORD(0));
+//
+//		THREADENTRY32 lpte = new THREADENTRY32();
+//		lpte.dwSize = new DWORD(lpte.size());
+//		if (Kernel32DLL.INSTANCE.Thread32First(snap, lpte).booleanValue()) {
+//			while (Kernel32DLL.INSTANCE.Thread32Next(snap, lpte).booleanValue())
+//			{
+//				if (lpte.th32OwnerProcessID.intValue() == currentID)
+//				{
+//					DWORD dwDesiredAccess = new DWORD(2);
+//					BOOL bInheritHandle = new BOOL(0);
+//					DWORD dwThreadId = new DWORD(lpte.th32ThreadID.longValue());
+//					HANDLE rezz = Kernel32DLL.INSTANCE.OpenThread(dwDesiredAccess, bInheritHandle, dwThreadId);
+//
+//					long value = (rezz == null) ? 0 : Pointer.nativeValue(rezz.getPointer());
+//					System.out.println("Return Value: " + value);
+//					System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
+//				}
+//			}
+//		} else {
+//		}
 
 		// String pMessage = new String("%1!*.*s! %4 %5!*s!");
 		// String pArgs[] = { "4", "2", "Bill", // %1!*.*s! refers back to the
@@ -280,7 +284,11 @@ public class Test {
 		// char[] buf = new char[100];
 		// long[] ar = {10, 20};
 		// Kernel32DLL.INSTANCE.wsprintf(buf, "%s", ar);
+		
+//		HANDLE file = Kernel32.INSTANCE.CreateFile("Log.log", 1073741824, 0, null, 3, 128, null);
+//		x = Kernel32DLL.INSTANCE._write(((int)Pointer.nativeValue(file.getPointer())), null, new UINT(6));
 
+		Kernel32DLL.INSTANCE.strlen("111");
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = (long) 1;
