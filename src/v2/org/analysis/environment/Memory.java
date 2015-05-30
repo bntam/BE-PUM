@@ -17,7 +17,6 @@ import org.jakstab.util.Pair;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
-import v2.org.analysis.environment.processthread.TIB;
 import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
@@ -266,26 +265,26 @@ public class Memory {
 		if (m.getBase() != null) {
 			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
 			
-			if (r == null || !(r instanceof LongValue))
-				return UNKNOWN; 
-	
-			Value s = null;
-			long r_s = ((LongValue) r).getValue();
-			if (m.getSegmentRegister() != null){
-				s = env.getRegister().getRegisterValue(m.getSegmentRegister().toString());
-			}
-			if (s != null && s instanceof LongValue){
-				r_s += ((LongValue) s).getValue(); 
-			}
+			//if (r == null || !(r instanceof LongValue))
+			//	return UNKNOWN;	
+			
 			if (r != null && r instanceof LongValue) {
 				// PHONG: change long address here to int address
-				val += (int) r_s;
+				val += (int) ((LongValue)r).getValue();
 				// return ret + m.getDisplacement() + ((LongValue)
 				// r).getValueOperand();
 			} else
 				return UNKNOWN;
 		}
-
+		
+		if (m.getSegmentRegister() != null){
+			Value s = env.getRegister().getRegisterValue(m.getSegmentRegister().toString());
+			if (s != null && s instanceof LongValue){
+				val += ((LongValue) s).getValue(); 
+			} else 
+				return UNKNOWN;			
+		}
+		
 		if (m.getIndex() != null) {
 			Value index = env.getRegister().getRegisterValue(m.getIndex().toString());
 
@@ -303,7 +302,7 @@ public class Memory {
 
 	public Value calculateAddress(X86MemoryOperand m) {
 		// TODO Auto-generated method stub
-		if (m.getBase() != null) {
+		/*if (m.getBase() != null) {
 			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
 			Value index = null;
 			if (m.getIndex() != null)
@@ -318,39 +317,17 @@ public class Memory {
 			r = r.addFunction(new LongValue(m.getDisplacement()));
 
 			return r;
-		}
-
-		return new LongValue(m.getDisplacement());
+		}*/	
+		
+		long val = evaluateAddress(m);
+		if (val == UNKNOWN)
+			return new SymbolValue(Convert.generateString(m));
+		
+		return new LongValue(val);
 	}
 
 	public X86MemoryOperand evaluateAddress(X86MemoryOperand m, Environment env) {
 		// TODO Auto-generated method stub
-		/*
-		 * Value base = null; long disp = 0;
-		 * 
-		 * if (t.getBase() != null) { base =
-		 * env.getRegister().getRegisterValue(t.getBase().toString()); } if
-		 * (t.getDisplacement() != 0) { disp = t.getDisplacement(); if (disp ==
-		 * -1254086899) disp = disp & 0xFFFFFF; }
-		 * 
-		 * if (base != null) { if (base instanceof LongValue) { // PHONG:
-		 * something weird here. Change to INT long val = (int)disp +
-		 * (int)((LongValue) base).getValue();
-		 * 
-		 * Value index = null; if (t.getIndex() != null) index =
-		 * env.getRegister().getRegisterValue(t.getIndex().toString());
-		 * 
-		 * if (index != null && index instanceof LongValue) val +=
-		 * (int)t.getScale() * (int) ((LongValue)index).getValue();
-		 * 
-		 * return new X86MemoryOperand(t.getDataType(), val); } } return t;
-		 */
-		if (m.getSegmentRegister() != null) {
-			String temp = m.getSegmentRegister().toString();
-			if (!temp.contains("es") && !temp.contains("ds"))
-				return m;
-		}
-
 		long val = (int) m.getDisplacement();
 		if (m.getBase() != null) {
 			Value r = env.getRegister().getRegisterValue(m.getBase().toString());
@@ -361,6 +338,14 @@ public class Memory {
 				// r).getValueOperand();
 			} else
 				return m;
+		}
+		
+		if (m.getSegmentRegister() != null){
+			Value s = env.getRegister().getRegisterValue(m.getSegmentRegister().toString());
+			if (s != null && s instanceof LongValue){
+				val += ((LongValue) s).getValue(); 
+			} else 
+				return m;			
 		}
 
 		if (m.getIndex() != null) {

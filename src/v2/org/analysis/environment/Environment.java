@@ -62,7 +62,11 @@ public class Environment {
 		register.mov("edi", new LongValue(0x7C910208));
 		register.mov("ebx", new LongValue(0x7FFDE000));
 		register.mov("eax", new LongValue(0));
+		register.mov("cs", new LongValue(0x0));
 		register.mov("ds", new LongValue(0x0));
+		register.mov("es", new LongValue(0x0));
+		register.mov("gs", new LongValue(0x0));
+		register.mov("ss", new LongValue(0x0));
 		register.mov("fs", new LongValue(0x7EFDD000));
 		// register.mov("esp", new LongValue(((StackV2)stack).getTopAddress()));
 		// register.mov("ebp", new
