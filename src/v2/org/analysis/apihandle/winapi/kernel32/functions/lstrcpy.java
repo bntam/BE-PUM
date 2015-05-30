@@ -77,7 +77,7 @@ public class lstrcpy extends Kernel32API {
 			memory.setText(new X86MemoryOperand(DataType.INT32, destAddr), ret.toString());
 
 			// TODO: Fix here
-			register.mov("eax", new LongValue(1));
+			register.mov("eax", new LongValue((ret != null) ? destAddr : 0));
 		}
 		return false;
 	}

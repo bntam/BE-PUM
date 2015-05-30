@@ -288,7 +288,9 @@ public class Test {
 //		HANDLE file = Kernel32.INSTANCE.CreateFile("Log.log", 1073741824, 0, null, 3, 128, null);
 //		x = Kernel32DLL.INSTANCE._write(((int)Pointer.nativeValue(file.getPointer())), null, new UINT(6));
 
-		Kernel32DLL.INSTANCE.strlen("111");
+		char[] bff = new char[5];
+		WString str = Kernel32DLL.INSTANCE.lstrcpy(bff, new WString("111"));
+		System.out.println(new String(bff) + " " + str.toString());
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = (long) 1;

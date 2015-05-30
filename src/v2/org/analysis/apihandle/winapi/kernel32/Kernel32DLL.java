@@ -245,6 +245,7 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         buffer.
 	 */
 	WString lstrcpy(WString lpString1, WString lpString2);
+	WString lstrcpy(char[] lpString1, WString lpString2);
 
 	// HANDLE CreateThread(SECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T
 	// dwStackSize,
@@ -2924,6 +2925,4 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         information, call GetLastError.
 	 */
 	BOOL Beep(/* _In_ */DWORD dwFreq, /* _In_ */DWORD dwDuration);
-	
-	int strlen(String str);
 }
