@@ -40,7 +40,7 @@ public class OTFModelGeneration implements Algorithm {
 	// Logger.getLogger(CPAAlgorithm.class);
 	// private static long maxTimeProgam = 2500000;
 	// private static long maxTimePath = 1500000;
-	private static long bkTime = 108000000;
+	private static long bkTime = 2700000;
 	// For Debug
 	private int num = 1, loopCount = 1;;
 	private boolean isCompareOlly = false, isChecked = false, isRestored = true;
@@ -93,8 +93,8 @@ public class OTFModelGeneration implements Algorithm {
 		if (Program.getProgram().getFileName().equals("api_test_v2.3_lvl1.exe") 
 				&& isRestored) {
 			System.out.println("Restore State from File.");
-			bkFile = new FileProcess("data/restore.txt");
-			pathList = restoreState(bkFile);
+			FileProcess restoreFile = new FileProcess("data/restoreState.txt");
+			pathList = restoreState(restoreFile);
 			// bkFile.clearContentFile();
 			System.out.println("Finished!");
 		}
@@ -164,9 +164,6 @@ public class OTFModelGeneration implements Algorithm {
 				TIB.updateTIB(curState);
 				TIB.updateChecking(curState);
 				// --------------------------------------
-				
-				if (path.getPathCondition().getListFormula().size() > 2)
-					System.out.println("Debug");
 				
 				if (inst == null || location == null)
 					break;
