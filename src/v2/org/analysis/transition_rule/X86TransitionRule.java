@@ -477,7 +477,8 @@ public class X86TransitionRule extends TransitionRule {
 			if (result[2].substring(1).equals("-"))
 				val = -val;
 		} else {
-			val = Long.parseLong(result[2].substring(2, result[2].length() - 4));
+			String temp = result[2].substring(2, result[2].length());
+			val = Long.parseLong(temp);
 			// if (val >= Math.pow(2, 31))
 			// val = (long) (val - Math.pow(2, 32));
 		}
@@ -502,7 +503,7 @@ public class X86TransitionRule extends TransitionRule {
 			return;
 
 		pathList.add(p);
-		Program.getProgram().generageCFG(Program.getProgram().getAbsolutePathFile() + "_test");
+		//Program.getProgram().generageCFG(Program.getProgram().getAbsolutePathFile() + "_test");
 	}
 
 	// Hai: Process the problem of multi destination of SAT Solver

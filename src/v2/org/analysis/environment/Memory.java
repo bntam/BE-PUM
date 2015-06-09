@@ -62,6 +62,7 @@ public class Memory {
 
 	public String outputMemory() {
 		FileProcess fp = new FileProcess("/data/memory.txt");
+		fp.clearContentFile();
 		String ret = "";
 		for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
 			ret += entry.getKey() + "\t" + entry.getValue() + "\n";

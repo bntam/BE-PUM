@@ -55,7 +55,7 @@ public class X86JumpInterpreter {
 		}
 
 		// PHONG: 20150502 -----------------------------------------------------
-		if (!rule.checkAddressValidJump(env, ((LongValue) r).getValue())) {
+		if (r != null && r instanceof LongValue && !rule.checkAddressValidJump(env, ((LongValue) r).getValue())) {
 			return rule.processSEH(curState);
 		}
 		// -----------------------------------------------------------------------

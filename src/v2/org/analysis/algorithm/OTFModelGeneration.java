@@ -42,8 +42,8 @@ public class OTFModelGeneration implements Algorithm {
 	// private static long maxTimePath = 1500000;
 	private static long bkTime = 2700000;
 	// For Debug
-	private int num = 1, loopCount = 1;;
-	private boolean isCompareOlly = false, isChecked = false, isRestored = true;
+	private int num = 19, loopCount = 1;;
+	private boolean isCompareOlly = true, isChecked = false, isRestored = true;
 	private long count = 1;
 	private AbsoluteAddress checkedAddr = new AbsoluteAddress(0);
 	private AbsoluteAddress endAddr = new AbsoluteAddress(0);
@@ -63,7 +63,8 @@ public class OTFModelGeneration implements Algorithm {
 		// --------------------------
 		FileProcess fileState = new FileProcess("data/stateValue.txt");
 		FileProcess bkFile = new FileProcess("data/restore.txt");
-		fileName = "out_" + Program.getProgram().getFileName() + "_";
+		//fileName = "out_" + Program.getProgram().getFileName() + "_";
+		fileName = "out_themida_";
 
 		fileState.clearContentFile();
 		long overallStartTime = System.currentTimeMillis();
@@ -93,10 +94,10 @@ public class OTFModelGeneration implements Algorithm {
 		if (Program.getProgram().getFileName().equals("api_test_v2.3_lvl1.exe") 
 				&& isRestored) {
 			System.out.println("Restore State from File.");
-			FileProcess restoreFile = new FileProcess("data/restoreState.txt");
-			pathList = restoreState(restoreFile);
+			FileProcess reFile = new FileProcess("data/restoreState.txt");
+			pathList = restoreState(reFile);
 			// bkFile.clearContentFile();
-			System.out.println("Finished!");
+			System.out.println("Finished restoring state!");
 		}
 
 		// Update at first -----------------------------
@@ -156,7 +157,7 @@ public class OTFModelGeneration implements Algorithm {
 				//if (location == null || location.toString().contains("4202d0"))
 				//	System.out.println("Debug " + location);
 								
-				//debugProgram(location, curState, fileState, bkFile);
+				debugProgram(location, curState, fileState, bkFile);
 				//compareOlly(curState);
 				
 				// PHONG: 20150506 - Update TIB
@@ -297,7 +298,7 @@ public class OTFModelGeneration implements Algorithm {
 
 	private void backupState(BPState curState, FileProcess fileState) {
 		// TODO Auto-generated method stub
-		String result = "Address=" + curState.getLocation().toString() + "\n";
+		String result = "Address=" + curState.getLocation() + "\n";
 		result += "Register: " + curState.getEnvironement().getRegister() + "\n";
 		result += "Flag: " + curState.getEnvironement().getFlag() + "\n";
 		result += "Stack: " + ((StackV2) curState.getEnvironement().getStack()).toString() + "\n";
@@ -324,16 +325,17 @@ public class OTFModelGeneration implements Algorithm {
 			AbsoluteAddress location = state.getLocation();
 			Environment env = state.getEnvironement();
 			if (ollyCompare == null) {
-				long memoryStartAddr = 0x404098;
-				long memoryEndAddr = 0x4040A0;
+				long memoryStartAddr = 0x40ECAB;
+				long memoryEndAddr = 0x40ECB3;
 				long stackIndex = 0x8c;
-
+				System.out.println("Read file Olly " + "asm/olly/" + fileName + "" + num + ".txt");
 				ollyCompare = new OllyCompare("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
 						memoryEndAddr, stackIndex);
 				// ollyCompare = new OllyCompare("asm/olly/" + fileName +
 				// ".txt", memoryStartAddr,
 				// memoryEndAddr, stackIndex);
 				ollyCompare.importOllyData(checkedAddr, endAddr);
+				System.out.println("Finish reading!");
 			}
 
 			if (compareOllyResult == null) {
@@ -372,7 +374,7 @@ public class OTFModelGeneration implements Algorithm {
 				isChecked = false;
 				count = 1;
 
-				if (num >= 3) {
+				if (num >= 22) {
 					isCompareOlly = false;
 					System.out.println("Finish Checking");
 				}
@@ -415,6 +417,7 @@ public class OTFModelGeneration implements Algorithm {
 				|| location.toString().contains("437b16") // After STI
 				|| location.toString().contains("43ce7c") // After STI 
 				|| location.toString().contains("43f722") // API GetVersionExA
+				|| location.toString().contains("43d397") // API GetCommandLine				
 				
 				|| location.toString().contains("44228a") // Target
 				))
@@ -443,7 +446,8 @@ public class OTFModelGeneration implements Algorithm {
 			System.out.println("Debug at:" + location.toString());
 			backupState(curState, fileState);
 			backupStateAll(curState, bkFile);
-			program.generageCFG(program.getAbsolutePathFile() + "_test");
+			//program.generageCFG(program.getAbsolutePathFile() + "_test");
+			program.generageCFG("/asm/cfg/" + program.getFileName() + "_test");
 		}
 		/*
 		 * if (location != null && location.toString().contains("0040481b") &&
