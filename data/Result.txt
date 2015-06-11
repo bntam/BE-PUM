@@ -146,3 +146,6 @@ multiDest.exe	     610ms	      14	      15	 Indirect Jump	 Indirect Jump:0x00401
 test.exe	    9156ms	       7	       6	 Ret-Indirect Jump	 Ret-Indirect Jump:0x00401005 
 multiDest.exe	    2203ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
 multiDest.exe	    2169ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+multiDest.exe	     658ms	      16	      17	 Indirect Jump	 Indirect Jump:0x0040101f	
+multiDest.exe	     938ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+multiDest.exe	     924ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	

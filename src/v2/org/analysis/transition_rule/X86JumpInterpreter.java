@@ -91,7 +91,7 @@ public class X86JumpInterpreter {
 					+ curState.getLocation().toString());
 			Map<String, Long> z3Value = new HashMap<String, Long>();
 
-			z3Value = rule.executeZ3(l);
+			z3Value = rule.executeZ3(l);				
 
 			if (z3Value != null) {
 				Value r1 = r.clone();
@@ -118,6 +118,9 @@ public class X86JumpInterpreter {
 
 					curState.setInstruction(i);
 					curState.setLocation(a);
+					
+					curState.setValue(z3Value);
+					path.clearPathCondition();
 				} else {
 					if (r instanceof SymbolValue) {
 						if (((SymbolValue) r).getVarName().equals("eax")) {

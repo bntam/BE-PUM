@@ -399,26 +399,33 @@ public class HybridBooleanValue implements Value {
 		left.setValueMap(z3Value);
 		right.setValueMap(z3Value);
 		Value l = left.evaluate(z3Value);
-		if (!(l instanceof BooleanValue))
+
+		if ((l == null) || (!(l instanceof BooleanValue) && !(l instanceof LongValue)))
 			return this;
-		BooleanValue l1 = (BooleanValue) l;
 
 		Value r = right.evaluate(z3Value);
-		if (!(r instanceof BooleanValue))
+		if (r == null || (!(r instanceof BooleanValue) && !(r instanceof LongValue)))
 			return this;
-		BooleanValue r1 = (BooleanValue) r;
 
-		if (getConnector().equals("and"))
-			return new BooleanValue(l1.getValue() & r1.getValue());
+		if (l instanceof BooleanValue && r instanceof BooleanValue) {
+			BooleanValue l1 = (BooleanValue) l;
+			BooleanValue r1 = (BooleanValue) r;
 
-		if (getConnector().equals("or"))
-			return new BooleanValue(l1.getValue() | r1.getValue());
+			if (getConnector().equals("and"))
+				return new BooleanValue(l1.getValue() & r1.getValue());
 
-		if (getConnector().equals("xor"))
-			return new BooleanValue(l1.getValue() ^ r1.getValue());
+			if (getConnector().equals("or"))
+				return new BooleanValue(l1.getValue() | r1.getValue());
+
+			if (getConnector().equals("xor"))
+				return new BooleanValue(l1.getValue() ^ r1.getValue());
+		}
 
 		if (getConnector().equals(">"))
 			return new BooleanValue(BitVector.gt(((LongValue) l).getValue(), ((LongValue) r).getValue()));
+		
+		if (getConnector().equals("=="))
+			return new BooleanValue(((LongValue) l).getValue() == ((LongValue) r).getValue());
 
 		if (getConnector().equals(">="))
 			return new BooleanValue(BitVector.ge(((LongValue) l).getValue(), ((LongValue) r).getValue()));

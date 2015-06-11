@@ -178,4 +178,9 @@ public class BPPath {
 	public void setLoopHandle(LoopHandle t) {
 		l = t;
 	}
+
+	public void clearPathCondition() {
+		// TODO Auto-generated method stub
+		pathCondition.clear();
+	}
 }

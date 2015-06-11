@@ -3,6 +3,9 @@
  */
 package v2.org.analysis.environment;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
@@ -1376,6 +1379,19 @@ public class Register {
 		}
 
 		uDiv(dest, s);
+	}
+
+	public void setValue(Map<String, Long> z3Value) {
+		// TODO Auto-generated method stub
+		setRegisterValue("eax", eax.evaluate(z3Value));
+		setRegisterValue("ebx", ebx.evaluate(z3Value));
+		setRegisterValue("ecx", ecx.evaluate(z3Value));
+		setRegisterValue("edx", edx.evaluate(z3Value));
+		setRegisterValue("esi", esi.evaluate(z3Value));
+		setRegisterValue("edi", edi.evaluate(z3Value));
+		setRegisterValue("esp", esp.evaluate(z3Value));
+		setRegisterValue("ebp", ebp.evaluate(z3Value));
+		
 	}
 
 }

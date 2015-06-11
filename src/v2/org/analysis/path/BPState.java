@@ -3,6 +3,8 @@
  */
 package v2.org.analysis.path;
 
+import java.util.Map;
+
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
 
@@ -105,6 +107,13 @@ public class BPState {
 	// Binh usage
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public void setValue(Map<String, Long> z3Value) {
+		// TODO Auto-generated method stub
+		env.getRegister().setValue(z3Value);
+		//env.getMemory().setValue(z3Value);
+		env.getFlag().setValue(z3Value);
 	}
 
 }

@@ -452,7 +452,7 @@ public class X86TransitionRule extends TransitionRule {
 			if (result[2].substring(1).equals("-"))
 				val = -val;
 		} else {
-			val = Long.parseLong(result[2].substring(2, result[2].length() - 4));
+			val = Long.parseLong(result[2].substring(2, result[2].length()));
 			if (val >= Math.pow(2, 31))
 				val = (long) (val - Math.pow(2, 32));
 		}
