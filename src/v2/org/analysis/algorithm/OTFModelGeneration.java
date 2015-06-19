@@ -20,7 +20,7 @@ import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPVertex;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.processthread.TIB;
-import v2.org.analysis.olly.OllyCompare;
+import v2.org.analysis.olly.OllyComparisonV2;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.path.PathList;
@@ -42,14 +42,14 @@ public class OTFModelGeneration implements Algorithm {
 	// private static long maxTimePath = 1500000;
 	private static long bkTime = 2700000;
 	// For Debug
-	private int num = 19, loopCount = 1;;
+	private int num = 28, loopCount = 1;
 	private boolean isCompareOlly = true, isChecked = false, isRestored = true;
 	private long count = 1;
 	private AbsoluteAddress checkedAddr = new AbsoluteAddress(0);
 	private AbsoluteAddress endAddr = new AbsoluteAddress(0);
 	private String fileName = "";
 	private FileProcess compareOllyResult = null;
-	private OllyCompare ollyCompare = null;
+	private OllyComparisonV2 ollyCompare = null;
 
 	private final Program program;
 
@@ -117,17 +117,17 @@ public class OTFModelGeneration implements Algorithm {
 			curState = path.getCurrentState();
 			// long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
-				long overallEndTimeTemp = System.currentTimeMillis();
+				/*long overallEndTimeTemp = System.currentTimeMillis();
 				// Output file each 60s
 				if (overallEndTimeTemp - overallStartTemp > 120000) {
 
 					// Stop running one paths after maxTimePath
-					/*
+					
 					 * if (overallEndTimeTemp - overallStartTimePath >
 					 * maxTimePath) { Program.getProgram().getLog()
 					 * .info("Stop Path after " + maxTimePath + " at " +
 					 * curState.getLocation()); // break; }
-					 */
+					 
 
 					backupState(curState, fileState);
 					overallStartTemp = overallEndTimeTemp;
@@ -136,16 +136,16 @@ public class OTFModelGeneration implements Algorithm {
 				if (overallEndTimeTemp - overallStartTime > bkTime) {
 
 					// Stop running one paths after maxTimePath
-					/*
+					
 					 * if (overallEndTimeTemp - overallStartTimePath >
 					 * maxTimePath) { Program.getProgram().getLog()
 					 * .info("Stop Path after " + maxTimePath + " at " +
 					 * curState.getLocation()); // break; }
-					 */
+					 
 
 					backupStateAll(curState, bkFile);
 					overallStartTime = overallEndTimeTemp;
-				}
+				}*/
 
 				if (path.isStop()) {
 					break;
@@ -157,7 +157,7 @@ public class OTFModelGeneration implements Algorithm {
 				//if (location == null || location.toString().contains("4202d0"))
 				//	System.out.println("Debug " + location);
 								
-				debugProgram(location, curState, fileState, bkFile);
+				//debugProgram(location, curState, fileState, bkFile);
 				//compareOlly(curState);
 				
 				// PHONG: 20150506 - Update TIB
@@ -198,8 +198,8 @@ public class OTFModelGeneration implements Algorithm {
 	private List<BPPath> restoreState(FileProcess bkFile) {
 		// TODO Auto-generated method stub
 		Environment env = new Environment();
-		getEnvironment(env, bkFile);
 		AbsoluteAddress location = getContinuosPoint(bkFile);
+		getEnvironment(env, bkFile);		
 		Instruction inst = Program.getProgram().getInstruction(location, env);
 		List<BPPath> pathList = new ArrayList<BPPath>();
 		// BPVertex startNode = null;
@@ -243,6 +243,7 @@ public class OTFModelGeneration implements Algorithm {
 	private void getEnvironment(Environment env, FileProcess file) {
 		// TODO Auto-generated method stub
 		int t = 0;
+		boolean setReg = false, setFlag = false, setMem = false;
 		while (true) {
 			String temp = file.getLineAt(t);
 
@@ -255,9 +256,9 @@ public class OTFModelGeneration implements Algorithm {
 					reg[i] = reg[i].replace(" ", "");
 					String r[] = reg[i].split("=");
 
-					env.getRegister().setRegisterValue(r[0], new LongValue(Long.parseLong(r[1], 16)));
+					env.getRegister().setRegisterValue(r[0], new LongValue(Long.parseLong(r[1], 16)));					
 				}
-
+				setReg = true;
 			} else if (temp.contains("Flag")) {
 				temp = temp.substring(temp.indexOf(":") + 1, temp.length());
 				String[] reg = temp.split(",");
@@ -270,6 +271,7 @@ public class OTFModelGeneration implements Algorithm {
 					else
 						env.getFlag().setFlagValue(r[0], new BooleanValue(false));
 				}
+				setFlag = true;
 			} else if (temp.contains("Memory")) {
 				temp = temp.substring(temp.indexOf(":") + 1, temp.length());
 				String[] reg = temp.split(",");
@@ -281,8 +283,12 @@ public class OTFModelGeneration implements Algorithm {
 					byte y = (byte) Long.parseLong(reduce(r[1], 8), 16);
 					env.getMemory().setByteMemoryValue(x, new LongValue(y));
 				}
-			}
+				setMem = true;
+			}  
 			t++;
+			
+			if (setReg && setFlag && setMem)
+				return;
 		}
 	}
 
@@ -329,12 +335,13 @@ public class OTFModelGeneration implements Algorithm {
 				long memoryEndAddr = 0x40ECB3;
 				long stackIndex = 0x8c;
 				System.out.println("Read file Olly " + "asm/olly/" + fileName + "" + num + ".txt");
-				ollyCompare = new OllyCompare("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
+				ollyCompare = new OllyComparisonV2("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
 						memoryEndAddr, stackIndex);
 				// ollyCompare = new OllyCompare("asm/olly/" + fileName +
 				// ".txt", memoryStartAddr,
 				// memoryEndAddr, stackIndex);
 				ollyCompare.importOllyData(checkedAddr, endAddr);
+				count = ollyCompare.getFirstCount();
 				System.out.println("Finish reading!");
 			}
 
@@ -347,8 +354,8 @@ public class OTFModelGeneration implements Algorithm {
 				isChecked = true;
 			}
 
-			if (isChecked & location != null
-					&& (location.getValue() != endAddr.getValue() || loopCount != ollyCompare.getLoopCount())) {
+			if (isChecked & location != null && !ollyCompare.isFinished()) {
+					//&& (location.getValue() != endAddr.getValue() || loopCount != ollyCompare.getLoopCount())) {
 				// System.out.println("Loop = " + count + " , Address = " +
 				// location.toString() + ":");
 				compareOllyResult.appendFile("Loop = " + count + " , Address = " + location.toString() + ":");
@@ -364,8 +371,10 @@ public class OTFModelGeneration implements Algorithm {
 				loopCount++;
 			}
 
-			if (isChecked && location != null && location.getValue() == endAddr.getValue()
-					&& loopCount == ollyCompare.getLoopCount()) {
+			if (isChecked && location != null 
+					&& ollyCompare.isFinished()) {
+					//&& location.getValue() == endAddr.getValue()
+					//&& loopCount == ollyCompare.getLoopCount()) {
 				System.out.println("Stop Check: " + fileName + "" + num + ".txt");
 				ollyCompare = null;
 				loopCount = 1;
@@ -374,7 +383,7 @@ public class OTFModelGeneration implements Algorithm {
 				isChecked = false;
 				count = 1;
 
-				if (num >= 22) {
+				if (num >= 33) {
 					isCompareOlly = false;
 					System.out.println("Finish Checking");
 				}

@@ -1118,3 +1118,19 @@
    Instructions:                              24
    Nodes:                              24
    Edges:                              28
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SampleVirus-1.exe
+   Runtime:                         1428ms
+   Instructions:                             196
+   Nodes:                             204
+   Edges:                             204
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SampleVirus-3.exe
+   Runtime:                          886ms
+   Instructions:                             204
+   Nodes:                             212
+   Edges:                             212

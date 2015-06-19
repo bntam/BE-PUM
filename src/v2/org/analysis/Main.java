@@ -387,9 +387,9 @@ public class Main {
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
 
-		pathVirus = "asm/testcase/";
+		//pathVirus = "asm/testcase/";
 		//in = "test.exe";
-		in = "multiDest.exe";
+		//in = "multiDest.exe";
 		
 		System.out.println(pathVirus + in);
 		analyzeFile(pathVirus + in);

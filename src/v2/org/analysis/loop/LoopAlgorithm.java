@@ -46,13 +46,13 @@ public class LoopAlgorithm {
 
 		if (trace.contain(curState.getLocation().getValue())) {
 			// Heuristics: If this is entry point, stops
-			BPVertex entry = Program.getProgram().getBPCFG().getEntryPoint();
+			/*BPVertex entry = Program.getProgram().getBPCFG().getEntryPoint();
 			if (entry != null && curState.getLocation().getValue() == entry.getAddress().getValue()
 					&& curState.getInstruction().compareInstruction(entry.getInstruction())) {
 				System.out.println("Path reaches to Entry Point!!!");
 				//path.setStop(true);
 				//return true;
-			}
+			}*/
 
 			LoopHandle temp = path.getLoopHandle();
 

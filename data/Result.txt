@@ -149,3 +149,5 @@ multiDest.exe	    2169ms	      24	      28	 Indirect Jump	 Indirect Jump:0x00401
 multiDest.exe	     658ms	      16	      17	 Indirect Jump	 Indirect Jump:0x0040101f	
 multiDest.exe	     938ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
 multiDest.exe	     924ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+SampleVirus-1.exe	    1428ms	     204	     204	 Ret-Indirect Jump SetUpException SEH	 Ret-Indirect Jump:0x004172bc  SetUpException:0x00415a2a  Ret-Indirect Jump:0x004159fa  SEH:0x00415b7e  Ret-Indirect Jump:0x004152c6  SetUpException:0x00415c28  Ret-Indirect Jump:0x00415c36  Ret-Indirect Jump:0x00415d8e 
+SampleVirus-3.exe	     886ms	     212	     212	 Ret-Indirect Jump SetUpException SEH	 Ret-Indirect Jump:0x004172bc  SetUpException:0x00415a2a  Ret-Indirect Jump:0x004159fa  SEH:0x00415b7e  Ret-Indirect Jump:0x00415752  Ret-Indirect Jump:0x00412b8d  SetUpException:0x00415c28  Ret-Indirect Jump:0x00415c36  Ret-Indirect Jump:0x00415d8e 
