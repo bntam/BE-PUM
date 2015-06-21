@@ -1794,8 +1794,8 @@ public class Flag {
 
 			// *1* %CF := ((op1 < 0) & (op2 < 0))
 			// | ((result >= 0) & ((op1 < 0) | (op2 < 0)))
-			//cFlag = new BooleanValue(((d >= 0) & (s < 0)) | ((t < 0) & ((d >= 0) | (s < 0))));
-			cFlag = new BooleanValue(((d < 0) & (s < 0)) | ((t >= 0) & ((d < 0) | (s < 0))));
+			cFlag = new BooleanValue(((d >= 0) & (s < 0)) | ((t < 0) & ((d >= 0) | (s < 0))));
+			//cFlag = new BooleanValue(((d < 0) & (s < 0)) | ((t >= 0) & ((d < 0) | (s < 0))));
 			// R_CF:bool =
 			// extract:32:32:[pad:u33(T_orig1:u32) + pad:u33(T_orig2:u32) +
 			// pad:u33(R_CF:bool)]
@@ -1803,8 +1803,8 @@ public class Flag {
 
 			// *1* %OF := ((op1 < 0) & (op2 < 0) & (result >= 0))
 			// | ((op1 >= 0) & (op2 >= 0) & (result < 0))
-			//oFlag = new BooleanValue(((d < 0) & (s >= 0) & (t > 0)) | ((d >= 0) & (s < 0) & (t < 0)));
-			oFlag = new BooleanValue(((d < 0) & (s < 0) & (t >= 0)) | ((d >= 0) & (s >= 0) & (t < 0)));
+			oFlag = new BooleanValue(((d < 0) & (s >= 0) & (t > 0)) | ((d >= 0) & (s < 0) & (t < 0)));
+			//oFlag = new BooleanValue(((d < 0) & (s < 0) & (t >= 0)) | ((d >= 0) & (s >= 0) & (t < 0)));
 
 			// R_OF:bool =
 			// high:bool((T_orig1:u32 ^ ~T_orig2:u32) & (T_orig1:u32 ^

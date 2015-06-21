@@ -14,7 +14,8 @@ import java.util.List;
 
 public class LoopAlgorithm {
 	private static LoopAlgorithm programInstance = null;
-	// private int MAX_LOOP = 5000000;
+	private int MAX_EP_LOOP = 50;
+	private int count_EP = 0;
 	private int MAX_LOOP = 1000000;
 
 	// private static int MAX_LOOP = 10;
@@ -46,13 +47,17 @@ public class LoopAlgorithm {
 
 		if (trace.contain(curState.getLocation().getValue())) {
 			// Heuristics: If this is entry point, stops
-			/*BPVertex entry = Program.getProgram().getBPCFG().getEntryPoint();
+			BPVertex entry = Program.getProgram().getBPCFG().getEntryPoint();
 			if (entry != null && curState.getLocation().getValue() == entry.getAddress().getValue()
 					&& curState.getInstruction().compareInstruction(entry.getInstruction())) {
-				System.out.println("Path reaches to Entry Point!!!");
-				//path.setStop(true);
-				//return true;
-			}*/
+				if (count_EP > MAX_EP_LOOP) {
+					System.out.println("Path reaches to Entry Point!!!");
+					count_EP = 0;
+					path.setStop(true);
+					return true;
+				} else 
+					count_EP ++;
+			}
 
 			LoopHandle temp = path.getLoopHandle();
 

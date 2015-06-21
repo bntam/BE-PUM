@@ -104,8 +104,7 @@ public class Main {
 		pathVirus = "asm/packer/";
 		// pathVirus = "D:/Temp/Test_week_6/";
 		// pathVirus = "asm/mcvecto/";
-		//pathVirus = "asm/vx.netlux.org/";
-		//pathVirus = "asm/vx.netlux.org/";
+		pathVirus = "asm/vx.netlux.org/";
 		// pathVirus = "C:/Software/Virus/API/";
 		// pathVirus = "asm/WindowsXP/";
 		// pathVirus = "asm/demo1/";
@@ -273,21 +272,21 @@ public class Main {
 		// SEH
 		in = "Virus.Win32.HLLO.Momac.a"; // Fail due to MOVS with too high
 		// loop
-		// in = "Virus.Win32.Donut"; // 4542 4543 truy cap 77e60000
-		// in = "Email-Worm.Win32.Atak.e"; // 5654 5653 2
-		// in = "Email-Worm.Win32.Atak.c"; // 6132 6131 2
+		 in = "Virus.Win32.Donut"; // 4542 4543 truy cap 77e60000
+		//in = "Email-Worm.Win32.Atak.e"; // 5654 5653 2
+		//in = "Email-Worm.Win32.Atak.c"; // 6132 6131 2
 		// in = "Email-Worm.Win32.Kipis.p"; // 40 41 Done
 		// in = "Worm.Win32.Leebad.a"; // 206 209; 49 48 0.7s
 		// in = "Email-Worm.Win32.Bagle.am"; // loop too long
 		// in = "Virus.Win32.ZMist"; // 158 190 0.9s x
 		// in = "Virus.Win32.Henky.772.b"; // 16 16 0.5
 		// in = "Virus.Win32.Champ.5495"; // 1057 1105 285 825 865 576s
-		// in = "Email-Worm.Win32.Navidad.b"; // 639 688 7161 x
-		// in = "Email-Worm.Win32.Nohoper.7397"; // 746 741 165 x 648 671
-		// in = "Email-Worm.Win32.Apbost.c"; // 317 345 SEH
-		// in = "Email-Worm.Win32.Mydoom.az"; // 952 981 47s
-		// in = "Email-Worm.Win32.Zeynep.j"; // 442 470 317s
-		//in = "Virus.Win32.Cabanas.2999"; // 385 404 45s;
+		in = "Email-Worm.Win32.Navidad.b"; // 639 688 7161 x
+		// in = "Email-Worm.Win32.Nohoper.7397"; // 746 741 165 x 648 671 623 645 4769s
+		//in = "Email-Worm.Win32.Apbost.c"; // 304 332 1s SEH C
+		//in = "Email-Worm.Win32.Mydoom.az"; // 952 981 47s x
+		//in = "Email-Worm.Win32.Zeynep.j"; // 442 470 317s 439 467 875 x
+		//in = "Virus.Win32.Cabanas.2999"; // 385 404 45s; 298 310 C
 
 		// Windows
 		// in = "cmd.exe"; // 484 493 273s
@@ -318,7 +317,7 @@ public class Main {
 
 		// Done
 		// in = "api_test.exe"; // 158 160 0.1s x
-		in = "api_test_upx.exe"; // 323 353 21s x
+		//in = "api_test_upx.exe"; // 323 353 21s x
 		// in = "api_test_fsg.exe"; // 244 268 5s x
 		// in = "api_test_pecompact.exe"; // 1127 1178 35s x
 		// in = "api_test_npack.exe"; // 602 639 10s x
@@ -328,7 +327,7 @@ public class Main {
 		//in = "api_test_aspack.exe"; // 1047 1112 101s x
 
 		// in = "api_test_yoda.exe"; // 962 1038 257s
-		in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
+		//in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
 
 		// in = "Virus.Win32.Aztec.01"; // 312 330 Done
 

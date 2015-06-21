@@ -190,6 +190,60 @@ public class OllyComparisonV2 {
 		for (OllyLoop l : ollyLoop)
 			if (l.getAddress().getValue() == value && l.getLoopID() >= count)
 				return l;
+		
+		//List<OllyLoop> old = ollyLoop;
+		//OllyLoop temp = get(count);
+		File olly = new File(this.ollyFileName);
+		try {
+			Scanner sc = new Scanner(olly);
+			int i = 0;
+			boolean isRead = false;
+			while (sc.hasNextLine() && i < MAXINDEX) {
+				String loop = sc.nextLine();
+				if (loop.contains("loop")) {
+					String register_line = sc.nextLine();
+					String flag_line = sc.nextLine();
+					String memory_line = sc.nextLine();
+					String stack_line = sc.nextLine();
+					// Get value
+					long id = getLoopIdentifer(loop);
+					long addr = getAddress(loop);
+					if (id >= count && addr == value) {
+						isRead = true;
+						this.ollyLoop.clear();
+					}
+
+					if (isRead) {
+						OllyRegister olly_register = new OllyRegister(
+								getRegister(register_line));
+						long esp = olly_register.getRegisterValue("esp");
+						OllyFlag olly_flag = new OllyFlag(getFlag(flag_line));
+						OllyMemory olly_memory = new OllyMemory(
+								this.getMemory(memory_line));
+						OllyMemory olly_stack = new OllyMemory(this.getStack(
+								stack_line, esp));
+						OllyLoop olly_loop = new OllyLoop(id, addr,
+								olly_register, olly_flag, olly_memory,
+								olly_stack);
+						this.ollyLoop.add(olly_loop);
+						i++;
+					}
+				}
+			}
+			
+			if (isRead) {
+				firstCount = this.ollyLoop.get(0).getLoopID();
+				lastCount = this.ollyLoop.get(ollyLoop.size() - 1).getLoopID();
+				
+				return ollyLoop.get(0);
+			} else {
+				firstCount = 0;
+				lastCount = 0;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 
@@ -206,7 +260,8 @@ public class OllyComparisonV2 {
 		for (OllyLoop l : ollyLoop)
 			if (l.getLoopID() == count)
 				return l;
-		return ollyLoop.get(0);
+		
+		return null;
 	}
 
 	private void refreshOllyData(long count) {
