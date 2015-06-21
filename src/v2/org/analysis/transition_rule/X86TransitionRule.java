@@ -110,7 +110,7 @@ public class X86TransitionRule extends TransitionRule {
 	public String checkAPICall(Value r, BPState curState) {
 		// YenNguyen: Check address in JNA memory
 		String api = APIHandle.checkAPI(((LongValue) r).getValue());
-		
+//		System.out.println();
 		if (api == null || api == "") {
 			api = curState.getEnvironement().getSystem().getLibraryHandle().getAPIName(((LongValue) r).getValue());
 		}
@@ -451,6 +451,10 @@ public class X86TransitionRule extends TransitionRule {
 			// if (val > 100000) val = 0;
 			if (result[2].substring(1).equals("-"))
 				val = -val;
+		} else if (result[2].contains("[")) {
+			val = Long.parseLong(result[2].substring(2, result[2].indexOf("[")));
+			if (val >= Math.pow(2, 31))
+				val = (long) (val - Math.pow(2, 32));
 		} else {
 			val = Long.parseLong(result[2].substring(2, result[2].length()));
 			if (val >= Math.pow(2, 31))
@@ -476,6 +480,9 @@ public class X86TransitionRule extends TransitionRule {
 			// if (val > 100000) val = 0;
 			if (result[2].substring(1).equals("-"))
 				val = -val;
+		} else if (result[2].contains("[")) {
+			String temp = result[2].substring(2, result[2].indexOf("["));
+			val = Long.parseLong(temp);
 		} else {
 			String temp = result[2].substring(2, result[2].length());
 			val = Long.parseLong(temp);

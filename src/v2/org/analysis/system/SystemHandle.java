@@ -292,4 +292,29 @@ public class SystemHandle {
 	public void setAdvapi32Handle(Advapi32Image advapiHandle) {
 		this.advapiHandle = advapiHandle;
 	}
+	
+	public String getLibraryName(long libraryHandle) {
+		Kernel32Image kernel = getKernel();
+		if (kernel.getBaseAddress() == libraryHandle) {
+			return "kernel32.dll";
+		}
+
+		User32Image user = getUser32();
+		if (user.getBaseAddress() == libraryHandle) {
+			return "user32.dll";
+		}
+		
+		Advapi32Image advapi = getAdvapi32Handle();
+		if (advapi.getBaseAddress() == libraryHandle) {
+			return "advapi32.dll";
+		}
+
+		Library l = this.libraryHandle.getLibrary(libraryHandle);
+
+		if (l != null)
+			return l.getLibraryName();
+
+		return null;
+
+	}
 }

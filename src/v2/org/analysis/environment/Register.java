@@ -1394,4 +1394,39 @@ public class Register {
 		
 	}
 
+	public void reset() {
+		// TODO Auto-generated method stub
+		eax = new SymbolValue("eax");
+		ax = new SymbolValue("ax");
+		ah = new SymbolValue("ah");
+		al = new SymbolValue("al");
+
+		ebx = new SymbolValue("ebx");
+		bx = new SymbolValue("bx");
+		bh = new SymbolValue("bh");
+		bl = new SymbolValue("bl");
+
+		ecx = new SymbolValue("ecx");
+		cx = new SymbolValue("cx");
+		ch = new SymbolValue("ch");
+		cl = new SymbolValue("cl");
+
+		edx = new SymbolValue("edx");
+		dx = new SymbolValue("dx");
+		dh = new SymbolValue("dh");
+		dl = new SymbolValue("dl");
+
+		esi = new SymbolValue("esi");
+		si = new SymbolValue("si");
+
+		edi = new SymbolValue("edi");
+		di = new SymbolValue("di");
+
+		esp = new SymbolValue("esp");
+		sp = new SymbolValue("sp");
+
+		ebp = new SymbolValue("ebp");
+		bp = new SymbolValue("bp");
+	}
+
 }

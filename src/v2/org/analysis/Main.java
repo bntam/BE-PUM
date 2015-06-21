@@ -101,7 +101,7 @@ public class Main {
 		pathVirus = "asm/api/";
 		// pathVirus = "asm/APLAS14/";
 		// pathVirus = "asm/virus/";
-		pathVirus = "asm/packer/";
+		//pathVirus = "asm/packer/";
 		// pathVirus = "D:/Temp/Test_week_6/";
 		// pathVirus = "asm/mcvecto/";
 		pathVirus = "asm/vx.netlux.org/";
@@ -287,6 +287,7 @@ public class Main {
 		//in = "Email-Worm.Win32.Mydoom.az"; // 952 981 47s x
 		//in = "Email-Worm.Win32.Zeynep.j"; // 442 470 317s 439 467 875 x
 		//in = "Virus.Win32.Cabanas.2999"; // 385 404 45s; 298 310 C
+		in = "Virus.Win32.Adson.1559";
 
 		// Windows
 		// in = "cmd.exe"; // 484 493 273s
@@ -322,7 +323,7 @@ public class Main {
 		// in = "api_test_pecompact.exe"; // 1127 1178 35s x
 		// in = "api_test_npack.exe"; // 602 639 10s x
 		// in = "api_test_yoda.1.2.exe"; // 622 659 80s x
-		// in = "api_test_yoda.1.3.exe"; // 909 945 54s x
+		//in = "api_test_yoda.1.3.exe"; // 909 945 54s x
 		//in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
 		//in = "api_test_aspack.exe"; // 1047 1112 101s x
 

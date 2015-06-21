@@ -158,7 +158,7 @@ public class OTFModelGeneration implements Algorithm {
 				//if (location == null || location.toString().contains("4202d0"))
 				//	System.out.println("Debug " + location);
 								
-				//debugProgram(location, curState, fileState, bkFile);
+				debugProgram(location, curState, fileState, bkFile);
 				//compareOlly(curState);
 				
 				// PHONG: 20150506 - Update TIB
@@ -453,18 +453,24 @@ public class OTFModelGeneration implements Algorithm {
 						(location.toString().contains("409239")
 				|| location.toString().contains("409227")
 				))
-
+				
+				|| (fileName.equals("Virus.Win32.Adson.1559") && 
+						(location.toString().contains("4094b3")
+						//|| location.toString().contains("402058")
+				// || location.toString().contains("408184")
+				))
 		// Virus.Win32.Aztec.01
 				|| (fileName.equals("Virus.Win32.Aztec.01") && 
 				(location.toString().contains("40134e")
 				|| location.toString().contains("401312")
 				|| location.toString().contains("40106c")
 				)))) {
+			//if (curState.getEnvironement().getRegister().getRegisterValue("eax").toString().equals("7c800c00"))
 			System.out.println("Debug at:" + location.toString());
-			backupState(curState, fileState);
-			backupStateAll(curState, bkFile);
+			//backupState(curState, fileState);
+			//backupStateAll(curState, bkFile);
 			//program.generageCFG(program.getAbsolutePathFile() + "_test");
-			program.generageCFG("/asm/cfg/" + program.getFileName() + "_test");
+			//program.generageCFG("/asm/cfg/" + program.getFileName() + "_test");
 		}
 		/*
 		 * if (location != null && location.toString().contains("0040481b") &&

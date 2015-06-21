@@ -23,6 +23,7 @@ import v2.org.analysis.environment.Memory;
 import v2.org.analysis.environment.Register;
 import v2.org.analysis.environment.Stack;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.system.Library;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
@@ -67,6 +68,12 @@ public class GetProcAddress extends Kernel32API {
 
 			if (ret != 0) {
 				String libName = APIHandle.libraryHandle.get(t1);
+				if (libName == null) {
+					//Library temp = curState.getEnvironement().getSystem().getLibraryHandle().getLibrary(t1);
+					//if (temp != null)
+					libName = curState.getEnvironement().getSystem().getLibraryName(t1);
+				}
+				
 				APIHandle.processAddressHandle.put((long) ret, lpProcName + '@' + libName);
 			}
 		}

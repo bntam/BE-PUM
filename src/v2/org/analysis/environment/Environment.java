@@ -77,7 +77,8 @@ public class Environment {
 			((StackV2) stack).setEnvironment(this);
 			// ((StackV2) stack).init(new LongValue(system.getKernel()
 			// .getReturnRandomValue()));
-			((StackV2) stack).init(new LongValue(0x7C817067));
+			//((StackV2) stack).init(new LongValue(0x7C817067));
+			((StackV2) stack).init(new LongValue(0x7c8000c0));
 		} else if (stack instanceof StackV1)
 			stack.push((new LongValue(system.getKernel().getReturnRandomValue())));
 	}
@@ -111,6 +112,11 @@ public class Environment {
 		return register.equals(e.getRegister()) && memory.equals(e.getMemory()) && stack.equals(e.getStack())
 		// && flag.equals(e.getFlag())
 		;
+	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		register.reset();
 	}
 
 }
