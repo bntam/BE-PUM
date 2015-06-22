@@ -68,7 +68,10 @@ public class GetComputerName extends Kernel32API {
 		if (x1 instanceof LongValue && x2 instanceof LongValue) {
 			long t2 = ((LongValue) x2).getValue();
 
-			char[] lpBuffer = new char[(int) t2];
+			int buffSize = (int) t2;
+			if (buffSize > 256)
+				buffSize = 256;
+			char[] lpBuffer = new char[buffSize];
 			IntByReference lpnSize = new IntByReference((int) t2);
 
 			boolean ret = Kernel32.INSTANCE.GetComputerName(lpBuffer, lpnSize);

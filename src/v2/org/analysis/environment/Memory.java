@@ -1083,8 +1083,8 @@ public class Memory {
 
 		for (int i = 0; i < value && i < t.length; i++) {
 			int x = (int) t[i];
-			if (x == 47)
-				x = 92;
+//			if (x == 47)
+//				x = 92;
 
 			this.setByteMemoryValue(new X86MemoryOperand(m.getDataType(), disp), new LongValue(x));
 			disp++;
