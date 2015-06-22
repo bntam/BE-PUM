@@ -101,93 +101,16 @@ public class Main {
 		pathVirus = "asm/api/";
 		// pathVirus = "asm/APLAS14/";
 		// pathVirus = "asm/virus/";
-		//pathVirus = "asm/packer/";
+		pathVirus = "asm/packer/";
 		// pathVirus = "D:/Temp/Test_week_6/";
 		// pathVirus = "asm/mcvecto/";
-		pathVirus = "asm/vx.netlux.org/";
+		//pathVirus = "asm/vx.netlux.org/";
 		// pathVirus = "C:/Software/Virus/API/";
 		// pathVirus = "asm/WindowsXP/";
 		// pathVirus = "asm/demo1/";
 		// pathVirus = "asm/Test-case/";
 		// pathVirus = "E:/masm32/myasm/TestCase/";
 
-		// Virus Name
-		in = "Rootkit.Win32.Agent.h";
-		in = "Virus.Win32.Seppuku.4827"; // Giai quyet tiep
-		in = "Virus.Win32.Wit.b"; // Convergence
-		in = "Virus.Win32.Htrip.b";
-		in = "Backdoor.Linux.Subsevux.b";
-		in = "DoS.Win32.Anon.09";
-		in = "Email-Worm.Win32.Bagle.aa";
-		in = "Flooder.Win32.Agent.m";
-		in = "Email-Worm.Win32.Bagle.ag";
-		in = "cmd.exe";
-		in = "Backdoor.Win32.RtKit.10.a";
-		in = "Email-Worm.Win32.Bagle.af";
-		in = "Email-Worm.Win32.Bagle.ag";
-		in = "Email-Worm.Win32.Bagle.aj";
-		in = "Email-Worm.Win32.Bagle.ak";
-		in = "Email-Worm.Win32.Bagle.am";
-		in = "Email-Worm.Win32.Bagle.as";
-		in = "Email-Worm.Win32.Plexus.c";
-		in = "Flooder.Win32.Agent.m";
-		in = "Virus.Win32.Belial.2537";
-		in = "Virus.Win32.Cabanas.a";
-		in = "Virus.Win32.Cabanas.b";
-		in = "Virus.Win32.Cabanas.c";
-		in = "Virus.Win32.Cabanas.Release";
-		in = "Virus.Win32.Seppuku.1606";
-		in = "Virus.Win32.Wit.b";
-		in = "Exploit.Linux.Rpc.e";
-		in = "Virus.Win32.Anuir.a";
-		in = "Virus.Win32.Awfull.2376";
-		in = "Virus.Win32.Champ";
-		in = "Virus.Win32.Champ.5430";
-		in = "Virus.Win32.Brof.a";
-		// in = "Virus.Win32.Brof.b";
-		in = "Virus.Win32.Seppuku.1606";// Tim gia tri cua EDI
-		// in = "Flooder.Win32.AngryPing";
-
-		in = "Email-Worm.Win32.Coronex.a"; // 107 112
-		// Xu li Top
-		in = "Trojan-PSW.Win32.QQRob.16.d"; // 33 33 Thieu duong kha nhieu
-		in = "Virus.Win32.Aidlot"; // 76 76 Chua xu li ret tai 0x004010af
-		in = "Virus.Win32.Belial.a"; // 113 117 Gan bang voi ket qua ban dau
-		in = "Virus.Win32.Belial.b"; // 123 127 Gan bang voi ket qua ban dau
-		in = "Virus.Win32.Belial.d"; // 151 155 Gan bang voi ket qua ban dau
-		in = "Virus.Win32.Benny.3219.a"; // 29 32 Qua thap
-		in = "Virus.Win32.Benny.3219.b"; // 29 32 Qua thap
-		in = "Virus.Win32.Benny.3223"; // 29 32 Qua thap
-		in = "Virus.Win32.Bogus.4096"; // 87 97 Bang ket qua ban dau
-		in = "Virus.Win32.Brof.a"; // 44 44 Thap Chua xu li loop tai 4012e5
-		in = "Virus.Win32.Cerebrus.1482"; // 24 26 Qua Thap
-		in = "Virus.Win32.Compan.a"; // 19 19
-		in = "Virus.Win32.Compan.b"; // 15 15
-		in = "Virus.Win32.Cornad"; // 93 97 Gan bang
-		in = "Virus.Win32.Eva.a"; // 130 136 Chua xu li xong RET
-		in = "Virus.Win32.Eva.b"; // 130 136 Chua xu li xong RET
-		in = "Virus.Win32.Eva.c"; // 130 136 Chua xu li xong RET
-		in = "Virus.Win32.Eva.d"; // 128 134 Chua xu li xong RET
-		in = "Virus.Win32.Eva.e"; // 150 156 Chua xu li xong RET
-		in = "Virus.Win32.Eva.f"; // 9 9 Chua xu li xong RET
-		in = "Virus.Win32.Eva.g"; // 9 9 Chua xu li xong RET
-		in = "Virus.Win32.Htrip.a"; // 5 5
-		// in = "Virus.Win32.Htrip.b"; // 5 5
-		// in = "Virus.Win32.Htrip.d"; // 5 5
-		// in = "Virus.Win32.Seppuku.1606"; // 30 29
-		// in = "Virus.Win32.Wit.a"; // 16 17
-		// in = "Virus.Win32.Wit.b"; // 4 4 Xu li loop
-		// in = "Virus.Win9x.I13.b"; // 26 26
-		// in = "Virus.Win9x.I13.c"; // 27 27
-		// in = "Virus.Win9x.I13.f"; // 31 31
-		// in = "Virus.Win9x.I13.h"; // 30 30
-
-		// in = "Virus.Win32.Cabanas.2999"; // 223 238
-		// SMC at 0x004048d5
-		// in = "Virus.Win32.Benny.3219.a"; // 209 224
-		// in = "selfModifyCode7.exe";
-
-		// in = "seh.exe";
 		in = "Virus.Win32.Wanex"; // 161 174
 		in = "Virus.Win32.Wanhope.1357"; // 232 236
 		in = "Virus.Win32.Warray"; // 282 274 Converge
@@ -199,7 +122,6 @@ public class Main {
 		in = "Virus.Win32.Zevity"; // 119 119
 		in = "Virus.Win9x.Harry.a"; // 30 30
 		in = "Virus.Win9x.Hooy.8192"; // 78 90
-
 		in = "Virus.Win32.Cabanas.2999"; // 220 233
 		in = "Virus.Win32.Auryn.1157"; // Truy cap vao dia chi B7FF0000;
 										// Kernel32 cua Win9x 2058 2058
@@ -220,7 +142,6 @@ public class Main {
 		in = "Constructor.Win32.A2Vbs.a";
 		in = "Email-Worm.Win32.Lassorm";
 		in = "Email-Worm.Win32.Locksky.r";
-
 		in = "Virus.Win32.Aztec.01"; // 265 282 4s x
 		// in = "Email-Worm.Win32.Coronex.a"; // 231 245 x
 		// 244 260 with MAX_LOOP = 50
@@ -266,8 +187,6 @@ public class Main {
 		//in = "Email-Worm.Win32.Apbost.c"; // 432 462 3
 		//in = "Email-Worm.Win32.LoveLetter.b"; //> 7000 Checked
 		//in = "Virus.Win32.Pulkfer.a"; // 8377 8385 87 Checked later
-
-		// ICFEM
 		// in = "Worm.Win32.Deborm.ah"; // Fail due to MOVS with too high loop
 		// SEH
 		in = "Virus.Win32.HLLO.Momac.a"; // Fail due to MOVS with too high
@@ -287,7 +206,20 @@ public class Main {
 		//in = "Email-Worm.Win32.Mydoom.az"; // 952 981 47s x
 		//in = "Email-Worm.Win32.Zeynep.j"; // 442 470 317s 439 467 875 x
 		//in = "Virus.Win32.Cabanas.2999"; // 385 404 45s; 298 310 C
-		in = "Virus.Win32.Adson.1559";
+		//in = "Virus.Win32.Adson.1559"; // 200 219
+		//in = "Virus.Win32.Weird.d"; // 294 312
+		//in = "Virus.Win32.HLLP.Delf.d"; // REP MOVS with too high loop
+		//in = "Virus.Win32.HLLC.Asive"; // 657 671
+		//in = "Virus.Win32.Anuir.3818"; // 26 27 Check later
+		//in = "Email-Worm.Win32.Blebla.A"; // 464 482
+		//in = "Email-Worm.Win32.Lindodia"; // 541 595
+		//in = "Email-Worm.Win32.Sircam.a"; // 538 571
+		//in = "Email-Worm.Win32.Sircam.c"; // 538 571
+		//in = "Email-Worm.Win32.Sober.m"; // 31 32 Checked later
+		//in = "Email-Worm.Win32.Zoek.e"; // 570 587
+		//in = "Email-Worm.Win32.ZippedFiles.a"; // 415 431
+		//in = "Email-Worm.Win32.ZippedFiles.d"; // 333 352
+		//in = "Virus.Win32.Wit.a"; // 102 109 Checked later
 
 		// Windows
 		// in = "cmd.exe"; // 484 493 273s
@@ -320,7 +252,7 @@ public class Main {
 		// in = "api_test.exe"; // 158 160 0.1s x
 		//in = "api_test_upx.exe"; // 323 353 21s x
 		// in = "api_test_fsg.exe"; // 244 268 5s x
-		// in = "api_test_pecompact.exe"; // 1127 1178 35s x
+		in = "api_test_pecompact.exe"; // 1127 1178 35s x
 		// in = "api_test_npack.exe"; // 602 639 10s x
 		// in = "api_test_yoda.1.2.exe"; // 622 659 80s x
 		//in = "api_test_yoda.1.3.exe"; // 909 945 54s x

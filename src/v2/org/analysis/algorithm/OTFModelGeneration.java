@@ -40,7 +40,7 @@ public class OTFModelGeneration implements Algorithm {
 	// private static long maxTimeProgam = 2500000;
 	//private static long maxTimePath = 1500000;
 	private static long bkTime = 2700000;
-	private static long outTime = 240000;
+	private static long outTime = 180000;
 	// For Debug
 	private int num = 1, loopCount = 1;
 	private boolean isCompareOlly = true, isChecked = false, isRestored = true;
@@ -156,9 +156,9 @@ public class OTFModelGeneration implements Algorithm {
 				location = curState.getLocation();
 				
 				//if (location == null || location.toString().contains("4202d0"))
-				//	System.out.println("Debug " + location);
+				//System.out.println("Debug " + location);
 								
-				debugProgram(location, curState, fileState, bkFile);
+				//debugProgram(location, curState, fileState, bkFile);
 				//compareOlly(curState);
 				
 				// PHONG: 20150506 - Update TIB
@@ -180,6 +180,7 @@ public class OTFModelGeneration implements Algorithm {
 				} else {
 					rule.getNewState(path, pathList, true);
 				}
+				//path.setPreviousInst(inst);
 			}
 		}
 	}
@@ -459,18 +460,31 @@ public class OTFModelGeneration implements Algorithm {
 						//|| location.toString().contains("402058")
 				// || location.toString().contains("408184")
 				))
+				
+				|| (fileName.equals("Virus.Win32.HLLP.Delf.d") && 
+						(location.toString().contains("401324")
+						//|| location.toString().contains("402058")
+				// || location.toString().contains("408184")
+				))
+				
+				|| (fileName.equals("Virus.Win32.HLLC.Asive") && 
+				(location.toString().contains("401130")
+						//|| location.toString().contains("402058")
+				// || location.toString().contains("408184")
+				))
+
 		// Virus.Win32.Aztec.01
 				|| (fileName.equals("Virus.Win32.Aztec.01") && 
 				(location.toString().contains("40134e")
 				|| location.toString().contains("401312")
 				|| location.toString().contains("40106c")
 				)))) {
-			//if (curState.getEnvironement().getRegister().getRegisterValue("eax").toString().equals("7c800c00"))
-			System.out.println("Debug at:" + location.toString());
-			//backupState(curState, fileState);
+			//if (curState.getEnvironement().getRegister().getRegisterValue("eax").toString().equals("7c800c00"))			
+			backupState(curState, fileState);
 			//backupStateAll(curState, bkFile);
 			//program.generageCFG(program.getAbsolutePathFile() + "_test");
 			//program.generageCFG("/asm/cfg/" + program.getFileName() + "_test");
+			System.out.println("Debug at:" + location.toString());
 		}
 		/*
 		 * if (location != null && location.toString().contains("0040481b") &&

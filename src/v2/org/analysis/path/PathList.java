@@ -48,8 +48,9 @@ public class PathList {
 	}
 
 	public boolean addT(Long addr) {
-		// if (contain(addr))
-		// return false;
+		if (contain(addr))
+			return false;
+		
 		addrList.add(addr);
 		return true;
 	}

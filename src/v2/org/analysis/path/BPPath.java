@@ -4,6 +4,9 @@
 package v2.org.analysis.path;
 
 import org.jakstab.asm.AbsoluteAddress;
+import org.jakstab.asm.Instruction;
+import org.jakstab.asm.x86.X86CallInstruction;
+
 import v2.org.analysis.loop.LoopHandle;
 import v2.org.analysis.value.Formulas;
 
@@ -20,6 +23,7 @@ public class BPPath {
 	private PathList trace;
 	private Formulas pathCondition;
 	private LoopHandle l;
+	private Instruction previousInst;
 	private List<ProcessedAPI> processedAPI;
 	private boolean isStop = false;
 
@@ -182,5 +186,13 @@ public class BPPath {
 	public void clearPathCondition() {
 		// TODO Auto-generated method stub
 		pathCondition.clear();
+	}
+
+	public Instruction getPreviousInst() {
+		return previousInst;
+	}
+
+	public void setPreviousInst(Instruction previousInst) {
+		this.previousInst = previousInst;
 	}
 }

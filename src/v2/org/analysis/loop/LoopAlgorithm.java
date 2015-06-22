@@ -17,7 +17,7 @@ public class LoopAlgorithm {
 	private int MAX_EP_LOOP = 50;
 	private int count_EP = 0;
 	private int MAX_LOOP = 1000000;
-	//private static int MAX_LOOP = 10;
+	//private static int MAX_LOOP = 1000;
 	// private List<LoopHandle> paths;
 
 	public static LoopAlgorithm getInstance() {
@@ -96,10 +96,12 @@ public class LoopAlgorithm {
 							+ curState.getLocation());
 						path.setStop(true);
 						return true;
-					}
+					}					
+								
+					if (loop_num == MAX_LOOP + 1)
+						curState.getEnvironement().reset();
 					
 					temp.setNumLoop(++loop_num);
-					curState.getEnvironement().reset();
 					return false;
 				}
 
@@ -199,8 +201,9 @@ public class LoopAlgorithm {
 
 	public long normalizeLoop(long t) {
 		// TODO Auto-generated method stub
-		// if (t > getMaxLoop())
-		// t = getMaxLoop();
+		if (t > 1000000000)
+			t = getMaxLoop();
+		
 		return t;
 	}
 }

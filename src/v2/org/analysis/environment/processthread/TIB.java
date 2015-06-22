@@ -8,6 +8,7 @@ import com.sun.jna.platform.win32.Kernel32;
 
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.Value;
 
 public class TIB {
 	private static boolean beUpdated;
@@ -96,10 +97,15 @@ public class TIB {
 		FS_0 = curState.getEnvironement().getSystem().getSEHHandler().getStart().getAddrSEHRecord();
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address, new LongValue(FS_0));
 		// Update EBP
-		FS_4 = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ebp")).getValue();
+		Value ebp = curState.getEnvironement().getRegister().getRegisterValue("ebp");
+		if (ebp != null && ebp instanceof LongValue)
+			FS_4 = ((LongValue) ebp).getValue();
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address + 0x4, new LongValue(FS_4));
 		// Update ESP
-		FS_8 = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp")).getValue();
+		Value esp = curState.getEnvironement().getRegister().getRegisterValue("esp");
+		if (esp != null && ebp instanceof LongValue)
+			FS_8 = ((LongValue) esp).getValue();
+		//FS_8 = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp")).getValue();
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address + 0x8, new LongValue(FS_8));
 		// More: Update Environment pointer FS_1C
 		FS_1C = 0;

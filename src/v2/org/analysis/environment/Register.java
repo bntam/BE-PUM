@@ -1422,8 +1422,8 @@ public class Register {
 		edi = new SymbolValue("edi");
 		di = new SymbolValue("di");
 
-		esp = new SymbolValue("esp");
-		sp = new SymbolValue("sp");
+		//esp = new SymbolValue("esp");
+		//sp = new SymbolValue("sp");
 
 		ebp = new SymbolValue("ebp");
 		bp = new SymbolValue("bp");

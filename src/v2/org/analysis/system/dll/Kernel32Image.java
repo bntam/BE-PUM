@@ -14,6 +14,7 @@ public class Kernel32Image {
 	private Kernel32PEHandler peHandler;
 	// Map <Integer, ByteClass> image;
 	private int length;
+	private String libName = "kernel32.dll";
 	private byte[] value;
 
 	public long getBaseAddress() {
@@ -236,5 +237,13 @@ public class Kernel32Image {
 		 * if (!s.equals(d)) System.out.println("Debug");
 		 */
 		return peHandler.getExportName(v);
+	}
+
+	public String getLibraryName() {
+		return libName;
+	}
+
+	public void setLibraryName(String libName) {
+		this.libName = libName;
 	}
 }

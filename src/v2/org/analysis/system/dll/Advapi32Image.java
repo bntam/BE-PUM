@@ -15,6 +15,7 @@ public class Advapi32Image {
 	private User32PEHandler peHandler;
 	// Map <Integer, ByteClass> image;
 	private int length;
+	private String libName = "advapi32.dll";
 	private byte[] value;
 
 	public long getBaseAddress() {
@@ -251,5 +252,13 @@ public class Advapi32Image {
 	public boolean isInside(AbsoluteAddress addr) {
 		// TODO Auto-generated method stub
 		return addr.getValue() >= this.baseAddress && addr.getValue() < (this.baseAddress + getLength());
+	}
+
+	public String getLibraryName() {
+		return libName;
+	}
+
+	public void setLibraryName(String libName) {
+		this.libName = libName;
 	}
 }

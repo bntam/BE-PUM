@@ -290,6 +290,9 @@ public final class Program {
 
 		if (api == "")
 			api = env.getSystem().getUser32().getProcName(value);
+		
+		if (api == "")
+			api = env.getSystem().getAdvapi32Handle().getProcName(value);
 
 		if (api == "")
 			api = env.getSystem().getLibraryHandle().getAPIName(value);

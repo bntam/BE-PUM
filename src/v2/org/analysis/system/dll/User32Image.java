@@ -13,7 +13,8 @@ public class User32Image {
 	private Map<AbsoluteAddress, String> exportTable;
 	private User32PEHandler peHandler;
 	// Map <Integer, ByteClass> image;
-	private int length;
+	private String libName = "user32.dll";
+;	private int length;
 	private byte[] value;
 
 	public long getBaseAddress() {
@@ -250,5 +251,13 @@ public class User32Image {
 	public boolean isInside(AbsoluteAddress addr) {
 		// TODO Auto-generated method stub
 		return addr.getValue() >= this.baseAddress && addr.getValue() < (this.baseAddress + getLength());
+	}
+
+	public String getLibraryName() {
+		return libName;
+	}
+
+	public void setLibraryName(String libName) {
+		this.libName = libName;
 	}
 }

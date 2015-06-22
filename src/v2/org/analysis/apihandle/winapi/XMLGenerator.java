@@ -47,11 +47,11 @@ public class XMLGenerator {
 							+ ".functions.";
 					String funcName = api.getName().replace(".java", "");
 					
-					System.out.print(funcName + ", ");
+					//System.out.println("\t\t" + funcName);
 					
-//					println(packageName, funcName, funcName);
-//					println(packageName, funcName + "A", funcName);
-//					println(packageName, funcName + "W", funcName);
+					println(packageName, funcName, funcName);
+					println(packageName, funcName + "A", funcName);
+					println(packageName, funcName + "W", funcName);
 					count++;
 				}
 

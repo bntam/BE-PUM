@@ -770,8 +770,11 @@ public class X86TransitionRule extends TransitionRule {
 		Program.getProgram().setDetailTechnique("SetUpException:" + curState.getLocation() + " ");
 		System.out.println("Set Up Other Exception: " + curState.getLocation());
 		Environment env = curState.getEnvironement();
-
-		long register_value = ((LongValue) env.getRegister().getRegisterValue(register)).getValue();
+		Value reg = env.getRegister().getRegisterValue(register);
+		long register_value = 0;
+		if (reg != null && reg instanceof LongValue)
+			register_value = ((LongValue) env.getRegister().getRegisterValue(register)).getValue();
+		
 		env.getSystem()
 				.getSEHHandler()
 				.getStart()

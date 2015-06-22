@@ -57,7 +57,7 @@ public class X86CallInterpreter {
 			AbsoluteAddress r1 = new AbsoluteAddress(((LongValue) r).getValue());
 			Program.getProgram().getBPCFG().getVertex(curState.getLocation(), curState.getInstruction())
 					.setProperty(r1.toString());
-
+			
 			String api = rule.checkAPICall(r, curState);
 			// String t[] = api.split("@");
 			if (api != null/* !api.equals("") */) {

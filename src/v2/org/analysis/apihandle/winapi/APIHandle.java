@@ -2,9 +2,8 @@ package v2.org.analysis.apihandle.winapi;
 
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
 import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import org.jakstab.asm.x86.X86CallInstruction;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -50,7 +49,7 @@ public class APIHandle {
 			return;
 
 		try {
-			String dir = "src\\" + APIHandle.class.getPackage().getName().replace(".", "\\");
+			String dir = "src\\" + Test.class.getPackage().getName().replace(".", "\\");
 			File fXmlFile = new File(dir + "\\" + "APIMap.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -132,10 +131,6 @@ public class APIHandle {
 		if (inst.getName().toString().equals("jmp")) {
 			System.out.println("JMP API:" + funcName);
 
-			// if (funcName.equals("ExitProcess") || funcName.equals("exit")) {
-			// System.out.println("Debgug");
-			// }
-
 			BPVertex v1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 			v1.setProperty(api);
 			BPVertex v2 = new BPVertex();
@@ -157,10 +152,13 @@ public class APIHandle {
 			cfg.insertEdge(new BPEdge(v1, v2));
 			Value returnAddr = stack.pop();
 			long r = 0;
-			if (returnAddr instanceof LongValue) {
+			if (//	path.getPreviousInst() instanceof X86CallInstruction && 
+					returnAddr != null && returnAddr instanceof LongValue) {
 				r = ((LongValue) returnAddr).getValue();
-			} else
+			} else {
 				r = curState.getLocation().getValue() + curState.getInstruction().getSize();
+				stack.push(returnAddr);
+			}
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			Instruction newInst = program.getInstruction(addr, env);
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
@@ -251,9 +249,9 @@ public class APIHandle {
 			curState.setInstruction(newInst);
 		}
 
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
-		SystemHandle system = env.getSystem();
+		//Memory memory = env.getMemory();
+		//Register register = env.getRegister();
+		//SystemHandle system = env.getSystem();
 
 		String className = findClassName(t[0].toLowerCase(), t[1].toLowerCase().replace(".dll", ""));
 		if (className != null) {

@@ -296,17 +296,17 @@ public class SystemHandle {
 	public String getLibraryName(long libraryHandle) {
 		Kernel32Image kernel = getKernel();
 		if (kernel.getBaseAddress() == libraryHandle) {
-			return "kernel32.dll";
+			return kernel.getLibraryName();
 		}
 
 		User32Image user = getUser32();
 		if (user.getBaseAddress() == libraryHandle) {
-			return "user32.dll";
+			return user.getLibraryName();
 		}
 		
 		Advapi32Image advapi = getAdvapi32Handle();
 		if (advapi.getBaseAddress() == libraryHandle) {
-			return "advapi32.dll";
+			return advapi.getLibraryName();
 		}
 
 		Library l = this.libraryHandle.getLibrary(libraryHandle);
