@@ -14,10 +14,10 @@ import java.util.List;
 
 public class LoopAlgorithm {
 	private static LoopAlgorithm programInstance = null;
-	// private int MAX_LOOP = 5000000;
+	private int MAX_EP_LOOP = 50;
+	private int count_EP = 0;
 	private int MAX_LOOP = 1000000;
-
-	// private static int MAX_LOOP = 10;
+	//private static int MAX_LOOP = 10;
 	// private List<LoopHandle> paths;
 
 	public static LoopAlgorithm getInstance() {
@@ -49,9 +49,13 @@ public class LoopAlgorithm {
 			BPVertex entry = Program.getProgram().getBPCFG().getEntryPoint();
 			if (entry != null && curState.getLocation().getValue() == entry.getAddress().getValue()
 					&& curState.getInstruction().compareInstruction(entry.getInstruction())) {
-				System.out.println("Path reaches to Entry Point!!!");
-				//path.setStop(true);
-				//return true;
+				if (count_EP > MAX_EP_LOOP) {
+					System.out.println("Path reaches to Entry Point!!!");
+					count_EP = 0;
+					path.setStop(true);
+					return true;
+				} else 
+					count_EP ++;
 			}
 
 			LoopHandle temp = path.getLoopHandle();
@@ -83,13 +87,20 @@ public class LoopAlgorithm {
 				// System.out.println("Debug");
 				temp.addLoopNode(curState.getLocation().getValue());
 
-				if (loop_num > MAX_LOOP || loop_num > exceptionCase(Program.getProgram().getFileName())) {
+				if (loop_num > MAX_LOOP 
+						|| loop_num > exceptionCase(Program.getProgram().getFileName())) {
 					// BPCFG cfg = Program.getProgram().getBPCFG();
-
-					System.out.println("Loop node reach Maximum Loops counts " + MAX_LOOP + " at "
+					if (loop_num > MAX_LOOP + 5 
+							|| loop_num > exceptionCase(Program.getProgram().getFileName()) + 5) {	
+						System.out.println("Loop node reach Maximum Loops counts " + MAX_LOOP + " at "
 							+ curState.getLocation());
-					path.setStop(true);
-					return true;
+						path.setStop(true);
+						return true;
+					}
+					
+					temp.setNumLoop(++loop_num);
+					curState.getEnvironement().reset();
+					return false;
 				}
 
 				if (loopHead.getAddress().getValue() == curState.getLocation().getValue()

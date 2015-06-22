@@ -136,3 +136,18 @@ api_test_upx.exe	   18465ms	     135	     154	 Encrypt/Decrypt-May Indirect Jump
 api_test_upx.exe	   11183ms	     135	     154	 Encrypt/Decrypt-May Indirect Jump	 Encrypt/Decrypt-May:0x004053dc  Indirect Jump:0x004053fa  Indirect Jump:0x0040540f  Indirect Jump:0x00405420 
 api_test_npack.exe	     579ms	      32	      32	 EPO Indirect Jump Ret-Indirect Jump	 EPO:0x00404290  EPO:0x00404297  EPO:0x00404299  EPO:0x0040429f  EPO:0x004042ea  EPO:0x004042eb  EPO:0x004042ec  EPO:0x004042f1  EPO:0x004042f7  EPO:0x004042fd  EPO:0x004042ff  EPO:0x00404304  EPO:0x00404305  Indirect Jump:0x00404305  EPO:0x00404307  EPO:0x0040430c  EPO:0x0040430d  EPO:0x00404312  Indirect Jump:0x00404312  EPO:0x00404314  EPO:0x00404315  EPO:0x0040431a  EPO:0x0040431b  EPO:0x004042a4  Ret-Indirect Jump:0x0040431b  EPO:0x0040431c  EPO:0x0040431d  EPO:0x0040431e  EPO:0x00404320  EPO:0x00404325  EPO:0x00404327  EPO:0x00404329 
 api_test_fsg.exe	    6214ms	      95	     114	 Indirect Jump Ret-Indirect Jump	 Indirect Jump:0x00400160  Ret-Indirect Jump:0x004001f1  Indirect Jump:0x00400166  Indirect Jump:0x0040016c  Indirect Jump:0x00400175  Indirect Jump:0x00400180  Indirect Jump:0x004001df  Indirect Jump:0x004001e3  Ret-Indirect Jump:0x004001e7  Indirect Jump:0x0040018a  Indirect Jump:0x0040019e  Indirect Jump:0x004001c6  Indirect Jump:0x004001d6  Indirect Jump:0x004001d1	
+multiDest.exe	     893ms	      23	      24	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+multiDest.exe	     514ms	      13	      13	 Indirect Jump	 Indirect Jump:0x0040101f	
+multiDest.exe	    2537ms	      16	      17	 Indirect Jump	 Indirect Jump:0x0040101f	
+multiDest.exe	 2260030ms	      10	      10	Unknown	
+multiDest.exe	  244893ms	      14	      15	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+multiDest.exe	    1360ms	      14	      15	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+multiDest.exe	     610ms	      14	      15	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+test.exe	    9156ms	       7	       6	 Ret-Indirect Jump	 Ret-Indirect Jump:0x00401005 
+multiDest.exe	    2203ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+multiDest.exe	    2169ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+multiDest.exe	     658ms	      16	      17	 Indirect Jump	 Indirect Jump:0x0040101f	
+multiDest.exe	     938ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+multiDest.exe	     924ms	      24	      28	 Indirect Jump	 Indirect Jump:0x0040101f	 Indirect Jump:0x00401031	
+SampleVirus-1.exe	    1428ms	     204	     204	 Ret-Indirect Jump SetUpException SEH	 Ret-Indirect Jump:0x004172bc  SetUpException:0x00415a2a  Ret-Indirect Jump:0x004159fa  SEH:0x00415b7e  Ret-Indirect Jump:0x004152c6  SetUpException:0x00415c28  Ret-Indirect Jump:0x00415c36  Ret-Indirect Jump:0x00415d8e 
+SampleVirus-3.exe	     886ms	     212	     212	 Ret-Indirect Jump SetUpException SEH	 Ret-Indirect Jump:0x004172bc  SetUpException:0x00415a2a  Ret-Indirect Jump:0x004159fa  SEH:0x00415b7e  Ret-Indirect Jump:0x00415752  Ret-Indirect Jump:0x00412b8d  SetUpException:0x00415c28  Ret-Indirect Jump:0x00415c36  Ret-Indirect Jump:0x00415d8e 

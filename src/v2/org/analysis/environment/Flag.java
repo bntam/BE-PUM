@@ -3,6 +3,9 @@
  */
 package v2.org.analysis.environment;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.value.*;
@@ -140,7 +143,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridValue(t, "=", new LongValue(0));
+			zFlag = new HybridValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -257,7 +260,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -333,7 +336,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -408,7 +411,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -519,7 +522,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -703,7 +706,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			// zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			// zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -810,7 +813,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -930,7 +933,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			// zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			// zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -982,7 +985,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(temp, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(temp, "==", new LongValue(0));
 			
 			aFlag = new BooleanValue(false);
 		}
@@ -1065,7 +1068,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 			
 			aFlag = new BooleanValue(false);
 		}
@@ -1217,7 +1220,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			// zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			// zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -1352,7 +1355,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			// zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			// zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -1469,7 +1472,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -1614,7 +1617,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			// zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			// zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -1749,7 +1752,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			// zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			// zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -1792,6 +1795,7 @@ public class Flag {
 			// *1* %CF := ((op1 < 0) & (op2 < 0))
 			// | ((result >= 0) & ((op1 < 0) | (op2 < 0)))
 			cFlag = new BooleanValue(((d >= 0) & (s < 0)) | ((t < 0) & ((d >= 0) | (s < 0))));
+			//cFlag = new BooleanValue(((d < 0) & (s < 0)) | ((t >= 0) & ((d < 0) | (s < 0))));
 			// R_CF:bool =
 			// extract:32:32:[pad:u33(T_orig1:u32) + pad:u33(T_orig2:u32) +
 			// pad:u33(R_CF:bool)]
@@ -1800,6 +1804,7 @@ public class Flag {
 			// *1* %OF := ((op1 < 0) & (op2 < 0) & (result >= 0))
 			// | ((op1 >= 0) & (op2 >= 0) & (result < 0))
 			oFlag = new BooleanValue(((d < 0) & (s >= 0) & (t > 0)) | ((d >= 0) & (s < 0) & (t < 0)));
+			//oFlag = new BooleanValue(((d < 0) & (s < 0) & (t >= 0)) | ((d >= 0) & (s >= 0) & (t < 0)));
 
 			// R_OF:bool =
 			// high:bool((T_orig1:u32 ^ ~T_orig2:u32) & (T_orig1:u32 ^
@@ -1861,12 +1866,12 @@ public class Flag {
 			// *1* %OF := ((op1 < 0) & (op2 >= 0) & (result > 0))
 			// | ((op1 >= 0) & (op2 < 0) & (result < 0))
 			HybridBooleanValue o1 = new HybridBooleanValue(dest, "<", new LongValue(0));
-			HybridBooleanValue o2 = new HybridBooleanValue(source, "<", new LongValue(0));
+			HybridBooleanValue o2 = new HybridBooleanValue(source, ">=", new LongValue(0));
 			HybridBooleanValue o3 = new HybridBooleanValue(t, ">", new LongValue(0));
 			HybridBooleanValue o4 = new HybridBooleanValue(o1, "and", new HybridBooleanValue(o2, "and", o3));
 
 			HybridBooleanValue o5 = new HybridBooleanValue(dest, ">=", new LongValue(0));
-			HybridBooleanValue o6 = new HybridBooleanValue(source, ">=", new LongValue(0));
+			HybridBooleanValue o6 = new HybridBooleanValue(source, "<", new LongValue(0));
 			HybridBooleanValue o7 = new HybridBooleanValue(t, "<", new LongValue(0));
 			HybridBooleanValue o8 = new HybridBooleanValue(o5, "and", new HybridBooleanValue(o6, "and", o7));
 
@@ -1885,7 +1890,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 		}
 	}
 
@@ -1971,7 +1976,7 @@ public class Flag {
 			// sFlag = t;
 
 			// R_ZF:bool = 0:u32 == T_t_84:u32
-			zFlag = new HybridBooleanValue(t, "=", new LongValue(0));
+			zFlag = new HybridBooleanValue(t, "==", new LongValue(0));
 			
 			aFlag = new BooleanValue(false);
 		}
@@ -2266,7 +2271,7 @@ public class Flag {
 				+ "df=" + dFlag.toString() + ", " + "of=" + oFlag.toString() + ", " + "if=" + iFlag.toString();
 	}
 
-	public void setFlagValue(String flag, BooleanValue value) {
+	public void setFlagValue(String flag, Value value) {
 		// TODO Auto-generated method stub
 		String temp = flag.toLowerCase();
 		
@@ -2288,5 +2293,18 @@ public class Flag {
 			oFlag = value;
 		else if (temp.contains("if"))
 			iFlag = value;
+	}
+
+	public void setValue(Map<String, Long> z3Value) {
+		// TODO Auto-generated method stub
+		setFlagValue("af", aFlag.evaluate(z3Value));
+		setFlagValue("cf", cFlag.evaluate(z3Value));
+		setFlagValue("df", dFlag.evaluate(z3Value));
+		setFlagValue("sf", sFlag.evaluate(z3Value));
+		setFlagValue("of", oFlag.evaluate(z3Value));
+		setFlagValue("if", iFlag.evaluate(z3Value));
+		setFlagValue("tf", tFlag.evaluate(z3Value));
+		setFlagValue("pf", pFlag.evaluate(z3Value));
+		setFlagValue("zf", zFlag.evaluate(z3Value));
 	}
 }

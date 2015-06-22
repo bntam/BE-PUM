@@ -20,11 +20,10 @@ import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPVertex;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.processthread.TIB;
-import v2.org.analysis.olly.OllyCompare;
+import v2.org.analysis.olly.OllyComparisonV2;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.path.PathList;
-import v2.org.analysis.environment.StackV2;
 import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.BooleanValue;
@@ -39,17 +38,18 @@ public class OTFModelGeneration implements Algorithm {
 	// private static final Logger logger =
 	// Logger.getLogger(CPAAlgorithm.class);
 	// private static long maxTimeProgam = 2500000;
-	// private static long maxTimePath = 1500000;
-	private static long bkTime = 108000000;
+	//private static long maxTimePath = 1500000;
+	private static long bkTime = 2700000;
+	private static long outTime = 240000;
 	// For Debug
-	private int num = 1, loopCount = 1;;
-	private boolean isCompareOlly = false, isChecked = false, isRestored = true;
+	private int num = 1, loopCount = 1;
+	private boolean isCompareOlly = true, isChecked = false, isRestored = true;
 	private long count = 1;
 	private AbsoluteAddress checkedAddr = new AbsoluteAddress(0);
 	private AbsoluteAddress endAddr = new AbsoluteAddress(0);
 	private String fileName = "";
 	private FileProcess compareOllyResult = null;
-	private OllyCompare ollyCompare = null;
+	private OllyComparisonV2 ollyCompare = null;
 
 	private final Program program;
 
@@ -64,8 +64,10 @@ public class OTFModelGeneration implements Algorithm {
 		FileProcess fileState = new FileProcess("data/stateValue.txt");
 		FileProcess bkFile = new FileProcess("data/restore.txt");
 		fileName = "out_" + Program.getProgram().getFileName() + "_";
+		//fileName = "out_themida_";
 
 		fileState.clearContentFile();
+		bkFile.clearContentFile();
 		long overallStartTime = System.currentTimeMillis();
 		long overallStartTemp = overallStartTime;
 		// BE-PUM algorithm
@@ -93,10 +95,10 @@ public class OTFModelGeneration implements Algorithm {
 		if (Program.getProgram().getFileName().equals("api_test_v2.3_lvl1.exe") 
 				&& isRestored) {
 			System.out.println("Restore State from File.");
-			bkFile = new FileProcess("data/restore.txt");
-			pathList = restoreState(bkFile);
+			FileProcess reFile = new FileProcess("data/restoreState.txt");
+			pathList = restoreState(reFile);
 			// bkFile.clearContentFile();
-			System.out.println("Finished!");
+			System.out.println("Finished restoring state!");
 		}
 
 		// Update at first -----------------------------
@@ -118,7 +120,7 @@ public class OTFModelGeneration implements Algorithm {
 			while (true) {
 				long overallEndTimeTemp = System.currentTimeMillis();
 				// Output file each 60s
-				if (overallEndTimeTemp - overallStartTemp > 120000) {
+				if (overallEndTimeTemp - overallStartTemp > outTime) {
 
 					// Stop running one paths after maxTimePath
 					/*
@@ -132,19 +134,19 @@ public class OTFModelGeneration implements Algorithm {
 					overallStartTemp = overallEndTimeTemp;
 				}
 
-				if (overallEndTimeTemp - overallStartTime > bkTime) {
+				/*if (overallEndTimeTemp - overallStartTime > bkTime) {
 
 					// Stop running one paths after maxTimePath
-					/*
+					
 					 * if (overallEndTimeTemp - overallStartTimePath >
 					 * maxTimePath) { Program.getProgram().getLog()
 					 * .info("Stop Path after " + maxTimePath + " at " +
 					 * curState.getLocation()); // break; }
-					 */
+					 
 
 					backupStateAll(curState, bkFile);
 					overallStartTime = overallEndTimeTemp;
-				}
+				}*/
 
 				if (path.isStop()) {
 					break;
@@ -156,7 +158,7 @@ public class OTFModelGeneration implements Algorithm {
 				//if (location == null || location.toString().contains("4202d0"))
 				//	System.out.println("Debug " + location);
 								
-				//debugProgram(location, curState, fileState, bkFile);
+				debugProgram(location, curState, fileState, bkFile);
 				//compareOlly(curState);
 				
 				// PHONG: 20150506 - Update TIB
@@ -164,9 +166,6 @@ public class OTFModelGeneration implements Algorithm {
 				TIB.updateTIB(curState);
 				TIB.updateChecking(curState);
 				// --------------------------------------
-				
-				if (path.getPathCondition().getListFormula().size() > 2)
-					System.out.println("Debug");
 				
 				if (inst == null || location == null)
 					break;
@@ -200,8 +199,8 @@ public class OTFModelGeneration implements Algorithm {
 	private List<BPPath> restoreState(FileProcess bkFile) {
 		// TODO Auto-generated method stub
 		Environment env = new Environment();
-		getEnvironment(env, bkFile);
 		AbsoluteAddress location = getContinuosPoint(bkFile);
+		getEnvironment(env, bkFile);		
 		Instruction inst = Program.getProgram().getInstruction(location, env);
 		List<BPPath> pathList = new ArrayList<BPPath>();
 		// BPVertex startNode = null;
@@ -245,6 +244,7 @@ public class OTFModelGeneration implements Algorithm {
 	private void getEnvironment(Environment env, FileProcess file) {
 		// TODO Auto-generated method stub
 		int t = 0;
+		boolean setReg = false, setFlag = false, setMem = false;
 		while (true) {
 			String temp = file.getLineAt(t);
 
@@ -257,9 +257,9 @@ public class OTFModelGeneration implements Algorithm {
 					reg[i] = reg[i].replace(" ", "");
 					String r[] = reg[i].split("=");
 
-					env.getRegister().setRegisterValue(r[0], new LongValue(Long.parseLong(r[1], 16)));
+					env.getRegister().setRegisterValue(r[0], new LongValue(Long.parseLong(r[1], 16)));					
 				}
-
+				setReg = true;
 			} else if (temp.contains("Flag")) {
 				temp = temp.substring(temp.indexOf(":") + 1, temp.length());
 				String[] reg = temp.split(",");
@@ -272,6 +272,7 @@ public class OTFModelGeneration implements Algorithm {
 					else
 						env.getFlag().setFlagValue(r[0], new BooleanValue(false));
 				}
+				setFlag = true;
 			} else if (temp.contains("Memory")) {
 				temp = temp.substring(temp.indexOf(":") + 1, temp.length());
 				String[] reg = temp.split(",");
@@ -283,8 +284,12 @@ public class OTFModelGeneration implements Algorithm {
 					byte y = (byte) Long.parseLong(reduce(r[1], 8), 16);
 					env.getMemory().setByteMemoryValue(x, new LongValue(y));
 				}
-			}
+				setMem = true;
+			}  
 			t++;
+			
+			if (setReg && setFlag && setMem)
+				return;
 		}
 	}
 
@@ -300,7 +305,7 @@ public class OTFModelGeneration implements Algorithm {
 
 	private void backupState(BPState curState, FileProcess fileState) {
 		// TODO Auto-generated method stub
-		String result = "Address=" + curState.getLocation().toString() + "\n";
+		/*String result = "Address=" + curState.getLocation() + "\n";
 		result += "Register: " + curState.getEnvironement().getRegister() + "\n";
 		result += "Flag: " + curState.getEnvironement().getFlag() + "\n";
 		result += "Stack: " + ((StackV2) curState.getEnvironement().getStack()).toString() + "\n";
@@ -308,7 +313,7 @@ public class OTFModelGeneration implements Algorithm {
 		result += "*************************************************************";
 
 		// bkFile.appendFile(result);
-		fileState.appendFile(result);
+		fileState.appendFile(result);*/
 
 		program.generageCFG("/asm/cfg/" + program.getFileName() + "_test");
 		program.getResultFileTemp().appendInLine(
@@ -327,16 +332,18 @@ public class OTFModelGeneration implements Algorithm {
 			AbsoluteAddress location = state.getLocation();
 			Environment env = state.getEnvironement();
 			if (ollyCompare == null) {
-				long memoryStartAddr = 0x404098;
-				long memoryEndAddr = 0x4040A0;
-				long stackIndex = 0x8c;
-
-				ollyCompare = new OllyCompare("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
+				long memoryStartAddr = 0x409770;
+				long memoryEndAddr = 0x409780;
+				long stackIndex = 0xc;
+				System.out.println("Read file Olly " + "asm/olly/" + fileName + "" + num + ".txt");
+				ollyCompare = new OllyComparisonV2("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
 						memoryEndAddr, stackIndex);
 				// ollyCompare = new OllyCompare("asm/olly/" + fileName +
 				// ".txt", memoryStartAddr,
 				// memoryEndAddr, stackIndex);
 				ollyCompare.importOllyData(checkedAddr, endAddr);
+				count = ollyCompare.getFirstCount();
+				System.out.println("Finish reading!");
 			}
 
 			if (compareOllyResult == null) {
@@ -348,8 +355,8 @@ public class OTFModelGeneration implements Algorithm {
 				isChecked = true;
 			}
 
-			if (isChecked & location != null
-					&& (location.getValue() != endAddr.getValue() || loopCount != ollyCompare.getLoopCount())) {
+			if (isChecked & location != null && !ollyCompare.isFinished()) {
+					//&& (location.getValue() != endAddr.getValue() || loopCount != ollyCompare.getLoopCount())) {
 				// System.out.println("Loop = " + count + " , Address = " +
 				// location.toString() + ":");
 				compareOllyResult.appendFile("Loop = " + count + " , Address = " + location.toString() + ":");
@@ -365,8 +372,10 @@ public class OTFModelGeneration implements Algorithm {
 				loopCount++;
 			}
 
-			if (isChecked && location != null && location.getValue() == endAddr.getValue()
-					&& loopCount == ollyCompare.getLoopCount()) {
+			if (isChecked && location != null 
+					&& ollyCompare.isFinished()) {
+					//&& location.getValue() == endAddr.getValue()
+					//&& loopCount == ollyCompare.getLoopCount()) {
 				System.out.println("Stop Check: " + fileName + "" + num + ".txt");
 				ollyCompare = null;
 				loopCount = 1;
@@ -375,7 +384,7 @@ public class OTFModelGeneration implements Algorithm {
 				isChecked = false;
 				count = 1;
 
-				if (num >= 3) {
+				if (num >= 2) {
 					isCompareOlly = false;
 					System.out.println("Finish Checking");
 				}
@@ -418,6 +427,7 @@ public class OTFModelGeneration implements Algorithm {
 				|| location.toString().contains("437b16") // After STI
 				|| location.toString().contains("43ce7c") // After STI 
 				|| location.toString().contains("43f722") // API GetVersionExA
+				|| location.toString().contains("43d397") // API GetCommandLine				
 				
 				|| location.toString().contains("44228a") // Target
 				))
@@ -437,16 +447,30 @@ public class OTFModelGeneration implements Algorithm {
 				// || location.toString().contains("408184")
 				))
 		// ******************************************
+				// ******************************************
+				// Email-Worm.Win32.Navidad.b
+				|| (fileName.equals("Email-Worm.Win32.Navidad.b") && 
+						(location.toString().contains("409239")
+				|| location.toString().contains("409227")
+				))
+				
+				|| (fileName.equals("Virus.Win32.Adson.1559") && 
+						(location.toString().contains("4094b3")
+						//|| location.toString().contains("402058")
+				// || location.toString().contains("408184")
+				))
 		// Virus.Win32.Aztec.01
 				|| (fileName.equals("Virus.Win32.Aztec.01") && 
 				(location.toString().contains("40134e")
 				|| location.toString().contains("401312")
 				|| location.toString().contains("40106c")
 				)))) {
+			//if (curState.getEnvironement().getRegister().getRegisterValue("eax").toString().equals("7c800c00"))
 			System.out.println("Debug at:" + location.toString());
-			backupState(curState, fileState);
-			backupStateAll(curState, bkFile);
-			program.generageCFG(program.getAbsolutePathFile() + "_test");
+			//backupState(curState, fileState);
+			//backupStateAll(curState, bkFile);
+			//program.generageCFG(program.getAbsolutePathFile() + "_test");
+			//program.generageCFG("/asm/cfg/" + program.getFileName() + "_test");
 		}
 		/*
 		 * if (location != null && location.toString().contains("0040481b") &&

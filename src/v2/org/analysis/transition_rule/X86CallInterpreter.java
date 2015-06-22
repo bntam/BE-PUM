@@ -152,6 +152,9 @@ public class X86CallInterpreter {
 
 						curState.setInstruction(i);
 						curState.setLocation(a);
+						
+						curState.setValue(z3Value);
+						path.clearPathCondition();
 					} else {
 						if (r instanceof SymbolValue) {
 							if (((SymbolValue) r).getVarName().equals("eax")) {

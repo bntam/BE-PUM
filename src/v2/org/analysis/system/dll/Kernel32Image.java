@@ -187,7 +187,6 @@ public class Kernel32Image {
 		 * 8; return ret;
 		 */
 		// int off = (int) getRVAAddress(index - this.baseAddress);
-
 		String temp = Convert.longToHex(readByte(index + 1), 8);
 		temp += Convert.longToHex(readByte(index), 8);
 		return Convert.hexToLong(temp);

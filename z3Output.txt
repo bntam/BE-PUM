@@ -1,1 +1,2 @@
-unsat
+sat
+api_eax__initterm_e -> #xffffffff

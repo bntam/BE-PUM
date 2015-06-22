@@ -113,8 +113,8 @@ public class APIHandle {
 		System.out.println("\n\tCall api: " + api);
 		String t[] = api.split("@");
 
-		if (api.contains("HeapAlloc"))
-			System.out.println("Debug");
+		//if (api.contains("HeapAlloc"))
+		//	System.out.println("Debug");
 
 		// long returnValue = 0;
 		String funcName = t[0];

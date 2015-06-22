@@ -60,15 +60,16 @@ public class Environment {
 		register.mov("esi", new LongValue(0xFFFFFFFF));
 		register.mov("ecx", new LongValue(0x12FFB0));
 		register.mov("edi", new LongValue(0x7C910208));
-		register.mov("ebx", new LongValue(0x7FFDE000));
+		register.mov("ebx", new LongValue(0x7FFDB000));
 		register.mov("eax", new LongValue(0));
+
 		register.mov("cs", new LongValue(0x0));
 		register.mov("ds", new LongValue(0x0));
 		register.mov("es", new LongValue(0x0));
 		register.mov("gs", new LongValue(0x0));
 		register.mov("ss", new LongValue(0x0));
 		register.mov("fs", new LongValue(0x7EFDD000));
-		// register.mov("esp", new LongValue(((StackV2)stack).getTopAddress()));
+		//register.mov("esp", new LongValue(((StackV2)stack).getTopAddress()));
 		// register.mov("ebp", new
 		// LongValue(((StackV2)stack).getBaseAddress()));
 
@@ -76,7 +77,8 @@ public class Environment {
 			((StackV2) stack).setEnvironment(this);
 			// ((StackV2) stack).init(new LongValue(system.getKernel()
 			// .getReturnRandomValue()));
-			((StackV2) stack).init(new LongValue(0x7C817067));
+			//((StackV2) stack).init(new LongValue(0x7C817067));
+			((StackV2) stack).init(new LongValue(0x7c8000c0));
 		} else if (stack instanceof StackV1)
 			stack.push((new LongValue(system.getKernel().getReturnRandomValue())));
 	}
@@ -110,6 +112,11 @@ public class Environment {
 		return register.equals(e.getRegister()) && memory.equals(e.getMemory()) && stack.equals(e.getStack())
 		// && flag.equals(e.getFlag())
 		;
+	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		register.reset();
 	}
 
 }

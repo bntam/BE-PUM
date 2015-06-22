@@ -11,9 +11,9 @@ import org.jakstab.asm.x86.X86Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 import org.jakstab.disasm.x86.X86Disassembler;
 import org.jakstab.loader.ExecutableImage;
-
 import org.jakstab.loader.pe.PEModule;
 import org.jakstab.util.Pair;
+
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
@@ -62,6 +62,7 @@ public class Memory {
 
 	public String outputMemory() {
 		FileProcess fp = new FileProcess("/data/memory.txt");
+		//fp.clearContentFile();
 		String ret = "";
 		for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
 			ret += entry.getKey() + "\t" + entry.getValue() + "\n";
@@ -1283,6 +1284,15 @@ public class Memory {
 				setDoubleWordMemoryValue(entry.getKey().getValue(), new LongValue(temp));
 			}
 		}
+	}
+
+	public void setValue(Map<String, Long> z3Value) {
+		// TODO Auto-generated method stub
+		System.out.println("Implement the memory later.");
+		for (Entry<String, Long> entry : z3Value.entrySet()) {
+			
+		}
+			
 	}
 
 	/*

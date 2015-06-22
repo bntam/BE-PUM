@@ -292,7 +292,8 @@ public class Main_AutomaticDetection {
 									Characters.starredBox("WARNING: Analysis was unsound!"));
 							logger.error(Characters.starredBox("WARNING: Analysis was unsound!"));
 						}
-						program.generageCFG(getExtractBaseFileName(baseFileName));
+						//program.generageCFG(getExtractBaseFileName(baseFileName));
+						program.generageCFG("/asm/cfg/" + program.getFileName());
 
 						BPCFG cfg = program.getBPCFG();
 

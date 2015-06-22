@@ -1014,3 +1014,123 @@
    Instructions:                              93
    Nodes:                              95
    Edges:                             114
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                          893ms
+   Instructions:                              23
+   Nodes:                              23
+   Edges:                              24
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                          514ms
+   Instructions:                              13
+   Nodes:                              13
+   Edges:                              13
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                         2537ms
+   Instructions:                              16
+   Nodes:                              16
+   Edges:                              17
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                      2260030ms
+   Instructions:                              10
+   Nodes:                              10
+   Edges:                              10
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                       244893ms
+   Instructions:                              14
+   Nodes:                              14
+   Edges:                              15
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                         1360ms
+   Instructions:                              14
+   Nodes:                              14
+   Edges:                              15
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                          610ms
+   Instructions:                              14
+   Nodes:                              14
+   Edges:                              15
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     test.exe
+   Runtime:                         9156ms
+   Instructions:                               7
+   Nodes:                               7
+   Edges:                               6
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                         2203ms
+   Instructions:                              24
+   Nodes:                              24
+   Edges:                              28
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                         2169ms
+   Instructions:                              24
+   Nodes:                              24
+   Edges:                              28
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                          658ms
+   Instructions:                              16
+   Nodes:                              16
+   Edges:                              17
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                          938ms
+   Instructions:                              24
+   Nodes:                              24
+   Edges:                              28
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     multiDest.exe
+   Runtime:                          924ms
+   Instructions:                              24
+   Nodes:                              24
+   Edges:                              28
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SampleVirus-1.exe
+   Runtime:                         1428ms
+   Instructions:                             196
+   Nodes:                             204
+   Edges:                             204
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SampleVirus-3.exe
+   Runtime:                          886ms
+   Instructions:                             204
+   Nodes:                             212
+   Edges:                             212

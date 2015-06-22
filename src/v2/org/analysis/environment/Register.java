@@ -3,6 +3,9 @@
  */
 package v2.org.analysis.environment;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
@@ -1376,6 +1379,54 @@ public class Register {
 		}
 
 		uDiv(dest, s);
+	}
+
+	public void setValue(Map<String, Long> z3Value) {
+		// TODO Auto-generated method stub
+		setRegisterValue("eax", eax.evaluate(z3Value));
+		setRegisterValue("ebx", ebx.evaluate(z3Value));
+		setRegisterValue("ecx", ecx.evaluate(z3Value));
+		setRegisterValue("edx", edx.evaluate(z3Value));
+		setRegisterValue("esi", esi.evaluate(z3Value));
+		setRegisterValue("edi", edi.evaluate(z3Value));
+		setRegisterValue("esp", esp.evaluate(z3Value));
+		setRegisterValue("ebp", ebp.evaluate(z3Value));
+		
+	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		eax = new SymbolValue("eax");
+		ax = new SymbolValue("ax");
+		ah = new SymbolValue("ah");
+		al = new SymbolValue("al");
+
+		ebx = new SymbolValue("ebx");
+		bx = new SymbolValue("bx");
+		bh = new SymbolValue("bh");
+		bl = new SymbolValue("bl");
+
+		ecx = new SymbolValue("ecx");
+		cx = new SymbolValue("cx");
+		ch = new SymbolValue("ch");
+		cl = new SymbolValue("cl");
+
+		edx = new SymbolValue("edx");
+		dx = new SymbolValue("dx");
+		dh = new SymbolValue("dh");
+		dl = new SymbolValue("dl");
+
+		esi = new SymbolValue("esi");
+		si = new SymbolValue("si");
+
+		edi = new SymbolValue("edi");
+		di = new SymbolValue("di");
+
+		esp = new SymbolValue("esp");
+		sp = new SymbolValue("sp");
+
+		ebp = new SymbolValue("ebp");
+		bp = new SymbolValue("bp");
 	}
 
 }

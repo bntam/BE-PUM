@@ -10,6 +10,7 @@ import java.util.*;
 public class OllyCompare {
 	private long nextCheck = 0;
 	private String ollyFileName;
+	private int loopCount = 0;
 	private List<OllyLoop> ollyLoop;
 
 	public long getMemoryStartAddr() {
@@ -226,5 +227,10 @@ public class OllyCompare {
 	public int getLoopCount() {
 		// TODO Auto-generated method stub
 		return ollyLoop.size();
+	}
+
+	public long getFirstLoopCount() {
+		// TODO Auto-generated method stub
+		return loopCount;
 	}
 }

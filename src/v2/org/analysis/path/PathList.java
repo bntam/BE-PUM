@@ -40,8 +40,8 @@ public class PathList {
 	}
 
 	public boolean add(Long addr) {
-		if (contain(addr))
-			return false;
+		//if (contain(addr))
+		//	return false;
 
 		addrList.add(addr);
 		return true;

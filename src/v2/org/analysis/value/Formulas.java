@@ -141,4 +141,11 @@ public class Formulas {
 
 		return ret;
 	}
+
+	public void clear() {
+		// TODO Auto-generated method stub
+		listFormula.clear();
+		variableName.clear();
+		num = 0;
+	}
 }
