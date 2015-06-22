@@ -50,7 +50,7 @@ public class APIHandle {
 			return;
 
 		try {
-			String dir = "src\\" + Test.class.getPackage().getName().replace(".", "\\");
+			String dir = "src\\" + APIHandle.class.getPackage().getName().replace(".", "\\");
 			File fXmlFile = new File(dir + "\\" + "APIMap.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
