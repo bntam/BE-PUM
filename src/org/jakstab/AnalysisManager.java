@@ -20,7 +20,13 @@ package org.jakstab;
 import org.jakstab.analysis.ConfigurableProgramAnalysis;
 import org.jakstab.util.Logger;
 
+import v2.org.analysis.Main;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
@@ -44,30 +50,64 @@ public class AnalysisManager {
 		// Enumerate all analyses and register them
 		String pkg = "org.jakstab.analysis";
 		File dir = new File(Options.jakstabHome + "/bin/" + pkg.replace(".", "/"));
-		List<Class<? extends ConfigurableProgramAnalysis>> classes = findCPAClasses(dir, pkg);
-		for (Class<? extends ConfigurableProgramAnalysis> cpaClass : classes) {
-			AnalysisProperties aProps = new AnalysisProperties();
+		List<Class<? extends ConfigurableProgramAnalysis>> classes = null;
+
+		// YenNguyen: Change way to get list of class in pkg package by text
+		// content
+		if (!Main.class.getResource("Main.class").toString().startsWith("file")) {
+			classes = new ArrayList<Class<? extends ConfigurableProgramAnalysis>>();
+
+			String directory = AnalysisManager.class.getPackage().getName().replace(".", "/");
+			InputStream textFile = AnalysisManager.class.getResourceAsStream("/" + directory + "/ClassList.txt");
+			BufferedReader buff = new BufferedReader(new InputStreamReader(textFile));
+
+			String className;
 			try {
-				// logger.debug("Trying to register " +
-				// cpaClass.getSimpleName());
-				cpaClass.getMethod("register", AnalysisProperties.class).invoke(cpaClass, aProps);
-				if (aProps.getShortHand() != ' ') {
-					if (shortHandMap.containsKey(aProps.getShortHand())) {
-						logger.fatal("Duplicate short hand '" + aProps.getShortHand() + "' registered by "
-								+ shortHandMap.get(aProps.getShortHand()).getSimpleName() + " and "
-								+ cpaClass.getSimpleName() + ".");
+				while ((className = buff.readLine()) != null) {
+					try {
+						Class<?> clazz = Class.forName(className);
+						classes.add(clazz.asSubclass(ConfigurableProgramAnalysis.class));
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					shortHandMap.put(aProps.getShortHand(), cpaClass);
 				}
-				analysisProperties.put(cpaClass, aProps);
-				// apply properties
 			} catch (Exception e) {
-				logger.warn("Failed to register " + cpaClass.getSimpleName());
-				if (e instanceof RuntimeException)
+				e.printStackTrace();
+			} finally {
+				try {
+					if (textFile != null)
+						textFile.close();
+					if (buff != null)
+						buff.close();
+				} catch (IOException e) {
 					e.printStackTrace();
+				}
+			}
+		} else {
+			classes = findCPAClasses(dir, pkg);
+			for (Class<? extends ConfigurableProgramAnalysis> cpaClass : classes) {
+				AnalysisProperties aProps = new AnalysisProperties();
+				try {
+					// logger.debug("Trying to register " +
+					// cpaClass.getSimpleName());
+					cpaClass.getMethod("register", AnalysisProperties.class).invoke(cpaClass, aProps);
+					if (aProps.getShortHand() != ' ') {
+						if (shortHandMap.containsKey(aProps.getShortHand())) {
+							logger.fatal("Duplicate short hand '" + aProps.getShortHand() + "' registered by "
+									+ shortHandMap.get(aProps.getShortHand()).getSimpleName() + " and "
+									+ cpaClass.getSimpleName() + ".");
+						}
+						shortHandMap.put(aProps.getShortHand(), cpaClass);
+					}
+					analysisProperties.put(cpaClass, aProps);
+					// apply properties
+				} catch (Exception e) {
+					logger.warn("Failed to register " + cpaClass.getSimpleName());
+					if (e instanceof RuntimeException)
+						e.printStackTrace();
+				}
 			}
 		}
-
 	}
 
 	public ConfigurableProgramAnalysis createAnalysis(char shortHand) {

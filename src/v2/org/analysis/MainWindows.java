@@ -41,6 +41,8 @@ public class MainWindows extends JFrame {
 
 	MainWindows() {
 		initComponents();
+		//YenNguyen: Set this boolean attribute in order to main thread will not exit when analysis have finished
+		Main.isGui = true;
 		this.setTitle("BE-PUM");
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

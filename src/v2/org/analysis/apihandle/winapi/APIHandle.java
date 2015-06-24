@@ -3,7 +3,6 @@ package v2.org.analysis.apihandle.winapi;
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86CallInstruction;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -15,12 +14,9 @@ import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
 import v2.org.analysis.cfg.BPVertex;
 import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
 import v2.org.analysis.environment.Stack;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.system.SystemHandle;
 import v2.org.analysis.system.VirtualMemory;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
@@ -29,7 +25,8 @@ import v2.org.analysis.value.Value;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
@@ -47,10 +44,15 @@ public class APIHandle {
 	private static void init() {
 		if (init)
 			return;
-
+		
+		String directory = APIHandle.class.getPackage().getName().replace(".", "/");
+		InputStream fXmlFile = null;
 		try {
-			String dir = "src\\" + Test.class.getPackage().getName().replace(".", "\\");
-			File fXmlFile = new File(dir + "\\" + "APIMap.xml");
+//			String dir = "src\\" + Test.class.getPackage().getName().replace(".", "\\");
+//			File fXmlFile = new File(dir + "\\" + "APIMap.xml");
+			
+			fXmlFile = APIHandle.class.getResourceAsStream("/" + directory + "/APIMap.xml");
+			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -92,6 +94,13 @@ public class APIHandle {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (fXmlFile != null)
+					fXmlFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		init = true;
