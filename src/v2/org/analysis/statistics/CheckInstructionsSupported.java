@@ -19,23 +19,23 @@ import java.io.File;
 import java.io.FileReader;
 
 public class CheckInstructionsSupported {
-	final String inst = "data/in/inst.txt"; // Name of supported instruction
-	final String pathTarget = "asm/Temp"; // Store generated results
-	final String supportVName = "data/out/supportedVirus.txt"; // Store name of
+	final String inst = "data/data/in/inst.txt"; // Name of supported instruction
+	final String pathTarget = "data/asm/Temp"; // Store generated results
+	final String supportVName = "data/data/out/supportedVirus.txt"; // Store name of
 																// supported
 																// Viruses
-	final String unSupportVName = "data/out/unSupportedVirus.txt"; // Store name
+	final String unSupportVName = "data/data/out/unSupportedVirus.txt"; // Store name
 																	// of
 																	// unsupported
 																	// Viruses
-	final String indirectName = "data/in/indirectResolvedFile.txt"; // Store
+	final String indirectName = "data/data/in/indirectResolvedFile.txt"; // Store
 																	// name of
 																	// supported
 																	// Viruses
 																	// with
 																	// indirect
 																	// jump
-	final String indirectUnName = "data/iout/indirectUnsupported.txt"; // Store
+	final String indirectUnName = "data/data/iout/indirectUnsupported.txt"; // Store
 																		// name
 																		// of
 																		// unsupported

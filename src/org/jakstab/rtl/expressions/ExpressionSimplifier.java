@@ -60,7 +60,7 @@ public class ExpressionSimplifier {
 
 	private ExpressionSimplifier() throws Exception {
 		// (x < y) | (x = y) <-> x <= y
-		File specFile = new File(Options.jakstabHome + "/ssl/simplifications.ssl");
+		File specFile = new File(Options.jakstabHome + "/data/ssl/simplifications.ssl"); //YenNguyen
 		logger.info("Reading simplifications from " + specFile.getName() + ".");
 
 		SSLLexer lex = new SSLLexer(new FileInputStream(specFile));

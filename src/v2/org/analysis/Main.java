@@ -98,13 +98,13 @@ public class Main {
 		String pathVirus = "";
 		// Path Virus
 		// pathVirus = "asm/sefm14/";
-		pathVirus = "asm/api/";
+//		pathVirus = "asm/api/";
 		// pathVirus = "asm/APLAS14/";
 		// pathVirus = "asm/virus/";
 		pathVirus = "asm/packer/";
 		// pathVirus = "D:/Temp/Test_week_6/";
 		// pathVirus = "asm/mcvecto/";
-		//pathVirus = "asm/vx.netlux.org/";
+//		pathVirus = "C:/Work/Virus/viruses-20070914/vx.netlux.org/";
 		// pathVirus = "C:/Software/Virus/API/";
 		// pathVirus = "asm/WindowsXP/";
 		// pathVirus = "asm/demo1/";
@@ -249,17 +249,17 @@ public class Main {
 		// 466 504
 
 		// Done
-		// in = "api_test.exe"; // 158 160 0.1s x
-		//in = "api_test_upx.exe"; // 323 353 21s x
-		// in = "api_test_fsg.exe"; // 244 268 5s x
-		in = "api_test_pecompact.exe"; // 1127 1178 35s x
-		// in = "api_test_npack.exe"; // 602 639 10s x
-		// in = "api_test_yoda.1.2.exe"; // 622 659 80s x
+//		 in = "api_test.exe"; // 158 160 0.1s x
+//		in = "api_test_upx.exe"; // 323 353 21s x // Edges nho hon
+//		 in = "api_test_fsg.exe"; // 244 268 5s x
+//		in = "api_test_pecompact.exe"; // 1127 1178 35s x
+//		 in = "api_test_npack.exe"; // 602 639 10s x
+		 in = "api_test_yoda.1.2.exe"; // 622 659 80s x // 661 695
 		//in = "api_test_yoda.1.3.exe"; // 909 945 54s x
 		//in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
 		//in = "api_test_aspack.exe"; // 1047 1112 101s x
 
-		// in = "api_test_yoda.exe"; // 962 1038 257s
+//		 in = "api_test_yoda.exe"; // 962 1038 257s
 		//in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
 
 		// in = "Virus.Win32.Aztec.01"; // 312 330 Done
@@ -322,6 +322,7 @@ public class Main {
 		//pathVirus = "asm/testcase/";
 		//in = "test.exe";
 		//in = "multiDest.exe";
+//		 in = "Virus.Win32.Weird.c";
 		
 		System.out.println(pathVirus + in);
 		analyzeFile(pathVirus + in);

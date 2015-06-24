@@ -25,7 +25,7 @@ public class User32Image {
 		this.baseAddress = baseAddress;
 	}
 
-	private String path = "data/user32.dll";
+	private String path = "data/data/user32.dll";
 
 	public String getPath() {
 		return path;

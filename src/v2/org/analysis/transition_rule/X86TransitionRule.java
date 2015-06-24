@@ -146,11 +146,11 @@ public class X86TransitionRule extends TransitionRule {
 
 		try {
 			// System.out.println();
-			this.writeZ3Input(System.getProperty("user.dir") + "/z3Input.smt", formulas);
+			this.writeZ3Input(System.getProperty("user.dir") + "/data/z3Input.smt", formulas);
 			// Process p = Runtime.getRuntime().exec(
 			// "cmd /c start /wait run_z3.bat");
 			Process p = Runtime.getRuntime().exec(
-					"cmd /c start /wait " + System.getProperty("user.dir") + "/run_z3.bat");
+					"cmd /c start /wait " + System.getProperty("user.dir") + "/data/run_z3.bat");
 			/*
 			 * Process p = Runtime.getRuntime().exec( "cmd /c start /wait " +
 			 * System.getProperty("user.dir") + "/z3-4.3.0-x86/bin/z3.exe /smt "
@@ -174,7 +174,7 @@ public class X86TransitionRule extends TransitionRule {
 
 		try {
 			String line = "";
-			fis = new FileInputStream(System.getProperty("user.dir") + "/z3Output.txt");
+			fis = new FileInputStream(System.getProperty("user.dir") + "/data/z3Output.txt");
 			// fis = new FileInputStream("z3Output.txt");
 			br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
 			line = br.readLine();
@@ -203,12 +203,12 @@ public class X86TransitionRule extends TransitionRule {
 
 	Map<String, Long> executeZ3(Formulas l) {
 		// TODO Auto-generated method stub
-		this.writeZ3Input(System.getProperty("user.dir") + "/z3Input.smt", l);
+		this.writeZ3Input(System.getProperty("user.dir") + "/data/z3Input.smt", l);
 		try {
 			// Process p = Runtime.getRuntime().exec(
 			// "cmd /c start /wait run_z3.bat");
 			Process p = Runtime.getRuntime().exec(
-					"cmd /c start /wait " + System.getProperty("user.dir") + "/run_z3.bat");
+					"cmd /c start /wait " + System.getProperty("user.dir") + "/data/run_z3.bat");
 			/*
 			 * Process p = Runtime.getRuntime().exec( "cmd /c start /wait " +
 			 * System.getProperty("user.dir") +
@@ -229,7 +229,7 @@ public class X86TransitionRule extends TransitionRule {
 		}
 		// return this.readZ3Output(System.getProperty("user.dir") +
 		// "/z3Output.txt");
-		return this.readZ3Output(System.getProperty("user.dir") + "/z3Output.txt");
+		return this.readZ3Output(System.getProperty("user.dir") + "/data/z3Output.txt");
 	}
 
 	// Change the location and instruction for new state
@@ -704,13 +704,13 @@ public class X86TransitionRule extends TransitionRule {
 	 * return var; }
 	 */
 
-	private Map<String, Long> readZ3Output(String fileName) {
+	private Map<String, Long> readZ3Output(String filePath) {
 		// TODO Auto-generated method stub
 		InputStream fis;
 		BufferedReader br;
 		String line;
 		try {
-			fis = new FileInputStream(fileName);
+			fis = new FileInputStream(filePath);
 			br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
 			line = br.readLine();
 
@@ -906,7 +906,7 @@ public class X86TransitionRule extends TransitionRule {
 		return curState;
 	}
 
-	private void writeZ3Input(String fileName, Formulas formulaList) {
+	private void writeZ3Input(String filePath, Formulas formulaList) {
 		FileWriter writer;
 		// System.out.println("Z3 Input File: ");
 		try {
@@ -914,7 +914,7 @@ public class X86TransitionRule extends TransitionRule {
 			/*
 			 * File f = new File(fileName); if (!f.exists()) return;
 			 */
-			writer = new FileWriter(new File(fileName));
+			writer = new FileWriter(new File(filePath));
 
 			try {
 				writer.write("(benchmark program\n");

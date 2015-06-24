@@ -984,3 +984,249 @@ OpenProcess@Kernel32.dll: API Node
 0x00406a42:	call Process32Next@Kernel32.dll
 0x00406a44:	testl %eax, %eax
 0x00406a46:	jne 0x004069c2
+0x00406a16:	pushl %edx
+0x00406a17:	movl %edx, %ebp
+0x00406a19:	addl %edx, $0x42a4ef<UINT32>
+0x00406a1f:	movl %eax, 0x18(%edx)
+0x00406a22:	movl %edx, %ebp
+0x00406a24:	addl %edx, $0x42a03c<UINT32>
+0x00406a2a:	movl (%edx), %eax
+0x00406a2c:	popl %edx
+0x00406a4c:	pushl %esi
+0x00406a4d:	movl %edx, %ebp
+0x00406a4f:	addl %edx, $0x42725b<UINT32>
+0x00406a55:	call CloseHandle@Kernel32.dll
+0x00406a57:	ret
+
+0x00405351:	testl 0x42a048(%ebp), $0x2<UINT32>
+0x0040535b:	jne 16
+0x0040535d:	movl %ebx, $0x1<UINT32>
+0x00405362:	movl %eax, 0x42a03c(%ebp)
+0x00405368:	call 0x00405708
+0x00405708:	movl %edx, %ebp
+0x0040570a:	addl %edx, $0x4285fe<UINT32>
+0x00405710:	movl (%edx), %eax
+0x00405712:	movl %ecx, $0x49<UINT32>
+0x00405717:	movl %edx, %ebp
+0x00405719:	addl %edx, $0x42a4ef<UINT32>
+0x0040571f:	xorl %eax, %eax
+0x00405721:	leal %edi, (%edx)
+0x00405723:	pushl %edi
+0x00405724:	rep stosl %es:(%edi), %eax
+0x00405726:	popl %edi
+0x00405727:	movl %ss:(%edx), $0x1c<UINT32>
+0x0040572e:	movl %edx, %ebp
+0x00405730:	addl %edx, $0x4285fe<UINT32>
+0x00405736:	movl %eax, (%edx)
+0x00405738:	pushl %eax
+0x00405739:	pushl $0x4<UINT8>
+0x0040573b:	movl %edx, %ebp
+0x0040573d:	addl %edx, $0x427263<UINT32>
+0x00405743:	call CreateToolhelp32Snapshot@Kernel32.dll
+0x00405745:	movl %esi, %eax
+0x00405747:	movl %eax, %ebp
+0x00405749:	addl %eax, $0x42a4ef<UINT32>
+0x0040574e:	pushl %eax
+0x0040574f:	pushl %esi
+0x00405750:	movl %edx, %ebp
+0x00405752:	addl %edx, $0x42727f<UINT32>
+0x00405758:	call Thread32First@Kernel32.dll
+Thread32First@Kernel32.dll: API Node	
+0x0040575a:	testl %eax, %eax
+0x0040575c:	je 166
+0x00405762:	movl %edx, %ebp
+0x00405764:	addl %edx, $0x42a4ef<UINT32>
+0x0040576a:	leal %ecx, (%edx)
+0x0040576c:	pushl %ecx
+0x0040576d:	pushl %esi
+0x0040576e:	movl %edx, %ebp
+0x00405770:	addl %edx, $0x427283<UINT32>
+0x00405776:	call Thread32Next@Kernel32.dll
+Thread32Next@Kernel32.dll: API Node	
+0x00405778:	testl %eax, %eax
+0x0040577a:	je 136
+0x00405780:	pushl %esi
+0x00405781:	movl %edx, %ebp
+0x00405783:	addl %edx, $0x42a4ef<UINT32>
+0x00405789:	movl %ecx, 0xc(%edx)
+0x0040578c:	movl %edx, %ebp
+0x0040578e:	addl %edx, $0x4285fe<UINT32>
+0x00405794:	movl %eax, (%edx)
+0x00405796:	cmpl %ecx, %eax
+0x00405798:	jne 0x004057e9
+0x004057e9:	popl %esi
+0x004057ea:	movl %edx, %ebp
+0x004057ec:	addl %edx, $0x42a4ef<UINT32>
+0x004057f2:	leal %ecx, (%edx)
+0x004057f4:	pushl %ecx
+0x004057f5:	pushl %esi
+0x004057f6:	movl %edx, %ebp
+0x004057f8:	addl %edx, $0x427283<UINT32>
+0x004057fe:	call Thread32Next@Kernel32.dll
+0x00405800:	testl %eax, %eax
+0x00405802:	jne 0x00405780
+0x0040579a:	movl %edx, %ebp
+0x0040579c:	addl %edx, $0x42a4ef<UINT32>
+0x004057a2:	movl %eax, 0x8(%edx)
+0x004057a5:	pushl %eax
+0x004057a6:	pushl $0x0<UINT8>
+0x004057a8:	pushl $0x2<UINT8>
+0x004057aa:	movl %edx, %ebp
+0x004057ac:	addl %edx, $0x427287<UINT32>
+0x004057b2:	call OpenThread@Kernel32.dll
+OpenThread@Kernel32.dll: API Node	
+0x004057b4:	testl %eax, %eax
+0x004057b6:	je 0x004057e9
+0x004057b8:	movl %ecx, %eax
+0x004057ba:	testl %ebx, %ebx
+0x004057bc:	je 17
+0x004057be:	pushl %ecx
+0x004057bf:	movl %eax, %ecx
+0x004057c1:	pushl %eax
+0x004057c2:	movl %edx, %ebp
+0x004057c4:	addl %edx, $0x4272b3<UINT32>
+0x004057ca:	call SuspendThread@Kernel32.dll
+SuspendThread@Kernel32.dll: API Node	
+0x004057cc:	popl %ecx
+0x004057cd:	jmp 0x004057de
+0x004057de:	pushl %ecx
+0x004057df:	movl %edx, %ebp
+0x004057e1:	addl %edx, $0x42725b<UINT32>
+0x004057e7:	call CloseHandle@Kernel32.dll
+0x00405808:	movl %eax, $0x55555555<UINT32>
+0x0040580d:	movl %edx, %ebp
+0x0040580f:	addl %edx, $0x4285fe<UINT32>
+0x00405815:	movl (%edx), %eax
+0x00405817:	ret
+
+0x0040536d:	pushl $0xfffffff0<UINT8>
+0x0040536f:	movl %eax, 0x42a050(%ebp)
+0x00405375:	pushl %eax
+0x00405376:	movl %ebx, $0x4272e3<UINT32>
+0x0040537b:	call GetWindowLongA@User32.dll
+GetWindowLongA@User32.dll: API Node	
+0x0040537f:	movl 0x42a054(%ebp), %eax
+0x00405385:	orl %eax, $0x8000000<UINT32>
+0x0040538a:	pushl %eax
+0x0040538b:	pushl $0xfffffff0<UINT8>
+0x0040538d:	movl %eax, 0x42a050(%ebp)
+0x00405393:	pushl %eax
+0x00405394:	movl %ebx, $0x4272e7<UINT32>
+0x00405399:	call SetWindowLongA@User32.dll
+SetWindowLongA@User32.dll: API Node	
+0x0040539d:	pushl $0xfffffff0<UINT8>
+0x0040539f:	movl %eax, 0x42a058(%ebp)
+0x004053a5:	pushl %eax
+0x004053a6:	movl %ebx, $0x4272e3<UINT32>
+0x004053ab:	call GetWindowLongA@User32.dll
+0x004053af:	movl 0x42a05c(%ebp), %eax
+0x004053b5:	orl %eax, $0x8000000<UINT32>
+0x004053ba:	pushl %eax
+0x004053bb:	pushl $0xfffffff0<UINT8>
+0x004053bd:	movl %eax, 0x42a058(%ebp)
+0x004053c3:	pushl %eax
+0x004053c4:	movl %ebx, $0x4272e7<UINT32>
+0x004053c9:	call SetWindowLongA@User32.dll
+0x004053cd:	testl 0x42a3a4(%ebp), $0x10<UINT32>
+0x004053d7:	je 58
+0x004053d9:	pushl %fs:0x30
+0x004053e0:	popl %eax
+0x004053e1:	testl %eax, %eax
+0x004053e3:	js 15
+0x004053e5:	movl %eax, 0xc(%eax)
+0x004053e8:	movl %eax, 0xc(%eax)
+0x004053eb:	movl 0x20(%eax), $0x2000<UINT32>
+0x004053f2:	jmp 0x00405413
+0x00405413:	testl 0x42a048(%ebp), $0x8<UINT32>
+0x0040541d:	je 0x00405427
+0x00405427:	movl %eax, 0x42a03c(%ebp)
+0x0040542d:	orl %eax, %eax
+0x0040542f:	jne 0x00405433
+0x00405433:	call 0x0040543b
+0x0040543b:	movl %edi, 0x42a034(%ebp)
+0x00405441:	addl %edi, 0x3c(%edi)
+0x00405444:	movl %esi, 0x42a034(%ebp)
+0x0040544a:	movl %ecx, 0x54(%edi)
+0x0040544d:	leal %eax, 0x42a4ef(%ebp)
+0x00405453:	pushl %eax
+0x00405454:	pushl $0x4<UINT8>
+0x00405456:	pushl %ecx
+0x00405457:	pushl 0x42a034(%ebp)
+0x0040545d:	movl %ebx, $0x42723b<UINT32>
+0x00405462:	call VirtualProtect@Kernel32.dll
+VirtualProtect@Kernel32.dll: API Node	
+0x00405466:	testl 0x42a3a4(%ebp), $0x8<UINT32>
+0x00405470:	je 419
+0x00405476:	testl 0x42a3a4(%ebp), $0x80<UINT32>
+0x00405480:	jne 25
+0x00405482:	pushl $0x104<UINT32>
+0x00405487:	leal %edi, 0x42a4ef(%ebp)
+0x0040548d:	pushl %edi
+0x0040548e:	pushl $0x0<UINT8>
+0x00405490:	movl %ebx, $0x427243<UINT32>
+0x00405495:	call GetModuleFileNameA@Kernel32.dll
+GetModuleFileNameA@Kernel32.dll: API Node	
+0x00405499:	jmp 0x004054b7
+0x004054b7:	pushl $0x0<UINT8>
+0x004054b9:	pushl $0x80<UINT32>
+0x004054be:	pushl $0x3<UINT8>
+0x004054c0:	pushl $0x0<UINT8>
+0x004054c2:	pushl $0x1<UINT8>
+0x004054c4:	pushl $0x80000000<UINT32>
+0x004054c9:	pushl %edi
+0x004054ca:	movl %ebx, $0x427247<UINT32>
+0x004054cf:	call CreateFileA@Kernel32.dll
+0x004054d3:	cmpl %eax, $0xffffffff<UINT8>
+0x004054d6:	jne 0x004054df
+0x004054df:	movl %edi, %eax
+0x004054e1:	pushl $0x0<UINT8>
+0x004054e3:	pushl %edi
+0x004054e4:	movl %ebx, $0x427257<UINT32>
+0x004054e9:	call GetFileSize@Kernel32.dll
+GetFileSize@Kernel32.dll: API Node	
+0x004054ed:	pushl %eax
+0x004054ee:	pushl %edi
+0x004054ef:	pushl %esi
+0x004054f0:	movl %edi, 0x42a034(%ebp)
+0x004054f6:	addl %edi, 0x3c(%edi)
+0x004054f9:	movl %esi, %edi
+0x004054fb:	addl %esi, $0x6<UINT8>
+0x004054fe:	xorl %ecx, %ecx
+0x00405500:	movw %cx, (%esi)
+0x00405503:	decl %ecx
+0x00405504:	addl %esi, $0xf2<UINT32>
+0x0040550a:	movl %eax, $0x28<UINT32>
+0x0040550f:	mull %eax, %ecx
+0x00405511:	addl %esi, %eax
+0x00405513:	addl %esi, $0x10<UINT8>
+0x00405516:	movl %ecx, (%esi)
+0x00405518:	popl %esi
+0x00405519:	popl %edi
+0x0040551a:	popl %eax
+0x0040551b:	addl %eax, 0x42a044(%ebp)
+0x00405521:	subl %eax, %ecx
+0x00405523:	xchgl %esi, %eax
+0x00405524:	pushl %esi
+0x00405525:	pushl $0x40<UINT8>
+0x00405527:	movl %ebx, $0x42724b<UINT32>
+0x0040552c:	call GlobalAlloc@Kernel32.dll
+GlobalAlloc@Kernel32.dll: API Node	
+0x00405530:	cmpl %eax, $0x0<UINT8>
+0x00405533:	jne 0x0040553a
+0x0040553a:	xchgl %ebx, %eax
+0x0040553b:	pushl $0x0<UINT8>
+0x0040553d:	leal %eax, 0x42a4ef(%ebp)
+0x00405543:	pushl %eax
+0x00405544:	pushl %esi
+0x00405545:	pushl %ebx
+0x00405546:	pushl %edi
+0x00405547:	movl %edx, $0x427253<UINT32>
+0x0040554c:	call ReadFile@Kernel32.dll
+ReadFile@Kernel32.dll: API Node	
+0x00405550:	movl %eax, %ebx
+0x00405552:	movl %ecx, %esi
+0x00405554:	pushl %ebx
+0x00405555:	pushl %edi
+0x00405556:	pushl %ecx
+0x00405557:	pushl %eax
+0x00405558:	call 0x004055ce

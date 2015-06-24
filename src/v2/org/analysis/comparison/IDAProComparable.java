@@ -99,7 +99,7 @@ public class IDAProComparable extends Comparison {
 	}
 
 	private BPCFG cfg;
-	private String outputFileName = "data/comparison.txt";
+	private String outputFileName = "data/data/comparison.txt"; //YenNguyen
 
 	public IDAProComparable(BPCFG cfg) {
 		this.cfg = cfg;

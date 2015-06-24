@@ -39,7 +39,7 @@ public class OTFModelGeneration implements Algorithm {
 	// Logger.getLogger(CPAAlgorithm.class);
 	// private static long maxTimeProgam = 2500000;
 	//private static long maxTimePath = 1500000;
-	private static long bkTime = 2700000;
+	//private static long bkTime = 2700000;
 	private static long outTime = 180000;
 	// For Debug
 	private int num = 1, loopCount = 1;
@@ -61,13 +61,13 @@ public class OTFModelGeneration implements Algorithm {
 	@Override
 	public void run() {
 		// --------------------------
-		FileProcess fileState = new FileProcess("data/stateValue.txt");
-		FileProcess bkFile = new FileProcess("data/restore.txt");
-		fileName = "out_" + Program.getProgram().getFileName() + "_";
+		//FileProcess fileState = new FileProcess("data/data/stateValue.txt");
+		//FileProcess bkFile = new FileProcess("data/data/restore.txt");
+		//fileName = "out_" + Program.getProgram().getFileName() + "_";
 		//fileName = "out_themida_";
 
-		fileState.clearContentFile();
-		bkFile.clearContentFile();
+		//fileState.clearContentFile();
+		//bkFile.clearContentFile();
 		long overallStartTime = System.currentTimeMillis();
 		long overallStartTemp = overallStartTime;
 		// BE-PUM algorithm
@@ -95,7 +95,7 @@ public class OTFModelGeneration implements Algorithm {
 		if (Program.getProgram().getFileName().equals("api_test_v2.3_lvl1.exe") 
 				&& isRestored) {
 			System.out.println("Restore State from File.");
-			FileProcess reFile = new FileProcess("data/restoreState.txt");
+			FileProcess reFile = new FileProcess("data/data/restoreState.txt");
 			pathList = restoreState(reFile);
 			// bkFile.clearContentFile();
 			System.out.println("Finished restoring state!");
@@ -130,7 +130,7 @@ public class OTFModelGeneration implements Algorithm {
 					 * curState.getLocation()); // break; }
 					 */
 
-					backupState(curState, fileState);
+					backupState(curState);
 					overallStartTemp = overallEndTimeTemp;
 				}
 
@@ -183,6 +183,14 @@ public class OTFModelGeneration implements Algorithm {
 				//path.setPreviousInst(inst);
 			}
 		}
+	}
+
+	private void backupState(BPState curState) {
+		// TODO Auto-generated method stub
+		program.generageCFG("/asm/cfg/" + program.getFileName() + "_test");
+		program.getResultFileTemp().appendInLine(
+				program.getDetailTechnique() + " Nodes:" + program.getBPCFG().getVertexCount() + " Edges:"
+						+ program.getBPCFG().getEdgeCount() + " ");
 	}
 
 	private void backupStateAll(BPState curState, FileProcess bkFile) {
@@ -348,7 +356,7 @@ public class OTFModelGeneration implements Algorithm {
 			}
 
 			if (compareOllyResult == null) {
-				compareOllyResult = new FileProcess("data/compareWithOlly_" + fileName + "" + num + ".txt");
+				compareOllyResult = new FileProcess("data/data/compareWithOlly_" + fileName + "" + num + ".txt");
 				compareOllyResult.clearContentFile();
 			}
 

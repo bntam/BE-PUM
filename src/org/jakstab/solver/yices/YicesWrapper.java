@@ -41,7 +41,7 @@ public class YicesWrapper {
 		// Select matching Yices library
 		String uname = System.getProperty("os.name");
 		String arch = System.getProperty("os.arch");
-		String yicesJNIdir = Options.jakstabHome.concat("/lib/");
+		String yicesJNIdir = Options.jakstabHome.concat("/data/lib/"); //YenNguyen
 		// Windows on x86
 		if (arch.endsWith("86") && uname.startsWith("Windows")) {
 			logger.debug("-- Loading Yices core DLL.");

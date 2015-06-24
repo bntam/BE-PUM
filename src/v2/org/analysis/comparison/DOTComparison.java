@@ -10,8 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DOTComparison {
-	static String resultFile = "data/comparison.txt";
-	static String resultFileTest = "data/comparison_test.txt";
+	static String resultFile = "data/data/comparison.txt";
+	static String resultFileTest = "data/data/comparison_test.txt";
 	private String instSrc = "", instDst = "";
 
 	/**
@@ -430,7 +430,10 @@ public class DOTComparison {
 
 	private void generateCFGForIDA(String fileName) {
 		try {
-			Process p = Runtime.getRuntime().exec("cmd /c start /wait ExportCFG.bat" + " " + fileName);
+			//YenNguyen
+			Process p = Runtime.getRuntime().exec(
+					"cmd /c start /wait " + System.getProperty("user.dir")
+							+ "/data/ExportCFG.bat" + " " + fileName);
 			Program.getProgram().getLog().info("Running script ExportCFG.bat...");
 			int exitCode = p.waitFor();
 

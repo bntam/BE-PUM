@@ -318,7 +318,7 @@ public class File {
 		if (!fileName.equals("demo.exe"))
 			fileName = "demo.exe";
 
-		fileImage = new FileImage("data/" + fileName);
+		fileImage = new FileImage("data/data/" + fileName);
 	}
 
 	public long createFileMapping(long t2, long t3, long t4, long t5, long t6) {

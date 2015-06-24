@@ -16,9 +16,9 @@ public class FileAnalysis {
 
 	public static void main(String[] args) {
 		// String pathVirus = "asm/vx.netlux.org/";
-		String rJakstab = "data/in/Result-Jakstab.txt";
-		String rCHRM = "data/in/Result-BE-PUM.txt";
-		String rFinal = "data/in/Result-Final.txt";
+		String rJakstab = "data/data/in/Result-Jakstab.txt";
+		String rCHRM = "data/data/in/Result-BE-PUM.txt";
+		String rFinal = "data/data/in/Result-Final.txt";
 
 		FileProcess fJ = new FileProcess(rJakstab);
 		// fList.clearContentFile();

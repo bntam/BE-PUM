@@ -114,9 +114,9 @@ public final class Program {
 	private String detail_technique = "";
 	private static Program programInstance;
 	private String absolutePath = "";
-	final static String resultFileTXT = "data/Result.txt";
-	final static String resultFileTempTXT = "data/Result_Temp.txt";
-	final static String fullResultFileTXT = "data/fullResult.txt";
+	final static String resultFileTXT = "data/data/Result.txt";
+	final static String resultFileTempTXT = "data/data/Result_Temp.txt";
+	final static String fullResultFileTXT = "data/data/fullResult.txt";
 	static final int MAX_BYTE_PER_INSTRUCTION = 15;
 
 	/**
@@ -1025,7 +1025,7 @@ public final class Program {
 					instr = module.getDisassembler().decodeInstruction(fp);
 					m.resetValue(address, instr);
 					if (instr != null) {
-						FileProcess fileProcess = new FileProcess("data/error.txt");
+						FileProcess fileProcess = new FileProcess("data/data/error.txt");
 						fileProcess.appendFile("FileName:" + fileName + " decode Instruction Error at " + address);
 					}
 

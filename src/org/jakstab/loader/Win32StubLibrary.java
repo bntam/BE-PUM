@@ -73,7 +73,7 @@ public class Win32StubLibrary implements StubProvider {
 
 	private final static Logger logger = Logger.getLogger(Win32StubLibrary.class);
 
-	private static final String stubDir = Options.jakstabHome + "/stubs/win32/";
+	private static final String stubDir = Options.jakstabHome + "/data/stubs/win32/"; //YenNguyen
 	private static final String jakstab_internal = "jakstab.dll";
 
 	static class Stub {

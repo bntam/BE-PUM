@@ -50,9 +50,9 @@ public class SystemHandle {
 	}
 
 	public SystemHandle() {
-		kernelHandle = new Kernel32Image("data/kernel32.dll");
-		userHandle = new User32Image("data/user32.dll");
-		advapiHandle = new Advapi32Image("data/advapi32.dll");
+		kernelHandle = new Kernel32Image("data/data/kernel32.dll");
+		userHandle = new User32Image("data/data/user32.dll");
+		advapiHandle = new Advapi32Image("data/data/advapi32.dll");
 		seh = new SEHHandle();
 		fileHandle = new FileHandle();
 		fileHandle.setPath(path);

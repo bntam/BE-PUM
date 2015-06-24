@@ -236,7 +236,7 @@ public class MainWindows extends JFrame {
 			Main.analyzeFile(path);
 			String nPath = Program.getProgram().generatePathFileName(path);
 			String output = nPath + ".png";
-			String command = root + "\\dot\\dot.exe -Tpng " + nPath + "_model.dot -o " + output;
+			String command = root + "\\data\\dot\\dot.exe -Tpng " + nPath + "_model.dot -o " + output;
 			System.out.println(command);
 			Process p = Runtime.getRuntime().exec(command);
 			p.waitFor();

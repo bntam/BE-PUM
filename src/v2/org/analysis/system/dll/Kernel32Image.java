@@ -25,7 +25,7 @@ public class Kernel32Image {
 		this.baseAddress = baseAddress;
 	}
 
-	private String path = "data/kernel32.dll";
+	private String path = "data/data/kernel32.dll"; //YenNguyen
 
 	public String getPath() {
 		return path;

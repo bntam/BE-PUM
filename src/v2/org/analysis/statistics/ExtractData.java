@@ -11,15 +11,15 @@ public class ExtractData {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String rJakstab = "data/in/Result-Jakstab.txt";
-		String name = "data/name.txt";
-		String timesJ = "data/times_J.txt";
-		String timesC = "data/times_B.txt";
-		String nodesJ = "data/nodes_J.txt";
-		String nodesC = "data/nodes_B.txt";
-		String edgesJ = "data/edges_J.txt";
-		String edgesC = "data/edges_B.txt";
-		String rFinal = "data/in/Result-Final.txt";
+		String rJakstab = "data/data/in/Result-Jakstab.txt";
+		String name = "data/data/name.txt";
+		String timesJ = "data/data/times_J.txt";
+		String timesC = "data/data/times_B.txt";
+		String nodesJ = "data/data/nodes_J.txt";
+		String nodesC = "data/data/nodes_B.txt";
+		String edgesJ = "data/data/edges_J.txt";
+		String edgesC = "data/data/edges_B.txt";
+		String rFinal = "data/data/in/Result-Final.txt";
 		FileProcess fJ = new FileProcess(rJakstab);
 		// fList.clearContentFile();
 		// fList.listFileInDir(pathVirus);

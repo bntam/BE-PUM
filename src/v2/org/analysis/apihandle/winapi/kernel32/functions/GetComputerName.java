@@ -8,6 +8,7 @@
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.complement.Convert;
 
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
@@ -66,6 +67,7 @@ public class GetComputerName extends Kernel32API {
 		System.out.println("Argument:" + x1 + " " + x2);
 
 		if (x1 instanceof LongValue && x2 instanceof LongValue) {
+			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 
 			int buffSize = (int) t2;
@@ -76,10 +78,14 @@ public class GetComputerName extends Kernel32API {
 
 			boolean ret = Kernel32.INSTANCE.GetComputerName(lpBuffer, lpnSize);
 
-			String compName = new String(lpBuffer);
-			memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()), compName,
-					compName.length());
-			System.out.println("Computer Name:" + compName);
+			StringBuilder compName = new StringBuilder();
+			for (int i = 0; i < lpBuffer.length; i++) {
+				if (lpBuffer[i] != 0) {
+					memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t1 + i), new LongValue(lpBuffer[i]));
+					compName.append(lpBuffer[i]);
+				}
+			}
+			System.out.println("Computer Name:" + compName.toString());
 			register.mov("eax", new LongValue(ret ? 1 : 0));
 		}
 		return false;

@@ -61,7 +61,7 @@ public class Memory {
 	////////////////////////////////////////////////////////////////////
 
 	public String outputMemory() {
-		FileProcess fp = new FileProcess("/data/memory.txt");
+		FileProcess fp = new FileProcess("/data/data/memory.txt"); //YenNguyen
 		//fp.clearContentFile();
 		String ret = "";
 		for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
@@ -75,7 +75,7 @@ public class Memory {
 
 	@Override
 	public String toString() {
-		// FileProcess fp = new FileProcess("data/memory.txt");
+		// FileProcess fp = new FileProcess("/data/data/memory.txt");
 		String ret = "";
 		for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
 			ret += entry.getKey() + "=" + entry.getValue() + ",";

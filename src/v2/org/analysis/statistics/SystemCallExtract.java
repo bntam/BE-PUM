@@ -15,9 +15,9 @@ public class SystemCallExtract {
 	// static String pathFile = "asm/ExtractFile"; // Store the generated
 	// results
 	static String pathFile = "G:/Downloads/Sharing/Virus-Analyze/Result/BE-PUM/";
-	static String pathResult = "data/systemCall";
-	// static String pathExcel = "data/systemCallResult.excel";
-	static String path = "data";
+	static String pathResult = "data/data/systemCall";
+	// static String pathExcel = "data/data/systemCallResult.excel";
+	static String path = "data/data";
 
 	public void extract() {
 		File folder = new File(pathFile);

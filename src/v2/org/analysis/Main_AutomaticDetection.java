@@ -89,10 +89,10 @@ public class Main_AutomaticDetection {
 	 */
 	// final static String targetPath = "C:/Software/Virus/API/";
 	final static String targetPath = "asm/vx.netlux.org/";
-	final static String targetListTXT = "data/listFile.txt";
+	final static String targetListTXT = "data/data/listFile.txt";
 	// final static String targetFileList = "UnresolveTargetJmp.txt";
 	// final static String targetFileList = "UnresolveTargetFiles.txt";
-	final static String processedFileListTXT = "data/processedListFile.txt";
+	final static String processedFileListTXT = "data/data/processedListFile.txt";
 
 	public static void main(String[] args) {
 

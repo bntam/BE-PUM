@@ -13,6 +13,8 @@ import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.WString;
+import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinReg.HKEY;
 import com.sun.jna.platform.win32.WinReg.HKEYByReference;
@@ -84,7 +86,12 @@ public class RegOpenKey extends Advapi32API {
 			HKEY hKey = new HKEY((int)t1);
 			String lpSubKey = (t2 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
 			HKEYByReference phkResult = new HKEYByReference();
+			
+			System.out.println("lpSubKey: " + lpSubKey);
+			
 			LONG ret = Advapi32DLL.INSTANCE.RegOpenKey(hKey, lpSubKey, phkResult);
+			
+			long e = Kernel32.INSTANCE.GetLastError();
 			
 			long result = Pointer.nativeValue(phkResult.getValue().getPointer());
 			System.out.println("Return value: " + ret.longValue() + ", result: " + result);

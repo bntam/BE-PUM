@@ -37,11 +37,18 @@ public class Options {
 	public static final String jakstabHome;
 	static {
 		// Get path of Jakstab's directory from VM
-		String classFileName = Options.class.getResource("/org/jakstab/Options.class").getPath();
-		if (classFileName.startsWith("file:"))
-			classFileName = classFileName.substring(5);
-		classFileName = classFileName.replace("%20", " ");
-		jakstabHome = (new File(classFileName)).getParentFile().getParentFile().getParentFile().getParent();
+//		String classFileName = Options.class.getResource(
+//				"/org/jakstab/Options.class").getPath();
+//		System.out.println(classFileName);
+//		if (classFileName.startsWith("file:"))
+//			classFileName = classFileName.substring(5);
+//		classFileName = classFileName.replace("%20", " ");
+//		
+//		jakstabHome = (new File(classFileName)).getParentFile().getParentFile()
+//				.getParentFile().getParent();
+		
+		// YenNguyen: Simple way to get jakstab's home
+		jakstabHome = System.getProperty("user.dir");
 	}
 
 	private static Map<String, JOption<?>> options = new TreeMap<String, JOption<?>>(new Comparator<String>() {
@@ -68,7 +75,7 @@ public class Options {
 	public static String mainFilename = null;
 	public static List<String> moduleFilenames = new LinkedList<String>();
 
-	public static JOption<String> sslFilename = JOption.create("ssl", "file", jakstabHome + "/ssl/pentium.ssl",
+	public static JOption<String> sslFilename = JOption.create("ssl", "file", jakstabHome + "/data/ssl/pentium.ssl",
 			"Use <file> instead of pentium.ssl.");
 	public static JOption<Long> startAddress = JOption.create("a", "address", -1L,
 			"Start analysis at given virtual address.");
