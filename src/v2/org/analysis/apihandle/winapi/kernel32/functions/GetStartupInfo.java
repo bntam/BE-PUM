@@ -97,12 +97,18 @@ public class GetStartupInfo extends Kernel32API {
 																	 * getPointer
 																	 * ())
 																	 */));
-			memory.setDoubleWordMemoryValue(t += 4,
-					new LongValue(Pointer.nativeValue(lpStartupInfo.hStdInput.getPointer())));
-			memory.setDoubleWordMemoryValue(t += 4,
-					new LongValue(Pointer.nativeValue(lpStartupInfo.hStdOutput.getPointer())));
-			memory.setDoubleWordMemoryValue(t += 4,
-					new LongValue(Pointer.nativeValue(lpStartupInfo.hStdError.getPointer())));
+			memory.setDoubleWordMemoryValue(
+					t += 4,
+					new LongValue((lpStartupInfo.hStdInput == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdInput
+							.getPointer())));
+			memory.setDoubleWordMemoryValue(
+					t += 4,
+					new LongValue((lpStartupInfo.hStdOutput == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdOutput
+							.getPointer())));
+			memory.setDoubleWordMemoryValue(
+					t += 4,
+					new LongValue((lpStartupInfo.hStdError == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdError
+							.getPointer())));
 
 			// String sInfo =
 			// "D...Â¨Â¡^.ÃˆÂ¡^.Ã°Â¡^.l).*.dll.Any file (*.*).*.*.Â�...........Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿";

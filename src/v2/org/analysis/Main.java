@@ -44,7 +44,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -57,14 +60,22 @@ public class Main {
 		// Set isLog true and them will be saved into Log.log file for you.
 		boolean isLog = false;
 		if (isLog) {
-			try {
-				PrintStream out = new PrintStream(new FileOutputStream("Log.log"));
-				System.setOut(out);
-				System.out.println("================== DEBUG ==================");
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			setLogToFile();
+		}
+	}
+	private static void setLogToFile() {
+		try {
+			System.out.println("================== LOG TO FILE ==================");
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+			Date date = new Date();
+			String logFile = "Log-" + dateFormat.format(date) + ".log";
+			PrintStream out = new PrintStream(new FileOutputStream(logFile));
+			System.setOut(out);
+			logger = Logger.getLogger(Main.class);
+			System.out.println("================== DEBUG ==================");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -251,7 +262,7 @@ public class Main {
 		// 466 504
 
 		// Done
-		 in = "api_test.exe"; // 158 160 0.1s x
+//		 in = "api_test.exe"; // 158 160 0.1s x
 //		in = "api_test_upx.exe"; // 323 353 21s x // Edges nho hon
 //		 in = "api_test_fsg.exe"; // 244 268 5s x
 //		in = "api_test_pecompact.exe"; // 1127 1178 35s x
@@ -259,7 +270,7 @@ public class Main {
 //		 in = "api_test_yoda.1.2.exe"; // 622 659 80s x // 661 695
 //		in = "api_test_yoda.1.3.exe"; // 909 945 54s x
 //		in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
-//		in = "api_test_aspack.exe"; // 1047 1112 101s x
+		in = "api_test_aspack.exe"; // 1047 1112 101s x
 
 //		 in = "api_test_yoda.exe"; // 962 1038 257s
 		//in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
@@ -325,26 +336,30 @@ public class Main {
 		//in = "test.exe";
 		//in = "multiDest.exe";
 //		 in = "Virus.Win32.Weird.c";
-		
+
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export
 		if (!Main.class.getResource("Main.class").toString().startsWith("file")) {
 			if (args.length > 0) {
-				path = args[0];
-		
-				if (path.equals("-gui")) {
-					try {
-						// Set System L&F
-						UIManager.setLookAndFeel(UIManager
-								.getSystemLookAndFeelClassName());
-					} catch (Exception e) {
-						// handle exception
+				for (String input : args) {
+					if (input.charAt(0) == '-') {
+						if (input.equals("-gui")) {
+							try {
+								// Set System L&F
+								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							} catch (Exception e) {
+								// handle exception
+							}
+							new MainWindows();
+						} else if (input.equals("-log")) {
+							setLogToFile();
+						}
+					} else {
+						path = input;
 					}
-					new MainWindows();
 				}
 			} else {
-				String rem = Main.class.getResource("Main.class").toString();
 				@SuppressWarnings("resource")
 				Scanner user_input = new Scanner(System.in);
 				path = user_input.next();

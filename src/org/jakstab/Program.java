@@ -94,6 +94,9 @@ public final class Program {
 
 	public String generatePathFileName(String baseFileName) {
 		// TODO Auto-generated method stub
+		if (!Program.class.getResource("Program.class").toString().startsWith("file")) {
+			return "//" + this.getFileName();
+		}
 
 		String r[] = baseFileName.split("\\\\");
 		String ret = "";
