@@ -1,13 +1,11 @@
 package v2.org.analysis.system;
 
-import v2.org.analysis.system.dll.Advapi32Image;
-import v2.org.analysis.system.dll.Kernel32Image;
-import v2.org.analysis.system.dll.User32Image;
+import v2.org.analysis.system.dll.abstracts.LibImage;
 
 public class SystemHandle {
-	private Kernel32Image kernelHandle;
-	private User32Image userHandle;
-	private Advapi32Image advapiHandle;
+	private LibImage kernelHandle;
+	private LibImage userHandle;
+	private LibImage advapiHandle;
 	private FileHandle fileHandle;
 	private RegistryHandle registryHandle;
 	private HeapHandle heapHandle;
@@ -21,24 +19,20 @@ public class SystemHandle {
 	// PHONG: Check if it is being in process of Virtual Memory
 	private boolean inVirtualMemory;
 
-	public FileHandle getFileHandle() {
-		return fileHandle;
-	}
-
-	public Kernel32Image getKernel() {
+	public LibImage getKernel() {
 		return kernelHandle;
 	}
 
-	public void setKernel(Kernel32Image kernel) {
-		this.kernelHandle = kernel;
-	}
-
-	public User32Image getUser32() {
+	public LibImage getUser32() {
 		return userHandle;
 	}
 
-	public void setUser32(User32Image kernel) {
-		userHandle = kernel;
+	public LibImage getAdvapi32Handle() {
+		return advapiHandle;
+	}
+	
+	public FileHandle getFileHandle() {
+		return fileHandle;
 	}
 
 	public SEHHandle getSEHHandler() {
@@ -50,9 +44,9 @@ public class SystemHandle {
 	}
 
 	public SystemHandle() {
-		kernelHandle = new Kernel32Image("data/data/kernel32.dll");
-		userHandle = new User32Image("data/data/user32.dll");
-		advapiHandle = new Advapi32Image("data/data/advapi32.dll");
+		kernelHandle = new LibImage(LibImage.KERNEL32PATH);
+		userHandle = new LibImage(LibImage.USER32PATH);
+		advapiHandle = new LibImage(LibImage.ADVAPI32PATH);
 		seh = new SEHHandle();
 		fileHandle = new FileHandle();
 		fileHandle.setPath(path);
@@ -91,17 +85,17 @@ public class SystemHandle {
 
 	public long getProcAddress(long libraryHandle, String functionName) {
 		// TODO Auto-generated method stub
-		Kernel32Image kernel = getKernel();
+		LibImage kernel = getKernel();
 		if (kernel.getBaseAddress() == libraryHandle) {
 			return kernel.getProcAddress(functionName);
 		}
 
-		User32Image user = getUser32();
+		LibImage user = getUser32();
 		if (user.getBaseAddress() == libraryHandle) {
 			return user.getProcAddress(functionName);
 		}
 		
-		Advapi32Image advapi = getAdvapi32Handle();
+		LibImage advapi = getAdvapi32Handle();
 		if (advapi.getBaseAddress() == libraryHandle) {
 			return advapi.getProcAddress(functionName);
 		}
@@ -284,27 +278,19 @@ public class SystemHandle {
 
 		return 0;
 	}
-
-	public Advapi32Image getAdvapi32Handle() {
-		return advapiHandle;
-	}
-
-	public void setAdvapi32Handle(Advapi32Image advapiHandle) {
-		this.advapiHandle = advapiHandle;
-	}
 	
 	public String getLibraryName(long libraryHandle) {
-		Kernel32Image kernel = getKernel();
+		LibImage kernel = getKernel();
 		if (kernel.getBaseAddress() == libraryHandle) {
 			return kernel.getLibraryName();
 		}
 
-		User32Image user = getUser32();
+		LibImage user = getUser32();
 		if (user.getBaseAddress() == libraryHandle) {
 			return user.getLibraryName();
 		}
 		
-		Advapi32Image advapi = getAdvapi32Handle();
+		LibImage advapi = getAdvapi32Handle();
 		if (advapi.getBaseAddress() == libraryHandle) {
 			return advapi.getLibraryName();
 		}

@@ -234,11 +234,6 @@ public class Advapi32Image {
 		return peHandler.getExportAddress(functionName);
 	}
 
-	public boolean isInsideKernel32(AbsoluteAddress nextAddr) {
-		// TODO Auto-generated method stub
-		return nextAddr.getValue() >= this.baseAddress && nextAddr.getValue() < (this.baseAddress + getLength());
-	}
-
 	public String getProcName(long v) {
 		// TODO Auto-generated method stub
 		/*

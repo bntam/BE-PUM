@@ -346,6 +346,7 @@ public class Main {
 					if (input.charAt(0) == '-') {
 						if (input.equals("-gui")) {
 							try {
+								isGui = true;
 								// Set System L&F
 								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 							} catch (Exception e) {

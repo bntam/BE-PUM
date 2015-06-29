@@ -232,9 +232,9 @@ public class User32Image {
 		return peHandler.getExportAddress(functionName);
 	}
 
-	public boolean isInsideKernel32(AbsoluteAddress nextAddr) {
+	public boolean isInside(AbsoluteAddress addr) {
 		// TODO Auto-generated method stub
-		return nextAddr.getValue() >= this.baseAddress && nextAddr.getValue() < (this.baseAddress + getLength());
+		return addr.getValue() >= this.baseAddress && addr.getValue() < (this.baseAddress + getLength());
 	}
 
 	public String getProcName(long v) {
@@ -246,11 +246,6 @@ public class User32Image {
 		 * if (!s.equals(d)) System.out.println("Debug");
 		 */
 		return peHandler.getExportName(v);
-	}
-
-	public boolean isInside(AbsoluteAddress addr) {
-		// TODO Auto-generated method stub
-		return addr.getValue() >= this.baseAddress && addr.getValue() < (this.baseAddress + getLength());
 	}
 
 	public String getLibraryName() {

@@ -63,7 +63,7 @@ public class X86TransitionRule extends TransitionRule {
 		boolean c2 = env.getStack().isInsideStack(addr);
 		boolean c3 = env.getMemory().contains(addr);
 		boolean c4 = env.getSystem().getKernel().isInside(addr);
-		boolean c5 = env.getSystem().getUser32().isInsideKernel32(addr);
+		boolean c5 = env.getSystem().getUser32().isInside(addr); // YenNguyen: Have the same as isInsideKernel32(addr)
 		boolean c6 = env.getSystem().getFileHandle().isInsideFIle(addr);
 		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
 
@@ -100,7 +100,7 @@ public class X86TransitionRule extends TransitionRule {
 		boolean c2 = env.getStack().isInsideStack(addr);
 		boolean c3 = env.getMemory().contains(addr);
 		boolean c4 = env.getSystem().getKernel().isInside(addr);
-		boolean c5 = env.getSystem().getUser32().isInsideKernel32(addr);
+		boolean c5 = env.getSystem().getUser32().isInside(addr); //YenNguyen: have the same as isInsideKernel32(addr);
 		boolean c6 = env.getSystem().getFileHandle().isInsideFIle(addr);
 		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
 
