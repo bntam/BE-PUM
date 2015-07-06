@@ -5,11 +5,8 @@ package v2.org.analysis.path;
 
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86CallInstruction;
-
 import v2.org.analysis.loop.LoopHandle;
 import v2.org.analysis.value.Formulas;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,8 @@ import java.util.List;
 public class BPPath {
 	private BPState curState;
 	private PathList trace;
-	private Formulas pathCondition;
+	//private Formulas pathCondition;
+	private PathCondition pathCond;
 	private LoopHandle l;
 	private Instruction previousInst;
 	private List<ProcessedAPI> processedAPI;
@@ -68,10 +66,12 @@ public class BPPath {
 		super();
 		this.curState = state;
 		this.trace = trace;
-		this.pathCondition = pathCondition;
+		this.pathCond = new PathCondition();
+		this.pathCond.setCondition(pathCondition);
+		this.pathCond.setEnvironment(state.getEnvironement());
 		processedAPI = new ArrayList<ProcessedAPI>();
 		l = new LoopHandle();
-		this.curState.setPathCondition(this.pathCondition);
+		this.curState.setPathCondition(this.pathCond.getCondition());
 	}
 
 	public BPState getCurrentState() {
@@ -80,7 +80,8 @@ public class BPPath {
 
 	public void setCurrentState(BPState curState) {
 		this.curState = curState;
-		this.curState.setPathCondition(this.pathCondition);
+		this.curState.setPathCondition(this.pathCond.getCondition());
+		pathCond.setEnvironment(curState.getEnvironement());
 	}
 
 	public PathList getTrace() {
@@ -92,16 +93,16 @@ public class BPPath {
 	}
 
 	public Formulas getPathCondition() {
-		return pathCondition;
+		return pathCond.getCondition();
 	}
 
 	public void setPathCondition(Formulas pathCondition) {
-		this.pathCondition = pathCondition;
-		this.curState.setPathCondition(this.pathCondition);
+		this.pathCond.setCondition(pathCondition);
+		this.curState.setPathCondition(this.pathCond.getCondition());
 	}
 
 	public BPPath clone() {
-		BPPath ret = new BPPath(curState.clone(), trace.clone(), pathCondition.clone());
+		BPPath ret = new BPPath(curState.clone(), trace.clone(), pathCond.getCondition().clone());
 
 		List<ProcessedAPI> p = new ArrayList<ProcessedAPI>();
 		for (ProcessedAPI t : this.processedAPI) {
@@ -185,7 +186,7 @@ public class BPPath {
 
 	public void clearPathCondition() {
 		// TODO Auto-generated method stub
-		pathCondition.clear();
+		pathCond.getCondition().clear();
 	}
 
 	public Instruction getPreviousInst() {
