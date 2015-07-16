@@ -6,10 +6,13 @@
  */
 package v2.org.analysis.apihandle.winapi;
 
+import java.sql.Struct;
+
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.Structure.ByReference;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.Shell32;
@@ -18,11 +21,16 @@ import com.sun.jna.platform.win32.ShellAPI;
 import com.sun.jna.platform.win32.Tlhelp32.PROCESSENTRY32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
+import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.DWORDByReference;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.LONG;
+import com.sun.jna.platform.win32.WinDef.PVOID;
 import com.sun.jna.platform.win32.WinDef.UINT;
+import com.sun.jna.platform.win32.WinDef.ULONG;
+import com.sun.jna.platform.win32.WinDef.ULONGByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.platform.win32.WinReg;
 import com.sun.jna.platform.win32.WinReg.HKEYByReference;
@@ -30,7 +38,9 @@ import com.sun.jna.platform.win32.WinReg.HKEYByReference;
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
+import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.PROCESS_BASIC_INFORMATION;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 import v2.org.analysis.complement.BitVector;
@@ -290,9 +300,30 @@ public class Test {
 //		HANDLE file = Kernel32.INSTANCE.CreateFile("Log.log", 1073741824, 0, null, 3, 128, null);
 //		x = Kernel32DLL.INSTANCE._write(((int)Pointer.nativeValue(file.getPointer())), null, new UINT(6));
 
-		HKEYByReference phkResult = new HKEYByReference();
-		LONG retz = Advapi32DLL.INSTANCE.RegOpenKey(WinReg.HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", phkResult);
-		x = retz.longValue();
+//		HKEYByReference phkResult = new HKEYByReference();
+//		LONG retz = Advapi32DLL.INSTANCE.RegOpenKey(WinReg.HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", phkResult);
+//		x = retz.longValue();
+		
+		DWORDByReference lpdwProcessId = new DWORDByReference();
+		x = User32DLL.INSTANCE.GetWindowThreadProcessId(User32DLL.INSTANCE.GetShellWindow(), lpdwProcessId).intValue();
+		System.out.println("GetWindowThreadProcessId: " + x);
+		
+		HANDLE ProcessHandle = Kernel32.INSTANCE.GetCurrentProcess();
+		int ProcessInformationClass = 0;
+		PROCESS_BASIC_INFORMATION.ByReference ProcessInformation = new PROCESS_BASIC_INFORMATION.ByReference();
+		ULONG ProcessInformationLength = new ULONG(ProcessInformation.size());
+		
+		x = NtdllDLL.INSTANCE.NtQueryInformationProcess(ProcessHandle, ProcessInformationClass, ProcessInformation,
+				ProcessInformationLength, null);
+		System.out.println("NtQueryInformationProcess: " + ProcessInformation);
+		
+		DWORDByReference info = new DWORDByReference();
+		x = NtdllDLL.INSTANCE.NtQueryInformationProcess(ProcessHandle, 0x1E, info ,
+				new ULONG(4), null);
+		
+		NtdllDLL.INSTANCE.NtQueryInformation();
+		
+		System.out.println(System.getProperty("jna.boot.library.name", "jnidispatch"));
 		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

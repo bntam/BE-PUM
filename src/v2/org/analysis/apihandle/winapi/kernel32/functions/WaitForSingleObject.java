@@ -53,9 +53,6 @@ import v2.org.analysis.value.Value;
  */
 public class WaitForSingleObject extends Kernel32API {
 
-	/**
-	 * 
-	 */
 	public WaitForSingleObject() {
 
 	}
@@ -66,10 +63,6 @@ public class WaitForSingleObject extends Kernel32API {
 		Stack stack = env.getStack();
 		Register register = env.getRegister();
 
-		/*
-		 * HANDLE hHandle, // handle of object to wait for DWORD dwMilliseconds
-		 * // time-out interval in milliseconds
-		 */
 		Value x1 = stack.pop();
 		Value x2 = stack.pop();
 		System.out.println("Argument:" + x1 + " " + x2 + " ");
@@ -78,6 +71,12 @@ public class WaitForSingleObject extends Kernel32API {
 			long t1 = ((LongValue) x1).getValue();
 			long t2 = ((LongValue) x2).getValue();
 			int ret = Kernel32.INSTANCE.WaitForSingleObject(new HANDLE(new Pointer(t1)), (int) t2);
+			
+			// http://stackoverflow.com/questions/897614/how-do-i-know-if-a-thread-is-suspended-under-windows-ce
+			// Return the state of a suspended thread
+			if (SuspendThread.suspendedThreadList.contains(t1)) {
+				ret = 258; //0x102
+			}
 			register.mov("eax", new LongValue(ret));
 		}
 		return false;

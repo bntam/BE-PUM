@@ -245,6 +245,7 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         buffer.
 	 */
 	WString lstrcpy(WString lpString1, WString lpString2);
+
 	WString lstrcpy(char[] lpString1, WString lpString2);
 
 	// HANDLE CreateThread(SECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T
@@ -2901,6 +2902,18 @@ public interface Kernel32DLL extends StdCallLibrary {
 	DWORD SuspendThread(/* _In_ */HANDLE hThread);
 
 	/**
+	 * Decrements a thread's suspend count. When the suspend count is
+	 * decremented to zero, the execution of the thread is resumed.
+	 * 
+	 * @param hThread
+	 *            A handle to the thread to be restarted.
+	 * 
+	 * @return If the function succeeds, the return value is the thread's
+	 *         previous suspend count.
+	 */
+	DWORD ResumeThread(/* _In_ */HANDLE hThread);
+
+	/**
 	 * Ends the calling thread.
 	 * 
 	 * @param dwExitCode
@@ -2925,4 +2938,5 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         information, call GetLastError.
 	 */
 	BOOL Beep(/* _In_ */DWORD dwFreq, /* _In_ */DWORD dwDuration);
+
 }

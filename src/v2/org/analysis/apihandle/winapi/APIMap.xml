@@ -532,6 +532,11 @@
 		<API funcName="_lopena" className="v2.org.analysis.apihandle.winapi.kernel32.functions._lopen" />
 		<API funcName="_lopenw" className="v2.org.analysis.apihandle.winapi.kernel32.functions._lopen" />
 	</DLL>
+	<DLL name="ntdll">
+		<API funcName="ntqueryinformationprocess" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtQueryInformationProcess" />
+		<API funcName="ntqueryinformationprocessa" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtQueryInformationProcess" />
+		<API funcName="ntqueryinformationprocessw" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtQueryInformationProcess" />
+	</DLL>
 	<DLL name="shell32">
 		<API funcName="shellexecute" className="v2.org.analysis.apihandle.winapi.shell32.functions.ShellExecute" />
 		<API funcName="shellexecutea" className="v2.org.analysis.apihandle.winapi.shell32.functions.ShellExecute" />

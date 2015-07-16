@@ -701,4 +701,12 @@ public interface User32DLL extends StdCallLibrary {
 	 *         GetLastError.
 	 */
 	LONG SetWindowLong(/* _In_ */HWND hWnd,/* _In_ */int nIndex,/* _In_ */LONG dwNewLong);
+
+	/**
+	 * Retrieves a handle to the Shell's desktop window.
+	 * 
+	 * @return The return value is the handle of the Shell's desktop window. If
+	 *         no Shell process is present, the return value is NULL.
+	 */
+	HWND GetShellWindow();
 }
