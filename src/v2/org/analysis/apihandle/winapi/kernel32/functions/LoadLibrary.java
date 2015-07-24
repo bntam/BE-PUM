@@ -43,10 +43,8 @@ import v2.org.analysis.value.Value;
  *
  */
 public class LoadLibrary extends Kernel32API {
-
-	/**
-	 * 
-	 */
+	private HMODULE apiCallReturn = null;
+	
 	public LoadLibrary() {
 
 	}
@@ -68,9 +66,19 @@ public class LoadLibrary extends Kernel32API {
 			String libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
 			System.out.println(" Library Name:" + libraryName);
 
-			HMODULE ret = Kernel32DLL.INSTANCE.LoadLibrary(libraryName);
+			LoadLibThread thread = new LoadLibThread(libraryName);
+			try {
+				thread.start();
+				Thread.sleep(100);
+				if (this.apiCallReturn == null) {
+					Thread.sleep(1000);
+				}
+				thread.interrupt();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+			long value = (apiCallReturn == null) ? 0 : Pointer.nativeValue(apiCallReturn.getPointer());
 			register.mov("eax", new LongValue(value));
 			//register.mov("edx", new LongValue(0x140608));
 			//register.mov("ecx", new LongValue(0x7c801bfa));
@@ -82,4 +90,16 @@ public class LoadLibrary extends Kernel32API {
 		return false;
 	}
 
+	class LoadLibThread extends Thread {
+		private String libName = null;
+		
+		public LoadLibThread(String lib) {
+			this.libName = lib;
+		}
+		
+		@Override
+		public void run() {
+			apiCallReturn = Kernel32DLL.INSTANCE.LoadLibrary(this.libName);
+		}
+	}
 }

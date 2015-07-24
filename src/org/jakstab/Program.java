@@ -109,7 +109,7 @@ public final class Program {
 				ret += r[i] + "\\";
 		}
 
-		return ret;
+		return System.getProperty("user.dir") + ret;
 	}
 
 	private String technique = "";

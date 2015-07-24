@@ -166,7 +166,7 @@ public class ProgramGraphWriter {
 	public void writeDisassembly(BPCFG l, String filename) {
 		// System.out.println("Writing assembly file to " + filename);
 		try {
-			FileWriter out = new FileWriter(System.getProperty("user.dir") + filename);
+			FileWriter out = new FileWriter(filename);
 			for (BPVertex vertex : l.getVertecesList()) {
 				AbsoluteAddress pc = vertex.getAddress();
 				// SymbolicExecution.setStartAddress(pc);
@@ -747,11 +747,11 @@ public class ProgramGraphWriter {
 		return instrString;
 	}
 
-	public void writeAssemblyCFG(BPCFG cfg, String fileName) {
+	public void writeAssemblyCFG(BPCFG cfg, String filePath) {
 		// Create dot file
 		List<BPEdge> edges = cfg.getEdgesList();
 		List<BPVertex> verteces = cfg.getVertecesList();
-		GraphWriter gwriter = createGraphWriter(System.getProperty("user.dir") + fileName);
+		GraphWriter gwriter = createGraphWriter(filePath);
 		if (gwriter == null)
 			return;
 

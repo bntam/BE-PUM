@@ -74,10 +74,15 @@ public class DeleteCriticalSection extends Kernel32API {
 					lpCriticalSection.LockCount.longValue()));
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, x += 4), new LongValue(
 					lpCriticalSection.RecursionCount.longValue()));
+			memory.setDoubleWordMemoryValue(
+					new X86MemoryOperand(DataType.INT32, x += 4),
+					new LongValue((lpCriticalSection.OwningThread == null) 
+									? 0 
+									: Pointer.nativeValue(lpCriticalSection.OwningThread.getPointer())));
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, x += 4),
-					new LongValue(Pointer.nativeValue(lpCriticalSection.OwningThread.getPointer())));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, x += 4),
-					new LongValue(Pointer.nativeValue(lpCriticalSection.LockSemaphore.getPointer())));
+					new LongValue((lpCriticalSection.LockSemaphore == null)
+									? 0 
+									: Pointer.nativeValue(lpCriticalSection.LockSemaphore.getPointer())));
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, x += 4), new LongValue(
 					lpCriticalSection.SpinCount.longValue()));
 		}

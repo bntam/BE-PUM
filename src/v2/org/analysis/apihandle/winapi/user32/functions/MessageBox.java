@@ -62,6 +62,8 @@ import v2.org.analysis.value.Value;
  */
 public class MessageBox extends User32API {
 
+	private Integer apiCallReturn = null;
+
 	public MessageBox() {
 	}
 
@@ -101,39 +103,39 @@ public class MessageBox extends User32API {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-//			Return code/value	Description
-//			IDABORT 3 The Abort button was selected.
-//			IDCANCEL 2 The Cancel button was selected.
-//			IDCONTINUE 11 The Continue button was selected.
-//			IDIGNORE 5 The Ignore button was selected.
-//			IDNO 7 The No button was selected.
-//			IDOK 1 The OK button was selected.
-//			IDRETRY 4 The Retry button was selected.
-//			IDTRYAGAIN 10 The Try Again button was selected.
-//			IDYES 6 The Yes button was selected.
+
+			// Return code/value Description
+			// IDABORT 3 The Abort button was selected.
+			// IDCANCEL 2 The Cancel button was selected.
+			// IDCONTINUE 11 The Continue button was selected.
+			// IDIGNORE 5 The Ignore button was selected.
+			// IDNO 7 The No button was selected.
+			// IDOK 1 The OK button was selected.
+			// IDRETRY 4 The Retry button was selected.
+			// IDTRYAGAIN 10 The Try Again button was selected.
+			// IDYES 6 The Yes button was selected.
 
 			register.mov("eax", new LongValue(1));
 		}
 		return false;
 	}
-}
 
-class MBThread extends Thread {
-	HWND _hWnd; 
-	String _lpText;
-	String _lpCaption;
-	UINT _uType;
-	
-	public MBThread(HWND hWnd, String lpText, String lpCaption, UINT uType) {
-		this._hWnd = hWnd;
-		this._lpText = lpText;
-		this._lpCaption = lpCaption;
-		this._uType = uType;
+	class MBThread extends Thread {
+		HWND _hWnd;
+		String _lpText;
+		String _lpCaption;
+		UINT _uType;
+
+		public MBThread(HWND hWnd, String lpText, String lpCaption, UINT uType) {
+			this._hWnd = hWnd;
+			this._lpText = lpText;
+			this._lpCaption = lpCaption;
+			this._uType = uType;
+		}
+
+		@Override
+		public void run() {
+			apiCallReturn = User32DLL.INSTANCE.MessageBox(this._hWnd, this._lpText, this._lpCaption, this._uType);
+		}
 	}
-
-	@Override
-	public void run() {
-		int ret = User32DLL.INSTANCE.MessageBox(this._hWnd, this._lpText, this._lpCaption, this._uType);	
-	}	
 }
