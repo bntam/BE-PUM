@@ -43,6 +43,7 @@ import v2.org.analysis.value.Value;
  *
  */
 public class Sleep extends Kernel32API {
+	public static int offset = 0;
 
 	public Sleep() {
 	}
@@ -58,6 +59,11 @@ public class Sleep extends Kernel32API {
 
 		if (x1 instanceof LongValue) {
 			long t1 = ((LongValue) x1).getValue();
+			
+			if (t1 > 1000L) {
+				offset += (int) (t1 - 1000L);
+				t1 = 1000L;
+			}
 
 			DWORD dwMilliseconds = new DWORD(t1);
 			Kernel32DLL.INSTANCE.Sleep(dwMilliseconds);

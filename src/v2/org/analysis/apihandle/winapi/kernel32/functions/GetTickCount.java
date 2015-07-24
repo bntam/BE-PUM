@@ -40,7 +40,8 @@ public class GetTickCount extends Kernel32API {
 		Environment env = curState.getEnvironement();
 		Register register = env.getRegister();
 
-		int ret = Kernel32.INSTANCE.GetTickCount();
+		// Add duration that had been minus from original sleep time
+		int ret = Kernel32.INSTANCE.GetTickCount() + Sleep.offset;
 		register.mov("eax", new LongValue(ret));
 		return false;
 	}
