@@ -186,6 +186,8 @@ public final class Program {
 		setResultFile(new FileProcess(resultFileTXT));
 		setFullResultFile(new FileProcess(fullResultFileTXT));
 		setResultFileTemp(new FileProcess(resultFileTempTXT));
+		
+		pDetection = new PackerDetection();
 	}
 
 	public void addByteSMPos(AbsoluteAddress addr) {
