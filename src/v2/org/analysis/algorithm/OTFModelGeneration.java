@@ -183,6 +183,11 @@ public class OTFModelGeneration implements Algorithm {
 				//path.setPreviousInst(inst);
 			}
 		}
+		// PHONG - 20150724
+		System.out.println("================PACKER DETECTION======================");
+		System.out.println(program.getDetection().getTechniques().getDetailTechniques());
+		program.getDetection().packedBy();
+		System.out.println("======================================================");
 	}
 
 	private void backupState(BPState curState) {
