@@ -106,6 +106,13 @@ public class OTFModelGeneration implements Algorithm {
 		TIB.updateTIB(curState);
 		// ---------------------------------------------
 
+		// PHONG - 20150801 /////////////////////////////
+		// Packer Detection via Header
+		System.out.println("================PACKER DETECTION======================");
+		program.getDetection().detectViaHeader(program);
+		System.out.println("======================================================");
+		/////////////////////////////////////////////////
+		
 		while (!pathList.isEmpty()) {
 			/*
 			 * if (System.currentTimeMillis() - overallStartTime >
@@ -184,10 +191,12 @@ public class OTFModelGeneration implements Algorithm {
 			}
 		}
 		// PHONG - 20150724
+		/*
 		System.out.println("================PACKER DETECTION======================");
 		System.out.println(program.getDetection().getTechniques().getDetailTechniques());
 		program.getDetection().packedBy();
 		System.out.println("======================================================");
+		*/
 	}
 
 	private void backupState(BPState curState) {
