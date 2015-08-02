@@ -26,10 +26,10 @@ public final class PackerConstants {
 	public static final String[] hFSG		= {"87","25","??","??","??","00","61","94","55"
 											  ,"A4","B6","80","FF","13","true"};
 	
-	public static final String[] hPECOMPACT = {"B8","??","??","??","02","50","64","FF","35"
+	public static final String[] hPECOMPACT = {"B8","??","??","??","??","50","64","FF","35"
 											  ,"00","00","00","00","64","89","25","00","00"
 											  ,"00","00","33","C0","89","08","50","45","43"
-											  ,"6F","6D","70","61","63","74","32","00","false"};
+											  ,"false"};
 	
 	public static final String[] hPETITE	= {"B8","??","??","??","??","6A","00","68","??"
 											  ,"??","??","??","64","??","??","??","??","??"
