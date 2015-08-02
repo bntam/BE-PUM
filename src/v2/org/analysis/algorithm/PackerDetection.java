@@ -54,7 +54,7 @@ public class PackerDetection {
 			e.printStackTrace();
 		}
 		
-		String packedby = "File packed by ";
+		String packedby = "File is packed by ";
 		// UPX
 		if (detectWithPacker(dataString, PackerConstants.hUPX, byteEP))
 		{
@@ -125,14 +125,15 @@ public class PackerDetection {
 		for (int i = beginTracing; i < dataString.length && trace; i++)
 		{
 			if (dataString[i].equals(hPacker[0].toLowerCase()) 
-				&& dataString[i+1].equals(hPacker[1].toLowerCase()))
+				&& (dataString[i+1].equals(hPacker[1].toLowerCase())
+				|| hPacker[1].equals("??")))
 			{
 				for (int j = 0; j < hPacker.length - 1; j++)
 				{
 					if (!hPacker[j].toLowerCase().equals(dataString[i + j]) 
 						&& !hPacker[j].equals("??"))
 					{
-						return false;
+						break;
 					}
 					if (j == hPacker.length - 2)
 					{
