@@ -263,6 +263,18 @@ public class APIHandle {
 		//SystemHandle system = env.getSystem();
 
 		String className = findClassName(t[0].toLowerCase(), t[1].toLowerCase().replace(".dll", ""));
+		
+		// PHONG - 20150728 ///////////////////////////////////////
+		if (t[0].contains("LoadLibraryA"))
+			Program.getProgram().setTechnique("UseAPI: LoadLibrary");
+		if (t[0].contains("GetProcAddress"))
+			Program.getProgram().setTechnique("UseAPI: GetProcAddress");
+		if (t[0].contains("VirtualAlloc"))
+			Program.getProgram().setTechnique("UseAPI: VirtualAlloc");
+		if (t[0].contains("IsDebuggerPresent"))
+			Program.getProgram().setTechnique("UseAPI: IsDebuggerPresent");
+		//////////////////////////////////////////////////////////
+		
 		if (className != null) {
 			try {
 				Class<?> clazz = Class.forName(className);

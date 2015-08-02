@@ -49,6 +49,7 @@ import org.jakstab.ssl.Architecture;
 import org.jakstab.util.BinaryFileInputBuffer;
 import org.jakstab.util.FastSet;
 
+import v2.org.analysis.algorithm.PackerDetection;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.ExternalMemory;
@@ -159,7 +160,10 @@ public final class Program {
 	private TargetOS targetOS;
 
 	private Instruction analyzedInstruction = null;;
-
+	
+	// PHONG - 20150724
+	private PackerDetection pDetection;
+	
 	private Program(Architecture arch) {
 		this.arch = arch;
 		this.targetOS = TargetOS.UNKNOWN;
@@ -182,6 +186,8 @@ public final class Program {
 		setResultFile(new FileProcess(resultFileTXT));
 		setFullResultFile(new FileProcess(fullResultFileTXT));
 		setResultFileTemp(new FileProcess(resultFileTempTXT));
+		
+		pDetection = new PackerDetection();
 	}
 
 	public void addByteSMPos(AbsoluteAddress addr) {
@@ -1991,6 +1997,23 @@ public final class Program {
 	public void setTechnique(String str) {
 		// TODO Auto-generated method stub
 		if (!technique.contains(str)) {
+			// PHONG - 20150724
+			if (str.contains("Encrypt/Decrypt"))
+				this.pDetection.getTechniques().isPackingUnpacking();
+			if (str.contains("Indirect Jump"))
+				this.pDetection.getTechniques().isIndirectJump();
+			if (str.contains("SEH")||str.contains("SetUpException"))
+				this.pDetection.getTechniques().isSEH();
+			if (str.contains("SMC"))
+				this.pDetection.getTechniques().isOverwriting();
+			if (str.contains("UseAPI: VirtualAlloc"))
+				this.pDetection.getTechniques().isStolenBytes();
+			if (str.contains("UseAPI: IsDebuggerPresent"))
+				this.pDetection.getTechniques().isAntiDebugging();
+			if (str.contains("UseAPI: LoadLibraryA")
+					|| str.contains("UseAPI: GetProcAddress"))
+				this.pDetection.getTechniques().isTwoAPIs();
+			
 			technique += " " + str;
 			// resultFile_Temp.appendInLine(str + " Nodes:" +
 			// getBPCFG().getVertexCount() + " ");
@@ -2024,5 +2047,11 @@ public final class Program {
 
 	public Logging getLog() {
 		return logger;
+	}
+	
+	// PHONG - 20150724
+	public PackerDetection getDetection()
+	{
+		return pDetection;
 	}
 }
