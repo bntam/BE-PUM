@@ -35,45 +35,34 @@ import v2.org.analysis.value.Value;
  */
 public class InitializeCriticalSection extends Kernel32API {
 	public InitializeCriticalSection() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		// Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		RTL_CRITICAL_SECTION lpCriticalSection = new RTL_CRITICAL_SECTION();
+		Kernel32DLL.INSTANCE.InitializeCriticalSection(lpCriticalSection);
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			RTL_CRITICAL_SECTION lpCriticalSection = new RTL_CRITICAL_SECTION();
-			Kernel32DLL.INSTANCE.InitializeCriticalSection(lpCriticalSection);
-
-			// public LPVOID /* PRTL_CRITICAL_SECTION_DEBUG */DebugInfo = null;
-			// public LONG LockCount;
-			// public LONG RecursionCount;
-			// public HANDLE OwningThread; // from the thread's
-			// ClientId->UniqueThread
-			// public HANDLE LockSemaphore;
-			// public ULONG_PTR SpinCount; // force size on 64-bit systems when
-			// packed
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
-					lpCriticalSection.LockCount.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
-					lpCriticalSection.RecursionCount.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
-					Pointer.nativeValue(lpCriticalSection.OwningThread.getPointer())));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
-					Pointer.nativeValue(lpCriticalSection.LockSemaphore.getPointer())));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
-					lpCriticalSection.SpinCount.longValue()));
-
-		}
-		return false;
+		// public LPVOID /* PRTL_CRITICAL_SECTION_DEBUG */DebugInfo = null;
+		// public LONG LockCount;
+		// public LONG RecursionCount;
+		// public HANDLE OwningThread; // from the thread's
+		// ClientId->UniqueThread
+		// public HANDLE LockSemaphore;
+		// public ULONG_PTR SpinCount; // force size on 64-bit systems when
+		// packed
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
+				lpCriticalSection.LockCount.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
+				lpCriticalSection.RecursionCount.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4),
+				new LongValue(Pointer.nativeValue(lpCriticalSection.OwningThread.getPointer())));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4),
+				new LongValue(Pointer.nativeValue(lpCriticalSection.LockSemaphore.getPointer())));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
+				lpCriticalSection.SpinCount.longValue()));
 	}
 
 }

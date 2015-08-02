@@ -54,34 +54,23 @@ import v2.org.analysis.value.Value;
 public class UnregisterClass extends User32API {
 
 	public UnregisterClass() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-
-		System.out.println("Argument:" + x1 + " " + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-
-			String lpClassName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			HINSTANCE hInstance = null;
-			if (t2 != 0L) {
-				hInstance = new HINSTANCE();
-				hInstance.setPointer(new Pointer(t2));
-			}
-			BOOL ret = User32DLL.INSTANCE.UnregisterClass(lpClassName, hInstance);
-
-			register.mov("eax", new LongValue(ret.longValue()));
+		String lpClassName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		HINSTANCE hInstance = null;
+		if (t2 != 0L) {
+			hInstance = new HINSTANCE();
+			hInstance.setPointer(new Pointer(t2));
 		}
-		return false;
+		BOOL ret = User32DLL.INSTANCE.UnregisterClass(lpClassName, hInstance);
+
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

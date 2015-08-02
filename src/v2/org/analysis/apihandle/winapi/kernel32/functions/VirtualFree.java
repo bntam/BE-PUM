@@ -51,38 +51,22 @@ public class VirtualFree extends Kernel32API {
 	 * 
 	 */
 	public VirtualFree() {
-
+		NUM_OF_PARMS = 3;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		/*
-		 * LPVOID lpAddress, // address of region of committed pages DWORD
-		 * dwSize, // size of region DWORD dwFreeType // type of free operation
-		 */
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		// String fileName = symbolValueMemoryOperand.getText(new
+		// X86MemoryOperand(DataType.INT32, t1));
+		System.out.println("Base Address:" + t1 + ", Size:" + t2 + ", Free Type:" + t3);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
+		BOOL ret = Kernel32DLL.INSTANCE.VirtualFree(new LPVOID(t1), new SIZE_T(t2), new DWORD(t3));
 
-			// String fileName = symbolValueMemoryOperand.getText(new
-			// X86MemoryOperand(DataType.INT32, t1));
-			System.out.println("Base Address:" + t1 + ", Size:" + t2 + ", Free Type:" + t3);
-
-			BOOL ret = Kernel32DLL.INSTANCE.VirtualFree(new LPVOID(t1), new SIZE_T(t2), new DWORD(t3));
-
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

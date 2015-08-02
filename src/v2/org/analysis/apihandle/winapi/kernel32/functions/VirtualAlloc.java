@@ -66,44 +66,25 @@ import v2.org.analysis.value.Value;
 public class VirtualAlloc extends Kernel32API {
 
 	public VirtualAlloc() {
-
+		NUM_OF_PARMS = 4;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		/*
-		 * LPVOID lpAddress, address of region to reserve or commit DWORD
-		 * dwSize, size of region DWORD flAllocationType, type of allocation
-		 * DWORD flProtect type of access protection
-		 */
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		// Exp x5 = symbolStack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
+		System.out.println("Address:" + t1 + ", Size:" + t2 + ", Allocation Type:" + t3 + ", Protection Type:" + t4);
 
-			System.out
-					.println("Address:" + t1 + ", Size:" + t2 + ", Allocation Type:" + t3 + ", Protection Type:" + t4);
+		LPVOID lpAddress = (t1 != 0L) ? new LPVOID(t1) : null;
+		SIZE_T dwSize = new SIZE_T(t2);
+		DWORD flAllocationType = new DWORD(t3);
+		DWORD flProtect = new DWORD(t4);
+		LPVOID ret = Kernel32DLL.INSTANCE.VirtualAlloc(lpAddress, dwSize, flAllocationType, flProtect);
 
-			LPVOID lpAddress = (t1 != 0L) ? new LPVOID(t1) : null;
-			SIZE_T dwSize = new SIZE_T(t2);
-			DWORD flAllocationType = new DWORD(t3);
-			DWORD flProtect = new DWORD(t4);
-			LPVOID ret = Kernel32DLL.INSTANCE.VirtualAlloc(lpAddress, dwSize, flAllocationType, flProtect);
-
-			register.mov("eax", new LongValue(Pointer.nativeValue(ret.toPointer())));
-		}
-		return false;
+		register.mov("eax", new LongValue(Pointer.nativeValue(ret.toPointer())));
 	}
 
 }

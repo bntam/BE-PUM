@@ -10,19 +10,11 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Disables the DLL_THREAD_ATTACH and DLL_THREAD_DETACH notifications for the
@@ -45,30 +37,21 @@ import v2.org.analysis.value.Value;
 public class DisableThreadLibraryCalls extends Kernel32API {
 
 	public DisableThreadLibraryCalls() {
-
+		NUM_OF_PARMS = 1;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long x = this.params.get(0);
+		System.out.println("hModule:" + x);
 
-		Value x1 = stack.pop();
+		HMODULE hModule = new HMODULE();
+		hModule.setPointer(new Pointer(x));
+		BOOL ret = Kernel32DLL.INSTANCE.DisableThreadLibraryCalls(hModule);
+		register.mov("eax", new LongValue(ret.longValue()));
 
-		System.out.println("Argument:" + x1);
-		if (x1 instanceof LongValue) {
-			long x = ((LongValue) x1).getValue();
-			System.out.println("hModule:" + x);
-
-			HMODULE hModule = new HMODULE();
-			hModule.setPointer(new Pointer(x));
-			BOOL ret = Kernel32DLL.INSTANCE.DisableThreadLibraryCalls(hModule);
-			register.mov("eax", new LongValue(ret.longValue()));
-
-			System.out.println("Return Value:" + ret);
-		}
-		return false;
+		System.out.println("Return Value:" + ret);
 	}
 
 }

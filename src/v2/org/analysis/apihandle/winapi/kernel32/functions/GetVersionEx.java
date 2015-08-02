@@ -47,35 +47,24 @@ public class GetVersionEx extends Kernel32API {
 	 * 
 	 */
 	public GetVersionEx() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
+	public void execute() {
+		long t = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Memory Address:" + x1.toString());
+		OSVERSIONINFO lpVersionInfo = new OSVERSIONINFO();
+		boolean ret = Kernel32.INSTANCE.GetVersionEx(lpVersionInfo);
 
-		if (x1 instanceof LongValue) {
-			long t = ((LongValue) x1).getValue();
+		register.mov("eax", new LongValue(ret ? 1 : 0));
 
-			OSVERSIONINFO lpVersionInfo = new OSVERSIONINFO();
-			boolean ret = Kernel32.INSTANCE.GetVersionEx(lpVersionInfo);
-
-			register.mov("eax", new LongValue(ret ? 1 : 0));
-
-			memory.setDoubleWordMemoryValue(t, new LongValue(lpVersionInfo.dwOSVersionInfoSize.longValue()));
-			memory.setDoubleWordMemoryValue(t + 4, new LongValue(lpVersionInfo.dwMajorVersion.longValue()));
-			memory.setDoubleWordMemoryValue(t + 8, new LongValue(lpVersionInfo.dwMinorVersion.longValue()));
-			memory.setDoubleWordMemoryValue(t + 12, new LongValue(lpVersionInfo.dwBuildNumber.longValue()));
-			memory.setDoubleWordMemoryValue(t + 16, new LongValue(lpVersionInfo.dwPlatformId.longValue()));
-			memory.setText(new X86MemoryOperand(DataType.INT32, t + 20), new String(lpVersionInfo.szCSDVersion));
-		}
-		return false;
+		memory.setDoubleWordMemoryValue(t, new LongValue(lpVersionInfo.dwOSVersionInfoSize.longValue()));
+		memory.setDoubleWordMemoryValue(t + 4, new LongValue(lpVersionInfo.dwMajorVersion.longValue()));
+		memory.setDoubleWordMemoryValue(t + 8, new LongValue(lpVersionInfo.dwMinorVersion.longValue()));
+		memory.setDoubleWordMemoryValue(t + 12, new LongValue(lpVersionInfo.dwBuildNumber.longValue()));
+		memory.setDoubleWordMemoryValue(t + 16, new LongValue(lpVersionInfo.dwPlatformId.longValue()));
+		memory.setText(new X86MemoryOperand(DataType.INT32, t + 20), new String(lpVersionInfo.szCSDVersion));
 	}
 
 }

@@ -10,15 +10,6 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
-
 /**
  * Ends the calling process and all its threads.
  * 
@@ -30,29 +21,16 @@ import v2.org.analysis.value.Value;
  */
 public class ExitProcess extends Kernel32API {
 
-	/**
-	 * 
-	 */
 	public ExitProcess() {
-
+		NUM_OF_PARMS = 1;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		// UINT uExitCode exit code for all threads
-		Value x1 = stack.pop();
-
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			LongValue x = (LongValue) x1;
-
-			Kernel32DLL.INSTANCE.ExitProcess((int) x.getValue());
-		}
-		return false;
+		Kernel32DLL.INSTANCE.ExitProcess((int) t1);
 	}
 
 }

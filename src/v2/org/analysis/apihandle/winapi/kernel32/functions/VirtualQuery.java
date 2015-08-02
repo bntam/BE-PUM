@@ -56,49 +56,37 @@ import v2.org.analysis.value.Value;
 public class VirtualQuery extends Kernel32API {
 
 	public VirtualQuery() {
+		NUM_OF_PARMS = 3;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
+		LPVOID lpAddress = (t1 != 0L) ? new LPVOID(t1) : null;
+		MEMORY_BASIC_INFORMATION lpBuffer = new MEMORY_BASIC_INFORMATION();
+		SIZE_T dwLength = new SIZE_T(t3);
+		SIZE_T ret = Kernel32DLL.INSTANCE.VirtualQuery(lpAddress, lpBuffer, dwLength);
 
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
+		register.mov("eax", new LongValue(ret.longValue()));
 
-			LPVOID lpAddress = (t1 != 0L) ? new LPVOID(t1) : null;
-			MEMORY_BASIC_INFORMATION lpBuffer = new MEMORY_BASIC_INFORMATION();
-			SIZE_T dwLength = new SIZE_T(t3);
-			SIZE_T ret = Kernel32DLL.INSTANCE.VirtualQuery(lpAddress, lpBuffer, dwLength);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
-					new LongValue(Pointer.nativeValue(lpBuffer.BaseAddress.getPointer())));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
-					new LongValue(Pointer.nativeValue(lpBuffer.AllocationBase.getPointer())));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
-					lpBuffer.AllocationProtect.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
-					lpBuffer.RegionSize.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
-					new LongValue(lpBuffer.State.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
-					lpBuffer.Protect.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
-					new LongValue(lpBuffer.Type.longValue()));
-		}
-		return false;
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
+				new LongValue(Pointer.nativeValue(lpBuffer.BaseAddress.getPointer())));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
+				new LongValue(Pointer.nativeValue(lpBuffer.AllocationBase.getPointer())));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
+				lpBuffer.AllocationProtect.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
+				lpBuffer.RegionSize.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
+				new LongValue(lpBuffer.State.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
+				new LongValue(lpBuffer.Protect.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
+				new LongValue(lpBuffer.Type.longValue()));
 	}
 
 }

@@ -54,34 +54,22 @@ import v2.org.analysis.value.Value;
 public class GetLogicalDriveStrings extends Kernel32API {
 
 	public GetLogicalDriveStrings() {
-
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
+		DWORD nBufferLength = new DWORD(t1);
+		char[] lpBuffer = new char[(int) t1];
+		DWORD ret = Kernel32.INSTANCE.GetLogicalDriveStrings(nBufferLength, lpBuffer);
 
-		System.out.println("Argument: Length:" + x1 + ", Memory Operand:" + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-
-			DWORD nBufferLength = new DWORD(t1);
-			char[] lpBuffer = new char[(int) t1];
-			DWORD ret = Kernel32.INSTANCE.GetLogicalDriveStrings(nBufferLength, lpBuffer);
-
-			String logicalDriveStrings = new String(lpBuffer);
-			memory.setText(new X86MemoryOperand(DataType.INT32, t2), logicalDriveStrings, ret.longValue());
-			System.out.println("Logical Drive Strings:" + logicalDriveStrings);
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		String logicalDriveStrings = new String(lpBuffer);
+		memory.setText(new X86MemoryOperand(DataType.INT32, t2), logicalDriveStrings, ret.longValue());
+		System.out.println("Logical Drive Strings:" + logicalDriveStrings);
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

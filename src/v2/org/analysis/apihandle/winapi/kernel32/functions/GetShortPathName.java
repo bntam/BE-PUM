@@ -51,37 +51,25 @@ import v2.org.analysis.value.Value;
 public class GetShortPathName extends Kernel32API {
 
 	public GetShortPathName() {
-
+		NUM_OF_PARMS = 3;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		String lpszLongPath = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		char[] lpdzShortPath = new char[(int) t3];
+		int cchBuffer = (int) t3;
+		int ret = Kernel32.INSTANCE.GetShortPathName(lpszLongPath, lpdzShortPath, cchBuffer);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
+		String shortPathName = new String(lpdzShortPath);
+		memory.setText(new X86MemoryOperand(DataType.INT32, t2), shortPathName, ret);
 
-			String lpszLongPath = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			char[] lpdzShortPath = new char[(int) t3];
-			int cchBuffer = (int) t3;
-			int ret = Kernel32.INSTANCE.GetShortPathName(lpszLongPath, lpdzShortPath, cchBuffer);
-
-			String shortPathName = new String(lpdzShortPath);
-			memory.setText(new X86MemoryOperand(DataType.INT32, t2), shortPathName, ret);
-
-			register.mov("eax", new LongValue(ret));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret));
 	}
 
 }

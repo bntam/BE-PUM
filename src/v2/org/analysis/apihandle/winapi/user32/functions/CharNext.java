@@ -10,18 +10,10 @@ package v2.org.analysis.apihandle.winapi.user32.functions;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves a pointer to the next character in a string. This function can
@@ -41,28 +33,17 @@ import v2.org.analysis.value.Value;
 public class CharNext extends User32API {
 
 	public CharNext() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long x = this.params.get(0);
 
-		Value x1 = stack.pop();
+		char[] lpsz = memory.getText(new X86MemoryOperand(DataType.INT32, x)).toCharArray();
+		User32DLL.INSTANCE.CharNext(lpsz);
 
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long x = ((LongValue) x1).getValue();
-
-			char[] lpsz = memory.getText(new X86MemoryOperand(DataType.INT32, x)).toCharArray();
-			User32DLL.INSTANCE.CharNext(lpsz);
-			
-			register.mov("eax", new LongValue((lpsz.length == 0) ? x : (x + 2)));
-		}
-		return false;
+		register.mov("eax", new LongValue((lpsz.length == 0) ? x : (x + 2)));
 	}
 
 }

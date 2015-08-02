@@ -46,30 +46,19 @@ import v2.org.analysis.value.Value;
 public class ShowWindow extends User32API {
 
 	public ShowWindow() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		//Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.print("Argument:" + x1 + " " + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
+		HWND hWnd = new HWND(new Pointer(t1));
+		int nCmdShow = (int) t2;
+		BOOL ret = User32DLL.INSTANCE.ShowWindow(hWnd, nCmdShow);
 
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-
-			HWND hWnd = new HWND(new Pointer(t1));
-			int nCmdShow = (int) t2;
-			BOOL ret = User32DLL.INSTANCE.ShowWindow(hWnd, nCmdShow);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

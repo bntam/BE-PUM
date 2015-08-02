@@ -66,39 +66,25 @@ import v2.org.analysis.value.Value;
 public class GetTempFileName extends Kernel32API {
 
 	public GetTempFileName() {
+		NUM_OF_PARMS = 4;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
+		WString lpPathName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
+		WString lpPrefixString = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+		UINT uUnique = new UINT(t3);
+		char[] lpTempFileName = new char[260]; // #define MAX_PATH 260
+		UINT ret = Kernel32DLL.INSTANCE.GetTempFileName(lpPathName, lpPrefixString, uUnique, lpTempFileName);
 
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
+		register.mov("eax", new LongValue(ret.longValue()));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-
-			WString lpPathName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
-			WString lpPrefixString = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
-			UINT uUnique = new UINT(t3);
-			char[] lpTempFileName = new char[260]; // #define MAX_PATH 260
-			UINT ret = Kernel32DLL.INSTANCE.GetTempFileName(lpPathName, lpPrefixString, uUnique, lpTempFileName);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-
-			memory.setText(new X86MemoryOperand(DataType.INT32, t4), new String(lpTempFileName));
-		}
-		return false;
+		memory.setText(new X86MemoryOperand(DataType.INT32, t4), new String(lpTempFileName));
 	}
 
 }

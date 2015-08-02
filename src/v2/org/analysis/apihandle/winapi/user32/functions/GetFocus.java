@@ -13,12 +13,6 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -36,20 +30,16 @@ import v2.org.analysis.value.LongValue;
 public class GetFocus extends User32API {
 
 	public GetFocus() {
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-
+	public void execute() {
 		HWND ret = User32DLL.INSTANCE.GetFocus();
 		
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 		register.mov("eax", new LongValue(value));
 		System.out.println("Return Value: " + value);
-
-		return false;
 	}
 
 }

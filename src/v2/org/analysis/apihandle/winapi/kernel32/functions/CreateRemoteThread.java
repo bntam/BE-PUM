@@ -27,30 +27,26 @@ import v2.org.analysis.value.Value;
 public class CreateRemoteThread extends User32API {
 
 	public CreateRemoteThread() {
+		NUM_OF_PARMS = 7;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-		Value x6 = stack.pop();
-		Value x7 = stack.pop();
+		// Value x1 = stack.pop();
+		// Value x2 = stack.pop();
+		// Value x3 = stack.pop();
+		// Value x4 = stack.pop();
+		// Value x5 = stack.pop();
+		// Value x6 = stack.pop();
+		// Value x7 = stack.pop();
+		//
+		// System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4
+		// + " " + x5 + " " + x6 + " " + x7);
 
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6 + " " + x7);
+		register.mov("eax", new LongValue(0));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue && x6 instanceof LongValue && x7 instanceof LongValue) {
-			register.mov("eax", new LongValue(0));
-		}
-		return false;
 	}
 
 }

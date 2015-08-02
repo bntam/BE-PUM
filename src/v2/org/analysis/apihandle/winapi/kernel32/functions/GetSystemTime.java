@@ -39,37 +39,26 @@ public class GetSystemTime extends Kernel32API {
 	 * 
 	 */
 	public GetSystemTime() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
+	public void execute() {
+		long t = this.params.get(0);
 
-		// LPSYSTEMTIME lpSystemTime address of system time structure
-		Value x1 = stack.pop();
-		System.out.println("Memory Address:" + x1.toString());
+		SYSTEMTIME lpSystemTime = new SYSTEMTIME();
+		Kernel32.INSTANCE.GetSystemTime(lpSystemTime);
 
-		if (x1 instanceof LongValue) {
-			long t = ((LongValue) x1).getValue();
-
-			SYSTEMTIME lpSystemTime = new SYSTEMTIME();
-			Kernel32.INSTANCE.GetSystemTime(lpSystemTime);
-
-			// typedef unsigned short WORD;
-			// It just use 2 bytes of memory
-			memory.setWordMemoryValue(t, new LongValue(lpSystemTime.wYear));
-			memory.setWordMemoryValue(t + 2, new LongValue(lpSystemTime.wMonth));
-			memory.setWordMemoryValue(t + 4, new LongValue(lpSystemTime.wDayOfWeek));
-			memory.setWordMemoryValue(t + 6, new LongValue(lpSystemTime.wDay));
-			memory.setWordMemoryValue(t + 8, new LongValue(lpSystemTime.wHour));
-			memory.setWordMemoryValue(t + 10, new LongValue(lpSystemTime.wMinute));
-			memory.setWordMemoryValue(t + 12, new LongValue(lpSystemTime.wSecond));
-			memory.setWordMemoryValue(t + 14, new LongValue(lpSystemTime.wMilliseconds));
-		}
-		return false;
+		// typedef unsigned short WORD;
+		// It just use 2 bytes of memory
+		memory.setWordMemoryValue(t, new LongValue(lpSystemTime.wYear));
+		memory.setWordMemoryValue(t + 2, new LongValue(lpSystemTime.wMonth));
+		memory.setWordMemoryValue(t + 4, new LongValue(lpSystemTime.wDayOfWeek));
+		memory.setWordMemoryValue(t + 6, new LongValue(lpSystemTime.wDay));
+		memory.setWordMemoryValue(t + 8, new LongValue(lpSystemTime.wHour));
+		memory.setWordMemoryValue(t + 10, new LongValue(lpSystemTime.wMinute));
+		memory.setWordMemoryValue(t + 12, new LongValue(lpSystemTime.wSecond));
+		memory.setWordMemoryValue(t + 14, new LongValue(lpSystemTime.wMilliseconds));
 	}
 
 }

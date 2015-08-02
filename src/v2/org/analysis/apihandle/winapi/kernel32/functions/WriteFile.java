@@ -67,70 +67,44 @@ public class WriteFile extends Kernel32API {
 	 * 
 	 */
 	public WriteFile() {
-
+		NUM_OF_PARMS = 5;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
-
+	public void execute() {
 		/*
-		 * HANDLE hFile, // handle to file to write to LPCVOID lpBuffer, //
-		 * pointer to data to write to file DWORD nNumberOfBytesToWrite, //
-		 * number of bytes to write LPDWORD lpNumberOfBytesWritten, // pointer
-		 * to number of bytes written LPOVERLAPPED lpOverlapped // pointer to
-		 * structure needed for overlapped I/O
+		 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
+		 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
 		 */
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
+		long t5 = this.params.get(4);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
+		String str = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue) {
-			/*
-			 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-			 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
-			 */
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-			long t5 = ((LongValue) x5).getValue();
+		System.out.println("Handle File:" + t1 + ", String written:" + str + ", Number of Byte:" + t3 + ", Pointer:"
+				+ t4 + ", Overlapped:" + t5);
 
-			String str = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		HANDLE hFile = new HANDLE(t1 != 0L ? new Pointer(t1) : Pointer.NULL);
+		byte[] lpBuffer = str.getBytes();
+		int nNumberOfBytesToWrite = (int) t3;
+		IntByReference lpNumberOfBytesWritten = new IntByReference((int) t4);
 
-			System.out.println("Handle File:" + t1 + ", String written:" + str + ", Number of Byte:" + t3
-					+ ", Pointer:" + t4 + ", Overlapped:" + t5);
-
-			HANDLE hFile = new HANDLE(t1 != 0L ? new Pointer(t1) : Pointer.NULL);
-			byte[] lpBuffer = str.getBytes();
-			int nNumberOfBytesToWrite = (int) t3;
-			IntByReference lpNumberOfBytesWritten = new IntByReference((int) t4);
-
-			OVERLAPPED lpOverlapped = new OVERLAPPED();
-			if (t5 != 0L) {
-				lpOverlapped.Internal = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t5)).getValue());
-				lpOverlapped.InternalHigh = new ULONG_PTR(
-						((LongValue) memory.getDoubleWordMemoryValue(t5 + 4)).getValue());
-				lpOverlapped.Offset = (int) (((LongValue) memory.getDoubleWordMemoryValue(t5 + 8)).getValue());
-				lpOverlapped.OffsetHigh = (int) (((LongValue) memory.getDoubleWordMemoryValue(t5 + 12)).getValue());
-				lpOverlapped.hEvent = new HANDLE(new Pointer(
-						((LongValue) memory.getDoubleWordMemoryValue(t5 + 16)).getValue()));
-			}
-
-			boolean ret = Kernel32.INSTANCE.WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten,
-					lpOverlapped);
-
-			register.mov("eax", new LongValue(ret ? 1 : 0));
+		OVERLAPPED lpOverlapped = new OVERLAPPED();
+		if (t5 != 0L) {
+			lpOverlapped.Internal = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t5)).getValue());
+			lpOverlapped.InternalHigh = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t5 + 4)).getValue());
+			lpOverlapped.Offset = (int) (((LongValue) memory.getDoubleWordMemoryValue(t5 + 8)).getValue());
+			lpOverlapped.OffsetHigh = (int) (((LongValue) memory.getDoubleWordMemoryValue(t5 + 12)).getValue());
+			lpOverlapped.hEvent = new HANDLE(new Pointer(
+					((LongValue) memory.getDoubleWordMemoryValue(t5 + 16)).getValue()));
 		}
 
-		return false;
+		boolean ret = Kernel32.INSTANCE.WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten,
+				lpOverlapped);
+
+		register.mov("eax", new LongValue(ret ? 1 : 0));
 	}
 }

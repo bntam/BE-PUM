@@ -12,12 +12,8 @@ import com.sun.jna.platform.win32.WinDef.UINT;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.Register;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -34,11 +30,12 @@ import v2.org.analysis.value.LongValue;
 public class GetACP extends Kernel32API {
 
 	public GetACP() {
-
+		NUM_OF_PARMS = 0;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public void execute() {
 		Environment env = curState.getEnvironement();
 		Register register = env.getRegister();
 
@@ -47,8 +44,6 @@ public class GetACP extends Kernel32API {
 		System.out.println("ACP:" + ret.longValue());
 
 		register.mov("eax", new LongValue(ret.longValue()));
-
-		return false;
 	}
 
 }

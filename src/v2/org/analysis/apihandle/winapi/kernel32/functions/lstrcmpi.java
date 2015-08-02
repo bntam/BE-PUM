@@ -42,33 +42,22 @@ import v2.org.analysis.value.Value;
 public class lstrcmpi extends Kernel32API {
 
 	public lstrcmpi() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long destAddr = this.params.get(0);
+		long scrAddr = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " ");
+		String dest = destAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
+		String src = scrAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long destAddr = ((LongValue) x1).getValue();
-			long scrAddr = ((LongValue) x2).getValue();
+		System.out.println("Destination String:" + dest + ", Source String:" + src);
 
-			String dest = destAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
-			String src = scrAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
+		int ret = Kernel32DLL.INSTANCE.lstrcmpi(new WString(dest), new WString(src));
 
-			System.out.println("Destination String:" + dest + ", Source String:" + src);
-
-			int ret = Kernel32DLL.INSTANCE.lstrcmpi(new WString(dest), new WString(src));
-
-			register.mov("eax", new LongValue(ret));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret));
 	}
 
 }

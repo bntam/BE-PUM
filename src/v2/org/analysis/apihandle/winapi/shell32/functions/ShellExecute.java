@@ -7,20 +7,11 @@
  */
 package v2.org.analysis.apihandle.winapi.shell32.functions;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.apihandle.winapi.shell32.Shell32API;
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Shell32;
 import com.sun.jna.platform.win32.WinDef;
@@ -117,49 +108,32 @@ import com.sun.jna.platform.win32.WinDef.INT_PTR;
 public class ShellExecute extends Shell32API {
 
 	public ShellExecute() {
-		// TODO Auto-generated constructor stub
+		NUM_OF_PARMS = 6;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
+		long t5 = this.params.get(4);
+		long t6 = this.params.get(5);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-		Value x6 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
+		HWND hwnd = (t1 == 0L) ? null : new HWND(new Pointer(t1));
+		String lpOperation = (t2 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String lpFile = (t3 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t3));
+		String lpParameters = (t4 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t4));
+		String lpDirectory = (t5 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t5));
+		int nShowCmd = (int) t6;
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue && x6 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-			long t5 = ((LongValue) x5).getValue();
-			long t6 = ((LongValue) x6).getValue();
+		System.out.println("hwnd: " + t1 + ", lpOperation: " + lpOperation + ", lpFile: " + lpFile + ", lpParameters: "
+				+ lpParameters + ", lpDirectory: " + lpDirectory + ", nShowCmd: " + nShowCmd);
 
-			HWND hwnd = (t1 == 0L) ? null : new HWND(new Pointer(t1));
-			String lpOperation = (t2 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-			String lpFile = (t3 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t3));
-			String lpParameters = (t4 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t4));
-			String lpDirectory = (t5 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t5));
-			int nShowCmd = (int) t6;
+		INT_PTR ret = Shell32.INSTANCE.ShellExecute(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd);
 
-			System.out.println("hwnd: " + t1 + ", lpOperation: " + lpOperation + ", lpFile: " + lpFile
-					+ ", lpParameters: " + lpParameters + ", lpDirectory: " + lpDirectory + ", nShowCmd: " + nShowCmd);
-
-			INT_PTR ret = Shell32.INSTANCE.ShellExecute(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd);
-
-			System.out.println("Return value:" + ret.intValue());
-			register.mov("eax", new LongValue(ret.intValue()));
-		}
-		return false;
+		System.out.println("Return value:" + ret.intValue());
+		register.mov("eax", new LongValue(ret.intValue()));
 	}
 
 }

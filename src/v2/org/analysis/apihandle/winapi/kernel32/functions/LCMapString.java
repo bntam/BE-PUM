@@ -86,46 +86,31 @@ import v2.org.analysis.value.Value;
 public class LCMapString extends Kernel32API {
 
 	public LCMapString() {
+		NUM_OF_PARMS = 6;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
+		long t5 = this.params.get(4);
+		long t6 = this.params.get(5);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-		Value x6 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
+		LCID Locale = new LCID(t1);
+		DWORD dwMapFlags = new DWORD(t2);
+		WString lpSrcStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
+		int cchSrc = (int) t4;
+		char[] lpDestStr = (t5 != 0L && t6 != 0L) ? new char[(int) t6] : null;
+		int cchDest = (int) t6;
+		int ret = Kernel32DLL.INSTANCE.LCMapString(Locale, dwMapFlags, lpSrcStr, cchSrc, lpDestStr, cchDest);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue && x6 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-			long t5 = ((LongValue) x5).getValue();
-			long t6 = ((LongValue) x6).getValue();
+		register.mov("eax", new LongValue(ret));
 
-			LCID Locale = new LCID(t1);
-			DWORD dwMapFlags = new DWORD(t2);
-			WString lpSrcStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
-			int cchSrc = (int) t4;
-			char[] lpDestStr = (t5 != 0L && t6 != 0L) ? new char[(int) t6] : null;
-			int cchDest = (int) t6;
-			int ret = Kernel32DLL.INSTANCE.LCMapString(Locale, dwMapFlags, lpSrcStr, cchSrc, lpDestStr, cchDest);
+		if (lpDestStr != null)
+			memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpDestStr));
 
-			register.mov("eax", new LongValue(ret));
-
-			if (lpDestStr != null)
-				memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpDestStr));
-		}
-		return false;
 	}
 
 }

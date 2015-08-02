@@ -11,15 +11,7 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Opens an existing local process object.
@@ -47,35 +39,23 @@ import v2.org.analysis.value.Value;
 public class OpenProcess extends Kernel32API {
 
 	public OpenProcess() {
+		NUM_OF_PARMS = 3;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		// Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		DWORD dwDesiredAccess = new DWORD(t1);
+		BOOL bInheritHandle = new BOOL(t2);
+		DWORD dwProcessId = new DWORD(t3);
+		HANDLE ret = Kernel32DLL.INSTANCE.OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-
-			DWORD dwDesiredAccess = new DWORD(t1);
-			BOOL bInheritHandle = new BOOL(t2);
-			DWORD dwProcessId = new DWORD(t3);
-			HANDLE ret = Kernel32DLL.INSTANCE.OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-		}
-		return false;
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

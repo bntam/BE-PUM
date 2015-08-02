@@ -44,24 +44,14 @@ import v2.org.analysis.value.Value;
 public class SetUnhandledExceptionFilter extends Kernel32API {
 
 	public SetUnhandledExceptionFilter() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
-
-		Value x1 = stack.pop();
-
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			register.mov("eax", new LongValue(0));
-		}
-		return false;
+	public void execute() {
+		long t1 = this.params.get(0);
+		System.out.println("\t\t SPECIAL WINDOWS API");
+		register.mov("eax", new LongValue(0));
 	}
 
 }

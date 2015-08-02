@@ -9,18 +9,8 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinBase.SYSTEM_INFO;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * The GetNativeSystemInfo function retrieves information about the current
@@ -36,26 +26,15 @@ import v2.org.analysis.value.Value;
 public class GetNativeSystemInfo extends Kernel32API {
 
 	public GetNativeSystemInfo() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			SYSTEM_INFO lpSystemInfo = new SYSTEM_INFO();
-			Kernel32.INSTANCE.GetNativeSystemInfo(lpSystemInfo);
-		}
-		return false;
+		SYSTEM_INFO lpSystemInfo = new SYSTEM_INFO();
+		Kernel32.INSTANCE.GetNativeSystemInfo(lpSystemInfo);
 	}
 
 }

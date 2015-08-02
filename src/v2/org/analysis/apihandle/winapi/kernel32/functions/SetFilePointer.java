@@ -64,52 +64,37 @@ import v2.org.analysis.value.Value;
 public class SetFilePointer extends Kernel32API {
 
 	public SetFilePointer() {
-
+		NUM_OF_PARMS = 4;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public void execute() {
+		/*
+		 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
+		 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
+		 */
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+		// String str = symbolValueMemoryOperand.getText(new
+		// X86MemoryOperand(DataType.INT32, t2));
+		System.out.println("Handle File:" + t1 + ", Number of Bytes:" + t2 + ", Address of High-Order:" + t3
+				+ ", Move Type:" + t4);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " ");
+		HANDLE hFile = new HANDLE(new Pointer(t1));
+		LONG lDistanceToMove = new LONG(t2);
+		LONGByReference lpDistanceToMoveHigh = (t3 == 0) ? null : new LONGByReference(new LONG(t3));
+		DWORD dwMoveMethod = new DWORD(t4);
+		DWORD ret = Kernel32DLL.INSTANCE.SetFilePointer(hFile, lDistanceToMove, lpDistanceToMoveHigh, dwMoveMethod);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
-			/*
-			 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-			 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
-			 */
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
+		register.mov("eax", new LongValue(ret.longValue()));
 
-			// String str = symbolValueMemoryOperand.getText(new
-			// X86MemoryOperand(DataType.INT32, t2));
-			System.out.println("Handle File:" + t1 + ", Number of Bytes:" + t2 + ", Address of High-Order:" + t3
-					+ ", Move Type:" + t4);
-
-			HANDLE hFile = new HANDLE(new Pointer(t1));
-			LONG lDistanceToMove = new LONG(t2);
-			LONGByReference lpDistanceToMoveHigh = (t3 == 0) ? null : new LONGByReference(new LONG(t3));
-			DWORD dwMoveMethod = new DWORD(t4);
-			DWORD ret = Kernel32DLL.INSTANCE.SetFilePointer(hFile, lDistanceToMove, lpDistanceToMoveHigh, dwMoveMethod);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-
-			if (lpDistanceToMoveHigh != null) {
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
-						lpDistanceToMoveHigh.getValue().longValue()));
-			}
+		if (lpDistanceToMoveHigh != null) {
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
+					lpDistanceToMoveHigh.getValue().longValue()));
 		}
-		return false;
 	}
 
 }

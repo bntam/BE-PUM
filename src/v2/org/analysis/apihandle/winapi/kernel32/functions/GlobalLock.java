@@ -37,28 +37,17 @@ import v2.org.analysis.value.Value;
 public class GlobalLock extends Kernel32API {
 
 	public GlobalLock() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		// Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
+		HANDLE hMem = new HANDLE(new Pointer(t1));
+		LPVOID ret = Kernel32DLL.INSTANCE.GlobalLock(hMem);
 
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			HANDLE hMem = new HANDLE(new Pointer(t1));
-			LPVOID ret = Kernel32DLL.INSTANCE.GlobalLock(hMem);
-
-			register.mov("eax", new LongValue(ret == null ? 0 : Pointer.nativeValue(ret.toPointer())));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret == null ? 0 : Pointer.nativeValue(ret.toPointer())));
 	}
 
 }

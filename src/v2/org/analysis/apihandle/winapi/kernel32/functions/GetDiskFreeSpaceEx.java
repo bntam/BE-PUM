@@ -9,21 +9,13 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.ptr.LongByReference;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * The GetDiskFreeSpaceEx function retrieves information about the amount of
@@ -63,52 +55,39 @@ import v2.org.analysis.value.Value;
 public class GetDiskFreeSpaceEx extends Kernel32API {
 
 	public GetDiskFreeSpaceEx() {
-
+		NUM_OF_PARMS = 4;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
+		String lpDirectoryName = (t1 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		LongByReference lpFreeBytesAvailable = (t2 == 0L) ? null : new LongByReference(
+				((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2))).getValue());
+		LongByReference lpTotalNumberOfBytes = (t3 == 0L) ? null : new LongByReference(
+				((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3))).getValue());
+		LongByReference lpTotalNumberOfFreeBytes = (t4 == 0L) ? null : new LongByReference(
+				((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4))).getValue());
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
+		boolean ret = Kernel32.INSTANCE.GetDiskFreeSpaceEx(lpDirectoryName, lpFreeBytesAvailable, lpTotalNumberOfBytes,
+				lpTotalNumberOfFreeBytes);
 
-			String lpDirectoryName = (t1 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			LongByReference lpFreeBytesAvailable = (t2 == 0L) ? null : new LongByReference(
-					((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2))).getValue());
-			LongByReference lpTotalNumberOfBytes = (t3 == 0L) ? null : new LongByReference(
-					((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3))).getValue());
-			LongByReference lpTotalNumberOfFreeBytes = (t4 == 0L) ? null : new LongByReference(
-					((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4))).getValue());
+		register.mov("eax", new LongValue((ret) ? 1 : 0));
 
-			boolean ret = Kernel32.INSTANCE.GetDiskFreeSpaceEx(lpDirectoryName, lpFreeBytesAvailable,
-					lpTotalNumberOfBytes, lpTotalNumberOfFreeBytes);
-
-			register.mov("eax", new LongValue((ret) ? 1 : 0));
-
-			if (t2 != 0L)
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(
-						lpFreeBytesAvailable.getValue()));
-			if (t3 != 0L)
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
-						lpTotalNumberOfBytes.getValue()));
-			if (t4 != 0L)
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
-						lpTotalNumberOfFreeBytes.getValue()));
-		}
-		return false;
+		if (t2 != 0L)
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(
+					lpFreeBytesAvailable.getValue()));
+		if (t3 != 0L)
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
+					lpTotalNumberOfBytes.getValue()));
+		if (t4 != 0L)
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
+					lpTotalNumberOfFreeBytes.getValue()));
 	}
 
 }

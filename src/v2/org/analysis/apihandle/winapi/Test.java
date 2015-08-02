@@ -14,6 +14,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure.ByReference;
 import com.sun.jna.WString;
+import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.Shell32;
 import com.sun.jna.platform.win32.Shell32Util;
@@ -34,11 +35,18 @@ import com.sun.jna.platform.win32.WinDef.ULONGByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.platform.win32.WinReg;
 import com.sun.jna.platform.win32.WinReg.HKEYByReference;
+import com.sun.jna.platform.win32.Winspool;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
+import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
+import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
+import v2.org.analysis.apihandle.winapi.structures.PointerByRefByRef;
+import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.PROCESS_BASIC_INFORMATION;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
@@ -238,41 +246,46 @@ public class Test {
 		// }
 		// }
 
-//		HANDLE hSnapshot = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new DWORD(2), new DWORD(0));
-//		PROCESSENTRY32 lppe = new PROCESSENTRY32();
-//		BOOL ret = Kernel32DLL.INSTANCE.Process32First(hSnapshot, lppe );
-//		if (ret.booleanValue()) {
-//			System.out.println(lppe.toString(false));
-//			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
-//		}
-//		while (Kernel32DLL.INSTANCE.Process32Next(hSnapshot, lppe).booleanValue()) {
-//			System.out.println(lppe.toString(false));
-//			System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
-//		}
-		
-//		int currentID = Kernel32.INSTANCE.GetCurrentProcessId();
-//
-//		HANDLE snap = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new DWORD(4), new DWORD(0));
-//
-//		THREADENTRY32 lpte = new THREADENTRY32();
-//		lpte.dwSize = new DWORD(lpte.size());
-//		if (Kernel32DLL.INSTANCE.Thread32First(snap, lpte).booleanValue()) {
-//			while (Kernel32DLL.INSTANCE.Thread32Next(snap, lpte).booleanValue())
-//			{
-//				if (lpte.th32OwnerProcessID.intValue() == currentID)
-//				{
-//					DWORD dwDesiredAccess = new DWORD(2);
-//					BOOL bInheritHandle = new BOOL(0);
-//					DWORD dwThreadId = new DWORD(lpte.th32ThreadID.longValue());
-//					HANDLE rezz = Kernel32DLL.INSTANCE.OpenThread(dwDesiredAccess, bInheritHandle, dwThreadId);
-//
-//					long value = (rezz == null) ? 0 : Pointer.nativeValue(rezz.getPointer());
-//					System.out.println("Return Value: " + value);
-//					System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
-//				}
-//			}
-//		} else {
-//		}
+		// HANDLE hSnapshot = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new
+		// DWORD(2), new DWORD(0));
+		// PROCESSENTRY32 lppe = new PROCESSENTRY32();
+		// BOOL ret = Kernel32DLL.INSTANCE.Process32First(hSnapshot, lppe );
+		// if (ret.booleanValue()) {
+		// System.out.println(lppe.toString(false));
+		// System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+		// }
+		// while (Kernel32DLL.INSTANCE.Process32Next(hSnapshot,
+		// lppe).booleanValue()) {
+		// System.out.println(lppe.toString(false));
+		// System.out.println("lppe.szExeFile: " + new String(lppe.szExeFile));
+		// }
+
+		// int currentID = Kernel32.INSTANCE.GetCurrentProcessId();
+		//
+		// HANDLE snap = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(new
+		// DWORD(4), new DWORD(0));
+		//
+		// THREADENTRY32 lpte = new THREADENTRY32();
+		// lpte.dwSize = new DWORD(lpte.size());
+		// if (Kernel32DLL.INSTANCE.Thread32First(snap, lpte).booleanValue()) {
+		// while (Kernel32DLL.INSTANCE.Thread32Next(snap, lpte).booleanValue())
+		// {
+		// if (lpte.th32OwnerProcessID.intValue() == currentID)
+		// {
+		// DWORD dwDesiredAccess = new DWORD(2);
+		// BOOL bInheritHandle = new BOOL(0);
+		// DWORD dwThreadId = new DWORD(lpte.th32ThreadID.longValue());
+		// HANDLE rezz = Kernel32DLL.INSTANCE.OpenThread(dwDesiredAccess,
+		// bInheritHandle, dwThreadId);
+		//
+		// long value = (rezz == null) ? 0 :
+		// Pointer.nativeValue(rezz.getPointer());
+		// System.out.println("Return Value: " + value);
+		// System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
+		// }
+		// }
+		// } else {
+		// }
 
 		// String pMessage = new String("%1!*.*s! %4 %5!*s!");
 		// String pArgs[] = { "4", "2", "Bill", // %1!*.*s! refers back to the
@@ -296,35 +309,75 @@ public class Test {
 		// char[] buf = new char[100];
 		// long[] ar = {10, 20};
 		// Kernel32DLL.INSTANCE.wsprintf(buf, "%s", ar);
-		
-//		HANDLE file = Kernel32.INSTANCE.CreateFile("Log.log", 1073741824, 0, null, 3, 128, null);
-//		x = Kernel32DLL.INSTANCE._write(((int)Pointer.nativeValue(file.getPointer())), null, new UINT(6));
 
-//		HKEYByReference phkResult = new HKEYByReference();
-//		LONG retz = Advapi32DLL.INSTANCE.RegOpenKey(WinReg.HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", phkResult);
-//		x = retz.longValue();
-		
-		DWORDByReference lpdwProcessId = new DWORDByReference();
-		x = User32DLL.INSTANCE.GetWindowThreadProcessId(User32DLL.INSTANCE.GetShellWindow(), lpdwProcessId).intValue();
-		System.out.println("GetWindowThreadProcessId: " + x);
-		
-		HANDLE ProcessHandle = Kernel32.INSTANCE.GetCurrentProcess();
-		int ProcessInformationClass = 0;
-		PROCESS_BASIC_INFORMATION.ByReference ProcessInformation = new PROCESS_BASIC_INFORMATION.ByReference();
-		ULONG ProcessInformationLength = new ULONG(ProcessInformation.size());
-		
-		x = NtdllDLL.INSTANCE.NtQueryInformationProcess(ProcessHandle, ProcessInformationClass, ProcessInformation,
-				ProcessInformationLength, null);
-		System.out.println("NtQueryInformationProcess: " + ProcessInformation);
-		
-		DWORDByReference info = new DWORDByReference();
-		x = NtdllDLL.INSTANCE.NtQueryInformationProcess(ProcessHandle, 0x1E, info ,
-				new ULONG(4), null);
-		
-		NtdllDLL.INSTANCE.NtQueryInformation();
-		
-		System.out.println(System.getProperty("jna.boot.library.name", "jnidispatch"));
-		
+		// HANDLE file = Kernel32.INSTANCE.CreateFile("Log.log", 1073741824, 0,
+		// null, 3, 128, null);
+		// x =
+		// Kernel32DLL.INSTANCE._write(((int)Pointer.nativeValue(file.getPointer())),
+		// null, new UINT(6));
+
+		// HKEYByReference phkResult = new HKEYByReference();
+		// LONG retz =
+		// Advapi32DLL.INSTANCE.RegOpenKey(WinReg.HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+		// phkResult);
+		// x = retz.longValue();
+
+		// IntByReference _Argc = new IntByReference();
+		// com.sun.jna.Memory _Argv = new com.sun.jna.Memory(4);
+		// com.sun.jna.Memory _Env = new com.sun.jna.Memory(4);
+		// int _DoWildCard = 0;
+		// _startupinfo _StartInfo = new _startupinfo();
+		// MSVCRTDLL.INSTANCE.__getmainargs(_Argc, _Argv, _Env, _DoWildCard,
+		// _StartInfo);
+		// // PointerByReference
+		// for (int i = 0; i < _Argc.getValue(); i++) {
+		// System.out.println(i + ": " + _Argv.getPointer(0).getPointer(i *
+		// 4).getString(0));
+		// }
+		//
+		// int c = 0;
+		// while (true) {
+		// try {
+		// System.out.println(c + ": " + _Env.getPointer(0).getPointer(c *
+		// 4).getString(0));
+		// c += 1;
+		// } catch (Exception ex) {
+		// System.out.println("BREAK;");
+		// break;
+		// }
+		// }
+
+		BOOL retz = Kernel32DLL.INSTANCE.AreFileApisANSI();
+		System.out.println(retz.booleanValue());
+
+		// DWORDByReference lpdwProcessId = new DWORDByReference();
+		// x =
+		// User32DLL.INSTANCE.GetWindowThreadProcessId(User32DLL.INSTANCE.GetShellWindow(),
+		// lpdwProcessId).intValue();
+		// System.out.println("GetWindowThreadProcessId: " + x);
+		//
+		// HANDLE ProcessHandle = Kernel32.INSTANCE.GetCurrentProcess();
+		// int ProcessInformationClass = 0;
+		// PROCESS_BASIC_INFORMATION.ByReference ProcessInformation = new
+		// PROCESS_BASIC_INFORMATION.ByReference();
+		// ULONG ProcessInformationLength = new
+		// ULONG(ProcessInformation.size());
+		//
+		// x = NtdllDLL.INSTANCE.NtQueryInformationProcess(ProcessHandle,
+		// ProcessInformationClass, ProcessInformation,
+		// ProcessInformationLength, null);
+		// System.out.println("NtQueryInformationProcess: " +
+		// ProcessInformation);
+		//
+		// DWORDByReference info = new DWORDByReference();
+		// x = NtdllDLL.INSTANCE.NtQueryInformationProcess(ProcessHandle, 0x1E,
+		// info, new ULONG(4), null);
+		//
+
+		//
+		// System.out.println(System.getProperty("jna.boot.library.name",
+		// "jnidispatch"));
+
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = (long) 1;
@@ -332,6 +385,12 @@ public class Test {
 }
 
 class A {
+	public static int a = 2;
+
+	public void print() {
+		System.out.println(a);
+	}
+
 	public A() {
 	}
 
@@ -346,6 +405,12 @@ class A {
 		int ret = Kernel32.INSTANCE.GetLastError();
 		System.out.println("ID : " + Thread.currentThread().getId());
 		return ret;
+	}
+}
+
+class B extends A {
+	public B() {
+		a = 200;
 	}
 }
 

@@ -32,27 +32,19 @@ import v2.org.analysis.value.Value;
 public class EnterCriticalSection extends Kernel32API {
 
 	public EnterCriticalSection() {
+		NUM_OF_PARMS = 1;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
-
-		Value x1 = stack.pop();
-
-		System.out.println("Argument:" + x1);
-		if (x1 instanceof LongValue) {
-			// long x = ((LongValue) x1).getValue();
-			// System.out.println("Object Handle:" + x);
-			//
-			// boolean ret = Kernel32.INSTANCE.CloseHandle(new HANDLE(x != 0 ?
-			// new Pointer(x) : Pointer.NULL));
-			register.mov("eax", new LongValue(0));
-
-		}
-		return false;
+	public void execute() {
+		// long x = this.params.get(0);
+		// System.out.println("Object Handle:" + x);
+		//
+		// boolean ret = Kernel32.INSTANCE.CloseHandle(new HANDLE(x != 0 ?
+		// new Pointer(x) : Pointer.NULL));
+		System.out.println("\t\t NOTICE: SPECIAL WINDOWS API");
+		register.mov("eax", new LongValue(0));
 	}
 
 }

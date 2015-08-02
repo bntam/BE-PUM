@@ -54,31 +54,20 @@ import v2.org.analysis.value.Value;
 public class WaitForSingleObject extends Kernel32API {
 
 	public WaitForSingleObject() {
-
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		int ret = Kernel32.INSTANCE.WaitForSingleObject(new HANDLE(new Pointer(t1)), (int) t2);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " ");
-
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			int ret = Kernel32.INSTANCE.WaitForSingleObject(new HANDLE(new Pointer(t1)), (int) t2);
-			
-			// http://stackoverflow.com/questions/897614/how-do-i-know-if-a-thread-is-suspended-under-windows-ce
-			// Return the state of a suspended thread
-			if (SuspendThread.suspendedThreadList.contains(t1)) {
-				ret = 258; //0x102
-			}
-			register.mov("eax", new LongValue(ret));
+		// http://stackoverflow.com/questions/897614/how-do-i-know-if-a-thread-is-suspended-under-windows-ce
+		// Return the state of a suspended thread
+		if (SuspendThread.suspendedThreadList.contains(t1)) {
+			ret = 258; // 0x102
 		}
-		return false;
+		register.mov("eax", new LongValue(ret));
 	}
 }

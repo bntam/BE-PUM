@@ -50,34 +50,23 @@ import v2.org.analysis.value.Value;
 public class SetWindowLong extends User32API {
 
 	public SetWindowLong() {
+		NUM_OF_PARMS = 3;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		HWND hWnd = (t1 == 0L) ? null : new HWND(new Pointer(t1));
+		int nIndex = (int) t2;
+		LONG dwNewLong = new LONG(t3);
+		LONG ret = User32DLL.INSTANCE.SetWindowLong(hWnd, nIndex, dwNewLong);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-
-			HWND hWnd = (t1 == 0L) ? null : new HWND(new Pointer(t1));
-			int nIndex = (int) t2;
-			LONG dwNewLong = new LONG(t3);
-			LONG ret = User32DLL.INSTANCE.SetWindowLong(hWnd, nIndex, dwNewLong);
-
-			long value = ret.longValue();
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-		}
-		return false;
+		long value = ret.longValue();
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

@@ -269,9 +269,12 @@ public class APIHandle {
 				Constructor<?> ctor = clazz.getConstructor();
 				API apiObject = (API) ctor.newInstance();
 
-				apiObject.execute(address, t[0], path.getCurrentState(), inst);
+				apiObject.run(address, path.getCurrentState(), inst);
 
 				System.out.println("\tLast Error: " + Kernel32.INSTANCE.GetLastError());
+			} catch (APIException ex) {
+				ex.writeLog();
+				ex.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

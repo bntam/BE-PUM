@@ -10,19 +10,11 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Takes a snapshot of the specified processes, as well as the heaps, modules,
@@ -58,33 +50,23 @@ import v2.org.analysis.value.Value;
 public class CreateToolhelp32Snapshot extends Kernel32API {
 
 	public CreateToolhelp32Snapshot() {
+		NUM_OF_PARMS = 2;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2);
+		DWORD dwFlags = new DWORD(t1);
+		DWORD th32ProcessID = new DWORD(t2);
+		HANDLE ret = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(dwFlags, th32ProcessID);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-
-			DWORD dwFlags = new DWORD(t1);
-			DWORD th32ProcessID = new DWORD(t2);
-			HANDLE ret = Kernel32DLL.INSTANCE.CreateToolhelp32Snapshot(dwFlags, th32ProcessID);
-
-			LongValue storeValue = new LongValue(Pointer.nativeValue(ret.getPointer()));
-			register.mov("eax", storeValue);
-			System.out.println("Return value:" + Pointer.nativeValue(ret.getPointer()) + " " + storeValue + " "
-					+ storeValue.getValue());
-			System.out.println("Stored return value:" + register.getRegisterValue("eax"));
-		}
-
-		return false;
+		LongValue storeValue = new LongValue(Pointer.nativeValue(ret.getPointer()));
+		register.mov("eax", storeValue);
+		System.out.println("Return value:" + Pointer.nativeValue(ret.getPointer()) + " " + storeValue + " "
+				+ storeValue.getValue());
+		System.out.println("Stored return value:" + register.getRegisterValue("eax"));
 	}
 }

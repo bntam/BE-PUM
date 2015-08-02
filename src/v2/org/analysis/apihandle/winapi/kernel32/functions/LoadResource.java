@@ -44,36 +44,26 @@ import v2.org.analysis.value.Value;
 public class LoadResource extends Kernel32API {
 
 	public LoadResource() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		// Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.print("Argument:" + x1 + " " + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-
-			HMODULE hModule = null;
-			if (t1 != 0L) {
-				hModule = new HMODULE();
-				hModule.setPointer(new Pointer(t1));
-			}
-			HRSRC hResInfo = new HRSRC(new Pointer(t2));
-			HANDLE ret = Kernel32DLL.INSTANCE.LoadResource(hModule, hResInfo);
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
+		HMODULE hModule = null;
+		if (t1 != 0L) {
+			hModule = new HMODULE();
+			hModule.setPointer(new Pointer(t1));
 		}
-		return false;
+		HRSRC hResInfo = new HRSRC(new Pointer(t2));
+		HANDLE ret = Kernel32DLL.INSTANCE.LoadResource(hModule, hResInfo);
+
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

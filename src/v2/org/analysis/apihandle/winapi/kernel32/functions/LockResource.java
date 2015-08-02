@@ -39,28 +39,18 @@ import v2.org.analysis.value.Value;
 public class LockResource extends Kernel32API {
 
 	public LockResource() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		// Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		HANDLE hResData = new HANDLE(new Pointer(t1));
+		LPVOID ret = Kernel32DLL.INSTANCE.LockResource(hResData);
 
-		Value x1 = stack.pop();
-		System.out.print("Argument:" + x1);
-		if (x1 instanceof LongValue) {
-
-			long t1 = ((LongValue) x1).getValue();
-			HANDLE hResData = new HANDLE(new Pointer(t1));
-			LPVOID ret = Kernel32DLL.INSTANCE.LockResource(hResData);
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.toPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-		}
-		return false;
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.toPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

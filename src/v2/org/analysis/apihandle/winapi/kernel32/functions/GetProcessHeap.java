@@ -34,21 +34,16 @@ import v2.org.analysis.value.LongValue;
 public class GetProcessHeap extends Kernel32API {
 
 	public GetProcessHeap() {
-
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-
+	public void execute() {
 		// This function has no parameters.
 		HANDLE ret = Kernel32DLL.INSTANCE.GetProcessHeap();
 		// System.out.println("Last Error:" + verNum);
 
 		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
-
-		return false;
 	}
 
 }

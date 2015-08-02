@@ -16,18 +16,10 @@ import v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS.WNDPROC;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Registers a window class for subsequent use in calls to the CreateWindow or
@@ -52,63 +44,52 @@ import v2.org.analysis.value.Value;
 public class RegisterClass extends User32API {
 
 	public RegisterClass() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		// public UINT style;
+		// public WNDPROC lpfnWndProc;
+		// public int cbClsExtra;
+		// public int cbWndExtra;
+		// public HINSTANCE hInstance;
+		// public HICON hIcon;
+		// public HCURSOR hCursor;
+		// public HBRUSH hbrBackground;
+		// public WString lpszMenuName;
+		// public WString lpszClassName;
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
+		System.out.println("\t\tSPECIAL WINDOWS API: CALLBACK");
+		WNDCLASS lpWndClass = new WNDCLASS();
+		lpWndClass.style = new UINT(((LongValue) memory.getDoubleWordMemoryValue(t1)).getValue());
+		lpWndClass.lpfnWndProc = new WNDPROC() {
+			@Override
+			public LRESULT invoke(HWND hwnd, UINT unit, WPARAM wparam, LPARAM lparam) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		t1 += 4;
+		lpWndClass.cbClsExtra = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
+		lpWndClass.cbWndExtra = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
+		lpWndClass.hInstance = new HINSTANCE();
+		lpWndClass.hInstance
+				.setPointer(new Pointer((((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
+		lpWndClass.hIcon = new HICON(new Pointer((((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
+		lpWndClass.hCursor = new HCURSOR(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
+		lpWndClass.hbrBackground = new HBRUSH(new Pointer(
+				((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
+		lpWndClass.lpszMenuName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) memory
+				.getDoubleWordMemoryValue(t1 += 4)).getValue())));
+		lpWndClass.lpszClassName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) memory
+				.getDoubleWordMemoryValue(t1 += 4)).getValue())));
 
-			// public UINT style;
-			// public WNDPROC lpfnWndProc;
-			// public int cbClsExtra;
-			// public int cbWndExtra;
-			// public HINSTANCE hInstance;
-			// public HICON hIcon;
-			// public HCURSOR hCursor;
-			// public HBRUSH hbrBackground;
-			// public WString lpszMenuName;
-			// public WString lpszClassName;
+		ATOM ret = User32DLL.INSTANCE.RegisterClass(lpWndClass);
 
-			WNDCLASS lpWndClass = new WNDCLASS();
-			lpWndClass.style = new UINT(((LongValue) memory.getDoubleWordMemoryValue(t1)).getValue());
-			lpWndClass.lpfnWndProc = new WNDPROC() {
-				@Override
-				public LRESULT invoke(HWND hwnd, UINT unit, WPARAM wparam, LPARAM lparam) {
-					// TODO Auto-generated method stub
-					return null;
-				}
-			};
-			t1 += 4;
-			lpWndClass.cbClsExtra = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
-			lpWndClass.cbWndExtra = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
-			lpWndClass.hInstance = new HINSTANCE();
-			lpWndClass.hInstance.setPointer(new Pointer((((LongValue) memory.getDoubleWordMemoryValue(t1 += 4))
-					.getValue())));
-			lpWndClass.hIcon = new HICON(new Pointer(
-					(((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
-			lpWndClass.hCursor = new HCURSOR(new Pointer(
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
-			lpWndClass.hbrBackground = new HBRUSH(new Pointer(
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
-			lpWndClass.lpszMenuName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32,
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
-			lpWndClass.lpszClassName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32,
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
-
-			ATOM ret = User32DLL.INSTANCE.RegisterClass(lpWndClass);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

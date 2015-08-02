@@ -33,43 +33,33 @@ import v2.org.analysis.value.Value;
 public class GlobalMemoryStatus extends Kernel32API {
 
 	public GlobalMemoryStatus() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
+	public void execute() {
+		long t = this.params.get(0);
 
-		Value x1 = stack.pop();
+		MEMORYSTATUS lpBuffer = new MEMORYSTATUS();
+		Kernel32DLL.INSTANCE.GlobalMemoryStatus(lpBuffer);
 
-		System.out.println("Argument:" + x1);
+		// DWORD dwLength;
+		// DWORD dwMemoryLoad;
+		// SIZE_T dwTotalPhys;
+		// SIZE_T dwAvailPhys;
+		// SIZE_T dwTotalPageFile;
+		// SIZE_T dwAvailPageFile;
+		// SIZE_T dwTotalVirtual;
+		// SIZE_T dwAvailVirtual;
 
-		if (x1 != null && x1 instanceof LongValue) {
-			long t = ((LongValue) x1).getValue();
-
-			MEMORYSTATUS lpBuffer = new MEMORYSTATUS();
-			Kernel32DLL.INSTANCE.GlobalMemoryStatus(lpBuffer);
-
-			// DWORD dwLength;
-			// DWORD dwMemoryLoad;
-			// SIZE_T dwTotalPhys;
-			// SIZE_T dwAvailPhys;
-			// SIZE_T dwTotalPageFile;
-			// SIZE_T dwAvailPageFile;
-			// SIZE_T dwTotalVirtual;
-			// SIZE_T dwAvailVirtual;
-
-			memory.setDoubleWordMemoryValue(t, new LongValue(lpBuffer.dwLength.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwMemoryLoad.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwTotalPhys.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwAvailPhys.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwTotalPageFile.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwAvailPageFile.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwTotalVirtual.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwAvailVirtual.longValue()));
-		}
-		return false;
+		memory.setDoubleWordMemoryValue(t, new LongValue(lpBuffer.dwLength.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwMemoryLoad.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwTotalPhys.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwAvailPhys.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwTotalPageFile.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwAvailPageFile.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwTotalVirtual.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpBuffer.dwAvailVirtual.longValue()));
 	}
 
 }

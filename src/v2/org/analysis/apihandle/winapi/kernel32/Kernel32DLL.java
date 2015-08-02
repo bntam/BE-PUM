@@ -129,6 +129,44 @@ public interface Kernel32DLL extends StdCallLibrary {
 	HMODULE LoadLibrary(String lpFileName);
 
 	/**
+	 * Loads the specified module into the address space of the calling process.
+	 * The specified module may cause other modules to be loaded.
+	 * 
+	 * @param lpFileName
+	 *            A string that specifies the file name of the module to load.
+	 *            This name is not related to the name stored in a library
+	 *            module itself, as specified by the LIBRARY keyword in the
+	 *            module-definition (.def) file.
+	 * 
+	 * @param hFile
+	 *            This parameter is reserved for future use. It must be NULL.
+	 * 
+	 * @param dwFlags
+	 *            The action to be taken when loading the module. If no flags
+	 *            are specified, the behavior of this function is identical to
+	 *            that of the LoadLibrary function. This parameter can be one of
+	 *            the following values.
+	 *            <ul>
+	 *            DONT_RESOLVE_DLL_REFERENCES 0x00000001
+	 *            <li>LOAD_IGNORE_CODE_AUTHZ_LEVEL 0x00000010
+	 *            <li>LOAD_LIBRARY_AS_DATAFILE 0x00000002
+	 *            <li>LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE 0x00000040
+	 *            <li>LOAD_LIBRARY_AS_IMAGE_RESOURCE 0x00000020
+	 *            <li>LOAD_LIBRARY_SEARCH_APPLICATION_DIR 0x00000200
+	 *            <li>LOAD_LIBRARY_SEARCH_DEFAULT_DIRS 0x00001000
+	 *            <li>LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR 0x00000100
+	 *            <li>LOAD_LIBRARY_SEARCH_SYSTEM32 0x00000800
+	 *            <li>LOAD_LIBRARY_SEARCH_USER_DIRS 0x00000400
+	 *            <li>LOAD_WITH_ALTERED_SEARCH_PATH 0x00000008
+	 *            </ul>
+	 * 
+	 * @return If the function succeeds, the return value is a handle to the
+	 *         loaded module. If the function fails, the return value is NULL.
+	 *         To get extended error information, call GetLastError.
+	 */
+	HMODULE LoadLibraryEx(/* _In_ */String lpFileName, /* _Reserved_ */HANDLE hFile, /* _In_ */DWORD dwFlags);
+
+	/**
 	 * Moves the file pointer of the specified file.
 	 * 
 	 * This function stores the file pointer in two LONG values. To work with
@@ -2939,4 +2977,84 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	BOOL Beep(/* _In_ */DWORD dwFreq, /* _In_ */DWORD dwDuration);
 
+	/**
+	 * Changes the protection on a region of committed pages in the virtual
+	 * address space of a specified process.
+	 * 
+	 * @param hProcess
+	 *            A handle to the process whose memory protection is to be
+	 *            changed. The handle must have the PROCESS_VM_OPERATION access
+	 *            right. For more information, see Process Security and Access
+	 *            Rights.
+	 * 
+	 * @param lpAddress
+	 *            A pointer to the base address of the region of pages whose
+	 *            access protection attributes are to be changed.
+	 * 
+	 * @param dwSize
+	 *            The size of the region whose access protection attributes are
+	 *            changed, in bytes. The region of affected pages includes all
+	 *            pages containing one or more bytes in the range from the
+	 *            lpAddress parameter to (lpAddress+dwSize). This means that a
+	 *            2-byte range straddling a page boundary causes the protection
+	 *            attributes of both pages to be changed.
+	 * 
+	 * @param flNewProtect
+	 *            The memory protection option. This parameter can be one of the
+	 *            memory protection constants.
+	 * 
+	 * @param lpflOldProtect
+	 *            A pointer to a variable that receives the previous access
+	 *            protection of the first page in the specified region of pages.
+	 *            If this parameter is NULL or does not point to a valid
+	 *            variable, the function fails.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL VirtualProtectEx(/* _In_ */HANDLE hProcess, /* _In_ */LPVOID lpAddress, /* _In_ */SIZE_T dwSize, /* _In_ */
+			DWORD flNewProtect, /* _Out_ */DWORDByReference lpflOldProtect);
+
+	/**
+	 * 
+	 * @param ExceptionInfo
+	 * @return
+	 */
+	LONG UnhandledExceptionFilter(/* _In_ struct *//* _EXCEPTION_POINTERS */Pointer ExceptionInfo);
+
+	/**
+	 * Retrieves information about the file system and volume associated with
+	 * the specified root directory.
+	 * 
+	 * @param lpRootPathName
+	 * @param lpVolumeNameBuffer
+	 * @param nVolumeNameSize
+	 * @param lpVolumeSerialNumber
+	 * @param lpMaximumComponentLength
+	 * @param lpFileSystemFlags
+	 * @param lpFileSystemNameBuffer
+	 * @param nFileSystemNameSize
+	 * @return
+	 */
+	BOOL GetVolumeInformation(
+	/* _In_opt_ */WString lpRootPathName,
+	/* _Out_opt_ */char[] lpVolumeNameBuffer,
+	/* _In_ */DWORD nVolumeNameSize,
+	/* _Out_opt_ */DWORDByReference lpVolumeSerialNumber,
+	/* _Out_opt_ */DWORDByReference lpMaximumComponentLength,
+	/* _Out_opt_ */DWORDByReference lpFileSystemFlags,
+	/* _Out_opt_ */char[] lpFileSystemNameBuffer,
+	/* _In_ */DWORD nFileSystemNameSize);
+
+	/**
+	 * Determines whether the file I/O functions are using the ANSI or OEM
+	 * character set code page. This function is useful for 8-bit console input
+	 * and output operations.
+	 * 
+	 * @return If the set of file I/O functions is using the ANSI code page, the
+	 *         return value is nonzero. If the set of file I/O functions is
+	 *         using the OEM code page, the return value is zero.
+	 */
+	BOOL AreFileApisANSI();
 }

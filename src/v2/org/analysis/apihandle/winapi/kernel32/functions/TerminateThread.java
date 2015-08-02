@@ -47,31 +47,20 @@ import v2.org.analysis.value.Value;
 public class TerminateThread extends Kernel32API {
 
 	public TerminateThread() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		// Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2);
+		HANDLE hThread = new HANDLE(new Pointer(t1));
+		DWORD dwExitCode = new DWORD(t2);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
+		BOOL ret = Kernel32DLL.INSTANCE.TerminateThread(hThread, dwExitCode);
 
-			HANDLE hThread = new HANDLE(new Pointer(t1));
-			DWORD dwExitCode = new DWORD(t2);
-
-			BOOL ret = Kernel32DLL.INSTANCE.TerminateThread(hThread, dwExitCode);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

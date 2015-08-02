@@ -12,15 +12,7 @@ import com.sun.jna.platform.win32.WinReg.HKEY;
 
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * The RegCloseKey function releases a handle to the specified registry key.
@@ -40,23 +32,13 @@ import v2.org.analysis.value.Value;
 public class RegCloseKey extends Advapi32API {
 
 	public RegCloseKey() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
-
-		// HKEY hKey // handle of key to close
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1 + " ");
-
-		if (x1 instanceof LongValue) {
-			int ret = Advapi32.INSTANCE.RegCloseKey(new HKEY((int) ((LongValue) x1).getValue()));
-			register.mov("eax", new LongValue(ret));
-		}
-		return false;
+	public void execute() {
+		int ret = Advapi32.INSTANCE.RegCloseKey(new HKEY(this.params.get(0).intValue()));
+		register.mov("eax", new LongValue(ret));
 	}
 
 }

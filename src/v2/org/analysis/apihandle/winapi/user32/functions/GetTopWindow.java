@@ -7,20 +7,12 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Examines the Z order of the child windows associated with the specified
@@ -43,30 +35,19 @@ import v2.org.analysis.value.Value;
 public class GetTopWindow extends User32API {
 
 	public GetTopWindow() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		// Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
+		HWND hWnd = (t1 == 0) ? null : new HWND(new Pointer(t1));
+		HWND ret = User32DLL.INSTANCE.GetTopWindow(hWnd);
 
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			HWND hWnd = (t1 == 0) ? null : new HWND(new Pointer(t1));
-			HWND ret = User32DLL.INSTANCE.GetTopWindow(hWnd);
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-		}
-		return false;
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

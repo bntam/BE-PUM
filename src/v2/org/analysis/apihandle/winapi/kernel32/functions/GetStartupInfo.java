@@ -11,17 +11,9 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.Pointer;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves the contents of the STARTUPINFO structure that was specified when
@@ -40,83 +32,68 @@ public class GetStartupInfo extends Kernel32API {
 	 * 
 	 */
 	public GetStartupInfo() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
+	public void execute() {
+		long t = this.params.get(0);
+		long pointer;
 
-		// LPSTARTUPINFO lpStartupInfo address of STARTUPINFO structure
-		Value x1 = stack.pop();
+		STARTUPINFO lpStartupInfo = new STARTUPINFO();
+		Kernel32DLL.INSTANCE.GetStartupInfo(lpStartupInfo);
 
-		System.out.println("Argument:" + x1);
+		memory.setDoubleWordMemoryValue(t, new LongValue(lpStartupInfo.cb.longValue()));
 
-		if (x1 != null && x1 instanceof LongValue) {
-			long t = ((LongValue) x1).getValue();
-			long pointer;
+		pointer = Pointer.nativeValue(lpStartupInfo.lpReserved);
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
+		// memory.setText(new X86MemoryOperand(DataType.INT32, pointer),
+		// lpStartupInfo.lpReserved.getWideString(0));
 
-			STARTUPINFO lpStartupInfo = new STARTUPINFO();
-			Kernel32DLL.INSTANCE.GetStartupInfo(lpStartupInfo);
+		pointer = Pointer.nativeValue(lpStartupInfo.lpDesktop);
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
+		// memory.setText(new X86MemoryOperand(DataType.INT32, pointer),
+		// lpStartupInfo.lpDesktop.toString());
 
-			memory.setDoubleWordMemoryValue(t, new LongValue(lpStartupInfo.cb.longValue()));
+		pointer = Pointer.nativeValue(lpStartupInfo.lpTitle);
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
 
-			pointer = Pointer.nativeValue(lpStartupInfo.lpReserved);
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
-			// memory.setText(new X86MemoryOperand(DataType.INT32, pointer),
-			// lpStartupInfo.lpReserved.getWideString(0));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwX.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwY.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwXSize.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwYSize.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwXCountChars.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwYCountChars.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwFillAttribute.longValue()));
+		memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwFlags.longValue()));
+		memory.setWordMemoryValue(t += 4, new LongValue(lpStartupInfo.wShowWindow.longValue()));
+		memory.setWordMemoryValue(t += 2, new LongValue(lpStartupInfo.cbReserved2.longValue()));
+		memory.setDoubleWordMemoryValue(t += 2, new LongValue(0/*
+																 * Pointer.
+																 * nativeValue (
+																 * lpStartupInfo
+																 * . lpReserved2
+																 * . getPointer
+																 * ())
+																 */));
+		memory.setDoubleWordMemoryValue(
+				t += 4,
+				new LongValue((lpStartupInfo.hStdInput == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdInput
+						.getPointer())));
+		memory.setDoubleWordMemoryValue(
+				t += 4,
+				new LongValue((lpStartupInfo.hStdOutput == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdOutput
+						.getPointer())));
+		memory.setDoubleWordMemoryValue(
+				t += 4,
+				new LongValue((lpStartupInfo.hStdError == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdError
+						.getPointer())));
 
-			pointer = Pointer.nativeValue(lpStartupInfo.lpDesktop);
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
-			// memory.setText(new X86MemoryOperand(DataType.INT32, pointer),
-			// lpStartupInfo.lpDesktop.toString());
+		// String sInfo =
+		// "D...Â¨Â¡^.ÃˆÂ¡^.Ã°Â¡^.l).*.dll.Any file (*.*).*.*.Â�...........Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿";
+		// memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue)
+		// x1).getValue()), sInfo);
 
-			pointer = Pointer.nativeValue(lpStartupInfo.lpTitle);
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
-
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwX.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwY.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwXSize.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwYSize.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwXCountChars.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwYCountChars.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwFillAttribute.longValue()));
-			memory.setDoubleWordMemoryValue(t += 4, new LongValue(lpStartupInfo.dwFlags.longValue()));
-			memory.setWordMemoryValue(t += 4, new LongValue(lpStartupInfo.wShowWindow.longValue()));
-			memory.setWordMemoryValue(t += 2, new LongValue(lpStartupInfo.cbReserved2.longValue()));
-			memory.setDoubleWordMemoryValue(t += 2, new LongValue(0/*
-																	 * Pointer.
-																	 * nativeValue
-																	 * (
-																	 * lpStartupInfo
-																	 * .
-																	 * lpReserved2
-																	 * .
-																	 * getPointer
-																	 * ())
-																	 */));
-			memory.setDoubleWordMemoryValue(
-					t += 4,
-					new LongValue((lpStartupInfo.hStdInput == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdInput
-							.getPointer())));
-			memory.setDoubleWordMemoryValue(
-					t += 4,
-					new LongValue((lpStartupInfo.hStdOutput == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdOutput
-							.getPointer())));
-			memory.setDoubleWordMemoryValue(
-					t += 4,
-					new LongValue((lpStartupInfo.hStdError == null) ? 0 : Pointer.nativeValue(lpStartupInfo.hStdError
-							.getPointer())));
-
-			// String sInfo =
-			// "D...Â¨Â¡^.ÃˆÂ¡^.Ã°Â¡^.l).*.dll.Any file (*.*).*.*.Â�...........Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿";
-			// memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue)
-			// x1).getValue()), sInfo);
-		}
-
-		return false;
 	}
 
 }

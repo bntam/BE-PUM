@@ -7,18 +7,12 @@
  */
 package v2.org.analysis.apihandle.winapi.advapi32.functions;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
 import com.sun.jna.platform.win32.WinDef.BOOL;
+
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * The CryptDestroyHash function destroys the hash object referenced by the
@@ -38,28 +32,20 @@ import v2.org.analysis.value.Value;
 public class CryptDestroyHash extends Advapi32API {
 
 	public CryptDestroyHash() {
+		NUM_OF_PARMS = 1;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		ULONG_PTR hHash = new ULONG_PTR(t1);
+		BOOL ret = Advapi32DLL.INSTANCE.CryptDestroyHash(hHash);
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			ULONG_PTR hHash = new ULONG_PTR(t1);
-			BOOL ret = Advapi32DLL.INSTANCE.CryptDestroyHash(hHash);
-
-			long value = ret.longValue();
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-		}
-		return false;
+		long value = ret.longValue();
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

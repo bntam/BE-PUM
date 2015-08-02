@@ -71,45 +71,29 @@ import v2.org.analysis.value.Value;
 public class WriteProcessMemory extends Kernel32API {
 
 	public WriteProcessMemory() {
+		NUM_OF_PARMS = 5;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
+		long t5 = this.params.get(4);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
+		HANDLE hProcess = new HANDLE(new Pointer(t1));
+		LPVOID lpBaseAddress = new LPVOID(t2);
+		LPVOID lpBuffer = new LPVOID(t3);
+		SIZE_T nSize = new SIZE_T(t4);
+		ULONG_PTRByReference lpNumberOfBytesWritten = new ULONG_PTRByReference();
+		BOOL ret = Kernel32DLL.INSTANCE.WriteProcessMemory(hProcess, lpBaseAddress, lpBuffer, nSize,
+				lpNumberOfBytesWritten);
 
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
+		register.mov("eax", new LongValue(ret.longValue()));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-			long t5 = ((LongValue) x5).getValue();
-
-			HANDLE hProcess = new HANDLE(new Pointer(t1));
-			LPVOID lpBaseAddress = new LPVOID(t2);
-			LPVOID lpBuffer = new LPVOID(t3);
-			SIZE_T nSize = new SIZE_T(t4);
-			ULONG_PTRByReference lpNumberOfBytesWritten = new ULONG_PTRByReference();
-			BOOL ret = Kernel32DLL.INSTANCE.WriteProcessMemory(hProcess, lpBaseAddress, lpBuffer, nSize,
-					lpNumberOfBytesWritten);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(
-					lpNumberOfBytesWritten.getValue().longValue()));
-		}
-		return false;
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(lpNumberOfBytesWritten
+				.getValue().longValue()));
 	}
 
 }

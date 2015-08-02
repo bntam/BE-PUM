@@ -7,20 +7,12 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Blocks keyboard and mouse input events from reaching applications.
@@ -41,42 +33,34 @@ import v2.org.analysis.value.Value;
 public class BlockInput extends User32API {
 
 	public BlockInput() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		// Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		int originalError = Kernel32.INSTANCE.GetLastError();
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
+		BOOL fBlockIt = new BOOL(t1);
+		BOOL ret = User32DLL.INSTANCE.BlockInput(fBlockIt);
+		
+		System.out.println("\t\tSPECIAL WINDOWS API: CAUSE GUI NOT RESPOND - NEED TO PASS");
 
-			int originalError = Kernel32.INSTANCE.GetLastError();
-
-			BOOL fBlockIt = new BOOL(t1);
-			BOOL ret = User32DLL.INSTANCE.BlockInput(fBlockIt);
-
-			long value = ret.longValue();
-			if (value == 0L) {
-				int error = Kernel32.INSTANCE.GetLastError();
-				if (error == 5L) {
-					// ERROR_ACCESS_DENIED //
-					// You must run in administrator mode to access it
-					// So, pass it and change the return value to success value
-					value = 1;
-					// And the clear current error value, restore previous value
-					Kernel32.INSTANCE.SetLastError(originalError);
-				}
+		long value = ret.longValue();
+		if (value == 0L) {
+			int error = Kernel32.INSTANCE.GetLastError();
+			if (error == 5L) {
+				// ERROR_ACCESS_DENIED //
+				// You must run in administrator mode to access it
+				// So, pass it and change the return value to success value
+				value = 1;
+				// And the clear current error value, restore previous value
+				Kernel32.INSTANCE.SetLastError(originalError);
 			}
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
 		}
-		return false;
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

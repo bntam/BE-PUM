@@ -46,27 +46,17 @@ public class GetProcessVersion extends Kernel32API {
 	 * 
 	 */
 	public GetProcessVersion() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		int processId = (int) t;
+		int ret = Kernel32.INSTANCE.GetProcessVersion(processId);
 
-		if (x1 instanceof LongValue) {
-			long t = ((LongValue) x1).getValue();
-
-			int processId = (int) t;
-			int ret = Kernel32.INSTANCE.GetProcessVersion(processId);
-
-			register.mov("eax", new LongValue(ret));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret));
 	}
 
 }

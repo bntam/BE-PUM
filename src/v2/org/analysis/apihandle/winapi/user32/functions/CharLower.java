@@ -10,18 +10,10 @@ package v2.org.analysis.apihandle.winapi.user32.functions;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Converts a character string or a single character to lowercase. If the
@@ -46,29 +38,18 @@ import v2.org.analysis.value.Value;
 public class CharLower extends User32API {
 
 	public CharLower() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
-
-		Value x1 = stack.pop();
-
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long x = ((LongValue) x1).getValue();
+	public void execute() {
+			long x = this.params.get(0);
 
 			char[] lpsz = memory.getText(new X86MemoryOperand(DataType.INT32, x)).toCharArray();
 			User32DLL.INSTANCE.CharLower(lpsz);
 			register.mov("eax", new LongValue(x));
 
 			memory.setText(new X86MemoryOperand(DataType.INT32, x), new String(lpsz));
-		}
-		return false;
 	}
 
 }

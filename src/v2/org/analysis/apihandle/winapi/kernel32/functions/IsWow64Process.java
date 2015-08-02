@@ -48,33 +48,22 @@ import v2.org.analysis.value.Value;
 public class IsWow64Process extends Kernel32API {
 
 	public IsWow64Process() {
-
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument: hProcess:" + x1 + ", Wow64Process:" + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
+		HANDLE hProcess = new HANDLE(new Pointer(t1));
+		IntByReference Wow64Process = new IntByReference();
+		boolean ret = Kernel32.INSTANCE.IsWow64Process(hProcess, Wow64Process);
 
-			HANDLE hProcess = new HANDLE(new Pointer(t1));
-			IntByReference Wow64Process = new IntByReference();
-			boolean ret = Kernel32.INSTANCE.IsWow64Process(hProcess, Wow64Process);
+		register.mov("eax", new LongValue(ret ? 1 : 0));
 
-			register.mov("eax", new LongValue(ret ? 1 : 0));
-
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
-					new LongValue(Wow64Process.getValue()));
-		}
-		return false;
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
+				new LongValue(Wow64Process.getValue()));
 	}
 
 }

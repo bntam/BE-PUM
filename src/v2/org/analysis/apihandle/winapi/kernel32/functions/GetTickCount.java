@@ -32,18 +32,15 @@ import v2.org.analysis.value.LongValue;
 public class GetTickCount extends Kernel32API {
 
 	public GetTickCount() {
-
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
+	public void execute() {
 
 		// Add duration that had been minus from original sleep time
 		int ret = Kernel32.INSTANCE.GetTickCount() + Sleep.offset;
 		register.mov("eax", new LongValue(ret));
-		return false;
 	}
 
 }

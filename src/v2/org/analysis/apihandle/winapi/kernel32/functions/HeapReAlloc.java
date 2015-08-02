@@ -36,39 +36,20 @@ public class HeapReAlloc extends Kernel32API {
 	 * 
 	 */
 	public HeapReAlloc() {
-
+		NUM_OF_PARMS = 4;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		/*
-		 * HANDLE hHeap, // handle to a heap block DWORD dwFlags, // heap
-		 * reallocation flags LPVOID lpMem, // pointer to the memory to
-		 * reallocate DWORD dwBytes // number of bytes to reallocate
-		 */
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
+		LPVOID ret = Kernel32DLL.INSTANCE.HeapReAlloc(new HANDLE(new Pointer(t1)), new DWORD(t2), new LPVOID(t3),
+				new SIZE_T(t4));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-
-			LPVOID ret = Kernel32DLL.INSTANCE.HeapReAlloc(new HANDLE(new Pointer(t1)), new DWORD(t2), new LPVOID(t3),
-					new SIZE_T(t4));
-
-			register.mov("eax", new LongValue(Pointer.nativeValue(ret.toPointer())));
-		}
-
-		return false;
+		register.mov("eax", new LongValue(Pointer.nativeValue(ret.toPointer())));
 	}
 
 }

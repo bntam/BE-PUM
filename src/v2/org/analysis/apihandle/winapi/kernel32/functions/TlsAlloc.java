@@ -36,19 +36,16 @@ import v2.org.analysis.value.LongValue;
 public class TlsAlloc extends Kernel32API {
 
 	public TlsAlloc() {
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-
+	public void execute() {
 		// This function has no parameters.
 		DWORD ret = Kernel32DLL.INSTANCE.TlsAlloc();
 		System.out.println("TLS index:" + ret.longValue());
 
 		register.mov("eax", new LongValue(ret.longValue()));
-		return false;
 	}
 
 }

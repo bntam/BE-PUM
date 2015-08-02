@@ -11,23 +11,13 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.UINT;
 
-import v2.org.analysis.apihandle.winapi.kernel32.functions.Sleep;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Displays a modal dialog box that contains a system icon, a set of buttons,
@@ -65,59 +55,49 @@ public class MessageBox extends User32API {
 	private Integer apiCallReturn = null;
 
 	public MessageBox() {
+		NUM_OF_PARMS = 4;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		/*
-		 * HWND hWnd, // handle of owner window LPCTSTR lpText, // address of
-		 * text in message box LPCTSTR lpCaption, // address of title of message
-		 * box UINT uType // style of message box
-		 */
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
-		System.out.print("Handle:" + x1.toString());
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
-			HWND hWnd = new HWND(new Pointer(((LongValue) x1).getValue()));
-			String lpText = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()));
-			String lpCaption = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x3).getValue()));
-			UINT uType = new UINT(((LongValue) x4).getValue());
+		HWND hWnd = new HWND(new Pointer(t1));
+		String lpText = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String lpCaption = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
+		UINT uType = new UINT(t4);
 
-			System.out.print(", Address of Text:" + x2.toString() + ", Text:" + lpText);
-			System.out.print(", Address of Title Text:" + x3.toString() + ", Title Text:" + lpCaption);
-			System.out.println(", Style:" + x4.toString());
+		System.out.print("Handle:" + t1);
+		System.out.print(", Address of Text:" + t2 + ", Text:" + lpText);
+		System.out.print(", Address of Title Text:" + t3 + ", Title Text:" + lpCaption);
+		System.out.println(", Style:" + t4);
 
-			MBThread thread = new MBThread(hWnd, lpText, lpCaption, uType);
-			try {
-				thread.start();
-				Thread.sleep(500);
-				thread.interrupt();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			// Return code/value Description
-			// IDABORT 3 The Abort button was selected.
-			// IDCANCEL 2 The Cancel button was selected.
-			// IDCONTINUE 11 The Continue button was selected.
-			// IDIGNORE 5 The Ignore button was selected.
-			// IDNO 7 The No button was selected.
-			// IDOK 1 The OK button was selected.
-			// IDRETRY 4 The Retry button was selected.
-			// IDTRYAGAIN 10 The Try Again button was selected.
-			// IDYES 6 The Yes button was selected.
-
-			register.mov("eax", new LongValue(1));
+		MBThread thread = new MBThread(hWnd, lpText, lpCaption, uType);
+		try {
+			thread.start();
+			Thread.sleep(500);
+			thread.interrupt();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return false;
+
+		// Return code/value Description
+		// IDABORT 3 The Abort button was selected.
+		// IDCANCEL 2 The Cancel button was selected.
+		// IDCONTINUE 11 The Continue button was selected.
+		// IDIGNORE 5 The Ignore button was selected.
+		// IDNO 7 The No button was selected.
+		// IDOK 1 The OK button was selected.
+		// IDRETRY 4 The Retry button was selected.
+		// IDTRYAGAIN 10 The Try Again button was selected.
+		// IDYES 6 The Yes button was selected.
+
+		register.mov("eax", new LongValue(1));
+		
+		System.out.println("\t\tSPECIAL WINDOWS API: The return code must be based on user interaction! Simulator always return 0!");
 	}
 
 	class MBThread extends Thread {

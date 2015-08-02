@@ -9,15 +9,7 @@ import com.sun.jna.platform.win32.WinDef.HBRUSH;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * The GetSysColorBrush function retrieves a handle identifying a logical brush
@@ -37,31 +29,19 @@ import v2.org.analysis.value.Value;
 public class GetSysColorBrush extends User32API {
 
 	public GetSysColorBrush() {
-		// TODO Auto-generated constructor stub
+		NUM_OF_PARMS = 1;
 	}
-	
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long x = this.params.get(0);
 
-		Value x1 = stack.pop();
+		int nIndex = (int) x;
+		HBRUSH ret = User32DLL.INSTANCE.GetSysColorBrush(nIndex);
 
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long x = ((LongValue) x1).getValue();
-			
-			int nIndex = (int) x;
-			HBRUSH ret = User32DLL.INSTANCE.GetSysColorBrush(nIndex);
-			
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-		}
-		return false;
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

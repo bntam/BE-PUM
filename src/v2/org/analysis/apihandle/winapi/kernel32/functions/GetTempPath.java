@@ -52,30 +52,19 @@ import v2.org.analysis.value.Value;
 public class GetTempPath extends Kernel32API {
 
 	public GetTempPath() {
-
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		char[] lpBuffer = new char[(int) t1];
+		DWORD ret = Kernel32.INSTANCE.GetTempPath(new DWORD(t1), lpBuffer);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument: Length:" + x1 + ", Memory Operand:" + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			char[] lpBuffer = new char[(int) t1];
-			DWORD ret = Kernel32.INSTANCE.GetTempPath(new DWORD(t1), lpBuffer);
-
-			String tmpPath = new String(lpBuffer);
-			memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()), tmpPath, tmpPath.length());
-			System.out.println("Temp Path: " + tmpPath);
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		String tmpPath = new String(lpBuffer);
+		memory.setText(new X86MemoryOperand(DataType.INT32, this.params.get(1)), tmpPath, tmpPath.length());
+		System.out.println("Temp Path: " + tmpPath);
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

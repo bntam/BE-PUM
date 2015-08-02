@@ -39,14 +39,12 @@ public class GetCommandLine extends Kernel32API {
 	 * 
 	 */
 	public GetCommandLine() {
-
+		NUM_OF_PARMS = 0;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
 		Program program = Program.getProgram();
 
 		// This function has no parameters.
@@ -60,7 +58,6 @@ public class GetCommandLine extends Kernel32API {
 
 		memory.setText(new X86MemoryOperand(DataType.INT32, ptr), commandLine);
 		register.mov("eax", new LongValue(ptr));
-		return false;
 	}
 
 }

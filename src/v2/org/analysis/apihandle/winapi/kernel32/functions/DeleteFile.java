@@ -11,19 +11,11 @@ import com.sun.jna.platform.win32.Kernel32;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Deletes an existing file.
@@ -40,35 +32,19 @@ import v2.org.analysis.value.Value;
  */
 public class DeleteFile extends Kernel32API {
 
-	/**
-	 * 
-	 */
 	public DeleteFile() {
-
+		NUM_OF_PARMS = 1;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public void execute() {
+		String fName = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
+		fName = Storage.getMappingPath(fName);
 
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+		System.out.println("Delete file: " + fName);
+		boolean ret = Kernel32.INSTANCE.DeleteFile(fName);
 
-		// LPCTSTR lpFileName // pointer to name of file to delete
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			String fName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
-			fName = Storage.getMappingPath(fName);
-
-			System.out.println("Delete file: " + fName);
-			boolean ret = Kernel32.INSTANCE.DeleteFile(fName);
-
-			register.mov("eax", new LongValue((ret) ? 1 : 0));
-		}
-
-		return false;
+		register.mov("eax", new LongValue((ret) ? 1 : 0));
 	}
 }

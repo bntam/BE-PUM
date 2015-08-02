@@ -11,12 +11,6 @@ import com.sun.jna.platform.win32.Kernel32;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -32,21 +26,16 @@ import v2.org.analysis.value.LongValue;
 public class GetLastError extends Kernel32API {
 
 	public GetLastError() {
-
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-
+	public void execute() {
 		// This function has no parameters.
 		long verNum = Kernel32.INSTANCE.GetLastError();
 		System.out.println("Last Error:" + verNum);
 
 		register.mov("eax", new LongValue(verNum));
-
-		return false;
 	}
 
 }
