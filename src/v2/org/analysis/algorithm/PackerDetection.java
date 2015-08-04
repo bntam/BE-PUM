@@ -98,7 +98,12 @@ public class PackerDetection {
 			return;
 		}
 		//NPACK
-		// Add later
+		if (detectWithPacker(dataString, PackerConstants.hNPACK, byteEP))
+		{
+			packedby += "NPACK";
+			System.out.println(packedby);
+			return;
+		}
 	}
 	
 	private boolean detectWithPacker (String[] dataString, String[] hPacker, String byteEP)
