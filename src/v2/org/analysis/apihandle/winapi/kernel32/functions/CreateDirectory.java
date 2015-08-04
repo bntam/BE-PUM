@@ -10,21 +10,13 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.platform.win32.WinDef.BOOL;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Creates a new directory. If the underlying file system supports security on
@@ -58,32 +50,21 @@ import v2.org.analysis.value.Value;
 public class CreateDirectory extends Kernel32API {
 
 	public CreateDirectory() {
+		NUM_OF_PARMS = 2;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2);
+		String lpPathName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		lpPathName = Storage.getMappingPath(lpPathName);
+		System.out.println("PathName:" + ", pSecurity:" + t2);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-
-			String lpPathName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			lpPathName = Storage.getMappingPath(lpPathName);
-			System.out.println("PathName:" + ", pSecurity:" + t2);
-
-			BOOL ret = Kernel32DLL.INSTANCE.CreateDirectory(lpPathName, null);
-			register.mov("eax", new LongValue(ret.longValue()));
-			System.out.println("Return value:" + ret.longValue());
-		}
-
-		return false;
+		BOOL ret = Kernel32DLL.INSTANCE.CreateDirectory(lpPathName, null);
+		register.mov("eax", new LongValue(ret.longValue()));
+		System.out.println("Return value:" + ret.longValue());
 	}
 }

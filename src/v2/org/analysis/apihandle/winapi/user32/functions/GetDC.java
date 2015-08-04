@@ -14,15 +14,7 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * This function retrieves a handle to a display device context (DC) for the
@@ -45,26 +37,17 @@ import v2.org.analysis.value.Value;
 public class GetDC extends User32API {
 
 	public GetDC() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		HWND hWnd = new HWND(new Pointer(t1));
+		HDC ret = User32.INSTANCE.GetDC(hWnd);
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			HWND hWnd = new HWND(new Pointer(t1));
-			HDC ret = User32.INSTANCE.GetDC(hWnd);
-
-			register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
-		}
-		return false;
+		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
 	}
 
 }

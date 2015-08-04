@@ -16,18 +16,10 @@ import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS.WNDPROC;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Registers a window class for subsequent use in calls to the CreateWindow or
@@ -52,70 +44,57 @@ import v2.org.analysis.value.Value;
 public class RegisterClassEx extends User32API {
 
 	public RegisterClassEx() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		// UINT cbSize;
+		// /* Win 3.x */
+		// UINT style;
+		// WNDPROC lpfnWndProc;
+		// int cbClsExtra;
+		// int cbWndExtra;
+		// HINSTANCE hInstance;
+		// HICON hIcon;
+		// HCURSOR hCursor;
+		// HBRUSH hbrBackground;
+		// LPCWSTR lpszMenuName;
+		// LPCWSTR lpszClassName;
+		// /* Win 4.0 */
+		// HICON hIconSm;
+		
+		System.out.println("\t\tSPECIAL WINDOWS API: CALLBACK");
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
+		WNDCLASSEX lpwcx = new WNDCLASSEX();
+		lpwcx.cbSize = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1)).getValue();
+		lpwcx.style = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
+		lpwcx.lpfnWndProc = new WNDPROC() {
+			@Override
+			public LRESULT invoke(HWND hwnd, UINT unit, WPARAM wparam, LPARAM lparam) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		t1 += 4;
+		lpwcx.cbClsExtra = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
+		lpwcx.cbWndExtra = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
+		lpwcx.hInstance = new HINSTANCE();
+		lpwcx.hInstance.setPointer(new Pointer((((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
+		lpwcx.hIcon = new HICON(new Pointer((((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
+		lpwcx.hCursor = new HCURSOR(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
+		lpwcx.hbrBackground = new HBRUSH(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
+		lpwcx.lpszMenuName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) memory
+				.getDoubleWordMemoryValue(t1 += 4)).getValue()));
+		lpwcx.lpszClassName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) memory
+				.getDoubleWordMemoryValue(t1 += 4)).getValue())));
+		lpwcx.hIconSm = new HICON(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
 
-//		    UINT        cbSize;
-//		    /* Win 3.x */
-//		    UINT        style;
-//		    WNDPROC     lpfnWndProc;
-//		    int         cbClsExtra;
-//		    int         cbWndExtra;
-//		    HINSTANCE   hInstance;
-//		    HICON       hIcon;
-//		    HCURSOR     hCursor;
-//		    HBRUSH      hbrBackground;
-//		    LPCWSTR     lpszMenuName;
-//		    LPCWSTR     lpszClassName;
-//		    /* Win 4.0 */
-//		    HICON       hIconSm;
-		    
-			WNDCLASSEX lpwcx = new WNDCLASSEX();
-			lpwcx.cbSize = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1)).getValue();
-			lpwcx.style = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
-			lpwcx.lpfnWndProc = new WNDPROC() {
-				@Override
-				public LRESULT invoke(HWND hwnd, UINT unit, WPARAM wparam, LPARAM lparam) {
-					// TODO Auto-generated method stub
-					return null;
-				}
-			};
-			t1 += 4;
-			lpwcx.cbClsExtra = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
-			lpwcx.cbWndExtra = (int) ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue();
-			lpwcx.hInstance = new HINSTANCE();
-			lpwcx.hInstance.setPointer(new Pointer((((LongValue) memory.getDoubleWordMemoryValue(t1 += 4))
-					.getValue())));
-			lpwcx.hIcon = new HICON(new Pointer(
-					(((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
-			lpwcx.hCursor = new HCURSOR(new Pointer(
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
-			lpwcx.hbrBackground = new HBRUSH(new Pointer(
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
-			lpwcx.lpszMenuName = memory.getText(new X86MemoryOperand(DataType.INT32,
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
-			lpwcx.lpszClassName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32,
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue())));
-			lpwcx.hIconSm = new HICON(new Pointer(
-					((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
+		ATOM ret = User32.INSTANCE.RegisterClassEx(lpwcx);
 
-			ATOM ret = User32.INSTANCE.RegisterClassEx(lpwcx);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

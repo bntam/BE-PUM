@@ -11,18 +11,10 @@ import com.sun.jna.platform.win32.Kernel32;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * The GetDriveType function determines whether a disk drive is a removable,
@@ -42,28 +34,17 @@ import v2.org.analysis.value.Value;
 public class GetDriveType extends Kernel32API {
 
 	public GetDriveType() {
-
+		NUM_OF_PARMS = 1;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			String lpRootPathName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			int ret = Kernel32.INSTANCE.GetDriveType(lpRootPathName);
-			register.mov("eax", new LongValue(ret));
-		}
-		return false;
+		String lpRootPathName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		int ret = Kernel32.INSTANCE.GetDriveType(lpRootPathName);
+		register.mov("eax", new LongValue(ret));
 	}
 
 }

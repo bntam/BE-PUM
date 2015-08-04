@@ -11,9 +11,7 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
 import org.jakstab.Program;
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.Pointer;
@@ -21,13 +19,7 @@ import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves the fully qualified path for the file that contains the specified
@@ -60,47 +52,37 @@ import v2.org.analysis.value.Value;
 public class GetModuleFileName extends Kernel32API {
 
 	public GetModuleFileName() {
-
+		NUM_OF_PARMS = 3;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		Value hModule = stack.pop();
-		Value lpFilename = stack.pop();
-		Value nSize = stack.pop();
-		System.out.println("Argument: Module: " + hModule.toString() + " lpFilename Address: " + lpFilename.toString()
-				+ " Array Size:" + nSize.toString());
+		System.out.println("Argument: Module: " + t1 + " lpFilename Address: " + t2 + " Array Size:" + t3);
 
-		if (hModule instanceof LongValue && lpFilename instanceof LongValue && nSize instanceof LongValue) {
+		char Filename[] = new char[(int) t3];
+		HMODULE module = new HMODULE();
+		module.setPointer(new Pointer(t1));
 
-			char Filename[] = new char[(int) ((LongValue) nSize).getValue()];
-			HMODULE module = new HMODULE();
-			module.setPointer(new Pointer(((LongValue) hModule).getValue()));
+		String output = null;
+		DWORD ret = null;
 
-			String output = null;
-			DWORD ret = null;
-
-			if (((LongValue) hModule).getValue() == 0L) {
-				output = Program.getProgram().getAbsolutePathFile();
-				ret = new DWORD(output.length());
-				Kernel32.INSTANCE.SetLastError(0);
-			} else {
-				ret = Kernel32DLL.INSTANCE.GetModuleFileName(module, Filename,
-						new DWORD(((LongValue) nSize).getValue()));
-				output = new String(Filename, 0, ret.intValue());
-			}
-			System.out.println("Filename:" + output + " \r\nReturn: " + ret);
-
-			memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue) lpFilename).getValue()), output);
-			register.mov("eax", new LongValue(ret.longValue()));
-
+		if (t1 == 0L) {
+			output = Program.getProgram().getAbsolutePathFile();
+			ret = new DWORD(output.length());
+			Kernel32.INSTANCE.SetLastError(0);
+		} else {
+			ret = Kernel32DLL.INSTANCE.GetModuleFileName(module, Filename, new DWORD(t3));
+			output = new String(Filename, 0, ret.intValue());
 		}
-		return false;
+		System.out.println("Filename:" + output + " \r\nReturn: " + ret);
+
+		memory.setText(new X86MemoryOperand(DataType.INT32, t2), output);
+		register.mov("eax", new LongValue(ret.longValue()));
+
 	}
 
 }

@@ -53,34 +53,22 @@ public class SetFileAttributes extends Kernel32API {
 	 * 
 	 */
 	public SetFileAttributes() {
-
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " ");
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
+		String fileName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		fileName = Storage.getMappingPath(fileName);
+		System.out.println("FileName:" + fileName + ", Attribute:" + t2);
 
-			String fileName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			fileName = Storage.getMappingPath(fileName);
-			System.out.println("FileName:" + fileName + ", Attribute:" + t2);
+		boolean ret = Kernel32.INSTANCE.SetFileAttributes(fileName, new DWORD(t2));
 
-			boolean ret = Kernel32.INSTANCE.SetFileAttributes(fileName, new DWORD(t2));
-
-			register.mov("eax", new LongValue(ret ? 1 : 0));
-			System.out.println("Return Value:" + (ret ? 1 : 0));
-		}
-
-		return false;
+		register.mov("eax", new LongValue(ret ? 1 : 0));
+		System.out.println("Return Value:" + (ret ? 1 : 0));
 	}
 
 }

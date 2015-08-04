@@ -36,28 +36,21 @@ public class GetCurrentProcess extends Kernel32API {
 	 * Constructor
 	 */
 	public GetCurrentProcess() {
-
+		NUM_OF_PARMS = 0;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		// Prepare environment
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-		Program program = Program.getProgram();
+	public void execute() {
 
 		// Call the real windows API
 		HANDLE handle = Kernel32.INSTANCE.GetCurrentProcess();
 		long value = Pointer.nativeValue(handle.getPointer());
 
 		System.out.println("Return Value: " + value);
-		System.out.println("Argument: No");
-		program.generageCFG(program.getAbsolutePathFile() + "_test");
 
 		// Store
 		register.mov("eax", new LongValue(value));
-
-		return false;
 	}
 
 }

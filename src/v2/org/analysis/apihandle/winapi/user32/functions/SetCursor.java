@@ -41,27 +41,19 @@ import v2.org.analysis.value.Value;
 public class SetCursor extends User32API {
 
 	public SetCursor() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.print("Argument:" + x1);
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
+		HCURSOR hCursor = new HCURSOR(new Pointer(t1));
+		HCURSOR ret = User32DLL.INSTANCE.SetCursor(hCursor);
 
-			HCURSOR hCursor = new HCURSOR(new Pointer(t1));
-			HCURSOR ret = User32DLL.INSTANCE.SetCursor(hCursor);
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-		}
-		return false;
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

@@ -9,16 +9,12 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
 import org.jakstab.Program;
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.Register;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -35,11 +31,12 @@ public class GetCurrentThread extends Kernel32API {
 	 * Constructor
 	 */
 	public GetCurrentThread() {
-
+		NUM_OF_PARMS = 0;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public void execute() {
 		// Prepare environment
 		Environment env = curState.getEnvironement();
 		Register register = env.getRegister();
@@ -53,8 +50,6 @@ public class GetCurrentThread extends Kernel32API {
 
 		// Store
 		register.mov("eax", new LongValue(value));
-
-		return false;
 	}
 
 }

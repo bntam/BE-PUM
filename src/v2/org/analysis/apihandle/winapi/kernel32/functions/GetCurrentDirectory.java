@@ -10,20 +10,12 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.platform.win32.WinDef.DWORD;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves the current directory for the current process.
@@ -52,31 +44,21 @@ public class GetCurrentDirectory extends Kernel32API {
 	 * 
 	 */
 	public GetCurrentDirectory() {
-
+		NUM_OF_PARMS = 2;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		char[] lpBuffer = new char[(int) t1];
+		DWORD ret = Kernel32DLL.INSTANCE.GetCurrentDirectory(new DWORD(t1), lpBuffer);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument: Length:" + x1 + ", Memory Operand:" + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			char[] lpBuffer = new char[(int) t1];
-			DWORD ret = Kernel32DLL.INSTANCE.GetCurrentDirectory(new DWORD(t1), lpBuffer);
-
-			String curDir = new String(lpBuffer);
-			curDir = curDir.substring(0, ret.intValue());
-			memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()), curDir, curDir.length());
-			System.out.println("Current Directory:" + curDir);
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		String curDir = new String(lpBuffer);
+		curDir = curDir.substring(0, ret.intValue());
+		memory.setText(new X86MemoryOperand(DataType.INT32, this.params.get(1)), curDir, curDir.length());
+		System.out.println("Current Directory:" + curDir);
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

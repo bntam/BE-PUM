@@ -16,18 +16,10 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
 import v2.org.analysis.complement.Convert;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Searches a directory for a file or subdirectory with a name that matches a
@@ -52,60 +44,46 @@ import v2.org.analysis.value.Value;
  */
 public class FindFirstFile extends Kernel32API {
 
-	/**
-	 * 
-	 */
 	public FindFirstFile() {
-
+		NUM_OF_PARMS = 2;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long pFind = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " ");
+		String searchName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		System.out.println("Search File:" + searchName + ", Memory Operand:" + pFind);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long pFind = ((LongValue) x2).getValue();
+		WIN32_FIND_DATA lpFindFileData = new WIN32_FIND_DATA();
+		HANDLE ret = Kernel32DLL.INSTANCE.FindFirstFile(new WString(searchName), lpFindFileData);
 
-			String searchName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			System.out.println("Search File:" + searchName + ", Memory Operand:" + pFind);
+		System.out.println("Search Handle:" + Pointer.nativeValue(ret.getPointer()));
+		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
 
-			WIN32_FIND_DATA lpFindFileData = new WIN32_FIND_DATA();
-			HANDLE ret = Kernel32DLL.INSTANCE.FindFirstFile(new WString(searchName), lpFindFileData);
+		memory.setDoubleWordMemoryValue(pFind, new LongValue(lpFindFileData.dwFileAttributes.longValue()));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftCreationTime.dwLowDateTime));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftCreationTime.dwHighDateTime));
 
-			System.out.println("Search Handle:" + Pointer.nativeValue(ret.getPointer()));
-			register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftLastAccessTime.dwLowDateTime));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftLastAccessTime.dwHighDateTime));
 
-			memory.setDoubleWordMemoryValue(pFind, new LongValue(lpFindFileData.dwFileAttributes.longValue()));
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftCreationTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftCreationTime.dwHighDateTime));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftLastWriteTime.dwLowDateTime));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftLastWriteTime.dwHighDateTime));
 
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftLastAccessTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftLastAccessTime.dwHighDateTime));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.nFileSizeHigh.longValue()));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.nFileSizeLow.longValue()));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved0.longValue()));
+		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved1.longValue()));
 
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftLastWriteTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.ftLastWriteTime.dwHighDateTime));
-
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.nFileSizeHigh.longValue()));
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.nFileSizeLow.longValue()));
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved0.longValue()));
-			memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved1.longValue()));
-
-			memory.setText(new X86MemoryOperand(DataType.INT32, pFind += 4), new String(lpFindFileData.cFileName));
-			String t = new String(lpFindFileData.cFileName);
-			t = Convert.reduceText(t); 			
-			memory.setText(new X86MemoryOperand(DataType.INT32, pFind += (2 * t.length())),
-					new String(lpFindFileData.cAlternateFileName));
-			env.getRegister().setRegisterValue("edx", new LongValue(0));
-		}
-
-		return false;
+		memory.setText(new X86MemoryOperand(DataType.INT32, pFind += 4), new String(lpFindFileData.cFileName));
+		String t = new String(lpFindFileData.cFileName);
+		t = Convert.reduceText(t);
+		memory.setText(new X86MemoryOperand(DataType.INT32, pFind += (2 * t.length())), new String(
+				lpFindFileData.cAlternateFileName));
+		
+		register.setRegisterValue("edx", new LongValue(0));
 	}
 }

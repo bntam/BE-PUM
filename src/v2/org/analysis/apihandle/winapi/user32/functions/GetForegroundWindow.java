@@ -13,12 +13,6 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -36,17 +30,14 @@ import v2.org.analysis.value.LongValue;
 public class GetForegroundWindow extends User32API {
 
 	public GetForegroundWindow() {
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-
+	public void execute() {
 		HWND ret = User32.INSTANCE.GetForegroundWindow();
 
 		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
-		return false;
 	}
 
 }

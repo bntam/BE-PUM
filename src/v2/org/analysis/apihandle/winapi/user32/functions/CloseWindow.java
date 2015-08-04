@@ -13,15 +13,7 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Minimizes (but does not destroy) the specified window.
@@ -40,26 +32,17 @@ import v2.org.analysis.value.Value;
 public class CloseWindow extends User32API {
 
 	public CloseWindow() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		HWND hWnd = new HWND(new Pointer(t1));
+		boolean ret = User32.INSTANCE.CloseWindow(hWnd);
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			HWND hWnd = new HWND(new Pointer(t1));
-			boolean ret = User32.INSTANCE.CloseWindow(hWnd);
-
-			register.mov("eax", new LongValue(ret ? 1 : 0));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret ? 1 : 0));
 	}
 
 }

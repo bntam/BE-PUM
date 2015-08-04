@@ -34,20 +34,16 @@ import v2.org.analysis.value.LongValue;
 public class GetLogicalDrives extends Kernel32API {
 
 	public GetLogicalDrives() {
-
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-
+	public void execute() {
 		// This function has no parameters.
 		DWORD ret = Kernel32DLL.INSTANCE.GetLogicalDrives();
 
 		register.mov("eax", new LongValue(ret.longValue()));
-
-		return false;
+		System.out.println("Return Value: " + ret.longValue());
 	}
 
 }

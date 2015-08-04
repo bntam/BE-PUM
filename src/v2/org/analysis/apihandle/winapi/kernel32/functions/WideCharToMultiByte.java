@@ -10,9 +10,7 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.WString;
@@ -20,13 +18,7 @@ import com.sun.jna.platform.win32.WinDef.BOOLByReference;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.UINT;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Maps a UTF-16 (wide character) string to a new character string. The new
@@ -93,59 +85,38 @@ import v2.org.analysis.value.Value;
 public class WideCharToMultiByte extends Kernel32API {
 
 	public WideCharToMultiByte() {
+		NUM_OF_PARMS = 8;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
+		long t5 = this.params.get(4);
+		long t6 = this.params.get(5);
+		long t7 = this.params.get(6);
+		long t8 = this.params.get(7);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-		Value x6 = stack.pop();
-		Value x7 = stack.pop();
-		Value x8 = stack.pop();
+		UINT CodePage = new UINT(t1);
+		DWORD dwFlags = new DWORD(t2);
+		WString lpWideCharStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
+		int cchWideChar = (int) t4;
+		char[] lpMultiByteStr = (t6 > 0) ? new char[(int) t6] : null;
+		int cbMultiByte = (int) t6;
+		String lpDefaultChar = (t7 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t7)) : null;
+		BOOLByReference lpUsedDefaultChar = (t8 != 0L) ? new BOOLByReference() : null;
+		int ret = Kernel32DLL.INSTANCE.WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar,
+				lpMultiByteStr, cbMultiByte, lpDefaultChar, lpUsedDefaultChar);
 
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6 + " " + x7 + " "
-				+ x8);
+		register.mov("eax", new LongValue(ret));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue && x6 instanceof LongValue && x7 instanceof LongValue
-				&& x8 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-			long t5 = ((LongValue) x5).getValue();
-			long t6 = ((LongValue) x6).getValue();
-			long t7 = ((LongValue) x7).getValue();
-			long t8 = ((LongValue) x8).getValue();
-
-			UINT CodePage = new UINT(t1);
-			DWORD dwFlags = new DWORD(t2);
-			WString lpWideCharStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
-			int cchWideChar = (int) t4;
-			char[] lpMultiByteStr = (t6 > 0) ? new char[(int) t6] : null;
-			int cbMultiByte = (int) t6;
-			String lpDefaultChar = (t7 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t7)) : null;
-			BOOLByReference lpUsedDefaultChar = (t8 != 0L) ? new BOOLByReference() : null;
-			int ret = Kernel32DLL.INSTANCE.WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar,
-					lpMultiByteStr, cbMultiByte, lpDefaultChar, lpUsedDefaultChar);
-
-			register.mov("eax", new LongValue(ret));
-
-			if (lpMultiByteStr != null)
-				memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpMultiByteStr));
-			if (lpUsedDefaultChar != null)
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8), new LongValue(
-						lpUsedDefaultChar.getValue().longValue()));
-		}
-		return false;
+		if (lpMultiByteStr != null)
+			memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpMultiByteStr));
+		if (lpUsedDefaultChar != null)
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8), new LongValue(lpUsedDefaultChar
+					.getValue().longValue()));
 	}
 
 }

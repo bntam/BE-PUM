@@ -62,37 +62,24 @@ import v2.org.analysis.value.Value;
 public class WritePrivateProfileString extends Kernel32API {
 
 	public WritePrivateProfileString() {
+		NUM_OF_PARMS = 4;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
+		WString lpAppName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
+		WString lpKeyName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+		WString lpString = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
+		WString lpFileName = new WString(Storage.getMappingPath(memory
+				.getText(new X86MemoryOperand(DataType.INT32, t4))));
+		BOOL ret = Kernel32DLL.INSTANCE.WritePrivateProfileString(lpAppName, lpKeyName, lpString, lpFileName);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-
-			WString lpAppName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
-			WString lpKeyName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
-			WString lpString = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
-			WString lpFileName = new WString(Storage.getMappingPath(memory.getText(new X86MemoryOperand(DataType.INT32,
-					t4))));
-			BOOL ret = Kernel32DLL.INSTANCE.WritePrivateProfileString(lpAppName, lpKeyName, lpString, lpFileName);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

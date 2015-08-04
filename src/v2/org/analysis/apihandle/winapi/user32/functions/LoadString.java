@@ -6,22 +6,14 @@ package v2.org.analysis.apihandle.winapi.user32.functions;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HINSTANCE;
 import com.sun.jna.platform.win32.WinDef.UINT;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Loads a string resource from the executable file associated with a specified
@@ -57,47 +49,33 @@ import v2.org.analysis.value.Value;
 public class LoadString extends User32API {
 
 	public LoadString() {
+		NUM_OF_PARMS = 4;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName,
-			BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		System.out.print("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
-		if (x1 instanceof LongValue && x2 instanceof LongValue
-				&& x3 instanceof LongValue && x4 instanceof LongValue) {
-
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-
-			HINSTANCE hInstance = null;
-			if (t1 != 0L) {
-				hInstance = new HINSTANCE();
-				hInstance.setPointer(new Pointer(t1));
-			}
-			UINT uID = new UINT(t2);
-			char[] lpBuffer = new char[(int) t4];
-			int nBufferMax = (int) t4;
-			int ret = User32DLL.INSTANCE.LoadString(hInstance, uID, lpBuffer,
-					nBufferMax);
-
-			register.mov("eax", new LongValue(ret));
-
-			if (ret != 0L)
-				memory.setText(new X86MemoryOperand(DataType.INT32, t3),
-						new String(lpBuffer));
+		HINSTANCE hInstance = null;
+		if (t1 != 0L) {
+			hInstance = new HINSTANCE();
+			hInstance.setPointer(new Pointer(t1));
 		}
-		return false;
+		UINT uID = new UINT(t2);
+		char[] lpBuffer = new char[(int) t4];
+		int nBufferMax = (int) t4;
+		int ret = User32DLL.INSTANCE.LoadString(hInstance, uID, lpBuffer, nBufferMax);
+
+		register.mov("eax", new LongValue(ret));
+
+		if (ret != 0L) {
+			for (int i = 0; i < ret; i++) {
+				memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t3 + i), new LongValue(lpBuffer[i]));
+			}
+		}
 	}
 
 }

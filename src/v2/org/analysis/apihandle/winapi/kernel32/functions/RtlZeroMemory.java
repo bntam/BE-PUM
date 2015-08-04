@@ -42,31 +42,21 @@ import v2.org.analysis.value.Value;
 public class RtlZeroMemory extends Kernel32API {
 
 	public RtlZeroMemory() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.print("Argument:" + x1 + " " + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
+		Pointer Destination = new Pointer(t1);
+		SIZE_T Length = new SIZE_T(t2);
+		Kernel32DLL.INSTANCE.RtlZeroMemory(Destination, Length);
 
-			Pointer Destination = new Pointer(t1);
-			SIZE_T Length = new SIZE_T(t2);
-			Kernel32DLL.INSTANCE.RtlZeroMemory(Destination, Length);
-
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1),
-					new LongValue(Pointer.nativeValue(Destination)));
-		}
-		return false;
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1),
+				new LongValue(Pointer.nativeValue(Destination)));
 	}
 
 }

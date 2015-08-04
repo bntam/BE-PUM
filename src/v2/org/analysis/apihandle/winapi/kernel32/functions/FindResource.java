@@ -14,18 +14,10 @@ import com.sun.jna.platform.win32.WinDef.HRSRC;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Determines the location of a resource with the specified type and name in the
@@ -60,36 +52,24 @@ import v2.org.analysis.value.Value;
 public class FindResource extends Kernel32API {
 
 	public FindResource() {
-
+		NUM_OF_PARMS = 3;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		HMODULE hModule = new HMODULE();
+		hModule.setPointer(new Pointer(t1));
+		String lpName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String lpType = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
+		HRSRC ret = Kernel32DLL.INSTANCE.FindResource(hModule, lpName, lpType);
 
-			HMODULE hModule = new HMODULE();
-			hModule.setPointer(new Pointer(t1));
-			String lpName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-			String lpType = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
-
-			HRSRC ret = Kernel32DLL.INSTANCE.FindResource(hModule, lpName, lpType);
-
-			register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
-		}
-		return false;
+		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
 	}
 
 }

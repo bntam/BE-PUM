@@ -14,18 +14,10 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.CPINFO;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves information about any valid installed or available code page.
@@ -49,43 +41,30 @@ import v2.org.analysis.value.Value;
 public class GetCPInfo extends Kernel32API {
 
 	public GetCPInfo() {
+		NUM_OF_PARMS = 2;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " ");
+		UINT CodePage = new UINT(t1);
+		CPINFO lpCPInfo = new CPINFO();
+		BOOL ret = Kernel32DLL.INSTANCE.GetCPInfo(CodePage, lpCPInfo);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
+		register.mov("eax", new LongValue(ret.longValue()));
 
-			UINT CodePage = new UINT(t1);
-			CPINFO lpCPInfo = new CPINFO();
-			BOOL ret = Kernel32DLL.INSTANCE.GetCPInfo(CodePage, lpCPInfo);
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
+				new LongValue(lpCPInfo.MaxCharSize.longValue()));
+		memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(lpCPInfo.DefaultChar[0]));
+		memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(lpCPInfo.DefaultChar[1]));
 
-			register.mov("eax", new LongValue(ret.longValue()));
-
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(
-					lpCPInfo.MaxCharSize.longValue()));
-			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(
-					lpCPInfo.DefaultChar[0]));
-			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(
-					lpCPInfo.DefaultChar[1]));
-
-			for (int i = 0; i < 12; i++) {
-				memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 1 + i), new LongValue(
-						lpCPInfo.LeadByte[i]));
-			}
+		for (int i = 0; i < 12; i++) {
+			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 1 + i), new LongValue(
+					lpCPInfo.LeadByte[i]));
 		}
-
-		return false;
 	}
 
 }

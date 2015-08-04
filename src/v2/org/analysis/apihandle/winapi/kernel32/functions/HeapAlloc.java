@@ -68,38 +68,20 @@ import v2.org.analysis.value.Value;
  */
 public class HeapAlloc extends Kernel32API {
 	public HeapAlloc() {
-
+		NUM_OF_PARMS = 3;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		/*
-		 * HANDLE hHeap, // handle to the private heap block DWORD dwFlags, //
-		 * heap allocation control flags DWORD dwBytes // number of bytes to
-		 * allocate
-		 */
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		LPVOID ret = Kernel32DLL.INSTANCE.HeapAlloc(new HANDLE(new Pointer(t1)), new DWORD(t2), new SIZE_T(t3));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-
-			LPVOID ret = Kernel32DLL.INSTANCE.HeapAlloc(new HANDLE(new Pointer(t1)), new DWORD(t2), new SIZE_T(t3));
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.toPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-		}
-
-		return false;
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.toPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 
 }

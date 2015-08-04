@@ -11,19 +11,11 @@ import com.sun.jna.platform.win32.Kernel32;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Copies an existing file to a new file.
@@ -61,39 +53,23 @@ import v2.org.analysis.value.Value;
 public class CopyFile extends Kernel32API {
 
 	public CopyFile() {
+		NUM_OF_PARMS = 3;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
 
-		/*
-		 * LPCTSTR lpExistingFileName, // pointer to name of an existing file
-		 * LPCTSTR lpNewFileName, // pointer to filename to copy to BOOL
-		 * bFailIfExists // flag for operation if file exists
-		 */
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		String fileNameOld = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		fileNameOld = Storage.getMappingPath(fileNameOld);
+		String fileNameNew = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		fileNameNew = Storage.getMappingPath(fileNameNew);
+		System.out.println("Old File:" + fileNameOld + ", New File:" + fileNameNew + ", Flag:" + t3);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-
-			String fileNameOld = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			fileNameOld = Storage.getMappingPath(fileNameOld);
-			String fileNameNew = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-			fileNameNew = Storage.getMappingPath(fileNameNew);
-			System.out.println("Old File:" + fileNameOld + ", New File:" + fileNameNew + ", Flag:" + t3);
-
-			boolean ret = Kernel32.INSTANCE.CopyFile(fileNameOld, fileNameNew, (t3 != 0L));
-			register.mov("eax", new LongValue(ret ? 1 : 0));
-		}
-		return false;
+		boolean ret = Kernel32.INSTANCE.CopyFile(fileNameOld, fileNameNew, (t3 != 0L));
+		register.mov("eax", new LongValue(ret ? 1 : 0));
 	}
 }

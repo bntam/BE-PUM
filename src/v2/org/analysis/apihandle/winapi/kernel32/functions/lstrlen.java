@@ -42,29 +42,16 @@ public class lstrlen extends Kernel32API {
 	 * 
 	 */
 	public lstrlen() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t = this.params.get(0);
+		String dest = t == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t));
+		System.out.println("Destination String:" + dest);
 
-		// LPCTSTR lpString // address of string to count
-		Value x1 = stack.pop();
-		// Exp x2 = symbolStack.pop();
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long t = ((LongValue) x1).getValue();
-			String dest = t == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t));
-			System.out.println("Destination String:" + dest);
-
-			register.mov("eax", new LongValue(Kernel32DLL.INSTANCE.lstrlen(dest)));
-		}
-		return false;
+		register.mov("eax", new LongValue(Kernel32DLL.INSTANCE.lstrlen(dest)));
 	}
 
 }

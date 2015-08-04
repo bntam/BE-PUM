@@ -167,16 +167,34 @@ public class Convert {
 		return 0;
 	}
 
-	public static String reduceText(String t) {
-		// TODO Auto-generated method stub
-		String ret = "";
-		for (int i = 0; i<t.length(); i++) { 
-			if (t.charAt(i) == '\0')
-				break;
-			ret += t.charAt(i);
+	public static String reduceText(String text) {
+		int index = text.indexOf('\0');
+		
+		if (index == 0) {
+			return "";
+		} else if (index > 0) {
+			return text.substring(0, index);
 		}
 		
-		return ret;
+		return text;
+	}
+
+	public static String reduceText(char[] text) {
+		int index = -1;
+		for (int i = 0; i < text.length; i++) {
+			if (text[i] == '\0') {
+				index = i;
+				break;
+			}
+		}
+		
+		if (index == 0) {
+			return "";
+		} else if (index > 0) {
+			return new String(text, 0, index);
+		}
+		
+		return new String(text);
 	}
 
 }

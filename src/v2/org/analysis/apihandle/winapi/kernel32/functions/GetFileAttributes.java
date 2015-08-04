@@ -9,21 +9,13 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.platform.win32.Kernel32;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves file system attributes for a specified file or directory.
@@ -41,28 +33,18 @@ import v2.org.analysis.value.Value;
 public class GetFileAttributes extends Kernel32API {
 
 	public GetFileAttributes() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		String fName = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
+		fName = Storage.getMappingPath(fName);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		long attr = Kernel32.INSTANCE.GetFileAttributes(fName);
+		register.mov("eax", new LongValue(attr));
 
-		if (x1 instanceof LongValue) {
-			String fName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
-			fName = Storage.getMappingPath(fName);
-
-			long attr = Kernel32.INSTANCE.GetFileAttributes(fName);
-			register.mov("eax", new LongValue(attr));
-
-			System.out.println("Return Value:" + attr);
-		}
-		return false;
+		System.out.println("Return Value:" + attr);
 	}
 
 }

@@ -10,14 +10,8 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.Pointer;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -36,12 +30,12 @@ public class GetEnvironmentStrings extends Kernel32API {
 	 * 
 	 */
 	public GetEnvironmentStrings() {
+		NUM_OF_PARMS = 0;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
+	public void execute() {
 
 		// This function has no parameters.
 		System.out.println("Argument: This function has no parameters");
@@ -51,8 +45,6 @@ public class GetEnvironmentStrings extends Kernel32API {
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret);
 		register.mov("eax", new LongValue(value));
 		System.out.println("Return Value:" + value);
-
-		return false;
 	}
 
 }

@@ -37,23 +37,16 @@ public class GetVersion extends Kernel32API {
 	 * 
 	 */
 	public GetVersion() {
-
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Register register = env.getRegister();
-
-		// This function has no parameters.
-
-		System.out.println("Argument: null");
+	public void execute() {
 		// Version of Windows XP: 170393861
 		long verNum = Kernel32.INSTANCE.GetVersion().longValue();
 		System.out.println("Version Number:" + verNum);
 
 		register.mov("eax", new LongValue(verNum));
-		return false;
 	}
 
 }

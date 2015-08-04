@@ -46,60 +46,49 @@ import v2.org.analysis.value.Value;
 public class Thread32Next extends Kernel32API {
 
 	public Thread32Next() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2);
+		HANDLE hSnapshot = new HANDLE(new Pointer(t1));
+		THREADENTRY32 lpte = new THREADENTRY32();
+		lpte.dwSize.setValue(lpte.size());
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
+		BOOL ret = Kernel32DLL.INSTANCE.Thread32Next(hSnapshot, lpte);
 
-			HANDLE hSnapshot = new HANDLE(new Pointer(t1));
-			THREADENTRY32 lpte = new THREADENTRY32();
-			lpte.dwSize.setValue(lpte.size());
-
-			BOOL ret = Kernel32DLL.INSTANCE.Thread32Next(hSnapshot, lpte);
-
-			long value = ret.longValue();
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-			if (APIHandle.isDebug) {
-				System.out.println(lpte.toString(false));
-			}
-
-			// public DWORD dwSize;
-			// public DWORD cntUsage;
-			// public DWORD th32ThreadID;
-			// public DWORD th32OwnerProcessID;
-			// public LONG tpBasePri;
-			// public LONG tpDeltaPri;
-			// public DWORD dwFlags;
-			long index = t2;
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index),
-					new LongValue(lpte.dwSize.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4), new LongValue(
-					lpte.cntUsage.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4), new LongValue(
-					lpte.th32ThreadID.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4), new LongValue(
-					lpte.th32OwnerProcessID.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4), new LongValue(
-					lpte.tpBasePri.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4), new LongValue(
-					lpte.tpDeltaPri.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4), new LongValue(
-					lpte.dwFlags.longValue()));
+		long value = ret.longValue();
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
+		if (APIHandle.isDebug) {
+			System.out.println(lpte.toString(false));
 		}
-		return false;
+
+		// public DWORD dwSize;
+		// public DWORD cntUsage;
+		// public DWORD th32ThreadID;
+		// public DWORD th32OwnerProcessID;
+		// public LONG tpBasePri;
+		// public LONG tpDeltaPri;
+		// public DWORD dwFlags;
+		long index = t2;
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index),
+				new LongValue(lpte.dwSize.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4),
+				new LongValue(lpte.cntUsage.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4), new LongValue(
+				lpte.th32ThreadID.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4), new LongValue(
+				lpte.th32OwnerProcessID.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4),
+				new LongValue(lpte.tpBasePri.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4),
+				new LongValue(lpte.tpDeltaPri.longValue()));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, index += 4),
+				new LongValue(lpte.dwFlags.longValue()));
 	}
 
 }

@@ -14,15 +14,7 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves a handle to the specified standard device (standard input, standard
@@ -57,29 +49,17 @@ public class GetStdHandle extends Kernel32API {
 	 * 
 	 */
 	public GetStdHandle() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t = this.params.get(0);
+		HANDLE ret = Kernel32DLL.INSTANCE.GetStdHandle(new DWORD(t));
 
-		// DWORD nStdHandle input, output, or error device
-		Value x1 = stack.pop();
-
-		System.out.println("Argument:" + x1 + " ");
-
-		if (x1 instanceof LongValue) {
-			long t = ((LongValue) x1).getValue();
-			HANDLE ret = Kernel32DLL.INSTANCE.GetStdHandle(new DWORD(t));
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value:" + value);
-		}
-		return false;
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value:" + value);
 	}
 
 }

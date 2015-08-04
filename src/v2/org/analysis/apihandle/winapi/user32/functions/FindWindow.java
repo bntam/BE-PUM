@@ -13,18 +13,10 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * This function retrieves the handle to the top-level window whose class name
@@ -57,41 +49,27 @@ public class FindWindow extends User32API {
 	 * 
 	 */
 	public FindWindow() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		/*
+		 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
+		 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
+		 */
+		String className = (this.params.get(0) == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32,
+				this.params.get(0)));
+		String windowName = (this.params.get(1) == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32,
+				this.params.get(1)));
 
-		// LPCTSTR lpClassName, pointer to class name
-		// LPCTSTR lpWindowName, pointer to window name
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " ");
+		System.out.println("Class Name:" + className + ", Window Name Address:" + this.params.get(1) + ", Window Name:"
+				+ windowName);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			/*
-			 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-			 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
-			 */
-			String className = (((LongValue) x1).getValue() == 0L) ? null : memory.getText(new X86MemoryOperand(
-					DataType.INT32, ((LongValue) x1).getValue()));
-			String windowName = (((LongValue) x2).getValue() == 0L) ? null : memory.getText(new X86MemoryOperand(
-					DataType.INT32, ((LongValue) x2).getValue()));
+		HWND ret = User32.INSTANCE.FindWindow(className, windowName);
 
-			System.out.println("Class Name:" + className + ", Window Name Address:" + ((LongValue) x2).getValue()
-					+ ", Window Name:" + windowName);
-
-			HWND ret = User32.INSTANCE.FindWindow(className, windowName);
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value: " + value);
-
-		}
-		return false;
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value: " + value);
 	}
 }

@@ -10,18 +10,10 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LPVOID;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Formats a message string. The function requires a message definition as
@@ -102,45 +94,31 @@ public class FormatMessage extends Kernel32API {
 
 	public FormatMessage() {
 
+		NUM_OF_PARMS = 7;
 	}
 
+
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
+		long t5 = this.params.get(3);
+		long t6 = this.params.get(5);
+		long t7 = this.params.get(6);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-		Value x6 = stack.pop();
-		Value x7 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6 + " " + x7);
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue && x6 instanceof LongValue && x7 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
-			long t5 = ((LongValue) x4).getValue();
-			long t6 = ((LongValue) x6).getValue();
-			long t7 = ((LongValue) x7).getValue();
+		DWORD dwFlags = new DWORD(t1);
+		LPVOID lpSource = new LPVOID(t2);
+		DWORD dwMessageId = new DWORD(t3);
+		DWORD dwLanguageId = new DWORD(t4);
+		char[] lpBuffer = new char[(int) t6];
+		DWORD nSize = new DWORD(t6);
+		String[] Arguments = null;
+		DWORD ret = Kernel32DLL.INSTANCE.FormatMessage(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer, nSize,
+				Arguments);
 
-			DWORD dwFlags = new DWORD(t1);
-			LPVOID lpSource = new LPVOID(t2);
-			DWORD dwMessageId = new DWORD(t3);
-			DWORD dwLanguageId = new DWORD(t4);
-			char[] lpBuffer = new char[(int) t6];
-			DWORD nSize = new DWORD(t6);
-			String[] Arguments = null;
-			DWORD ret = Kernel32DLL.INSTANCE.FormatMessage(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer,
-					nSize, Arguments);
-
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

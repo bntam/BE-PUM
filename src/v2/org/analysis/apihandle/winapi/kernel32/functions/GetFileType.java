@@ -13,15 +13,7 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves the file type of the specified file.
@@ -40,30 +32,15 @@ import v2.org.analysis.value.Value;
  *
  */
 public class GetFileType extends Kernel32API {
-
-	/**
-	 * 
-	 */
 	public GetFileType() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
-
-		// HANDLE hFile file handle
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
-
-		if (x1 instanceof LongValue) {
-			long t = ((LongValue) x1).getValue();
-			int ret = Kernel32.INSTANCE.GetFileType(new HANDLE(new Pointer(t)));
-			register.mov("eax", new LongValue(ret));
-		}
-		return false;
+	public void execute() {
+		long t = this.params.get(0);
+		int ret = Kernel32.INSTANCE.GetFileType(new HANDLE(new Pointer(t)));
+		register.mov("eax", new LongValue(ret));
 	}
 
 }

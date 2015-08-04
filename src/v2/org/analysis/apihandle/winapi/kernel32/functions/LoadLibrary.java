@@ -14,18 +14,10 @@ import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Loads the specified module into the address space of the calling process. The
@@ -44,59 +36,49 @@ import v2.org.analysis.value.Value;
  */
 public class LoadLibrary extends Kernel32API {
 	private HMODULE apiCallReturn = null;
-	
-	public LoadLibrary() {
 
+	public LoadLibrary() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		// LPCTSTR lpLibFileName address of filename of executable module
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
-		Value x1 = stack.pop();
-		System.out.print("Argument:" + x1);
-		if (x1 instanceof LongValue) {
-			/*
-			 * returnValue = APIHandler.loadLibraryA( ((ValueLongExp)
-			 * x1).getValue(), program);
-			 */
-			String libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
-			System.out.println(" Library Name:" + libraryName);
+	public void execute() {
+		/*
+		 * returnValue = APIHandler.loadLibraryA( ((ValueLongExp)
+		 * x1).getValue(), program);
+		 */
+		String libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
+		System.out.println(" Library Name:" + libraryName);
 
-			LoadLibThread thread = new LoadLibThread(libraryName);
-			try {
-				thread.start();
-				Thread.sleep(100);
-				if (this.apiCallReturn == null) {
-					Thread.sleep(1000);
-				}
-				thread.interrupt();
-			} catch (Exception e) {
-				e.printStackTrace();
+		LoadLibThread thread = new LoadLibThread(libraryName);
+		try {
+			thread.start();
+			Thread.sleep(100);
+			if (this.apiCallReturn == null) {
+				Thread.sleep(1000);
 			}
-
-			long value = (apiCallReturn == null) ? 0 : Pointer.nativeValue(apiCallReturn.getPointer());
-			register.mov("eax", new LongValue(value));
-			//register.mov("edx", new LongValue(0x140608));
-			//register.mov("ecx", new LongValue(0x7c801bfa));
-			System.out.println("Return Value: " + value);
-
-			value = ((LongValue) register.getRegisterValue("eax")).getValue();
-			APIHandle.libraryHandle.put(value, libraryName);
+			thread.interrupt();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return false;
+
+		long value = (apiCallReturn == null) ? 0 : Pointer.nativeValue(apiCallReturn.getPointer());
+		register.mov("eax", new LongValue(value));
+		// register.mov("edx", new LongValue(0x140608));
+		// register.mov("ecx", new LongValue(0x7c801bfa));
+		System.out.println("Return Value: " + value);
+
+		value = ((LongValue) register.getRegisterValue("eax")).getValue();
+		APIHandle.libraryHandle.put(value, libraryName);
 	}
 
 	class LoadLibThread extends Thread {
 		private String libName = null;
-		
+
 		public LoadLibThread(String lib) {
 			this.libName = lib;
 		}
-		
+
 		@Override
 		public void run() {
 			apiCallReturn = Kernel32DLL.INSTANCE.LoadLibrary(this.libName);

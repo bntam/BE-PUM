@@ -47,30 +47,20 @@ import v2.org.analysis.value.Value;
 public class IsBadWritePtr extends Kernel32API {
 
 	public IsBadWritePtr() {
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		// Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		System.out.println("Argument: " + x1 + ", " + x2);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
+		LPVOID lp = new LPVOID(t1);
+		UINT_PTR ucb = new UINT_PTR(t2);
+		BOOL ret = Kernel32DLL.INSTANCE.IsBadWritePtr(lp, ucb);
 
-			LPVOID lp = new LPVOID(t1);
-			UINT_PTR ucb = new UINT_PTR(t2);
-			BOOL ret = Kernel32DLL.INSTANCE.IsBadWritePtr(lp, ucb);
-
-			System.out.println("Return: " + ret.longValue());
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		System.out.println("Return: " + ret.longValue());
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

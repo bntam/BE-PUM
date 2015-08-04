@@ -48,37 +48,23 @@ import v2.org.analysis.value.Value;
 public class lstrcpyn extends Kernel32API {
 
 	public lstrcpyn() {
+		NUM_OF_PARMS = 3;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long destAddr = this.params.get(0);
+		long scrAddr = this.params.get(1);
+		int n = this.params.get(2).intValue();
 
-		// LPTSTR lpString1, address of buffer
-		// LPCTSTR lpString2 address of string to copy
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3);
+		String dest = memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
+		String src = memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue) {
-			long destAddr = ((LongValue) x1).getValue();
-			long scrAddr = ((LongValue) x2).getValue();
-			int n = (int) ((LongValue) x3).getValue();
+		System.out.println("Destination Address:" + destAddr + ", Source String:" + src);
 
-			String dest = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x1).getValue()));
-			String src = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()));
-
-			System.out.println("Destination Address:" + destAddr + ", Source String:" + src);
-
-			WString ret = Kernel32DLL.INSTANCE.lstrcpyn(new WString(dest), new WString(src), n);
-			memory.setText(new X86MemoryOperand(DataType.INT32, destAddr), ret.toString());
-			register.mov("eax", new LongValue(1));
-		}
-		return false;
+		WString ret = Kernel32DLL.INSTANCE.lstrcpyn(new WString(dest), new WString(src), n);
+		memory.setText(new X86MemoryOperand(DataType.INT32, destAddr), ret.toString());
+		register.mov("eax", new LongValue(1));
 	}
 
 }

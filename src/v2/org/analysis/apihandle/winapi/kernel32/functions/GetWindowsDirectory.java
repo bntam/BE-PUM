@@ -53,35 +53,23 @@ public class GetWindowsDirectory extends Kernel32API {
 	 * 
 	 */
 	public GetWindowsDirectory() {
-
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
+		char[] lpBuffer = new char[(int) t2];
+		UINT uSize = new UINT(t2);
+		UINT ret = Kernel32DLL.INSTANCE.GetWindowsDirectory(lpBuffer, uSize);
+		String curDir = new String(lpBuffer);
+		curDir = curDir.substring(0, ret.intValue());
 
-		System.out.println("Argument: Length:" + x2 + ", Memory Operand:" + x1);
-		if (x1 instanceof LongValue && x2 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-
-			char[] lpBuffer = new char[(int) t2];
-			UINT uSize = new UINT(t2);
-			UINT ret = Kernel32DLL.INSTANCE.GetWindowsDirectory(lpBuffer, uSize);
-			String curDir = new String(lpBuffer);
-			curDir = curDir.substring(0, ret.intValue());
-
-			memory.setText(new X86MemoryOperand(DataType.INT32, t1), curDir, ret.longValue());
-			System.out.println("Windows Directory:" + curDir);
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		memory.setText(new X86MemoryOperand(DataType.INT32, t1), curDir, ret.longValue());
+		System.out.println("Windows Directory:" + curDir);
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }

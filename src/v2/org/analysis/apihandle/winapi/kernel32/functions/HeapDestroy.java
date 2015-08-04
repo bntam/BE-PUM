@@ -63,27 +63,16 @@ public class HeapDestroy extends Kernel32API {
 	 * 
 	 */
 	public HeapDestroy() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		// HANDLE hHeap handle to the heap
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		boolean ret = Kernel32DLL.INSTANCE.HeapDestroy(new HANDLE(new Pointer(t1)));
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			boolean ret = Kernel32DLL.INSTANCE.HeapDestroy(new HANDLE(new Pointer(t1)));
-
-			register.mov("eax", new LongValue((ret) ? 1 : 0));
-		}
-		return false;
+		register.mov("eax", new LongValue((ret) ? 1 : 0));
 	}
 
 }

@@ -12,7 +12,9 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
+import org.jakstab.asm.DataType;
 import org.jakstab.asm.Instruction;
+import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
@@ -44,43 +46,34 @@ import v2.org.analysis.value.Value;
 public class GetModuleHandle extends Kernel32API {
 
 	public GetModuleHandle() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
 
-		Value lpModuleName = stack.pop();
-		System.out.println("lpModuleName:" + lpModuleName);
+		HMODULE ret;
+		String libraryName = null;
+		long t1 = this.params.get(0);
+		if (t1 == 0L) {
+			ret = new HMODULE();
+			ret.setPointer(new Pointer(Program.getProgram().getImageBase()));
+			// returnValue = Kernel32.INSTANCE.GetModuleHandle(null);
+		} else {
+			libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+			System.out.println("Library Name: " + libraryName);
 
-		if (lpModuleName instanceof LongValue) {
-
-			HMODULE ret;
-			String libraryName = null;
-			if (((LongValue) lpModuleName).getValue() == 0) {
-				ret = new HMODULE();
-				ret.setPointer(new Pointer(Program.getProgram().getImageBase()));
-				// returnValue = Kernel32.INSTANCE.GetModuleHandle(null);
-			} else {
-				libraryName = env.getMemory().getText(((LongValue) lpModuleName).getValue());
-				System.out.println("Library Name: " + libraryName);
-
-				ret = Kernel32.INSTANCE.GetModuleHandle(libraryName);
-			}
-
-			long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
-			register.mov("eax", new LongValue(value));
-			System.out.println("Return Value:" + value);
-
-			if (libraryName != null) {
-				value = ((LongValue) register.getRegisterValue("eax")).getValue();
-				APIHandle.libraryHandle.put(value, libraryName);
-			}
+			ret = Kernel32.INSTANCE.GetModuleHandle(libraryName);
 		}
-		return false;
+
+		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
+		register.mov("eax", new LongValue(value));
+		System.out.println("Return Value:" + value);
+
+		if (libraryName != null) {
+			value = ((LongValue) register.getRegisterValue("eax")).getValue();
+			APIHandle.libraryHandle.put(value, libraryName);
+		}
 	}
 
 }

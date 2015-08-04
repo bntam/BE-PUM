@@ -267,7 +267,7 @@ public class Main {
 		// Done
 		in = "api_test.exe"; // 158 160 0.1s x
 		//in = "api_test_upx.exe"; // 323 353 21s x
-		in = "api_test_fsg.exe"; // 244 268 5s x
+//		in = "api_test_fsg.exe"; // 244 268 5s x
 		//in = "api_test_pecompact.exe"; // 1127 1178 35s x
 		// in = "api_test_npack.exe"; // 602 639 10s x
 		// in = "api_test_yoda.1.2.exe"; // 622 659 80s x

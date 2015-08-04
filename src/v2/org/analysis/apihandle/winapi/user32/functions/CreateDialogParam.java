@@ -27,28 +27,13 @@ import v2.org.analysis.value.Value;
 public class CreateDialogParam extends User32API {
 
 	public CreateDialogParam() {
+		NUM_OF_PARMS = 5;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
-
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
-
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue) {
-			register.mov("eax", new LongValue(0));
-		}
-		return false;
+	public void execute() {
+		System.out.println("\t\tSPECIAL WINDOWS API: CALLBACK - UNIMPLEMENTED");
+		register.mov("eax", new LongValue(0));
 	}
 
 }

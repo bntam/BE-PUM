@@ -109,4 +109,8 @@ public interface WinUser extends StdCallLibrary, WinDef, BaseTSD {
 			read();
 		}
 	}
+	
+	public static interface DLGPROC extends Callback {
+		INT_PTR invoke(HWND hwnd, UINT unit, WPARAM wparam, LPARAM lparam);
+	}
 }

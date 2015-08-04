@@ -17,6 +17,7 @@ import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
+import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGPROC;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.MENUITEMINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS;
 
@@ -709,4 +710,105 @@ public interface User32DLL extends StdCallLibrary {
 	 *         no Shell process is present, the return value is NULL.
 	 */
 	HWND GetShellWindow();
+
+	/**
+	 * Creates a modal dialog box from a dialog box template resource. Before
+	 * displaying the dialog box, the function passes an application-defined
+	 * value to the dialog box procedure as the lParam parameter of the
+	 * WM_INITDIALOG message. An application can use this value to initialize
+	 * dialog box controls.
+	 * 
+	 * @param hInstance
+	 *            A handle to the module which contains the dialog box template.
+	 *            If this parameter is NULL, then the current executable is
+	 *            used.
+	 * 
+	 * @param lpTemplateName
+	 *            The dialog box template. This parameter is either the pointer
+	 *            to a null-terminated character string that specifies the name
+	 *            of the dialog box template or an integer value that specifies
+	 *            the resource identifier of the dialog box template. If the
+	 *            parameter specifies a resource identifier, its high-order word
+	 *            must be zero and its low-order word must contain the
+	 *            identifier. You can use the MAKEINTRESOURCE macro to create
+	 *            this value.
+	 * 
+	 * @param hWndParent
+	 *            A handle to the window that owns the dialog box.
+	 * 
+	 * @param lpDialogFunc
+	 *            A pointer to the dialog box procedure. For more information
+	 *            about the dialog box procedure, see DialogProc.
+	 * 
+	 * @param dwInitParam
+	 *            The value to pass to the dialog box in the lParam parameter of
+	 *            the WM_INITDIALOG message.
+	 * 
+	 * @return If the function succeeds, the return value is the value of the
+	 *         nResult parameter specified in the call to the EndDialog function
+	 *         used to terminate the dialog box. If the function fails because
+	 *         the hWndParent parameter is invalid, the return value is zero.
+	 *         The function returns zero in this case for compatibility with
+	 *         previous versions of Windows. If the function fails for any other
+	 *         reason, the return value is –1. To get extended error
+	 *         information, call GetLastError.
+	 */
+	INT_PTR DialogBoxParam(/* _In_opt_ */HINSTANCE hInstance, /* _In_ */String lpTemplateName, /* _In_opt_ */
+			HWND hWndParent, /* _In_opt_ */DLGPROC lpDialogFunc, /* _In_ */LPARAM dwInitParam);
+
+	/**
+	 * The OffsetRect function moves the specified rectangle by the specified
+	 * offsets.
+	 * 
+	 * @param lprc
+	 *            Pointer to a RECT structure that contains the logical
+	 *            coordinates of the rectangle to be moved.
+	 * 
+	 * @param dx
+	 *            Specifies the amount to move the rectangle left or right. This
+	 *            parameter must be a negative value to move the rectangle to
+	 *            the left.
+	 * 
+	 * @param dy
+	 *            Specifies the amount to move the rectangle up or down. This
+	 *            parameter must be a negative value to move the rectangle up.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero.
+	 */
+	BOOL OffsetRect(/* _Inout_ */RECT lprc, /* _In_ */int dx, /* _In_ */int dy);
+
+	/**
+	 * Provides default processing for any window messages that the window
+	 * procedure of a multiple-document interface (MDI) frame window does not
+	 * process. All window messages that are not explicitly processed by the
+	 * window procedure must be passed to the DefFrameProc function, not the
+	 * DefWindowProc function.
+	 * 
+	 * @param hWnd
+	 *            A handle to the MDI frame window.
+	 * 
+	 * @param hWndMDIClient
+	 *            A handle to the MDI client window.
+	 * 
+	 * @param uMsg
+	 *            The message to be processed.
+	 * 
+	 * @param wParam
+	 *            Additional message-specific information.
+	 * 
+	 * @param lParam
+	 *            Additional message-specific information.
+	 * 
+	 * @return The return value specifies the result of the message processing
+	 *         and depends on the message. If the hWndMDIClient parameter is
+	 *         NULL, the return value is the same as for the DefWindowProc
+	 *         function.
+	 */
+	LRESULT DefFrameProc(
+	/* _In_ */HWND hWnd,
+	/* _In_ */HWND hWndMDIClient,
+	/* _In_ */UINT uMsg,
+	/* _In_ */WPARAM wParam,
+	/* _In_ */LPARAM lParam);
 }

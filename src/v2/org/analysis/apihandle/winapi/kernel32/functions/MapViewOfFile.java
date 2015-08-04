@@ -9,19 +9,11 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Maps a view of a file mapping into the address space of a calling process.
@@ -56,53 +48,28 @@ public class MapViewOfFile extends Kernel32API {
 	 * 
 	 */
 	public MapViewOfFile() {
-
+		NUM_OF_PARMS = 5;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
+	public void execute() {
 
-		/*
-		 * HANDLE hFileMappingObject, // file-mapping object to map into address
-		 * space DWORD dwDesiredAccess, // access mode DWORD dwFileOffsetHigh,
-		 * // high-order 32 bits of file offset DWORD dwFileOffsetLow, //
-		 * low-order 32 bits of file offset DWORD dwNumberOfBytesToMap // number
-		 * of bytes to map
-		 */
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
+		long t1 = this.params.get(0);
+		HANDLE hFileMappingObject = new HANDLE(t1 != 0L ? new Pointer(t1) : Pointer.NULL);
+		int dwDesiredAccess = this.params.get(1).intValue();
+		int dwFileOffsetHigh = this.params.get(2).intValue();
+		int dwFileOffsetLow = this.params.get(3).intValue();
+		int dwNumberOfBytesToMap = this.params.get(4).intValue();
 
-		// symbolValueRegister.mov("eax", 1);
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue
-				&& x5 instanceof LongValue) {
+		System.out.println("Handle File:" + t1 + ", Access Mode:" + dwDesiredAccess
+				+ ", High-order 32 bits of file offset:" + dwFileOffsetHigh + ", Low-order 32 bits of file offset :"
+				+ dwFileOffsetLow + ", Number of bytes to map:" + dwNumberOfBytesToMap);
 
-			long t1 = ((LongValue) x1).getValue();
-			HANDLE hFileMappingObject = new HANDLE(t1 != 0L ? new Pointer(t1) : Pointer.NULL);
-			int dwDesiredAccess = (int) ((LongValue) x2).getValue();
-			int dwFileOffsetHigh = (int) ((LongValue) x3).getValue();
-			int dwFileOffsetLow = (int) ((LongValue) x4).getValue();
-			int dwNumberOfBytesToMap = (int) ((LongValue) x5).getValue();
+		Pointer ret = Kernel32.INSTANCE.MapViewOfFile(hFileMappingObject, dwDesiredAccess, dwFileOffsetHigh,
+				dwFileOffsetLow, dwNumberOfBytesToMap);
 
-			System.out.println("Handle File:" + t1 + ", Access Mode:" + dwDesiredAccess
-					+ ", High-order 32 bits of file offset:" + dwFileOffsetHigh
-					+ ", Low-order 32 bits of file offset :" + dwFileOffsetLow + ", Number of bytes to map:"
-					+ dwNumberOfBytesToMap);
-
-			Pointer ret = Kernel32.INSTANCE.MapViewOfFile(hFileMappingObject, dwDesiredAccess, dwFileOffsetHigh,
-					dwFileOffsetLow, dwNumberOfBytesToMap);
-
-			System.out.println("Base Address: " + Pointer.nativeValue(ret));
-			register.mov("eax", new LongValue(Pointer.nativeValue(ret)));
-		}
-
-		return false;
+		System.out.println("Base Address: " + Pointer.nativeValue(ret));
+		register.mov("eax", new LongValue(Pointer.nativeValue(ret)));
 	}
 
 }

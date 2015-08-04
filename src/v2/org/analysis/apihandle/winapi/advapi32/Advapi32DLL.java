@@ -290,4 +290,50 @@ public interface Advapi32DLL extends StdCallLibrary {
 	 *         description of the error.
 	 */
 	LONG RegOpenKey(/* _In_ */HKEY hKey, /* _In_opt_ */String lpSubKey, /* _Out_ */HKEYByReference phkResult);
+
+	/**
+	 * Retrieves the type and data for the specified value name associated with
+	 * an open registry key.
+	 * 
+	 * @param hKey
+	 *            A handle to an open registry key. The key must have been
+	 *            opened with the KEY_QUERY_VALUE access right. For more
+	 *            information, see Registry Key Security and Access Rights.
+	 * 
+	 * @param lpValueName
+	 *            The name of the registry value.
+	 * 
+	 * @param lpReserved
+	 *            This parameter is reserved and must be NULL.
+	 * 
+	 * @param lpType
+	 *            A pointer to a variable that receives a code indicating the
+	 *            type of data stored in the specified value. For a list of the
+	 *            possible type codes, see Registry Value Types. The lpType
+	 *            parameter can be NULL if the type code is not required.
+	 * 
+	 * @param lpData
+	 *            A pointer to a buffer that receives the value's data. This
+	 *            parameter can be NULL if the data is not required.
+	 * 
+	 * @param lpcbData
+	 *            A pointer to a variable that specifies the size of the buffer
+	 *            pointed to by the lpData parameter, in bytes. When the
+	 *            function returns, this variable contains the size of the data
+	 *            copied to lpData. The lpcbData parameter can be NULL only if
+	 *            lpData is NULL.
+	 * 
+	 * @return If the function succeeds, the return value is ERROR_SUCCESS. If
+	 *         the function fails, the return value is a system error code. If
+	 *         the lpData buffer is too small to receive the data, the function
+	 *         returns ERROR_MORE_DATA. If the lpValueName registry value does
+	 *         not exist, the function returns ERROR_FILE_NOT_FOUND.
+	 */
+	LONG RegQueryValueEx(
+	/* _In_ */HKEY hKey,
+	/* _In_opt_ */String lpValueName,
+	/* _Reserved_ */DWORDByReference lpReserved,
+	/* _Out_opt_ */DWORDByReference lpType,
+	/* _Out_opt_ */ByteByReference lpData,
+	/* _Inout_opt_ */DWORDByReference lpcbData);
 }

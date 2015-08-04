@@ -48,13 +48,13 @@ import v2.org.analysis.path.BPState;
 public class wsprintf extends Kernel32API {
 
 	public wsprintf() {
+		NUM_OF_PARMS = 0;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
+	public void execute() {
 		// TODO Auto-generated method stub
 		int dontknowhowtoimplementthisapi = 1;
-		return false;
 	}
 
 }

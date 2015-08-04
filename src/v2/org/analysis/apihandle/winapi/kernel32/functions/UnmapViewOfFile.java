@@ -42,25 +42,18 @@ public class UnmapViewOfFile extends Kernel32API {
 	 * 
 	 */
 	public UnmapViewOfFile() {
-
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Register register = env.getRegister();
-
-		// LPCVOID lpBaseAddress address where mapped view begins
-		Value x1 = stack.pop();
-		long t1 = ((LongValue) x1).getValue();
+	public void execute() {
+		long t1 = this.params.get(0);
 		System.out.println("Argument:" + t1);
 
 		Pointer lpBaseAddress = t1 != 0L ? new Pointer(t1) : Pointer.NULL;
 		boolean ret = Kernel32.INSTANCE.UnmapViewOfFile(lpBaseAddress);
 
 		register.mov("eax", new LongValue(ret ? 1 : 0));
-		return false;
 	}
 
 }

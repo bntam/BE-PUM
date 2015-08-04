@@ -29,16 +29,12 @@ import v2.org.analysis.value.Value;
 public class CreateThread extends Kernel32API {
 
 	public CreateThread() {
+		NUM_OF_PARMS = 6;
 	}
 
-	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
-		Program program = Program.getProgram();
 
+	@Override
+	public void execute() {
 		/*
 		 * LPSECURITY_ATTRIBUTES lpThreadAttributes, // pointer to thread
 		 * security attributes DWORD dwStackSize, // initial thread stack size,
@@ -47,16 +43,15 @@ public class CreateThread extends Kernel32API {
 		 * dwCreationFlags, // creation flags LPDWORD lpThreadId // pointer to
 		 * returned thread identifier
 		 */
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		Value x5 = stack.pop();
-		Value x6 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
+//		Value x1 = stack.pop();
+//		Value x2 = stack.pop();
+//		Value x3 = stack.pop();
+//		Value x4 = stack.pop();
+//		Value x5 = stack.pop();
+//		Value x6 = stack.pop();
+//		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
 
 		// Kernel32.INSTANCE.creat
-		return false;
 	}
 
 }

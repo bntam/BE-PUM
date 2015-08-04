@@ -14,18 +14,10 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves the date and time that a file or directory was created, last
@@ -66,50 +58,36 @@ import v2.org.analysis.value.Value;
 public class GetFileTime extends Kernel32API {
 
 	public GetFileTime() {
-
+		NUM_OF_PARMS = 4;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
 
-		Value x1 = stack.pop();
-		Value x2 = stack.pop();
-		Value x3 = stack.pop();
-		Value x4 = stack.pop();
-		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4);
+		HANDLE hFile = new HANDLE(new Pointer(t1));
+		FILETIME lpCreationTime = new FILETIME();
+		FILETIME lpLastAccessTime = new FILETIME();
+		FILETIME lpLastWriteTime = new FILETIME();
+		boolean ret = Kernel32.INSTANCE.GetFileTime(hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime);
 
-		if (x1 instanceof LongValue && x2 instanceof LongValue && x3 instanceof LongValue && x4 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-			long t2 = ((LongValue) x2).getValue();
-			long t3 = ((LongValue) x3).getValue();
-			long t4 = ((LongValue) x4).getValue();
+		register.mov("eax", new LongValue(ret ? 1 : 0));
 
-			HANDLE hFile = new HANDLE(new Pointer(t1));
-			FILETIME lpCreationTime = new FILETIME();
-			FILETIME lpLastAccessTime = new FILETIME();
-			FILETIME lpLastWriteTime = new FILETIME();
-			boolean ret = Kernel32.INSTANCE.GetFileTime(hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime);
-
-			register.mov("eax", new LongValue(ret ? 1 : 0));
-
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(
-					lpCreationTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 4), new LongValue(
-					lpCreationTime.dwHighDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
-					lpLastAccessTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 + 4), new LongValue(
-					lpLastAccessTime.dwHighDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
-					lpLastWriteTime.dwLowDateTime));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 + 4), new LongValue(
-					lpLastWriteTime.dwHighDateTime));
-		}
-		return false;
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(
+				lpCreationTime.dwLowDateTime));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 4), new LongValue(
+				lpCreationTime.dwHighDateTime));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
+				lpLastAccessTime.dwLowDateTime));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 + 4), new LongValue(
+				lpLastAccessTime.dwHighDateTime));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
+				lpLastWriteTime.dwLowDateTime));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 + 4), new LongValue(
+				lpLastWriteTime.dwHighDateTime));
 	}
 
 }

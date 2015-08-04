@@ -54,41 +54,30 @@ import v2.org.analysis.value.Value;
 public class TranslateMessage extends User32API {
 
 	public TranslateMessage() {
+		NUM_OF_PARMS = 1;
 	}
 
 	@Override
-	public boolean execute(AbsoluteAddress address, String funcName, BPState curState, Instruction inst) {
-		Environment env = curState.getEnvironement();
-		Stack stack = env.getStack();
-		Memory memory = env.getMemory();
-		Register register = env.getRegister();
+	public void execute() {
+		long t1 = this.params.get(0);
 
-		Value x1 = stack.pop();
-		System.out.println("Argument:" + x1);
+		MSG lpMsg = new MSG();
+		lpMsg.hWnd = new HWND(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
+				DataType.INT32, t1))).getValue()));
+		lpMsg.message = (int) ((LongValue) memory
+				.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4))).getValue();
+		lpMsg.wParam = new WPARAM(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+				t1 += 4))).getValue());
+		lpMsg.lParam = new LPARAM(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+				t1 += 4))).getValue());
+		lpMsg.time = (int) ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4)))
+				.getValue();
+		lpMsg.pt = new POINT((int) ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
+				t1 += 4))).getValue(), (int) ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
+				DataType.INT32, t1 += 4))).getValue());
 
-		if (x1 instanceof LongValue) {
-			long t1 = ((LongValue) x1).getValue();
-
-			MSG lpMsg = new MSG();
-			lpMsg.hWnd = new HWND(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t1))).getValue()));
-			lpMsg.message = (int) ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t1 += 4))).getValue();
-			lpMsg.wParam = new WPARAM(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t1 += 4))).getValue());
-			lpMsg.lParam = new LPARAM(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t1 += 4))).getValue());
-			lpMsg.time = (int) ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t1 += 4))).getValue();
-			lpMsg.pt = new POINT((int) ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-					DataType.INT32, t1 += 4))).getValue(),
-					(int) ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4)))
-							.getValue());
-
-			BOOL ret = User32DLL.INSTANCE.TranslateMessage(lpMsg);
-			register.mov("eax", new LongValue(ret.longValue()));
-		}
-		return false;
+		BOOL ret = User32DLL.INSTANCE.TranslateMessage(lpMsg);
+		register.mov("eax", new LongValue(ret.longValue()));
 	}
 
 }
