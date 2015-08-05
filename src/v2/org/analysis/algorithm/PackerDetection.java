@@ -5,10 +5,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.jakstab.Program;
+import org.jakstab.util.Characters;
+
+import com.sun.jna.WString;
+
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.cfg.BPCFG;
+import v2.org.analysis.statistics.FileProcess;
 
 public class PackerDetection {
 
 	private PackerTechniques techniques;
+	
+	private String detectViaHeader;
+	private String detectViaBEPUM;
 	
 	public PackerDetection ()
 	{
@@ -17,7 +27,7 @@ public class PackerDetection {
 	
 	public void packedBy ()
 	{
-		String packedby = "File packed by ";
+		String packedby = "File is packed by ";
 		String pTech = techniques.getDetailTechniques();
 		packedby += (pTech.equals(PackerConstants.UPX)) 		? "UPX ": "";
 		packedby += (pTech.equals(PackerConstants.FSG)) 		? "FSG ": "";
@@ -27,6 +37,9 @@ public class PackerDetection {
 		packedby += (pTech.equals(PackerConstants.YODA)) 		? "YODA ": "";
 		packedby += (pTech.equals(PackerConstants.ASPACK)) 		? "ASPACK ": "";
 		System.out.println(packedby);
+		
+		this.detectViaBEPUM = pTech + "-" 
+							+ packedby.substring(new String("File is packed by ").length());
 	}
 	
 	public PackerTechniques getTechniques ()
@@ -54,57 +67,57 @@ public class PackerDetection {
 			e.printStackTrace();
 		}
 		
-		String packedby = "File is packed by ";
 		// UPX
 		if (detectWithPacker(dataString, PackerConstants.hUPX, byteEP))
 		{
-			packedby += "UPX";
-			System.out.println(packedby);
+			isPackedBy("UPX");
 			return;
 		}
 		// FSG
 		if (detectWithPacker(dataString, PackerConstants.hFSG, byteEP))
 		{
-			packedby += "FSG";
-			System.out.println(packedby);
+			isPackedBy("FSG");
 			return;
 		}
 		// PECOMPACT
 		if (detectWithPacker(dataString, PackerConstants.hPECOMPACT, byteEP))
 		{
-			packedby += "PECOMPACT";
-			System.out.println(packedby);
+			isPackedBy("PECOMPACT");
 			return;
 		}
 		// PETITE
 		if (detectWithPacker(dataString, PackerConstants.hPETITE, byteEP))
 		{
-			packedby += "PETITE";
-			System.out.println(packedby);
+			isPackedBy("PETITE");
 			return;
 		}
 		// YODA
 		if (detectWithPacker(dataString, PackerConstants.hYODA, byteEP))
 		{
-			packedby += "YODA";
-			System.out.println(packedby);
+			isPackedBy("YODA");
 			return;
 		}
 		// ASPACK
 		if (detectWithPacker(dataString, PackerConstants.hASPACK, byteEP))
 		{
-			packedby += "ASPACK";
-			System.out.println(packedby);
+			isPackedBy("ASPACK");
 			return;
 		}
 		//NPACK
 		if (detectWithPacker(dataString, PackerConstants.hNPACK, byteEP))
 		{
-			packedby += "NPACK";
-			System.out.println(packedby);
+			isPackedBy("NPACK");
 			return;
 		}
 	}
+	
+	private void isPackedBy(String packerName)
+	{
+		String packedby = "File is packed by " + packerName;
+		System.out.println(packedby);
+		this.detectViaHeader = packedby.substring(new String("File is packed by ").length());
+	}
+	
 	
 	private boolean detectWithPacker (String[] dataString, String[] hPacker, String byteEP)
 	{
@@ -152,6 +165,38 @@ public class PackerDetection {
 			}
 		}
 		return true;
+	}
+	
+	public void setToLog (Program prog, OTFModelGeneration otfMG)
+	{
+		BPCFG cfg = prog.getBPCFG();
+
+		FileProcess packerResultFile = prog.getPackerResultFile();
+
+		Kernel32DLL.INSTANCE.SetCurrentDirectory(new WString(System.getProperty("user.dir")));
+		
+		String fileName = prog.getFileName();
+		String viaHeader = this.detectViaHeader;
+		String viaBEPUM = this.detectViaBEPUM;
+		String nodes = String.format("%8d", cfg.getVertexCount());
+		String edges = String.format("%8d", cfg.getEdgeCount());
+		String times = Long.toString(prog.GetAnalyzingTime());
+		String convergence = otfMG.isCompleted() ? "x": " ";
+		
+		String result = fileName + "\t" + viaHeader + "\t";
+		for(int i = 0; i < viaBEPUM.split("-")[0].length(); i++)
+		{
+			if (viaBEPUM.split("-")[0].charAt(i) == '1')
+				result += ("x" + "\t");
+			else result += (" " + "\t");
+		}
+		result += (viaBEPUM.split("-")[1] + "\t"
+				+ nodes + "\t"
+				+ edges + "\t"
+				+ times + "\t"
+				+ convergence + "\t");
+		
+		packerResultFile.appendFile(result);
 	}
 	
 }
