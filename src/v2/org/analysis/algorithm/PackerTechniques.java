@@ -2,15 +2,15 @@ package v2.org.analysis.algorithm;
 
 public class PackerTechniques {
 	
-	private boolean packing_unpacking; //x	
+	private boolean packing_unpacking;	
 	private boolean overwriting;	
-	private boolean indirect_jump; //x	
+	private boolean indirect_jump; 	
 	private boolean obfuscated_const;	
 	private boolean overlapping;	
 	private boolean code_chunking;	
 	private boolean stolen_bytes;	
 	private boolean checksumming;	
-	private boolean SEHs; //x
+	private boolean SEHs; 
 	private boolean two_APIs;
 	private boolean anti_debugging;	
 

@@ -121,6 +121,7 @@ public final class Program {
 	final static String resultFileTXT = "data/data/Result.txt";
 	final static String resultFileTempTXT = "data/data/Result_Temp.txt";
 	final static String fullResultFileTXT = "data/data/fullResult.txt";
+	final static String packerResultFileTXT = "data/data/packerResult.txt";
 	static final int MAX_BYTE_PER_INSTRUCTION = 15;
 
 	/**
@@ -156,13 +157,15 @@ public final class Program {
 	private StubProvider stubLibrary;
 	private Harness harness;
 	Disassembler disassembler;
-	private FileProcess resultFile, fullResultFile, resultFile_Temp;
+	private FileProcess resultFile, fullResultFile, resultFile_Temp, packerResultFile;
 	private TargetOS targetOS;
 
 	private Instruction analyzedInstruction = null;;
 	
 	// PHONG - 20150724
 	private PackerDetection pDetection;
+	
+	private long analyzingTime;
 	
 	private Program(Architecture arch) {
 		this.arch = arch;
@@ -186,6 +189,7 @@ public final class Program {
 		setResultFile(new FileProcess(resultFileTXT));
 		setFullResultFile(new FileProcess(fullResultFileTXT));
 		setResultFileTemp(new FileProcess(resultFileTempTXT));
+		setPackerResultFile(new FileProcess(packerResultFileTXT));
 		
 		pDetection = new PackerDetection();
 	}
@@ -2053,5 +2057,23 @@ public final class Program {
 	public PackerDetection getDetection()
 	{
 		return pDetection;
+	}
+	
+	public void setPackerResultFile(FileProcess packerResultFile) {
+		this.packerResultFile = packerResultFile;
+	}
+	
+	public FileProcess getPackerResultFile() {
+		return packerResultFile;
+	}
+	
+	public void SetAnalyzingTime (long time)
+	{
+		this.analyzingTime = time;
+	}
+	
+	public long GetAnalyzingTime ()
+	{
+		return this.analyzingTime;
 	}
 }

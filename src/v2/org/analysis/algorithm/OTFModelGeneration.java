@@ -37,8 +37,8 @@ public class OTFModelGeneration implements Algorithm {
 
 	// private static final Logger logger =
 	// Logger.getLogger(CPAAlgorithm.class);
-	// private static long maxTimeProgam = 2500000;
-	//private static long maxTimePath = 1500000;
+	private static long maxTimeProgam = 2500000;
+	private static long maxTimePath = 1500000;
 	//private static long bkTime = 2700000;
 	private static long outTime = 180000;
 	// For Debug
@@ -108,18 +108,18 @@ public class OTFModelGeneration implements Algorithm {
 
 		// PHONG - 20150801 /////////////////////////////
 		// Packer Detection via Header
-		System.out.println("================PACKER DETECTION======================");
+		System.out.println("================PACKER DETECTION VIA HEADER ======================");
 		program.getDetection().detectViaHeader(program);
-		System.out.println("======================================================");
+		System.out.println("==================================================================");
 		/////////////////////////////////////////////////
 		
 		while (!pathList.isEmpty()) {
-			/*
-			 * if (System.currentTimeMillis() - overallStartTime >
-			 * maxTimeProgram) { System.out.println("Stop Program after " +
-			 * maxTimeProgram); overallStartTime = System.currentTimeMillis();
-			 * // break; }
-			 */
+			
+			if (System.currentTimeMillis() - overallStartTime > maxTimeProgam) { 
+				System.out.println("Stop Program after " + maxTimeProgam); 
+				overallStartTime = System.currentTimeMillis();
+				break;
+			}
 
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
@@ -191,12 +191,10 @@ public class OTFModelGeneration implements Algorithm {
 			}
 		}
 		// PHONG - 20150724
-		/*
-		System.out.println("================PACKER DETECTION======================");
+		System.out.println("================PACKER DETECTION VIA OTF======================");
 		System.out.println(program.getDetection().getTechniques().getDetailTechniques());
 		program.getDetection().packedBy();
-		System.out.println("======================================================");
-		*/
+		System.out.println("==============================================================");
 	}
 
 	private void backupState(BPState curState) {
