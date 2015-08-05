@@ -14,6 +14,7 @@ import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.*;
 import com.sun.jna.platform.win32.WinUser.MSG;
 import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
+import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
@@ -811,4 +812,35 @@ public interface User32DLL extends StdCallLibrary {
 	/* _In_ */UINT uMsg,
 	/* _In_ */WPARAM wParam,
 	/* _In_ */LPARAM lParam);
+
+	/**
+	 * Copies the text of the specified window's title bar (if it has one) into
+	 * a buffer. If the specified window is a control, the text of the control
+	 * is copied. However, GetWindowText cannot retrieve the text of a control
+	 * in another application.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window or control containing the text.
+	 * 
+	 * @param lpString
+	 *            The buffer that will receive the text. If the string is as
+	 *            long or longer than the buffer, the string is truncated and
+	 *            terminated with a null character.
+	 * 
+	 * @param nMaxCount
+	 *            The maximum number of characters to copy to the buffer,
+	 *            including the null character. If the text exceeds this limit,
+	 *            it is truncated.
+	 * 
+	 * @return If the function succeeds, the return value is the length, in
+	 *         characters, of the copied string, not including the terminating
+	 *         null character. If the window has no title bar or text, if the
+	 *         title bar is empty, or if the window or control handle is
+	 *         invalid, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	int GetWindowText(
+	/* _In_ */HWND hWnd,
+	/* _Out_ */char[] lpString,
+	/* _In_ */int nMaxCount);
 }

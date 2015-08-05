@@ -15,7 +15,9 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure.ByReference;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
+import com.sun.jna.platform.win32.GDI32;
 import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.Ole32;
 import com.sun.jna.platform.win32.Shell32;
 import com.sun.jna.platform.win32.Shell32Util;
 import com.sun.jna.platform.win32.ShellAPI;
@@ -347,6 +349,10 @@ public class Test {
 		// }
 		// }
 
+//Kernel32.INSTANCE.GetT
+//		User32.INSTANCE.SetFocus(hWnd)
+//		Ole32.INSTANCE.
+//Shell32.INSTANCE.SHG
 		BOOL retz = Kernel32DLL.INSTANCE.AreFileApisANSI();
 		System.out.println(retz.booleanValue());
 

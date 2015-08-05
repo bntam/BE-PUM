@@ -1,13 +1,12 @@
 package v2.org.analysis.apihandle.winapi.msvcrt;
 
-import v2.org.analysis.apihandle.winapi.structures.PointerByRefByRef;
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
-import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
-
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
+import com.sun.jna.WString;
 import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
+import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.win32.StdCallLibrary;
@@ -197,4 +196,118 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *            number generator algorithm.
 	 */
 	void srand(int seed);
+
+	/**
+	 * Sets the current application type.
+	 * 
+	 * @param at
+	 *            A value that indicates the application type. The possible
+	 *            values are:
+	 * 
+	 *            _UNKNOWN_APP Unknown application type.
+	 * 
+	 *            _CONSOLE_APP Console (command-line) application.
+	 * 
+	 *            _GUI_APP GUI (Windows) application.
+	 */
+	void __set_app_type(int at);
+
+	/**
+	 * Points to the _fmode global variable, which specifies the default file
+	 * translation mode for file I/O operations.
+	 * 
+	 * @return Pointer to the _fmode global variable.
+	 */
+	IntByReference __p__fmode();
+
+	/**
+	 * Sets the file translation mode.
+	 * 
+	 * @param fd
+	 *            File descriptor.
+	 * 
+	 * @param mode
+	 *            New translation mode.
+	 * 
+	 * @return If successful, returns the previous translation mode. If invalid
+	 *         parameters are passed to this function, the invalid-parameter
+	 *         handler is invoked, as described in Parameter Validation. If
+	 *         execution is allowed to continue, this function returns –1 and
+	 *         sets errno to either EBADF, which indicates an invalid file
+	 *         descriptor, or EINVAL, which indicates an invalid mode argument.
+	 */
+	int _setmode(int fd, int mode);
+
+	/**
+	 * Allocate memory block
+	 * 
+	 * Allocates a block of size bytes of memory, returning a pointer to the
+	 * beginning of the block.
+	 * 
+	 * The content of the newly allocated block of memory is not initialized,
+	 * remaining with indeterminate values.
+	 * 
+	 * If size is zero, the return value depends on the particular library
+	 * implementation (it may or may not be a null pointer), but the returned
+	 * pointer shall not be dereferenced.
+	 * 
+	 * @param size
+	 *            Size of the memory block, in bytes. size_t is an unsigned
+	 *            integral type.
+	 * 
+	 * @return On success, a pointer to the memory block allocated by the
+	 *         function. The type of this pointer is always void*, which can be
+	 *         cast to the desired type of data pointer in order to be
+	 *         dereferenceable. If the function failed to allocate the requested
+	 *         block of memory, a null pointer is returned.
+	 */
+	Pointer malloc(SIZE_T size);
+
+	/**
+	 * Performs cleanup operations and returns without terminating the process.
+	 */
+	void _cexit();
+
+	/**
+	 * Points to the _commode global variable, which specifies the default file
+	 * commit mode for file I/O operations.
+	 * 
+	 * @return Pointer to the _commode global variable.
+	 */
+	IntByReference __p__commode();
+
+	/**
+	 * Gets and sets the floating-point control word. A more secure version of
+	 * _controlfp is available; see _controlfp_s.
+	 * 
+	 * @param nnew
+	 *            New control-word bit values.
+	 * 
+	 * @param mask
+	 *            Mask for new control-word bits to set.
+	 * 
+	 * @return For _control87 and _controlfp, the bits in the value returned
+	 *         indicate the floating-point control state. For a complete
+	 *         definition of the bits that are returned by _control87, see
+	 *         FLOAT.H.
+	 */
+	UINT _controlfp(UINT nnew, UINT mask);
+
+	/**
+	 * Converts an integer to a string. More secure versions of these functions
+	 * are available
+	 * 
+	 * @param value
+	 *            Number to be converted.
+	 * 
+	 * @param str
+	 *            String result.
+	 * 
+	 * @param radix
+	 *            Base of value; which must be in the range 2–36.
+	 * 
+	 * @return Each of these functions returns a pointer to str. There is no
+	 *         error return.
+	 */
+	WString _itow(int value, WString str, int radix);
 }

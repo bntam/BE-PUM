@@ -3057,4 +3057,39 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         using the OEM code page, the return value is zero.
 	 */
 	BOOL AreFileApisANSI();
+
+	/**
+	 * Multiplies two 32-bit values and then divides the 64-bit result by a
+	 * third 32-bit value. The final result is rounded to the nearest integer.
+	 * 
+	 * @param nNumber
+	 *            The multiplicand.
+	 * 
+	 * @param nNumerator
+	 *            The multiplier.
+	 * 
+	 * @param nDenominator
+	 *            The number by which the result of the multiplication operation
+	 *            is to be divided.
+	 * 
+	 * @return If the function succeeds, the return value is the result of the
+	 *         multiplication and division, rounded to the nearest integer. If
+	 *         the result is a positive half integer (ends in .5), it is rounded
+	 *         up. If the result is a negative half integer, it is rounded down.
+	 *         If either an overflow occurred or nDenominator was 0, the return
+	 *         value is -1.
+	 */
+	int MulDiv(
+	/* _In_ */int nNumber,
+	/* _In_ */int nNumerator,
+	/* _In_ */int nDenominator);
+
+	/**
+	 * Returns the locale identifier of the current locale for the calling
+	 * thread.
+	 * 
+	 * @return Returns the locale identifier of the locale associated with the
+	 *         current thread.
+	 */
+	LCID GetThreadLocale();
 }
