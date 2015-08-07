@@ -706,7 +706,7 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         terminating null character.
 	 */
 	DWORD GetCurrentDirectory(/* _In_ */DWORD nBufferLength, /* _Out_ */
-			char[] lpBuffer);
+			char[] lpBuffer); // char type has been verified
 
 	/**
 	 * Retrieves the path of the system directory. The system directory contains
@@ -2737,6 +2737,17 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	int wsprintf(/* _Out_ */char[] lpOut, /* _In_ */String lpFmt, /* _In_ */long[] args);
 
+	/**
+	 * 
+	 * @param dwFlags
+	 * @param pMessage
+	 * @param dwMessageId
+	 * @param dwLanguageId
+	 * @param lpBuffer
+	 * @param nSize
+	 * @param pArgs
+	 * @return
+	 */
 	DWORD FormatMessageW(
 	/* _In_ */DWORD dwFlags,
 	/* _In_opt_ */String pMessage,
@@ -3092,4 +3103,37 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         current thread.
 	 */
 	LCID GetThreadLocale();
+
+	/**
+	 * Releases ownership of the specified critical section object.
+	 * 
+	 * @param lpCriticalSection
+	 *            A pointer to the critical section object.
+	 */
+	void LeaveCriticalSection(/* _Inout_ */RTL_CRITICAL_SECTION lpCriticalSection);
+
+	/**
+	 * Retrieves a copy of the character string associated with the specified
+	 * global atom.
+	 * 
+	 * @param nAtom
+	 *            The global atom associated with the character string to be
+	 *            retrieved.
+	 * 
+	 * @param lpBuffer
+	 *            The buffer for the character string.
+	 * 
+	 * @param nSize
+	 *            The size, in characters, of the buffer.
+	 * 
+	 * @return If the function succeeds, the return value is the length of the
+	 *         string copied to the buffer, in characters, not including the
+	 *         terminating null character. If the function fails, the return
+	 *         value is zero. To get extended error information, call
+	 *         GetLastError.
+	 */
+	UINT GlobalGetAtomName(
+	/* _In_ */ATOM nAtom,
+	/* _Out_ */char[] lpBuffer,
+	/* _In_ */int nSize);
 }

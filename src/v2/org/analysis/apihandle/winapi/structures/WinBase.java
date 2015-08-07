@@ -263,7 +263,7 @@ public interface WinBase extends StdCallLibrary, WinDef, BaseTSD {
 		public WORD nErrCode;
 		public WORD Reserved1;
 		public WORD Reserved2;
-		public char szPathName[] = new char[128];
+		public byte szPathName[] = new byte[128];
 
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "cBytes", "fFixedDisk", "nErrCode", "Reserved1", "Reserved2",

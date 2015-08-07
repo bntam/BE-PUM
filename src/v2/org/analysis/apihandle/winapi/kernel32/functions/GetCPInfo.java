@@ -44,7 +44,6 @@ public class GetCPInfo extends Kernel32API {
 		NUM_OF_PARMS = 2;
 	}
 
-
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
@@ -58,12 +57,14 @@ public class GetCPInfo extends Kernel32API {
 
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
 				new LongValue(lpCPInfo.MaxCharSize.longValue()));
-		memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(lpCPInfo.DefaultChar[0]));
-		memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1), new LongValue(lpCPInfo.DefaultChar[1]));
+		memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1),
+				new LongValue(lpCPInfo.DefaultChar[0].longValue()));
+		memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1),
+				new LongValue(lpCPInfo.DefaultChar[1].longValue()));
 
 		for (int i = 0; i < 12; i++) {
 			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 + 1 + i), new LongValue(
-					lpCPInfo.LeadByte[i]));
+					lpCPInfo.LeadByte[i].longValue()));
 		}
 	}
 

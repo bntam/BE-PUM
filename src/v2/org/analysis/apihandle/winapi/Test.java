@@ -47,12 +47,14 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
-import v2.org.analysis.apihandle.winapi.structures.PointerByRefByRef;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.PROCESS_BASIC_INFORMATION;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.WinSock.WSADATA;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
+import v2.org.analysis.apihandle.winapi.ws2_32.Ws2_32DLL;
+import v2.org.analysis.apihandle.winapi.ws2_32.functions.WSAStartup;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.Memory;
@@ -348,13 +350,11 @@ public class Test {
 		// break;
 		// }
 		// }
-
-//Kernel32.INSTANCE.GetT
-//		User32.INSTANCE.SetFocus(hWnd)
-//		Ole32.INSTANCE.
-//Shell32.INSTANCE.SHG
-		BOOL retz = Kernel32DLL.INSTANCE.AreFileApisANSI();
-		System.out.println(retz.booleanValue());
+		
+//		 Kernel32.INSTANCE.Gl
+		// User32.INSTANCE.SetFocus(hWnd)
+		// Ole32.INSTANCE.
+		// Shell32.INSTANCE.SHG
 
 		// DWORDByReference lpdwProcessId = new DWORDByReference();
 		// x =

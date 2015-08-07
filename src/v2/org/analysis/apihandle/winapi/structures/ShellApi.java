@@ -8,7 +8,7 @@ import com.sun.jna.Structure;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HICON;
 
-public interface shellapi {
+public interface ShellApi {
 
 	public static class SHFILEINFO extends Structure {
 		public HICON hIcon; // out: icon

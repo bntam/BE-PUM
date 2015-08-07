@@ -7,7 +7,7 @@
  */
 package v2.org.analysis.apihandle.winapi.shell32;
 
-import v2.org.analysis.apihandle.winapi.structures.shellapi.SHFILEINFO;
+import v2.org.analysis.apihandle.winapi.structures.ShellApi.SHFILEINFO;
 
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.BaseTSD.DWORD_PTR;

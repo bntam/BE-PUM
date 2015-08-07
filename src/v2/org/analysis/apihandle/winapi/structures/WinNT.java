@@ -91,8 +91,8 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 
 	public class CPINFO extends Structure {
 		public UINT MaxCharSize = new UINT(); // max length (in bytes) of a char
-		public char DefaultChar[] = new char[2]; // default character
-		public char LeadByte[] = new char[12]; // lead byte ranges
+		public BYTE DefaultChar[] = new BYTE[2]; // default character
+		public BYTE LeadByte[] = new BYTE[12]; // lead byte ranges
 
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "MaxCharSize", "DefaultChar", "LeadByte" });
@@ -394,12 +394,12 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 	}
 
 	public static class EXCEPTION_RECORD extends Structure {
-		DWORD ExceptionCode;
-		DWORD ExceptionFlags;
-		EXCEPTION_RECORD ExceptionRecord;
-		PVOID ExceptionAddress;
-		DWORD NumberParameters;
-		ULONG_PTR ExceptionInformation[] = new ULONG_PTR[EXCEPTION_MAXIMUM_PARAMETERS];
+		public DWORD ExceptionCode;
+		public DWORD ExceptionFlags;
+		public EXCEPTION_RECORD ExceptionRecord;
+		public PVOID ExceptionAddress;
+		public DWORD NumberParameters;
+		public ULONG_PTR ExceptionInformation[] = new ULONG_PTR[EXCEPTION_MAXIMUM_PARAMETERS];
 
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "ExceptionCode", "ExceptionFlags", "ExceptionRecord",
