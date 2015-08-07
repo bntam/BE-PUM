@@ -3136,4 +3136,32 @@ public interface Kernel32DLL extends StdCallLibrary {
 	/* _In_ */ATOM nAtom,
 	/* _Out_ */char[] lpBuffer,
 	/* _In_ */int nSize);
+
+	/**
+	 * Waits until either a time-out interval elapses or an instance of the
+	 * specified named pipe is available for connection (that is, the pipe's
+	 * server process has a pending ConnectNamedPipe operation on the pipe).
+	 * 
+	 * @param lpNamedPipeName
+	 *            The name of the named pipe. The string must include the name
+	 *            of the computer on which the server process is executing. A
+	 *            period may be used for the servername if the pipe is local.
+	 *            The following pipe name format is used:
+	 *            \\servername\pipe\pipename
+	 * 
+	 * @param nTimeOut
+	 *            The number of milliseconds that the function will wait for an
+	 *            instance of the named pipe to be available. You can used one
+	 *            of the following values instead of specifying a number of
+	 *            milliseconds.
+	 * 
+	 * @return If an instance of the pipe is available before the time-out
+	 *         interval elapses, the return value is nonzero. If an instance of
+	 *         the pipe is not available before the time-out interval elapses,
+	 *         the return value is zero. To get extended error information, call
+	 *         GetLastError.
+	 */
+	BOOL WaitNamedPipe(
+	/* _In_ */String lpNamedPipeName,
+	/* _In_ */DWORD nTimeOut);
 }

@@ -14,9 +14,11 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure.ByReference;
 import com.sun.jna.WString;
+import com.sun.jna.platform.win32.Advapi32;
 import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
 import com.sun.jna.platform.win32.GDI32;
 import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.Msi;
 import com.sun.jna.platform.win32.Ole32;
 import com.sun.jna.platform.win32.Shell32;
 import com.sun.jna.platform.win32.Shell32Util;
@@ -44,6 +46,7 @@ import com.sun.jna.ptr.PointerByReference;
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
+import v2.org.analysis.apihandle.winapi.mscoree.MsCorEEDLL;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
@@ -351,10 +354,14 @@ public class Test {
 		// }
 		// }
 		
+//		x = MsCorEEDLL.INSTANCE._CorExeMain();
+//		if (x > 0)
+//			System.out.println(x);
 //		 Kernel32.INSTANCE.Gl
-		// User32.INSTANCE.SetFocus(hWnd)
+//		 User32.INSTANCE.De
 		// Ole32.INSTANCE.
 		// Shell32.INSTANCE.SHG
+//		Advapi32.INSTANCE.OpenThreadToken(ThreadHandle, DesiredAccess, OpenAsSelf, TokenHandle)
 
 		// DWORDByReference lpdwProcessId = new DWORDByReference();
 		// x =

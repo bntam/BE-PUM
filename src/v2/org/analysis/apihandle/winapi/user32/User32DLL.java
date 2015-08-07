@@ -843,4 +843,18 @@ public interface User32DLL extends StdCallLibrary {
 	/* _In_ */HWND hWnd,
 	/* _Out_ */char[] lpString,
 	/* _In_ */int nMaxCount);
+
+	/**
+	 * Sets the caret blink time to the specified number of milliseconds. The
+	 * blink time is the elapsed time, in milliseconds, required to invert the
+	 * caret's pixels.
+	 * 
+	 * @param uMSeconds
+	 *            The new blink time, in milliseconds.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL SetCaretBlinkTime(/* _In_ */UINT uMSeconds);
 }

@@ -35,7 +35,7 @@ import java.util.Map;
 //import v2.org.analysis.apihandle.be_pum.winapi.kernel32.Kernel32Stub;
 
 public class APIHandle {
-	private static HashMap<String, HashMap<String, String>> libMapping = new HashMap<String, HashMap<String, String>>();
+	private static HashMap<String, String> apiMapping = new HashMap<String, String>();
 	private static boolean init = false;
 	public static Map<Long, String> libraryHandle = new HashMap<Long, String>();
 	public static Map<Long, String> processAddressHandle = new HashMap<Long, String>();
@@ -67,8 +67,8 @@ public class APIHandle {
 
 					// make sure it's element node.
 					if (DLLNode.getNodeType() == Node.ELEMENT_NODE) {
-						HashMap<String, String> apiHashMap = new HashMap<String, String>();
-						libMapping.put(DLLNode.getAttributes().item(0).getNodeValue(), apiHashMap);
+//						HashMap<String, String> apiHashMap = new HashMap<String, String>();
+//						apiMapping.put(DLLNode.getAttributes().item(0).getNodeValue(), apiHashMap);
 						// get attributes names and values
 						NodeList APIList = DLLNode.getChildNodes();
 
@@ -78,7 +78,7 @@ public class APIHandle {
 							if (apiNode.getNodeType() == Node.ELEMENT_NODE && apiNode.hasAttributes()) {
 								// get attributes names and values
 								NamedNodeMap apiMap = apiNode.getAttributes();
-								apiHashMap.put(apiMap.getNamedItem("funcName").getNodeValue(),
+								apiMapping.put(apiMap.getNamedItem("funcName").getNodeValue(),
 										apiMap.getNamedItem("className").getNodeValue());
 								// if
 								// (apiMap.getNamedItem("funcName").getNodeValue().equals(funcName))
@@ -109,10 +109,10 @@ public class APIHandle {
 	private static String findClassName(String funcName, String libName) {
 		init();
 		String fullClassName = null;
-		HashMap<String, String> apiMap = libMapping.get(libName);
-		if (apiMap == null)
-			return null;
-		fullClassName = apiMap.get(funcName);
+//		String apiMap = apiMapping.get(libName);
+//		if (apiMap == null)
+//			return null;
+		fullClassName = apiMapping.get(funcName);
 		return fullClassName;
 	}
 

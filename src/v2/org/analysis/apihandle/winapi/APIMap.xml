@@ -25,6 +25,9 @@
 		<API funcName="cryptreleasecontext" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
 		<API funcName="cryptreleasecontexta" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
 		<API funcName="cryptreleasecontextw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
+		<API funcName="openthreadtoken" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenThreadToken" />
+		<API funcName="openthreadtokena" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenThreadToken" />
+		<API funcName="openthreadtokenw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenThreadToken" />
 		<API funcName="regclosekey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
 		<API funcName="regclosekeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
 		<API funcName="regclosekeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
@@ -34,11 +37,30 @@
 		<API funcName="regopenkeyex" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKeyEx" />
 		<API funcName="regopenkeyexa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKeyEx" />
 		<API funcName="regopenkeyexw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKeyEx" />
+		<API funcName="regqueryvalueex" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegQueryValueEx" />
+		<API funcName="regqueryvalueexa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegQueryValueEx" />
+		<API funcName="regqueryvalueexw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegQueryValueEx" />
 		<API funcName="regsetvalueex" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegSetValueEx" />
 		<API funcName="regsetvalueexa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegSetValueEx" />
 		<API funcName="regsetvalueexw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegSetValueEx" />
 	</DLL>
+	<DLL name="comctl32">
+		<API funcName="initcommoncontrols" className="v2.org.analysis.apihandle.winapi.comctl32.functions.InitCommonControls" />
+		<API funcName="initcommoncontrolsa" className="v2.org.analysis.apihandle.winapi.comctl32.functions.InitCommonControls" />
+		<API funcName="initcommoncontrolsw" className="v2.org.analysis.apihandle.winapi.comctl32.functions.InitCommonControls" />
+	</DLL>
+	<DLL name="gdi32">
+		<API funcName="animatepalette" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
+		<API funcName="animatepalettea" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
+		<API funcName="animatepalettew" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
+		<API funcName="getdevicecaps" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
+		<API funcName="getdevicecapsa" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
+		<API funcName="getdevicecapsw" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
+	</DLL>
 	<DLL name="kernel32">
+		<API funcName="arefileapisansi" className="v2.org.analysis.apihandle.winapi.kernel32.functions.AreFileApisANSI" />
+		<API funcName="arefileapisansia" className="v2.org.analysis.apihandle.winapi.kernel32.functions.AreFileApisANSI" />
+		<API funcName="arefileapisansiw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.AreFileApisANSI" />
 		<API funcName="closehandle" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CloseHandle" />
 		<API funcName="closehandlea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CloseHandle" />
 		<API funcName="closehandlew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CloseHandle" />
@@ -261,6 +283,9 @@
 		<API funcName="gettemppath" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTempPath" />
 		<API funcName="gettemppatha" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTempPath" />
 		<API funcName="gettemppathw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTempPath" />
+		<API funcName="getthreadlocale" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadLocale" />
+		<API funcName="getthreadlocalea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadLocale" />
+		<API funcName="getthreadlocalew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadLocale" />
 		<API funcName="gettickcount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTickCount" />
 		<API funcName="gettickcounta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTickCount" />
 		<API funcName="gettickcountw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTickCount" />
@@ -270,6 +295,9 @@
 		<API funcName="getversionex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVersionEx" />
 		<API funcName="getversionexa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVersionEx" />
 		<API funcName="getversionexw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVersionEx" />
+		<API funcName="getvolumeinformation" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVolumeInformation" />
+		<API funcName="getvolumeinformationa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVolumeInformation" />
+		<API funcName="getvolumeinformationw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVolumeInformation" />
 		<API funcName="getwindowsdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetWindowsDirectory" />
 		<API funcName="getwindowsdirectorya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetWindowsDirectory" />
 		<API funcName="getwindowsdirectoryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetWindowsDirectory" />
@@ -279,6 +307,9 @@
 		<API funcName="globalfree" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalFree" />
 		<API funcName="globalfreea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalFree" />
 		<API funcName="globalfreew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalFree" />
+		<API funcName="globalgetatomname" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalGetAtomName" />
+		<API funcName="globalgetatomnamea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalGetAtomName" />
+		<API funcName="globalgetatomnamew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalGetAtomName" />
 		<API funcName="globallock" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalLock" />
 		<API funcName="globallocka" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalLock" />
 		<API funcName="globallockw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalLock" />
@@ -315,9 +346,15 @@
 		<API funcName="lcmapstring" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LCMapString" />
 		<API funcName="lcmapstringa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LCMapString" />
 		<API funcName="lcmapstringw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LCMapString" />
+		<API funcName="leavecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LeaveCriticalSection" />
+		<API funcName="leavecriticalsectiona" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LeaveCriticalSection" />
+		<API funcName="leavecriticalsectionw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LeaveCriticalSection" />
 		<API funcName="loadlibrary" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary" />
 		<API funcName="loadlibrarya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary" />
 		<API funcName="loadlibraryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary" />
+		<API funcName="loadlibraryex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibraryEx" />
+		<API funcName="loadlibraryexa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibraryEx" />
+		<API funcName="loadlibraryexw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibraryEx" />
 		<API funcName="loadresource" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadResource" />
 		<API funcName="loadresourcea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadResource" />
 		<API funcName="loadresourcew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LoadResource" />
@@ -360,6 +397,9 @@
 		<API funcName="movefile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MoveFile" />
 		<API funcName="movefilea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MoveFile" />
 		<API funcName="movefilew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MoveFile" />
+		<API funcName="muldiv" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MulDiv" />
+		<API funcName="muldiva" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MulDiv" />
+		<API funcName="muldivw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MulDiv" />
 		<API funcName="multibytetowidechar" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MultiByteToWideChar" />
 		<API funcName="multibytetowidechara" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MultiByteToWideChar" />
 		<API funcName="multibytetowidecharw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MultiByteToWideChar" />
@@ -480,6 +520,9 @@
 		<API funcName="tlssetvalue" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TlsSetValue" />
 		<API funcName="tlssetvaluea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TlsSetValue" />
 		<API funcName="tlssetvaluew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.TlsSetValue" />
+		<API funcName="unhandledexceptionfilter" className="v2.org.analysis.apihandle.winapi.kernel32.functions.UnhandledExceptionFilter" />
+		<API funcName="unhandledexceptionfiltera" className="v2.org.analysis.apihandle.winapi.kernel32.functions.UnhandledExceptionFilter" />
+		<API funcName="unhandledexceptionfilterw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.UnhandledExceptionFilter" />
 		<API funcName="unmapviewoffile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.UnmapViewOfFile" />
 		<API funcName="unmapviewoffilea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.UnmapViewOfFile" />
 		<API funcName="unmapviewoffilew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.UnmapViewOfFile" />
@@ -495,12 +538,18 @@
 		<API funcName="virtualprotect" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualProtect" />
 		<API funcName="virtualprotecta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualProtect" />
 		<API funcName="virtualprotectw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualProtect" />
+		<API funcName="virtualprotectex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualProtectEx" />
+		<API funcName="virtualprotectexa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualProtectEx" />
+		<API funcName="virtualprotectexw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualProtectEx" />
 		<API funcName="virtualquery" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualQuery" />
 		<API funcName="virtualquerya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualQuery" />
 		<API funcName="virtualqueryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.VirtualQuery" />
 		<API funcName="waitforsingleobject" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WaitForSingleObject" />
 		<API funcName="waitforsingleobjecta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WaitForSingleObject" />
 		<API funcName="waitforsingleobjectw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WaitForSingleObject" />
+		<API funcName="waitnamedpipe" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WaitNamedPipe" />
+		<API funcName="waitnamedpipea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WaitNamedPipe" />
+		<API funcName="waitnamedpipew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WaitNamedPipe" />
 		<API funcName="widechartomultibyte" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WideCharToMultiByte" />
 		<API funcName="widechartomultibytea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WideCharToMultiByte" />
 		<API funcName="widechartomultibytew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.WideCharToMultiByte" />
@@ -532,15 +581,81 @@
 		<API funcName="_lopena" className="v2.org.analysis.apihandle.winapi.kernel32.functions._lopen" />
 		<API funcName="_lopenw" className="v2.org.analysis.apihandle.winapi.kernel32.functions._lopen" />
 	</DLL>
+	<DLL name="mscoree">
+		<API funcName="_corexemain" className="v2.org.analysis.apihandle.winapi.mscoree.functions._CorExeMain" />
+		<API funcName="_corexemaina" className="v2.org.analysis.apihandle.winapi.mscoree.functions._CorExeMain" />
+		<API funcName="_corexemainw" className="v2.org.analysis.apihandle.winapi.mscoree.functions._CorExeMain" />
+	</DLL>
+	<DLL name="msvcrt">
+		<API funcName="atexit" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.atexit" />
+		<API funcName="atexita" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.atexit" />
+		<API funcName="atexitw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.atexit" />
+		<API funcName="malloc" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
+		<API funcName="malloca" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
+		<API funcName="mallocw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
+		<API funcName="memset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
+		<API funcName="memseta" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
+		<API funcName="memsetw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
+		<API funcName="srand" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.srand" />
+		<API funcName="sranda" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.srand" />
+		<API funcName="srandw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.srand" />
+		<API funcName="strstr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strstr" />
+		<API funcName="strstra" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strstr" />
+		<API funcName="strstrw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strstr" />
+		<API funcName="time" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.time" />
+		<API funcName="timea" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.time" />
+		<API funcName="timew" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.time" />
+		<API funcName="_cexit" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._cexit" />
+		<API funcName="_cexita" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._cexit" />
+		<API funcName="_cexitw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._cexit" />
+		<API funcName="_controlfp" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._controlfp" />
+		<API funcName="_controlfpa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._controlfp" />
+		<API funcName="_controlfpw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._controlfp" />
+		<API funcName="_fpreset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
+		<API funcName="_fpreseta" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
+		<API funcName="_fpresetw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
+		<API funcName="_itow" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
+		<API funcName="_itowa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
+		<API funcName="_itoww" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
+		<API funcName="_setmode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._setmode" />
+		<API funcName="_setmodea" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._setmode" />
+		<API funcName="_setmodew" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._setmode" />
+		<API funcName="__getmainargs" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__getmainargs" />
+		<API funcName="__getmainargsa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__getmainargs" />
+		<API funcName="__getmainargsw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__getmainargs" />
+		<API funcName="__p__commode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__commode" />
+		<API funcName="__p__commodea" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__commode" />
+		<API funcName="__p__commodew" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__commode" />
+		<API funcName="__p__environ" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__environ" />
+		<API funcName="__p__environa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__environ" />
+		<API funcName="__p__environw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__environ" />
+		<API funcName="__p__fmode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__fmode" />
+		<API funcName="__p__fmodea" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__fmode" />
+		<API funcName="__p__fmodew" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__fmode" />
+		<API funcName="__set_app_type" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__set_app_type" />
+		<API funcName="__set_app_typea" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__set_app_type" />
+		<API funcName="__set_app_typew" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__set_app_type" />
+	</DLL>
 	<DLL name="ntdll">
 		<API funcName="ntqueryinformationprocess" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtQueryInformationProcess" />
 		<API funcName="ntqueryinformationprocessa" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtQueryInformationProcess" />
 		<API funcName="ntqueryinformationprocessw" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtQueryInformationProcess" />
 	</DLL>
+	<DLL name="ole32">
+		<API funcName="oleinitialize" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleInitialize" />
+		<API funcName="oleinitializea" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleInitialize" />
+		<API funcName="oleinitializew" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleInitialize" />
+		<API funcName="oleuninitialize" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleUninitialize" />
+		<API funcName="oleuninitializea" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleUninitialize" />
+		<API funcName="oleuninitializew" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleUninitialize" />
+	</DLL>
 	<DLL name="shell32">
 		<API funcName="shellexecute" className="v2.org.analysis.apihandle.winapi.shell32.functions.ShellExecute" />
 		<API funcName="shellexecutea" className="v2.org.analysis.apihandle.winapi.shell32.functions.ShellExecute" />
 		<API funcName="shellexecutew" className="v2.org.analysis.apihandle.winapi.shell32.functions.ShellExecute" />
+		<API funcName="shgetfileinfo" className="v2.org.analysis.apihandle.winapi.shell32.functions.SHGetFileInfo" />
+		<API funcName="shgetfileinfoa" className="v2.org.analysis.apihandle.winapi.shell32.functions.SHGetFileInfo" />
+		<API funcName="shgetfileinfow" className="v2.org.analysis.apihandle.winapi.shell32.functions.SHGetFileInfo" />
 	</DLL>
 	<DLL name="user32">
 		<API funcName="blockinput" className="v2.org.analysis.apihandle.winapi.user32.functions.BlockInput" />
@@ -567,6 +682,9 @@
 		<API funcName="createwindowex" className="v2.org.analysis.apihandle.winapi.user32.functions.CreateWindowEx" />
 		<API funcName="createwindowexa" className="v2.org.analysis.apihandle.winapi.user32.functions.CreateWindowEx" />
 		<API funcName="createwindowexw" className="v2.org.analysis.apihandle.winapi.user32.functions.CreateWindowEx" />
+		<API funcName="defframeproc" className="v2.org.analysis.apihandle.winapi.user32.functions.DefFrameProc" />
+		<API funcName="defframeproca" className="v2.org.analysis.apihandle.winapi.user32.functions.DefFrameProc" />
+		<API funcName="defframeprocw" className="v2.org.analysis.apihandle.winapi.user32.functions.DefFrameProc" />
 		<API funcName="destroymenu" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyMenu" />
 		<API funcName="destroymenua" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyMenu" />
 		<API funcName="destroymenuw" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyMenu" />
@@ -627,6 +745,9 @@
 		<API funcName="getwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
 		<API funcName="getwindowlonga" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
 		<API funcName="getwindowlongw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
+		<API funcName="getwindowtext" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowText" />
+		<API funcName="getwindowtexta" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowText" />
+		<API funcName="getwindowtextw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowText" />
 		<API funcName="getwindowthreadprocessid" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
 		<API funcName="getwindowthreadprocessida" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
 		<API funcName="getwindowthreadprocessidw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
@@ -654,6 +775,9 @@
 		<API funcName="messagebox" className="v2.org.analysis.apihandle.winapi.user32.functions.MessageBox" />
 		<API funcName="messageboxa" className="v2.org.analysis.apihandle.winapi.user32.functions.MessageBox" />
 		<API funcName="messageboxw" className="v2.org.analysis.apihandle.winapi.user32.functions.MessageBox" />
+		<API funcName="offsetrect" className="v2.org.analysis.apihandle.winapi.user32.functions.OffsetRect" />
+		<API funcName="offsetrecta" className="v2.org.analysis.apihandle.winapi.user32.functions.OffsetRect" />
+		<API funcName="offsetrectw" className="v2.org.analysis.apihandle.winapi.user32.functions.OffsetRect" />
 		<API funcName="openclipboard" className="v2.org.analysis.apihandle.winapi.user32.functions.OpenClipboard" />
 		<API funcName="openclipboarda" className="v2.org.analysis.apihandle.winapi.user32.functions.OpenClipboard" />
 		<API funcName="openclipboardw" className="v2.org.analysis.apihandle.winapi.user32.functions.OpenClipboard" />
@@ -672,9 +796,15 @@
 		<API funcName="sendmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.SendMessage" />
 		<API funcName="sendmessagea" className="v2.org.analysis.apihandle.winapi.user32.functions.SendMessage" />
 		<API funcName="sendmessagew" className="v2.org.analysis.apihandle.winapi.user32.functions.SendMessage" />
+		<API funcName="setcaretblinktime" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCaretBlinkTime" />
+		<API funcName="setcaretblinktimea" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCaretBlinkTime" />
+		<API funcName="setcaretblinktimew" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCaretBlinkTime" />
 		<API funcName="setcursor" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setcursora" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setcursorw" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
+		<API funcName="setfocus" className="v2.org.analysis.apihandle.winapi.user32.functions.SetFocus" />
+		<API funcName="setfocusa" className="v2.org.analysis.apihandle.winapi.user32.functions.SetFocus" />
+		<API funcName="setfocusw" className="v2.org.analysis.apihandle.winapi.user32.functions.SetFocus" />
 		<API funcName="setwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
 		<API funcName="setwindowlonga" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
 		<API funcName="setwindowlongw" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
@@ -690,5 +820,18 @@
 		<API funcName="updatewindow" className="v2.org.analysis.apihandle.winapi.user32.functions.UpdateWindow" />
 		<API funcName="updatewindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.UpdateWindow" />
 		<API funcName="updatewindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.UpdateWindow" />
+	</DLL>
+	<DLL name="winspool">
+		<API funcName="enumprinters" className="v2.org.analysis.apihandle.winapi.winspool.functions.EnumPrinters" />
+		<API funcName="enumprintersa" className="v2.org.analysis.apihandle.winapi.winspool.functions.EnumPrinters" />
+		<API funcName="enumprintersw" className="v2.org.analysis.apihandle.winapi.winspool.functions.EnumPrinters" />
+	</DLL>
+	<DLL name="ws2_32">
+		<API funcName="wsacleanup" className="v2.org.analysis.apihandle.winapi.ws2_32.functions.WSACleanup" />
+		<API funcName="wsacleanupa" className="v2.org.analysis.apihandle.winapi.ws2_32.functions.WSACleanup" />
+		<API funcName="wsacleanupw" className="v2.org.analysis.apihandle.winapi.ws2_32.functions.WSACleanup" />
+		<API funcName="wsastartup" className="v2.org.analysis.apihandle.winapi.ws2_32.functions.WSAStartup" />
+		<API funcName="wsastartupa" className="v2.org.analysis.apihandle.winapi.ws2_32.functions.WSAStartup" />
+		<API funcName="wsastartupw" className="v2.org.analysis.apihandle.winapi.ws2_32.functions.WSAStartup" />
 	</DLL>
 </APIMap>
