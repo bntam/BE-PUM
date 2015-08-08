@@ -38,8 +38,15 @@ public class PackerDetection {
 		packedby += (pTech.equals(PackerConstants.ASPACK)) 		? "ASPACK ": "";
 		System.out.println(packedby);
 		
-		this.detectViaBEPUM = pTech + "-" 
-							+ packedby.substring(new String("File is packed by ").length());
+		if (packedby.equals("File is packed by "))
+		{
+			this.detectViaBEPUM = pTech + "-" + "NONE";
+		}
+		else 
+		{
+			this.detectViaBEPUM = pTech + "-" 
+					+ packedby.substring(new String("File is packed by ").length());
+		}
 	}
 	
 	public PackerTechniques getTechniques ()
@@ -108,6 +115,10 @@ public class PackerDetection {
 		{
 			isPackedBy("NPACK");
 			return;
+		}
+		else
+		{
+			this.detectViaHeader = "NONE";
 		}
 	}
 	
