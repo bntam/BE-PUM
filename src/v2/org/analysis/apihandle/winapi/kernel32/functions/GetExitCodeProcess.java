@@ -38,6 +38,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class GetExitCodeProcess extends Kernel32API {
 	public GetExitCodeProcess() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

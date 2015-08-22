@@ -44,6 +44,7 @@ import v2.org.analysis.value.Value;
 public class LoadResource extends Kernel32API {
 
 	public LoadResource() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

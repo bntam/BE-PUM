@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
 public class DeleteFile extends Kernel32API {
 
 	public DeleteFile() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

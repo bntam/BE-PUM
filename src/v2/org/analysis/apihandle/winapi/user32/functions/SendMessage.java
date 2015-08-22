@@ -59,6 +59,7 @@ import v2.org.analysis.value.Value;
 public class SendMessage extends User32API {
 
 	public SendMessage() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

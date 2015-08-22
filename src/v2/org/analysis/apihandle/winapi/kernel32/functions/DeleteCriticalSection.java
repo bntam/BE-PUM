@@ -35,6 +35,7 @@ import v2.org.analysis.value.LongValue;
 public class DeleteCriticalSection extends Kernel32API {
 
 	public DeleteCriticalSection() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

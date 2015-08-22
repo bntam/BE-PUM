@@ -27,6 +27,7 @@ import v2.org.analysis.value.LongValue;
 public class AreFileApisANSI extends Kernel32API {
 
 	public AreFileApisANSI() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

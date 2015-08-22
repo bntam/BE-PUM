@@ -51,6 +51,7 @@ import v2.org.analysis.value.Value;
 public class GetShortPathName extends Kernel32API {
 
 	public GetShortPathName() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

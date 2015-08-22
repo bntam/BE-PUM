@@ -38,6 +38,7 @@ import v2.org.analysis.value.LongValue;
 public class CharLower extends User32API {
 
 	public CharLower() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

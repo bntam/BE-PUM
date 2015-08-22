@@ -42,6 +42,7 @@ import v2.org.analysis.value.LongValue;
 public class GetFileSize extends Kernel32API {
 
 	public GetFileSize() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

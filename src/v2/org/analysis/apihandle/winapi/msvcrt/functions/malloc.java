@@ -46,6 +46,7 @@ import v2.org.analysis.value.LongValue;
 public class malloc extends MSVCRTAPI {
 
 	public malloc() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

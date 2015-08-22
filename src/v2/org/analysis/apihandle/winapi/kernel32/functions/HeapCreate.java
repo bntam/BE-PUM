@@ -118,6 +118,7 @@ public class HeapCreate extends Kernel32API {
 	 * 
 	 */
 	public HeapCreate() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

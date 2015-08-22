@@ -27,6 +27,7 @@ import v2.org.analysis.value.LongValue;
 public class GetVolumeInformation extends Kernel32API {
 
 	public GetVolumeInformation() {
+		super();
 		NUM_OF_PARMS = 8;
 	}
 

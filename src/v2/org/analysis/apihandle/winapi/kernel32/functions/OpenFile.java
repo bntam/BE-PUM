@@ -38,6 +38,7 @@ import v2.org.analysis.value.LongValue;
 public class OpenFile extends Kernel32API {
 
 	public OpenFile() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

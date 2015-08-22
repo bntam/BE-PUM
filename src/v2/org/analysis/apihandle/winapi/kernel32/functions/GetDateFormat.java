@@ -65,6 +65,7 @@ import v2.org.analysis.value.LongValue;
 public class GetDateFormat extends Kernel32API {
 
 	public GetDateFormat() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

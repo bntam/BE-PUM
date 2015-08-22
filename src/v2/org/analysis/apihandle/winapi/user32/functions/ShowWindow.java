@@ -46,6 +46,7 @@ import v2.org.analysis.value.Value;
 public class ShowWindow extends User32API {
 
 	public ShowWindow() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

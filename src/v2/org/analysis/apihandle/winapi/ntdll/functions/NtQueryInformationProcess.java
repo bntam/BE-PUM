@@ -62,6 +62,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class NtQueryInformationProcess extends NtdllAPI {
 	public NtQueryInformationProcess() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

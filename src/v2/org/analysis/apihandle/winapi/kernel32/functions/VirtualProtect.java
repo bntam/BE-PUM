@@ -66,6 +66,7 @@ import v2.org.analysis.value.Value;
 public class VirtualProtect extends Kernel32API {
 
 	public VirtualProtect() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

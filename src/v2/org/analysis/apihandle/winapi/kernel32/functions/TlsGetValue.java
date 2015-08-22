@@ -44,6 +44,7 @@ import v2.org.analysis.value.Value;
 public class TlsGetValue extends Kernel32API {
 
 	public TlsGetValue() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

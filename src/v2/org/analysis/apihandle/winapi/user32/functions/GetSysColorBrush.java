@@ -29,6 +29,7 @@ import v2.org.analysis.value.LongValue;
 public class GetSysColorBrush extends User32API {
 
 	public GetSysColorBrush() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

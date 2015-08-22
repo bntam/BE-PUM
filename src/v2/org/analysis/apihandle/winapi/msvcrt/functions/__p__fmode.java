@@ -29,6 +29,7 @@ import v2.org.analysis.value.LongValue;
 public class __p__fmode extends MSVCRTAPI {
 
 	public __p__fmode() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

@@ -37,6 +37,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class _itow extends MSVCRTAPI {
 	public _itow() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

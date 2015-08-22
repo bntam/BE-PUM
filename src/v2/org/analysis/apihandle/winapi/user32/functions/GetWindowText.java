@@ -48,6 +48,7 @@ import v2.org.analysis.value.LongValue;
 public class GetWindowText extends User32API {
 
 	public GetWindowText() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

@@ -27,6 +27,7 @@ import v2.org.analysis.value.LongValue;
 public class GetKeyboardType extends User32API {
 
 	public GetKeyboardType() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

@@ -42,6 +42,7 @@ public class UnmapViewOfFile extends Kernel32API {
 	 * 
 	 */
 	public UnmapViewOfFile() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

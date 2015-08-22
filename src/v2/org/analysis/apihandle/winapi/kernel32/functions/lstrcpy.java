@@ -48,6 +48,7 @@ public class lstrcpy extends Kernel32API {
 	 * 
 	 */
 	public lstrcpy() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

@@ -46,6 +46,7 @@ import v2.org.analysis.value.Value;
 public class TlsSetValue extends Kernel32API {
 
 	public TlsSetValue() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

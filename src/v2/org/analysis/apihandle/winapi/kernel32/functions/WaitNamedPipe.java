@@ -47,6 +47,7 @@ import v2.org.analysis.value.LongValue;
 public class WaitNamedPipe extends Kernel32API {
 
 	public WaitNamedPipe() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

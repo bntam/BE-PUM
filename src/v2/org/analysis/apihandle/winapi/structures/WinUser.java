@@ -109,8 +109,40 @@ public interface WinUser extends StdCallLibrary, WinDef, BaseTSD {
 			read();
 		}
 	}
-	
+
 	public static interface DLGPROC extends Callback {
 		INT_PTR invoke(HWND hwnd, UINT unit, WPARAM wparam, LPARAM lparam);
+	}
+
+	public class DLGTEMPLATE extends Structure {
+		public DWORD style;
+		public DWORD dwExtendedStyle;
+		public WORD cdit;
+		public short x;
+		public short y;
+		public short cx;
+		public short cy;
+
+		protected List<String> getFieldOrder() {
+			return Arrays.asList(new String[] { "style", "dwExtendedStyle", "cdit", "x", "y", "cx", "cy" });
+		}
+
+		public static class ByReference extends DLGTEMPLATE implements Structure.ByReference {
+			public ByReference() {
+			}
+
+			public ByReference(Pointer memory) {
+				super(memory);
+			}
+		}
+
+		public DLGTEMPLATE() {
+
+		}
+
+		public DLGTEMPLATE(Pointer memory) {
+			super(memory);
+			read();
+		}
 	}
 }

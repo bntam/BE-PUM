@@ -20,6 +20,7 @@ import com.sun.jna.WString;
 public class OutputDebugString extends Kernel32API {
 
 	public OutputDebugString() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

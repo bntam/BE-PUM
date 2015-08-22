@@ -41,6 +41,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class OffsetRect extends User32API {
 	public OffsetRect() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

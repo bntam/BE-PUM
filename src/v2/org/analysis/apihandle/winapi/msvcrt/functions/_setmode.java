@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
 public class _setmode extends MSVCRTAPI {
 
 	public _setmode() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

@@ -41,6 +41,7 @@ import v2.org.analysis.value.LongValue;
 public class LoadIcon extends User32API {
 
 	public LoadIcon() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

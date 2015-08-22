@@ -59,6 +59,7 @@ import v2.org.analysis.value.LongValue;
 public class SetFileTime extends Kernel32API {
 
 	public SetFileTime() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

@@ -40,6 +40,7 @@ import v2.org.analysis.value.LongValue;
 public class CryptReleaseContext extends Advapi32API {
 
 	public CryptReleaseContext() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

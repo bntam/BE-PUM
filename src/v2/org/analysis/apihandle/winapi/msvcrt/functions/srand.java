@@ -41,6 +41,7 @@ import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 public class srand extends MSVCRTAPI {
 
 	public srand() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

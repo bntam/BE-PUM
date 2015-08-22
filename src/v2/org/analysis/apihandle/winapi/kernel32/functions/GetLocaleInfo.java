@@ -57,6 +57,7 @@ import v2.org.analysis.value.LongValue;
 public class GetLocaleInfo extends Kernel32API {
 
 	public GetLocaleInfo() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

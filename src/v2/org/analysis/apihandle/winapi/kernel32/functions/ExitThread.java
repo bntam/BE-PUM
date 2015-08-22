@@ -24,6 +24,7 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 public class ExitThread extends Kernel32API {
 
 	public ExitThread() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

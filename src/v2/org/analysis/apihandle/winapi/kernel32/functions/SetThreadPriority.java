@@ -38,6 +38,7 @@ import v2.org.analysis.value.LongValue;
 public class SetThreadPriority extends Kernel32API {
 
 	public SetThreadPriority() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

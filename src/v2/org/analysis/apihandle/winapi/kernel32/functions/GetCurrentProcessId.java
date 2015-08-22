@@ -26,6 +26,7 @@ import v2.org.analysis.value.LongValue;
 public class GetCurrentProcessId extends Kernel32API {
 
 	public GetCurrentProcessId() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

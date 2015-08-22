@@ -31,6 +31,7 @@ import v2.org.analysis.value.LongValue;
 public class GetSystemTimeAsFileTime extends Kernel32API {
 
 	public GetSystemTimeAsFileTime() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

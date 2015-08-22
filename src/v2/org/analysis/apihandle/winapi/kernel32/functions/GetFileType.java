@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class GetFileType extends Kernel32API {
 	public GetFileType() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

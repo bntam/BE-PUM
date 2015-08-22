@@ -29,6 +29,7 @@ import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 public class __set_app_type extends MSVCRTAPI {
 
 	public __set_app_type() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

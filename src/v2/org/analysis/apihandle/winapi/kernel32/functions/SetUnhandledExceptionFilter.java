@@ -44,6 +44,7 @@ import v2.org.analysis.value.Value;
 public class SetUnhandledExceptionFilter extends Kernel32API {
 
 	public SetUnhandledExceptionFilter() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

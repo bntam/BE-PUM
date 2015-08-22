@@ -46,6 +46,7 @@ import v2.org.analysis.value.Value;
 public class GetModuleHandle extends Kernel32API {
 
 	public GetModuleHandle() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

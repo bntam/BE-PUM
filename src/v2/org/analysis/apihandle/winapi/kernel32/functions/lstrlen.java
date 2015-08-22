@@ -42,6 +42,7 @@ public class lstrlen extends Kernel32API {
 	 * 
 	 */
 	public lstrlen() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

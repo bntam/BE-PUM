@@ -34,6 +34,7 @@ import v2.org.analysis.value.LongValue;
 public class GetKeyboardState extends User32API {
 
 	public GetKeyboardState() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

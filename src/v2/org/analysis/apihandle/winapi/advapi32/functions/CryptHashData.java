@@ -47,6 +47,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class CryptHashData extends Advapi32API {
 	public CryptHashData() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

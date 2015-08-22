@@ -40,6 +40,7 @@ public class SetHandleCount extends Kernel32API {
 	 * 
 	 */
 	public SetHandleCount() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

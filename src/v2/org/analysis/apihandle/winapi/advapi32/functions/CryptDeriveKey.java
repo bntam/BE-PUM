@@ -61,6 +61,7 @@ import v2.org.analysis.value.LongValue;
 public class CryptDeriveKey extends Advapi32API {
 
 	public CryptDeriveKey() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

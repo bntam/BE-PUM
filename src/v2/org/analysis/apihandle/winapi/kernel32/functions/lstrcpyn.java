@@ -48,6 +48,7 @@ import v2.org.analysis.value.Value;
 public class lstrcpyn extends Kernel32API {
 
 	public lstrcpyn() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

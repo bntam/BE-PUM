@@ -53,6 +53,7 @@ import v2.org.analysis.value.LongValue;
 public class CopyFile extends Kernel32API {
 
 	public CopyFile() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

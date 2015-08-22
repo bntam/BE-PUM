@@ -52,6 +52,7 @@ import v2.org.analysis.value.LongValue;
 public class FindResource extends Kernel32API {
 
 	public FindResource() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

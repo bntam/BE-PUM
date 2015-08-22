@@ -49,6 +49,7 @@ public class FindWindow extends User32API {
 	 * 
 	 */
 	public FindWindow() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

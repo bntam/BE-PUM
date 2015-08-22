@@ -49,6 +49,7 @@ import v2.org.analysis.value.LongValue;
 public class LoadString extends User32API {
 
 	public LoadString() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

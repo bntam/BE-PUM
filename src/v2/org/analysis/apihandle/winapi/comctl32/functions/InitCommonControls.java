@@ -16,6 +16,7 @@ import v2.org.analysis.apihandle.winapi.comctl32.Comctl32DLL;
  */
 public class InitCommonControls extends Comctl32API {
 	public InitCommonControls() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

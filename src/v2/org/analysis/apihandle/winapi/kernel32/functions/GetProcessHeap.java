@@ -34,6 +34,7 @@ import v2.org.analysis.value.LongValue;
 public class GetProcessHeap extends Kernel32API {
 
 	public GetProcessHeap() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

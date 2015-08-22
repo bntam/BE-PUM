@@ -37,6 +37,7 @@ import v2.org.analysis.value.Value;
 public class GetLocalTime extends Kernel32API {
 
 	public GetLocalTime() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

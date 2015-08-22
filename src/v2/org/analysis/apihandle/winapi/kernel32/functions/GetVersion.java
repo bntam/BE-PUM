@@ -37,6 +37,7 @@ public class GetVersion extends Kernel32API {
 	 * 
 	 */
 	public GetVersion() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

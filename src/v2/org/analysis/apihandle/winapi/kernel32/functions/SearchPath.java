@@ -67,6 +67,7 @@ import v2.org.analysis.value.LongValue;
 public class SearchPath extends Kernel32API {
 
 	public SearchPath() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

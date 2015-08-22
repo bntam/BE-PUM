@@ -30,6 +30,7 @@ public class GetEnvironmentStrings extends Kernel32API {
 	 * 
 	 */
 	public GetEnvironmentStrings() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

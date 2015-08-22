@@ -29,6 +29,7 @@ import v2.org.analysis.value.Value;
 public class CreateThread extends Kernel32API {
 
 	public CreateThread() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

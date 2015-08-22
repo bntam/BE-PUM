@@ -37,6 +37,7 @@ import v2.org.analysis.value.LongValue;
 public class DisableThreadLibraryCalls extends Kernel32API {
 
 	public DisableThreadLibraryCalls() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

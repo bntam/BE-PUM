@@ -26,6 +26,7 @@ import v2.org.analysis.value.LongValue;
 public class GetLastError extends Kernel32API {
 
 	public GetLastError() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

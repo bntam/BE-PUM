@@ -53,6 +53,7 @@ import v2.org.analysis.value.Value;
 public class PostMessage extends User32API {
 
 	public PostMessage() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

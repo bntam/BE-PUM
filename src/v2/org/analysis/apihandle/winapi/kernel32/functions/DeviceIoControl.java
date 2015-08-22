@@ -79,6 +79,7 @@ import v2.org.analysis.value.LongValue;
 public class DeviceIoControl extends Kernel32API {
 
 	public DeviceIoControl() {
+		super();
 		NUM_OF_PARMS = 8;
 	}
 

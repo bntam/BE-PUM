@@ -108,6 +108,7 @@ import com.sun.jna.platform.win32.WinDef.INT_PTR;
 public class ShellExecute extends Shell32API {
 
 	public ShellExecute() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

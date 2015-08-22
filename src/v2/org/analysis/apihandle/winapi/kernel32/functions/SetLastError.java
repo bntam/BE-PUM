@@ -23,6 +23,7 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 public class SetLastError extends Kernel32API {
 
 	public SetLastError() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

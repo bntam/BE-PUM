@@ -67,6 +67,7 @@ public class WriteFile extends Kernel32API {
 	 * 
 	 */
 	public WriteFile() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

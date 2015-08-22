@@ -30,6 +30,7 @@ import v2.org.analysis.value.LongValue;
 public class GetACP extends Kernel32API {
 
 	public GetACP() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

@@ -64,6 +64,7 @@ import v2.org.analysis.value.LongValue;
 public class RegQueryValueEx extends Kernel32API {
 
 	public RegQueryValueEx() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

@@ -75,6 +75,7 @@ import java.nio.ByteBuffer;
  */
 public class ReadFile extends Kernel32API {
 	public ReadFile() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

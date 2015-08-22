@@ -44,6 +44,7 @@ import v2.org.analysis.value.LongValue;
 public class RegisterClass extends User32API {
 
 	public RegisterClass() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

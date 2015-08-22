@@ -54,6 +54,7 @@ import v2.org.analysis.value.Value;
 public class TranslateMessage extends User32API {
 
 	public TranslateMessage() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

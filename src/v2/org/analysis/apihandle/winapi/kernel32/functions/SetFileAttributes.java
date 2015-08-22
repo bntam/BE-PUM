@@ -53,6 +53,7 @@ public class SetFileAttributes extends Kernel32API {
 	 * 
 	 */
 	public SetFileAttributes() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

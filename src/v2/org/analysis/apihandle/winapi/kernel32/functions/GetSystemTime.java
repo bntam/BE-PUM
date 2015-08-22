@@ -39,6 +39,7 @@ public class GetSystemTime extends Kernel32API {
 	 * 
 	 */
 	public GetSystemTime() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

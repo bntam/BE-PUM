@@ -66,6 +66,7 @@ import v2.org.analysis.value.Value;
 public class GetTempFileName extends Kernel32API {
 
 	public GetTempFileName() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

@@ -68,6 +68,7 @@ import v2.org.analysis.value.Value;
  */
 public class HeapAlloc extends Kernel32API {
 	public HeapAlloc() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

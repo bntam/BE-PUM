@@ -38,6 +38,7 @@ import v2.org.analysis.value.Value;
 public class LocalLock extends Kernel32API {
 
 	public LocalLock() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

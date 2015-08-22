@@ -46,6 +46,7 @@ public class GetProcessVersion extends Kernel32API {
 	 * 
 	 */
 	public GetProcessVersion() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

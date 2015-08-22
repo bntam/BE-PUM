@@ -19,6 +19,7 @@ import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
 import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGPROC;
+import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGTEMPLATE;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.MENUITEMINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS;
 
@@ -857,4 +858,20 @@ public interface User32DLL extends StdCallLibrary {
 	 *         information, call GetLastError.
 	 */
 	BOOL SetCaretBlinkTime(/* _In_ */UINT uMSeconds);
+
+	/**
+	 * 
+	 * @param hInstance
+	 * @param hDialogTemplate
+	 * @param hWndParent
+	 * @param lpDialogFunc
+	 * @param dwInitParam
+	 * @return
+	 */
+	INT_PTR DialogBoxIndirectParam(
+	/* _In_opt_ */HINSTANCE hInstance,
+	/* _In_ */DLGTEMPLATE hDialogTemplate,
+	/* _In_opt_ */HWND hWndParent,
+	/* _In_opt_ */DLGPROC lpDialogFunc,
+	/* _In_ */LPARAM dwInitParam);
 }

@@ -60,6 +60,7 @@ import v2.org.analysis.value.LongValue;
 public class CompareString extends Kernel32API {
 
 	public CompareString() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

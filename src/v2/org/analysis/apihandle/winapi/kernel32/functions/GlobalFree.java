@@ -35,6 +35,7 @@ import v2.org.analysis.value.Value;
 public class GlobalFree extends Kernel32API {
 
 	public GlobalFree() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

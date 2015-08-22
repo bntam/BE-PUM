@@ -39,6 +39,7 @@ import v2.org.analysis.value.LongValue;
 public class LoadMenu extends User32API {
 
 	public LoadMenu() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

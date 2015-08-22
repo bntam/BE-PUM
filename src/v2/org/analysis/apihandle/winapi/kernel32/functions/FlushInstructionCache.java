@@ -40,6 +40,7 @@ import v2.org.analysis.value.LongValue;
 public class FlushInstructionCache extends Kernel32API {
 
 	public FlushInstructionCache() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

@@ -42,6 +42,7 @@ import v2.org.analysis.value.LongValue;
 public class GetWindowLong extends User32API {
 
 	public GetWindowLong() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

@@ -85,6 +85,7 @@ import v2.org.analysis.value.LongValue;
 public class WideCharToMultiByte extends Kernel32API {
 
 	public WideCharToMultiByte() {
+		super();
 		NUM_OF_PARMS = 8;
 	}
 

@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
 public class _controlfp extends MSVCRTAPI {
 
 	public _controlfp() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

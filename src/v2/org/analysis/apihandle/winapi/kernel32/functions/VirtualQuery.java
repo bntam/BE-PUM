@@ -56,6 +56,7 @@ import v2.org.analysis.value.Value;
 public class VirtualQuery extends Kernel32API {
 
 	public VirtualQuery() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

@@ -68,6 +68,7 @@ import v2.org.analysis.value.LongValue;
 public class CreateFile extends Kernel32API {
 
 	public CreateFile() {
+		super();
 		NUM_OF_PARMS = 7;
 	}
 

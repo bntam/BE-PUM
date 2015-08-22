@@ -37,6 +37,7 @@ import v2.org.analysis.value.LongValue;
 public class CompareFileTime extends Kernel32API {
 
 	public CompareFileTime() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

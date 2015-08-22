@@ -29,6 +29,7 @@ import v2.org.analysis.value.LongValue;
 public class OpenClipboard extends User32API {
 
 	public OpenClipboard() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

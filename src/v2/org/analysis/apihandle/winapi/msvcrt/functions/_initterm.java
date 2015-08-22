@@ -1,31 +1,32 @@
 /**
  * Project: BE-PUMv2
  * Package name: v2.org.analysis.apihandle.winapi.msvcrt.functions
- * File name: _fpreset.java
- * Created date: Jul 28, 2015
+ * File name: _initterm.java
+ * Created date: Aug 22, 2015
  * Description:
  */
 package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
-import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
+import v2.org.analysis.value.SymbolValue;
 
 /**
- * Resets the floating-point package.
- * 
  * @author Yen Nguyen
  *
  */
-public class _fpreset extends MSVCRTAPI {
-
-	public _fpreset() {
+public class _initterm extends MSVCRTAPI {
+	
+	public _initterm() {
 		super();
-		NUM_OF_PARMS = 0;
+		NUM_OF_PARMS = 2;
 	}
 
 	@Override
 	public void execute() {
-		MSVCRTDLL.INSTANCE._fpreset();
+		// TODO Auto-generated method stub
+
+		// VOID Func
+		//register.setRegisterValue("eax", new SymbolValue("api_eax_" + getFullName()));
 	}
 
 }

@@ -47,6 +47,7 @@ public class lstrcmp extends Kernel32API {
 	 * 
 	 */
 	public lstrcmp() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

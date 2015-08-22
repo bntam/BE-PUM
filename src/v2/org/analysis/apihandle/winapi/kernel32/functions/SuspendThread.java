@@ -37,6 +37,7 @@ public class SuspendThread extends Kernel32API {
 	public static List<Long> suspendedThreadList = new ArrayList<Long>();
 
 	public SuspendThread() {
+		super();
 		int lastError = Kernel32.INSTANCE.GetLastError();
 		currentThread = Kernel32.INSTANCE.GetCurrentThread();
 		Kernel32.INSTANCE.SetLastError(lastError);

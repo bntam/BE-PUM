@@ -38,6 +38,7 @@ public class LoadLibrary extends Kernel32API {
 	private HMODULE apiCallReturn = null;
 
 	public LoadLibrary() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

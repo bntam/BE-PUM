@@ -51,6 +51,7 @@ public class MoveFile extends Kernel32API {
 	 * 
 	 */
 	public MoveFile() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

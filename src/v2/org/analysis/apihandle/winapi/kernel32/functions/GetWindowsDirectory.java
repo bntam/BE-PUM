@@ -53,6 +53,7 @@ public class GetWindowsDirectory extends Kernel32API {
 	 * 
 	 */
 	public GetWindowsDirectory() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

@@ -62,6 +62,7 @@ import v2.org.analysis.value.LongValue;
 public class GetDiskFreeSpace extends Kernel32API {
 
 	public GetDiskFreeSpace() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

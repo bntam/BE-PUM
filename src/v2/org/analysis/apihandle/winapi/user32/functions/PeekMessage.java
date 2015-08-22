@@ -46,6 +46,7 @@ import v2.org.analysis.value.LongValue;
 public class PeekMessage extends User32API {
 
 	public PeekMessage() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

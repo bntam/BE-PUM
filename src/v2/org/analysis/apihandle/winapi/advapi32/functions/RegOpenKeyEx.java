@@ -54,6 +54,7 @@ import v2.org.analysis.value.LongValue;
 public class RegOpenKeyEx extends Advapi32API {
 
 	public RegOpenKeyEx() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

@@ -37,6 +37,7 @@ import v2.org.analysis.value.LongValue;
 public class MulDiv extends Kernel32API {
 
 	public MulDiv() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

@@ -63,6 +63,7 @@ import v2.org.analysis.value.LongValue;
 public class VirtualProtectEx extends Kernel32API {
 
 	public VirtualProtectEx() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

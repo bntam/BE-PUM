@@ -70,6 +70,7 @@ public class WinExec extends Kernel32API {
 	 * Constructor
 	 */
 	public WinExec() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

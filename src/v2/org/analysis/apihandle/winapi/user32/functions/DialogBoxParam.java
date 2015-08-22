@@ -69,6 +69,7 @@ import v2.org.analysis.value.LongValue;
 public class DialogBoxParam extends User32API {
 
 	public DialogBoxParam() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

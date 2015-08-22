@@ -38,6 +38,7 @@ import v2.org.analysis.value.LongValue;
 public class SizeofResource extends Kernel32API {
 
 	public SizeofResource() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

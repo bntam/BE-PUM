@@ -32,6 +32,7 @@ import v2.org.analysis.value.LongValue;
 public class LeaveCriticalSection extends Kernel32API {
 
 	public LeaveCriticalSection() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

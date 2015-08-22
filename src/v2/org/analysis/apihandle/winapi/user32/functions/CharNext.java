@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
 public class CharNext extends User32API {
 
 	public CharNext() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

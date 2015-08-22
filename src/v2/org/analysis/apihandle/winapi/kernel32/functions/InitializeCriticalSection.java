@@ -35,6 +35,7 @@ import v2.org.analysis.value.Value;
  */
 public class InitializeCriticalSection extends Kernel32API {
 	public InitializeCriticalSection() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

@@ -28,6 +28,7 @@ public class IsDebuggerPresent extends Kernel32API {
 	 * 
 	 */
 	public IsDebuggerPresent() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

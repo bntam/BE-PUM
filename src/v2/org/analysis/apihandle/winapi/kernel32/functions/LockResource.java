@@ -39,6 +39,7 @@ import v2.org.analysis.value.Value;
 public class LockResource extends Kernel32API {
 
 	public LockResource() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

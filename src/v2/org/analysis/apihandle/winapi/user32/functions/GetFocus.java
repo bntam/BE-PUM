@@ -30,6 +30,7 @@ import v2.org.analysis.value.LongValue;
 public class GetFocus extends User32API {
 
 	public GetFocus() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

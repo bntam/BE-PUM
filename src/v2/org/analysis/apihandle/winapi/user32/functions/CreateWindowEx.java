@@ -18,6 +18,7 @@ import v2.org.analysis.value.LongValue;
 public class CreateWindowEx extends User32API {
 
 	public CreateWindowEx() {
+		super();
 		NUM_OF_PARMS = 12;
 	}
 

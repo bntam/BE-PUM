@@ -37,6 +37,7 @@ import v2.org.analysis.value.LongValue;
 public class GetWindowThreadProcessId extends User32API {
 
 	public GetWindowThreadProcessId() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

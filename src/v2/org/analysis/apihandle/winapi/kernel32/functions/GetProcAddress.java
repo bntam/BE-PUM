@@ -25,6 +25,7 @@ import v2.org.analysis.value.LongValue;
 public class GetProcAddress extends Kernel32API {
 
 	public GetProcAddress() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

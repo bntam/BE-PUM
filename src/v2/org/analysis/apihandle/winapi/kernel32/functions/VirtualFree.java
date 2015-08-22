@@ -51,6 +51,7 @@ public class VirtualFree extends Kernel32API {
 	 * 
 	 */
 	public VirtualFree() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

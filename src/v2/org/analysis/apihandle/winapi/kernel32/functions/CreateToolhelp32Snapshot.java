@@ -50,6 +50,7 @@ import v2.org.analysis.value.LongValue;
 public class CreateToolhelp32Snapshot extends Kernel32API {
 
 	public CreateToolhelp32Snapshot() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

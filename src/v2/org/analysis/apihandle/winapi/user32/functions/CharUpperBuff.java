@@ -36,6 +36,7 @@ import v2.org.analysis.value.LongValue;
 public class CharUpperBuff extends User32API {
 
 	public CharUpperBuff() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

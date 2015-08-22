@@ -52,6 +52,7 @@ import v2.org.analysis.value.LongValue;
 public class GetClassInfoEx extends User32API {
 
 	public GetClassInfoEx() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

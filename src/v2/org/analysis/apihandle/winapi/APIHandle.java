@@ -261,6 +261,16 @@ public class APIHandle {
 		//Memory memory = env.getMemory();
 		//Register register = env.getRegister();
 		//SystemHandle system = env.getSystem();
+		
+		/**********************************************
+		 * Special API that I hadn't found the define *
+		 **********************************************/
+		if (t[0].toLowerCase().startsWith("ord(")) {
+			System.out.println("\t\tCAN NOT FIND API DEFINE");
+			Value x = stack.pop();
+			System.out.println("Argument: " + x);
+			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+		}
 
 		String className = findClassName(t[0].toLowerCase(), t[1].toLowerCase().replace(".dll", ""));
 		

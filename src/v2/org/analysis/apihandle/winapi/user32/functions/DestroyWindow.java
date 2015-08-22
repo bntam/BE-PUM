@@ -45,6 +45,7 @@ import v2.org.analysis.value.LongValue;
 public class DestroyWindow extends User32API {
 
 	public DestroyWindow() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

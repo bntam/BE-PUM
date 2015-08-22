@@ -45,6 +45,7 @@ import v2.org.analysis.value.LongValue;
 public class OpenEvent extends Kernel32API {
 
 	public OpenEvent() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

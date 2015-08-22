@@ -46,6 +46,7 @@ public class GetSystemDirectory extends Kernel32API {
 	 * 
 	 */
 	public GetSystemDirectory() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

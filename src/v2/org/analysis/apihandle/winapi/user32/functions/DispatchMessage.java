@@ -35,6 +35,7 @@ import v2.org.analysis.value.LongValue;
 public class DispatchMessage extends User32API {
 
 	public DispatchMessage() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

@@ -63,6 +63,7 @@ public class HeapDestroy extends Kernel32API {
 	 * 
 	 */
 	public HeapDestroy() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

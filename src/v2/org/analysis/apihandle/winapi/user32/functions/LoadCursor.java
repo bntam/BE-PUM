@@ -42,6 +42,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class LoadCursor extends User32API {
 	public LoadCursor() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class GetDeviceCaps extends Gdi32API {
 	public GetDeviceCaps() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

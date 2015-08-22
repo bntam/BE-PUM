@@ -42,6 +42,7 @@ import v2.org.analysis.value.LongValue;
 public class GetSystemMenu extends User32API {
 
 	public GetSystemMenu() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

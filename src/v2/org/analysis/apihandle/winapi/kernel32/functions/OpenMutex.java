@@ -47,6 +47,7 @@ import v2.org.analysis.value.LongValue;
 public class OpenMutex extends Kernel32API {
 
 	public OpenMutex() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

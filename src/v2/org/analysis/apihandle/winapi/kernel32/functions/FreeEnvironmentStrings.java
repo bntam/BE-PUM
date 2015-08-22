@@ -35,6 +35,7 @@ public class FreeEnvironmentStrings extends Kernel32API {
 	 */
 	public FreeEnvironmentStrings() {
 
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

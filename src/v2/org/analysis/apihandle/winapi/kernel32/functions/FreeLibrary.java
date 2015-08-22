@@ -36,6 +36,7 @@ public class FreeLibrary extends Kernel32API {
 
 	public FreeLibrary() {
 
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

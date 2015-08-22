@@ -31,6 +31,7 @@ public class GetCurrentThread extends Kernel32API {
 	 * Constructor
 	 */
 	public GetCurrentThread() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

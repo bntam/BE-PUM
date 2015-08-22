@@ -30,6 +30,7 @@ import v2.org.analysis.value.LongValue;
 public class DestroyMenu extends User32API {
 
 	public DestroyMenu() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

@@ -48,6 +48,7 @@ import v2.org.analysis.value.Value;
 public class IsWow64Process extends Kernel32API {
 
 	public IsWow64Process() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

@@ -54,6 +54,7 @@ import v2.org.analysis.value.LongValue;
 public class time extends MSVCRTAPI {
 
 	public time() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

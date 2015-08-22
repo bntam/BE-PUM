@@ -44,6 +44,7 @@ public class GetCurrentDirectory extends Kernel32API {
 	 * 
 	 */
 	public GetCurrentDirectory() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

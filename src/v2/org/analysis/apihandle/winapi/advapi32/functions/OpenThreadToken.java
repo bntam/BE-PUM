@@ -50,6 +50,7 @@ import v2.org.analysis.value.LongValue;
 public class OpenThreadToken extends Advapi32API {
 
 	public OpenThreadToken() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

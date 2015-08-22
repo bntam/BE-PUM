@@ -39,6 +39,7 @@ import v2.org.analysis.value.LongValue;
 public class OpenProcess extends Kernel32API {
 
 	public OpenProcess() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

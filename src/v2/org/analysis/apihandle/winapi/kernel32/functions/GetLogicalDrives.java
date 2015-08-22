@@ -34,6 +34,7 @@ import v2.org.analysis.value.LongValue;
 public class GetLogicalDrives extends Kernel32API {
 
 	public GetLogicalDrives() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

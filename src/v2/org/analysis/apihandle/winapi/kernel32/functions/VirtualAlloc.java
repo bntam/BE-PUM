@@ -58,6 +58,7 @@ import v2.org.analysis.value.LongValue;
 public class VirtualAlloc extends Kernel32API {
 
 	public VirtualAlloc() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

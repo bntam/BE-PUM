@@ -34,6 +34,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class IsDialogMessage extends User32API {
 	public IsDialogMessage() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

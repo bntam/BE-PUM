@@ -39,6 +39,7 @@ import v2.org.analysis.value.LongValue;
 public class memset extends MSVCRTAPI {
 
 	public memset() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

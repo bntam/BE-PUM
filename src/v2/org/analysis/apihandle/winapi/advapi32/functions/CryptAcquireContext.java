@@ -62,6 +62,7 @@ import v2.org.analysis.value.LongValue;
 public class CryptAcquireContext extends Advapi32API {
 
 	public CryptAcquireContext() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

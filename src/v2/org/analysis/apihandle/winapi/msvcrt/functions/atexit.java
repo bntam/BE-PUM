@@ -45,6 +45,7 @@ import v2.org.analysis.value.LongValue;
 public class atexit extends MSVCRTAPI {
 
 	public atexit() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

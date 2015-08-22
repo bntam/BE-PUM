@@ -22,6 +22,7 @@ import v2.org.analysis.value.LongValue;
 public class WSAStartup extends Ws2_32API {
 
 	public WSAStartup() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

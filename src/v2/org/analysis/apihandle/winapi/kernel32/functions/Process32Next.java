@@ -40,6 +40,7 @@ import v2.org.analysis.value.LongValue;
 public class Process32Next extends Kernel32API {
 
 	public Process32Next() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

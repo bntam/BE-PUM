@@ -29,6 +29,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class SHGetFileInfo extends Shell32API {
 	public SHGetFileInfo() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

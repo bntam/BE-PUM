@@ -20,6 +20,7 @@ import v2.org.analysis.value.LongValue;
 public class __p__environ extends MSVCRTAPI {
 
 	public __p__environ() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

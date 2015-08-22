@@ -24,6 +24,7 @@ import v2.org.analysis.value.LongValue;
 public class AnimatePalette extends Kernel32API {
 
 	public AnimatePalette() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

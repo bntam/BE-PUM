@@ -26,6 +26,7 @@ import com.sun.jna.platform.win32.WinBase.SYSTEM_INFO;
 public class GetNativeSystemInfo extends Kernel32API {
 
 	public GetNativeSystemInfo() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

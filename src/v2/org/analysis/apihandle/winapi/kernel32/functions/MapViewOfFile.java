@@ -48,6 +48,7 @@ public class MapViewOfFile extends Kernel32API {
 	 * 
 	 */
 	public MapViewOfFile() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

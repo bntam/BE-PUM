@@ -32,6 +32,7 @@ import v2.org.analysis.value.LongValue;
 public class CryptDestroyHash extends Advapi32API {
 
 	public CryptDestroyHash() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

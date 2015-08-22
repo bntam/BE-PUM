@@ -18,6 +18,7 @@ import v2.org.analysis.value.LongValue;
 public class WSACleanup extends Ws2_32API {
 
 	public WSACleanup() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

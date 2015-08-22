@@ -19,6 +19,7 @@ import v2.org.analysis.value.LongValue;
 public class UnhandledExceptionFilter extends Kernel32API {
 
 	public UnhandledExceptionFilter() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

@@ -41,6 +41,7 @@ import v2.org.analysis.value.LongValue;
 public class SetConsoleCtrlHandler extends Kernel32API {
 
 	public SetConsoleCtrlHandler() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

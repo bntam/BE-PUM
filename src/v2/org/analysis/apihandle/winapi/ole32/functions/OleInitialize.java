@@ -20,6 +20,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class OleInitialize extends Ole32API {
 	public OleInitialize() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

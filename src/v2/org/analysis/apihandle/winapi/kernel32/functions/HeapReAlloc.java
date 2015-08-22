@@ -36,6 +36,7 @@ public class HeapReAlloc extends Kernel32API {
 	 * 
 	 */
 	public HeapReAlloc() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

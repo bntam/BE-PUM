@@ -68,6 +68,7 @@ import v2.org.analysis.value.LongValue;
 public class SetTimer extends Kernel32API {
 
 	public SetTimer() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

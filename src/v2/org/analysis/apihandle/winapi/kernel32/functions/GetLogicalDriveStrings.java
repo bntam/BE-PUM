@@ -54,6 +54,7 @@ import v2.org.analysis.value.Value;
 public class GetLogicalDriveStrings extends Kernel32API {
 
 	public GetLogicalDriveStrings() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

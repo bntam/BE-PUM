@@ -63,6 +63,7 @@ public class CreateFileMapping extends Kernel32API {
 	 * 
 	 */
 	public CreateFileMapping() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

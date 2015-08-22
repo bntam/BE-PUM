@@ -22,6 +22,7 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 public class ExitProcess extends Kernel32API {
 
 	public ExitProcess() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

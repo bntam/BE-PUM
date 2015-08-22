@@ -42,6 +42,7 @@ import v2.org.analysis.value.LongValue;
 public class OpenThread extends Kernel32API {
 
 	public OpenThread() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

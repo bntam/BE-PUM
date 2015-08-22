@@ -74,6 +74,7 @@ import v2.org.analysis.value.LongValue;
 public class CreateProcess extends Kernel32API {
 
 	public CreateProcess() {
+		super();
 		NUM_OF_PARMS = 10;
 	}
 

@@ -39,6 +39,7 @@ import v2.org.analysis.value.LongValue;
 public class SetPriorityClass extends Kernel32API {
 
 	public SetPriorityClass() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

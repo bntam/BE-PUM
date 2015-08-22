@@ -44,6 +44,7 @@ import v2.org.analysis.value.Value;
 public class LocalAlloc extends Kernel32API {
 
 	public LocalAlloc() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

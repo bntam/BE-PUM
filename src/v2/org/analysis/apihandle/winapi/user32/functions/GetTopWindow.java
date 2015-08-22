@@ -35,6 +35,7 @@ import v2.org.analysis.value.LongValue;
 public class GetTopWindow extends User32API {
 
 	public GetTopWindow() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

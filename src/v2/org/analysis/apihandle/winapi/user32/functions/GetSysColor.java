@@ -21,6 +21,7 @@ import v2.org.analysis.value.LongValue;
 public class GetSysColor extends User32API {
 
 	public GetSysColor() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

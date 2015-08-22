@@ -39,6 +39,7 @@ public class GetCommandLine extends Kernel32API {
 	 * 
 	 */
 	public GetCommandLine() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

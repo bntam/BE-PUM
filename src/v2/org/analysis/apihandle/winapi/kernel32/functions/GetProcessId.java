@@ -41,6 +41,7 @@ import v2.org.analysis.value.Value;
 public class GetProcessId extends Kernel32API {
 
 	public GetProcessId() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

@@ -20,6 +20,7 @@ import v2.org.analysis.apihandle.winapi.ole32.Ole32DLL;
  */
 public class OleUninitialize extends Ole32API {
 	public OleUninitialize() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

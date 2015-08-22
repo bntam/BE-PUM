@@ -40,6 +40,7 @@ public class SetCurrentDirectory extends Kernel32API {
 	 * 
 	 */
 	public SetCurrentDirectory() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

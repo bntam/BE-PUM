@@ -64,6 +64,7 @@ import v2.org.analysis.value.Value;
 public class ReadProcessMemory extends Kernel32API {
 
 	public ReadProcessMemory() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

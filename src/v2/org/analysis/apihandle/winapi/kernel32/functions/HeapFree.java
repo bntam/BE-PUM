@@ -55,6 +55,7 @@ public class HeapFree extends Kernel32API {
 	 * 
 	 */
 	public HeapFree() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

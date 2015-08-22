@@ -32,6 +32,7 @@ import v2.org.analysis.value.LongValue;
 public class CloseWindow extends User32API {
 
 	public CloseWindow() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

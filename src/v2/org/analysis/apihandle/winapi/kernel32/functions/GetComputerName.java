@@ -42,6 +42,7 @@ import v2.org.analysis.value.LongValue;
 public class GetComputerName extends Kernel32API {
 
 	public GetComputerName() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

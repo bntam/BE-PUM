@@ -27,6 +27,7 @@ import v2.org.analysis.value.Value;
 public class CreateRemoteThread extends User32API {
 
 	public CreateRemoteThread() {
+		super();
 		NUM_OF_PARMS = 7;
 	}
 

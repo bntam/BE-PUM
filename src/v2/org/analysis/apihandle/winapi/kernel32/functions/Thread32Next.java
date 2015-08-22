@@ -46,6 +46,7 @@ import v2.org.analysis.value.Value;
 public class Thread32Next extends Kernel32API {
 
 	public Thread32Next() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

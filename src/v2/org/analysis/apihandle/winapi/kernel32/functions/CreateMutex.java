@@ -51,6 +51,7 @@ import v2.org.analysis.value.LongValue;
 public class CreateMutex extends Kernel32API {
 
 	public CreateMutex() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

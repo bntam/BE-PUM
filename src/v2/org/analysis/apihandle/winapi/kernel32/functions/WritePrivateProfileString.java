@@ -62,6 +62,7 @@ import v2.org.analysis.value.Value;
 public class WritePrivateProfileString extends Kernel32API {
 
 	public WritePrivateProfileString() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

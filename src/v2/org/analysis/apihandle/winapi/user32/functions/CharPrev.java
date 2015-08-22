@@ -34,6 +34,7 @@ import v2.org.analysis.value.LongValue;
 public class CharPrev extends User32API {
 
 	public CharPrev() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

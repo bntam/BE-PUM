@@ -41,6 +41,7 @@ import v2.org.analysis.value.LongValue;
 public class GetCPInfo extends Kernel32API {
 
 	public GetCPInfo() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

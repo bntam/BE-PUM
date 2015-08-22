@@ -71,6 +71,7 @@ import v2.org.analysis.value.Value;
 public class WriteProcessMemory extends Kernel32API {
 
 	public WriteProcessMemory() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

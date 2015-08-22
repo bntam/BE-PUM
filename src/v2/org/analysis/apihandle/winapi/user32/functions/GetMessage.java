@@ -51,6 +51,7 @@ import v2.org.analysis.value.LongValue;
 public class GetMessage extends User32API {
 
 	public GetMessage() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

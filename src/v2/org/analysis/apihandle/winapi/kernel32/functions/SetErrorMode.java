@@ -38,6 +38,7 @@ import v2.org.analysis.value.Value;
 public class SetErrorMode extends Kernel32API {
 
 	public SetErrorMode() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

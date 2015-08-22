@@ -33,6 +33,7 @@ import v2.org.analysis.value.Value;
 public class GlobalMemoryStatus extends Kernel32API {
 
 	public GlobalMemoryStatus() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

@@ -37,6 +37,7 @@ import v2.org.analysis.value.LongValue;
 public class GetDC extends User32API {
 
 	public GetDC() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

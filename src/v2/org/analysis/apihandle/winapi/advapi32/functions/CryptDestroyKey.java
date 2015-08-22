@@ -32,6 +32,7 @@ import v2.org.analysis.value.LongValue;
 public class CryptDestroyKey extends Advapi32API {
 
 	public CryptDestroyKey() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

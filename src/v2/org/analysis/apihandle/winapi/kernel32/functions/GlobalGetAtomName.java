@@ -43,6 +43,7 @@ import v2.org.analysis.value.LongValue;
 public class GlobalGetAtomName extends Kernel32API {
 
 	public GlobalGetAtomName() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

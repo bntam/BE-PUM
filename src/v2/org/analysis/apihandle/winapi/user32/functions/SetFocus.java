@@ -34,6 +34,7 @@ import v2.org.analysis.value.LongValue;
 public class SetFocus extends User32API {
 
 	public SetFocus() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

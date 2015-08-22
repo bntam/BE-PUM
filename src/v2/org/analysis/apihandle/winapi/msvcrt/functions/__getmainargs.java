@@ -54,6 +54,7 @@ import v2.org.analysis.value.LongValue;
 public class __getmainargs extends MSVCRTAPI {
 
 	public __getmainargs() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

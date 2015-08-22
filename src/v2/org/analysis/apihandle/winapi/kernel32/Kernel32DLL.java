@@ -30,6 +30,7 @@ import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.CPINFO;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.MEMORY_BASIC_INFORMATION;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.PRTL_CRITICAL_SECTION;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
@@ -3164,4 +3165,29 @@ public interface Kernel32DLL extends StdCallLibrary {
 	BOOL WaitNamedPipe(
 	/* _In_ */String lpNamedPipeName,
 	/* _In_ */DWORD nTimeOut);
+
+	/**
+	 * Initiates an unwind of procedure call frames.
+	 * 
+	 * @param TargetFrame
+	 *            A pointer to the call frame that is the target of the unwind.
+	 *            If this parameter is NULL, the function performs an exit
+	 *            unwind.
+	 * 
+	 * @param TargetIp
+	 *            The continuation address of the unwind. This parameter is
+	 *            ignored if TargetFrame is NULL.
+	 * 
+	 * @param ExceptionRecord
+	 *            A pointer to an EXCEPTION_RECORD structure.
+	 * 
+	 * @param ReturnValue
+	 *            A value to be placed in the integer function return register
+	 *            before continuing execution.
+	 */
+	void RtlUnwind(
+	/* _In_opt_ */PVOID TargetFrame,
+	/* _In_opt_ */PVOID TargetIp,
+	/* _In_opt_ */EXCEPTION_RECORD ExceptionRecord,
+	/* _In_ */PVOID ReturnValue);
 }

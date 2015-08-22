@@ -71,6 +71,7 @@ import v2.org.analysis.value.LongValue;
 public class GetStringTypeW extends Kernel32API {
 
 	public GetStringTypeW() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

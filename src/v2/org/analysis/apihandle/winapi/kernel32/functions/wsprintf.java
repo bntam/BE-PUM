@@ -48,6 +48,7 @@ import v2.org.analysis.path.BPState;
 public class wsprintf extends Kernel32API {
 
 	public wsprintf() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

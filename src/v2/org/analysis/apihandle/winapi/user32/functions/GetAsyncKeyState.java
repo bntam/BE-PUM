@@ -32,6 +32,7 @@ import v2.org.analysis.value.LongValue;
 public class GetAsyncKeyState extends User32API {
 
 	public GetAsyncKeyState() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

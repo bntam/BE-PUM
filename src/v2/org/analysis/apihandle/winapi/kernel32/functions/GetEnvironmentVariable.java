@@ -48,6 +48,7 @@ import v2.org.analysis.value.LongValue;
 public class GetEnvironmentVariable extends Kernel32API {
 
 	public GetEnvironmentVariable() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

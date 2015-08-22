@@ -50,6 +50,7 @@ import v2.org.analysis.value.LongValue;
 public class CreateDirectory extends Kernel32API {
 
 	public CreateDirectory() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

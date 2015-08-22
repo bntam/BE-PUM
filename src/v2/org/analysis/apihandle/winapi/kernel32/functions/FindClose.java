@@ -31,6 +31,7 @@ import v2.org.analysis.value.LongValue;
 public class FindClose extends Kernel32API {
 
 	public FindClose() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

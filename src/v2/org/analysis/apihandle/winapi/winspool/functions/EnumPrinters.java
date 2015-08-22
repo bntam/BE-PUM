@@ -88,6 +88,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class EnumPrinters extends WinspoolAPI {
 	public EnumPrinters() {
+		super();
 		NUM_OF_PARMS = 7;
 	}
 

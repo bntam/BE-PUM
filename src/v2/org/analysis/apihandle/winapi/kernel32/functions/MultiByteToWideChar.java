@@ -62,6 +62,7 @@ import v2.org.analysis.value.LongValue;
 public class MultiByteToWideChar extends Kernel32API {
 
 	public MultiByteToWideChar() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

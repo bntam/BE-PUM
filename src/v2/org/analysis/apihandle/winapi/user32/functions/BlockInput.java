@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
 public class BlockInput extends User32API {
 
 	public BlockInput() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

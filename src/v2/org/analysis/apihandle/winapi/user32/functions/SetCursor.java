@@ -41,6 +41,7 @@ import v2.org.analysis.value.Value;
 public class SetCursor extends User32API {
 
 	public SetCursor() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

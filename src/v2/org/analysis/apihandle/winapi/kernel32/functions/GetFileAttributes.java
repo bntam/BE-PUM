@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
 public class GetFileAttributes extends Kernel32API {
 
 	public GetFileAttributes() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

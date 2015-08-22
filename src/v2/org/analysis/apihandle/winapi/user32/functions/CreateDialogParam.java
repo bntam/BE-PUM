@@ -27,6 +27,7 @@ import v2.org.analysis.value.Value;
 public class CreateDialogParam extends User32API {
 
 	public CreateDialogParam() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

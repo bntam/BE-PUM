@@ -55,6 +55,7 @@ import v2.org.analysis.value.LongValue;
 public class CreateEvent extends Kernel32API {
 
 	public CreateEvent() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

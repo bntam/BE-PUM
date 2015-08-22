@@ -30,6 +30,7 @@ import v2.org.analysis.value.LongValue;
 public class GetForegroundWindow extends User32API {
 
 	public GetForegroundWindow() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

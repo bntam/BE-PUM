@@ -6,6 +6,7 @@
  */
 package v2.org.analysis.apihandle.winapi;
 
+import java.lang.reflect.Constructor;
 import java.sql.Struct;
 
 import org.jakstab.asm.DataType;
@@ -77,8 +78,17 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		try {
+			String className = "v2.org.analysis.apihandle.winapi.msvcrt.functions.__set_app_type";
+			Class<?> clazz = Class.forName(className);
+			Constructor<?> ctor = clazz.getConstructor();
+			API apiObject = (API) ctor.newInstance();
+		}	catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		// int x = Kernel32DLL.INSTANCE.WinExec("Cpp.exe", 1);
-		BPState curState = null;
+		// BPState curState = null;
 
 		// Environment env = curState.getEnvironement();
 		// Stack stack = env.getStack();
@@ -353,15 +363,16 @@ public class Test {
 		// break;
 		// }
 		// }
-		
-//		x = MsCorEEDLL.INSTANCE._CorExeMain();
-//		if (x > 0)
-//			System.out.println(x);
-//		 Kernel32.INSTANCE.Gl
-//		 User32.INSTANCE.De
+
+		// x = MsCorEEDLL.INSTANCE._CorExeMain();
+		// if (x > 0)
+		// System.out.println(x);
+		// Kernel32.INSTANCE.Gl
+		// User32.INSTANCE.De
 		// Ole32.INSTANCE.
 		// Shell32.INSTANCE.SHG
-//		Advapi32.INSTANCE.OpenThreadToken(ThreadHandle, DesiredAccess, OpenAsSelf, TokenHandle)
+		// Advapi32.INSTANCE.OpenThreadToken(ThreadHandle, DesiredAccess,
+		// OpenAsSelf, TokenHandle)
 
 		// DWORDByReference lpdwProcessId = new DWORDByReference();
 		// x =
@@ -390,7 +401,8 @@ public class Test {
 		//
 		// System.out.println(System.getProperty("jna.boot.library.name",
 		// "jnidispatch"));
-
+//		DLGTEMPLATE
+		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = (long) 1;

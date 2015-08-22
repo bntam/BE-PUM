@@ -42,6 +42,7 @@ import v2.org.analysis.value.Value;
 public class lstrcmpi extends Kernel32API {
 
 	public lstrcmpi() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

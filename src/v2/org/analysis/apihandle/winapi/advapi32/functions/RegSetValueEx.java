@@ -59,6 +59,7 @@ import v2.org.analysis.value.LongValue;
 public class RegSetValueEx extends Advapi32API {
 
 	public RegSetValueEx() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

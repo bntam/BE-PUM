@@ -58,6 +58,7 @@ import v2.org.analysis.value.LongValue;
 public class GetFileTime extends Kernel32API {
 
 	public GetFileTime() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

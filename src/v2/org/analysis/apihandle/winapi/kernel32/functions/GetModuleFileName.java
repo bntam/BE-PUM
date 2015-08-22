@@ -52,6 +52,7 @@ import v2.org.analysis.value.LongValue;
 public class GetModuleFileName extends Kernel32API {
 
 	public GetModuleFileName() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

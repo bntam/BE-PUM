@@ -34,6 +34,7 @@ public class SetEndOfFile extends Kernel32API {
 	 * 
 	 */
 	public SetEndOfFile() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

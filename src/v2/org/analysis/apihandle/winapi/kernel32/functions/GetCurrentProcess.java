@@ -36,6 +36,7 @@ public class GetCurrentProcess extends Kernel32API {
 	 * Constructor
 	 */
 	public GetCurrentProcess() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

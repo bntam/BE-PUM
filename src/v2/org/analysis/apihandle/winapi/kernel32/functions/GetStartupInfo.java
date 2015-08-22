@@ -32,6 +32,7 @@ public class GetStartupInfo extends Kernel32API {
 	 * 
 	 */
 	public GetStartupInfo() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

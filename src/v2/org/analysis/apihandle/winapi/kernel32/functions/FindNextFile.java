@@ -46,6 +46,7 @@ public class FindNextFile extends Kernel32API {
 	 * 
 	 */
 	public FindNextFile() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

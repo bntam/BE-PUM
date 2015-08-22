@@ -44,6 +44,7 @@ import v2.org.analysis.value.LongValue;
 public class Process32First extends Kernel32API {
 
 	public Process32First() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

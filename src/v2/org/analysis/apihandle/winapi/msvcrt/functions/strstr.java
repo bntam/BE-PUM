@@ -38,6 +38,7 @@ import v2.org.analysis.value.LongValue;
 public class strstr extends MSVCRTAPI {
 
 	public strstr() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

@@ -45,6 +45,7 @@ import v2.org.analysis.value.LongValue;
 public class GetGUIThreadInfo extends User32API {
 
 	public GetGUIThreadInfo() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

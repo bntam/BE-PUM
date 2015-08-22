@@ -29,6 +29,7 @@ import v2.org.analysis.value.LongValue;
 public class __p__commode extends MSVCRTAPI {
 
 	public __p__commode() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

@@ -60,6 +60,7 @@ import v2.org.analysis.value.LongValue;
 public class DuplicateHandle extends Kernel32API {
 
 	public DuplicateHandle() {
+		super();
 		NUM_OF_PARMS = 7;
 	}
 

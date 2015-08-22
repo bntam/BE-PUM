@@ -72,6 +72,7 @@ import v2.org.analysis.value.Value;
 public class VirtualAllocEx extends Kernel32API {
 
 	public VirtualAllocEx() {
+		super();
 		NUM_OF_PARMS = 5;
 	}
 

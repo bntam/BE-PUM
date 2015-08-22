@@ -55,6 +55,7 @@ public class MessageBox extends User32API {
 	private Integer apiCallReturn = null;
 
 	public MessageBox() {
+		super();
 		NUM_OF_PARMS = 4;
 	}
 

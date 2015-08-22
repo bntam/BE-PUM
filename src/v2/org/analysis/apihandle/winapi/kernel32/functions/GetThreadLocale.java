@@ -24,6 +24,7 @@ import v2.org.analysis.value.LongValue;
  */
 public class GetThreadLocale extends Kernel32API {
 	public GetThreadLocale() {
+		super();
 		NUM_OF_PARMS = 0;
 	}
 

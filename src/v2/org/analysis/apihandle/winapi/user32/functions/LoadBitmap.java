@@ -42,6 +42,7 @@ import v2.org.analysis.value.LongValue;
 public class LoadBitmap extends User32API {
 
 	public LoadBitmap() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

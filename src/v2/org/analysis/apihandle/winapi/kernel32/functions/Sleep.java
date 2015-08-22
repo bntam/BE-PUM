@@ -37,6 +37,7 @@ public class Sleep extends Kernel32API {
 	public static int offset = 0;
 
 	public Sleep() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

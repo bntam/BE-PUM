@@ -24,6 +24,7 @@ import v2.org.analysis.value.LongValue;
 public class _lcreat extends Kernel32API {
 
 	public _lcreat() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

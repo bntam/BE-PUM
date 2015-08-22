@@ -27,6 +27,7 @@ import v2.org.analysis.value.LongValue;
 public class CryptDecrypt extends Advapi32API {
 
 	public CryptDecrypt() {
+		super();
 		NUM_OF_PARMS = 6;
 	}
 

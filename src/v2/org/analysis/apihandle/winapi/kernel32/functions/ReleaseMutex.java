@@ -33,6 +33,7 @@ import v2.org.analysis.value.LongValue;
 public class ReleaseMutex extends Kernel32API {
 
 	public ReleaseMutex() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

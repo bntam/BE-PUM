@@ -32,6 +32,7 @@ import v2.org.analysis.value.LongValue;
 public class RegCloseKey extends Advapi32API {
 
 	public RegCloseKey() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

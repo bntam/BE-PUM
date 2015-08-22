@@ -22,6 +22,7 @@ import v2.org.analysis.value.LongValue;
 public class _llseek extends Kernel32API {
 
 	public _llseek() {
+		super();
 		NUM_OF_PARMS = 3;
 	}
 

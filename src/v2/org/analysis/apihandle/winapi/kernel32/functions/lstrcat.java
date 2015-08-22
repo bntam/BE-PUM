@@ -46,6 +46,7 @@ public class lstrcat extends Kernel32API {
 	 * 
 	 */
 	public lstrcat() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

@@ -37,6 +37,7 @@ import v2.org.analysis.value.Value;
 public class LocalFree extends Kernel32API {
 
 	public LocalFree() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

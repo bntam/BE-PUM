@@ -94,6 +94,7 @@ public class FormatMessage extends Kernel32API {
 
 	public FormatMessage() {
 
+		super();
 		NUM_OF_PARMS = 7;
 	}
 

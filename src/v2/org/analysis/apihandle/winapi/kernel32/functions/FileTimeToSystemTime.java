@@ -39,6 +39,7 @@ import v2.org.analysis.value.LongValue;
 public class FileTimeToSystemTime extends Kernel32API {
 
 	public FileTimeToSystemTime() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

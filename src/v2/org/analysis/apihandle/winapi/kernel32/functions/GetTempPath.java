@@ -52,6 +52,7 @@ import v2.org.analysis.value.Value;
 public class GetTempPath extends Kernel32API {
 
 	public GetTempPath() {
+		super();
 		NUM_OF_PARMS = 2;
 	}
 

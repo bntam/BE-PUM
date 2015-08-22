@@ -49,6 +49,7 @@ public class GetStdHandle extends Kernel32API {
 	 * 
 	 */
 	public GetStdHandle() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 

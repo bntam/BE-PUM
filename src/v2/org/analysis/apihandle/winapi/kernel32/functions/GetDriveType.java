@@ -34,6 +34,7 @@ import v2.org.analysis.value.LongValue;
 public class GetDriveType extends Kernel32API {
 
 	public GetDriveType() {
+		super();
 		NUM_OF_PARMS = 1;
 	}
 
