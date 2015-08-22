@@ -27,7 +27,7 @@ public class APIException extends Exception {
 		try {
 
 			// This block configure the logger with handler and formatter
-			fh = new FileHandler("APIException.log");
+			fh = new FileHandler("APIException.log", true);
 			logger.addHandler(fh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fh.setFormatter(formatter);

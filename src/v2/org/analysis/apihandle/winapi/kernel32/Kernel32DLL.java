@@ -3190,4 +3190,76 @@ public interface Kernel32DLL extends StdCallLibrary {
 	/* _In_opt_ */PVOID TargetIp,
 	/* _In_opt_ */EXCEPTION_RECORD ExceptionRecord,
 	/* _In_ */PVOID ReturnValue);
+
+	/**
+	 * Initializes a critical section object and sets the spin count for the
+	 * critical section. When a thread tries to acquire a critical section that
+	 * is locked, the thread spins: it enters a loop which iterates spin count
+	 * times, checking to see if the lock is released. If the lock is not
+	 * released before the loop finishes, the thread goes to sleep to wait for
+	 * the lock to be released.
+	 * 
+	 * @param lpCriticalSection
+	 *            A pointer to the critical section object.
+	 * 
+	 * @param dwSpinCount
+	 *            The spin count for the critical section object. On
+	 *            single-processor systems, the spin count is ignored and the
+	 *            critical section spin count is set to 0 (zero). On
+	 *            multiprocessor systems, if the critical section is
+	 *            unavailable, the calling thread spins dwSpinCount times before
+	 *            performing a wait operation on a semaphore associated with the
+	 *            critical section. If the critical section becomes free during
+	 *            the spin operation, the calling thread avoids the wait
+	 *            operation.
+	 * 
+	 * @return This function always returns a nonzero value.
+	 */
+	BOOL InitializeCriticalSectionAndSpinCount(
+	/* _Out_ */RTL_CRITICAL_SECTION lpCriticalSection,
+	/* _In_ */DWORD dwSpinCount);
+
+	/**
+	 * Stores a value in the calling fiber's fiber local storage (FLS) slot for
+	 * the specified FLS index. Each fiber has its own slot for each FLS index.
+	 * 
+	 * @param dwFlsIndex
+	 *            The FLS index that was allocated by the FlsAlloc function.
+	 * 
+	 * @param lpFlsData
+	 *            The value to be stored in the FLS slot for the calling fiber.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError. The following errors can be
+	 *         returned.
+	 */
+	BOOL FlsSetValue(
+	/* _In_ */DWORD dwFlsIndex,
+	/* _In_opt_ */PVOID lpFlsData);
+
+	/**
+	 * Allocates a fiber local storage (FLS) index. Any fiber in the process can
+	 * subsequently use this index to store and retrieve values that are local
+	 * to the fiber.
+	 * 
+	 * @param lpCallback
+	 *            A pointer to the application-defined callback function of type
+	 *            PFLS_CALLBACK_FUNCTION. This parameter is optional. For more
+	 *            information, see FlsCallback.
+	 * 
+	 *            An application-defined function. If the FLS slot is in use,
+	 *            FlsCallback is called on fiber deletion, thread exit, and when
+	 *            an FLS index is freed. Specify this function when calling the
+	 *            FlsAlloc function. The PFLS_CALLBACK_FUNCTION type defines a
+	 *            pointer to this callback function. FlsCallback is a
+	 *            placeholder for the application-defined function name.
+	 * 
+	 * @return If the function succeeds, the return value is an FLS index
+	 *         initialized to zero. If the function fails, the return value is
+	 *         FLS_OUT_OF_INDEXES. To get extended error information, call
+	 *         GetLastError.
+	 */
+	DWORD FlsAlloc(
+	/* _In_ *//* PFLS_CALLBACK_FUNCTION */Callback lpCallback);
 }

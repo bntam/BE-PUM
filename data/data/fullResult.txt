@@ -1318,3 +1318,91 @@
    Instructions:                              93
    Nodes:                              95
    Edges:                             114
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Win32_MultiThread.exe
+   Runtime:                         6571ms
+   Instructions:                              23
+   Nodes:                              25
+   Edges:                              24
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                        11860ms
+   Instructions:                             477
+   Nodes:                             489
+   Edges:                             512
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                         9988ms
+   Instructions:                             477
+   Nodes:                             489
+   Edges:                             512
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                        12443ms
+   Instructions:                             477
+   Nodes:                             489
+   Edges:                             512
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                         6030ms
+   Instructions:                             360
+   Nodes:                             371
+   Edges:                             390
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                         5998ms
+   Instructions:                             360
+   Nodes:                             371
+   Edges:                             390
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                         2289ms
+   Instructions:                             360
+   Nodes:                             371
+   Edges:                             390
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                         2434ms
+   Instructions:                             360
+   Nodes:                             371
+   Edges:                             390
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                         1709ms
+   Instructions:                             380
+   Nodes:                             389
+   Edges:                             406
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Sample.exe
+   Runtime:                         3536ms
+   Instructions:                              47
+   Nodes:                              52
+   Edges:                              51
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     SillyExample.exe
+   Runtime:                         1762ms
+   Instructions:                             380
+   Nodes:                             389
+   Edges:                             406

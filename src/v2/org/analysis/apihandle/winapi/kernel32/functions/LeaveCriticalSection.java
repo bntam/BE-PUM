@@ -68,14 +68,19 @@ public class LeaveCriticalSection extends Kernel32API {
 		// public HANDLE LockSemaphore;
 		// public ULONG_PTR SpinCount; // force size on 64-bit systems when
 		// packed
+
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
 				lpCriticalSection.LockCount.longValue()));
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
 				lpCriticalSection.RecursionCount.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4),
-				new LongValue(Pointer.nativeValue(lpCriticalSection.OwningThread.getPointer())));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4),
-				new LongValue(Pointer.nativeValue(lpCriticalSection.LockSemaphore.getPointer())));
+		memory.setDoubleWordMemoryValue(
+				new X86MemoryOperand(DataType.INT32, t1 += 4),
+				new LongValue((lpCriticalSection.OwningThread == null) ? 0 : Pointer
+						.nativeValue(lpCriticalSection.OwningThread.getPointer())));
+		memory.setDoubleWordMemoryValue(
+				new X86MemoryOperand(DataType.INT32, t1 += 4),
+				new LongValue((lpCriticalSection.LockSemaphore == null) ? 0 : Pointer
+						.nativeValue(lpCriticalSection.LockSemaphore.getPointer())));
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
 				lpCriticalSection.SpinCount.longValue()));
 	}

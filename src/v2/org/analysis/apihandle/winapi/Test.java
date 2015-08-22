@@ -402,6 +402,7 @@ public class Test {
 		// System.out.println(System.getProperty("jna.boot.library.name",
 		// "jnidispatch"));
 //		DLGTEMPLATE
+//		RTL_CRITICAL_SECTION
 		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

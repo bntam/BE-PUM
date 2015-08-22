@@ -142,6 +142,12 @@
 		<API funcName="findresource" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindResource" />
 		<API funcName="findresourcea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindResource" />
 		<API funcName="findresourcew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindResource" />
+		<API funcName="flsalloc" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
+		<API funcName="flsalloca" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
+		<API funcName="flsallocw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
+		<API funcName="flssetvalue" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
+		<API funcName="flssetvaluea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
+		<API funcName="flssetvaluew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
 		<API funcName="flushinstructioncache" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlushInstructionCache" />
 		<API funcName="flushinstructioncachea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlushInstructionCache" />
 		<API funcName="flushinstructioncachew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlushInstructionCache" />
@@ -334,6 +340,9 @@
 		<API funcName="initializecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSection" />
 		<API funcName="initializecriticalsectiona" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSection" />
 		<API funcName="initializecriticalsectionw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSection" />
+		<API funcName="initializecriticalsectionandspincount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
+		<API funcName="initializecriticalsectionandspincounta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
+		<API funcName="initializecriticalsectionandspincountw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
 		<API funcName="isbadwriteptr" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isbadwriteptra" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isbadwriteptrw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />

@@ -80,6 +80,7 @@ public abstract class API {
 				
 				System.out.print(String.format("\tx%d: %s\t", i + 1, value.toString()));
 			}
+			System.out.println();
 		}
 	}
 

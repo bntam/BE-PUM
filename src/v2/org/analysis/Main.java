@@ -331,7 +331,8 @@ public class Main {
 		// pathVirus = "asm/packer/";
 		// in = "api_test_pecompact.exe";
 
-		// pathVirus = "asm/api/";
+		 pathVirus = "asm/api/multithread/";
+		 in = "SillyExample.exe";
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
 
