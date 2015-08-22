@@ -436,6 +436,9 @@
 		<API funcName="releasemutex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReleaseMutex" />
 		<API funcName="releasemutexa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReleaseMutex" />
 		<API funcName="releasemutexw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReleaseMutex" />
+		<API funcName="rtlunwind" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlUnwind" />
+		<API funcName="rtlunwinda" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlUnwind" />
+		<API funcName="rtlunwindw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlUnwind" />
 		<API funcName="rtlzeromemory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlZeroMemory" />
 		<API funcName="rtlzeromemorya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlZeroMemory" />
 		<API funcName="rtlzeromemoryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlZeroMemory" />
@@ -614,6 +617,9 @@
 		<API funcName="_fpreset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
 		<API funcName="_fpreseta" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
 		<API funcName="_fpresetw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
+		<API funcName="_initterm" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._initterm" />
+		<API funcName="_initterma" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._initterm" />
+		<API funcName="_inittermw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._initterm" />
 		<API funcName="_itow" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
 		<API funcName="_itowa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
 		<API funcName="_itoww" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
@@ -691,6 +697,9 @@
 		<API funcName="destroywindow" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyWindow" />
 		<API funcName="destroywindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyWindow" />
 		<API funcName="destroywindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyWindow" />
+		<API funcName="dialogboxindirectparam" className="v2.org.analysis.apihandle.winapi.user32.functions.DialogBoxIndirectParam" />
+		<API funcName="dialogboxindirectparama" className="v2.org.analysis.apihandle.winapi.user32.functions.DialogBoxIndirectParam" />
+		<API funcName="dialogboxindirectparamw" className="v2.org.analysis.apihandle.winapi.user32.functions.DialogBoxIndirectParam" />
 		<API funcName="dialogboxparam" className="v2.org.analysis.apihandle.winapi.user32.functions.DialogBoxParam" />
 		<API funcName="dialogboxparama" className="v2.org.analysis.apihandle.winapi.user32.functions.DialogBoxParam" />
 		<API funcName="dialogboxparamw" className="v2.org.analysis.apihandle.winapi.user32.functions.DialogBoxParam" />
