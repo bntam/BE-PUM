@@ -349,6 +349,9 @@
 		<API funcName="isbadwriteptr" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isbadwriteptra" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isbadwriteptrw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
+		<API funcName="isdbcsleadbyte" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDBCSLeadByte" />
+		<API funcName="isdbcsleadbytea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDBCSLeadByte" />
+		<API funcName="isdbcsleadbytew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDBCSLeadByte" />
 		<API funcName="isdebuggerpresent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDebuggerPresent" />
 		<API funcName="isdebuggerpresenta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDebuggerPresent" />
 		<API funcName="isdebuggerpresentw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDebuggerPresent" />

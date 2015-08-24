@@ -3316,4 +3316,21 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	BOOL QueryPerformanceCounter(
 	/* _Out_ */LONGLONGByReference lpPerformanceCount);
+
+	/**
+	 * Determines if a specified character is a lead byte for the system default
+	 * Windows ANSI code page (CP_ACP). A lead byte is the first byte of a
+	 * two-byte character in a double-byte character set (DBCS) for the code
+	 * page.
+	 * 
+	 * @param TestChar
+	 *            The character to test.
+	 *            
+	 * @return Returns a nonzero value if the test character is potentially a
+	 *         lead byte. The function returns 0 if the test character is not a
+	 *         lead byte or if it is a single-byte character. To get extended
+	 *         error information, the application can call GetLastError.
+	 */
+	BOOL IsDBCSLeadByte(
+	/* _In_ */BYTE TestChar);
 }
