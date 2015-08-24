@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.jakstab.Program;
-import org.jakstab.util.Characters;
 
 import com.sun.jna.WString;
 
@@ -29,15 +28,15 @@ public class PackerDetection {
 	{
 		String packedby = "File is packed by ";
 		String pTech = techniques.getDetailTechniques();
-		packedby += (pTech.equals(PackerConstants.UPX)) 		? "UPX ": "";
-		packedby += (pTech.equals(PackerConstants.FSG)) 		? "FSG ": "";
-		packedby += (pTech.equals(PackerConstants.PECOMPACT)) 	? "PECOMPACT ": "";
-		packedby += (pTech.equals(PackerConstants.NPACK)) 		? "NPACK ": "";
-		packedby += (pTech.equals(PackerConstants.PETITE)) 		? "PETITE ": "";
-		packedby += (pTech.equals(PackerConstants.YODA)) 		? "YODA ": "";
-		packedby += (pTech.equals(PackerConstants.ASPACK)) 		? "ASPACK ": "";
+		packedby += this.isPackedWith(PackerConstants.UPX, pTech)		? "UPX ": "";
+		packedby += this.isPackedWith(PackerConstants.FSG, pTech)		? "FSG ": "";
+		packedby += this.isPackedWith(PackerConstants.PECOMPACT, pTech) ? "PECOMPACT ": "";
+		packedby += this.isPackedWith(PackerConstants.NPACK, pTech) 	? "NPACK ": "";
+		packedby += this.isPackedWith(PackerConstants.PETITE, pTech) 	? "PETITE ": "";
+		packedby += this.isPackedWith(PackerConstants.YODA, pTech)		? "YODA ": "";
+		packedby += this.isPackedWith(PackerConstants.ASPACK, pTech) 	? "ASPACK ": "";
 		System.out.println(packedby);
-		Program.getProgram().setLog("Via OTF, " + packedby);
+		//Program.getProgram().setLog("Via OTF, " + packedby);
 		
 		if (packedby.equals("File is packed by "))
 		{
@@ -127,7 +126,7 @@ public class PackerDetection {
 	{
 		String packedby = "File is packed by " + packerName;
 		System.out.println(packedby);
-		Program.getProgram().setLog("Detect via Header, " + packedby);
+		//Program.getProgram().setLog("Detect via Header, " + packedby);
 		this.detectViaHeader = packedby.substring(new String("File is packed by ").length());
 	}
 	
@@ -212,4 +211,15 @@ public class PackerDetection {
 		packerResultFile.appendFile(result);
 	}
 	
+	public boolean isPackedWith(String packerStr, String techStr)
+	{
+		for (int i = 0; i < packerStr.length(); i++)
+		{
+			if (packerStr.charAt(i) == '1' && techStr.charAt(i) == '0')
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }
