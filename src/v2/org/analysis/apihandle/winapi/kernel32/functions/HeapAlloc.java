@@ -17,7 +17,9 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
 import org.jakstab.asm.AbsoluteAddress;
+import org.jakstab.asm.DataType;
 import org.jakstab.asm.Instruction;
+import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.Register;
@@ -83,6 +85,13 @@ public class HeapAlloc extends Kernel32API {
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.toPointer());
 		register.mov("eax", new LongValue(value));
 		System.out.println("Return Value: " + value);
+		
+		if (ret != null) {
+			LongValue v = new LongValue(0);
+			for (long i = 0; i < t3; i++) {
+				memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, value + i), v);
+			}
+		}
 	}
 
 }

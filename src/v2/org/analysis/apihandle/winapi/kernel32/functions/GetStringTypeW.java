@@ -85,13 +85,14 @@ public class GetStringTypeW extends Kernel32API {
 		DWORD dwInfoType = new DWORD(t1);
 		WString lpSrcStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
 		int cchSrc = (int) t3;
-		WORDByReference lpCharType = new WORDByReference();
+		short[] lpCharType = new short[cchSrc + 1];
 		BOOL ret = Kernel32DLL.INSTANCE.GetStringTypeW(dwInfoType, lpSrcStr, cchSrc, lpCharType);
 
 		register.mov("eax", new LongValue(ret.longValue()));
 
-		memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(lpCharType.getValue()
-				.longValue()));
+		for (int i = 0; i < lpCharType.length; i++) {
+			memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT16, t4 + i), new LongValue(lpCharType[i]));
+		}
 	}
 
 }

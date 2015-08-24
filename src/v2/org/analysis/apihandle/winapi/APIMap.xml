@@ -337,6 +337,9 @@
 		<API funcName="heaprealloc" className="v2.org.analysis.apihandle.winapi.kernel32.functions.HeapReAlloc" />
 		<API funcName="heaprealloca" className="v2.org.analysis.apihandle.winapi.kernel32.functions.HeapReAlloc" />
 		<API funcName="heapreallocw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.HeapReAlloc" />
+		<API funcName="heapsize" className="v2.org.analysis.apihandle.winapi.kernel32.functions.HeapSize" />
+		<API funcName="heapsizea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.HeapSize" />
+		<API funcName="heapsizew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.HeapSize" />
 		<API funcName="initializecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSection" />
 		<API funcName="initializecriticalsectiona" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSection" />
 		<API funcName="initializecriticalsectionw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSection" />
@@ -436,6 +439,9 @@
 		<API funcName="process32next" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Process32Next" />
 		<API funcName="process32nexta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Process32Next" />
 		<API funcName="process32nextw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Process32Next" />
+		<API funcName="queryperformancecounter" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceCounter" />
+		<API funcName="queryperformancecountera" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceCounter" />
+		<API funcName="queryperformancecounterw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceCounter" />
 		<API funcName="readfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile" />
 		<API funcName="readfilea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile" />
 		<API funcName="readfilew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile" />

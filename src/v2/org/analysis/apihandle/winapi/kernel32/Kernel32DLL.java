@@ -1404,9 +1404,11 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         valid. ERROR_INVALID_PARAMETER. Any of the parameter values was
 	 *         invalid.
 	 */
-	BOOL GetStringTypeW(/* _In_ */DWORD dwInfoType, /* _In_NLS_string_(cchSrc) */
-			WString lpSrcStr, /* _In_ */
-			int cchSrc, /* _Out_ */WORDByReference lpCharType);
+	BOOL GetStringTypeW(
+	/* _In_ */DWORD dwInfoType,
+	/* _In_NLS_string_(cchSrc) */WString lpSrcStr,
+	/* _In_ */int cchSrc,
+	/* _Out_ */short[] lpCharType);
 
 	/**
 	 * Deprecated. Retrieves character type information for the characters in
@@ -3262,4 +3264,56 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	DWORD FlsAlloc(
 	/* _In_ *//* PFLS_CALLBACK_FUNCTION */Callback lpCallback);
+
+	/**
+	 * Retrieves the size of a memory block allocated from a heap by the
+	 * HeapAlloc or HeapReAlloc function.
+	 * 
+	 * @param hHeap
+	 *            A handle to the heap in which the memory block resides. This
+	 *            handle is returned by either the HeapCreate or GetProcessHeap
+	 *            function.
+	 * 
+	 * @param dwFlags
+	 *            The heap size options. Specifying the following value
+	 *            overrides the corresponding value specified in the flOptions
+	 *            parameter when the heap was created by using the HeapCreate
+	 *            function.
+	 * 
+	 * @param lpMem
+	 *            A pointer to the memory block whose size the function will
+	 *            obtain. This is a pointer returned by the HeapAlloc or
+	 *            HeapReAlloc function. The memory block must be from the heap
+	 *            specified by the hHeap parameter.
+	 * 
+	 * @return If the function succeeds, the return value is the requested size
+	 *         of the allocated memory block, in bytes. If the function fails,
+	 *         the return value is (SIZE_T)-1. The function does not call
+	 *         SetLastError. An application cannot call GetLastError for
+	 *         extended error information. If the lpMem parameter refers to a
+	 *         heap allocation that is not in the heap specified by the hHeap
+	 *         parameter, the behavior of the HeapSize function is undefined.
+	 */
+	SIZE_T HeapSize(
+	/* _In_ */HANDLE hHeap,
+	/* _In_ */DWORD dwFlags,
+	/* _In_ */Pointer lpMem);
+
+	/**
+	 * Retrieves the current value of the performance counter, which is a high
+	 * resolution (<1us) time stamp that can be used for time-interval
+	 * measurements.
+	 * 
+	 * @param lpPerformanceCount
+	 *            A pointer to a variable that receives the current
+	 *            performance-counter value, in counts.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError. On systems that run Windows XP or
+	 *         later, the function will always succeed and will thus never
+	 *         return zero.
+	 */
+	BOOL QueryPerformanceCounter(
+	/* _Out_ */LONGLONGByReference lpPerformanceCount);
 }
