@@ -29,15 +29,15 @@ public class X86InstructionInterpreter {
 		Value d = null, s = null;
 		int opSize = rule.getBitCount(inst);
 		// System.out.println("Instruction: " + inst.getName());
-		
-		if (inst.getName().startsWith("rdtsc")){
-			//System.out.println("rdtsc");
+
+		if (inst.getName().startsWith("rdtsc")) {
+			// System.out.println("rdtsc");
 			long time_stamp = System.nanoTime();
 			AnalysisBit analysisBit = new AnalysisBit();
 			long rdtsc_eax = analysisBit.RDTSC_EAX(time_stamp);
 			long rdtsc_edx = analysisBit.RDTSC_EDX(time_stamp);
-			env.getRegister().setRegisterValue("eax",new LongValue(rdtsc_eax));
-			env.getRegister().setRegisterValue("edx",new LongValue(rdtsc_edx));		
+			env.getRegister().setRegisterValue("eax", new LongValue(rdtsc_eax));
+			env.getRegister().setRegisterValue("edx", new LongValue(rdtsc_edx));
 		} else
 		// Khanh
 		if (inst.getName().startsWith("cmpxchg8b")) {
@@ -963,7 +963,7 @@ public class X86InstructionInterpreter {
 
 				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")
 						&& src.getClass().getSimpleName().equals("X86MemoryOperand")) {
-					//System.out.println();
+					// System.out.println();
 					X86MemoryOperand edi = env.getMemory().evaluateAddress((X86MemoryOperand) dest, env);
 					X86MemoryOperand esi = env.getMemory().evaluateAddress((X86MemoryOperand) src, env);
 
@@ -1509,7 +1509,7 @@ public class X86InstructionInterpreter {
 						&& t.getDisplacement() == 0) {
 					// PHONG: update 20150526-----------------
 					d = new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
-					//---------------------------------------
+					// ---------------------------------------
 				} else
 					d = env.getMemory().getMemoryValue(t, inst);
 
@@ -1773,23 +1773,28 @@ public class X86InstructionInterpreter {
 				s = env.getMemory().getMemoryValue((X86MemoryOperand) src, inst);
 			}
 
-			temp_d = ((LongValue) d).getValue();
-			temp_s = ((LongValue) s).getValue();
-			if ((temp_d == 0) && (temp_s == 0)) {
-				env.getFlag().setZFlag(new BooleanValue(true));
-			} else {
-				env.getFlag().setZFlag(new BooleanValue(false));
-				result = new AnalysisBit().BSF(temp_s, get_bit);
-				env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-				// PHONG: change flag here
-				// As documentation: flag will change when temp + 1. Dest will
-				// be number of loops
-				// --------------------------------------------------------------------------------------
-				for (int i = 0; i < result; i++) {
-					LongValue temp_value = new LongValue(i);
-					env.getFlag().changeFlagWithINC(temp_value, env, get_bit);
+			if (d instanceof LongValue && s instanceof LongValue) {
+				temp_d = ((LongValue) d).getValue();
+				temp_s = ((LongValue) s).getValue();
+				if ((temp_d == 0) && (temp_s == 0)) {
+					env.getFlag().setZFlag(new BooleanValue(true));
+				} else {
+					env.getFlag().setZFlag(new BooleanValue(false));
+					result = new AnalysisBit().BSF(temp_s, get_bit);
+					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
+					// PHONG: change flag here
+					// As documentation: flag will change when temp + 1. Dest
+					// will
+					// be number of loops
+					// --------------------------------------------------------------------------------------
+					for (int i = 0; i < result; i++) {
+						LongValue temp_value = new LongValue(i);
+						env.getFlag().changeFlagWithINC(temp_value, env, get_bit);
+					}
+					// --------------------------------------------------------------------------------------
 				}
-				// --------------------------------------------------------------------------------------
+			} else {
+				Program.getProgram().setLog("BSF with Symbol Value at " + curState.getLocation());
 			}
 			/*
 			 * PHONG: change here env.getFlag().setCFlag(new

@@ -37,6 +37,7 @@ public class PackerDetection {
 		packedby += (pTech.equals(PackerConstants.YODA)) 		? "YODA ": "";
 		packedby += (pTech.equals(PackerConstants.ASPACK)) 		? "ASPACK ": "";
 		System.out.println(packedby);
+		Program.getProgram().setLog("Via OTF, " + packedby);
 		
 		if (packedby.equals("File is packed by "))
 		{
@@ -126,6 +127,7 @@ public class PackerDetection {
 	{
 		String packedby = "File is packed by " + packerName;
 		System.out.println(packedby);
+		Program.getProgram().setLog("Detect via Header, " + packedby);
 		this.detectViaHeader = packedby.substring(new String("File is packed by ").length());
 	}
 	

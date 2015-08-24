@@ -157,7 +157,7 @@ public final class Program {
 	private StubProvider stubLibrary;
 	private Harness harness;
 	Disassembler disassembler;
-	private FileProcess resultFile, fullResultFile, resultFile_Temp, packerResultFile;
+	private FileProcess resultFile, fullResultFile, resultFile_Temp, packerResultFile, logFile;
 	private TargetOS targetOS;
 
 	private Instruction analyzedInstruction = null;;
@@ -190,7 +190,7 @@ public final class Program {
 		setFullResultFile(new FileProcess(fullResultFileTXT));
 		setResultFileTemp(new FileProcess(resultFileTempTXT));
 		setPackerResultFile(new FileProcess(packerResultFileTXT));
-		
+	
 		pDetection = new PackerDetection();
 	}
 
@@ -1767,8 +1767,15 @@ public final class Program {
 		mainModule = module;
 		setEntryAddress(module.getEntryPoint());
 		fileName = moduleFile.getName();
+		setLogFile(fileName);
 		installStubs();
 		return module;
+	}
+
+	private void setLogFile(String name) {
+		// TODO Auto-generated method stub
+		logFile = new FileProcess("data/log/" + name + ".log");
+		logFile.clearContentFile();
 	}
 
 	/**
@@ -2075,5 +2082,10 @@ public final class Program {
 	public long GetAnalyzingTime ()
 	{
 		return this.analyzingTime;
+	}
+
+	public void setLog(String string) {
+		// TODO Auto-generated method stub
+		logFile.appendFile(string);
 	}
 }

@@ -331,13 +331,13 @@ public class Main {
 		// pathVirus = "asm/packer/";
 		// in = "api_test_pecompact.exe";
 
-		 pathVirus = "asm/api/multithread/";
-		 in = "SillyExample.exe";
+		//pathVirus = "asm/api/multithread/";
+		//in = "SillyExample.exe";
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
 
-		//pathVirus = "asm/testcase/";
-		//in = "test.exe";
+		pathVirus = "asm/testcase/";
+		in = "bsf_symbol.exe";
 		//in = "multiDest.exe";
 		//in = "Virus.Win32.Weird.c";
 

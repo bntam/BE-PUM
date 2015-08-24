@@ -1406,3 +1406,59 @@
    Instructions:                             380
    Nodes:                             389
    Edges:                             406
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     bsf_symbol.exe
+   Runtime:                          579ms
+   Instructions:                               4
+   Nodes:                               4
+   Edges:                               3
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     bsf_symbol.exe
+   Runtime:                          303ms
+   Instructions:                               1
+   Nodes:                               1
+   Edges:                               0
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     bsf_symbol.exe
+   Runtime:                          303ms
+   Instructions:                               4
+   Nodes:                               4
+   Edges:                               3
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     bsf_symbol.exe
+   Runtime:                          284ms
+   Instructions:                               4
+   Nodes:                               4
+   Edges:                               3
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     bsf_symbol.exe
+   Runtime:                          298ms
+   Instructions:                               4
+   Nodes:                               4
+   Edges:                               3
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     bsf_symbol.exe
+   Runtime:                          314ms
+   Instructions:                               4
+   Nodes:                               4
+   Edges:                               3
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     bsf_symbol.exe
+   Runtime:                          283ms
+   Instructions:                               4
+   Nodes:                               4
+   Edges:                               3
