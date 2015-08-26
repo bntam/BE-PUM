@@ -41,6 +41,8 @@ public class GetFileType extends Kernel32API {
 	public void execute() {
 		long t = this.params.get(0);
 		int ret = Kernel32.INSTANCE.GetFileType(new HANDLE(new Pointer(t)));
+		
+		System.out.println("Return value:" + ret);
 		register.mov("eax", new LongValue(ret));
 	}
 

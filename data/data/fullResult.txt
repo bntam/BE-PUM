@@ -1,8 +1,0 @@
-===============================================================================
-   Statistics for On-The-Fly Model Generation of BE-PUM
-===============================================================================
-   Filename:                     SillyExample.exe
-   Runtime:                         9630ms
-   Instructions:                            1349
-   Nodes:                            1380
-   Edges:                            1463

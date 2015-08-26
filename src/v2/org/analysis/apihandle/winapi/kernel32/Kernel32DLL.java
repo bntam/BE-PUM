@@ -3241,6 +3241,21 @@ public interface Kernel32DLL extends StdCallLibrary {
 	/* _In_opt_ */PVOID lpFlsData);
 
 	/**
+	 * Retrieves the value in the calling fiber's fiber local storage (FLS) slot
+	 * for the specified FLS index. Each fiber has its own slot for each FLS
+	 * index.
+	 * 
+	 * @param dwFlsIndex
+	 *            The FLS index that was allocated by the FlsAlloc function.
+	 * 
+	 * @return If the function succeeds, the return value is the value stored in
+	 *         the calling fiber's FLS slot associated with the specified index.
+	 *         If the function fails, the return value is NULL. To get extended
+	 *         error information, call GetLastError.
+	 */
+	PVOID FlsGetValue(/* _In_ */DWORD dwFlsIndex);
+
+	/**
 	 * Allocates a fiber local storage (FLS) index. Any fiber in the process can
 	 * subsequently use this index to store and retrieve values that are local
 	 * to the fiber.
@@ -3325,7 +3340,7 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 * 
 	 * @param TestChar
 	 *            The character to test.
-	 *            
+	 * 
 	 * @return Returns a nonzero value if the test character is potentially a
 	 *         lead byte. The function returns 0 if the test character is not a
 	 *         lead byte or if it is a single-byte character. To get extended
@@ -3333,4 +3348,25 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	BOOL IsDBCSLeadByte(
 	/* _In_ */BYTE TestChar);
+
+	/**
+	 * Encodes the specified pointer. Encoded pointers can be used to provide
+	 * another layer of protection for pointer values.
+	 * 
+	 * @param Ptr
+	 *            The pointer to be encoded.
+	 * 
+	 * @return The function returns the encoded pointer.
+	 */
+	PVOID EncodePointer(/* _In_ */PVOID Ptr);
+
+	/**
+	 * Decodes a pointer that was previously encoded with EncodePointer.
+	 * 
+	 * @param Ptr
+	 *            The pointer to be decoded.
+	 * 
+	 * @return The function returns the decoded pointer.
+	 */
+	PVOID DecodePointer(/* _In_ */PVOID Ptr);
 }

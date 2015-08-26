@@ -403,6 +403,8 @@ public class Test {
 		// "jnidispatch"));
 //		DLGTEMPLATE
 //		RTL_CRITICAL_SECTION
+		x = 0x0ffff;
+		x = x & 0xff;
 		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

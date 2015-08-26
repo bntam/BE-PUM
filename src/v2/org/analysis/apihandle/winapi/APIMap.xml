@@ -100,6 +100,9 @@
 		<API funcName="createtoolhelp32snapshot" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateToolhelp32Snapshot" />
 		<API funcName="createtoolhelp32snapshota" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateToolhelp32Snapshot" />
 		<API funcName="createtoolhelp32snapshotw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateToolhelp32Snapshot" />
+		<API funcName="decodepointer" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DecodePointer" />
+		<API funcName="decodepointera" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DecodePointer" />
+		<API funcName="decodepointerw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DecodePointer" />
 		<API funcName="deletecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteCriticalSection" />
 		<API funcName="deletecriticalsectiona" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteCriticalSection" />
 		<API funcName="deletecriticalsectionw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteCriticalSection" />
@@ -115,6 +118,9 @@
 		<API funcName="duplicatehandle" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DuplicateHandle" />
 		<API funcName="duplicatehandlea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DuplicateHandle" />
 		<API funcName="duplicatehandlew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DuplicateHandle" />
+		<API funcName="encodepointer" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EncodePointer" />
+		<API funcName="encodepointera" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EncodePointer" />
+		<API funcName="encodepointerw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EncodePointer" />
 		<API funcName="entercriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnterCriticalSection" />
 		<API funcName="entercriticalsectiona" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnterCriticalSection" />
 		<API funcName="entercriticalsectionw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnterCriticalSection" />
@@ -145,6 +151,9 @@
 		<API funcName="flsalloc" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
 		<API funcName="flsalloca" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
 		<API funcName="flsallocw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
+		<API funcName="flsgetvalue" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsGetValue" />
+		<API funcName="flsgetvaluea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsGetValue" />
+		<API funcName="flsgetvaluew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsGetValue" />
 		<API funcName="flssetvalue" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
 		<API funcName="flssetvaluea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
 		<API funcName="flssetvaluew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
@@ -454,6 +463,9 @@
 		<API funcName="releasemutex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReleaseMutex" />
 		<API funcName="releasemutexa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReleaseMutex" />
 		<API funcName="releasemutexw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReleaseMutex" />
+		<API funcName="resumethread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ResumeThread" />
+		<API funcName="resumethreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ResumeThread" />
+		<API funcName="resumethreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ResumeThread" />
 		<API funcName="rtlunwind" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlUnwind" />
 		<API funcName="rtlunwinda" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlUnwind" />
 		<API funcName="rtlunwindw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlUnwind" />

@@ -57,7 +57,7 @@ public class QueryPerformanceCounter extends Kernel32API {
 			long v1 = v >> 32;
 			long v2 = v & 0xFFFFFFFF;
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1), new LongValue(v1));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 + 32), new LongValue(v2));
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 + 4), new LongValue(v2));
 		}
 	}
 

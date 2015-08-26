@@ -9,15 +9,7 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Waits for ownership of the specified critical section object. The function
@@ -45,7 +37,6 @@ public class EnterCriticalSection extends Kernel32API {
 		// boolean ret = Kernel32.INSTANCE.CloseHandle(new HANDLE(x != 0 ?
 		// new Pointer(x) : Pointer.NULL));
 		System.out.println("\t\t NOTICE: SPECIAL WINDOWS API");
-		register.mov("eax", new LongValue(0));
 	}
 
 }
