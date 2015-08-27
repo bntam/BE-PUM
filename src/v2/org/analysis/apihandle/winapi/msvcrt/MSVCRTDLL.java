@@ -1,6 +1,9 @@
 package v2.org.analysis.apihandle.winapi.msvcrt;
 
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.CONTEXT;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD;
+
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -310,4 +313,29 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *         error return.
 	 */
 	WString _itow(int value, WString str, int radix);
+
+	/**
+	 * Internal CRT function. Used by a framework to find the appropriate
+	 * exception handler to process the current exception..
+	 * 
+	 * @param exception_record
+	 *            [in] Information about the specific exception.
+	 * 
+	 * @param registration
+	 *            [in] The record that indicates which scope table should be
+	 *            used to find the exception handler.
+	 * 
+	 * @param context
+	 *            [in] Reserved.
+	 * 
+	 * @param dispatcher
+	 *            [in] Reserved.
+	 * 
+	 * @return If an exception should be dismissed, returns DISPOSITION_DISMISS.
+	 *         If the exception should be passed up a level to the encapsulating
+	 *         exception handlers, returns DISPOSITION_CONTINUE_SEARCH.
+	 */
+	int _except_handler3(EXCEPTION_RECORD exception_record,
+	/* PEXCEPTION_REGISTRATION */Pointer registration, CONTEXT context,
+	/* PEXCEPTION_REGISTRATION */Pointer dispatcher);
 }

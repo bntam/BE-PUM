@@ -50,6 +50,9 @@
 		<API funcName="initcommoncontrolsw" className="v2.org.analysis.apihandle.winapi.comctl32.functions.InitCommonControls" />
 	</DLL>
 	<DLL name="gdi32">
+		<API funcName="addfontresource" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AddFontResource" />
+		<API funcName="addfontresourcea" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AddFontResource" />
+		<API funcName="addfontresourcew" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AddFontResource" />
 		<API funcName="animatepalette" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
 		<API funcName="animatepalettea" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
 		<API funcName="animatepalettew" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
@@ -286,6 +289,9 @@
 		<API funcName="getsystemdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemDirectory" />
 		<API funcName="getsystemdirectorya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemDirectory" />
 		<API funcName="getsystemdirectoryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemDirectory" />
+		<API funcName="getsysteminfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemInfo" />
+		<API funcName="getsysteminfoa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemInfo" />
+		<API funcName="getsysteminfow" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemInfo" />
 		<API funcName="getsystemtime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemTime" />
 		<API funcName="getsystemtimea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemTime" />
 		<API funcName="getsystemtimew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemTime" />
@@ -644,6 +650,9 @@
 		<API funcName="_controlfp" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._controlfp" />
 		<API funcName="_controlfpa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._controlfp" />
 		<API funcName="_controlfpw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._controlfp" />
+		<API funcName="_except_handler3" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._except_handler3" />
+		<API funcName="_except_handler3a" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._except_handler3" />
+		<API funcName="_except_handler3w" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._except_handler3" />
 		<API funcName="_fpreset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
 		<API funcName="_fpreseta" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
 		<API funcName="_fpresetw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />

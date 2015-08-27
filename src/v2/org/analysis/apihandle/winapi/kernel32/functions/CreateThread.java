@@ -18,6 +18,7 @@ import v2.org.analysis.environment.Memory;
 import v2.org.analysis.environment.Register;
 import v2.org.analysis.environment.Stack;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 /**
@@ -44,13 +45,17 @@ public class CreateThread extends Kernel32API {
 		 * dwCreationFlags, // creation flags LPDWORD lpThreadId // pointer to
 		 * returned thread identifier
 		 */
-//		Value x1 = stack.pop();
-//		Value x2 = stack.pop();
-//		Value x3 = stack.pop();
-//		Value x4 = stack.pop();
-//		Value x5 = stack.pop();
-//		Value x6 = stack.pop();
-//		System.out.println("Argument:" + x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5 + " " + x6);
+
+		long t1 = this.params.get(0);
+		long t2 = this.params.get(1);
+		long t3 = this.params.get(2);
+		long t4 = this.params.get(3);
+		long t5 = this.params.get(4);
+		long t6 = this.params.get(5);
+		
+		LongValue threadAddress = (LongValue) memory.getDoubleWordMemoryValue(t3);
+		
+		System.out.println("ThreadFunctionAddress: " + threadAddress.getValue());
 
 		// Kernel32.INSTANCE.creat
 	}

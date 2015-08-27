@@ -11,6 +11,7 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.Wingdi.PALETTEENTRY;
 
 import com.sun.jna.Native;
+import com.sun.jna.WString;
 import com.sun.jna.platform.win32.GDI32;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
@@ -51,4 +52,21 @@ public interface Gdi32DLL extends StdCallLibrary {
 	/* _In_ */UINT iStartIndex,
 	/* _In_ */UINT cEntries,
 	/* _In_ */PALETTEENTRY pe);
+
+	/**
+	 * The AddFontResource function adds the font resource from the specified
+	 * file to the system font table. The font can subsequently be used for text
+	 * output by any application.
+	 * 
+	 * @param lpszFilename
+	 *            A pointer to a null-terminated character string that contains
+	 *            a valid font file name. This parameter can specify any of the
+	 *            following files.
+	 * 
+	 * @return If the function succeeds, the return value specifies the number
+	 *         of fonts added. If the function fails, the return value is zero.
+	 *         No extended error information is available.
+	 */
+	int AddFontResource(/* _In_ */WString lpszFilename);
+
 }

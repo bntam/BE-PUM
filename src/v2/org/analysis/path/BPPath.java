@@ -22,40 +22,40 @@ public class BPPath {
 	private PathCondition pathCond;
 	private LoopHandle l;
 	private Instruction previousInst;
-	private List<ProcessedAPI> processedAPI;
+//	private List<ProcessedAPI> processedAPI;
 	private boolean isStop = false;
 
-	private class ProcessedAPI {
-		private String apiName;
-		private byte processedWay;
-
-		public ProcessedAPI(String api, byte way) {
-			this.apiName = api;
-			this.processedWay = way;
-		}
-
-		/**
-		 * @return the apiName
-		 */
-		public String getApiName() {
-			return apiName;
-		}
-
-		/**
-		 * @return the processedWay
-		 */
-		public byte getProcessedWay() {
-			return processedWay;
-		}
-
-		/**
-		 * @param processedWay
-		 *            the processedWay to set
-		 */
-		public void setProcessedWay(byte processedWay) {
-			this.processedWay = processedWay;
-		}
-	}
+//	private class ProcessedAPI {
+//		private String apiName;
+//		private byte processedWay;
+//
+//		public ProcessedAPI(String api, byte way) {
+//			this.apiName = api;
+//			this.processedWay = way;
+//		}
+//
+//		/**
+//		 * @return the apiName
+//		 */
+//		public String getApiName() {
+//			return apiName;
+//		}
+//
+//		/**
+//		 * @return the processedWay
+//		 */
+//		public byte getProcessedWay() {
+//			return processedWay;
+//		}
+//
+//		/**
+//		 * @param processedWay
+//		 *            the processedWay to set
+//		 */
+//		public void setProcessedWay(byte processedWay) {
+//			this.processedWay = processedWay;
+//		}
+//	}
 
 	/**
 	 * @param curState
@@ -69,7 +69,7 @@ public class BPPath {
 		this.pathCond = new PathCondition();
 		this.pathCond.setCondition(pathCondition);
 		this.pathCond.setEnvironment(state.getEnvironement());
-		processedAPI = new ArrayList<ProcessedAPI>();
+//		processedAPI = new ArrayList<ProcessedAPI>();
 		l = new LoopHandle();
 		this.curState.setPathCondition(this.pathCond.getCondition());
 	}
@@ -104,49 +104,49 @@ public class BPPath {
 	public BPPath clone() {
 		BPPath ret = new BPPath(curState.clone(), trace.clone(), pathCond.getCondition().clone());
 
-		List<ProcessedAPI> p = new ArrayList<ProcessedAPI>();
-		for (ProcessedAPI t : this.processedAPI) {
-			p.add(new ProcessedAPI(t.getApiName(), t.getProcessedWay()));
-		}
+//		List<ProcessedAPI> p = new ArrayList<ProcessedAPI>();
+//		for (ProcessedAPI t : this.processedAPI) {
+//			p.add(new ProcessedAPI(t.getApiName(), t.getProcessedWay()));
+//		}
 		ret.setLoopHandle(l.clone());
-		ret.setProcessedAPI(p);
+//		ret.setProcessedAPI(p);
 
 		return ret;
 	}
 
-	public void insertProcessedAPI(String name, byte way) {
-		for (ProcessedAPI t : this.processedAPI) {
-			if (t.getApiName().equals(name)) {
-				t.setProcessedWay(way);
-				return;
-			}
-		}
-
-		this.processedAPI.add(new ProcessedAPI(name, way));
-	}
-
-	public boolean containAPI(String name) {
-		for (ProcessedAPI t : this.processedAPI) {
-			if (t.getApiName().equals(name))
-				return true;
-		}
-
-		return false;
-	}
-
-	public byte getAPIWay(String name) {
-		for (ProcessedAPI t : this.processedAPI) {
-			if (t.getApiName().equals(name))
-				return t.getProcessedWay();
-		}
-
-		return 0;
-	}
-
-	private void setProcessedAPI(List<ProcessedAPI> p) {
-		// TODO Auto-generated method stub
-		this.processedAPI = p;
-	}
+//	public void insertProcessedAPI(String name, byte way) {
+//		for (ProcessedAPI t : this.processedAPI) {
+//			if (t.getApiName().equals(name)) {
+//				t.setProcessedWay(way);
+//				return;
+//			}
+//		}
+//
+//		this.processedAPI.add(new ProcessedAPI(name, way));
+//	}
+//
+//	public boolean containAPI(String name) {
+//		for (ProcessedAPI t : this.processedAPI) {
+//			if (t.getApiName().equals(name))
+//				return true;
+//		}
+//
+//		return false;
+//	}
+//
+//	public byte getAPIWay(String name) {
+//		for (ProcessedAPI t : this.processedAPI) {
+//			if (t.getApiName().equals(name))
+//				return t.getProcessedWay();
+//		}
+//
+//		return 0;
+//	}
+//
+//	private void setProcessedAPI(List<ProcessedAPI> p) {
+//		// TODO Auto-generated method stub
+//		this.processedAPI = p;
+//	}
 
 	public void addTrace(AbsoluteAddress addr) {
 		if (addr != null)

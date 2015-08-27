@@ -73,6 +73,7 @@ public class OTFModelGeneration implements Algorithm {
 		// BE-PUM algorithm
 		System.out.println("Starting On-the-fly Model Generation algorithm.");
 		program.getResultFileTemp().appendInLine('\n' + program.getFileName() + '\t');
+		
 		// Set up initial context
 		X86TransitionRule rule = new X86TransitionRule();
 		BPCFG cfg = Program.getProgram().getBPCFG();
@@ -81,12 +82,15 @@ public class OTFModelGeneration implements Algorithm {
 		AbsoluteAddress location = Program.getProgram().getEntryPoint();
 		Instruction inst = Program.getProgram().getInstruction(location, env);
 		List<BPPath> pathList = new ArrayList<BPPath>();
+		
+		// Insert start node
 		BPVertex startNode = null;
-		BPState curState = null;
-		BPPath path = null;
 		startNode = new BPVertex(location, inst);
 		startNode.setType(0);
 		cfg.insertVertex(startNode);
+
+		BPState curState = null;
+		BPPath path = null;
 		curState = new BPState(env, location, inst);
 		path = new BPPath(curState, new PathList(), new Formulas());
 		path.setCurrentState(curState);
