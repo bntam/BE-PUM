@@ -1,190 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<APIMap>
-	<DLL name="advapi32">
-		<API funcName="cryptacquirecontext" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptAcquireContext" />
-		<API funcName="cryptacquirecontexta" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptAcquireContext" />
-		<API funcName="cryptacquirecontextw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptAcquireContext" />
-		<API funcName="cryptcreatehash" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
-		<API funcName="cryptcreatehasha" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
-		<API funcName="cryptcreatehashw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptCreateHash" />
-		<API funcName="cryptdecrypt" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDecrypt" />
-		<API funcName="cryptdecrypta" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDecrypt" />
-		<API funcName="cryptdecryptw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDecrypt" />
-		<API funcName="cryptderivekey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
-		<API funcName="cryptderivekeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
-		<API funcName="cryptderivekeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDeriveKey" />
-		<API funcName="cryptdestroyhash" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
-		<API funcName="cryptdestroyhasha" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
-		<API funcName="cryptdestroyhashw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyHash" />
-		<API funcName="cryptdestroykey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyKey" />
-		<API funcName="cryptdestroykeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyKey" />
-		<API funcName="cryptdestroykeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyKey" />
-		<API funcName="crypthashdata" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
-		<API funcName="crypthashdataa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
-		<API funcName="crypthashdataw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
-		<API funcName="cryptreleasecontext" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
-		<API funcName="cryptreleasecontexta" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
-		<API funcName="cryptreleasecontextw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
-		<API funcName="openthreadtoken" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenThreadToken" />
-		<API funcName="openthreadtokena" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenThreadToken" />
-		<API funcName="openthreadtokenw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenThreadToken" />
-		<API funcName="regclosekey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
-		<API funcName="regclosekeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
-		<API funcName="regclosekeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
-		<API funcName="regopenkey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKey" />
-		<API funcName="regopenkeya" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKey" />
-		<API funcName="regopenkeyw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKey" />
-		<API funcName="regopenkeyex" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKeyEx" />
-		<API funcName="regopenkeyexa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKeyEx" />
-		<API funcName="regopenkeyexw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegOpenKeyEx" />
-		<API funcName="regqueryvalueex" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegQueryValueEx" />
-		<API funcName="regqueryvalueexa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegQueryValueEx" />
-		<API funcName="regqueryvalueexw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegQueryValueEx" />
-		<API funcName="regsetvalueex" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegSetValueEx" />
-		<API funcName="regsetvalueexa" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegSetValueEx" />
-		<API funcName="regsetvalueexw" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegSetValueEx" />
-	</DLL>
-	<DLL name="comctl32">
-		<API funcName="initcommoncontrols" className="v2.org.analysis.apihandle.winapi.comctl32.functions.InitCommonControls" />
-		<API funcName="initcommoncontrolsa" className="v2.org.analysis.apihandle.winapi.comctl32.functions.InitCommonControls" />
-		<API funcName="initcommoncontrolsw" className="v2.org.analysis.apihandle.winapi.comctl32.functions.InitCommonControls" />
-	</DLL>
-	<DLL name="gdi32">
-		<API funcName="addfontresource" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AddFontResource" />
-		<API funcName="addfontresourcea" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AddFontResource" />
-		<API funcName="addfontresourcew" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AddFontResource" />
-		<API funcName="animatepalette" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
-		<API funcName="animatepalettea" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
-		<API funcName="animatepalettew" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
-		<API funcName="getdevicecaps" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
-		<API funcName="getdevicecapsa" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
-		<API funcName="getdevicecapsw" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
-	</DLL>
-	<DLL name="kernel32">
-		<API funcName="arefileapisansi" className="v2.org.analysis.apihandle.winapi.kernel32.functions.AreFileApisANSI" />
-		<API funcName="arefileapisansia" className="v2.org.analysis.apihandle.winapi.kernel32.functions.AreFileApisANSI" />
-		<API funcName="arefileapisansiw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.AreFileApisANSI" />
-		<API funcName="closehandle" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CloseHandle" />
-		<API funcName="closehandlea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CloseHandle" />
-		<API funcName="closehandlew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CloseHandle" />
-		<API funcName="comparefiletime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CompareFileTime" />
-		<API funcName="comparefiletimea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CompareFileTime" />
-		<API funcName="comparefiletimew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CompareFileTime" />
-		<API funcName="comparestring" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CompareString" />
-		<API funcName="comparestringa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CompareString" />
-		<API funcName="comparestringw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CompareString" />
-		<API funcName="copyfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CopyFile" />
-		<API funcName="copyfilea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CopyFile" />
-		<API funcName="copyfilew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CopyFile" />
-		<API funcName="createdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateDirectory" />
-		<API funcName="createdirectorya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateDirectory" />
-		<API funcName="createdirectoryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateDirectory" />
-		<API funcName="createevent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateEvent" />
-		<API funcName="createeventa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateEvent" />
-		<API funcName="createeventw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateEvent" />
-		<API funcName="createfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateFile" />
-		<API funcName="createfilea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateFile" />
-		<API funcName="createfilew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateFile" />
-		<API funcName="createfilemapping" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateFileMapping" />
-		<API funcName="createfilemappinga" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateFileMapping" />
-		<API funcName="createfilemappingw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateFileMapping" />
-		<API funcName="createmutex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateMutex" />
-		<API funcName="createmutexa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateMutex" />
-		<API funcName="createmutexw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateMutex" />
-		<API funcName="createprocess" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateProcess" />
-		<API funcName="createprocessa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateProcess" />
-		<API funcName="createprocessw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateProcess" />
-		<API funcName="createremotethread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateRemoteThread" />
-		<API funcName="createremotethreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateRemoteThread" />
-		<API funcName="createremotethreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateRemoteThread" />
-		<API funcName="createthread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateThread" />
-		<API funcName="createthreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateThread" />
-		<API funcName="createthreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateThread" />
-		<API funcName="createtoolhelp32snapshot" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateToolhelp32Snapshot" />
-		<API funcName="createtoolhelp32snapshota" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateToolhelp32Snapshot" />
-		<API funcName="createtoolhelp32snapshotw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.CreateToolhelp32Snapshot" />
-		<API funcName="decodepointer" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DecodePointer" />
-		<API funcName="decodepointera" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DecodePointer" />
-		<API funcName="decodepointerw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DecodePointer" />
-		<API funcName="deletecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteCriticalSection" />
-		<API funcName="deletecriticalsectiona" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteCriticalSection" />
-		<API funcName="deletecriticalsectionw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteCriticalSection" />
-		<API funcName="deletefile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteFile" />
-		<API funcName="deletefilea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteFile" />
-		<API funcName="deletefilew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeleteFile" />
-		<API funcName="deviceiocontrol" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeviceIoControl" />
-		<API funcName="deviceiocontrola" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeviceIoControl" />
-		<API funcName="deviceiocontrolw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DeviceIoControl" />
-		<API funcName="disablethreadlibrarycalls" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DisableThreadLibraryCalls" />
-		<API funcName="disablethreadlibrarycallsa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DisableThreadLibraryCalls" />
-		<API funcName="disablethreadlibrarycallsw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DisableThreadLibraryCalls" />
-		<API funcName="duplicatehandle" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DuplicateHandle" />
-		<API funcName="duplicatehandlea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DuplicateHandle" />
-		<API funcName="duplicatehandlew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.DuplicateHandle" />
-		<API funcName="encodepointer" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EncodePointer" />
-		<API funcName="encodepointera" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EncodePointer" />
-		<API funcName="encodepointerw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EncodePointer" />
-		<API funcName="entercriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnterCriticalSection" />
-		<API funcName="entercriticalsectiona" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnterCriticalSection" />
-		<API funcName="entercriticalsectionw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnterCriticalSection" />
-		<API funcName="enumdateformats" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnumDateFormats" />
-		<API funcName="enumdateformatsa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnumDateFormats" />
-		<API funcName="enumdateformatsw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.EnumDateFormats" />
-		<API funcName="exitprocess" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitProcess" />
-		<API funcName="exitprocessa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitProcess" />
-		<API funcName="exitprocessw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitProcess" />
-		<API funcName="exitthread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitThread" />
-		<API funcName="exitthreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitThread" />
-		<API funcName="exitthreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ExitThread" />
-		<API funcName="filetimetosystemtime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FileTimeToSystemTime" />
-		<API funcName="filetimetosystemtimea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FileTimeToSystemTime" />
-		<API funcName="filetimetosystemtimew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FileTimeToSystemTime" />
-		<API funcName="findclose" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindClose" />
-		<API funcName="findclosea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindClose" />
-		<API funcName="findclosew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindClose" />
-		<API funcName="findfirstfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindFirstFile" />
-		<API funcName="findfirstfilea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindFirstFile" />
-		<API funcName="findfirstfilew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindFirstFile" />
-		<API funcName="findnextfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindNextFile" />
-		<API funcName="findnextfilea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindNextFile" />
-		<API funcName="findnextfilew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindNextFile" />
-		<API funcName="findresource" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindResource" />
-		<API funcName="findresourcea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindResource" />
-		<API funcName="findresourcew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FindResource" />
-		<API funcName="flsalloc" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
-		<API funcName="flsalloca" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
-		<API funcName="flsallocw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsAlloc" />
-		<API funcName="flsgetvalue" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsGetValue" />
-		<API funcName="flsgetvaluea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsGetValue" />
-		<API funcName="flsgetvaluew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsGetValue" />
-		<API funcName="flssetvalue" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
-		<API funcName="flssetvaluea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
-		<API funcName="flssetvaluew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlsSetValue" />
-		<API funcName="flushinstructioncache" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlushInstructionCache" />
-		<API funcName="flushinstructioncachea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlushInstructionCache" />
-		<API funcName="flushinstructioncachew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FlushInstructionCache" />
-		<API funcName="formatmessage" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FormatMessage" />
-		<API funcName="formatmessagea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FormatMessage" />
-		<API funcName="formatmessagew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FormatMessage" />
-		<API funcName="freeenvironmentstrings" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeEnvironmentStrings" />
-		<API funcName="freeenvironmentstringsa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeEnvironmentStrings" />
-		<API funcName="freeenvironmentstringsw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeEnvironmentStrings" />
-		<API funcName="freelibrary" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeLibrary" />
-		<API funcName="freelibrarya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeLibrary" />
-		<API funcName="freelibraryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeLibrary" />
-		<API funcName="getacp" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetACP" />
-		<API funcName="getacpa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetACP" />
-		<API funcName="getacpw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetACP" />
-		<API funcName="getcommandline" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCommandLine" />
-		<API funcName="getcommandlinea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCommandLine" />
-		<API funcName="getcommandlinew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCommandLine" />
-		<API funcName="getcomputername" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetComputerName" />
-		<API funcName="getcomputernamea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetComputerName" />
-		<API funcName="getcomputernamew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetComputerName" />
-		<API funcName="getcpinfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCPInfo" />
-		<API funcName="getcpinfoa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCPInfo" />
-		<API funcName="getcpinfow" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCPInfo" />
-		<API funcName="getcurrentdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentDirectory" />
 		<API funcName="getcurrentdirectorya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentDirectory" />
 		<API funcName="getcurrentdirectoryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentDirectory" />
 		<API funcName="getcurrentprocess" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcess" />
@@ -632,6 +445,9 @@
 		<API funcName="malloc" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
 		<API funcName="malloca" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
 		<API funcName="mallocw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
+		<API funcName="memcpy" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memcpy" />
+		<API funcName="memcpya" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memcpy" />
+		<API funcName="memcpyw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memcpy" />
 		<API funcName="memset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
 		<API funcName="memseta" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
 		<API funcName="memsetw" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
@@ -745,6 +561,9 @@
 		<API funcName="dispatchmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.DispatchMessage" />
 		<API funcName="dispatchmessagea" className="v2.org.analysis.apihandle.winapi.user32.functions.DispatchMessage" />
 		<API funcName="dispatchmessagew" className="v2.org.analysis.apihandle.winapi.user32.functions.DispatchMessage" />
+		<API funcName="equalrect" className="v2.org.analysis.apihandle.winapi.user32.functions.EqualRect" />
+		<API funcName="equalrecta" className="v2.org.analysis.apihandle.winapi.user32.functions.EqualRect" />
+		<API funcName="equalrectw" className="v2.org.analysis.apihandle.winapi.user32.functions.EqualRect" />
 		<API funcName="findwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.FindWindow" />
 		<API funcName="findwindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.FindWindow" />
 		<API funcName="findwindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.FindWindow" />
@@ -757,6 +576,9 @@
 		<API funcName="getclassname" className="v2.org.analysis.apihandle.winapi.user32.functions.GetClassName" />
 		<API funcName="getclassnamea" className="v2.org.analysis.apihandle.winapi.user32.functions.GetClassName" />
 		<API funcName="getclassnamew" className="v2.org.analysis.apihandle.winapi.user32.functions.GetClassName" />
+		<API funcName="getcursorpos" className="v2.org.analysis.apihandle.winapi.user32.functions.GetCursorPos" />
+		<API funcName="getcursorposa" className="v2.org.analysis.apihandle.winapi.user32.functions.GetCursorPos" />
+		<API funcName="getcursorposw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetCursorPos" />
 		<API funcName="getdc" className="v2.org.analysis.apihandle.winapi.user32.functions.GetDC" />
 		<API funcName="getdca" className="v2.org.analysis.apihandle.winapi.user32.functions.GetDC" />
 		<API funcName="getdcw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetDC" />
@@ -793,18 +615,27 @@
 		<API funcName="getwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
 		<API funcName="getwindowlonga" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
 		<API funcName="getwindowlongw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
+		<API funcName="getwindowrect" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowRect" />
+		<API funcName="getwindowrecta" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowRect" />
+		<API funcName="getwindowrectw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowRect" />
 		<API funcName="getwindowtext" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowText" />
 		<API funcName="getwindowtexta" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowText" />
 		<API funcName="getwindowtextw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowText" />
 		<API funcName="getwindowthreadprocessid" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
 		<API funcName="getwindowthreadprocessida" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
 		<API funcName="getwindowthreadprocessidw" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
+		<API funcName="inflaterect" className="v2.org.analysis.apihandle.winapi.user32.functions.InflateRect" />
+		<API funcName="inflaterecta" className="v2.org.analysis.apihandle.winapi.user32.functions.InflateRect" />
+		<API funcName="inflaterectw" className="v2.org.analysis.apihandle.winapi.user32.functions.InflateRect" />
 		<API funcName="insertmenuitem" className="v2.org.analysis.apihandle.winapi.user32.functions.InsertMenuItem" />
 		<API funcName="insertmenuitema" className="v2.org.analysis.apihandle.winapi.user32.functions.InsertMenuItem" />
 		<API funcName="insertmenuitemw" className="v2.org.analysis.apihandle.winapi.user32.functions.InsertMenuItem" />
 		<API funcName="isdialogmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.IsDialogMessage" />
 		<API funcName="isdialogmessagea" className="v2.org.analysis.apihandle.winapi.user32.functions.IsDialogMessage" />
 		<API funcName="isdialogmessagew" className="v2.org.analysis.apihandle.winapi.user32.functions.IsDialogMessage" />
+		<API funcName="iswindowvisible" className="v2.org.analysis.apihandle.winapi.user32.functions.IsWindowVisible" />
+		<API funcName="iswindowvisiblea" className="v2.org.analysis.apihandle.winapi.user32.functions.IsWindowVisible" />
+		<API funcName="iswindowvisiblew" className="v2.org.analysis.apihandle.winapi.user32.functions.IsWindowVisible" />
 		<API funcName="loadbitmap" className="v2.org.analysis.apihandle.winapi.user32.functions.LoadBitmap" />
 		<API funcName="loadbitmapa" className="v2.org.analysis.apihandle.winapi.user32.functions.LoadBitmap" />
 		<API funcName="loadbitmapw" className="v2.org.analysis.apihandle.winapi.user32.functions.LoadBitmap" />
@@ -868,6 +699,11 @@
 		<API funcName="updatewindow" className="v2.org.analysis.apihandle.winapi.user32.functions.UpdateWindow" />
 		<API funcName="updatewindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.UpdateWindow" />
 		<API funcName="updatewindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.UpdateWindow" />
+	</DLL>
+	<DLL name="wininet">
+		<API funcName="internetsetoption" className="v2.org.analysis.apihandle.winapi.wininet.functions.InternetSetOption" />
+		<API funcName="internetsetoptiona" className="v2.org.analysis.apihandle.winapi.wininet.functions.InternetSetOption" />
+		<API funcName="internetsetoptionw" className="v2.org.analysis.apihandle.winapi.wininet.functions.InternetSetOption" />
 	</DLL>
 	<DLL name="winspool">
 		<API funcName="enumprinters" className="v2.org.analysis.apihandle.winapi.winspool.functions.EnumPrinters" />

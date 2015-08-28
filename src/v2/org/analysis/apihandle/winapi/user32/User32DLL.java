@@ -874,4 +874,98 @@ public interface User32DLL extends StdCallLibrary {
 	/* _In_opt_ */HWND hWndParent,
 	/* _In_opt_ */DLGPROC lpDialogFunc,
 	/* _In_ */LPARAM dwInitParam);
+
+	/**
+	 * The InflateRect function increases or decreases the width and height of
+	 * the specified rectangle. The InflateRect function adds dx units to the
+	 * left and right ends of the rectangle and dy units to the top and bottom.
+	 * The dx and dy parameters are signed values; positive values increase the
+	 * width and height, and negative values decrease them.
+	 * 
+	 * @param lprc
+	 *            A pointer to the RECT structure that increases or decreases in
+	 *            size.
+	 * 
+	 * @param dx
+	 *            The amount to increase or decrease the rectangle width. This
+	 *            parameter must be negative to decrease the width.
+	 * 
+	 * @param dy
+	 *            The amount to increase or decrease the rectangle height. This
+	 *            parameter must be negative to decrease the height.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero.
+	 */
+	BOOL InflateRect(
+	/* _Inout_ */RECT lprc,
+	/* _In_ */int dx,
+	/* _In_ */int dy);
+
+	/**
+	 * Determines the visibility state of the specified window.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window to be tested.
+	 * 
+	 * @return If the specified window, its parent window, its parent's parent
+	 *         window, and so forth, have the WS_VISIBLE style, the return value
+	 *         is nonzero. Otherwise, the return value is zero. Because the
+	 *         return value specifies whether the window has the WS_VISIBLE
+	 *         style, it may be nonzero even if the window is totally obscured
+	 *         by other windows.
+	 */
+	BOOL IsWindowVisible(/* _In_ */HWND hWnd);
+
+	/**
+	 * Retrieves the dimensions of the bounding rectangle of the specified
+	 * window. The dimensions are given in screen coordinates that are relative
+	 * to the upper-left corner of the screen.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window.
+	 * 
+	 * @param lpRect
+	 *            A pointer to a RECT structure that receives the screen
+	 *            coordinates of the upper-left and lower-right corners of the
+	 *            window.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL GetWindowRect(/* _In_ */HWND hWnd, /* _Out_ */RECT lpRect);
+
+	/**
+	 * The EqualRect function determines whether the two specified rectangles
+	 * are equal by comparing the coordinates of their upper-left and
+	 * lower-right corners.
+	 * 
+	 * @param lprc1
+	 *            Pointer to a RECT structure that contains the logical
+	 *            coordinates of the first rectangle.
+	 * 
+	 * @param lprc2
+	 *            Pointer to a RECT structure that contains the logical
+	 *            coordinates of the second rectangle.
+	 * 
+	 * @return If the two rectangles are identical, the return value is nonzero.
+	 *         If the two rectangles are not identical, the return value is
+	 *         zero.
+	 */
+	BOOL EqualRect(
+	/* _In_ const */RECT lprc1,
+	/* _In_ const */RECT lprc2);
+
+	/**
+	 * Retrieves the position of the mouse cursor, in screen coordinates.
+	 * 
+	 * @param lpPoint
+	 *            A pointer to a POINT structure that receives the screen
+	 *            coordinates of the cursor.
+	 * 
+	 * @return Returns nonzero if successful or zero otherwise. To get extended
+	 *         error information, call GetLastError.
+	 */
+	BOOL GetCursorPos(/* _Out_ */POINT lpPoint);
 }

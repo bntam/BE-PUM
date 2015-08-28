@@ -16,6 +16,6 @@ import v2.org.analysis.apihandle.winapi.API;
 public abstract class Ws2_32API extends API {
  
 	public Ws2_32API() {
-		this.libraryName = "Ws2_32.DLL";
+		this.libraryName = "Ws2_32.dll";
 	}
 }
