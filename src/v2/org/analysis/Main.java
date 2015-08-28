@@ -60,15 +60,16 @@ public class Main {
 		// Set isLog true and them will be saved into Log.log file for you.
 		boolean isLog = false;
 		if (isLog) {
-			setLogToFile();
-		}
-	}
-	private static void setLogToFile() {
-		try {
-			System.out.println("================== LOG TO FILE ==================");
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 			Date date = new Date();
 			String logFile = "Log-" + dateFormat.format(date) + ".log";
+			setLogToFile(logFile);
+		}
+	}
+	
+	private static void setLogToFile(String logFile) {
+		try {
+			System.out.println("================== LOG TO FILE ==================");
 			PrintStream out = new PrintStream(new FileOutputStream(logFile));
 			System.setOut(out);
 			logger = Logger.getLogger(Main.class);
@@ -359,7 +360,15 @@ public class Main {
 							}
 							new MainWindows();
 						} else if (input.equals("-log")) {
-							setLogToFile();
+							String fName = "";
+							if (args[1].contains("\\"))
+							{
+								fName = args[1].substring(args[1].lastIndexOf("\\") + 1 
+										, args[1].length());
+							}
+							else fName = args[1];
+							String logFile = "Log - " + fName + ".log";
+							setLogToFile(logFile);
 						}
 					} else {
 						path = input;

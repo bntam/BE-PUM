@@ -2086,6 +2086,6 @@ public final class Program {
 
 	public void setLog(String string) {
 		// TODO Auto-generated method stub
-		logFile.appendFile(string);
+		System.out.println(string);
 	}
 }
