@@ -48,6 +48,5 @@ public class GetDeviceCaps extends Gdi32API {
 		int ret = GDI32.INSTANCE.GetDeviceCaps(hdc, nIndex);
 
 		register.mov("eax", new LongValue(ret));
-		System.out.println("Return Value: " + ret);
 	}
 }

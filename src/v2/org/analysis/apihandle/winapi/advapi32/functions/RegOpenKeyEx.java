@@ -63,15 +63,14 @@ public class RegOpenKeyEx extends Advapi32API {
 	public void execute() {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
-		long t3 = this.params.get(2);
+//		long t3 = this.params.get(2);
 		long t4 = this.params.get(3);
 		long t5 = this.params.get(4);
 
 		String lpSubKey = (t2 == 0) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
 		HKEYByReference phkResult = new HKEYByReference();
 
-		int t = (int) t1;
-		int ret = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY((int) t1), lpSubKey, (int) t3, (int) t4, phkResult);
+		int ret = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY((int) t1), lpSubKey, 0 /*NULL - reversed*/, (int) t4, phkResult);
 		register.mov("eax", new LongValue(ret));
 
 		HKEY result = phkResult.getValue();

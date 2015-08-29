@@ -1,5 +1,7 @@
 package v2.org.analysis.apihandle.winapi.advapi32;
 
+import java.nio.Buffer;
+
 import com.sun.jna.Native;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
@@ -334,6 +336,6 @@ public interface Advapi32DLL extends StdCallLibrary {
 	/* _In_opt_ */String lpValueName,
 	/* _Reserved_ */DWORDByReference lpReserved,
 	/* _Out_opt_ */DWORDByReference lpType,
-	/* _Out_opt_ */ByteByReference lpData,
+	/* _Out_opt_ */Buffer lpData,
 	/* _Inout_opt_ */DWORDByReference lpcbData);
 }

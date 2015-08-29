@@ -45,7 +45,6 @@ public class GetProcAddress extends Kernel32API {
 
 		int ret = Kernel32DLLwithoutOption.INSTANCE.GetProcAddress(hModule, lpProcName);
 		register.mov("eax", new LongValue(ret));
-		System.out.println("Return Value: " + ret);
 
 		if (ret != 0) {
 			String libName = APIHandle.libraryHandle.get(t1);

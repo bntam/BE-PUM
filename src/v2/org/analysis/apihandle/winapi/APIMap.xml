@@ -1,20 +1,3 @@
-		<API funcName="getcurrentdirectorya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentDirectory" />
-		<API funcName="getcurrentdirectoryw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentDirectory" />
-		<API funcName="getcurrentprocess" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcess" />
-		<API funcName="getcurrentprocessa" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcess" />
-		<API funcName="getcurrentprocessw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcess" />
-		<API funcName="getcurrentprocessid" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcessId" />
-		<API funcName="getcurrentprocessida" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcessId" />
-		<API funcName="getcurrentprocessidw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcessId" />
-		<API funcName="getcurrentthread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentThread" />
-		<API funcName="getcurrentthreada" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentThread" />
-		<API funcName="getcurrentthreadw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentThread" />
-		<API funcName="getcurrentthreadid" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentThreadId" />
-		<API funcName="getcurrentthreadida" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentThreadId" />
-		<API funcName="getcurrentthreadidw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentThreadId" />
-		<API funcName="getdateformat" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetDateFormat" />
-		<API funcName="getdateformata" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetDateFormat" />
-		<API funcName="getdateformatw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetDateFormat" />
 		<API funcName="getdiskfreespace" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetDiskFreeSpace" />
 		<API funcName="getdiskfreespacea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetDiskFreeSpace" />
 		<API funcName="getdiskfreespacew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetDiskFreeSpace" />
@@ -120,9 +103,15 @@
 		<API funcName="getthreadlocale" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadLocale" />
 		<API funcName="getthreadlocalea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadLocale" />
 		<API funcName="getthreadlocalew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadLocale" />
+		<API funcName="getthreadpriority" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadPriority" />
+		<API funcName="getthreadprioritya" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadPriority" />
+		<API funcName="getthreadpriorityw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadPriority" />
 		<API funcName="gettickcount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTickCount" />
 		<API funcName="gettickcounta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTickCount" />
 		<API funcName="gettickcountw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTickCount" />
+		<API funcName="getuserdefaultlangid" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetUserDefaultLangID" />
+		<API funcName="getuserdefaultlangida" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetUserDefaultLangID" />
+		<API funcName="getuserdefaultlangidw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetUserDefaultLangID" />
 		<API funcName="getversion" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVersion" />
 		<API funcName="getversiona" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVersion" />
 		<API funcName="getversionw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVersion" />
@@ -174,6 +163,9 @@
 		<API funcName="initializecriticalsectionandspincount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
 		<API funcName="initializecriticalsectionandspincounta" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
 		<API funcName="initializecriticalsectionandspincountw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
+		<API funcName="interlockedexchange" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedExchange" />
+		<API funcName="interlockedexchangea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedExchange" />
+		<API funcName="interlockedexchangew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedExchange" />
 		<API funcName="isbadwriteptr" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isbadwriteptra" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isbadwriteptrw" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
@@ -503,6 +495,9 @@
 		<API funcName="ntqueryinformationprocessw" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtQueryInformationProcess" />
 	</DLL>
 	<DLL name="ole32">
+		<API funcName="cocreateguid" className="v2.org.analysis.apihandle.winapi.ole32.functions.CoCreateGuid" />
+		<API funcName="cocreateguida" className="v2.org.analysis.apihandle.winapi.ole32.functions.CoCreateGuid" />
+		<API funcName="cocreateguidw" className="v2.org.analysis.apihandle.winapi.ole32.functions.CoCreateGuid" />
 		<API funcName="oleinitialize" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleInitialize" />
 		<API funcName="oleinitializea" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleInitialize" />
 		<API funcName="oleinitializew" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleInitialize" />
@@ -534,6 +529,9 @@
 		<API funcName="charupperbuff" className="v2.org.analysis.apihandle.winapi.user32.functions.CharUpperBuff" />
 		<API funcName="charupperbuffa" className="v2.org.analysis.apihandle.winapi.user32.functions.CharUpperBuff" />
 		<API funcName="charupperbuffw" className="v2.org.analysis.apihandle.winapi.user32.functions.CharUpperBuff" />
+		<API funcName="clienttoscreen" className="v2.org.analysis.apihandle.winapi.user32.functions.ClientToScreen" />
+		<API funcName="clienttoscreena" className="v2.org.analysis.apihandle.winapi.user32.functions.ClientToScreen" />
+		<API funcName="clienttoscreenw" className="v2.org.analysis.apihandle.winapi.user32.functions.ClientToScreen" />
 		<API funcName="closewindow" className="v2.org.analysis.apihandle.winapi.user32.functions.CloseWindow" />
 		<API funcName="closewindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.CloseWindow" />
 		<API funcName="closewindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.CloseWindow" />
@@ -567,6 +565,9 @@
 		<API funcName="findwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.FindWindow" />
 		<API funcName="findwindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.FindWindow" />
 		<API funcName="findwindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.FindWindow" />
+		<API funcName="getactivewindow" className="v2.org.analysis.apihandle.winapi.user32.functions.GetActiveWindow" />
+		<API funcName="getactivewindowa" className="v2.org.analysis.apihandle.winapi.user32.functions.GetActiveWindow" />
+		<API funcName="getactivewindoww" className="v2.org.analysis.apihandle.winapi.user32.functions.GetActiveWindow" />
 		<API funcName="getasynckeystate" className="v2.org.analysis.apihandle.winapi.user32.functions.GetAsyncKeyState" />
 		<API funcName="getasynckeystatea" className="v2.org.analysis.apihandle.winapi.user32.functions.GetAsyncKeyState" />
 		<API funcName="getasynckeystatew" className="v2.org.analysis.apihandle.winapi.user32.functions.GetAsyncKeyState" />

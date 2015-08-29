@@ -42,7 +42,6 @@ public class GetCurrentThread extends Kernel32API {
 		Environment env = curState.getEnvironement();
 		Register register = env.getRegister();
 		Program program = Program.getProgram();
-		int error;
 
 		HANDLE handle = Kernel32.INSTANCE.GetCurrentThread();
 		long value = Pointer.nativeValue(handle.getPointer());

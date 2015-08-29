@@ -968,4 +968,32 @@ public interface User32DLL extends StdCallLibrary {
 	 *         error information, call GetLastError.
 	 */
 	BOOL GetCursorPos(/* _Out_ */POINT lpPoint);
+
+	/**
+	 * The ClientToScreen function converts the client-area coordinates of a
+	 * specified point to screen coordinates.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window whose client area is used for the
+	 *            conversion.
+	 * 
+	 * @param lpPoint
+	 *            A pointer to a POINT structure that contains the client
+	 *            coordinates to be converted. The new screen coordinates are
+	 *            copied into this structure if the function succeeds.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero.
+	 */
+	BOOL ClientToScreen(/* _In_ */HWND hWnd, /* _Inout_ */POINT lpPoint);
+
+	/**
+	 * Retrieves the window handle to the active window attached to the calling
+	 * thread's message queue.
+	 * 
+	 * @return The return value is the handle to the active window attached to
+	 *         the calling thread's message queue. Otherwise, the return value
+	 *         is NULL.
+	 */
+	HWND GetActiveWindow();
 }

@@ -7,6 +7,8 @@
  */
 package v2.org.analysis.apihandle.winapi.ole32;
 
+import v2.org.analysis.apihandle.winapi.structures.Guid.GUID;
+
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.WinDef.LPVOID;
 import com.sun.jna.platform.win32.WinNT.HRESULT;
@@ -43,4 +45,15 @@ public interface Ole32DLL extends StdCallLibrary {
 	 * apartment, and frees any resources the apartment maintains.
 	 */
 	void OleUninitialize();
+	
+    /**
+     * Creates a GUID, a unique 128-bit integer used for CLSIDs and interface
+     * identifiers.
+     * 
+     * @param pguid
+     *            A pointer to the requested GUID.
+     *            
+     * @return S_OK if the GUID was successfully created.
+     */
+    HRESULT CoCreateGuid(GUID pguid);
 }

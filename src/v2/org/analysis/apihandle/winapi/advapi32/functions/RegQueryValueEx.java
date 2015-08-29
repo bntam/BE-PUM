@@ -7,6 +7,8 @@
  */
 package v2.org.analysis.apihandle.winapi.advapi32.functions;
 
+import java.nio.ByteBuffer;
+
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
@@ -15,10 +17,12 @@ import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.DWORDByReference;
 import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinReg.HKEY;
-import com.sun.jna.ptr.ByteByReference;
 
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.system.RegistryHandle;
+import v2.org.analysis.system.RegistryHandle.KeyValueType;
+import v2.org.analysis.util.PairEntry;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -72,36 +76,59 @@ public class RegQueryValueEx extends Kernel32API {
 	public void execute() {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
-		long t3 = this.params.get(2);
+		// long t3 = this.params.get(2);
 		long t4 = this.params.get(3);
 		long t5 = this.params.get(4);
 		long t6 = this.params.get(5);
 
 		HKEY hKey = new HKEY(new Pointer(t1));
 		String lpValueName = (t2 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-		DWORDByReference lpReserved = (t3 == 0L) ? null : new DWORDByReference();
+		DWORDByReference lpReserved = null;// reversed!!
+		// (t3 == 0L) ? null : new DWORDByReference();
 		DWORDByReference lpType = (t4 == 0L) ? null : new DWORDByReference();
-		ByteByReference lpData = (t5 == 0L) ? null : new ByteByReference();
 		DWORDByReference lpcbData = (t6 == 0L) ? null : new DWORDByReference(new DWORD(
 				((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t6))).getValue()));
+		ByteBuffer lpData = (t5 == 0L) ? null : ByteBuffer.allocate(lpcbData.getValue().intValue() + 1);
 
 		LONG ret = Advapi32DLL.INSTANCE.RegQueryValueEx(hKey, lpValueName, lpReserved, lpType, lpData, lpcbData);
-		
+
 		register.mov("eax", new LongValue(ret.longValue()));
-		System.out.println("Return Value: " + ret.longValue());
 
 		if (t4 != 0L) {
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(lpType.getValue()
 					.longValue()));
 		}
-		
+
 		if (t5 != 0L) {
-			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t5), new LongValue(lpData.getValue()));
+			byte[] bufferArray = lpData.array();
+			for (int i = 0; i < bufferArray.length; i++) {
+				memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t5 + i), new LongValue(
+						(long) bufferArray[i]));
+			}
+			// memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8,
+			// t5), new LongValue(lpData.getValue()));
 		}
-		
+
 		if (t6 != 0L) {
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t6), new LongValue(lpcbData.getValue()
 					.longValue()));
+		}
+
+		// In case of not existing, try to find it in virtual registry
+		// #define ERROR_FILE_NOT_FOUND 2L
+		if (ret.longValue() == 2L) {
+			PairEntry<KeyValueType, char[]> regEntry = RegistryHandle.queryRegValue(hKey, lpValueName);
+			// Set data
+			char[] bufferArray = regEntry.getValue();
+			for (int i = 0; i < bufferArray.length; i++) {
+				memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t5 + i), new LongValue(
+						(long) bufferArray[i]));
+			}
+			// Set type
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), //
+					new LongValue(regEntry.getKey().getValue()));
+			// Set size
+			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t6), new LongValue(bufferArray.length));
 		}
 	}
 }

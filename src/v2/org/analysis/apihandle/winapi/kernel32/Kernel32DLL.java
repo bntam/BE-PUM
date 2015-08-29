@@ -3369,4 +3369,71 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 * @return The function returns the decoded pointer.
 	 */
 	PVOID DecodePointer(/* _In_ */PVOID Ptr);
+
+	/**
+	 * Searches the local atom table for the specified character string and
+	 * retrieves the atom associated with that string.
+	 * 
+	 * @param lpString
+	 *            The character string for which to search. Alternatively, you
+	 *            can use an integer atom that has been converted using the
+	 *            MAKEINTATOM macro. See Remarks for more information.
+	 * 
+	 * @return If the function succeeds, the return value is the atom associated
+	 *         with the given string. If the function fails, the return value is
+	 *         zero. To get extended error information, call GetLastError.
+	 */
+	ATOM FindAtom(/* _In_ */String lpString);
+
+	/**
+	 * Sets a 32-bit variable to the specified value as an atomic operation.
+	 * 
+	 * @param Target
+	 *            A pointer to the value to be exchanged. The function sets this
+	 *            variable to Value, and returns its prior value.
+	 * 
+	 * @param Value
+	 *            The value to be exchanged with the value pointed to by Target.
+	 * 
+	 * @return The function returns the initial value of the Target parameter.
+	 */
+	LONG InterlockedExchange(/* _Inout_ */LONGByReference Target,/* _In_ */LONG Value);
+
+	/**
+	 * Retrieves the input code page used by the console associated with the
+	 * calling process. A console uses its input code page to translate keyboard
+	 * input into the corresponding character value.
+	 * 
+	 * @return The return value is a code that identifies the code page. For a
+	 *         list of identifiers, see Code Page Identifiers.
+	 */
+	UINT GetConsoleCP();
+
+	/**
+	 * Returns the language identifier of the Region Format setting for the
+	 * current user.
+	 * 
+	 * @return Returns the language identifier for the current user as set under
+	 *         Control Panel > Clock, Language, and Region > Change date, time,
+	 *         or number formats > Formats tab > Format dropdown.
+	 */
+	WORD GetUserDefaultLangID();
+
+	/**
+	 * Retrieves the priority value for the specified thread. This value,
+	 * together with the priority class of the thread's process, determines the
+	 * thread's base-priority level.
+	 * 
+	 * @param hThread
+	 *            A handle to the thread. The handle must have the
+	 *            THREAD_QUERY_INFORMATION or THREAD_QUERY_LIMITED_INFORMATION
+	 *            access right. For more information, see Thread Security and
+	 *            Access Rights.
+	 * 
+	 * @return If the function succeeds, the return value is the thread's
+	 *         priority level. If the function fails, the return value is
+	 *         THREAD_PRIORITY_ERROR_RETURN. To get extended error information,
+	 *         call GetLastError.
+	 */
+	int GetThreadPriority(/* _In_ */HANDLE hThread);
 }

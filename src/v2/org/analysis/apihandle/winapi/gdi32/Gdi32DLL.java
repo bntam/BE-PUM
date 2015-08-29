@@ -7,12 +7,10 @@
  */
 package v2.org.analysis.apihandle.winapi.gdi32;
 
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.Wingdi.PALETTEENTRY;
 
 import com.sun.jna.Native;
 import com.sun.jna.WString;
-import com.sun.jna.platform.win32.GDI32;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.win32.StdCallLibrary;
@@ -69,4 +67,17 @@ public interface Gdi32DLL extends StdCallLibrary {
 	 */
 	int AddFontResource(/* _In_ */WString lpszFilename);
 
+	/**
+	 * The GetStockObject function retrieves a handle to one of the stock pens,
+	 * brushes, fonts, or palettes.
+	 * 
+	 * @param fnObject
+	 *            The type of stock object. This parameter can be one of the
+	 *            following values.
+	 * 
+	 * @return If the function succeeds, the return value is a handle to the
+	 *         requested logical object. If the function fails, the return value
+	 *         is NULL.
+	 */
+	HANDLE GetStockObject(/* _In_ */int fnObject);
 }

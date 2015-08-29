@@ -401,8 +401,10 @@ public class Test {
 		//
 		// System.out.println(System.getProperty("jna.boot.library.name",
 		// "jnidispatch"));
-//		DLGTEMPLATE
-//		RTL_CRITICAL_SECTION
+
+//		Kernel32.INSTANCE.GetT
+//		User32.INSTANCE.GetAsyncKeyState(vKey)
+//		GDI32.INSTANCE.Ge
 		x = 0x0ffff;
 		x = x & 0xff;
 		
