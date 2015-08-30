@@ -53,6 +53,8 @@ public class OTFModelGeneration implements Algorithm {
 
 	private final Program program;
 
+	private boolean detectPacker = true;
+	
 	public OTFModelGeneration(Program program) {
 		super();
 		this.program = program;
@@ -113,7 +115,10 @@ public class OTFModelGeneration implements Algorithm {
 		// PHONG - 20150801 /////////////////////////////
 		// Packer Detection via Header
 		System.out.println("================PACKER DETECTION VIA HEADER ======================");
-		program.getDetection().detectViaHeader(program);
+		if (this.detectPacker)
+		{
+			program.getDetection().detectViaHeader(program);
+		}
 		System.out.println("==================================================================");
 		/////////////////////////////////////////////////
 		
@@ -127,6 +132,22 @@ public class OTFModelGeneration implements Algorithm {
 
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
+			
+			// Detect OTF ////////////////////////////////////////////////
+			if (this.detectPacker)
+			{
+				program.getDetection().packedBy();
+				if (program.getDetection().fileIsPacked())
+				{
+					this.detectPacker = false;
+					program.SetAnalyzingTime(System.currentTimeMillis()
+							- overallStartTime); 
+					program.getDetection().updateBackupDetectionState(program, this);
+					program.getDetection().setToLog(program);
+				}
+			}
+			//////////////////////////////////////////////////////////////
+			
 			// long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
 				long overallEndTimeTemp = System.currentTimeMillis();
@@ -143,6 +164,15 @@ public class OTFModelGeneration implements Algorithm {
 
 					backupState(curState);
 					overallStartTemp = overallEndTimeTemp;
+					
+					////////////////////////////////////////////////////
+					// Write to packer result file after each 60s
+					program.SetAnalyzingTime(System.currentTimeMillis()
+							- overallStartTime); 
+					program.getDetection().updateBackupDetectionState(program, this);
+					program.getDetection().setToLog(program);
+					////////////////////////////////////////////////////
+					
 				}
 
 				/*if (overallEndTimeTemp - overallStartTime > bkTime) {
@@ -197,7 +227,10 @@ public class OTFModelGeneration implements Algorithm {
 		// PHONG - 20150724
 		System.out.println("================PACKER DETECTION VIA OTF======================");
 		System.out.println(program.getDetection().getTechniques().getDetailTechniques());
-		program.getDetection().packedBy();
+		if (this.detectPacker)
+		{
+			program.getDetection().packedBy();
+		}
 		System.out.println("==============================================================");
 	}
 
@@ -534,4 +567,5 @@ public class OTFModelGeneration implements Algorithm {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
 }

@@ -342,7 +342,7 @@ public class Main {
 //		in = "bsf_symbol.exe";
 		//in = "multiDest.exe";
 		//in = "Virus.Win32.Weird.c";
-
+	
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export
@@ -607,7 +607,8 @@ public class Main {
 			// PHONG: 20150508
 			program.SetAnalyzingTime(overallEndTime - overallStartTime); 
 			// Write to log
-			program.getDetection().setToLog(program, otfMG);
+			program.getDetection().updateBackupDetectionState(program, otfMG);
+			program.getDetection().setToLog(program);
 
 			try {
 				Runtime.getRuntime().removeShutdownHook(shutdownThread);
