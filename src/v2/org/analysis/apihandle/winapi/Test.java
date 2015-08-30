@@ -39,6 +39,7 @@ import com.sun.jna.platform.win32.WinDef.ULONG;
 import com.sun.jna.platform.win32.WinDef.ULONGByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.platform.win32.WinReg;
+import com.sun.jna.platform.win32.WinReg.HKEY;
 import com.sun.jna.platform.win32.WinReg.HKEYByReference;
 import com.sun.jna.platform.win32.Winspool;
 import com.sun.jna.ptr.IntByReference;
@@ -64,6 +65,8 @@ import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.Memory;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.Storage;
+import v2.org.analysis.system.registry.EKeyValueType;
+import v2.org.analysis.system.registry.ERegKeySecuritynAccessRights;
 import v2.org.analysis.value.LongValue;
 
 //import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
@@ -405,8 +408,15 @@ public class Test {
 //		Kernel32.INSTANCE.GetT
 //		User32.INSTANCE.GetAsyncKeyState(vKey)
 //		GDI32.INSTANCE.Ge
-		x = 0x0ffff;
-		x = x & 0xff;
+//		Advapi32.INSTANCE.RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, phkResult)
+		
+		HKEYByReference phkResult = new HKEYByReference();
+		int retzz = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(0x80000001), "SOFTWARE\\SEGFRY\\TEST", 0, (int)ERegKeySecuritynAccessRights.KEY_READ.getValue(), phkResult);
+		System.out.println(retzz);
+		
+		String str = "abc";
+		x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath", 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
+		
 		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

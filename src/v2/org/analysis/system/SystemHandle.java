@@ -7,7 +7,6 @@ public class SystemHandle {
 	private LibImage userHandle;
 	private LibImage advapiHandle;
 	private FileHandle fileHandle;
-	private RegistryHandle registryHandle;
 	private HeapHandle heapHandle;
 	private SEHHandle seh;
 	private VirtualMemoryHandle virtualHandle;
@@ -50,7 +49,6 @@ public class SystemHandle {
 		seh = new SEHHandle();
 		fileHandle = new FileHandle();
 		fileHandle.setPath(path);
-		registryHandle = new RegistryHandle();
 		heapHandle = new HeapHandle();
 		virtualHandle = new VirtualMemoryHandle();
 		processHandle = new ProcessHandle();
@@ -131,22 +129,7 @@ public class SystemHandle {
 
 		return 0;
 	}
-
-	/**
-	 * @return the registryHandle
-	 */
-	public RegistryHandle getRegistryHandle() {
-		return registryHandle;
-	}
-
-	/**
-	 * @param registryHandle
-	 *            the registryHandle to set
-	 */
-	public void setRegistryHandle(RegistryHandle registryHandle) {
-		this.registryHandle = registryHandle;
-	}
-
+	
 	/**
 	 * @return the heapHandle
 	 */

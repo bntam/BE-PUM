@@ -72,7 +72,7 @@ public class SymbolicValue {
 	/**
 	 * Initiate a new string symbolic value
 	 * 
-	 * @param value
+	 * @param second
 	 *            string value
 	 */
 	public SymbolicValue(String symbol) {
@@ -89,7 +89,7 @@ public class SymbolicValue {
 	 * Initiate a new symbolic value that refer to structure of another symbolic
 	 * value
 	 * 
-	 * @param value
+	 * @param second
 	 *            to-be-refered symbolic value
 	 */
 	public SymbolicValue(SymbolicValue element) {

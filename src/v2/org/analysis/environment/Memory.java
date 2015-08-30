@@ -1262,7 +1262,7 @@ public class Memory {
 			if (index < n && index >= 0) {
 				Value t = entry.getValue();
 				if (t != null && t instanceof LongValue)
-					ret[index] = (byte) ((LongValue) t).getValue();
+					ret[index] = /*(byte)*/ ((LongValue) t).getValue();
 			}
 		}
 		return ret;

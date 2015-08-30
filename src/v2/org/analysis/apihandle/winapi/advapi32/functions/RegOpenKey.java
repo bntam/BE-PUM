@@ -17,7 +17,8 @@ import com.sun.jna.platform.win32.WinReg.HKEYByReference;
 
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
-import v2.org.analysis.system.RegistryHandle;
+import v2.org.analysis.system.registry.ERegKeySecuritynAccessRights;
+import v2.org.analysis.system.registry.RegistryHandle;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -59,11 +60,11 @@ public class RegOpenKey extends Advapi32API {
 
 	@Override
 	public void execute() {
-		long t1 = this.params.get(0);
+		long hKeyValue = this.params.get(0);
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		HKEY hKey = new HKEY((int) t1);
+		HKEY hKey = new HKEY(new Pointer(hKeyValue));
 		String lpSubKey = (t2 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
 		HKEYByReference phkResult = new HKEYByReference();
 
@@ -71,15 +72,20 @@ public class RegOpenKey extends Advapi32API {
 
 		LONG ret = Advapi32DLL.INSTANCE.RegOpenKey(hKey, lpSubKey, phkResult);
 
-//		long e = Kernel32.INSTANCE.GetLastError();
-
-		long result = Pointer.nativeValue(phkResult.getValue().getPointer());
-		System.out.println("Return value: " + ret.longValue() + ", result: " + result);
+		long keyResult = Pointer.nativeValue(phkResult.getValue().getPointer());
+		
+		if (keyResult == 2L) {
+			// Key not found, try to find in virtual environment
+			if (RegistryHandle.isKeyExist(hKeyValue, lpSubKey)) {
+				ret.setValue(0L); // ERROR_SUCCESS 0L
+				keyResult = RegistryHandle.generateNewHandle();
+			}
+		}
 
 		register.mov("eax", new LongValue(ret.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(result));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(keyResult));
 
-		RegistryHandle.addHandle(phkResult.getValue(), t1, lpSubKey);
+		RegistryHandle.addHandle(keyResult, hKeyValue, lpSubKey, ERegKeySecuritynAccessRights.KEY_ALL_ACCESS);
 	}
 
 }

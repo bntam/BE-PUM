@@ -20,8 +20,8 @@ import com.sun.jna.platform.win32.WinReg.HKEY;
 
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.system.RegistryHandle;
-import v2.org.analysis.system.RegistryHandle.KeyValueType;
+import v2.org.analysis.system.registry.EKeyValueType;
+import v2.org.analysis.system.registry.RegistryHandle;
 import v2.org.analysis.util.PairEntry;
 import v2.org.analysis.value.LongValue;
 
@@ -117,7 +117,11 @@ public class RegQueryValueEx extends Kernel32API {
 		// In case of not existing, try to find it in virtual registry
 		// #define ERROR_FILE_NOT_FOUND 2L
 		if (ret.longValue() == 2L) {
-			PairEntry<KeyValueType, char[]> regEntry = RegistryHandle.queryRegValue(hKey, lpValueName);
+			PairEntry<EKeyValueType, char[]> regEntry = RegistryHandle.queryRegValue(hKey, lpValueName);
+			
+			if (regEntry == null)
+				return;
+			
 			// Set data
 			char[] bufferArray = regEntry.getValue();
 			for (int i = 0; i < bufferArray.length; i++) {
@@ -129,6 +133,9 @@ public class RegQueryValueEx extends Kernel32API {
 					new LongValue(regEntry.getKey().getValue()));
 			// Set size
 			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t6), new LongValue(bufferArray.length));
+			
+			// Return ERORR_SUCCESS 0L
+			register.mov("eax", new LongValue(0));
 		}
 	}
 }

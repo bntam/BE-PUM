@@ -17,7 +17,8 @@ import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.system.RegistryHandle;
+import v2.org.analysis.system.registry.ERegKeySecuritynAccessRights;
+import v2.org.analysis.system.registry.RegistryHandle;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -61,7 +62,7 @@ public class RegOpenKeyEx extends Advapi32API {
 
 	@Override
 	public void execute() {
-		long t1 = this.params.get(0);
+		long hKeyValue = this.params.get(0);
 		long t2 = this.params.get(1);
 //		long t3 = this.params.get(2);
 		long t4 = this.params.get(3);
@@ -70,17 +71,23 @@ public class RegOpenKeyEx extends Advapi32API {
 		String lpSubKey = (t2 == 0) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
 		HKEYByReference phkResult = new HKEYByReference();
 
-		int ret = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY((int) t1), lpSubKey, 0 /*NULL - reversed*/, (int) t4, phkResult);
+		int ret = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(new Pointer(hKeyValue)), lpSubKey, 0 /*NULL - reversed*/, (int) t4, phkResult);
 		register.mov("eax", new LongValue(ret));
 
-		HKEY result = phkResult.getValue();
-		long value = (result == null) ? 0 : Pointer.nativeValue(result.getPointer());
-		System.out.println("Return: " + value);
-
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(value));
+		long keyResult = Pointer.nativeValue(phkResult.getValue().getPointer());
+		
+		if (keyResult == 2L) {
+			// Key not found, try to find in virtual environment
+			if (RegistryHandle.isKeyExist(hKeyValue, lpSubKey)) {
+				ret = 0; // ERROR_SUCCESS 0L
+				keyResult = RegistryHandle.generateNewHandle();
+			}
+		}
+		
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(keyResult));
 		
 		// Add handle to map
-		RegistryHandle.addHandle(phkResult.getValue(), t1, lpSubKey);
+		RegistryHandle.addHandle(keyResult, hKeyValue, lpSubKey, ERegKeySecuritynAccessRights.fromLong(t4));
 	}
 
 }

@@ -60,7 +60,6 @@ public class strstr extends MSVCRTAPI {
 		}
 
 		register.mov("eax", new LongValue(ret));
-		System.out.println("Return Value: " + ret);
 	}
 
 }

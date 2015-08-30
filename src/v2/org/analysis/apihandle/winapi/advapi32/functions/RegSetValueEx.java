@@ -9,10 +9,11 @@ package v2.org.analysis.apihandle.winapi.advapi32.functions;
 
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
 
+import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.system.RegistryHandle;
+import v2.org.analysis.system.registry.RegistryHandle;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -63,17 +64,22 @@ public class RegSetValueEx extends Advapi32API {
 
 	@Override
 	public void execute() {
-		long t1 = this.params.get(0);
-		long t2 = this.params.get(1);
+		long hKey = this.params.get(0);
+		long lpValueName = this.params.get(1);
 //		long t3 = this.params.get(2);
-		long t4 = this.params.get(3);
-		long t5 = this.params.get(4);
-//		long t6 = this.params.get(5);
+		long dwType = this.params.get(3);
+		long lpData = this.params.get(4);
+		long cbData = this.params.get(5);
 
-		String lpValueName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-		String lpData = memory.getText(new X86MemoryOperand(DataType.INT32, t5));
+		String valueName = memory.getText(new X86MemoryOperand(DataType.INT32, lpValueName));
+		long[] data = memory.getBytesArray(new AbsoluteAddress(lpData), (int) cbData);
 		
-		RegistryHandle.setRegValue((Long) t1, lpValueName, t4, lpData.toCharArray());
+		char[] convertedData = new char[data.length];
+		for (int i = 0; i < convertedData.length; i++) {
+			convertedData[i] = (char) data[i];
+		}
+		
+		RegistryHandle.setRegValue((Long) hKey, valueName, dwType, convertedData);
 
 		int ret = 0;
 		// Advapi32.INSTANCE.RegSetValueEx(new HKEY((int) t1), lpValueName,

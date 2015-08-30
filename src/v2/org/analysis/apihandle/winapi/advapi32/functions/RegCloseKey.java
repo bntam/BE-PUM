@@ -7,8 +7,8 @@
  */
 package v2.org.analysis.apihandle.winapi.advapi32.functions;
 
-import com.sun.jna.platform.win32.Advapi32;
-import com.sun.jna.platform.win32.WinReg.HKEY;
+//import com.sun.jna.platform.win32.Advapi32;
+//import com.sun.jna.platform.win32.WinReg.HKEY;
 
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
 
@@ -38,8 +38,9 @@ public class RegCloseKey extends Advapi32API {
 
 	@Override
 	public void execute() {
-		int ret = Advapi32.INSTANCE.RegCloseKey(new HKEY(this.params.get(0).intValue()));
-		register.mov("eax", new LongValue(ret));
+//		int ret = Advapi32.INSTANCE.RegCloseKey(new HKEY(this.params.get(0).intValue()));
+		// Always close successfully
+		register.mov("eax", new LongValue(0));
 	}
 
 }

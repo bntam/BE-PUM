@@ -20,7 +20,7 @@ import v2.org.analysis.value.LongValue;
  * Converts an integer to a string. More secure versions of these functions are
  * available
  * 
- * @param value
+ * @param second
  *            Number to be converted.
  * 
  * @param str

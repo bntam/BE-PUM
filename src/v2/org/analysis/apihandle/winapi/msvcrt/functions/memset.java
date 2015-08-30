@@ -22,7 +22,7 @@ import v2.org.analysis.value.LongValue;
  * @param ptr
  *            Pointer to the block of memory to fill.
  * 
- * @param value
+ * @param second
  *            Value to be set. The value is passed as an int, but the function
  *            fills the block of memory using the unsigned char conversion of
  *            this value.
