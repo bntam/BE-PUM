@@ -345,6 +345,9 @@ public class Main {
 		pathVirus = "asm/packer_detection/aspack/";
 		in = "api_test.exe";
 	
+//		pathVirus = "asm/packer_detection/upx/";
+//		in = "api_test.exe";
+		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export

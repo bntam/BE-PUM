@@ -227,10 +227,7 @@ public class OTFModelGeneration implements Algorithm {
 		// PHONG - 20150724
 		System.out.println("================PACKER DETECTION VIA OTF======================");
 		System.out.println(program.getDetection().getTechniques().getDetailTechniques());
-		if (this.detectPacker)
-		{
-			program.getDetection().packedBy();
-		}
+		program.getDetection().packedBy();
 		System.out.println("==============================================================");
 	}
 

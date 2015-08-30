@@ -87,52 +87,15 @@ public class PackerDetection {
 			e.printStackTrace();
 		}
 		
-		// UPX
-		if (detectWithPacker(dataString, PackerConstants.hUPX, byteEP))
+		for (PackerHeader hP: PackerConstants.hPacker)
 		{
-			isPackedBy("UPX");
-			return;
+			if (detectWithPacker(dataString, hP.getPackerSignature(), byteEP))
+			{
+				isPackedBy(hP.getPackerName());
+				return;
+			}
 		}
-		// FSG
-		if (detectWithPacker(dataString, PackerConstants.hFSG, byteEP))
-		{
-			isPackedBy("FSG");
-			return;
-		}
-		// PECOMPACT
-		if (detectWithPacker(dataString, PackerConstants.hPECOMPACT, byteEP))
-		{
-			isPackedBy("PECOMPACT");
-			return;
-		}
-		// PETITE
-		if (detectWithPacker(dataString, PackerConstants.hPETITE, byteEP))
-		{
-			isPackedBy("PETITE");
-			return;
-		}
-		// YODA
-		if (detectWithPacker(dataString, PackerConstants.hYODA, byteEP))
-		{
-			isPackedBy("YODA");
-			return;
-		}
-		// ASPACK
-		if (detectWithPacker(dataString, PackerConstants.hASPACK, byteEP))
-		{
-			isPackedBy("ASPACK");
-			return;
-		}
-		//NPACK
-		if (detectWithPacker(dataString, PackerConstants.hNPACK, byteEP))
-		{
-			isPackedBy("NPACK");
-			return;
-		}
-		else
-		{
-			this.detectViaHeader = "NONE";
-		}
+		this.detectViaHeader = "NONE";
 	}
 	
 	private void isPackedBy(String packerName)
@@ -151,9 +114,9 @@ public class PackerDetection {
 		int beginTracing = 0;
 		if (fromEntryPoint)
 		{
-			for (int i = 0; i < hPacker.length; i++)
+			for (int i = 0; i < dataString.length; i++)
 			{
-				if (hPacker[i].toLowerCase().equals(byteEP))
+				if (dataString[i].toLowerCase().equals(byteEP))
 				{
 					beginTracing = i;
 					break;
