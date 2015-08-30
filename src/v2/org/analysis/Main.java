@@ -343,6 +343,9 @@ public class Main {
 		//in = "multiDest.exe";
 		//in = "Virus.Win32.Weird.c";
 	
+//		pathVirus = "asm/packer_detection/upx/";
+//		in = "api_test.exe";
+		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export

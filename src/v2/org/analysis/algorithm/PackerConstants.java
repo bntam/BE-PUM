@@ -58,5 +58,71 @@ public final class PackerConstants {
 											  ,"??","??","??","C7","05","??","??","??","00"
 											  ,"01","00","00","00","01","05","00","??","??"
 											  ,"??","FF","35","00", "true"};
-
+	
+	public static final String[] hARMADILLO	= {"60","E8","00","00","00","00","5D","50","51"
+											  ,"0F","CA","F7","D2","9C","F7","D2","0F","CA"
+											  ,"EB","0F","B9","EB","0F","B8","EB","07","B9"
+											  ,"EB","0F","90","EB","08","FD","EB","0B","F2"
+											  ,"EB","F5","EB","F6","F2","EB","08","FD","EB"
+											  ,"E9","F3","EB","E4","FC","E9","9D","0F","C9"
+											  ,"8B","CA","F7","D1","59","58","50","51","0F"
+											  ,"CA","F7","D2","9C","F7","D2","0F","CA","EB"
+											  ,"0F","B9","EB","0F","B8","EB","07","B9","EB"
+											  ,"0F","90","EB","08","true"};
+	
+	public static final String[] hASPROTECT = {"68","01","??","??","??","E8","01","00","00"
+											  ,"00","C3","C3","true"};
+	
+	public static final String[] hMEW		= {"E9","??","??","??","FF","0C","??","??","00"
+											  ,"00","00","00","00","00","00","00","00","??"
+											  ,"??","??","00","0C","??","??","00","true"};
+	
+	public static final String[] hMPRESS	= {"60","E8","00","00","00","00","58","05","??"
+											  ,"??","??","??","8B","30","0?","?0","2B","C0"
+											  ,"8B","FE","66","AD","C1","E0","0C","8B","C8"
+											  ,"50","AD","2B","C8","0?","?1","8B","C8","57"
+											  ,"51","49","8A","44","39","06","88","04","31"
+											  ,"75","F6","false"};
+	
+	public static final String[] hPELOCK	= {"4C","6F","61","64","4C","69","62","72","61"
+											  ,"72","79","41","00","00","56","69","72","74"
+											  ,"75","61","6C","41","6C","6C","6F","63","00"
+											  ,"4B","45","true"};
+	
+	public static final String[] hPESPIN	= {"EB","01","??","60","E8","00","00","00","00"
+											  ,"8B","1C","24","83","C3","12","81","2B","E8"
+											  ,"B1","06","00","FE","4B","FD","82","2C","24"
+											  ,"??","??","46","00","0B","E4","74","9E","75"
+											  ,"01","C7","81","73","04","D7","7A","F7","2F"
+											  ,"81","73","19","77","00","43","B7","F6","C3"
+											  ,"6B","B7","00","00","F9","FF","E3","C9","C2"
+											  ,"08","00","A3","68","72","01","FF","5D","33"
+											  ,"C9","41","E2","17","EB","07","??","EB","01"
+											  ,"??","EB","0D","??","E8","01","00","00","00"
+											  ,"??","5A","83","EA","0B","FF","E2","EB","04"
+											  ,"??","EB","04","??","EB","FB","??","??","??"
+											  ,"??","??","??","??","??","??","??","??","??"
+											  ,"??","??","??","??","??","??","EB","02","??"
+											  ,"??","F9","72","08","73","0E","F9","83","04"
+											  ,"24","17","C3","E8","04","00","00","00","??"
+											  ,"??","??","??","EB","06","??","??","??","??"
+											  ,"??","??","F5","72","0E","F5","72","F8","68"
+											  ,"EB","EC","83","04","24","07","F5","FF","34"
+											  ,"24","C3","true"};
+	
+	public static final PackerHeader hPacker[] =
+		{ new PackerHeader("UPX"		, PackerConstants.hUPX)
+	     ,new PackerHeader("FSG"		, PackerConstants.hFSG)
+	     ,new PackerHeader("PECOMPACT"	, PackerConstants.hPECOMPACT)
+	     ,new PackerHeader("PETITE"		, PackerConstants.hPETITE)
+	     ,new PackerHeader("YODA"		, PackerConstants.hYODA)
+	     ,new PackerHeader("ASPACK"		, PackerConstants.hASPACK)
+	     ,new PackerHeader("NPACK"		, PackerConstants.hNPACK)
+	     ,new PackerHeader("ARMADILLO"	, PackerConstants.hARMADILLO)
+	     ,new PackerHeader("ASPROTECT"	, PackerConstants.hASPROTECT)
+	     ,new PackerHeader("MEW"		, PackerConstants.hMEW)
+	     ,new PackerHeader("MPRESS"		, PackerConstants.hMPRESS)
+	     ,new PackerHeader("ARMADILLO"	, PackerConstants.hPELOCK)
+	     ,new PackerHeader("ARMADILLO"	, PackerConstants.hPESPIN)
+		};
 }
