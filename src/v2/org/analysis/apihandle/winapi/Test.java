@@ -410,13 +410,16 @@ public class Test {
 //		GDI32.INSTANCE.Ge
 //		Advapi32.INSTANCE.RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, phkResult)
 		
-		HKEYByReference phkResult = new HKEYByReference();
-		int retzz = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(0x80000001), "SOFTWARE\\SEGFRY\\TEST", 0, (int)ERegKeySecuritynAccessRights.KEY_READ.getValue(), phkResult);
-		System.out.println(retzz);
-		
-		String str = "abc";
-		x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath", 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
-		
+//		HKEYByReference phkResult = new HKEYByReference();
+//		int retzz = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(0x80000001), "SOFTWARE\\SEGFRY\\TEST", 0, (int)ERegKeySecuritynAccessRights.KEY_READ.getValue(), phkResult);
+//		System.out.println(retzz);
+//		
+//		String str = "abc";
+//		x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath", 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
+
+		char ch[] = new char[260];
+		Shell32.INSTANCE.SHGetSpecialFolderPath(null, ch, 0x002a, false);
+		System.out.println(new String(ch));
 		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

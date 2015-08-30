@@ -74,7 +74,6 @@ public class SHGetFileInfo extends Shell32API {
 		long value = ret.longValue();
 
 		register.mov("eax", new LongValue(value));
-		System.out.println("Return Value: " + value);
 		
 		t3 = this.params.get(2);
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(Pointer.nativeValue(psfi.hIcon.getPointer())));

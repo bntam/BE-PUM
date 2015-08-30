@@ -13,7 +13,9 @@ import com.sun.jna.Native;
 import com.sun.jna.platform.win32.BaseTSD.DWORD_PTR;
 import com.sun.jna.platform.win32.Shell32;
 import com.sun.jna.platform.win32.ShellAPI;
+import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
@@ -37,4 +39,5 @@ public interface Shel32DLL extends ShellAPI, StdCallLibrary {
 	DWORD_PTR SHGetFileInfo(
 	/* _In_ */String pszPath, DWORD dwFileAttributes,
 	/* _Inout_ */SHFILEINFO psfi, UINT cbFileInfo, UINT uFlags);
+
 }

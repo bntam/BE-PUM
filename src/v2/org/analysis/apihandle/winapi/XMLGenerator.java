@@ -7,7 +7,10 @@
  */
 package v2.org.analysis.apihandle.winapi;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * @author Yen Nguyen
@@ -15,16 +18,18 @@ import java.io.File;
  */
 public class XMLGenerator {
 
-	/**
-	 * 
-	 */
+	private static BufferedWriter bufferWriter;
+
 	public XMLGenerator() {
 		// TODO Auto-generated constructor stub
 	}
 
-	private static void println(String packageName, String funcName, String fileName) {
-		System.out.println("\t\t<API funcName=\"" + funcName.toLowerCase() + "\" className=\""
-				+ packageName + fileName + "\" />");
+	private static void println(String packageName, String funcName, String fileName) throws IOException {
+		String str = "\t\t<API funcName=\"" + funcName.toLowerCase() + "\" className=\"" + packageName + fileName
+				+ "\" />";
+		// System.out.println(str);
+		bufferWriter.write(str);
+		bufferWriter.write("\r\n");
 	}
 
 	/**
@@ -35,32 +40,52 @@ public class XMLGenerator {
 		String workingDir = System.getProperty("user.dir");
 		String path = workingDir + "\\src\\" + XMLGenerator.class.getPackage().getName().replace(".", "\\");
 		// System.out.println("Current working directory : " + path);
-		System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<APIMap>");
-		File directory = new File(path);
-		for (File file : directory.listFiles()) {
-			if (file.isDirectory() && !file.getName().equals("structures")) {
-				System.out.println("\t<DLL name=\"" + file.getName() + "\">");
 
-				File subDir = new File(file.getAbsolutePath() + "\\functions");
-				for (File api : subDir.listFiles()) {
-					String packageName = XMLGenerator.class.getPackage().getName() + "." + file.getName()
-							+ ".functions.";
-					String funcName = api.getName().replace(".java", "");
-					
-					//System.out.println("\t\t" + funcName);
-					
-					println(packageName, funcName, funcName);
-					println(packageName, funcName + "A", funcName);
-					println(packageName, funcName + "W", funcName);
-					count++;
-				}
+		try {
+			File XMLfile = new File(path + "\\APIMap.xml");
 
-				System.out.println("\t</DLL>");
+			// if file doesnt exists, then create it
+			if (!XMLfile.exists()) {
+				XMLfile.createNewFile();
 			}
-		}
 
-		System.out.println("</APIMap>");
-		System.out.println("Total: " + count);
+			FileWriter fw = new FileWriter(XMLfile.getAbsoluteFile());
+			bufferWriter = new BufferedWriter(fw);
+
+			bufferWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<APIMap>");
+			bufferWriter.write("\r\n");
+			File directory = new File(path);
+			for (File file : directory.listFiles()) {
+				if (file.isDirectory() && !file.getName().equals("structures")) {
+					bufferWriter.write("\t<DLL name=\"" + file.getName() + "\">");
+					bufferWriter.write("\r\n");
+
+					File subDir = new File(file.getAbsolutePath() + "\\functions");
+					for (File api : subDir.listFiles()) {
+						String packageName = XMLGenerator.class.getPackage().getName() + "." + file.getName()
+								+ ".functions.";
+						String funcName = api.getName().replace(".java", "");
+
+						// System.out.println("\t\t" + funcName);
+
+						println(packageName, funcName, funcName);
+						println(packageName, funcName + "A", funcName);
+						println(packageName, funcName + "W", funcName);
+						count++;
+					}
+
+					bufferWriter.write("\t</DLL>");
+					bufferWriter.write("\r\n");
+				}
+			}
+
+			bufferWriter.write("</APIMap>");
+			bufferWriter.write("\r\n");
+			bufferWriter.close();
+			System.out.println("Total: " + count);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }
