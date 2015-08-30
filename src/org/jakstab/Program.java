@@ -189,8 +189,9 @@ public final class Program {
 		setResultFile(new FileProcess(resultFileTXT));
 		setFullResultFile(new FileProcess(fullResultFileTXT));
 		setResultFileTemp(new FileProcess(resultFileTempTXT));
+		
 		setPackerResultFile(new FileProcess(packerResultFileTXT));
-	
+		this.packerResultFile.appendFile("");
 		pDetection = new PackerDetection();
 	}
 
@@ -2072,6 +2073,11 @@ public final class Program {
 	
 	public FileProcess getPackerResultFile() {
 		return packerResultFile;
+	}
+	
+	public static String getPackerResultFileName ()
+	{
+		return packerResultFileTXT;
 	}
 	
 	public void SetAnalyzingTime (long time)

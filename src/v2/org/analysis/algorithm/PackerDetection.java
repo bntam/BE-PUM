@@ -1,26 +1,39 @@
 package v2.org.analysis.algorithm;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+
 import org.jakstab.Program;
 
 import com.sun.jna.WString;
 
+import antlr.collections.List;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.statistics.FileProcess;
 
 public class PackerDetection {
 
+	private boolean isPacked;
+	
 	private PackerTechniques techniques;
 	
 	private String detectViaHeader;
 	private String detectViaBEPUM;
 	
+	private String curDetectionFile = "";
+	private String backupDetectionState = "";
+	
 	public PackerDetection ()
 	{
+		isPacked = false;
 		techniques = new PackerTechniques();
 	}
 	
@@ -35,15 +48,15 @@ public class PackerDetection {
 		packedby += this.isPackedWith(PackerConstants.PETITE, pTech) 	? "PETITE ": "";
 		packedby += this.isPackedWith(PackerConstants.YODA, pTech)		? "YODA ": "";
 		packedby += this.isPackedWith(PackerConstants.ASPACK, pTech) 	? "ASPACK ": "";
-		System.out.println(packedby);
-		//Program.getProgram().setLog("Via OTF, " + packedby);
 		
 		if (packedby.equals("File is packed by "))
 		{
+			this.isPacked = false;
 			this.detectViaBEPUM = pTech + "-" + "NONE";
 		}
 		else 
 		{
+			this.isPacked = true;
 			this.detectViaBEPUM = pTech + "-" 
 					+ packedby.substring(new String("File is packed by ").length());
 		}
@@ -55,7 +68,7 @@ public class PackerDetection {
 	}
 	
 	public void detectViaHeader (Program prog)
-	{
+	{	
 		// Entry point
 		String byteEP = String.format("%02x", prog.getByteValueMemory(prog.getEntryPoint()));
 		
@@ -126,10 +139,8 @@ public class PackerDetection {
 	{
 		String packedby = "File is packed by " + packerName;
 		System.out.println(packedby);
-		//Program.getProgram().setLog("Detect via Header, " + packedby);
 		this.detectViaHeader = packedby.substring(new String("File is packed by ").length());
 	}
-	
 	
 	private boolean detectWithPacker (String[] dataString, String[] hPacker, String byteEP)
 	{
@@ -179,11 +190,75 @@ public class PackerDetection {
 		return true;
 	}
 	
-	public void setToLog (Program prog, OTFModelGeneration otfMG)
+	public void setToLog (Program prog)
+	{
+		FileProcess packerResultFile = prog.getPackerResultFile();
+		
+		ArrayList<String> resultString = new ArrayList<String>();
+		
+		try {
+			BufferedReader input = new BufferedReader(
+					new FileReader(Program.getPackerResultFileName()));
+
+		    try {
+		    	String lastLine = "", curLine = "";
+		    	
+				while ((curLine = input.readLine()) != null) {
+					resultString.add(curLine);
+				    lastLine = curLine;
+				}
+				
+				String curFile = this.curDetectionFile;
+				
+				if (!lastLine.contains(curFile))
+				{
+					packerResultFile.appendFile(this.backupDetectionState);
+				}
+				else 
+				{
+					resultString.remove(resultString.size() - 1);
+					resultString.add(this.backupDetectionState);
+					PrintWriter pResFileTemp = new PrintWriter(
+							Program.getPackerResultFileName());
+					pResFileTemp.close();
+					
+					PrintWriter pResFile = new PrintWriter(
+							Program.getPackerResultFileName());
+					for (String line : resultString)
+				        pResFile.println(line);
+				    pResFile.close();
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean isPackedWith(String packerStr, String techStr)
+	{
+		for (int i = 0; i < packerStr.length(); i++)
+		{
+			if (packerStr.charAt(i) == '1' && techStr.charAt(i) == '0')
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean fileIsPacked ()
+	{
+		return this.isPacked;
+	}
+
+	public void updateBackupDetectionState (Program prog, OTFModelGeneration otfMG)
 	{
 		BPCFG cfg = prog.getBPCFG();
-
-		FileProcess packerResultFile = prog.getPackerResultFile();
 
 		Kernel32DLL.INSTANCE.SetCurrentDirectory(new WString(System.getProperty("user.dir")));
 		
@@ -208,18 +283,7 @@ public class PackerDetection {
 				+ times + "\t"
 				+ convergence + "\t");
 		
-		packerResultFile.appendFile(result);
-	}
-	
-	public boolean isPackedWith(String packerStr, String techStr)
-	{
-		for (int i = 0; i < packerStr.length(); i++)
-		{
-			if (packerStr.charAt(i) == '1' && techStr.charAt(i) == '0')
-			{
-				return false;
-			}
-		}
-		return true;
+		this.curDetectionFile = fileName;
+		this.backupDetectionState = result;
 	}
 }
