@@ -138,6 +138,12 @@ public class OTFModelGeneration implements Algorithm {
 			/*
 			if (this.detectPacker)
 			{
+				program.getDetection().getTechniques().updateChecking(curState);
+			}
+			*/
+			/*
+			if (this.detectPacker)
+			{
 				program.getDetection().packedBy();
 				if (program.getDetection().fileIsPacked())
 				{

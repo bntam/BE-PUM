@@ -1,6 +1,10 @@
 package v2.org.analysis.algorithm;
 
+import v2.org.analysis.path.BPState;
+
 public class PackerTechniques {
+	
+	private PackerPatterns pPattern;
 	
 	private boolean packing_unpacking;	
 	private boolean overwriting;	
@@ -16,17 +20,51 @@ public class PackerTechniques {
 
 	public PackerTechniques ()
 	{
-		packing_unpacking 	= false; //x
-		overwriting 		= false; //x
-		indirect_jump 		= false; //x
-		obfuscated_const	= true;  // Detect later
-		overlapping			= false; // Detect later
-		code_chunking		= false; // Detect later 
-		stolen_bytes		= false; //x
-		checksumming		= false; // Detect later
-		SEHs				= false; //x
-		two_APIs			= false; //x
-		anti_debugging		= false; //x
+		pPattern = new PackerPatterns();
+		
+		packing_unpacking 	= false; 
+		overwriting 		= false; 
+		indirect_jump 		= false; 
+		obfuscated_const	= false; 
+		overlapping			= false; 
+		code_chunking		= false; 
+		stolen_bytes		= false; 
+		checksumming		= false; 
+		SEHs				= false; 
+		two_APIs			= false; 
+		anti_debugging		= false; 
+	}
+	
+	public void updateChecking (BPState curState)
+	{
+		pPattern.setCheckingState(curState);
+		this.checkingState();
+	}
+	
+	private void checkingState ()
+	{
+		if (!this.packing_unpacking)
+		{
+			if (pPattern.PackAndUnpack()) 	
+				isPackingUnpacking();
+		}
+		
+		if (!this.overwriting && !this.packing_unpacking)
+		{
+			if (pPattern.Overwriting()) 	
+				isOverwriting();
+		}
+		else isOverwriting();
+		
+		if (pPattern.IndirectJump())	isIndirectJump();
+		if (pPattern.ObfuscatedConst())	isObfuscatedConst();
+		if (pPattern.Overlapping())		isOverlapping();
+		if (pPattern.CodeChunking())	isCodeChunking();
+		if (pPattern.StolenBytes())		isStolenBytes();
+		if (pPattern.Checksumming())	isChecksumming();
+		if (pPattern.SEHs())			isSEH();
+		if (pPattern.TwoAPIs())			isTwoAPIs();
+		if (pPattern.AntiDebugging())	isAntiDebugging();
 	}
 	
 	public void isPackingUnpacking ()
