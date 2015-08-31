@@ -51,6 +51,7 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
 import v2.org.analysis.apihandle.winapi.mscoree.MsCorEEDLL;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
+import v2.org.analysis.apihandle.winapi.shlwapi.ShlwapiDLL;
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
@@ -417,6 +418,8 @@ public class Test {
 //		String str = "abc";
 //		x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath", 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
+		System.out.println(ShlwapiDLL.INSTANCE.PathFindFileName("C:\\W\\a"));
+		
 		char ch[] = new char[260];
 		Shell32.INSTANCE.SHGetSpecialFolderPath(null, ch, 0x002a, false);
 		System.out.println(new String(ch));

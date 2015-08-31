@@ -18,18 +18,14 @@ import java.io.IOException;
  */
 public class XMLGenerator {
 
-	private static BufferedWriter bufferWriter;
-
-	public XMLGenerator() {
-		// TODO Auto-generated constructor stub
-	}
-
+	private static BufferedWriter bufferedWriter;
+	
 	private static void println(String packageName, String funcName, String fileName) throws IOException {
 		String str = "\t\t<API funcName=\"" + funcName.toLowerCase() + "\" className=\"" + packageName + fileName
 				+ "\" />";
 		// System.out.println(str);
-		bufferWriter.write(str);
-		bufferWriter.write("\r\n");
+		bufferedWriter.write(str);
+		bufferedWriter.write("\r\n");
 	}
 
 	/**
@@ -44,21 +40,21 @@ public class XMLGenerator {
 		try {
 			File XMLfile = new File(path + "\\APIMap.xml");
 
-			// if file doesnt exists, then create it
+			// if file doesn't exists, then create it
 			if (!XMLfile.exists()) {
 				XMLfile.createNewFile();
 			}
 
 			FileWriter fw = new FileWriter(XMLfile.getAbsoluteFile());
-			bufferWriter = new BufferedWriter(fw);
+			bufferedWriter = new BufferedWriter(fw);
 
-			bufferWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<APIMap>");
-			bufferWriter.write("\r\n");
+			bufferedWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<APIMap>");
+			bufferedWriter.write("\r\n");
 			File directory = new File(path);
 			for (File file : directory.listFiles()) {
 				if (file.isDirectory() && !file.getName().equals("structures")) {
-					bufferWriter.write("\t<DLL name=\"" + file.getName() + "\">");
-					bufferWriter.write("\r\n");
+					bufferedWriter.write("\t<DLL name=\"" + file.getName() + "\">");
+					bufferedWriter.write("\r\n");
 
 					File subDir = new File(file.getAbsolutePath() + "\\functions");
 					for (File api : subDir.listFiles()) {
@@ -69,19 +65,19 @@ public class XMLGenerator {
 						// System.out.println("\t\t" + funcName);
 
 						println(packageName, funcName, funcName);
-						println(packageName, funcName + "A", funcName);
-						println(packageName, funcName + "W", funcName);
+//						println(packageName, funcName + "A", funcName);
+//						println(packageName, funcName + "W", funcName);
 						count++;
 					}
 
-					bufferWriter.write("\t</DLL>");
-					bufferWriter.write("\r\n");
+					bufferedWriter.write("\t</DLL>");
+					bufferedWriter.write("\r\n");
 				}
 			}
 
-			bufferWriter.write("</APIMap>");
-			bufferWriter.write("\r\n");
-			bufferWriter.close();
+			bufferedWriter.write("</APIMap>");
+			bufferedWriter.write("\r\n");
+			bufferedWriter.close();
 			System.out.println("Total: " + count);
 		} catch (Exception ex) {
 			ex.printStackTrace();

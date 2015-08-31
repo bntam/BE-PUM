@@ -40,7 +40,6 @@ public class GetFocus extends User32API {
 		
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 		register.mov("eax", new LongValue(value));
-		System.out.println("Return Value: " + value);
 	}
 
 }

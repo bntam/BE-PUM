@@ -12,6 +12,7 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.*;
+import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.platform.win32.WinUser.MSG;
 import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
 import com.sun.jna.ptr.IntByReference;
@@ -996,4 +997,13 @@ public interface User32DLL extends StdCallLibrary {
 	 *         is NULL.
 	 */
 	HWND GetActiveWindow();
+
+	/**
+	 * Retrieves a handle to the current window station for the calling process.
+	 * 
+	 * @return If the function succeeds, the return value is a handle to the
+	 *         window station. If the function fails, the return value is NULL.
+	 *         To get extended error information, call GetLastError.
+	 */
+	HANDLE GetProcessWindowStation();
 }
