@@ -13,6 +13,7 @@ import com.sun.jna.platform.win32.WinDef.DWORDByReference;
 import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinDef.WORD;
+import com.sun.jna.platform.win32.WinNT.ACL;
 import com.sun.jna.platform.win32.WinReg.HKEY;
 import com.sun.jna.platform.win32.WinReg.HKEYByReference;
 import com.sun.jna.ptr.ByteByReference;
@@ -439,4 +440,17 @@ public interface Advapi32DLL extends StdCallLibrary {
 	/* _In_opt_ */SECURITY_ATTRIBUTES lpSecurityAttributes,
 	/* _Out_ */HKEY phkResult,
 	/* _Out_opt_ */DWORD lpdwDisposition);
+
+	/**
+	 * The IsValidAcl function validates an access control list (ACL).
+	 * 
+	 * @param pAcl
+	 *            A pointer to an ACL structure validated by this function. This
+	 *            value must not be NULL.
+	 * 
+	 * @return If the ACL is valid, the function returns nonzero. If the ACL is
+	 *         not valid, the function returns zero. There is no extended error
+	 *         information for this function; do not call GetLastError.
+	 */
+	BOOL IsValidAcl(/* _In_ */ACL pAcl);
 }

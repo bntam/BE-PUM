@@ -1102,4 +1102,15 @@ public interface User32DLL extends StdCallLibrary {
 	/* _In_opt_ */HBITMAP hBitmap,
 	/* _In_ */int nWidth,
 	/* _In_ */int nHeight);
+
+	/**
+	 * Determines whether a window is maximized.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window to be tested.
+	 * 
+	 * @return If the window is zoomed, the return value is nonzero. If the
+	 *         window is not zoomed, the return value is zero.
+	 */
+	BOOL IsZoomed(/* _In_ */HWND hWnd);
 }

@@ -9,6 +9,7 @@
 		<API funcName="cryptdestroykey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptDestroyKey" />
 		<API funcName="crypthashdata" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
 		<API funcName="cryptreleasecontext" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
+		<API funcName="isvalidacl" className="v2.org.analysis.apihandle.winapi.advapi32.functions.IsValidAcl" />
 		<API funcName="openthreadtoken" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenThreadToken" />
 		<API funcName="regclosekey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
 		<API funcName="regcreatekeyex" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCreateKeyEx" />
@@ -104,6 +105,7 @@
 		<API funcName="getstdhandle" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetStdHandle" />
 		<API funcName="getstringtypea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetStringTypeA" />
 		<API funcName="getstringtypew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetStringTypeW" />
+		<API funcName="getsystemdefaultlcid" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemDefaultLCID" />
 		<API funcName="getsystemdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemDirectory" />
 		<API funcName="getsysteminfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemInfo" />
 		<API funcName="getsystemtime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemTime" />
@@ -158,6 +160,7 @@
 		<API funcName="multibytetowidechar" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MultiByteToWideChar" />
 		<API funcName="openevent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenEvent" />
 		<API funcName="openfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenFile" />
+		<API funcName="openfilemapping" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenFileMapping" />
 		<API funcName="openmutex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenMutex" />
 		<API funcName="openprocess" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenProcess" />
 		<API funcName="openthread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenThread" />
@@ -236,6 +239,7 @@
 		<API funcName="_fpreset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
 		<API funcName="_initterm" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._initterm" />
 		<API funcName="_itow" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
+		<API funcName="_ltoa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._ltoa" />
 		<API funcName="_setmode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._setmode" />
 		<API funcName="__getmainargs" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__getmainargs" />
 		<API funcName="__p__commode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__commode" />
@@ -244,6 +248,7 @@
 		<API funcName="__set_app_type" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__set_app_type" />
 	</DLL>
 	<DLL name="ntdll">
+		<API funcName="ntprotectvirtualmemory" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtProtectVirtualMemory" />
 		<API funcName="ntqueryinformationprocess" className="v2.org.analysis.apihandle.winapi.ntdll.functions.NtQueryInformationProcess" />
 	</DLL>
 	<DLL name="ole32">
@@ -257,6 +262,9 @@
 		<API funcName="shgetspecialfolderpath" className="v2.org.analysis.apihandle.winapi.shell32.functions.SHGetSpecialFolderPath" />
 		<API funcName="strchri" className="v2.org.analysis.apihandle.winapi.shell32.functions.StrChrI" />
 	</DLL>
+	<DLL name="shlwapi">
+		<API funcName="pathfindfilename" className="v2.org.analysis.apihandle.winapi.shlwapi.functions.PathFindFileName" />
+	</DLL>
 	<DLL name="user32">
 		<API funcName="blockinput" className="v2.org.analysis.apihandle.winapi.user32.functions.BlockInput" />
 		<API funcName="charlower" className="v2.org.analysis.apihandle.winapi.user32.functions.CharLower" />
@@ -265,6 +273,7 @@
 		<API funcName="charupperbuff" className="v2.org.analysis.apihandle.winapi.user32.functions.CharUpperBuff" />
 		<API funcName="clienttoscreen" className="v2.org.analysis.apihandle.winapi.user32.functions.ClientToScreen" />
 		<API funcName="closewindow" className="v2.org.analysis.apihandle.winapi.user32.functions.CloseWindow" />
+		<API funcName="createcaret" className="v2.org.analysis.apihandle.winapi.user32.functions.CreateCaret" />
 		<API funcName="createdialogparam" className="v2.org.analysis.apihandle.winapi.user32.functions.CreateDialogParam" />
 		<API funcName="createwindowex" className="v2.org.analysis.apihandle.winapi.user32.functions.CreateWindowEx" />
 		<API funcName="defframeproc" className="v2.org.analysis.apihandle.winapi.user32.functions.DefFrameProc" />
@@ -277,6 +286,7 @@
 		<API funcName="findwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.FindWindow" />
 		<API funcName="getactivewindow" className="v2.org.analysis.apihandle.winapi.user32.functions.GetActiveWindow" />
 		<API funcName="getasynckeystate" className="v2.org.analysis.apihandle.winapi.user32.functions.GetAsyncKeyState" />
+		<API funcName="getcaretpos" className="v2.org.analysis.apihandle.winapi.user32.functions.GetCaretPos" />
 		<API funcName="getclassinfoex" className="v2.org.analysis.apihandle.winapi.user32.functions.GetClassInfoEx" />
 		<API funcName="getclassname" className="v2.org.analysis.apihandle.winapi.user32.functions.GetClassName" />
 		<API funcName="getcursorpos" className="v2.org.analysis.apihandle.winapi.user32.functions.GetCursorPos" />
@@ -287,10 +297,12 @@
 		<API funcName="getkeyboardstate" className="v2.org.analysis.apihandle.winapi.user32.functions.GetKeyboardState" />
 		<API funcName="getkeyboardtype" className="v2.org.analysis.apihandle.winapi.user32.functions.GetKeyboardType" />
 		<API funcName="getmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.GetMessage" />
+		<API funcName="getprocesswindowstation" className="v2.org.analysis.apihandle.winapi.user32.functions.GetProcessWindowStation" />
 		<API funcName="getsyscolor" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSysColor" />
 		<API funcName="getsyscolorbrush" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSysColorBrush" />
 		<API funcName="getsystemmenu" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSystemMenu" />
 		<API funcName="gettopwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.GetTopWindow" />
+		<API funcName="getuserobjectinformation" className="v2.org.analysis.apihandle.winapi.user32.functions.GetUserObjectInformation" />
 		<API funcName="getwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
 		<API funcName="getwindowrect" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowRect" />
 		<API funcName="getwindowtext" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowText" />
@@ -299,6 +311,7 @@
 		<API funcName="insertmenuitem" className="v2.org.analysis.apihandle.winapi.user32.functions.InsertMenuItem" />
 		<API funcName="isdialogmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.IsDialogMessage" />
 		<API funcName="iswindowvisible" className="v2.org.analysis.apihandle.winapi.user32.functions.IsWindowVisible" />
+		<API funcName="iszoomed" className="v2.org.analysis.apihandle.winapi.user32.functions.IsZoomed" />
 		<API funcName="loadbitmap" className="v2.org.analysis.apihandle.winapi.user32.functions.LoadBitmap" />
 		<API funcName="loadcursor" className="v2.org.analysis.apihandle.winapi.user32.functions.LoadCursor" />
 		<API funcName="loadicon" className="v2.org.analysis.apihandle.winapi.user32.functions.LoadIcon" />

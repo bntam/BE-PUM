@@ -20,6 +20,7 @@ import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
 import com.sun.jna.platform.win32.GDI32;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.Msi;
+import com.sun.jna.platform.win32.NtDll;
 import com.sun.jna.platform.win32.Ole32;
 import com.sun.jna.platform.win32.Shell32;
 import com.sun.jna.platform.win32.Shell32Util;
@@ -409,7 +410,7 @@ public class Test {
 //		Kernel32.INSTANCE.GetSystemDefaultLCID()
 //		User32.INSTANCE.GetAsyncKeyState(vKey)
 //		GDI32.INSTANCE.Ge
-//		Advapi32.INSTANCE.RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, phkResult)
+//		Advapi32.INSTANCE.is
 		
 //		HKEYByReference phkResult = new HKEYByReference();
 //		int retzz = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(0x80000001), "SOFTWARE\\SEGFRY\\TEST", 0, (int)ERegKeySecuritynAccessRights.KEY_READ.getValue(), phkResult);
@@ -418,7 +419,7 @@ public class Test {
 //		String str = "abc";
 //		x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath", 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		System.out.println(ShlwapiDLL.INSTANCE.PathFindFileName("C:\\W\\a"));
+		
 		
 		char ch[] = new char[260];
 		Shell32.INSTANCE.SHGetSpecialFolderPath(null, ch, 0x002a, false);

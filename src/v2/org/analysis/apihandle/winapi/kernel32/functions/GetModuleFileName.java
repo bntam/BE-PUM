@@ -83,7 +83,6 @@ public class GetModuleFileName extends Kernel32API {
 
 		memory.setText(new X86MemoryOperand(DataType.INT32, t2), output);
 		register.mov("eax", new LongValue(ret.longValue()));
-
 	}
 
 }

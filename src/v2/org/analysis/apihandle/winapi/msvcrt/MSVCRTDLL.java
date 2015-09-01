@@ -371,10 +371,22 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 * @return destination is returned.
 	 */
 	Pointer memcpy(Pointer destination, Pointer source, SIZE_T num);
-	
-//	char *_ltoa(
-//			   long value,
-//			   char *str,
-//			   int radix 
-//			);
+
+	/**
+	 * Converts a long integer to a string. More secure versions of these
+	 * functions are available
+	 * 
+	 * @param value
+	 *            Number to be converted.
+	 * 
+	 * @param str
+	 *            String result.
+	 * 
+	 * @param radix
+	 *            Base of value.
+	 * 
+	 * @return Each of these functions returns a pointer to str. There is no
+	 *         error return.
+	 */
+	Pointer _ltoa(long value, char[] str, int radix);
 }

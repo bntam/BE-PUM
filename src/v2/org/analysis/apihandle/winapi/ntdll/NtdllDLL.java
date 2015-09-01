@@ -6,6 +6,7 @@ import com.sun.jna.platform.win32.WinDef.PVOID;
 import com.sun.jna.platform.win32.WinDef.ULONG;
 import com.sun.jna.platform.win32.WinDef.ULONGByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
@@ -45,10 +46,29 @@ public interface NtdllDLL extends StdCallLibrary {
 	 * @return The function returns an NTSTATUS success or error code.
 	 */
 	/* NTSTATUS */int /* WINAPI */NtQueryInformationProcess(/* _In_ */HANDLE ProcessHandle, /* _In_ *//* PROCESSINFOCLASS */
-			int ProcessInformationClass, /* _Out_ */Structure.ByReference ProcessInformation, /* _In_ */ULONG ProcessInformationLength, /* _Out_opt_ */
+			int ProcessInformationClass, /* _Out_ */Structure.ByReference ProcessInformation, /* _In_ */
+			ULONG ProcessInformationLength, /* _Out_opt_ */
 			ULONGByReference ReturnLength);
+
 	/* NTSTATUS */int /* WINAPI */NtQueryInformationProcess(/* _In_ */HANDLE ProcessHandle, /* _In_ *//* PROCESSINFOCLASS */
-			int ProcessInformationClass, /* _Out_ */com.sun.jna.ptr.ByReference ProcessInformation, /* _In_ */ULONG ProcessInformationLength, /* _Out_opt_ */
+			int ProcessInformationClass, /* _Out_ */com.sun.jna.ptr.ByReference ProcessInformation, /* _In_ */
+			ULONG ProcessInformationLength, /* _Out_opt_ */
 			ULONGByReference ReturnLength);
+
 	int NtQueryInformation();
+
+	/**
+	 * 
+	 * @param ProcessHandle
+	 * @param BaseAddress
+	 * @param NumberOfBytesToProtect
+	 * @param NewAccessProtection
+	 * @param OldAccessProtection
+	 */
+	void NtProtectVirtualMemory(
+	/* IN */HANDLE ProcessHandle,
+	/* IN_OUT */PointerByReference BaseAddress,
+	/* IN_OUT */ULONGByReference NumberOfBytesToProtect,
+	/* IN */ULONG NewAccessProtection,
+	/* OUT */ULONGByReference OldAccessProtection);
 }
