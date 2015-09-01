@@ -406,7 +406,7 @@ public class Test {
 		// System.out.println(System.getProperty("jna.boot.library.name",
 		// "jnidispatch"));
 
-//		Kernel32.INSTANCE.GetT
+//		Kernel32.INSTANCE.GetSystemDefaultLCID()
 //		User32.INSTANCE.GetAsyncKeyState(vKey)
 //		GDI32.INSTANCE.Ge
 //		Advapi32.INSTANCE.RegOpenKeyEx(hKey, lpSubKey, ulOptions, samDesired, phkResult)

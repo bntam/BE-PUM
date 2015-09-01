@@ -6,22 +6,14 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LCID;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * For a locale specified by identifier, maps one input character string to
