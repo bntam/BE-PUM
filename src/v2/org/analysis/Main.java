@@ -333,13 +333,21 @@ public class Main {
 		// in = "api_test_pecompact.exe";
 
 		pathVirus = "asm/api/multithread/";
-		in = "SillyExampleFixed.exe"; // VS 7.0 (VS C++ 6.0)
+		in = "SillyExample.exe"; // VS 7.0 (VS C++ 6.0)
 //		in = "Temp.exe"; // VS C++ 2005 Express Edition
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
 
-		pathVirus = "asm/testcase/";
-		in = "cmova_symbol.exe";
+//		pathVirus = "asm/testcase/";
+//		in = "bsf_symbol.exe";
+		//in = "multiDest.exe";
+		//in = "Virus.Win32.Weird.c";
+		//pathVirus = "asm/packer_detection/aspack/";
+		//in = "api_test.exe";
+	
+//		pathVirus = "asm/packer_detection/upx/";
+//		in = "api_test.exe";
+		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export
