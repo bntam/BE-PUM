@@ -36,23 +36,20 @@ import java.util.Map;
 
 public class APIHandle {
 	private static HashMap<String, String> apiMapping = new HashMap<String, String>();
-	private static boolean init = false;
 	public static Map<Long, String> libraryHandle = new HashMap<Long, String>();
 	public static Map<Long, String> processAddressHandle = new HashMap<Long, String>();
 	public static boolean isDebug = true;
 
-	private static void init() {
-		if (init)
-			return;
-		
+	static {
 		String directory = APIHandle.class.getPackage().getName().replace(".", "/");
 		InputStream fXmlFile = null;
 		try {
-//			String dir = "src\\" + Test.class.getPackage().getName().replace(".", "\\");
-//			File fXmlFile = new File(dir + "\\" + "APIMap.xml");
-			
+			// String dir = "src\\" +
+			// Test.class.getPackage().getName().replace(".", "\\");
+			// File fXmlFile = new File(dir + "\\" + "APIMap.xml");
+
 			fXmlFile = APIHandle.class.getResourceAsStream("/" + directory + "/APIMap.xml");
-			
+
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -67,8 +64,10 @@ public class APIHandle {
 
 					// make sure it's element node.
 					if (DLLNode.getNodeType() == Node.ELEMENT_NODE) {
-//						HashMap<String, String> apiHashMap = new HashMap<String, String>();
-//						apiMapping.put(DLLNode.getAttributes().item(0).getNodeValue(), apiHashMap);
+						// HashMap<String, String> apiHashMap = new
+						// HashMap<String, String>();
+						// apiMapping.put(DLLNode.getAttributes().item(0).getNodeValue(),
+						// apiHashMap);
 						// get attributes names and values
 						NodeList APIList = DLLNode.getChildNodes();
 
@@ -102,17 +101,24 @@ public class APIHandle {
 				e.printStackTrace();
 			}
 		}
-
-		init = true;
 	}
 
-	private static String findClassName(String funcName, String libName) {
-		init();
+	private static String findClassName(String funcName/* , String libName */) {
+		if (funcName == null)
+			return null;
+
 		String fullClassName = null;
-//		String apiMap = apiMapping.get(libName);
-//		if (apiMap == null)
-//			return null;
+		// String apiMap = apiMapping.get(libName);
+		// if (apiMap == null)
+		// return null;
 		fullClassName = apiMapping.get(funcName);
+		if (fullClassName == null) {
+			char lastChar = funcName.charAt(funcName.length() - 1);
+			if (lastChar == 'a' || lastChar == 'w') {
+				funcName = funcName.substring(0, funcName.length() - 1);
+				fullClassName = apiMapping.get(funcName);
+			}
+		}
 		return fullClassName;
 	}
 
@@ -121,8 +127,8 @@ public class APIHandle {
 		System.out.println("\n\tCall api: " + api);
 		String t[] = api.split("@");
 
-		//if (api.contains("HeapAlloc"))
-		//	System.out.println("Debug");
+		// if (api.contains("HeapAlloc"))
+		// System.out.println("Debug");
 
 		// long returnValue = 0;
 		String funcName = t[0];
@@ -161,8 +167,8 @@ public class APIHandle {
 			cfg.insertEdge(new BPEdge(v1, v2));
 			Value returnAddr = stack.pop();
 			long r = 0;
-			if (//	path.getPreviousInst() instanceof X86CallInstruction && 
-					returnAddr != null && returnAddr instanceof LongValue) {
+			if (// path.getPreviousInst() instanceof X86CallInstruction &&
+			returnAddr != null && returnAddr instanceof LongValue) {
 				r = ((LongValue) returnAddr).getValue();
 			} else {
 				r = curState.getLocation().getValue() + curState.getInstruction().getSize();
@@ -258,10 +264,10 @@ public class APIHandle {
 			curState.setInstruction(newInst);
 		}
 
-		//Memory memory = env.getMemory();
-		//Register register = env.getRegister();
-		//SystemHandle system = env.getSystem();
-		
+		// Memory memory = env.getMemory();
+		// Register register = env.getRegister();
+		// SystemHandle system = env.getSystem();
+
 		/**********************************************
 		 * Special API that I hadn't found the define *
 		 **********************************************/
@@ -272,8 +278,14 @@ public class APIHandle {
 			env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
 		}
 
-		String className = findClassName(t[0].toLowerCase(), t[1].toLowerCase().replace(".dll", ""));
-		
+		String className = findClassName(t[0].toLowerCase()/*
+															 * ,
+															 * t[1].toLowerCase
+															 * ()
+															 * .replace(".dll",
+															 * "")
+															 */);
+
 		// PHONG - 20150728 ///////////////////////////////////////
 		if (t[0].contains("LoadLibraryA"))
 			Program.getProgram().setTechnique("UseAPI: LoadLibrary");
@@ -283,8 +295,8 @@ public class APIHandle {
 			Program.getProgram().setTechnique("UseAPI: VirtualAlloc");
 		if (t[0].contains("IsDebuggerPresent"))
 			Program.getProgram().setTechnique("UseAPI: IsDebuggerPresent");
-		//////////////////////////////////////////////////////////
-		
+		// ////////////////////////////////////////////////////////
+
 		if (className != null) {
 			try {
 				Class<?> clazz = Class.forName(className);

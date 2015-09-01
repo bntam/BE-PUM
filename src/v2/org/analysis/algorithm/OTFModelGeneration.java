@@ -118,6 +118,7 @@ public class OTFModelGeneration implements Algorithm {
 		if (this.detectPacker)
 		{
 			program.getDetection().detectViaHeader(program);
+			program.getDetection().setToLogFirst(program);
 		}
 		System.out.println("==================================================================");
 		/////////////////////////////////////////////////
@@ -134,6 +135,13 @@ public class OTFModelGeneration implements Algorithm {
 			curState = path.getCurrentState();
 			
 			// Detect OTF ////////////////////////////////////////////////
+			/*
+			if (this.detectPacker)
+			{
+				program.getDetection().getTechniques().updateChecking(curState);
+			}
+			*/
+			/*
 			if (this.detectPacker)
 			{
 				program.getDetection().packedBy();
@@ -146,6 +154,7 @@ public class OTFModelGeneration implements Algorithm {
 					program.getDetection().setToLog(program);
 				}
 			}
+			*/
 			//////////////////////////////////////////////////////////////
 			
 			// long overallStartTimePath = System.currentTimeMillis();
@@ -167,10 +176,12 @@ public class OTFModelGeneration implements Algorithm {
 					
 					////////////////////////////////////////////////////
 					// Write to packer result file after each 60s
+					/*
 					program.SetAnalyzingTime(System.currentTimeMillis()
 							- overallStartTime); 
 					program.getDetection().updateBackupDetectionState(program, this);
 					program.getDetection().setToLog(program);
+					*/
 					////////////////////////////////////////////////////
 					
 				}

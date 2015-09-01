@@ -8,10 +8,14 @@
  */
 package v2.org.analysis.apihandle.winapi.user32;
 
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.*;
+import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.platform.win32.WinUser.MSG;
 import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
 import com.sun.jna.ptr.IntByReference;
@@ -996,4 +1000,106 @@ public interface User32DLL extends StdCallLibrary {
 	 *         is NULL.
 	 */
 	HWND GetActiveWindow();
+
+	/**
+	 * Retrieves a handle to the current window station for the calling process.
+	 * 
+	 * @return If the function succeeds, the return value is a handle to the
+	 *         window station. If the function fails, the return value is NULL.
+	 *         To get extended error information, call GetLastError.
+	 */
+	HANDLE GetProcessWindowStation();
+
+	/**
+	 * Retrieves information about the specified window station or desktop
+	 * object.
+	 * 
+	 * @param hObj
+	 *            A handle to the window station or desktop object. This handle
+	 *            is returned by the CreateWindowStation, OpenWindowStation,
+	 *            CreateDesktop, or OpenDesktop function.
+	 * 
+	 * @param nIndex
+	 *            The information to be retrieved.
+	 * 
+	 * @param pvInfo
+	 *            A pointer to a buffer to receive the object information.
+	 * 
+	 * @param nLength
+	 *            The size of the buffer pointed to by the pvInfo parameter, in
+	 *            bytes.
+	 * 
+	 * @param lpnLengthNeeded
+	 *            A pointer to a variable receiving the number of bytes required
+	 *            to store the requested information. If this variable's value
+	 *            is greater than the value of the nLength parameter when the
+	 *            function returns, the function returns FALSE, and none of the
+	 *            information is copied to the pvInfo buffer. If the value of
+	 *            the variable pointed to by lpnLengthNeeded is less than or
+	 *            equal to the value of nLength, the entire information block is
+	 *            copied.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL GetUserObjectInformation(
+	/* _In_ */HANDLE hObj,
+	/* _In_ */int nIndex,
+	/* _Out_opt_ *//* PVOID */Buffer pvInfo,
+	/* _In_ */DWORD nLength,
+	/* _Out_opt_ */DWORDByReference lpnLengthNeeded);
+
+	/**
+	 * Copies the caret's position to the specified POINT structure.
+	 * 
+	 * @param lpPoint
+	 *            A pointer to the POINT structure that is to receive the client
+	 *            coordinates of the caret.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL GetCaretPos(/* _Out_ */POINT lpPoint);
+
+	/**
+	 * Creates a new shape for the system caret and assigns ownership of the
+	 * caret to the specified window. The caret shape can be a line, a block, or
+	 * a bitmap.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window that owns the caret.
+	 * 
+	 * @param hBitmap
+	 *            A handle to the bitmap that defines the caret shape. If this
+	 *            parameter is NULL, the caret is solid. If this parameter is
+	 *            (HBITMAP) 1, the caret is gray. If this parameter is a bitmap
+	 *            handle, the caret is the specified bitmap. The bitmap handle
+	 *            must have been created by the CreateBitmap, CreateDIBitmap, or
+	 *            LoadBitmap function. If hBitmap is a bitmap handle,
+	 *            CreateCaret ignores the nWidth and nHeight parameters; the
+	 *            bitmap defines its own width and height.
+	 * 
+	 * @param nWidth
+	 *            The width of the caret, in logical units. If this parameter is
+	 *            zero, the width is set to the system-defined window border
+	 *            width. If hBitmap is a bitmap handle, CreateCaret ignores this
+	 *            parameter.
+	 * 
+	 * @param nHeight
+	 *            The height of the caret, in logical units. If this parameter
+	 *            is zero, the height is set to the system-defined window border
+	 *            height. If hBitmap is a bitmap handle, CreateCaret ignores
+	 *            this parameter.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL CreateCaret(
+	/* _In_ */HWND hWnd,
+	/* _In_opt_ */HBITMAP hBitmap,
+	/* _In_ */int nWidth,
+	/* _In_ */int nHeight);
 }

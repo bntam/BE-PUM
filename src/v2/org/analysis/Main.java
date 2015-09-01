@@ -610,11 +610,13 @@ public class Main {
 			// new DOTComparison().exportComparison(baseFileName);
 
 			// PHONG: 20150508
+			// DETECT VIA OTF IF COMPLETED
+			//////////////////////////////////////////////////////////////////////
 			program.SetAnalyzingTime(overallEndTime - overallStartTime); 
-			// Write to log
 			program.getDetection().updateBackupDetectionState(program, otfMG);
 			program.getDetection().setToLog(program);
-
+			//////////////////////////////////////////////////////////////////////
+			
 			try {
 				Runtime.getRuntime().removeShutdownHook(shutdownThread);
 				//YenNguyen: Start GUI from this class

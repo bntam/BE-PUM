@@ -14,7 +14,6 @@ import org.jakstab.Program;
 
 import com.sun.jna.WString;
 
-import antlr.collections.List;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.statistics.FileProcess;
@@ -153,6 +152,18 @@ public class PackerDetection {
 		return true;
 	}
 	
+	public void setToLogFirst (Program prog)
+	{
+		FileProcess packerResultFile = prog.getPackerResultFile();
+	
+		String fileName = prog.getFileName();
+		String viaHeader = this.detectViaHeader;
+		
+		String resultFirst = fileName + "\t" + viaHeader + "\t";
+		
+		packerResultFile.appendFile(resultFirst);
+	}
+	
 	public void setToLog (Program prog)
 	{
 		FileProcess packerResultFile = prog.getPackerResultFile();
@@ -170,6 +181,8 @@ public class PackerDetection {
 					resultString.add(curLine);
 				    lastLine = curLine;
 				}
+				
+				input.close();
 				
 				String curFile = this.curDetectionFile;
 				

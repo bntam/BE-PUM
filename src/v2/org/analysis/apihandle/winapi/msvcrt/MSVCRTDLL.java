@@ -371,4 +371,10 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 * @return destination is returned.
 	 */
 	Pointer memcpy(Pointer destination, Pointer source, SIZE_T num);
+	
+//	char *_ltoa(
+//			   long value,
+//			   char *str,
+//			   int radix 
+//			);
 }
