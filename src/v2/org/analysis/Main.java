@@ -342,8 +342,8 @@ public class Main {
 //		in = "bsf_symbol.exe";
 		//in = "multiDest.exe";
 		//in = "Virus.Win32.Weird.c";
-		pathVirus = "asm/packer_detection/aspack/";
-		in = "api_test.exe";
+		//pathVirus = "asm/packer_detection/aspack/";
+		//in = "api_test.exe";
 	
 //		pathVirus = "asm/packer_detection/upx/";
 //		in = "api_test.exe";
