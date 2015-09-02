@@ -1,5 +1,7 @@
 package v2.org.analysis.algorithm;
 
+import org.jakstab.Program;
+
 import v2.org.analysis.path.BPState;
 
 public class PackerTechniques {
@@ -35,26 +37,30 @@ public class PackerTechniques {
 		anti_debugging		= false; 
 	}
 	
-	public void updateChecking (BPState curState)
+	public void updateChecking (BPState curState, Program program)
 	{
-		pPattern.setCheckingState(curState);
-		this.checkingState();
+		if (curState != null)
+		{
+			pPattern.setCheckingState(curState, program);
+			this.checkingState();
+		}
 	}
 	
 	private void checkingState ()
 	{
+		// Check packing/unpacking
 		if (!this.packing_unpacking)
 		{
 			if (pPattern.PackAndUnpack()) 	
 				isPackingUnpacking();
 		}
 		
-		if (!this.overwriting && !this.packing_unpacking)
+		// Check SMC
+		if (!this.packing_unpacking)
 		{
 			if (pPattern.Overwriting()) 	
 				isOverwriting();
 		}
-		else isOverwriting();
 		
 		if (pPattern.IndirectJump())	isIndirectJump();
 		if (pPattern.ObfuscatedConst())	isObfuscatedConst();

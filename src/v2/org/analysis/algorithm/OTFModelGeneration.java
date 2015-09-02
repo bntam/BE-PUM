@@ -138,12 +138,6 @@ public class OTFModelGeneration implements Algorithm {
 			/*
 			if (this.detectPacker)
 			{
-				program.getDetection().getTechniques().updateChecking(curState);
-			}
-			*/
-			/*
-			if (this.detectPacker)
-			{
 				program.getDetection().packedBy();
 				if (program.getDetection().fileIsPacked())
 				{
@@ -159,6 +153,14 @@ public class OTFModelGeneration implements Algorithm {
 			
 			// long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
+				
+				////////////////////////////////// VIA OTF ////////////////////////////////////////
+				if (this.detectPacker)
+				{
+					program.getDetection().getTechniques().updateChecking(curState, program);
+				}
+				///////////////////////////////////////////////////////////////////////////////////
+				
 				long overallEndTimeTemp = System.currentTimeMillis();
 				// Output file each 60s
 				if (overallEndTimeTemp - overallStartTemp > outTime) {

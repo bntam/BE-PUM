@@ -2010,6 +2010,7 @@ public final class Program {
 		// TODO Auto-generated method stub
 		if (!technique.contains(str)) {
 			// PHONG - 20150724
+			/*
 			if (str.contains("Encrypt/Decrypt"))
 				this.pDetection.getTechniques().isPackingUnpacking();
 			if (str.contains("Indirect Jump"))
@@ -2025,7 +2026,7 @@ public final class Program {
 			if (str.contains("UseAPI: LoadLibraryA")
 					|| str.contains("UseAPI: GetProcAddress"))
 				this.pDetection.getTechniques().isTwoAPIs();
-			
+			*/
 			technique += " " + str;
 			// resultFile_Temp.appendInLine(str + " Nodes:" +
 			// getBPCFG().getVertexCount() + " ");
