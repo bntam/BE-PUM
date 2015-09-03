@@ -3,14 +3,14 @@ package v2.org.analysis.algorithm;
 public final class PackerConstants {
 
 	// Techniques String
-	public static final String UPX = "10110000010";
-	public static final String FSG = "10111000010";
-	public static final String PECOMPACT = "11111111110";
-	public static final String NPACK = "10111000010";
-	public static final String PETITE = "00110000100";
-	public static final String YODA = "10111101111";
-	public static final String ASPACK = "10101000000";
-
+	public static final String UPX 			= "11110001010";
+	public static final String FSG 			= "11010101010";
+	public static final String NPACK 		= "11110111010";
+	public static final String PECOMPACT 	= "11110011110";
+	public static final String PETITE 		= "11110101100";
+	public static final String YODA 		= "11110101110";
+	public static final String ASPACK 		= "11010111000";
+	
 	// Packer Header
 	public static final String[] hUPX 		= {"5E","89","F7","B9","??","??","??","??","8A"
 											  ,"07","47","2C","E8","3C","01","77","F7","80"

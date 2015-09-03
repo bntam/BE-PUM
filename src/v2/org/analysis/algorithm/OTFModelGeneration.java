@@ -134,23 +134,6 @@ public class OTFModelGeneration implements Algorithm {
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
 			
-			// Detect OTF ////////////////////////////////////////////////
-			/*
-			if (this.detectPacker)
-			{
-				program.getDetection().packedBy();
-				if (program.getDetection().fileIsPacked())
-				{
-					this.detectPacker = false;
-					program.SetAnalyzingTime(System.currentTimeMillis()
-							- overallStartTime); 
-					program.getDetection().updateBackupDetectionState(program, this);
-					program.getDetection().setToLog(program);
-				}
-			}
-			*/
-			//////////////////////////////////////////////////////////////
-			
 			// long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
 				
@@ -178,12 +161,14 @@ public class OTFModelGeneration implements Algorithm {
 					
 					////////////////////////////////////////////////////
 					// Write to packer result file after each 60s
-					/*
-					program.SetAnalyzingTime(System.currentTimeMillis()
-							- overallStartTime); 
-					program.getDetection().updateBackupDetectionState(program, this);
-					program.getDetection().setToLog(program);
-					*/
+					if (this.detectPacker)
+					{
+						program.SetAnalyzingTime(System.currentTimeMillis()
+						- overallStartTime); 
+						program.getDetection().packedBy();
+						program.getDetection().updateBackupDetectionState(program, this);
+						program.getDetection().setToLog(program);
+					}
 					////////////////////////////////////////////////////
 					
 				}
@@ -239,7 +224,6 @@ public class OTFModelGeneration implements Algorithm {
 		}
 		// PHONG - 20150724
 		System.out.println("================PACKER DETECTION VIA OTF======================");
-		System.out.println(program.getDetection().getTechniques().getDetailTechniques());
 		program.getDetection().packedBy();
 		System.out.println("==============================================================");
 	}
