@@ -59,7 +59,7 @@ public class X86InstructionInterpreter {
 			}
 
 			if (d instanceof LongValue && EAX instanceof LongValue && EDX instanceof LongValue) {
-				long temp_EAX = ((LongValue) EAX).getValue();				
+				long temp_EAX = ((LongValue) EAX).getValue();
 				long temp_EDX = ((LongValue) EDX).getValue();
 
 				long temp_d = 0;
@@ -69,7 +69,7 @@ public class X86InstructionInterpreter {
 				long ECX_EBX = 0;
 
 				temp_d = ((LongValue) d).getValue();
-				EDX_EAX = new AnalysisBit().Bit64toDec(temp_EAX, temp_EDX);			
+				EDX_EAX = new AnalysisBit().Bit64toDec(temp_EAX, temp_EDX);
 
 				if (temp_d == EDX_EAX) {
 					env.getFlag().setZFlag(new BooleanValue(true));
@@ -473,17 +473,17 @@ public class X86InstructionInterpreter {
 		// SETNL: SF = OF => dest =1 else dest = 0
 		else if ((inst.getName().startsWith("setge")) || (inst.getName().startsWith("setnl"))) {
 			boolean isSet = false;
-			//boolean SF, OF;
+			// boolean SF, OF;
 
 			Value sFlag = env.getFlag().getSFlag();
 			sFlag = sFlag.evaluate(sFlag.getValueMap());
-			//SF = ((BooleanValue) sFlag).getValue();
+			// SF = ((BooleanValue) sFlag).getValue();
 
 			Value oFlag = env.getFlag().getOFlag();
 			oFlag = oFlag.evaluate(oFlag.getValueMap());
-			//OF = ((BooleanValue) oFlag).getValue();
+			// OF = ((BooleanValue) oFlag).getValue();
 
-			//if (SF == OF)
+			// if (SF == OF)
 			if (sFlag.equal(oFlag))
 				isSet = true;
 
@@ -510,21 +510,21 @@ public class X86InstructionInterpreter {
 		// SETNLE: ZF=0 and SF=OF => dest = 1 else dest = 0
 		else if ((inst.getName().startsWith("setg")) || (inst.getName().startsWith("setnle"))) {
 			boolean isSet = false;
-			//boolean ZF, SF, OF;
+			// boolean ZF, SF, OF;
 
 			Value zFlag = env.getFlag().getZFlag();
 			zFlag = zFlag.evaluate(zFlag.getValueMap());
-			//ZF = ((BooleanValue) zFlag).getValue();
+			// ZF = ((BooleanValue) zFlag).getValue();
 
 			Value sFlag = env.getFlag().getSFlag();
 			sFlag = sFlag.evaluate(sFlag.getValueMap());
-			//SF = ((BooleanValue) sFlag).getValue();
+			// SF = ((BooleanValue) sFlag).getValue();
 
 			Value oFlag = env.getFlag().getOFlag();
 			oFlag = oFlag.evaluate(oFlag.getValueMap());
-			//OF = ((BooleanValue) oFlag).getValue();
+			// OF = ((BooleanValue) oFlag).getValue();
 
-			//if ((ZF == false) && (SF == OF))
+			// if ((ZF == false) && (SF == OF))
 			if ((zFlag.equal(new BooleanValue(false))) && (sFlag.equal(oFlag)))
 				isSet = true;
 
@@ -551,21 +551,21 @@ public class X86InstructionInterpreter {
 		// SETNG: ZF=1 or SF<>OF => dest = 1 else dest = 0
 		else if ((inst.getName().startsWith("setle")) || (inst.getName().startsWith("setng"))) {
 			boolean isSet = false;
-			//boolean ZF, SF, OF;
+			// boolean ZF, SF, OF;
 
 			Value zFlag = env.getFlag().getZFlag();
 			zFlag = zFlag.evaluate(zFlag.getValueMap());
-			//ZF = ((BooleanValue) zFlag).getValue();
+			// ZF = ((BooleanValue) zFlag).getValue();
 
 			Value sFlag = env.getFlag().getSFlag();
 			sFlag = sFlag.evaluate(sFlag.getValueMap());
-			//SF = ((BooleanValue) sFlag).getValue();
+			// SF = ((BooleanValue) sFlag).getValue();
 
 			Value oFlag = env.getFlag().getOFlag();
 			oFlag = oFlag.evaluate(oFlag.getValueMap());
-			//OF = ((BooleanValue) oFlag).getValue();
+			// OF = ((BooleanValue) oFlag).getValue();
 
-			//if ((ZF == true) || (SF != OF))
+			// if ((ZF == true) || (SF != OF))
 			if ((zFlag.equal(new BooleanValue(true))) || !(sFlag.equal(oFlag)))
 				isSet = true;
 
@@ -591,15 +591,15 @@ public class X86InstructionInterpreter {
 		// SETNGE: SF<>OF => dest = 1 else dest = 0
 		else if ((inst.getName().startsWith("setl")) || (inst.getName().startsWith("setnge"))) {
 			boolean isSet = false;
-			//boolean SF, OF;
+			// boolean SF, OF;
 
 			Value sFlag = env.getFlag().getSFlag();
 			sFlag = sFlag.evaluate(sFlag.getValueMap());
-			//SF = ((BooleanValue) sFlag).getValue();
+			// SF = ((BooleanValue) sFlag).getValue();
 
 			Value oFlag = env.getFlag().getOFlag();
 			oFlag = oFlag.evaluate(oFlag.getValueMap());
-			//OF = ((BooleanValue) oFlag).getValue();
+			// OF = ((BooleanValue) oFlag).getValue();
 
 			if (!(sFlag.equal(oFlag)))
 				isSet = true;
@@ -848,7 +848,8 @@ public class X86InstructionInterpreter {
 			Value AL = env.getRegister().getRegisterValue("al");
 			Value AF = env.getFlag().getAFlag();
 			boolean isCF = false;
-			if ((AL instanceof LongValue) && ((LongValue) AL).getValue() > 9 || (AF instanceof BooleanValue && ((BooleanValue) AF).getValue()))
+			if ((AL instanceof LongValue) && ((LongValue) AL).getValue() > 9
+					|| (AF instanceof BooleanValue && ((BooleanValue) AF).getValue()))
 				isCF = true;
 
 			if (isCF) {
@@ -1682,6 +1683,8 @@ public class X86InstructionInterpreter {
 				}
 			} else {
 				Program.getProgram().setLog("BSF with Symbol Value at " + curState.getLocation());
+				rule.generateNextInstruction(inst, path, pathList, true);
+				return curState;
 			}
 			/*
 			 * PHONG: change here env.getFlag().setCFlag(new
@@ -2145,18 +2148,24 @@ public class X86InstructionInterpreter {
 				s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(), opSize));
 			}
 
-			temp_d = ((LongValue) d).getValue();
-			temp_s = ((LongValue) s).getValue();
-			CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
-			result = new AnalysisBit().BTC(temp_d, temp_s, get_bit);
-			if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
-				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-			else
-				env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-			if (CF == 1)
-				env.getFlag().setCFlag(new BooleanValue(true));
-			else
-				env.getFlag().setCFlag(new BooleanValue(false));
+			if (d != null && d instanceof LongValue && s != null && s instanceof LongValue) {
+				temp_d = ((LongValue) d).getValue();
+				temp_s = ((LongValue) s).getValue();
+				CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
+				result = new AnalysisBit().BTC(temp_d, temp_s, get_bit);
+				if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
+				else
+					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
+				if (CF == 1)
+					env.getFlag().setCFlag(new BooleanValue(true));
+				else
+					env.getFlag().setCFlag(new BooleanValue(false));
+			} else {
+				Program.getProgram().setLog("BTC with Symbol Value at " + curState.getLocation());
+				rule.generateNextInstruction(inst, path, pathList, true);
+				return curState;
+			}
 
 		}
 
@@ -2193,19 +2202,24 @@ public class X86InstructionInterpreter {
 						rule.getBitCount(inst)));
 			}
 
-			temp_d = ((LongValue) d).getValue();
-			temp_s = ((LongValue) s).getValue();
-			CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
-			result = new AnalysisBit().BTR(temp_d, temp_s, get_bit);
-			if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
-				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-			else
-				env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-			if (CF == 1)
-				env.getFlag().setCFlag(new BooleanValue(true));
-			else
-				env.getFlag().setCFlag(new BooleanValue(false));
-
+			if (d != null && d instanceof LongValue && s != null && s instanceof LongValue) {
+				temp_d = ((LongValue) d).getValue();
+				temp_s = ((LongValue) s).getValue();
+				CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
+				result = new AnalysisBit().BTR(temp_d, temp_s, get_bit);
+				if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
+				else
+					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
+				if (CF == 1)
+					env.getFlag().setCFlag(new BooleanValue(true));
+				else
+					env.getFlag().setCFlag(new BooleanValue(false));
+			} else {
+				Program.getProgram().setLog("BTR with Symbol Value at " + curState.getLocation());
+				rule.generateNextInstruction(inst, path, pathList, true);
+				return curState;
+			}
 		}
 
 		/** BTS **/
@@ -2241,18 +2255,24 @@ public class X86InstructionInterpreter {
 						rule.getBitCount(inst)));
 			}
 
-			temp_d = ((LongValue) d).getValue();
-			temp_s = ((LongValue) s).getValue();
-			CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
-			result = new AnalysisBit().BTS(temp_d, temp_s, get_bit);
-			if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
-				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-			else
-				env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-			if (CF == 1)
-				env.getFlag().setCFlag(new BooleanValue(true));
-			else
-				env.getFlag().setCFlag(new BooleanValue(false));
+			if (d != null && s != null && d instanceof LongValue && s instanceof LongValue) {
+				temp_d = ((LongValue) d).getValue();
+				temp_s = ((LongValue) s).getValue();
+				CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
+				result = new AnalysisBit().BTS(temp_d, temp_s, get_bit);
+				if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
+				else
+					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
+				if (CF == 1)
+					env.getFlag().setCFlag(new BooleanValue(true));
+				else
+					env.getFlag().setCFlag(new BooleanValue(false));
+			} else {
+				Program.getProgram().setLog("BTS with Symbol Value at " + curState.getLocation());
+				rule.generateNextInstruction(inst, path, pathList, true);
+				return curState;
+			}
 
 		}
 
@@ -2298,9 +2318,12 @@ public class X86InstructionInterpreter {
 					env.getFlag().setCFlag(new BooleanValue(true));
 				else
 					env.getFlag().setCFlag(new BooleanValue(false));
+			} else {
+				Program.getProgram().setLog("BT with Symbol Value at " + curState.getLocation());
+				rule.generateNextInstruction(inst, path, pathList, true);
+				return curState;
 			}
 		} else if (inst.getName().startsWith("bsr")) {
-			long temp_d = 0;
 			temp_s = 0;
 			long result = 0;
 			int get_bit = rule.getBitCount(inst);
@@ -2310,7 +2333,8 @@ public class X86InstructionInterpreter {
 
 			if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				// X86MemoryOperand t =
-				// env.getMemory().evaluateAddress((X86MemoryOperand) src, env);
+				// env.getMemory(bv hghgh g ).evaluateAddress((X86MemoryOperand)
+				// src, env);
 				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
 					// SEH Exploit
 					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
@@ -2318,26 +2342,33 @@ public class X86InstructionInterpreter {
 				}
 			}
 
-			if (s == null || !(s instanceof LongValue))
-				return curState;
+			// if (s == null || !(s instanceof LongValue))
+			// return curState;
 
-			temp_d = ((LongValue) d).getValue();
-			temp_s = ((LongValue) s).getValue();
-			if (temp_s == 0) {
-				env.getFlag().setZFlag(new BooleanValue(true));
-				// rule.setValueOperand(dest, new SymbolValue(dest.toString()),
-				// env, inst);
-			} else {
-				env.getFlag().setZFlag(new BooleanValue(false));
-				result = new AnalysisBit().BSR(temp_s, get_bit);
-				// Phong: change flag here
-				// -------------------------------------------------------------------------------------
-				for (int i = get_bit - 1; i > result; i--) {
-					LongValue temp_value = new LongValue(i);
-					env.getFlag().changeFlagWithDEC(temp_value, env, get_bit);
+			// temp_d = ((LongValue) d).getValue();
+			if (s != null && s instanceof LongValue) {
+				temp_s = ((LongValue) s).getValue();
+				if (temp_s == 0) {
+					env.getFlag().setZFlag(new BooleanValue(true));
+					// rule.setValueOperand(dest, new
+					// SymbolValue(dest.toString()),
+					// env, inst);
+				} else {
+					env.getFlag().setZFlag(new BooleanValue(false));
+					result = new AnalysisBit().BSR(temp_s, get_bit);
+					// Phong: change flag here
+					// -------------------------------------------------------------------------------------
+					for (int i = get_bit - 1; i > result; i--) {
+						LongValue temp_value = new LongValue(i);
+						env.getFlag().changeFlagWithDEC(temp_value, env, get_bit);
+					}
+					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
+					// -------------------------------------------------------------------------------------
 				}
-				env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-				// -------------------------------------------------------------------------------------
+			} else {
+				Program.getProgram().setLog("BSR with Symbol Value at " + curState.getLocation());
+				rule.generateNextInstruction(inst, path, pathList, true);
+				return curState;
 			}
 		} else if (inst.getName().startsWith("cpuid")) {
 

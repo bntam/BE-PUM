@@ -59,6 +59,7 @@ public class PackerDetection {
 			this.detectViaBEPUM = pTech + "-" 
 					+ packedby.substring(new String("File is packed by ").length());
 		}
+		System.out.println(detectViaBEPUM);
 	}
 	
 	public PackerTechniques getTechniques ()

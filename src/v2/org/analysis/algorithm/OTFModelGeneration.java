@@ -37,13 +37,14 @@ public class OTFModelGeneration implements Algorithm {
 
 	// private static final Logger logger =
 	// Logger.getLogger(CPAAlgorithm.class);
-	private static long maxTimeProgam = 2500000;
-	private static long maxTimePath = 1500000;
+	private static long maxTimeProgam = 3600000;
+	//private static long maxTimePath = 1500000;
 	//private static long bkTime = 2700000;
 	private static long outTime = 180000;
 	// For Debug
 	private int num = 1, loopCount = 1;
-	private boolean isCompareOlly = true, isChecked = false, isRestored = true;
+	private boolean isCompareOlly = true, isChecked = false;
+	//isRestored = true;
 	private long count = 1;
 	private AbsoluteAddress checkedAddr = new AbsoluteAddress(0);
 	private AbsoluteAddress endAddr = new AbsoluteAddress(0);
@@ -98,14 +99,14 @@ public class OTFModelGeneration implements Algorithm {
 		path.setCurrentState(curState);
 		pathList.add(path);
 
-		if (Program.getProgram().getFileName().equals("api_test_v2.3_lvl1.exe") 
+		/*if (Program.getProgram().getFileName().equals("api_test_v2.3_lvl1.exe") 
 				&& isRestored) {
 			System.out.println("Restore State from File.");
 			FileProcess reFile = new FileProcess("data/data/restoreState.txt");
 			pathList = restoreState(reFile);
 			// bkFile.clearContentFile();
 			System.out.println("Finished restoring state!");
-		}
+		}*/
 
 		// Update at first -----------------------------
 		TIB.setBeUpdated(true);
@@ -134,31 +135,16 @@ public class OTFModelGeneration implements Algorithm {
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
 			
-			// Detect OTF ////////////////////////////////////////////////
-			/*
-			if (this.detectPacker)
-			{
-				program.getDetection().getTechniques().updateChecking(curState);
-			}
-			*/
-			/*
-			if (this.detectPacker)
-			{
-				program.getDetection().packedBy();
-				if (program.getDetection().fileIsPacked())
-				{
-					this.detectPacker = false;
-					program.SetAnalyzingTime(System.currentTimeMillis()
-							- overallStartTime); 
-					program.getDetection().updateBackupDetectionState(program, this);
-					program.getDetection().setToLog(program);
-				}
-			}
-			*/
-			//////////////////////////////////////////////////////////////
-			
 			// long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
+				
+				////////////////////////////////// VIA OTF ////////////////////////////////////////
+				if (this.detectPacker)
+				{
+					program.getDetection().getTechniques().updateChecking(curState, program);
+				}
+				///////////////////////////////////////////////////////////////////////////////////
+				
 				long overallEndTimeTemp = System.currentTimeMillis();
 				// Output file each 60s
 				if (overallEndTimeTemp - overallStartTemp > outTime) {
@@ -176,12 +162,14 @@ public class OTFModelGeneration implements Algorithm {
 					
 					////////////////////////////////////////////////////
 					// Write to packer result file after each 60s
-					/*
-					program.SetAnalyzingTime(System.currentTimeMillis()
-							- overallStartTime); 
-					program.getDetection().updateBackupDetectionState(program, this);
-					program.getDetection().setToLog(program);
-					*/
+					if (this.detectPacker)
+					{
+						program.SetAnalyzingTime(System.currentTimeMillis()
+						- overallStartTime); 
+						program.getDetection().packedBy();
+						program.getDetection().updateBackupDetectionState(program, this);
+						program.getDetection().setToLog(program);
+					}
 					////////////////////////////////////////////////////
 					
 				}
@@ -237,7 +225,6 @@ public class OTFModelGeneration implements Algorithm {
 		}
 		// PHONG - 20150724
 		System.out.println("================PACKER DETECTION VIA OTF======================");
-		System.out.println(program.getDetection().getTechniques().getDetailTechniques());
 		program.getDetection().packedBy();
 		System.out.println("==============================================================");
 	}

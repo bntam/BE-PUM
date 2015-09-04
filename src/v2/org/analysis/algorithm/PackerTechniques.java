@@ -1,5 +1,7 @@
 package v2.org.analysis.algorithm;
 
+import org.jakstab.Program;
+
 import v2.org.analysis.path.BPState;
 
 public class PackerTechniques {
@@ -22,49 +24,111 @@ public class PackerTechniques {
 	{
 		pPattern = new PackerPatterns();
 		
-		packing_unpacking 	= false; 
-		overwriting 		= false; 
-		indirect_jump 		= false; 
-		obfuscated_const	= false; 
-		overlapping			= false; 
+		packing_unpacking 	= false; //x
+		overwriting 		= false; //x
+		indirect_jump 		= false; //x
+		obfuscated_const	= false; //x
+		overlapping			= false; //-
 		code_chunking		= false; 
-		stolen_bytes		= false; 
+		stolen_bytes		= false; //x
 		checksumming		= false; 
-		SEHs				= false; 
-		two_APIs			= false; 
-		anti_debugging		= false; 
+		SEHs				= false; //x
+		two_APIs			= false; //x
+		anti_debugging		= false; //x
 	}
 	
-	public void updateChecking (BPState curState)
+	public void updateChecking (BPState curState, Program program)
 	{
-		pPattern.setCheckingState(curState);
-		this.checkingState();
+		if (curState != null)
+		{
+			pPattern.setCheckingState(curState, program);
+			this.checkingState();
+		}
 	}
 	
 	private void checkingState ()
 	{
+		// Check packing/unpacking: Done
 		if (!this.packing_unpacking)
 		{
 			if (pPattern.PackAndUnpack()) 	
 				isPackingUnpacking();
 		}
 		
-		if (!this.overwriting && !this.packing_unpacking)
+		// Check SMC: Half-Done
+		// <INC, DEC>
+		if (!this.packing_unpacking)
 		{
 			if (pPattern.Overwriting()) 	
 				isOverwriting();
 		}
-		else isOverwriting();
 		
-		if (pPattern.IndirectJump())	isIndirectJump();
-		if (pPattern.ObfuscatedConst())	isObfuscatedConst();
-		if (pPattern.Overlapping())		isOverlapping();
-		if (pPattern.CodeChunking())	isCodeChunking();
-		if (pPattern.StolenBytes())		isStolenBytes();
-		if (pPattern.Checksumming())	isChecksumming();
-		if (pPattern.SEHs())			isSEH();
-		if (pPattern.TwoAPIs())			isTwoAPIs();
-		if (pPattern.AntiDebugging())	isAntiDebugging();
+		// Check indirect - jump: Half-Done
+		// < return indirect jump >
+		if (!this.indirect_jump)
+		{
+			if (pPattern.IndirectJump())	
+				isIndirectJump();
+		}
+		
+		// Check obfuscated constant: Done
+		if (!this.obfuscated_const)
+		{
+			if (pPattern.ObfuscatedConst())	
+				isObfuscatedConst();
+		}
+		
+		// Check overlapping: Half-Done
+		// <time consumption>
+		if (!this.overlapping)
+		{
+			if (pPattern.Overlapping())		
+				isOverlapping();
+		}
+		
+		// Check code chunk
+		if (!this.code_chunking)
+		{
+			if (pPattern.CodeChunking())	
+				isCodeChunking();
+		}
+		
+		// Check stolen bytes: Done
+		if (!this.stolen_bytes)
+		{
+			if (pPattern.StolenBytes())		
+				isStolenBytes();
+		}
+		
+		// Check checksum
+		if (!this.checksumming)
+		{
+			if (pPattern.Checksumming())	
+				isChecksumming();
+		}
+		
+		// Check SEH: Half-Done
+		// < part2: detect exception >
+		if (!this.SEHs)
+		{
+			if (pPattern.SEHs())			
+				isSEH();
+		}
+		
+		// Check 2 special APIs: Done
+		if (!this.two_APIs)
+		{
+			if (pPattern.TwoAPIs())			
+				isTwoAPIs();
+		}
+		
+		// Check anti-debugging
+		if (!this.anti_debugging)
+		{
+			if (pPattern.AntiDebugging())	
+				isAntiDebugging();
+		}
+		
 	}
 	
 	public void isPackingUnpacking ()
@@ -125,17 +189,17 @@ public class PackerTechniques {
 	public String getDetailTechniques ()
 	{
 		String techniques = "";
-		techniques += (packing_unpacking) 	? "1" : "0";
-		techniques += (overwriting) 		? "1" : "0";
-		techniques += (indirect_jump) 		? "1" : "0";
-		techniques += (obfuscated_const) 	? "1" : "0";
-		techniques += (overlapping) 		? "1" : "0";
-		techniques += (code_chunking) 		? "1" : "0";
-		techniques += (stolen_bytes) 		? "1" : "0";
-		techniques += (checksumming) 		? "1" : "0";
-		techniques += (SEHs) 				? "1" : "0";
-		techniques += (two_APIs) 			? "1" : "0";
-		techniques += (anti_debugging) 		? "1" : "0";
+		techniques += (packing_unpacking) 	? "1" : "0"; // byte0
+		techniques += (overwriting) 		? "1" : "0"; // byte1
+		techniques += (indirect_jump) 		? "1" : "0"; // byte2
+		techniques += (obfuscated_const) 	? "1" : "0"; // byte3
+		techniques += (overlapping) 		? "1" : "0"; // byte4
+		techniques += (code_chunking) 		? "1" : "0"; // byte5
+		techniques += (stolen_bytes) 		? "1" : "0"; // byte6
+		techniques += (checksumming) 		? "1" : "0"; // byte7
+		techniques += (SEHs) 				? "1" : "0"; // byte8
+		techniques += (two_APIs) 			? "1" : "0"; // byte9
+		techniques += (anti_debugging) 		? "1" : "0"; // byte10
 		return techniques;
 	}
 }
