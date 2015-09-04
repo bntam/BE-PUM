@@ -95,20 +95,30 @@ public final class Program {
 
 	public String generatePathFileName(String baseFileName) {
 		// TODO Auto-generated method stub
+		String ret = baseFileName;
+		
+		// Get the file name in input path to save in the same folder of BE-PUM jar file.
 		if (!Program.class.getResource("Program.class").toString().startsWith("file")) {
-			return System.getProperty("user.dir") + "/" + this.getFileName();
+			int index = baseFileName.lastIndexOf('/');
+			if (index == -1) {
+				index = baseFileName.lastIndexOf('\\');
+			}
+			if (index > -1) {
+				ret = baseFileName.substring(index + 1, baseFileName.length() - 1);
+			}
 		}
 
-		String r[] = baseFileName.split("\\\\");
-		String ret = "";
-		for (int i = 0; i < r.length; i++) {
-			if (i == r.length - 2)
-				ret += "cfg" + "\\";
-			else if (i == r.length - 1)
-				ret += r[i];
-			else
-				ret += r[i] + "\\";
-		}
+		// Never run because baseFileName parameter is a relative path within '/' separator characters
+//		String r[] = baseFileName.split("\\\\");
+//		String ret = "";
+//		for (int i = 0; i < r.length; i++) {
+//			if (i == r.length - 2)
+//				ret += "cfg" + "\\";
+//			else if (i == r.length - 1)
+//				ret += r[i];
+//			else
+//				ret += r[i] + "\\";
+//		}
 
 		return System.getProperty("user.dir") + ret;
 	}

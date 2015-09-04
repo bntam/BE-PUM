@@ -9,6 +9,7 @@ package v2.org.analysis.apihandle.winapi;
 import java.lang.reflect.Constructor;
 import java.sql.Struct;
 
+import org.jakstab.Program;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
@@ -88,10 +89,10 @@ public class Test {
 			Class<?> clazz = Class.forName(className);
 			Constructor<?> ctor = clazz.getConstructor();
 			API apiObject = (API) ctor.newInstance();
-		}	catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		// int x = Kernel32DLL.INSTANCE.WinExec("Cpp.exe", 1);
 		// BPState curState = null;
 
@@ -407,24 +408,32 @@ public class Test {
 		// System.out.println(System.getProperty("jna.boot.library.name",
 		// "jnidispatch"));
 
-//		Kernel32.INSTANCE.GetSystemDefaultLCID()
-//		User32.INSTANCE.GetAsyncKeyState(vKey)
-//		GDI32.INSTANCE.Ge
-//		Advapi32.INSTANCE.is
-		
-//		HKEYByReference phkResult = new HKEYByReference();
-//		int retzz = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(0x80000001), "SOFTWARE\\SEGFRY\\TEST", 0, (int)ERegKeySecuritynAccessRights.KEY_READ.getValue(), phkResult);
-//		System.out.println(retzz);
-//		
-//		String str = "abc";
-//		x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath", 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
+		// Kernel32.INSTANCE.GetSystemDefaultLCID()
+		// User32.INSTANCE.GetAsyncKeyState(vKey)
+		// GDI32.INSTANCE.Ge
+		// Advapi32.INSTANCE.is
 
-		
-		
-		char ch[] = new char[260];
-		Shell32.INSTANCE.SHGetSpecialFolderPath(null, ch, 0x002a, false);
-		System.out.println(new String(ch));
-		
+		// HKEYByReference phkResult = new HKEYByReference();
+		// int retzz = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(0x80000001),
+		// "SOFTWARE\\SEGFRY\\TEST", 0,
+		// (int)ERegKeySecuritynAccessRights.KEY_READ.getValue(), phkResult);
+		// System.out.println(retzz);
+		//
+		// String str = "abc";
+		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
+		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
+
+		String baseFileName = "asm/cfg/abc_test";
+		String ret = baseFileName;
+		int index = baseFileName.lastIndexOf('/');
+		if (index == -1) {
+			index = baseFileName.lastIndexOf('\\');
+		}
+		if (index > -1) {
+			ret = baseFileName.substring(index + 1, baseFileName.length() - 1);
+		}
+		System.out.println(ret);
+
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = (long) 1;
