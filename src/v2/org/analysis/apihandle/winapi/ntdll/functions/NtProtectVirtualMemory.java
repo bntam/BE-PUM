@@ -4,6 +4,7 @@ import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinDef.ULONG;
 import com.sun.jna.platform.win32.WinDef.ULONGByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
@@ -38,8 +39,10 @@ public class NtProtectVirtualMemory extends NtdllAPI {
 		ULONG NewAccessProtection = new ULONG((int) t4);
 		ULONGByReference OldAccessProtection = new ULONGByReference(new ULONG());
 
-		NtdllDLL.INSTANCE.NtProtectVirtualMemory(ProcessHandle, BaseAddress, NumberOfBytesToProtect,
+		LONG ret = NtdllDLL.INSTANCE.NtProtectVirtualMemory(ProcessHandle, BaseAddress, NumberOfBytesToProtect,
 				NewAccessProtection, OldAccessProtection);
+		
+		register.mov("eax", new LongValue(ret.longValue()));
 
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
 				new LongValue(Pointer.nativeValue(BaseAddress.getValue().getPointer(0))));

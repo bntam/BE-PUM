@@ -145,4 +145,32 @@ public interface WinUser extends StdCallLibrary, WinDef, BaseTSD {
 			read();
 		}
 	}
+
+	public class TITLEBARINFO extends Structure {
+		public DWORD cbSize;
+		public RECT rcTitleBar;
+		public DWORD rgstate[] = new DWORD[6];
+
+		protected List<String> getFieldOrder() {
+			return Arrays.asList(new String[] { "cbSize", "rcTitleBar", "rgstate"});
+		}
+
+		public static class ByReference extends TITLEBARINFO implements Structure.ByReference {
+			public ByReference() {
+			}
+
+			public ByReference(Pointer memory) {
+				super(memory);
+			}
+		}
+
+		public TITLEBARINFO() {
+
+		}
+
+		public TITLEBARINFO(Pointer memory) {
+			super(memory);
+			read();
+		}
+	}
 }

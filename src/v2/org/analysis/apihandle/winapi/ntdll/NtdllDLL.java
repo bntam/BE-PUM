@@ -1,11 +1,17 @@
 package v2.org.analysis.apihandle.winapi.ntdll;
 
+import v2.org.analysis.apihandle.winapi.structures.Winternl.OBJECT_ATTRIBUTES;
+
 import com.sun.jna.Native;
 import com.sun.jna.Structure;
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinDef.PVOID;
 import com.sun.jna.platform.win32.WinDef.ULONG;
 import com.sun.jna.platform.win32.WinDef.ULONGByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.platform.win32.WinNT.HANDLEByReference;
+import com.sun.jna.platform.win32.WinNT.LARGE_INTEGER;
 import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
@@ -58,6 +64,7 @@ public interface NtdllDLL extends StdCallLibrary {
 	int NtQueryInformation();
 
 	/**
+	 * Undocumented function
 	 * 
 	 * @param ProcessHandle
 	 * @param BaseAddress
@@ -65,10 +72,47 @@ public interface NtdllDLL extends StdCallLibrary {
 	 * @param NewAccessProtection
 	 * @param OldAccessProtection
 	 */
-	void NtProtectVirtualMemory(
+	LONG NtProtectVirtualMemory(
 	/* IN */HANDLE ProcessHandle,
 	/* IN_OUT */PointerByReference BaseAddress,
 	/* IN_OUT */ULONGByReference NumberOfBytesToProtect,
 	/* IN */ULONG NewAccessProtection,
 	/* OUT */ULONGByReference OldAccessProtection);
+
+	/**
+	 * Undocumented function
+	 * 
+	 * @param ProcessHandle
+	 * @param BaseAddress
+	 * @param Buffer
+	 * @param NumberOfBytesToWrite
+	 * @param NumberOfBytesWritten
+	 * @return
+	 */
+	LONG NtWriteVirtualMemory(
+	/* IN */HANDLE ProcessHandle,
+	/* IN */PVOID BaseAddress,
+	/* IN */byte[] Buffer,
+	/* IN */ULONG NumberOfBytesToWrite,
+	/* OUT */ULONGByReference NumberOfBytesWritten /* OPTIONAL */);
+
+	/**
+	 * 
+	 * @param SectionHandle
+	 * @param DesiredAccess
+	 * @param ObjectAttributes
+	 * @param MaximumSize
+	 * @param SectionPageProtection
+	 * @param AllocationAttributes
+	 * @param FileHandle
+	 * @return
+	 */
+	LONG NtCreateSection(
+	/* _Out_ */HANDLEByReference SectionHandle,
+	/* _In_ *//* ACCESS_MASK */DWORD DesiredAccess,
+	/* _In_opt_ */OBJECT_ATTRIBUTES ObjectAttributes,
+	/* _In_opt_ */LARGE_INTEGER MaximumSize,
+	/* _In_ */ULONG SectionPageProtection,
+	/* _In_ */ULONG AllocationAttributes,
+	/* _In_opt_ */HANDLE FileHandle);
 }

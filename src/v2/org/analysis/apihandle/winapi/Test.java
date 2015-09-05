@@ -412,6 +412,7 @@ public class Test {
 		// User32.INSTANCE.GetAsyncKeyState(vKey)
 		// GDI32.INSTANCE.Ge
 		// Advapi32.INSTANCE.is
+//		NtDll.INSTANCE.
 
 		// HKEYByReference phkResult = new HKEYByReference();
 		// int retzz = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(0x80000001),
@@ -423,16 +424,8 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		String baseFileName = "asm/cfg/abc_test";
-		String ret = baseFileName;
-		int index = baseFileName.lastIndexOf('/');
-		if (index == -1) {
-			index = baseFileName.lastIndexOf('\\');
-		}
-		if (index > -1) {
-			ret = baseFileName.substring(index + 1, baseFileName.length() - 1);
-		}
-		System.out.println(ret);
+		int a = 127;
+		System.out.println((byte)a);
 
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

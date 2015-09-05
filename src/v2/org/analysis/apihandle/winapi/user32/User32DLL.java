@@ -25,6 +25,7 @@ import com.sun.jna.win32.W32APIOptions;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGPROC;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGTEMPLATE;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.MENUITEMINFO;
+import v2.org.analysis.apihandle.winapi.structures.WinUser.TITLEBARINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS;
 
 /**
@@ -1113,4 +1114,22 @@ public interface User32DLL extends StdCallLibrary {
 	 *         window is not zoomed, the return value is zero.
 	 */
 	BOOL IsZoomed(/* _In_ */HWND hWnd);
+
+	/**
+	 * Retrieves information about the specified title bar.
+	 * 
+	 * @param hwnd
+	 *            A handle to the title bar whose information is to be
+	 *            retrieved.
+	 * 
+	 * @param pti
+	 *            A pointer to a TITLEBARINFO structure to receive the
+	 *            information. Note that you must set the cbSize member to
+	 *            sizeof(TITLEBARINFO) before calling this function.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL GetTitleBarInfo(/* _In_ */HWND hwnd, /* _Inout_ */TITLEBARINFO pti);
 }

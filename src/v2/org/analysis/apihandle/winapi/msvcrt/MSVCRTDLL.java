@@ -389,4 +389,21 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *         error return.
 	 */
 	Pointer _ltoa(long value, char[] str, int radix);
+
+	/**
+	 * Check if character is alphabetic
+	 * 
+	 * Checks whether c is an alphabetic letter.
+	 * 
+	 * Notice that what is considered a letter depends on the locale being used;
+	 * In the default "C" locale, what constitutes a letter is only what returns
+	 * true by either isupper or islower.
+	 * 
+	 * @param c
+	 *            Character to be checked, casted to an int, or EOF.
+	 * 
+	 * @return A value different from zero (i.e., true) if indeed c is an
+	 *         alphabetic letter. Zero (i.e., false) otherwise.
+	 */
+	int isalpha(int c);
 }
