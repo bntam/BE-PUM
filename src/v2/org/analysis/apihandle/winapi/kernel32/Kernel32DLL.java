@@ -1064,6 +1064,15 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	BOOL DisableThreadLibraryCalls(/* _In_ */HMODULE hModule);
 
+	/**
+	 * Waits for ownership of the specified critical section object. The
+	 * function returns when the calling thread is granted ownership.
+	 * 
+	 * @param lpCriticalSection
+	 *            A pointer to the critical section object.
+	 * 
+	 * @return 0
+	 */
 	void EnterCriticalSection(/* _Inout_ */RTL_CRITICAL_SECTION lpCriticalSection);
 
 	/*
@@ -1571,6 +1580,8 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 * 
 	 * @param lpCriticalSection
 	 *            A pointer to the critical section object.
+	 * 
+	 * @return 0
 	 */
 	void InitializeCriticalSection(/* _Out_ */RTL_CRITICAL_SECTION lpCriticalSection);
 
@@ -2336,6 +2347,8 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *            immediately, and the thread continues execution. This behavior
 	 *            changed starting with Windows Server 2003. A value of INFINITE
 	 *            indicates that the suspension should not time out.
+	 * 
+	 * @return 0
 	 */
 	void Sleep(/* _In_ */DWORD dwMilliseconds);
 
@@ -3112,6 +3125,8 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 * 
 	 * @param lpCriticalSection
 	 *            A pointer to the critical section object.
+	 * 
+	 * @return 0
 	 */
 	void LeaveCriticalSection(/* _Inout_ */RTL_CRITICAL_SECTION lpCriticalSection);
 

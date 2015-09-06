@@ -11,6 +11,7 @@ import com.sun.jna.platform.win32.WinDef.DWORD;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
 
 /**
  * Suspends the execution of the current thread until the time-out interval
@@ -52,6 +53,8 @@ public class Sleep extends Kernel32API {
 
 		DWORD dwMilliseconds = new DWORD(t1);
 		Kernel32DLL.INSTANCE.Sleep(dwMilliseconds);
+		
+		register.mov("eax", new LongValue(0));
 	}
 
 }

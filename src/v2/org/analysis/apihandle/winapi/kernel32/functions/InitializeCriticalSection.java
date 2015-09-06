@@ -64,6 +64,8 @@ public class InitializeCriticalSection extends Kernel32API {
 				new LongValue(Pointer.nativeValue(lpCriticalSection.LockSemaphore.getPointer())));
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1 += 4), new LongValue(
 				lpCriticalSection.SpinCount.longValue()));
+		
+		register.mov("eax", new LongValue(0));
 	}
 
 }

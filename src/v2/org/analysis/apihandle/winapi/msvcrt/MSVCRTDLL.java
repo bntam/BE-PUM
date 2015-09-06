@@ -1,6 +1,10 @@
 package v2.org.analysis.apihandle.winapi.msvcrt;
 
+import java.nio.Buffer;
+
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
+import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
+import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.CONTEXT;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD;
 
@@ -10,6 +14,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
 import com.sun.jna.platform.win32.WinDef.UINT;
+import com.sun.jna.platform.win32.WinDef.USHORT;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.win32.StdCallLibrary;
@@ -21,7 +26,7 @@ import com.sun.jna.win32.W32APIOptions;
  *
  */
 public interface MSVCRTDLL extends StdCallLibrary {
-	MSVCRTDLL INSTANCE = (MSVCRTDLL) Native.loadLibrary("msvcrt", MSVCRTDLL.class, W32APIOptions.DEFAULT_OPTIONS);
+	MSVCRTDLL INSTANCE = (MSVCRTDLL) Native.loadLibrary("msvcrt", MSVCRTDLL.class);
 	MSVCRTDLL SYNC_INSTANCE = (MSVCRTDLL) Native.synchronizedLibrary(INSTANCE);
 
 	/**
@@ -391,6 +396,26 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	Pointer _ltoa(long value, char[] str, int radix);
 
 	/**
+	 * Performs a case-insensitive comparison of strings.
+	 * 
+	 * @param _Str1
+	 *            Null-terminated strings to compare.
+	 * 
+	 * @param _Str2
+	 *            Null-terminated strings to compare.
+	 * 
+	 * @return The return value indicates the relation of string1 to string2 as
+	 *         follows.
+	 * 
+	 *         < 0 string1 less than string2
+	 * 
+	 *         0 string1 identical to string2
+	 * 
+	 *         > 0 string1 greater than string2
+	 */
+	int _strcmpi(String _Str1, String _Str2);
+
+	/**
 	 * Check if character is alphabetic
 	 * 
 	 * Checks whether c is an alphabetic letter.
@@ -406,4 +431,134 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *         alphabetic letter. Zero (i.e., false) otherwise.
 	 */
 	int isalpha(int c);
+
+	/**
+	 * 
+	 * @param _C
+	 * @param _Type
+	 * @return
+	 */
+	int is_wctype(/* _In_ */USHORT _C, /* _In_ */USHORT _Type);
+
+	/**
+	 * Open file
+	 * 
+	 * Opens the file whose name is specified in the parameter filename and
+	 * associates it with a stream that can be identified in future operations
+	 * by the FILE pointer returned.
+	 * 
+	 * The operations that are allowed on the stream and how these are performed
+	 * are defined by the mode parameter.
+	 * 
+	 * The returned stream is fully buffered by default if it is known to not
+	 * refer to an interactive device (see setbuf).
+	 * 
+	 * The returned pointer can be disassociated from the file by calling fclose
+	 * or freopen. All opened files are automatically closed on normal program
+	 * termination.
+	 * 
+	 * The running environment supports at least FOPEN_MAX files open
+	 * simultaneously.
+	 * 
+	 * @param filename
+	 *            Open file Opens the file whose name is specified in the
+	 *            parameter filename and associates it with a stream that can be
+	 *            identified in future operations by the FILE pointer returned.
+	 * 
+	 *            The operations that are allowed on the stream and how these
+	 *            are performed are defined by the mode parameter.
+	 * 
+	 *            The returned stream is fully buffered by default if it is
+	 *            known to not refer to an interactive device (see setbuf).
+	 * 
+	 *            The returned pointer can be disassociated from the file by
+	 *            calling fclose or freopen. All opened files are automatically
+	 *            closed on normal program termination.
+	 * 
+	 *            The running environment supports at least FOPEN_MAX files open
+	 *            simultaneously.
+	 * 
+	 * @param mode
+	 *            C string containing a file access mode. It can be:
+	 * 
+	 *            "r" read: Open file for input operations. The file must exist.
+	 * 
+	 *            "w" write: Create an empty file for output operations. If a
+	 *            file with the same name already exists, its contents are
+	 *            discarded and the file is treated as a new empty file.
+	 * 
+	 *            "a" append: Open file for output at the end of a file. Output
+	 *            operations always write data at the end of the file, expanding
+	 *            it. Repositioning operations (fseek, fsetpos, rewind) are
+	 *            ignored. The file is created if it does not exist.
+	 * 
+	 *            "r+" read/update: Open a file for update (both for input and
+	 *            output). The file must exist.
+	 * 
+	 *            "w+" write/update: Create an empty file and open it for update
+	 *            (both for input and output). If a file with the same name
+	 *            already exists its contents are discarded and the file is
+	 *            treated as a new empty file.
+	 * 
+	 *            "a+" append/update: Open a file for update (both for input and
+	 *            output) with all output operations writing data at the end of
+	 *            the file. Repositioning operations (fseek, fsetpos, rewind)
+	 *            affects the next input operations, but output operations move
+	 *            the position back to the end of file. The file is created if
+	 *            it does not exist.
+	 * 
+	 * @return If the file is successfully opened, the function returns a
+	 *         pointer to a FILE object that can be used to identify the stream
+	 *         on future operations. Otherwise, a null pointer is returned. On
+	 *         most library implementations, the errno variable is also set to a
+	 *         system-specific error code on failure.
+	 */
+	FILE fopen(String filename, String mode);
+
+	int fopen_s(Pointer pFile, String filename, String mode);
+
+	/**
+	 * Read block of data from stream
+	 * 
+	 * Reads an array of count elements, each one with a size of size bytes,
+	 * from the stream and stores them in the block of memory specified by ptr.
+	 * 
+	 * The position indicator of the stream is advanced by the total amount of
+	 * bytes read.
+	 * 
+	 * The total amount of bytes read if successful is (size*count).
+	 * 
+	 * @param ptr
+	 *            Pointer to a block of memory with a size of at least
+	 *            (size*count) bytes, converted to a void*.
+	 * 
+	 * @param size
+	 *            Size, in bytes, of each element to be read. size_t is an
+	 *            unsigned integral type.
+	 * 
+	 * @param count
+	 *            Number of elements, each one with a size of size bytes. size_t
+	 *            is an unsigned integral type.
+	 * 
+	 * @param stream
+	 *            Pointer to a FILE object that specifies an input stream.
+	 * 
+	 * @return The total number of elements successfully read is returned. If
+	 *         this number differs from the count parameter, either a reading
+	 *         error occurred or the end-of-file was reached while reading. In
+	 *         both cases, the proper indicator is set, which can be checked
+	 *         with ferror and feof, respectively. If either size or count is
+	 *         zero, the function returns zero and both the stream state and the
+	 *         content pointed by ptr remain unchanged. size_t is an unsigned
+	 *         integral type.
+	 */
+	UINT fread(Buffer ptr, UINT size, UINT count, FILE2 stream);
+
+	void system(String command);
+
+	int fputs(String content, FILE fp);
+
+	String fgets(Memory memory, int size, FILE fp);
+
+	int fclose(FILE fp);
 }

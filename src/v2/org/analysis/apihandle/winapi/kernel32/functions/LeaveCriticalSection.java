@@ -59,6 +59,8 @@ public class LeaveCriticalSection extends Kernel32API {
 				DataType.INT32, t1 += 4))).getValue());
 
 		Kernel32DLL.INSTANCE.LeaveCriticalSection(lpCriticalSection);
+		
+		register.mov("eax", new LongValue(0));
 
 		// public LPVOID /* PRTL_CRITICAL_SECTION_DEBUG */DebugInfo = null;
 		// public LONG LockCount;

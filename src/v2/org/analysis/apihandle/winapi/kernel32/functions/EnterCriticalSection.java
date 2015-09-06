@@ -37,6 +37,8 @@ public class EnterCriticalSection extends Kernel32API {
 		// boolean ret = Kernel32.INSTANCE.CloseHandle(new HANDLE(x != 0 ?
 		// new Pointer(x) : Pointer.NULL));
 		System.out.println("\t\t NOTICE: SPECIAL WINDOWS API");
+		
+		register.mov("eax", new LongValue(0));
 	}
 
 }

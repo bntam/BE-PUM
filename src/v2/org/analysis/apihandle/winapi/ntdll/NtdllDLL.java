@@ -17,7 +17,7 @@ import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
 public interface NtdllDLL extends StdCallLibrary {
-	NtdllDLL INSTANCE = (NtdllDLL) Native.loadLibrary("NtDll", NtdllDLL.class, W32APIOptions.DEFAULT_OPTIONS);
+	NtdllDLL INSTANCE = (NtdllDLL) Native.loadLibrary("NtDll", NtdllDLL.class);
 
 	/**
 	 * Retrieves information about the specified process.

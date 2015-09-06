@@ -6,7 +6,10 @@
  */
 package v2.org.analysis.apihandle.winapi;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 import java.sql.Struct;
 
 import org.jakstab.Program;
@@ -55,6 +58,8 @@ import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
 import v2.org.analysis.apihandle.winapi.shlwapi.ShlwapiDLL;
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
+import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
+import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.PROCESS_BASIC_INFORMATION;
@@ -424,8 +429,17 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		int a = 127;
-		System.out.println((byte)a);
+		FILE f = MSVCRTDLL.INSTANCE.fopen("F:\\mylog.txt", "r");
+		ByteBuffer ptr = ByteBuffer.allocate(20);
+		MSVCRTDLL.INSTANCE.fread(ptr, new UINT(8), new UINT(2), new FILE2(f.getPointer()));
+		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
+		try {
+			System.out.println(ptr.array().length);
+			System.out.println(new String(ptr.array(), "ASCII"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

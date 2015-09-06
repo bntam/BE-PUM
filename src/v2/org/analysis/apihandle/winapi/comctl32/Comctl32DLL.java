@@ -16,8 +16,7 @@ import com.sun.jna.win32.W32APIOptions;
  *
  */
 public interface Comctl32DLL extends StdCallLibrary {
-	Comctl32DLL INSTANCE = (Comctl32DLL) Native.loadLibrary("comctl32", Comctl32DLL.class,
-			W32APIOptions.DEFAULT_OPTIONS);
+	Comctl32DLL INSTANCE = (Comctl32DLL) Native.loadLibrary("comctl32", Comctl32DLL.class);
 	Comctl32DLL SYNC_INSTANCE = (Comctl32DLL) Native.synchronizedLibrary(INSTANCE);
 
 	/**

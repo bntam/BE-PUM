@@ -16,7 +16,7 @@ import com.sun.jna.win32.W32APIOptions;
  *
  */
 public interface MsCorEEDLL extends StdCallLibrary {
-	MsCorEEDLL INSTANCE = (MsCorEEDLL) Native.loadLibrary("mscoree", MsCorEEDLL.class, W32APIOptions.DEFAULT_OPTIONS);
+	MsCorEEDLL INSTANCE = (MsCorEEDLL) Native.loadLibrary("mscoree", MsCorEEDLL.class);
 	MsCorEEDLL SYNC_INSTANCE = (MsCorEEDLL) Native.synchronizedLibrary(INSTANCE);
 
 	/**

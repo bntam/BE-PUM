@@ -227,7 +227,10 @@
 	</DLL>
 	<DLL name="msvcrt">
 		<API funcName="atexit" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.atexit" />
+		<API funcName="fopen" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fopen" />
+		<API funcName="fread" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fread" />
 		<API funcName="isalpha" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.isalpha" />
+		<API funcName="is_wctype" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.is_wctype" />
 		<API funcName="malloc" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
 		<API funcName="memcpy" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memcpy" />
 		<API funcName="memset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
@@ -242,6 +245,7 @@
 		<API funcName="_itow" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
 		<API funcName="_ltoa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._ltoa" />
 		<API funcName="_setmode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._setmode" />
+		<API funcName="_strcmpi" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._strcmpi" />
 		<API funcName="__getmainargs" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__getmainargs" />
 		<API funcName="__p__commode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__commode" />
 		<API funcName="__p__environ" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__environ" />
@@ -336,6 +340,7 @@
 		<API funcName="showwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.ShowWindow" />
 		<API funcName="translatemessage" className="v2.org.analysis.apihandle.winapi.user32.functions.TranslateMessage" />
 		<API funcName="unregisterclass" className="v2.org.analysis.apihandle.winapi.user32.functions.UnregisterClass" />
+		<API funcName="updatelayeredwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.UpdateLayeredWindow" />
 		<API funcName="updatewindow" className="v2.org.analysis.apihandle.winapi.user32.functions.UpdateWindow" />
 	</DLL>
 	<DLL name="wininet">

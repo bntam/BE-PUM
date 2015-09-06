@@ -54,6 +54,7 @@ public class DeleteCriticalSection extends Kernel32API {
 		lpCriticalSection.SpinCount = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(x += 4)).getValue());
 
 		Kernel32DLL.INSTANCE.DeleteCriticalSection(lpCriticalSection);
+		register.mov("eax", new LongValue(0));
 
 		x = this.params.get(0);
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, x), new LongValue(

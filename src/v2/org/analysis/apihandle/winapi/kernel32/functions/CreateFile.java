@@ -139,6 +139,5 @@ public class CreateFile extends Kernel32API {
 		HANDLE ret = Kernel32.INSTANCE.CreateFile(fileName, (int) t2, (int) t3, null, (int) t5, (int) t6, new HANDLE(
 				new Pointer(t7)));
 		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));
-		System.out.println("Return value:" + Pointer.nativeValue(ret.getPointer()));
 	}
 }
