@@ -459,7 +459,14 @@ public class APIHandle {
 
 				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else {
+			} else if (funcName.startsWith("SendNotifyMessageA")) {
+				Value x1 = stack.pop();
+				Value x2 = stack.pop();
+				Value x3 = stack.pop();
+				Value x4 = stack.pop();
+				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3 + ", " + x4);
+				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
+			}  else {
 				System.out.println("No Handling of this API");
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax"));
 			}

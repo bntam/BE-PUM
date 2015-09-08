@@ -53,7 +53,11 @@ public class X86TransitionRule extends TransitionRule {
 			return true;
 		
 		if (env.getSystem().getLibraryHandle().getAPIName(t) != "")
-			return true;				
+			return true;		
+		
+		String temp = APIHandle.checkAPI(t);
+		if (temp != null && temp != "")
+			return true;
 		
 		AbsoluteAddress addr = new AbsoluteAddress(t);
 
