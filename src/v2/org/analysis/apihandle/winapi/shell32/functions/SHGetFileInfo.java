@@ -17,7 +17,7 @@ import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.UINT;
 
 import com.sun.jna.platform.win32.WinDef.HICON;
-import v2.org.analysis.apihandle.winapi.shell32.Shel32DLL;
+import v2.org.analysis.apihandle.winapi.shell32.Shell32DLL;
 import v2.org.analysis.apihandle.winapi.shell32.Shell32API;
 import v2.org.analysis.apihandle.winapi.structures.ShellApi.SHFILEINFO;
 import v2.org.analysis.complement.Convert;
@@ -69,7 +69,7 @@ public class SHGetFileInfo extends Shell32API {
 			psfi.szTypeName[count] = c;
 			count++;
 		}
-		DWORD_PTR ret = Shel32DLL.INSTANCE.SHGetFileInfo(pszPath, dwFileAttributes, psfi, cbFileInfo, uFlags);
+		DWORD_PTR ret = Shell32DLL.INSTANCE.SHGetFileInfo(pszPath, dwFileAttributes, psfi, cbFileInfo, uFlags);
 
 		long value = ret.longValue();
 

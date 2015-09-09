@@ -333,7 +333,9 @@ public class Main {
 		// in = "api_test_pecompact.exe";
 
 		pathVirus = "asm/api/multithread/";
+		pathVirus = "asm/api/";
 		in = "SillyExample.exe"; // VS 7.0 (VS C++ 6.0)
+		in = "regedit.exe"; // VS 7.0 (VS C++ 6.0)
 //		in = "Temp.exe"; // VS C++ 2005 Express Edition
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files

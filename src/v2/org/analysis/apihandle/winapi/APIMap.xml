@@ -264,6 +264,7 @@
 		<API funcName="oleuninitialize" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleUninitialize" />
 	</DLL>
 	<DLL name="shell32">
+		<API funcName="shellabout" className="v2.org.analysis.apihandle.winapi.shell32.functions.ShellAbout" />
 		<API funcName="shellexecute" className="v2.org.analysis.apihandle.winapi.shell32.functions.ShellExecute" />
 		<API funcName="shgetfileinfo" className="v2.org.analysis.apihandle.winapi.shell32.functions.SHGetFileInfo" />
 		<API funcName="shgetspecialfolderpath" className="v2.org.analysis.apihandle.winapi.shell32.functions.SHGetSpecialFolderPath" />

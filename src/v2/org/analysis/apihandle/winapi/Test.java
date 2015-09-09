@@ -89,14 +89,6 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		try {
-			String className = "v2.org.analysis.apihandle.winapi.msvcrt.functions.__set_app_type";
-			Class<?> clazz = Class.forName(className);
-			Constructor<?> ctor = clazz.getConstructor();
-			API apiObject = (API) ctor.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		// int x = Kernel32DLL.INSTANCE.WinExec("Cpp.exe", 1);
 		// BPState curState = null;
@@ -429,17 +421,13 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		FILE f = MSVCRTDLL.INSTANCE.fopen("F:\\mylog.txt", "r");
-		ByteBuffer ptr = ByteBuffer.allocate(20);
-		MSVCRTDLL.INSTANCE.fread(ptr, new UINT(8), new UINT(2), new FILE2(f.getPointer()));
-		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
-		try {
-			System.out.println(ptr.array().length);
-			System.out.println(new String(ptr.array(), "ASCII"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		HWND hwnd = null;
+		String lpOperation = null;
+		String lpFile = "regedit.exe";
+		String lpParameters = "";
+		String lpDirectory = null;
+		int nShowCmd = 10;
+		Shell32.INSTANCE.ShellExecute(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd);
 
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
