@@ -104,7 +104,7 @@ public final class Program {
 				index = baseFileName.lastIndexOf('\\');
 			}
 			if (index > -1) {
-				ret = baseFileName.substring(index + 1, baseFileName.length() - 1);
+				ret = baseFileName.substring(index, baseFileName.length());
 			}
 		}
 
