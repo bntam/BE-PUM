@@ -146,6 +146,8 @@ public class OTFModelGeneration implements Algorithm {
 				///////////////////////////////////////////////////////////////////////////////////
 				
 				long overallEndTimeTemp = System.currentTimeMillis();
+				long time = overallEndTimeTemp - overallStartTemp;
+				//System.out.println("Times: " + time);
 				// Output file each 60s
 				if (overallEndTimeTemp - overallStartTemp > outTime) {
 
@@ -194,9 +196,6 @@ public class OTFModelGeneration implements Algorithm {
 
 				inst = curState.getInstruction();
 				location = curState.getLocation();
-				
-				//if (location == null || location.toString().contains("4202d0"))
-				//System.out.println("Debug " + location);
 								
 				//debugProgram(location, curState, fileState, bkFile);
 				//compareOlly(curState);

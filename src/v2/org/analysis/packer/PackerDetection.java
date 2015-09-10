@@ -1,4 +1,4 @@
-package v2.org.analysis.algorithm;
+package v2.org.analysis.packer;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,6 +14,7 @@ import org.jakstab.Program;
 
 import com.sun.jna.WString;
 
+import v2.org.analysis.algorithm.OTFModelGeneration;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.statistics.FileProcess;

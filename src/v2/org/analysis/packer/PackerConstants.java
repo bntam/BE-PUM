@@ -1,15 +1,15 @@
-package v2.org.analysis.algorithm;
+package v2.org.analysis.packer;
 
 public final class PackerConstants {
 
 	// Techniques String
-	public static final String UPX 			= "11110001010";
-	public static final String FSG 			= "11010101010";
-	public static final String NPACK 		= "11110111010";
-	public static final String PECOMPACT 	= "11110011110";
-	public static final String PETITE 		= "11110101100";
-	public static final String YODA 		= "11110101110";
-	public static final String ASPACK 		= "11010111000";
+	public static final String UPX 			= "111110010100";
+	public static final String FSG 			= "110111010100";
+	public static final String NPACK 		= "111111110100";
+	public static final String PECOMPACT 	= "111110111100";
+	public static final String PETITE 		= "111111011000";
+	public static final String YODA 		= "111111011110";
+	public static final String ASPACK 		= "110111110000";
 	
 	// Packer Header
 	public static final String[] hUPX 		= {"5E","89","F7","B9","??","??","??","??","8A"

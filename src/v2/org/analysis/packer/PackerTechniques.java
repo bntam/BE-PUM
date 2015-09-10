@@ -1,4 +1,4 @@
-package v2.org.analysis.algorithm;
+package v2.org.analysis.packer;
 
 import org.jakstab.Program;
 
@@ -19,22 +19,24 @@ public class PackerTechniques {
 	private boolean SEHs; 
 	private boolean two_APIs;
 	private boolean anti_debugging;	
+	private boolean timing_check;
 
 	public PackerTechniques ()
 	{
 		pPattern = new PackerPatterns();
 		
-		packing_unpacking 	= false; //x
-		overwriting 		= false; //x
-		indirect_jump 		= false; //x
-		obfuscated_const	= false; //x
-		overlapping			= false; //-
+		packing_unpacking 	= false; 
+		overwriting 		= false; 
+		indirect_jump 		= false; 
+		obfuscated_const	= false; 
+		overlapping			= false; 
 		code_chunking		= false; 
-		stolen_bytes		= false; //x
+		stolen_bytes		= false; 
 		checksumming		= false; 
-		SEHs				= false; //x
-		two_APIs			= false; //x
-		anti_debugging		= false; //x
+		SEHs				= false; 
+		two_APIs			= false; 
+		anti_debugging		= false;
+		timing_check		= false;
 	}
 	
 	public void updateChecking (BPState curState, Program program)
@@ -48,38 +50,35 @@ public class PackerTechniques {
 	
 	private void checkingState ()
 	{
-		// Check packing/unpacking: Done
+		// Check packing/unpacking
 		if (!this.packing_unpacking)
 		{
 			if (pPattern.PackAndUnpack()) 	
 				isPackingUnpacking();
 		}
 		
-		// Check SMC: Half-Done
-		// <INC, DEC>
+		// Check SMC
 		if (!this.packing_unpacking)
 		{
 			if (pPattern.Overwriting()) 	
 				isOverwriting();
 		}
 		
-		// Check indirect - jump: Half-Done
-		// < return indirect jump >
+		// Check indirect - jump
 		if (!this.indirect_jump)
 		{
 			if (pPattern.IndirectJump())	
 				isIndirectJump();
 		}
 		
-		// Check obfuscated constant: Done
+		// Check obfuscated constant
 		if (!this.obfuscated_const)
 		{
 			if (pPattern.ObfuscatedConst())	
 				isObfuscatedConst();
 		}
 		
-		// Check overlapping: Half-Done
-		// <time consumption>
+		// Check overlapping
 		if (!this.overlapping)
 		{
 			if (pPattern.Overlapping())		
@@ -93,7 +92,7 @@ public class PackerTechniques {
 				isCodeChunking();
 		}
 		
-		// Check stolen bytes: Done
+		// Check stolen bytes
 		if (!this.stolen_bytes)
 		{
 			if (pPattern.StolenBytes())		
@@ -107,15 +106,14 @@ public class PackerTechniques {
 				isChecksumming();
 		}
 		
-		// Check SEH: Half-Done
-		// < part2: detect exception >
+		// Check SEH
 		if (!this.SEHs)
 		{
 			if (pPattern.SEHs())			
 				isSEH();
 		}
 		
-		// Check 2 special APIs: Done
+		// Check 2 special APIs
 		if (!this.two_APIs)
 		{
 			if (pPattern.TwoAPIs())			
@@ -127,6 +125,13 @@ public class PackerTechniques {
 		{
 			if (pPattern.AntiDebugging())	
 				isAntiDebugging();
+		}
+		
+		// Check timing-check
+		if (!this.timing_check)
+		{
+			if (pPattern.TimingCheck())
+				isTimingCheck();
 		}
 		
 	}
@@ -186,6 +191,11 @@ public class PackerTechniques {
 		this.anti_debugging = true;
 	}
 	
+	public void isTimingCheck ()
+	{
+		this.timing_check = true;
+	}
+	
 	public String getDetailTechniques ()
 	{
 		String techniques = "";
@@ -200,6 +210,7 @@ public class PackerTechniques {
 		techniques += (SEHs) 				? "1" : "0"; // byte8
 		techniques += (two_APIs) 			? "1" : "0"; // byte9
 		techniques += (anti_debugging) 		? "1" : "0"; // byte10
+		techniques += (timing_check)		? "1" : "0"; // byte11
 		return techniques;
 	}
 }

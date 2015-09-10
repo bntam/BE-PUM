@@ -49,12 +49,12 @@ import org.jakstab.ssl.Architecture;
 import org.jakstab.util.BinaryFileInputBuffer;
 import org.jakstab.util.FastSet;
 
-import v2.org.analysis.algorithm.PackerDetection;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.ExternalMemory;
 import v2.org.analysis.environment.Memory;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
+import v2.org.analysis.packer.PackerDetection;
 import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.statistics.Logging;
 import v2.org.analysis.value.LongValue;
