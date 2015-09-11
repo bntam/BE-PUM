@@ -66,6 +66,7 @@
 		<API funcName="formatmessage" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FormatMessage" />
 		<API funcName="freeenvironmentstrings" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeEnvironmentStrings" />
 		<API funcName="freelibrary" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeLibrary" />
+		<API funcName="getaclinformation" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetAclInformation" />
 		<API funcName="getacp" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetACP" />
 		<API funcName="getcommandline" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCommandLine" />
 		<API funcName="getcomputername" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetComputerName" />
@@ -95,6 +96,7 @@
 		<API funcName="getmodulefilename" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetModuleFileName" />
 		<API funcName="getmodulehandle" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetModuleHandle" />
 		<API funcName="getnativesysteminfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetNativeSystemInfo" />
+		<API funcName="getoemcp" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetOEMCP" />
 		<API funcName="getpriorityclass" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetPriorityClass" />
 		<API funcName="getprocaddress" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetProcAddress" />
 		<API funcName="getprocessheap" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetProcessHeap" />

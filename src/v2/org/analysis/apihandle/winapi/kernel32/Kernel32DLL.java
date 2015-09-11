@@ -11,6 +11,7 @@ package v2.org.analysis.apihandle.winapi.kernel32;
 import com.sun.jna.Callback;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
@@ -19,8 +20,10 @@ import com.sun.jna.platform.win32.WinBase.FILETIME;
 import com.sun.jna.platform.win32.WinBase.OVERLAPPED;
 import com.sun.jna.platform.win32.WinBase.SECURITY_ATTRIBUTES;
 import com.sun.jna.platform.win32.WinBase.SYSTEMTIME;
+import com.sun.jna.platform.win32.WinNT.ACL;
 import com.sun.jna.platform.win32.WinDef.*;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
@@ -3491,4 +3494,56 @@ public interface Kernel32DLL extends StdCallLibrary {
 	/* _In_ */DWORD dwDesiredAccess,
 	/* _In_ */BOOL bInheritHandle,
 	/* _In_ */String lpName);
+
+	/**
+	 * Returns the current original equipment manufacturer (OEM) code page
+	 * identifier for the operating system.
+	 * 
+	 * @return Returns the current OEM code page identifier for the operating
+	 *         system.
+	 */
+	UINT GetOEMCP();
+
+	/**
+	 * The GetAclInformation function retrieves information about an access
+	 * control list (ACL).
+	 * 
+	 * @param pAcl
+	 *            A pointer to an ACL. The function retrieves information about
+	 *            this ACL. If a null value is passed, the function causes an
+	 *            access violation.
+	 * 
+	 * @param pAclInformation
+	 *            A pointer to a buffer to receive the requested information.
+	 *            The structure that is placed into the buffer depends on the
+	 *            information class requested in the dwAclInformationClass
+	 *            parameter.
+	 * 
+	 * @param nAclInformationLength
+	 *            The size, in bytes, of the buffer pointed to by the
+	 *            pAclInformation parameter.
+	 * 
+	 * @param dwAclInformationClass
+	 *            A value of the ACL_INFORMATION_CLASS enumeration that
+	 *            indicates the class of information requested.
+	 * 
+	 *            This parameter can be one of two values from this enumeration:
+	 * 
+	 *            If the value is AclRevisionInformation, the function fills the
+	 *            buffer pointed to by the pAclInformation parameter with an
+	 *            ACL_REVISION_INFORMATION structure.
+	 * 
+	 *            If the value is AclSizeInformation, the function fills the
+	 *            buffer pointed to by the pAclInformation parameter with an
+	 *            ACL_SIZE_INFORMATION structure.
+	 * 
+	 * @return If the function succeeds, the function returns nonzero. If the
+	 *         function fails, it returns zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL GetAclInformation(
+	/* _In_ */ACL pAcl,
+	/* _Out_ */Structure pAclInformation,
+	/* _In_ */DWORD nAclInformationLength,
+	/* _In_ */int dwAclInformationClass);
 }

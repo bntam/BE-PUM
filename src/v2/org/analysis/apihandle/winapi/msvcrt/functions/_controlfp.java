@@ -50,6 +50,9 @@ public class _controlfp extends MSVCRTAPI {
 
 		register.mov("eax", new LongValue(value));
 		System.out.println("Return Value: " + value);
+		
+		stack.push(new LongValue(t2));
+		stack.push(new LongValue(t1));
 	}
 
 }

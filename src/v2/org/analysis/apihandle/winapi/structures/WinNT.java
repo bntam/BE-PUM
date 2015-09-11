@@ -424,4 +424,58 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 			read();
 		}
 	}
+
+	public static class ACL_REVISION_INFORMATION extends Structure {
+		public DWORD AclRevision;
+
+		protected List<String> getFieldOrder() {
+			return Arrays.asList(new String[] { "AclRevision" });
+		}
+
+		public static class ByReference extends ACL_REVISION_INFORMATION implements Structure.ByReference {
+			public ByReference() {
+			}
+
+			public ByReference(Pointer memory) {
+				super(memory);
+			}
+		}
+
+		public ACL_REVISION_INFORMATION() {
+
+		}
+
+		public ACL_REVISION_INFORMATION(Pointer memory) {
+			super(memory);
+			read();
+		}
+	}
+
+	public static class ACL_SIZE_INFORMATION extends Structure {
+		public DWORD AceCount;
+		public DWORD AclBytesInUse;
+		public DWORD AclBytesFree;
+
+		protected List<String> getFieldOrder() {
+			return Arrays.asList(new String[] { "AceCount", "AclBytesInUse", "AclBytesFree" });
+		}
+
+		public static class ByReference extends ACL_SIZE_INFORMATION implements Structure.ByReference {
+			public ByReference() {
+			}
+
+			public ByReference(Pointer memory) {
+				super(memory);
+			}
+		}
+
+		public ACL_SIZE_INFORMATION() {
+
+		}
+
+		public ACL_SIZE_INFORMATION(Pointer memory) {
+			super(memory);
+			read();
+		}
+	}
 }
