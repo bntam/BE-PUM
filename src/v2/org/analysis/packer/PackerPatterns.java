@@ -128,11 +128,20 @@ public class PackerPatterns {
 	{
 		if (curState == null || curState.getInstruction() == null) return false;
 		
-		String insName = this.curState.getInstruction().getName();
+		Instruction ins = curState.getInstruction();
+		String insName = ins.getName();
 		if (insName.contains("call"))
 		{
-			Operand dest = this.curState.getInstruction().getOperand(0);
-			if (dest instanceof X86Register)
+			Operand dest = curState.getInstruction().getOperand(0);
+			if (dest instanceof X86Register || dest instanceof X86MemoryOperand)
+			{
+				return true;
+			}
+		}
+		else if (ins instanceof X86JmpInstruction || ins instanceof X86CondJmpInstruction)
+		{
+			Operand dest = curState.getInstruction().getOperand(0);
+			if (dest instanceof X86Register || dest instanceof X86MemoryOperand)
 			{
 				return true;
 			}
@@ -177,11 +186,6 @@ public class PackerPatterns {
 	/*
 	 * Check if it is overlapping
 	 */
-	public boolean Overlapping()
-	{
-		return (this.OverlappingFunction() || this.OverlappingBlock());
-	}
-	
 	public boolean OverlappingFunction()
 	{
 		if (curState == null || curState.getInstruction() == null) return false;
