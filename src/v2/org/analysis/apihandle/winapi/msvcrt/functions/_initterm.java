@@ -18,7 +18,10 @@ public class _initterm extends MSVCRTAPI {
 	
 	public _initterm() {
 		super();
-		NUM_OF_PARMS = 2;
+		// Although this API have 2 parameter, but it does not pop them out
+		// Therefore we don't need to do any thing
+		NUM_OF_PARMS = 0;
+//		NUM_OF_PARMS = 2;
 	}
 
 	@Override
