@@ -561,4 +561,25 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	String fgets(Memory memory, int size, FILE fp);
 
 	int fclose(FILE fp);
+
+	/**
+	 * Deallocate memory block
+	 * 
+	 * A block of memory previously allocated by a call to malloc, calloc or
+	 * realloc is deallocated, making it available again for further
+	 * allocations.
+	 * 
+	 * If ptr does not point to a block of memory allocated with the above
+	 * functions, it causes undefined behavior.
+	 * 
+	 * If ptr is a null pointer, the function does nothing.
+	 * 
+	 * Notice that this function does not change the value of ptr itself, hence
+	 * it still points to the same (now invalid) location.
+	 * 
+	 * @param ptr
+	 *            Pointer to a memory block previously allocated with malloc,
+	 *            calloc or realloc.
+	 */
+	void free(Pointer ptr);
 }

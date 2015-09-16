@@ -56,13 +56,16 @@ public class malloc extends MSVCRTAPI {
 
 		SIZE_T size = new SIZE_T(t1);
 		Pointer ret = MSVCRTDLL.INSTANCE.malloc(size);
-		
+
 		long value = Pointer.nativeValue(ret);
 
 		register.mov("eax", new LongValue(value));
 		System.out.println("Return Value: " + value);
-		
+
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, value), new LongValue(ret.getInt(0)));
+
+		// Special API - it does not pop value
+		stack.push(new LongValue(t1));
 	}
 
 }

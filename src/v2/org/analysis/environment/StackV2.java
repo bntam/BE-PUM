@@ -213,8 +213,11 @@ public class StackV2 extends Stack {
 	@Override
 	public void pop(long t) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < t / 4; i++)
-			pop();
+		//for (int i = 0; i < t / 4; i++)
+		//	pop();
+		topAddr += t;
+		//env.getRegister().add("esp", new LongValue(4));
+		env.getRegister().add("esp", new LongValue(t));
 	}
 
 	public void init(LongValue longValue) {
@@ -235,7 +238,7 @@ public class StackV2 extends Stack {
 		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
 
 		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		push(new LongValue(0xFFFFFFFF));
+		push(new LongValue(0x1));
 		// push(new LongValue((long) (Math.random() * Math.pow(10, 7))));
 		push(new LongValue(0x7C910208));
 		push(longValue);

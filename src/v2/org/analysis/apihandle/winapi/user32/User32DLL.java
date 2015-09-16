@@ -1196,4 +1196,41 @@ public interface User32DLL extends StdCallLibrary {
 	/* _In_ */DWORD crKey,
 	/* _In_opt_ */BLENDFUNCTION pblend,
 	/* _In_ */DWORD dwFlags);
+
+	/**
+	 * Sends the specified message to a window or windows. If the window was
+	 * created by the calling thread, SendNotifyMessage calls the window
+	 * procedure for the window and does not return until the window procedure
+	 * has processed the message. If the window was created by a different
+	 * thread, SendNotifyMessage passes the message to the window procedure and
+	 * returns immediately; it does not wait for the window procedure to finish
+	 * processing the message.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window whose window procedure will receive the
+	 *            message. If this parameter is HWND_BROADCAST ((HWND)0xffff),
+	 *            the message is sent to all top-level windows in the system,
+	 *            including disabled or invisible unowned windows, overlapped
+	 *            windows, and pop-up windows; but the message is not sent to
+	 *            child windows.
+	 * 
+	 * @param Msg
+	 *            The message to be sent.
+	 * 
+	 * @param wParam
+	 *            Additional message-specific information.
+	 * 
+	 * @param lParam
+	 *            Additional message-specific information.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL SendNotifyMessage(
+	/* _In_ */HWND hWnd,
+	/* _In_ */UINT Msg,
+	/* _In_ */WPARAM wParam,
+	/* _In_ */LPARAM lParam);
+
 }

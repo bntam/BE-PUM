@@ -157,6 +157,9 @@ public class PE_Header {
 		} else
 			throw new BinaryParseException("PE_Header: Invalid magic number");
 
+		if (NumberOfRvaAndSizes < 16)
+			NumberOfRvaAndSizes = 16;
+		
 		DataDirectory = new ImageDataDirectory[(int) NumberOfRvaAndSizes];
 		for (int i = 0; i < NumberOfRvaAndSizes; i++)
 			DataDirectory[i] = new ImageDataDirectory(in);
