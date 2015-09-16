@@ -554,6 +554,44 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 */
 	UINT fread(Buffer ptr, UINT size, UINT count, FILE2 stream);
 
+	/**
+	 * Write block of data to stream
+	 * 
+	 * Writes an array of count elements, each one with a size of size bytes,
+	 * from the block of memory pointed by ptr to the current position in the
+	 * stream.
+	 * 
+	 * The position indicator of the stream is advanced by the total number of
+	 * bytes written.
+	 * 
+	 * Internally, the function interprets the block pointed by ptr as if it was
+	 * an array of (size*count) elements of type unsigned char, and writes them
+	 * sequentially to stream as if fputc was called for each byte.
+	 * 
+	 * @param ptr
+	 *            Pointer to the array of elements to be written, converted to a
+	 *            const void*.
+	 * 
+	 * @param size
+	 *            Size in bytes of each element to be written. size_t is an
+	 *            unsigned integral type.
+	 * 
+	 * @param count
+	 *            Number of elements, each one with a size of size bytes. size_t
+	 *            is an unsigned integral type.
+	 * 
+	 * @param stream
+	 *            Pointer to a FILE object that specifies an output stream.
+	 * 
+	 * @return The total number of elements successfully written is returned. If
+	 *         this number differs from the count parameter, a writing error
+	 *         prevented the function from completing. In this case, the error
+	 *         indicator (ferror) will be set for the stream. If either size or
+	 *         count is zero, the function returns zero and the error indicator
+	 *         remains unchanged. size_t is an unsigned integral type.
+	 */
+	SIZE_T fwrite(byte[] ptr, SIZE_T size, SIZE_T count, FILE2 stream);
+
 	void system(String command);
 
 	int fputs(String content, FILE fp);

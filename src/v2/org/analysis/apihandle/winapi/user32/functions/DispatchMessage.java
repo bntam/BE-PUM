@@ -61,7 +61,6 @@ public class DispatchMessage extends User32API {
 
 		LRESULT ret = User32.INSTANCE.DispatchMessage(lpMsg);
 		register.mov("eax", new LongValue(ret.longValue()));
-		System.out.println("Return Value:" + ret);
 
 		t1 = this.params.get(0);
 		long value = Pointer.nativeValue(lpMsg.hWnd.getPointer());

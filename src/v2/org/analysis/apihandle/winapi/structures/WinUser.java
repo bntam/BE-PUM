@@ -173,4 +173,31 @@ public interface WinUser extends StdCallLibrary, WinDef, BaseTSD {
 			read();
 		}
 	}
+
+	public class COORD extends Structure {
+		public short X;
+		public short Y;
+
+		protected List<String> getFieldOrder() {
+			return Arrays.asList(new String[] { "X", "Y"});
+		}
+
+		public static class ByReference extends COORD implements Structure.ByReference {
+			public ByReference() {
+			}
+
+			public ByReference(Pointer memory) {
+				super(memory);
+			}
+		}
+
+		public COORD() {
+
+		}
+
+		public COORD(Pointer memory) {
+			super(memory);
+			read();
+		}
+	}
 }

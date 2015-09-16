@@ -88,6 +88,7 @@
 		<API funcName="getfilesize" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetFileSize" />
 		<API funcName="getfiletime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetFileTime" />
 		<API funcName="getfiletype" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetFileType" />
+		<API funcName="getlargestconsolewindowsize" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetLargestConsoleWindowSize" />
 		<API funcName="getlasterror" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetLastError" />
 		<API funcName="getlocaleinfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetLocaleInfo" />
 		<API funcName="getlocaltime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetLocalTime" />
@@ -231,6 +232,8 @@
 		<API funcName="atexit" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.atexit" />
 		<API funcName="fopen" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fopen" />
 		<API funcName="fread" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fread" />
+		<API funcName="free" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.free" />
+		<API funcName="fwrite" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fwrite" />
 		<API funcName="isalpha" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.isalpha" />
 		<API funcName="is_wctype" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.is_wctype" />
 		<API funcName="malloc" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
@@ -276,6 +279,7 @@
 		<API funcName="pathfindfilename" className="v2.org.analysis.apihandle.winapi.shlwapi.functions.PathFindFileName" />
 	</DLL>
 	<DLL name="user32">
+		<API funcName="anypopup" className="v2.org.analysis.apihandle.winapi.user32.functions.AnyPopup" />
 		<API funcName="blockinput" className="v2.org.analysis.apihandle.winapi.user32.functions.BlockInput" />
 		<API funcName="charlower" className="v2.org.analysis.apihandle.winapi.user32.functions.CharLower" />
 		<API funcName="charnext" className="v2.org.analysis.apihandle.winapi.user32.functions.CharNext" />
@@ -336,6 +340,7 @@
 		<API funcName="registerclass" className="v2.org.analysis.apihandle.winapi.user32.functions.RegisterClass" />
 		<API funcName="registerclassex" className="v2.org.analysis.apihandle.winapi.user32.functions.RegisterClassEx" />
 		<API funcName="sendmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.SendMessage" />
+		<API funcName="sendnotifymessage" className="v2.org.analysis.apihandle.winapi.user32.functions.SendNotifyMessage" />
 		<API funcName="setcaretblinktime" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCaretBlinkTime" />
 		<API funcName="setcursor" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setfocus" className="v2.org.analysis.apihandle.winapi.user32.functions.SetFocus" />

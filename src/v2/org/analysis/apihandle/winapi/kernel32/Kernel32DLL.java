@@ -37,6 +37,7 @@ import v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.MEMORY_BASIC_INFORMATION;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.PRTL_CRITICAL_SECTION;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.WinUser.COORD;
 
 import java.nio.ByteBuffer;
 
@@ -3546,4 +3547,19 @@ public interface Kernel32DLL extends StdCallLibrary {
 	/* _Out_ */Structure pAclInformation,
 	/* _In_ */DWORD nAclInformationLength,
 	/* _In_ */int dwAclInformationClass);
+
+	/**
+	 * Retrieves the size of the largest possible console window, based on the
+	 * current font and the size of the display.
+	 * 
+	 * @param hConsoleOutput
+	 *            A handle to the console screen buffer.
+	 * 
+	 * @return If the function succeeds, the return value is a COORD structure
+	 *         that specifies the number of character cell rows (X member) and
+	 *         columns (Y member) in the largest possible console window.
+	 *         Otherwise, the members of the structure are zero. To get extended
+	 *         error information, call GetLastError.
+	 */
+	int GetLargestConsoleWindowSize(HANDLE hConsoleOutput);
 }

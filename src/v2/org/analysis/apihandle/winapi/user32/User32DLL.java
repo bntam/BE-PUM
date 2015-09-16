@@ -24,6 +24,7 @@ import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
+import v2.org.analysis.apihandle.winapi.structures.WinUser.COORD;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGPROC;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGTEMPLATE;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.MENUITEMINFO;
@@ -1233,4 +1234,17 @@ public interface User32DLL extends StdCallLibrary {
 	/* _In_ */WPARAM wParam,
 	/* _In_ */LPARAM lParam);
 
+	/**
+	 * Indicates whether an owned, visible, top-level pop-up, or overlapped
+	 * window exists on the screen. The function searches the entire screen, not
+	 * just the calling application's client area.
+	 * 
+	 * This function is provided only for compatibility with 16-bit versions of
+	 * Windows. It is generally not useful.
+	 * 
+	 * @return If a pop-up window exists, the return value is nonzero, even if
+	 *         the pop-up window is completely covered by other windows. If a
+	 *         pop-up window does not exist, the return value is zero.
+	 */
+	BOOL AnyPopup();
 }
