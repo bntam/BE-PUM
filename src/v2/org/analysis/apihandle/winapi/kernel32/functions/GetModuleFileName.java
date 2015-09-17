@@ -101,6 +101,9 @@ public class GetModuleFileName extends Kernel32API {
 		System.out.println("Filename:" + output + " \r\nReturn: " + ret);
 
 		memory.setText(new X86MemoryOperand(DataType.INT32, t2), output);
+		// Null-terminated string
+		memory.setByteMemoryValue(t2 + ret.longValue(), new LongValue(0));
+		
 		register.mov("eax", new LongValue(ret.longValue()));
 	}
 

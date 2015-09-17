@@ -36,6 +36,7 @@ import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.DWORDByReference;
+import com.sun.jna.platform.win32.WinDef.HMODULE;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinDef.PVOID;
@@ -423,6 +424,13 @@ public class Test {
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
 //		ACL
+		HMODULE hModule = Kernel32.INSTANCE.GetModuleHandle(null);
+		System.out.println(Pointer.nativeValue(hModule.getPointer()));
+		char[] lpFilename = new char[260];
+		DWORD nSize = new DWORD(260);
+		Kernel32DLL.INSTANCE.GetModuleFileName(hModule, lpFilename, nSize);
+		
+		System.out.println(new String(lpFilename));
 
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
