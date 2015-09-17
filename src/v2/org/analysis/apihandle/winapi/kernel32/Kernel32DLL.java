@@ -3562,4 +3562,42 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         error information, call GetLastError.
 	 */
 	int GetLargestConsoleWindowSize(HANDLE hConsoleOutput);
+
+	/**
+	 * Searches the global atom table for the specified character string and
+	 * retrieves the global atom associated with that string.
+	 * 
+	 * @param lpString
+	 *            The null-terminated character string for which to search.
+	 *            Alternatively, you can use an integer atom that has been
+	 *            converted using the MAKEINTATOM macro. See the Remarks for
+	 *            more information.
+	 * 
+	 * @return If the function succeeds, the return value is the global atom
+	 *         associated with the given string. If the function fails, the
+	 *         return value is zero. To get extended error information, call
+	 *         GetLastError.
+	 */
+	ATOM GlobalFindAtom(String lpString);
+
+	/**
+	 * Deletes an existing empty directory.
+	 * 
+	 * To perform this operation as a transacted operation, use the
+	 * RemoveDirectoryTransacted function.
+	 * 
+	 * @param lpPathName
+	 *            he path of the directory to be removed. This path must specify
+	 *            an empty directory, and the calling process must have delete
+	 *            access to the directory. In the ANSI version of this function,
+	 *            the name is limited to MAX_PATH characters. To extend this
+	 *            limit to 32,767 wide characters, call the Unicode version of
+	 *            the function and prepend "\\?\" to the path. For more
+	 *            information, see Naming a File.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL RemoveDirectory(String lpPathName);
 }

@@ -124,6 +124,7 @@
 		<API funcName="getvolumeinformation" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVolumeInformation" />
 		<API funcName="getwindowsdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetWindowsDirectory" />
 		<API funcName="globalalloc" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalAlloc" />
+		<API funcName="globalfindatom" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalFindAtom" />
 		<API funcName="globalfree" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalFree" />
 		<API funcName="globalgetatomname" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalGetAtomName" />
 		<API funcName="globallock" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GlobalLock" />
@@ -174,6 +175,7 @@
 		<API funcName="readfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile" />
 		<API funcName="readprocessmemory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadProcessMemory" />
 		<API funcName="releasemutex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReleaseMutex" />
+		<API funcName="removedirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RemoveDirectory" />
 		<API funcName="resumethread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ResumeThread" />
 		<API funcName="rtlunwind" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlUnwind" />
 		<API funcName="rtlzeromemory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RtlZeroMemory" />
