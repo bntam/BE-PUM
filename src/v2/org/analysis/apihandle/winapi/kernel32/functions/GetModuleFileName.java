@@ -21,7 +21,6 @@ import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 
-import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -96,8 +95,6 @@ public class GetModuleFileName extends Kernel32API {
 			Kernel32.INSTANCE.SetLastError(0);
 		}
 		
-		// Sandbox storage
-		output = Storage.getMappingPath(output);
 		System.out.println("Filename:" + output + " \r\nReturn: " + ret);
 
 		memory.setText(new X86MemoryOperand(DataType.INT32, t2), output);
