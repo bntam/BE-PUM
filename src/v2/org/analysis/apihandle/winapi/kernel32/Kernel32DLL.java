@@ -3600,4 +3600,16 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         information, call GetLastError.
 	 */
 	BOOL RemoveDirectory(String lpPathName);
+
+	/**
+	 * Increments (increases by one) the value of the specified 32-bit variable
+	 * as an atomic operation. To operate on 64-bit values, use the
+	 * InterlockedIncrement64 function.
+	 * 
+	 * @param Addend
+	 *            A pointer to the variable to be incremented.
+	 * 
+	 * @return The function returns the resulting incremented value.
+	 */
+	LONG InterlockedIncrement(LONG Addend);
 }

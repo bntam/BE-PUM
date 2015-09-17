@@ -138,6 +138,7 @@
 		<API funcName="initializecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSection" />
 		<API funcName="initializecriticalsectionandspincount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
 		<API funcName="interlockedexchange" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedExchange" />
+		<API funcName="interlockedincrement" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedIncrement" />
 		<API funcName="isbadwriteptr" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isdbcsleadbyte" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDBCSLeadByte" />
 		<API funcName="isdebuggerpresent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDebuggerPresent" />
