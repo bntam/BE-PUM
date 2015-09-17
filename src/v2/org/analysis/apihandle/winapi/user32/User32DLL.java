@@ -1247,4 +1247,40 @@ public interface User32DLL extends StdCallLibrary {
 	 *         pop-up window does not exist, the return value is zero.
 	 */
 	BOOL AnyPopup();
+
+	/**
+	 * Determines whether a window is a child window or descendant window of a
+	 * specified parent window. A child window is the direct descendant of a
+	 * specified parent window if that parent window is in the chain of parent
+	 * windows; the chain of parent windows leads from the original overlapped
+	 * or pop-up window to the child window.
+	 * 
+	 * @param hWndParent
+	 *            A handle to the parent window.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window to be tested.
+	 * 
+	 * @return If the window is a child or descendant window of the specified
+	 *         parent window, the return value is nonzero. If the window is not
+	 *         a child or descendant window of the specified parent window, the
+	 *         return value is zero.
+	 */
+	BOOL IsChild(HWND hWndParent, HWND hWnd);
+
+	/**
+	 * Determines which pop-up window owned by the specified window was most
+	 * recently active.
+	 * 
+	 * @param hWnd
+	 *            A handle to the owner window.
+	 * 
+	 * @return The return value identifies the most recently active pop-up
+	 *         window. The return value is the same as the hWnd parameter, if
+	 *         any of the following conditions are met: The window identified by
+	 *         hWnd was most recently active. The window identified by hWnd does
+	 *         not own any pop-up windows. The window identifies by hWnd is not
+	 *         a top-level window, or it is owned by another window.
+	 */
+	HWND GetLastActivePopup(HWND hWnd);
 }

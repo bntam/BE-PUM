@@ -10,6 +10,7 @@ package v2.org.analysis.apihandle.winapi.ole32;
 import v2.org.analysis.apihandle.winapi.structures.Guid.GUID;
 
 import com.sun.jna.Native;
+import com.sun.jna.platform.win32.WinBase.FILETIME;
 import com.sun.jna.platform.win32.WinDef.LPVOID;
 import com.sun.jna.platform.win32.WinNT.HRESULT;
 import com.sun.jna.win32.StdCallLibrary;
@@ -45,15 +46,26 @@ public interface Ole32DLL extends StdCallLibrary {
 	 * apartment, and frees any resources the apartment maintains.
 	 */
 	void OleUninitialize();
-	
-    /**
-     * Creates a GUID, a unique 128-bit integer used for CLSIDs and interface
-     * identifiers.
-     * 
-     * @param pguid
-     *            A pointer to the requested GUID.
-     *            
-     * @return S_OK if the GUID was successfully created.
-     */
-    HRESULT CoCreateGuid(GUID pguid);
+
+	/**
+	 * Creates a GUID, a unique 128-bit integer used for CLSIDs and interface
+	 * identifiers.
+	 * 
+	 * @param pguid
+	 *            A pointer to the requested GUID.
+	 * 
+	 * @return S_OK if the GUID was successfully created.
+	 */
+	HRESULT CoCreateGuid(GUID pguid);
+
+	/**
+	 * Returns the current time as a FILETIME structure.
+	 * 
+	 * @param lpFileTime
+	 *            A pointer to the FILETIME structure that receives the current
+	 *            time.
+	 * 
+	 * @return This function returns S_OK to indicate success.
+	 */
+	HRESULT CoFileTimeNow(FILETIME lpFileTime);
 }

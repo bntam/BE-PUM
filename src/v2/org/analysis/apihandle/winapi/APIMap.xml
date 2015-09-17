@@ -268,6 +268,7 @@
 	</DLL>
 	<DLL name="ole32">
 		<API funcName="cocreateguid" className="v2.org.analysis.apihandle.winapi.ole32.functions.CoCreateGuid" />
+		<API funcName="cofiletimenow" className="v2.org.analysis.apihandle.winapi.ole32.functions.CoFileTimeNow" />
 		<API funcName="oleinitialize" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleInitialize" />
 		<API funcName="oleuninitialize" className="v2.org.analysis.apihandle.winapi.ole32.functions.OleUninitialize" />
 	</DLL>
@@ -313,6 +314,7 @@
 		<API funcName="getguithreadinfo" className="v2.org.analysis.apihandle.winapi.user32.functions.GetGUIThreadInfo" />
 		<API funcName="getkeyboardstate" className="v2.org.analysis.apihandle.winapi.user32.functions.GetKeyboardState" />
 		<API funcName="getkeyboardtype" className="v2.org.analysis.apihandle.winapi.user32.functions.GetKeyboardType" />
+		<API funcName="getlastactivepopup" className="v2.org.analysis.apihandle.winapi.user32.functions.GetLastActivePopup" />
 		<API funcName="getmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.GetMessage" />
 		<API funcName="getprocesswindowstation" className="v2.org.analysis.apihandle.winapi.user32.functions.GetProcessWindowStation" />
 		<API funcName="getsyscolor" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSysColor" />
@@ -327,6 +329,7 @@
 		<API funcName="getwindowthreadprocessid" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
 		<API funcName="inflaterect" className="v2.org.analysis.apihandle.winapi.user32.functions.InflateRect" />
 		<API funcName="insertmenuitem" className="v2.org.analysis.apihandle.winapi.user32.functions.InsertMenuItem" />
+		<API funcName="ischild" className="v2.org.analysis.apihandle.winapi.user32.functions.IsChild" />
 		<API funcName="isdialogmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.IsDialogMessage" />
 		<API funcName="iswindowvisible" className="v2.org.analysis.apihandle.winapi.user32.functions.IsWindowVisible" />
 		<API funcName="iszoomed" className="v2.org.analysis.apihandle.winapi.user32.functions.IsZoomed" />
