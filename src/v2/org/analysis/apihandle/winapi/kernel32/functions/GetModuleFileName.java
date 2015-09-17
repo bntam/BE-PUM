@@ -7,6 +7,8 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import java.io.File;
+
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 
@@ -19,6 +21,7 @@ import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 
+import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -79,6 +82,22 @@ public class GetModuleFileName extends Kernel32API {
 			ret = Kernel32DLL.INSTANCE.GetModuleFileName(module, Filename, new DWORD(t3));
 			output = new String(Filename, 0, ret.intValue());
 		}
+		
+		String jvm_location;
+		if (System.getProperty("os.name").startsWith("Win")) {
+		    jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
+		} else {
+		    jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+		}
+		
+		if (jvm_location.equals(output)) {
+			output = Program.getProgram().getAbsolutePathFile();
+			ret = new DWORD(output.length());
+			Kernel32.INSTANCE.SetLastError(0);
+		}
+		
+		// Sandbox storage
+		output = Storage.getMappingPath(output);
 		System.out.println("Filename:" + output + " \r\nReturn: " + ret);
 
 		memory.setText(new X86MemoryOperand(DataType.INT32, t2), output);
