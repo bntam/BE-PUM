@@ -82,14 +82,14 @@ public class GetModuleFileName extends Kernel32API {
 			output = new String(Filename, 0, ret.intValue());
 		}
 		
-		String jvm_location;
-		if (System.getProperty("os.name").startsWith("Win")) {
-		    jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
-		} else {
-		    jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+		String jre_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator
+				+ "java";
+		String jdk_location = System.getProperties().getProperty("java.home") + File.separator + "java";
+		if (jdk_location.contains("jre")) {
+			jdk_location = jdk_location.replace("jre", "bin");
 		}
 		
-		if (jvm_location.equals(output)) {
+		if (output.startsWith(jre_location) || output.startsWith(jdk_location)) {
 			output = Program.getProgram().getAbsolutePathFile();
 			ret = new DWORD(output.length());
 			Kernel32.INSTANCE.SetLastError(0);

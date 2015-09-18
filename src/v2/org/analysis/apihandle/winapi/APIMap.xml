@@ -24,6 +24,9 @@
 	<DLL name="gdi32">
 		<API funcName="addfontresource" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AddFontResource" />
 		<API funcName="animatepalette" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
+		<API funcName="gdiflush" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GdiFlush" />
+		<API funcName="gdigetbatchlimit" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GdiGetBatchLimit" />
+		<API funcName="getbkcolor" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetBkColor" />
 		<API funcName="getdevicecaps" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
 		<API funcName="getstockobject" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetStockObject" />
 	</DLL>
@@ -350,6 +353,7 @@
 		<API funcName="setcaretblinktime" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCaretBlinkTime" />
 		<API funcName="setcursor" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setfocus" className="v2.org.analysis.apihandle.winapi.user32.functions.SetFocus" />
+		<API funcName="setlasterrorex" className="v2.org.analysis.apihandle.winapi.user32.functions.SetLastErrorEx" />
 		<API funcName="setwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
 		<API funcName="showwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.ShowWindow" />
 		<API funcName="translatemessage" className="v2.org.analysis.apihandle.winapi.user32.functions.TranslateMessage" />

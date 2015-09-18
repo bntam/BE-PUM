@@ -6,6 +6,7 @@
  */
 package v2.org.analysis.apihandle.winapi;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.nio.Buffer;
@@ -411,7 +412,7 @@ public class Test {
 		// User32.INSTANCE.GetAsyncKeyState(vKey)
 		// GDI32.INSTANCE.Ge
 		// Advapi32.INSTANCE.is
-//		NtDll.INSTANCE.
+		// NtDll.INSTANCE.
 
 		// HKEYByReference phkResult = new HKEYByReference();
 		// int retzz = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(0x80000001),
@@ -423,14 +424,26 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-//		ACL
+		// ACL
 		HMODULE hModule = Kernel32.INSTANCE.GetModuleHandle(null);
 		System.out.println(Pointer.nativeValue(hModule.getPointer()));
 		char[] lpFilename = new char[260];
 		DWORD nSize = new DWORD(260);
 		Kernel32DLL.INSTANCE.GetModuleFileName(hModule, lpFilename, nSize);
-		
+
 		System.out.println(new String(lpFilename));
+
+		String jre_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator
+				+ "java";
+		String jdk_location = System.getProperties().getProperty("java.home") + File.separator + "java";
+		if (jdk_location.contains("jre")) {
+			jdk_location = jdk_location.replace("jre", "bin");
+		}
+		System.out.println(jre_location);
+		System.out.println(jdk_location);
+		if (new String(lpFilename).startsWith(jre_location) || new String(lpFilename).startsWith(jdk_location)) {
+			System.out.println("OK");
+		}
 
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

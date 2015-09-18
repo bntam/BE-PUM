@@ -51,7 +51,6 @@ public class AnimatePalette extends Kernel32API {
 
 		int ret = Gdi32DLL.INSTANCE.AnimatePalette(hpal, iStartIndex, cEntries, pe);
 
-		System.out.println("Return value:" + ret);
 		register.mov("eax", new LongValue(ret));
 	}
 

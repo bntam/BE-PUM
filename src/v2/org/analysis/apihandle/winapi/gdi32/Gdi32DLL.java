@@ -11,6 +11,8 @@ import v2.org.analysis.apihandle.winapi.structures.Wingdi.PALETTEENTRY;
 
 import com.sun.jna.Native;
 import com.sun.jna.WString;
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.HDC;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.win32.StdCallLibrary;
@@ -80,4 +82,28 @@ public interface Gdi32DLL extends StdCallLibrary {
 	 *         is NULL.
 	 */
 	HANDLE GetStockObject(/* _In_ */int fnObject);
+
+	/**
+	 * The GdiGetBatchLimit function returns the maximum number of function
+	 * calls that can be accumulated in the calling thread's current batch. The
+	 * system flushes the current batch whenever this limit is exceeded.
+	 * 
+	 * @return If the function succeeds, the return value is the batch limit. If
+	 *         the function fails, the return value is zero.
+	 */
+	DWORD GdiGetBatchLimit();
+
+	/**
+	 * The GetBkColor function returns the current background color for the
+	 * specified device context.
+	 * 
+	 * @param hdc
+	 *            Handle to the device context whose background color is to be
+	 *            returned.
+	 * 
+	 * @return If the function succeeds, the return value is a COLORREF value
+	 *         for the current background color. If the function fails, the
+	 *         return value is CLR_INVALID.
+	 */
+	DWORD GetBkColor(HDC hdc);
 }

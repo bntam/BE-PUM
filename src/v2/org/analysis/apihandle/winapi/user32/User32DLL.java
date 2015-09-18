@@ -1283,4 +1283,16 @@ public interface User32DLL extends StdCallLibrary {
 	 *         a top-level window, or it is owned by another window.
 	 */
 	HWND GetLastActivePopup(HWND hWnd);
+
+	/**
+	 * Sets the last-error code. Currently, this function is identical to the
+	 * SetLastError function. The second parameter is ignored.
+	 * 
+	 * @param dwErrCode
+	 *            The last-error code for the thread.
+	 * 
+	 * @param dwType
+	 *            This parameter is ignored.
+	 */
+	void SetLastErrorEx(DWORD dwErrCode, DWORD dwType);
 }
