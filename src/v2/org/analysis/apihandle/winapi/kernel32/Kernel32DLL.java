@@ -3612,4 +3612,43 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 * @return The function returns the resulting incremented value.
 	 */
 	LONG InterlockedIncrement(LONG Addend);
+
+	/**
+	 * Moves an existing file or directory, including its children, with various
+	 * move options. The MoveFileWithProgress function is equivalent to the
+	 * MoveFileEx function, except that MoveFileWithProgress allows you to
+	 * provide a callback function that receives progress notifications. To
+	 * perform this operation as a transacted operation, use the
+	 * MoveFileTransacted function.
+	 * 
+	 * @param lpExistingFileName
+	 *            The current name of the file or directory on the local
+	 *            computer.
+	 * 
+	 * @param lpNewFileName
+	 *            The new name of the file or directory on the local computer.
+	 * 
+	 * @param dwFlags
+	 *            This parameter can be one or more of the following values.
+	 * 
+	 *            MOVEFILE_COPY_ALLOWED 2 (0x2)
+	 * 
+	 *            MOVEFILE_CREATE_HARDLINK 16 (0x10)
+	 * 
+	 *            MOVEFILE_DELAY_UNTIL_REBOOT 4 (0x4)
+	 * 
+	 *            MOVEFILE_FAIL_IF_NOT_TRACKABLE 32 (0x20)
+	 * 
+	 *            MOVEFILE_REPLACE_EXISTING 1 (0x1)
+	 * 
+	 *            MOVEFILE_WRITE_THROUGH 8 (0x8)
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero (0). To get extended
+	 *         error information, call GetLastError.
+	 */
+	BOOL MoveFileEx(
+	/* _In_ */String lpExistingFileName,
+	/* _In_opt_ */String lpNewFileName,
+	/* _In_ */DWORD dwFlags);
 }

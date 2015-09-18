@@ -164,6 +164,7 @@
 		<API funcName="lstrlen" className="v2.org.analysis.apihandle.winapi.kernel32.functions.lstrlen" />
 		<API funcName="mapviewoffile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MapViewOfFile" />
 		<API funcName="movefile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MoveFile" />
+		<API funcName="movefileex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MoveFileEx" />
 		<API funcName="muldiv" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MulDiv" />
 		<API funcName="multibytetowidechar" className="v2.org.analysis.apihandle.winapi.kernel32.functions.MultiByteToWideChar" />
 		<API funcName="openevent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.OpenEvent" />
