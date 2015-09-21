@@ -1,6 +1,7 @@
 package v2.org.analysis.transition_rule;
 
 import org.jakstab.Program;
+import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86Instruction;
@@ -11,6 +12,7 @@ import v2.org.analysis.environment.Environment;
 import v2.org.analysis.loop.LoopAlgorithm;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.system.SEHHandle;
 import v2.org.analysis.value.*;
 
 import java.util.Calendar;
@@ -23,6 +25,17 @@ public class X86InstructionInterpreter {
 		Operand dest = inst.getOperand1();
 		Operand src = inst.getOperand2();
 		Environment env = curState.getEnvironement();
+		
+		// PHONG - 20150921 - Check SEH before going ///////////////
+		AbsoluteAddress curAddr = curState.getLocation();
+		if (rule.getSEHHandle().causeException(curAddr))
+		{
+			SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
+			sehHandle.setSEHType(SEHHandle.SINGLE_STEP);
+			return rule.processSEH(curState);
+		}
+		///////////////////////////////////////////////////////////
+		
 		// Bien dung de xu ly CMOVcc
 		boolean isSet_CMOVcc = false; // Xet dieu kien cua CMOVcc
 		long temp_s;
@@ -133,7 +146,11 @@ public class X86InstructionInterpreter {
 
 		} else if (inst.getName().startsWith("int3")) {
 			if (env.getSystem().getSEHHandler().isSet())
+			{
+				SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
+				sehHandle.setSEHType(SEHHandle.INTERUPT);
 				return rule.processSEH(curState);
+			}
 			else
 				Program.getProgram().getLog().debugString("Not processed int3 at " + curState.getLocation());
 		} else if (inst.getName().startsWith("cmovne")) {
@@ -913,8 +930,23 @@ public class X86InstructionInterpreter {
 			// Program.getProgram().generageCFG(
 			// Program.getProgram().getAbsolutePathFile() + "_test");
 		} else if (inst.getName().startsWith("popf")) {
-			// System.out.println("Process " + inst.getName());
 			Value v = env.getStack().pop();
+			env.getFlag().setAllFlagValue(v);
+			
+			// PHONG - 20150916 - SINGLE_STEP_EXCEPTION
+			Value tFlag = env.getFlag().getTFlag();
+			if (tFlag instanceof BooleanValue)
+			{
+				if (((BooleanValue)tFlag).getValue() == true)
+				{
+					// If tF == 1, execute exception here
+					SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
+					sehHandle.setSEHType(SEHHandle.SINGLE_STEP);
+					return rule.processSEH(curState);
+				}
+			}
+			///////////////////////////////////////////
+			
 			System.out.println("Restore value of Flags: " + v.toString());
 		} else if (inst.getName().startsWith("cmps")) {
 			opSize = rule.getBitCount(inst) / 8;
@@ -1264,8 +1296,15 @@ public class X86InstructionInterpreter {
 				long x = (long) Convert.convetUnsignedValue(((Immediate) dest).getNumber().intValue(),
 						rule.getBitCount(inst));
 
+				// Process interrupt 68h
+				if (x == 104)
+				{
+					SEHHandle sehHandle = env.getSystem().getSEHHandler();
+					sehHandle.setSEHType(SEHHandle.INTERUPT);
+					return rule.processSEH(curState);
+				}
 				// Process interrupt 80h
-				if (x == 80) {
+				else if (x == 80) {
 
 				} else
 				// Process interrupt 21h
@@ -1293,6 +1332,21 @@ public class X86InstructionInterpreter {
 		} else if (inst.getName().startsWith("lea")) {
 			// just like MOV but with minor difference - Come back later
 			// http://stackoverflow.com/questions/1699748/what-is-the-difference-between-mov-and-lea
+			
+			// CHECK SRC IS VALID
+			if (src.getClass().getSimpleName().equals("X86Register"))
+			{
+				Value srcVal = rule.getValueOperand(src, env, inst);
+				if (srcVal != null && srcVal instanceof LongValue)
+				{
+					AbsoluteAddress aAddr = new AbsoluteAddress(((LongValue)srcVal).getValue());
+					if (!rule.checkAddressValid(env, aAddr))
+					{
+						return rule.processSEH(curState);
+					}
+				}
+			}
+			
 			if (dest.getClass().getSimpleName().equals("X86Register")) {
 				if (src.getClass().getSimpleName().equals("X86Register")) {
 					env.getRegister().mov(dest.toString(), src.toString());

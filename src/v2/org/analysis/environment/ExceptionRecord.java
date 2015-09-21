@@ -1,6 +1,7 @@
 package v2.org.analysis.environment;
 
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.system.SEHHandle;
 import v2.org.analysis.value.LongValue;
 
 public class ExceptionRecord {
@@ -18,7 +19,24 @@ public class ExceptionRecord {
 	}
 
 	public void setExceptionRecord(BPState curState) {
-		this.ExceptionCode = 0xC0000005;
+		int sehType = curState.getEnvironement().getSystem().getSEHHandler().typeOf();
+		
+		if (sehType == SEHHandle.DIVIDE_BY_ZERO)
+		{
+			this.ExceptionCode = 0xC0000094;
+		}
+		else if (sehType == SEHHandle.INTERUPT)
+		{
+			this.ExceptionCode = 0x80000003;
+		}
+		else if (sehType == SEHHandle.SINGLE_STEP)
+		{
+			this.ExceptionCode = 0x80000004;
+		}
+		else 
+		{
+			this.ExceptionCode = 0xC0000005;
+		}
 		this.ExceptionFlag = 0;
 		this.NestedExceptionRecord = 0;
 		this.ExceptionAddress = curState.getLocation().getValue();

@@ -196,5 +196,22 @@ public class Convert {
 		
 		return new String(text);
 	}
+	
+	// Fix by khanh
+	public static long convetUnsignedValue_Mbit_1(long v, int numCount) {
+			// if (v == 4294967295l)
+			// System.out.println("Debug " + 4294967295l);
+
+			if (numCount == 8)
+				return v | 0x80;
+			if (numCount == 16)
+				return v | 0x8000;
+			if (numCount == 32)
+				return v | 0x80000000l;
+			if (numCount == 64)
+				return v & 0x8000000000000000l;
+
+			return v;
+		}
 
 }

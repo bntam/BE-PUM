@@ -19,6 +19,8 @@ public class Register {
 	private Value eax, ebx, ecx, edx, esi, edi, esp, ebp, eip, ax, ah, al, bx, bh, bl, cx, ch, cl, dx, dh, dl, si, di,
 			sp, bp, ds, es, fs, cs, ss, gs;
 
+	private Value dr0, dr1, dr2, dr3, dr4, dr5, dr6, dr7;
+	
 	public Register clone() {
 		Register ret = new Register();
 		ret.setRegisterValue("eax", eax.clone());
@@ -66,7 +68,16 @@ public class Register {
 		ret.setRegisterValue("fs", fs.clone());
 		ret.setRegisterValue("ss", ss.clone());
 		ret.setRegisterValue("gs", gs.clone());
-
+		
+		ret.setRegisterValue("dr0", dr0.clone());
+		ret.setRegisterValue("dr1", dr1.clone());
+		ret.setRegisterValue("dr2", dr2.clone());
+		ret.setRegisterValue("dr3", dr3.clone());
+		ret.setRegisterValue("dr4", dr4.clone());
+		ret.setRegisterValue("dr5", dr5.clone());
+		ret.setRegisterValue("dr6", dr6.clone());
+		ret.setRegisterValue("dr7", dr7.clone());
+		
 		return ret;
 	}
 
@@ -110,6 +121,15 @@ public class Register {
 		fs = new SymbolValue("fs");
 		gs = new SymbolValue("gs");
 		ss = new SymbolValue("ss");
+		
+		dr0 = new SymbolValue("dr0");
+		dr1 = new SymbolValue("dr1");
+		dr2 = new SymbolValue("dr2");
+		dr3 = new SymbolValue("dr3");
+		dr4 = new SymbolValue("dr4");
+		dr5 = new SymbolValue("dr5");
+		dr6 = new SymbolValue("dr6");
+		dr7 = new SymbolValue("dr7");
 	}
 
 	public Value getRegisterValue(String registerName) {
@@ -192,6 +212,30 @@ public class Register {
 		if (reg.equals("ss"))
 			return ss;
 
+		if (reg.equals("dr0"))
+			return dr0;
+		
+		if (reg.equals("dr1"))
+			return dr1;
+		
+		if (reg.equals("dr2"))
+			return dr2;
+		
+		if (reg.equals("dr3"))
+			return dr3;
+		
+		if (reg.equals("dr4"))
+			return dr4;
+		
+		if (reg.equals("dr5"))
+			return dr5;
+		
+		if (reg.equals("dr6"))
+			return dr6;
+		
+		if (reg.equals("dr7"))
+			return dr7;
+		
 		return null;
 	}
 
@@ -200,7 +244,23 @@ public class Register {
 		Value v = this.normalizeValue(value, registerName);
 		
 
-		if (reg.equals("cs")) {
+		if (reg.equals("dr0")){
+			dr0 = v;
+		}else if (reg.equals("dr1")){
+			dr1 = v;
+		}else if (reg.equals("dr2")){
+			dr2 = v;
+		}else if (reg.equals("dr3")){
+			dr3 = v;
+		}else if (reg.equals("dr4")){
+			dr4 = v;
+		}else if (reg.equals("dr5")){
+			dr5 = v;
+		}else if (reg.equals("dr6")){
+			dr6 = v;
+		}else if (reg.equals("dr7")){
+			dr7 = v;
+		}else if (reg.equals("cs")) {
 			cs = v;
 		} else if (reg.equals("ds")) {
 			ds = v;

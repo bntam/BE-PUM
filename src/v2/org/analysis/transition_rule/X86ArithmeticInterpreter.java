@@ -1,5 +1,6 @@
 package v2.org.analysis.transition_rule;
 
+import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86ArithmeticInstruction;
@@ -9,6 +10,7 @@ import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.system.SEHHandle;
 import v2.org.analysis.value.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class X86ArithmeticInterpreter {
 		// TODO Auto-generated method stub
 		BPState curState = path.getCurrentState();
 		Environment env = curState.getEnvironement();
+		
 		int opSize = rule.getBitCount(ins);
 		switch (ins.getOperation()) {
 		case NOT:
@@ -53,7 +56,11 @@ public class X86ArithmeticInterpreter {
 					// curState.getEnvironement().getSystem().getSEHHandler().isSet()
 					)
 						// SEH trong day
+					{
+						SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
+						sehHandle.setSEHType(SEHHandle.DIVIDE_BY_ZERO);
 						return rule.processSEH(path.getCurrentState());
+					}
 				}
 				switch (opSize) {
 				case 8:
@@ -1529,7 +1536,7 @@ public class X86ArithmeticInterpreter {
 		return dest;
 	}
 
-	private long calculateShiftOperator(long dest, long count, Environment env, X86TransitionRule rule,
+	/*private long calculateShiftOperator(long dest, long count, Environment env, X86TransitionRule rule,
 			X86ArithmeticInstruction inst) {
 		if (count == 0) {
 			// All flag unchanged
@@ -1550,6 +1557,66 @@ public class X86ArithmeticInterpreter {
 
 				if (inst.getName().startsWith("sar")) {
 					dest /= 2;
+				} else {
+					// SHR
+					dest /= 2;
+				}
+			}
+
+			tempCount--;
+		}
+
+		if ((count & 0x1F) == 1) {
+			if (inst.getName().startsWith("sal") || inst.getName().startsWith("shl")) {
+				BooleanValue temp = new BooleanValue(BitVector.getMSB(dest, bits));
+				Value cFlag = env.getFlag().getCFlag();
+				Value oFlag = new HybridBooleanValue(temp, "xor", cFlag);
+				env.getFlag().setOFlag(oFlag);
+			} else if (inst.getName().startsWith("sar"))
+				env.getFlag().setOFlag(new BooleanValue(false));
+			else
+				env.getFlag().setOFlag(new BooleanValue(BitVector.getMSB(tempDest, bits)));
+
+		} else {
+			// OF undefined
+		}
+
+		long t = Convert.convertSignedValue(dest, bits);
+		env.getFlag().setPFlag(new BooleanValue(BitVector.getParityBit(t)));
+		env.getFlag().setSFlag(new BooleanValue(t < 0));
+		env.getFlag().setZFlag(new BooleanValue(t == 0));
+
+		return dest;
+	}*/
+	private long calculateShiftOperator(long dest, long count, Environment env, X86TransitionRule rule,
+			X86ArithmeticInstruction inst) {
+		if (count == 0) {
+			// All flag unchanged
+			return dest;
+		}
+
+		int size = rule.getBitCount(inst);
+		dest = Convert.convetUnsignedValue(dest, size);
+		long tempCount = (long) count & 0x1F;
+		long tempDest = dest;
+		byte bits = (byte) rule.getBitCount(inst);
+		while (tempCount != 0) {
+			if (inst.getName().startsWith("sal") || inst.getName().startsWith("shl")) {
+				env.getFlag().setCFlag(new BooleanValue(BitVector.getMSB(dest, bits)));
+				dest = Convert.convetUnsignedValue(dest << 1, size);
+			} else {
+				env.getFlag().setCFlag(new BooleanValue(BitVector.getLSB(dest, bits)));
+
+				if (inst.getName().startsWith("sar")) {
+					// Fix by Khanh
+					byte Mbit = BitVector.getMSB(dest, bits);						
+					if ( Mbit == 1 ) {
+						dest = Convert.convetUnsignedValue_Mbit_1(dest >> 1, size);
+					}
+					else {
+						dest = Convert.convetUnsignedValue(dest >> 1, size);
+					}
+					//dest /= 2;
 				} else {
 					// SHR
 					dest /= 2;

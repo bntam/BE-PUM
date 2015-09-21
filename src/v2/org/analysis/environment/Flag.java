@@ -14,6 +14,17 @@ import v2.org.analysis.value.*;
  * @author NMHai
  */
 public class Flag {
+	
+	private final static int AFLAG_BIT = 4;
+	private final static int CFLAG_BIT = 0;
+	private final static int DFLAG_BIT = 10;
+	private final static int IFLAG_BIT = 9;
+	private final static int OFLAG_BIT = 11;
+	private final static int PFLAG_BIT = 2;
+	private final static int SFLAG_BIT = 7;
+	private final static int TFLAG_BIT = 8;
+	private final static int ZFLAG_BIT = 6;
+	
 	private Value aFlag, cFlag, dFlag, iFlag, oFlag, pFlag, sFlag, tFlag, zFlag;
 
 	public Flag() {
@@ -2306,5 +2317,23 @@ public class Flag {
 		setFlagValue("tf", tFlag.evaluate(z3Value));
 		setFlagValue("pf", pFlag.evaluate(z3Value));
 		setFlagValue("zf", zFlag.evaluate(z3Value));
+	}
+	
+	// PHONG - 20150916
+	public void setAllFlagValue (Value value)
+	{
+		if (value instanceof LongValue)
+		{
+			long eflag = ((LongValue) value).getValue();
+			cFlag = new BooleanValue((eflag & (1L << CFLAG_BIT)) != 0);
+			pFlag = new BooleanValue((eflag & (1L << PFLAG_BIT)) != 0);
+			aFlag = new BooleanValue((eflag & (1L << AFLAG_BIT)) != 0);
+			zFlag = new BooleanValue((eflag & (1L << ZFLAG_BIT)) != 0);
+			sFlag = new BooleanValue((eflag & (1L << SFLAG_BIT)) != 0);
+			tFlag = new BooleanValue((eflag & (1L << TFLAG_BIT)) != 0);
+			dFlag = new BooleanValue((eflag & (1L << DFLAG_BIT)) != 0);
+			oFlag = new BooleanValue((eflag & (1L << OFLAG_BIT)) != 0);
+			iFlag = new BooleanValue((eflag & (1L << IFLAG_BIT)) != 0);
+		}
 	}
 }
