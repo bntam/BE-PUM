@@ -424,27 +424,9 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		// ACL
-		HMODULE hModule = Kernel32.INSTANCE.GetModuleHandle(null);
-		System.out.println(Pointer.nativeValue(hModule.getPointer()));
-		char[] lpFilename = new char[260];
-		DWORD nSize = new DWORD(260);
-		Kernel32DLL.INSTANCE.GetModuleFileName(hModule, lpFilename, nSize);
-
-		System.out.println(new String(lpFilename));
-
-		String jre_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator
-				+ "java";
-		String jdk_location = System.getProperties().getProperty("java.home") + File.separator + "java";
-		if (jdk_location.contains("jre")) {
-			jdk_location = jdk_location.replace("jre", "bin");
-		}
-		System.out.println(jre_location);
-		System.out.println(jdk_location);
-		if (new String(lpFilename).startsWith(jre_location) || new String(lpFilename).startsWith(jdk_location)) {
-			System.out.println("OK");
-		}
-
+		String str = "This is a sample string";
+		System.out.println(str.lastIndexOf('c'));
+		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = (long) 1;

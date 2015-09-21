@@ -10,6 +10,7 @@
 		<API funcName="crypthashdata" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptHashData" />
 		<API funcName="cryptreleasecontext" className="v2.org.analysis.apihandle.winapi.advapi32.functions.CryptReleaseContext" />
 		<API funcName="isvalidacl" className="v2.org.analysis.apihandle.winapi.advapi32.functions.IsValidAcl" />
+		<API funcName="openprocesstoken" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenProcessToken" />
 		<API funcName="openthreadtoken" className="v2.org.analysis.apihandle.winapi.advapi32.functions.OpenThreadToken" />
 		<API funcName="regclosekey" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCloseKey" />
 		<API funcName="regcreatekeyex" className="v2.org.analysis.apihandle.winapi.advapi32.functions.RegCreateKeyEx" />
@@ -247,6 +248,7 @@
 		<API funcName="memcpy" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memcpy" />
 		<API funcName="memset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
 		<API funcName="srand" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.srand" />
+		<API funcName="strrchr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strrchr" />
 		<API funcName="strstr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strstr" />
 		<API funcName="time" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.time" />
 		<API funcName="_cexit" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._cexit" />
@@ -256,6 +258,7 @@
 		<API funcName="_initterm" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._initterm" />
 		<API funcName="_itow" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
 		<API funcName="_ltoa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._ltoa" />
+		<API funcName="_mbsrchr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._mbsrchr" />
 		<API funcName="_setmode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._setmode" />
 		<API funcName="_strcmpi" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._strcmpi" />
 		<API funcName="__getmainargs" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__getmainargs" />

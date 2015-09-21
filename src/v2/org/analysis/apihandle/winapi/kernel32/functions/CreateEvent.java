@@ -71,6 +71,9 @@ public class CreateEvent extends Kernel32API {
 		BOOL bManualReset = new BOOL(t2);
 		BOOL bInitialState = new BOOL(t3);
 		String lpName = (t4 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t4)) : null;
+		
+		System.out.println(String.format("lpName:%s", lpName));
+		
 		HANDLE ret = Kernel32DLL.INSTANCE.CreateEvent(null, bManualReset, bInitialState, lpName);
 
 		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));

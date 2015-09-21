@@ -1295,4 +1295,23 @@ public interface User32DLL extends StdCallLibrary {
 	 *            This parameter is ignored.
 	 */
 	void SetLastErrorEx(DWORD dwErrCode, DWORD dwType);
+
+	/**
+	 * Retrieves the specified system metric or system configuration setting.
+	 * Note that all dimensions retrieved by GetSystemMetrics are in pixels.
+	 * 
+	 * @param nIndex
+	 *            The system metric or configuration setting to be retrieved.
+	 *            This parameter can be one of the following values. Note that
+	 *            all SM_CX* values are widths and all SM_CY* values are
+	 *            heights. Also note that all settings designed to return
+	 *            Boolean data represent TRUE as any nonzero value, and FALSE as
+	 *            a zero value.
+	 * 
+	 * @return If the function succeeds, the return value is the requested
+	 *         system metric or configuration setting. If the function fails,
+	 *         the return value is 0. GetLastError does not provide extended
+	 *         error information.
+	 */
+	int GetSystemMetrics(/* _In_ */int nIndex);
 }

@@ -14,6 +14,8 @@ import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinDef.WORD;
 import com.sun.jna.platform.win32.WinNT.ACL;
+import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.platform.win32.WinNT.HANDLEByReference;
 import com.sun.jna.platform.win32.WinReg.HKEY;
 import com.sun.jna.platform.win32.WinReg.HKEYByReference;
 import com.sun.jna.ptr.ByteByReference;
@@ -453,4 +455,34 @@ public interface Advapi32DLL extends StdCallLibrary {
 	 *         information for this function; do not call GetLastError.
 	 */
 	BOOL IsValidAcl(/* _In_ */ACL pAcl);
+
+	/**
+	 * The OpenProcessToken function opens the access token associated with a
+	 * process.
+	 * 
+	 * @param ProcessHandle
+	 *            A handle to the process whose access token is opened. The
+	 *            process must have the PROCESS_QUERY_INFORMATION access
+	 *            permission.
+	 * 
+	 * @param DesiredAccess
+	 *            dAccess [in] Specifies an access mask that specifies the
+	 *            requested types of access to the access token. These requested
+	 *            access types are compared with the discretionary access
+	 *            control list (DACL) of the token to determine which accesses
+	 *            are granted or denied. For a list of access rights for access
+	 *            tokens, see Access Rights for Access-Token Objects.
+	 * 
+	 * @param TokenHandle
+	 *            A pointer to a handle that identifies the newly opened access
+	 *            token when the function returns.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL OpenProcessToken(
+	/* _In_ */HANDLE ProcessHandle,
+	/* _In_ */DWORD DesiredAccess,
+	/* _Out_ */HANDLEByReference TokenHandle);
 }

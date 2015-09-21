@@ -620,4 +620,27 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *            calloc or realloc.
 	 */
 	void free(Pointer ptr);
+
+	/**
+	 * Remove file
+	 * 
+	 * Deletes the file whose name is specified in filename.
+	 * 
+	 * This is an operation performed directly on a file identified by its
+	 * filename; No streams are involved in the operation.
+	 * 
+	 * Proper file access shall be available.
+	 * 
+	 * @param filename
+	 *            C string containing the name of the file to be deleted. Its
+	 *            value shall follow the file name specifications of the running
+	 *            environment and can include a path (if supported by the
+	 *            system).
+	 * 
+	 * @return If the file is successfully deleted, a zero value is returned. On
+	 *         failure, a nonzero value is returned. On most library
+	 *         implementations, the errno variable is also set to a
+	 *         system-specific error code on failure.
+	 */
+	int remove(String filename);
 }

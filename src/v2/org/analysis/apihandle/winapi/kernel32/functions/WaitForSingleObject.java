@@ -63,6 +63,10 @@ public class WaitForSingleObject extends Kernel32API {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 		int ret = Kernel32.INSTANCE.WaitForSingleObject(new HANDLE(new Pointer(t1)), (int) t2);
+		
+		if (t2 == 0xffffffffL) {
+			t2 = 0xfffL;
+		}
 
 		// http://stackoverflow.com/questions/897614/how-do-i-know-if-a-thread-is-suspended-under-windows-ce
 		// Return the state of a suspended thread
