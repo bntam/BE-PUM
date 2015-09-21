@@ -395,8 +395,6 @@ public class X86TransitionRule extends TransitionRule {
 		Instruction ins = curState.getInstruction();
 		BPVertex src = cfg.getVertex(curState.getLocation(), ins);
 		
-		Value a = curState.getEnvironement().getMemory().getDoubleWordMemoryValue(0x404118);
-		
 		if (ins instanceof X86ArithmeticInstruction)
 			new X86ArithmeticInterpreter().execute((X86ArithmeticInstruction) ins, path, pathList, this);
 		else if (ins instanceof X86CallInstruction)
