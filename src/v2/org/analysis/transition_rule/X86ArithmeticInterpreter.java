@@ -1,5 +1,6 @@
 package v2.org.analysis.transition_rule;
 
+import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86ArithmeticInstruction;
@@ -9,6 +10,7 @@ import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.system.SEHHandle;
 import v2.org.analysis.value.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class X86ArithmeticInterpreter {
 		// TODO Auto-generated method stub
 		BPState curState = path.getCurrentState();
 		Environment env = curState.getEnvironement();
+		
 		int opSize = rule.getBitCount(ins);
 		switch (ins.getOperation()) {
 		case NOT:
@@ -53,7 +56,11 @@ public class X86ArithmeticInterpreter {
 					// curState.getEnvironement().getSystem().getSEHHandler().isSet()
 					)
 						// SEH trong day
+					{
+						SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
+						sehHandle.setSEHType(SEHHandle.DIVIDE_BY_ZERO);
 						return rule.processSEH(path.getCurrentState());
+					}
 				}
 				switch (opSize) {
 				case 8:

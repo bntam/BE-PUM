@@ -122,7 +122,7 @@ public final class PackerConstants {
 	     ,new PackerHeader("ASPROTECT"	, PackerConstants.hASPROTECT)
 	     ,new PackerHeader("MEW"		, PackerConstants.hMEW)
 	     ,new PackerHeader("MPRESS"		, PackerConstants.hMPRESS)
-	     ,new PackerHeader("ARMADILLO"	, PackerConstants.hPELOCK)
-	     ,new PackerHeader("ARMADILLO"	, PackerConstants.hPESPIN)
+	     ,new PackerHeader("PELOCK"		, PackerConstants.hPELOCK)
+	     ,new PackerHeader("PESPIN"		, PackerConstants.hPESPIN)
 		};
 }
