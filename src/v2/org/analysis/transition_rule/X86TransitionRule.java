@@ -937,7 +937,8 @@ public class X86TransitionRule extends TransitionRule {
 		curState.getEnvironement().getRegister().mov("dr7", dr7_value);
 		
 		// Restore System SEH
-		//this.setSEH(curState);
+		this.setSEH(curState);
+		curState.getEnvironement().getSystem().getSEHHandler().setSEHReady(false);
 		this.sehHandle.setExceptionAddr(curState.getEnvironement().getRegister().getRegisterValue("dr0"));
 		this.sehHandle.setExceptionAddr(curState.getEnvironement().getRegister().getRegisterValue("dr1"));
 		this.sehHandle.setExceptionAddr(curState.getEnvironement().getRegister().getRegisterValue("dr2"));
