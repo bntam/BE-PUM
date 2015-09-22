@@ -76,7 +76,7 @@ public class SHGetFileInfo extends Shell32API {
 		register.mov("eax", new LongValue(value));
 		
 		t3 = this.params.get(2);
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(Pointer.nativeValue(psfi.hIcon.getPointer())));
+		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue((psfi.hIcon == null) ? 0 : Pointer.nativeValue(psfi.hIcon.getPointer())));
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(psfi.iIcon));
 		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(psfi.dwAttributes.longValue()));
 		memory.setText(new X86MemoryOperand(DataType.INT32, t3), Convert.reduceText(psfi.szDisplayName));
