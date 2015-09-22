@@ -37,7 +37,7 @@ public class OTFModelGeneration implements Algorithm {
 
 	// private static final Logger logger =
 	// Logger.getLogger(CPAAlgorithm.class);
-	private static long maxTimeProgam = 3600000;
+	//private static long maxTimeProgam = 3600000;
 	//private static long maxTimePath = 1500000;
 	//private static long bkTime = 2700000;
 	private static long outTime = 180000;
@@ -126,11 +126,11 @@ public class OTFModelGeneration implements Algorithm {
 		
 		while (!pathList.isEmpty()) {
 			
-			if (System.currentTimeMillis() - overallStartTime > maxTimeProgam) { 
+			/*if (System.currentTimeMillis() - overallStartTime > maxTimeProgam) { 
 				System.out.println("Stop Program after " + maxTimeProgam); 
 				overallStartTime = System.currentTimeMillis();
 				break;
-			}
+			}*/
 
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
@@ -146,7 +146,7 @@ public class OTFModelGeneration implements Algorithm {
 				///////////////////////////////////////////////////////////////////////////////////
 				
 				long overallEndTimeTemp = System.currentTimeMillis();
-				long time = overallEndTimeTemp - overallStartTemp;
+				//long time = overallEndTimeTemp - overallStartTemp;
 				//System.out.println("Times: " + time);
 				// Output file each 60s
 				if (overallEndTimeTemp - overallStartTemp > outTime) {
