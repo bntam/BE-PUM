@@ -930,7 +930,13 @@ public class X86InstructionInterpreter {
 			// Program.getProgram().generageCFG(
 			// Program.getProgram().getAbsolutePathFile() + "_test");
 		} else if (inst.getName().startsWith("popf")) {
-			Value v = env.getStack().pop();
+			Value v = null; 
+			if (opSize == 32)
+				v = env.getStack().pop();
+			else if (opSize == 16)
+				v = env.getStack().pop16();
+			
+			//Value v = env.getStack().pop();
 			env.getFlag().setAllFlagValue(v);
 			
 			// PHONG - 20150916 - SINGLE_STEP_EXCEPTION

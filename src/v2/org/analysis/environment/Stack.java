@@ -55,4 +55,6 @@ public abstract class Stack {
 	public abstract boolean isEmpty();
 
 	public abstract void push16(Value pushedElement);
+
+	public abstract Value pop16();
 }

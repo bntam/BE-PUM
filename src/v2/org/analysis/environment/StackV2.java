@@ -395,4 +395,25 @@ public class StackV2 extends Stack {
 			System.out.println("Cannot pushed to stack!!!");
 
 	}
+
+	@Override
+	public Value pop16() {
+		// TODO Auto-generated method stub
+		Value top = env.getRegister().getRegisterValue("esp");
+
+		if (top instanceof LongValue) {
+			topAddr = ((LongValue) top).getValue();
+			Value p = env.getMemory().getWordMemoryValue(topAddr);
+
+			if (p != null) {
+				topAddr += 2;
+				env.getRegister().add("esp", new LongValue(2));
+
+				return p;
+			}
+		}
+
+		System.out.println("Cannot pop out of stack!!!");
+		return null;
+	}
 }

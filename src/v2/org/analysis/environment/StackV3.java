@@ -302,4 +302,10 @@ public class StackV3 extends Stack {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public Value pop16() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
