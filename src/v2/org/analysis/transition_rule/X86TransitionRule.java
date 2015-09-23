@@ -78,7 +78,7 @@ public class X86TransitionRule extends TransitionRule {
 
 	// ------------------------------------------------------------------------
 
-	boolean checkAddressValid(Environment env, X86MemoryOperand d) {
+	public boolean checkAddressValid(Environment env, X86MemoryOperand d) {
 		// TODO Auto-generated method stub
 		/*
 		 * if (Program.getProgram().getFileName().equals("hostname.exe") ||
@@ -255,7 +255,7 @@ public class X86TransitionRule extends TransitionRule {
 	}
 
 	// Change the location and instruction for new state
-	void generateNextInstruction(Instruction ins, BPPath path, List<BPPath> pathList, boolean cond) {
+	public void generateNextInstruction(Instruction ins, BPPath path, List<BPPath> pathList, boolean cond) {
 		// TODO Auto-generated method stub
 		BPState curState = path.getCurrentState();
 		BPCFG cfg = Program.getProgram().getBPCFG();

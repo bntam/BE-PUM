@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X86AssemlyMap>
+	<GROUP name="x86instruction">
+		<API assemblyName="cmpxchg" className="v2.org.analysis.transition_rule.x86instruction.cmpxchg" />
+		<API assemblyName="cmpxchg8b" className="v2.org.analysis.transition_rule.x86instruction.cmpxchg8b" />
+		<API assemblyName="int3" className="v2.org.analysis.transition_rule.x86instruction.int3" />
+		<API assemblyName="rdtsc" className="v2.org.analysis.transition_rule.x86instruction.rdtsc" />
+	</GROUP>
+	<GROUP name="x86move">
+	</GROUP>
+</X86AssemlyMap>
