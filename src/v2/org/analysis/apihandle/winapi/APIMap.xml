@@ -72,6 +72,7 @@
 		<API funcName="freelibrary" className="v2.org.analysis.apihandle.winapi.kernel32.functions.FreeLibrary" />
 		<API funcName="getaclinformation" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetAclInformation" />
 		<API funcName="getacp" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetACP" />
+		<API funcName="getatomname" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetAtomName" />
 		<API funcName="getcommandline" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCommandLine" />
 		<API funcName="getcomputername" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetComputerName" />
 		<API funcName="getconsolecp" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetConsoleCP" />
@@ -247,6 +248,7 @@
 		<API funcName="malloc" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
 		<API funcName="memcpy" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memcpy" />
 		<API funcName="memset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
+		<API funcName="remove" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.remove" />
 		<API funcName="srand" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.srand" />
 		<API funcName="strrchr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strrchr" />
 		<API funcName="strstr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strstr" />
@@ -288,6 +290,7 @@
 	</DLL>
 	<DLL name="shlwapi">
 		<API funcName="pathfindfilename" className="v2.org.analysis.apihandle.winapi.shlwapi.functions.PathFindFileName" />
+		<API funcName="pathundecorate" className="v2.org.analysis.apihandle.winapi.shlwapi.functions.PathUndecorate" />
 	</DLL>
 	<DLL name="user32">
 		<API funcName="anypopup" className="v2.org.analysis.apihandle.winapi.user32.functions.AnyPopup" />
@@ -327,6 +330,7 @@
 		<API funcName="getsyscolor" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSysColor" />
 		<API funcName="getsyscolorbrush" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSysColorBrush" />
 		<API funcName="getsystemmenu" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSystemMenu" />
+		<API funcName="getsystemmetrics" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSystemMetrics" />
 		<API funcName="gettitlebarinfo" className="v2.org.analysis.apihandle.winapi.user32.functions.GetTitleBarInfo" />
 		<API funcName="gettopwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.GetTopWindow" />
 		<API funcName="getuserobjectinformation" className="v2.org.analysis.apihandle.winapi.user32.functions.GetUserObjectInformation" />

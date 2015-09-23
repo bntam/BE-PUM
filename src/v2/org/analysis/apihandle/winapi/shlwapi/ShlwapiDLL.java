@@ -30,4 +30,14 @@ public interface ShlwapiDLL extends ShellAPI, StdCallLibrary {
 	 *         a pointer to the beginning of the path otherwise.
 	 */
 	String PathFindFileName(/* _In_ */String pPath);
+
+	/**
+	 * Removes the decoration from a path string.
+	 * 
+	 * @param pszPath
+	 *            A null-terminated string of length MAX_PATH that contains the
+	 *            path. When the function returns, pszPath points to the
+	 *            undecorated string.
+	 */
+	void PathUndecorate(/* _Inout_ */char[] pszPath);
 }

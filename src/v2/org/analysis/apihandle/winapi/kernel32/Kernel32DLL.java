@@ -3651,4 +3651,29 @@ public interface Kernel32DLL extends StdCallLibrary {
 	/* _In_ */String lpExistingFileName,
 	/* _In_opt_ */String lpNewFileName,
 	/* _In_ */DWORD dwFlags);
+
+	/**
+	 * Retrieves a copy of the character string associated with the specified
+	 * local atom.
+	 * 
+	 * @param nAtom
+	 *            The local atom that identifies the character string to be
+	 *            retrieved.
+	 * 
+	 * @param lpBuffer
+	 *            The character string.
+	 * 
+	 * @param nSize
+	 *            The size, in characters, of the buffer.
+	 * 
+	 * @return If the function succeeds, the return value is the length of the
+	 *         string copied to the buffer, in characters, not including the
+	 *         terminating null character. If the function fails, the return
+	 *         value is zero. To get extended error information, call
+	 *         GetLastError.
+	 */
+	UINT GetAtomName(
+	/* _In_ */ATOM nAtom,
+	/* _Out_ */char[] lpBuffer,
+	/* _In_ */int nSize);
 }

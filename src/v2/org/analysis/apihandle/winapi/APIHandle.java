@@ -286,7 +286,7 @@ public class APIHandle {
 															 * "")
 															 */);
 
-		// PHONG - 20150728 ///////////////////////////////////////
+/*		// PHONG - 20150728 ///////////////////////////////////////
 		if (t[0].contains("LoadLibraryA"))
 			Program.getProgram().setTechnique("UseAPI: LoadLibrary");
 		if (t[0].contains("GetProcAddress"))
@@ -296,7 +296,7 @@ public class APIHandle {
 		if (t[0].contains("IsDebuggerPresent"))
 			Program.getProgram().setTechnique("UseAPI: IsDebuggerPresent");
 		// ////////////////////////////////////////////////////////
-
+*/
 		if (className != null) {
 			try {
 				Class<?> clazz = Class.forName(className);
