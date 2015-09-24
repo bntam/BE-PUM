@@ -212,6 +212,7 @@ public class GRPDecoder extends InstructionDecoder {
 
 		int ModRM = readByte(bytesArray, byteIndex);
 		int reg = (ModRM >> 3) & 7;
+		System.out.println();
 
 		InstructionDecoder instrDecoder = grpTable[number][reg];
 		Instruction instr = null;
