@@ -1,0 +1,30 @@
+
+Sample.exe	 
+sal.exe	  	    1072ms	     256	     255 
+sal.exe	  	     584ms	       5	       4 
+sal.exe	  	     569ms	       5	       4 
+sal1.exe	  	     481ms	       2	       1 
+sal1.exe	 
+sal1.exe	  	     475ms	       3	       2 
+sal1.exe	  Nodes:2 Edges:1  
+sal1.exe	 
+sal1.exe	  Nodes:3 Edges:2   	 2391854ms	       3	       2 
+sal1.exe	  Nodes:2 Edges:1  
+sal1.exe	 
+sal1.exe	 
+sal1.exe	 
+sal1.exe	 
+sal1.exe	 
+sal1.exe	 
+sal1.exe	 
+sal1.exe	 
+sal1.exe	 
+sal2.exe	  	     407ms	       6	       5 
+sal2.exe	 
+sal2.exe	 
+sal2.exe	  	     376ms	       6	       5 
+sal2.exe	 
+sal2.exe	  	     402ms	       6	       5 
+sal2.exe	 
+sal2.exe	  	     397ms	       6	       5 
+sal2.exe	 
