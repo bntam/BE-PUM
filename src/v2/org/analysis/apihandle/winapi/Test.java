@@ -424,8 +424,7 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		String str = "This is a sample string";
-		System.out.println(str.lastIndexOf('c'));
+		System.out.println(Storage.getOriginalPath("C:\\Workspace\\BE_PUM_DEBUG\\Storage\\C\\DOCUME~1\\ADMINI~1\\LOCALS~1\\Temp\\rcpynA\\nsj3.tmp"));
 		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

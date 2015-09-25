@@ -156,4 +156,16 @@ public class Storage {
 			return originalPath;
 		}
 	}
+	
+	public static String getOriginalPath(String path) {
+		if (path == null) 
+			return null;
+		
+		if (path.length() < workingDirectory.length())
+			return path;
+		
+		char driveName = path.charAt(workingDirectory.length());
+		
+		return String.format("%c:%s", driveName, path.substring(workingDirectory.length() + 1, path.length()));
+	}
 }

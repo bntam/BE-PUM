@@ -1518,8 +1518,8 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         number.
 	 * 
 	 */
-	UINT GetTempFileName(/* _In_ */WString lpPathName, /* _In_ */
-			WString lpPrefixString, /* _In_ */UINT uUnique, /* _Out_ */
+	UINT GetTempFileName(/* _In_ */String lpPathName, /* _In_ */
+			String lpPrefixString, /* _In_ */UINT uUnique, /* _Out_ */
 			char[] lpTempFileName);
 
 	/**

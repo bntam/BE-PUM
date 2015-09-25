@@ -5,22 +5,16 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.complement.Convert;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import com.sun.jna.WString;
+import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.UINT;
 
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
+import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Creates a name for a temporary file. If a unique file name is generated, an
@@ -61,7 +55,7 @@ import v2.org.analysis.value.Value;
  *         parameter is nonzero, the return value specifies that same number.
  * 
  * @author Yen Nguyen
- *
+ * 
  */
 public class GetTempFileName extends Kernel32API {
 
@@ -77,15 +71,28 @@ public class GetTempFileName extends Kernel32API {
 		long t3 = this.params.get(2);
 		long t4 = this.params.get(3);
 
-		WString lpPathName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
-		WString lpPrefixString = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+		String lpPathName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String lpPrefixString = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
 		UINT uUnique = new UINT(t3);
 		char[] lpTempFileName = new char[260]; // #define MAX_PATH 260
-		UINT ret = Kernel32DLL.INSTANCE.GetTempFileName(lpPathName, lpPrefixString, uUnique, lpTempFileName);
+		
+		UINT ret = Kernel32DLL.INSTANCE.GetTempFileName(Storage.getMappingPath(lpPathName.toString()), lpPrefixString, uUnique, lpTempFileName);
 
 		register.mov("eax", new LongValue(ret.longValue()));
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, t4), new String(lpTempFileName));
+		String tempFileName = Convert.reduceText(lpTempFileName);
+		if (Kernel32.INSTANCE.GetLastError() == 0) {
+			tempFileName = Storage.getOriginalPath(tempFileName);
+		}
+		
+		memory.setText(new X86MemoryOperand(DataType.INT32, t4), tempFileName);
+		// Set all tail null character array
+		for (int i = tempFileName.length(); i < 260; i++) {
+			memory.setByteMemoryValue(t4 + i, new LongValue(0));
+		}
+		
+		System.out.println(String.format("lpPathName: %s, lpPrefixString: %s, lpTempFileName: %s",
+				lpPathName.toString(), lpPrefixString.toString(), tempFileName ));
 	}
 
 }

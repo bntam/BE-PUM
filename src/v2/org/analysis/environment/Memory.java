@@ -1077,19 +1077,19 @@ public class Memory {
 	}
 
 	public long setText(X86MemoryOperand m, String str, long value) {
-		// TODO Auto-generated method stub
-		char[] t = str.toCharArray();
 		long disp = evaluateAddress(m);
+		return this.setText(disp, str, value);
+	}
 
-		for (int i = 0; i < value && i < t.length; i++) {
-			int x = (int) t[i];
-			//if (x == 47)
-			//	x = 92;
+	public long setText(long addr, String str, long value) {
+		char[] charArray = str.toCharArray();
+		for (int i = 0; i < value && i < charArray.length; i++) {
+			int x = (int) charArray[i];
 
-			this.setByteMemoryValue(new X86MemoryOperand(m.getDataType(), disp), new LongValue(x));
-			disp++;
+			this.setByteMemoryValue(addr, new LongValue(x));
+			addr++;
 		}
-		return t.length;
+		return charArray.length;
 	}
 
 	public void setWordMemoryValue(long address, Value v) {

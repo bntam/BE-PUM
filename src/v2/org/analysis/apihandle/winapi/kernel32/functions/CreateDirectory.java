@@ -62,7 +62,7 @@ public class CreateDirectory extends Kernel32API {
 
 		String lpPathName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
 		lpPathName = Storage.getMappingPath(lpPathName);
-		System.out.println("PathName:" + ", pSecurity:" + t2);
+		System.out.println("PathName:" + lpPathName + ", pSecurity:" + t2);
 
 		BOOL ret = Kernel32DLL.INSTANCE.CreateDirectory(lpPathName, null);
 		register.mov("eax", new LongValue(ret.longValue()));

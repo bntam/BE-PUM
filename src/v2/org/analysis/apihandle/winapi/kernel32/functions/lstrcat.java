@@ -57,12 +57,14 @@ public class lstrcat extends Kernel32API {
 
 		String dest = destAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
 		String src = scrAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
-		System.out.println("Destination Address:" + destAddr + ", Source String:" + src);
+		System.out.println("Destination String:" + dest + ", Source String:" + src);
 
-		dest = Kernel32DLL.INSTANCE.lstrcat(dest, src); // =
-														// dest.concat(src);
+		dest = dest.concat(src);
+		System.out.println("Out:" + dest);
 
 		memory.setText(new X86MemoryOperand(DataType.INT32, destAddr), dest);
+		// Null-terminated character
+		memory.setByteMemoryValue(destAddr + dest.length(), new LongValue(0));
 		register.mov("eax", new LongValue(1));
 	}
 }
