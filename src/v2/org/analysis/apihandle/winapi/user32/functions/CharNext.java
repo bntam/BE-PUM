@@ -43,6 +43,8 @@ public class CharNext extends User32API {
 
 		char[] lpsz = memory.getText(new X86MemoryOperand(DataType.INT32, x)).toCharArray();
 		User32DLL.INSTANCE.CharNext(lpsz);
+		
+		System.out.println(new String(lpsz));
 
 		register.mov("eax", new LongValue((lpsz.length == 0) ? x : (x + 1)));
 	}

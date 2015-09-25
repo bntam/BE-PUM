@@ -65,6 +65,9 @@ public class GetTempPath extends Kernel32API {
 
 		String tmpPath = Convert.reduceText(lpBuffer);
 		memory.setText(this.params.get(1).longValue(), tmpPath, tmpPath.length());
+		// Null-terminated character
+		memory.setByteMemoryValue(this.params.get(1).longValue() + tmpPath.length(), new LongValue(0));
+		
 		System.out.println("Temp Path: " + tmpPath);
 		register.mov("eax", new LongValue(ret.longValue()));
 	}
