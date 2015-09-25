@@ -6,8 +6,6 @@ import v2.org.analysis.complement.Convert;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LibImage {
 	// YenNguyen
@@ -16,7 +14,6 @@ public class LibImage {
 	public static final String KERNEL32PATH = "data/data/kernel32.dll";
 
 	private long baseAddress; // 7C800000
-	private Map<AbsoluteAddress, String> exportTable;
 	private LibPEHandler peHandler;
 	// Map <Integer, ByteClass> image;
 	private int length;
@@ -39,37 +36,11 @@ public class LibImage {
 
 	public LibImage() {
 		createImage();
-		exportTable = new HashMap<AbsoluteAddress, String>();
-		initExportTable();
 	}
 
 	public LibImage(String path) {
 		this.path = path;
 		createImage();
-		exportTable = new HashMap<AbsoluteAddress, String>();
-		initExportTable();
-	}
-
-	private void initExportTable() {
-		if (this.path.equals(LibImage.KERNEL32PATH)) {
-			exportTable.put(new AbsoluteAddress(2088899403), "GetWindowsDirectoryA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088849274), "GetSystemDirectoryA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088980502), "GetCurrentDirectoryA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088984821), "SetCurrentDirectoryA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088843369), "FindFirstFileA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088839186), "SetFileAttributesA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088770088), "CreateFileA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088801518), "CreateFileMappingA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088803287), "CloseHandle@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088980169), "FindNextFileA@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088810901), "MapViewOfFile@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088811012), "UnmapViewOfFile@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088832030), "SetFilePointer@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088968286), "SetEndOfFile@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088824423), "FindClose@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088833642), "GetVersion@kernel32.dll");
-			exportTable.put(new AbsoluteAddress(2088841507), "IsDebuggerPresent@kernel32.dll");
-		}
 	}
 
 	public long getReturnRandomValue() {
@@ -226,9 +197,12 @@ public class LibImage {
 		return peHandler.getExportAddress(functionName);
 	}
 
+	public boolean isInside(long addr) {
+		return addr >= this.baseAddress && addr < (this.baseAddress + getLength());
+	}
+
 	public boolean isInside(AbsoluteAddress addr) {
-		// TODO Auto-generated method stub
-		return addr.getValue() >= this.baseAddress && addr.getValue() < (this.baseAddress + getLength());
+		return this.isInside(addr.getValue());
 	}
 
 	public String getProcName(long v) {

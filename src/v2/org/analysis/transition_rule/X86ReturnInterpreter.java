@@ -6,6 +6,8 @@ import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86RetInstruction;
+
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
 import v2.org.analysis.cfg.BPVertex;
@@ -53,7 +55,8 @@ public class X86ReturnInterpreter {
 				
 				String api = rule.checkAPICall(ret, curState);
 				if (api != null/* !api.equals("") */) {
-					rule.getAPIHandle().executeAPI(new AbsoluteAddress(r), api, inst, path, pathList);
+//					rule.getAPIHandle();
+					APIHandle.executeAPI(new AbsoluteAddress(r), api, inst, path, pathList);
 					rule.setCFG(true);
 					return curState;
 				}

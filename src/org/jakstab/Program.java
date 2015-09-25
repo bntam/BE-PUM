@@ -96,8 +96,9 @@ public final class Program {
 	public String generatePathFileName(String baseFileName) {
 		// TODO Auto-generated method stub
 		String ret = baseFileName;
-		
-		// Get the file name in input path to save in the same folder of BE-PUM jar file.
+
+		// Get the file name in input path to save in the same folder of BE-PUM
+		// jar file.
 		if (!Program.class.getResource("Program.class").toString().startsWith("file")) {
 			int index = baseFileName.lastIndexOf('/');
 			if (index == -1) {
@@ -108,17 +109,18 @@ public final class Program {
 			}
 		}
 
-		// Never run because baseFileName parameter is a relative path within '/' separator characters
-//		String r[] = baseFileName.split("\\\\");
-//		String ret = "";
-//		for (int i = 0; i < r.length; i++) {
-//			if (i == r.length - 2)
-//				ret += "cfg" + "\\";
-//			else if (i == r.length - 1)
-//				ret += r[i];
-//			else
-//				ret += r[i] + "\\";
-//		}
+		// Never run because baseFileName parameter is a relative path within
+		// '/' separator characters
+		// String r[] = baseFileName.split("\\\\");
+		// String ret = "";
+		// for (int i = 0; i < r.length; i++) {
+		// if (i == r.length - 2)
+		// ret += "cfg" + "\\";
+		// else if (i == r.length - 1)
+		// ret += r[i];
+		// else
+		// ret += r[i] + "\\";
+		// }
 
 		return System.getProperty("user.dir") + ret;
 	}
@@ -171,12 +173,12 @@ public final class Program {
 	private TargetOS targetOS;
 
 	private Instruction analyzedInstruction = null;;
-	
+
 	// PHONG - 20150724
 	private PackerDetection pDetection;
-	
+
 	private long analyzingTime;
-	
+
 	private Program(Architecture arch) {
 		this.arch = arch;
 		this.targetOS = TargetOS.UNKNOWN;
@@ -199,7 +201,7 @@ public final class Program {
 		setResultFile(new FileProcess(resultFileTXT));
 		setFullResultFile(new FileProcess(fullResultFileTXT));
 		setResultFileTemp(new FileProcess(resultFileTempTXT));
-		
+
 		setPackerResultFile(new FileProcess(packerResultFileTXT));
 		this.packerResultFile.appendFile("");
 		pDetection = new PackerDetection();
@@ -274,12 +276,12 @@ public final class Program {
 		this.smPos.add(new AbsoluteAddress(addr.getValue() - 2));
 		this.smPos.add(new AbsoluteAddress(addr.getValue() - 3));
 		this.smPos.add(new AbsoluteAddress(addr.getValue() - 4));
+		this.smPos.add(new AbsoluteAddress(addr.getValue() - 5));
 		this.smPos.add(new AbsoluteAddress(addr.getValue() - 6));
 		this.smPos.add(new AbsoluteAddress(addr.getValue() - 7));
 		this.smPos.add(new AbsoluteAddress(addr.getValue() - 8));
 		this.smPos.add(new AbsoluteAddress(addr.getValue() - 9));
 		this.smPos.add(new AbsoluteAddress(addr.getValue() - 10));
-		this.smPos.add(new AbsoluteAddress(addr.getValue() - 5));
 
 	}
 
@@ -314,7 +316,7 @@ public final class Program {
 
 		if (api == "")
 			api = env.getSystem().getUser32().getProcName(value);
-		
+
 		if (api == "")
 			api = env.getSystem().getAdvapi32Handle().getProcName(value);
 
@@ -613,6 +615,9 @@ public final class Program {
 		return statementMap.containsKey(label);
 	}
 
+	/*
+	 * @SuppressWarnings Unused method
+	 */
 	public int countIndirectBranches() {
 		int res = 0;
 		for (Map.Entry<AbsoluteAddress, Instruction> entry : assemblyMap.entrySet()) {
@@ -702,7 +707,12 @@ public final class Program {
 				// logger.error("No module for address " + address
 				// + ". Cannot disassemble instruction!");
 
-				result = Long.MIN_VALUE;
+				// PHONG: 20150501 ------------------------------------------
+				if (mainModule instanceof PEModule && ((PEModule) mainModule).isInside(address.getValue())) {
+					result = (int) ((PEModule) mainModule).getByteValue(address.getValue());
+				} else {
+					result = Long.MIN_VALUE;
+				}
 			} else {
 				fp = module.getFilePointer(address);
 				// Also check whether fp is out of the int range, since the
@@ -735,58 +745,40 @@ public final class Program {
 		return result;
 	}
 
-	// PHONG: debug here
-	public final long getByteValueMemoryPhong(AbsoluteAddress address, Environment env) {
-		// TODO Auto-generated method stub
-		int result = 0;
-		try {
-			if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE)
-				return 0;
-
-			ExecutableImage module = getModule(address);
-
-			long fp = -1;
-			if (module == null) {
-				// logger.error("No module for address " + address
-				// + ". Cannot disassemble instruction!")
-				;
-				// PHONG: 20150501 ------------------------------------------
-				if (mainModule instanceof PEModule) {
-					if (((PEModule) mainModule).isInside(address.getValue()))
-						result = (int) ((PEModule) mainModule).getByteValue(address.getValue());
-				}
-				// ------------------------------------------------------------
-			} else {
-				fp = module.getFilePointer(address);
-				// Also check whether fp is out of the int range, since the
-				// X86Disassembler actually
-				// performs this cast in its implementation.
-				if (fp < 0 || (int) fp < 0) {
-					logger.error("Requested instruction outside of file area: " + address);
-				}
-				// else {
-				// if (!module.isCodeArea(address)) {
-				// logger.error("Requested instruction outside code section: "
-				// + address);
-				// return 0;
-				// }
-				// Disassembler dis = module.getDisassembler();
-				// instr =				 
-				X86Disassembler dis = (X86Disassembler) module.getDisassembler();
-				int byteIndex = (int) fp;
-				result = InstructionDecoder.readByte(dis.getCode(), byteIndex);
-				/*
-				 * if (instr == null) {
-				 * logger.error("Instruction could not be disassembled at: " +
-				 * address); }
-				 */
-			}
-
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
+	/*
+	 * // PHONG: debug here public final long
+	 * getByteValueMemoryPhong(AbsoluteAddress address) { // TODO Auto-generated
+	 * method stub int result = 0; try { if (harness.contains(address) ||
+	 * address.getValue() >= StubProvider.STUB_BASE) return 0;
+	 * 
+	 * ExecutableImage module = getModule(address);
+	 * 
+	 * long fp = -1; if (module == null) { //
+	 * logger.error("No module for address " + address // +
+	 * ". Cannot disassemble instruction!") ; // PHONG: 20150501
+	 * ------------------------------------------ if (mainModule instanceof
+	 * PEModule) { if (((PEModule) mainModule).isInside(address.getValue()))
+	 * result = (int) ((PEModule) mainModule).getByteValue(address.getValue());
+	 * } // ------------------------------------------------------------ } else
+	 * { fp = module.getFilePointer(address); // Also check whether fp is out of
+	 * the int range, since the // X86Disassembler actually // performs this
+	 * cast in its implementation. if (fp < 0 || (int) fp < 0) {
+	 * logger.error("Requested instruction outside of file area: " + address); }
+	 * // else { // if (!module.isCodeArea(address)) { //
+	 * logger.error("Requested instruction outside code section: " // +
+	 * address); // return 0; // } // Disassembler dis =
+	 * module.getDisassembler(); // instr = X86Disassembler dis =
+	 * (X86Disassembler) module.getDisassembler(); int byteIndex = (int) fp;
+	 * result = InstructionDecoder.readByte(dis.getCode(), byteIndex);
+	 * 
+	 * if (instr == null) {
+	 * logger.error("Instruction could not be disassembled at: " + address); }
+	 * 
+	 * }
+	 * 
+	 * } catch (Exception e) { System.out.println(e.toString()); } return
+	 * result; }
+	 */
 
 	public Set<CFAEdge> getCFA() {
 		return Collections.unmodifiableSet(cfa);
@@ -2021,22 +2013,21 @@ public final class Program {
 		if (!technique.contains(str)) {
 			// PHONG - 20150724
 			/*
-			if (str.contains("Encrypt/Decrypt"))
-				this.pDetection.getTechniques().isPackingUnpacking();
-			if (str.contains("Indirect Jump"))
-				this.pDetection.getTechniques().isIndirectJump();
-			if (str.contains("SEH")||str.contains("SetUpException"))
-				this.pDetection.getTechniques().isSEH();
-			if (str.contains("SMC"))
-				this.pDetection.getTechniques().isOverwriting();
-			if (str.contains("UseAPI: VirtualAlloc"))
-				this.pDetection.getTechniques().isStolenBytes();
-			if (str.contains("UseAPI: IsDebuggerPresent"))
-				this.pDetection.getTechniques().isAntiDebugging();
-			if (str.contains("UseAPI: LoadLibraryA")
-					|| str.contains("UseAPI: GetProcAddress"))
-				this.pDetection.getTechniques().isTwoAPIs();
-			*/
+			 * if (str.contains("Encrypt/Decrypt"))
+			 * this.pDetection.getTechniques().isPackingUnpacking(); if
+			 * (str.contains("Indirect Jump"))
+			 * this.pDetection.getTechniques().isIndirectJump(); if
+			 * (str.contains("SEH")||str.contains("SetUpException"))
+			 * this.pDetection.getTechniques().isSEH(); if (str.contains("SMC"))
+			 * this.pDetection.getTechniques().isOverwriting(); if
+			 * (str.contains("UseAPI: VirtualAlloc"))
+			 * this.pDetection.getTechniques().isStolenBytes(); if
+			 * (str.contains("UseAPI: IsDebuggerPresent"))
+			 * this.pDetection.getTechniques().isAntiDebugging(); if
+			 * (str.contains("UseAPI: LoadLibraryA") ||
+			 * str.contains("UseAPI: GetProcAddress"))
+			 * this.pDetection.getTechniques().isTwoAPIs();
+			 */
 			technique += " " + str;
 			// resultFile_Temp.appendInLine(str + " Nodes:" +
 			// getBPCFG().getVertexCount() + " ");
@@ -2071,33 +2062,29 @@ public final class Program {
 	public Logging getLog() {
 		return logger;
 	}
-	
+
 	// PHONG - 20150724
-	public PackerDetection getDetection()
-	{
+	public PackerDetection getDetection() {
 		return pDetection;
 	}
-	
+
 	public void setPackerResultFile(FileProcess packerResultFile) {
 		this.packerResultFile = packerResultFile;
 	}
-	
+
 	public FileProcess getPackerResultFile() {
 		return packerResultFile;
 	}
-	
-	public static String getPackerResultFileName ()
-	{
+
+	public static String getPackerResultFileName() {
 		return packerResultFileTXT;
 	}
-	
-	public void SetAnalyzingTime (long time)
-	{
+
+	public void SetAnalyzingTime(long time) {
 		this.analyzingTime = time;
 	}
-	
-	public long GetAnalyzingTime ()
-	{
+
+	public long GetAnalyzingTime() {
 		return this.analyzingTime;
 	}
 

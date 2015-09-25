@@ -3,6 +3,9 @@ package v2.org.analysis.complement;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86MemoryOperand;
+import org.jakstab.asm.x86.X86Register;
+import org.jakstab.asm.x86.X86RegisterPart;
+import org.jakstab.asm.x86.X86SegmentRegister;
 
 public class Convert {
 	public static String longToHex(long t) {
@@ -44,11 +47,9 @@ public class Convert {
 	}
 
 	public static String generateString(Operand op) {
-		if (op.getClass().getSimpleName().equals("X86Register")
-				|| op.getClass().getSimpleName().equals("X86RegisterPart")
-				|| op.getClass().getSimpleName().equals("X86SegmentRegister"))
+		if (op instanceof X86Register || op instanceof X86RegisterPart || op instanceof X86SegmentRegister)
 			return op.toString().replace("%", "");
-		else if (op.getClass().getSimpleName().equals("X86MemoryOperand")) {
+		else if (op instanceof X86MemoryOperand) {
 			X86MemoryOperand o = (X86MemoryOperand) op;
 			String ret = "memory";
 			if (o.getBase() != null)
@@ -169,13 +170,13 @@ public class Convert {
 
 	public static String reduceText(String text) {
 		int index = text.indexOf('\0');
-		
+
 		if (index == 0) {
 			return "";
 		} else if (index > 0) {
 			return text.substring(0, index);
 		}
-		
+
 		return text;
 	}
 
@@ -187,31 +188,31 @@ public class Convert {
 				break;
 			}
 		}
-		
+
 		if (index == 0) {
 			return "";
 		} else if (index > 0) {
 			return new String(text, 0, index);
 		}
-		
+
 		return new String(text);
 	}
-	
+
 	// Fix by khanh
 	public static long convetUnsignedValue_Mbit_1(long v, int numCount) {
-			// if (v == 4294967295l)
-			// System.out.println("Debug " + 4294967295l);
+		// if (v == 4294967295l)
+		// System.out.println("Debug " + 4294967295l);
 
-			if (numCount == 8)
-				return v | 0x80;
-			if (numCount == 16)
-				return v | 0x8000;
-			if (numCount == 32)
-				return v | 0x80000000l;
-			if (numCount == 64)
-				return v & 0x8000000000000000l;
+		if (numCount == 8)
+			return v | 0x80;
+		if (numCount == 16)
+			return v | 0x8000;
+		if (numCount == 32)
+			return v | 0x80000000l;
+		if (numCount == 64)
+			return v & 0x8000000000000000l;
 
-			return v;
-		}
+		return v;
+	}
 
 }

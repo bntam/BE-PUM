@@ -79,6 +79,7 @@ import v2.org.analysis.system.Storage;
 import v2.org.analysis.system.registry.EKeyValueType;
 import v2.org.analysis.system.registry.ERegKeySecuritynAccessRights;
 import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.Value;
 
 //import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
@@ -424,8 +425,8 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		String str = "This is a sample string";
-		System.out.println(str.lastIndexOf('c'));
+		Value v = null;
+		System.out.println((v instanceof LongValue));
 		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

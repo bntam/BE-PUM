@@ -108,11 +108,14 @@ public class Environment {
 		return ret;
 	}
 
-	public boolean equals(Environment e) {
-		return register.equals(e.getRegister()) && memory.equals(e.getMemory()) && stack.equals(e.getStack())
-		// && flag.equals(e.getFlag())
-		;
-	}
+	/**
+	 * YenNguyen: Unused method
+	 */
+//	public boolean equals(Environment e) {
+//		return register.equals(e.getRegister()) && memory.equals(e.getMemory()) && stack.equals(e.getStack())
+//		// && flag.equals(e.getFlag())
+//		;
+//	}
 
 	public void reset() {
 		// TODO Auto-generated method stub

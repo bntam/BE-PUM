@@ -301,7 +301,7 @@ public class X86TransitionRule extends TransitionRule {
 
 					String api = checkAPICall(r, curState);
 					if (api != null/* !api.equals("") */) {
-						apiHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, ins, path, pathList);
+						APIHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, ins, path, pathList);
 						this.setCFG = true;
 					} else {
 						AbsoluteAddress nextAddr = new AbsoluteAddress(((LongValue) r).getValue());
@@ -832,61 +832,6 @@ public class X86TransitionRule extends TransitionRule {
 		env.getSystem().getSEHHandler().setSEHReady(true);
 	}
 
-	/*
-	 * private BPState specialCase(Instruction inst, BPState curState, Formulas
-	 * l) { // TODO Auto-generated method stub if (inst instanceof
-	 * X86RetInstruction) { if
-	 * (Program.getProgram().getFileName().equals("hostname.exe") &&
-	 * curState.getLocation().toString().contains("010013ac")) { AbsoluteAddress
-	 * addr = new AbsoluteAddress(16781795); Instruction ins =
-	 * Program.getProgram().getInstruction(addr, curState.getEnvironement());
-	 * 
-	 * curState.setInstruction(ins); curState.setLocation(addr);
-	 * 
-	 * return curState; } else if (Program.getProgram().getFileName()
-	 * .equals("hostname.exe") &&
-	 * curState.getLocation().toString().contains("01001472")) { AbsoluteAddress
-	 * addr = new AbsoluteAddress(16781691); Instruction ins =
-	 * Program.getProgram().getInstruction(addr, curState.getEnvironement());
-	 * 
-	 * curState.setInstruction(ins); curState.setLocation(addr);
-	 * 
-	 * return curState; } }
-	 * 
-	 * return null; }
-	 */
-	/*
-	 * BPState specialProcessSEH(BPState curState) { // TODO Auto-generated
-	 * method stub // PHONG Environment env = curState.getEnvironement();
-	 * env.getRegister().mov("ebp", "esp"); env.getRegister().add("ebp", new
-	 * LongValue(20)); long ebp_addr = ((LongValue)
-	 * env.getRegister().getRegisterValue("ebp")) .getValue(); long
-	 * exception_took_place = ((LongValue) env.getMemory()
-	 * .getDoubleWordMemoryValue(ebp_addr)).getValue();
-	 * 
-	 * AbsoluteAddress nextAddr = new AbsoluteAddress(exception_took_place);
-	 * Instruction nextIns = Program.getProgram() .getInstruction(nextAddr,
-	 * env);
-	 * 
-	 * // Restore stack long seh_address =
-	 * curState.getEnvironement().getSystem()
-	 * .getSEHHandler().getStart().getSehHandler();
-	 * 
-	 * // Stack pointer while (true) { long top_stack_address = ((LongValue)
-	 * env.getRegister() .getRegisterValue("esp")).getValue(); Value t =
-	 * env.getMemory().getDoubleWordMemoryValue( top_stack_address);
-	 * 
-	 * if (t instanceof LongValue) { long top_stack_value = ((LongValue)
-	 * t).getValue(); env.getStack().pop(); if (seh_address == top_stack_value
-	 * || env.getStack().isEmpty()) break; }
-	 * 
-	 * if (env.getStack().isEmpty()) break; env.getRegister().add("esp", new
-	 * LongValue(4)); }
-	 * 
-	 * curState.setLocation(nextAddr); curState.setInstruction(nextIns);
-	 * 
-	 * return curState; }
-	 */
 	// PHONG - 20150422
 	public BPState specialProcessSEH(BPState curState) {
 		// Restore

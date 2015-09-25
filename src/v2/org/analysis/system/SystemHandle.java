@@ -106,19 +106,6 @@ public class SystemHandle {
 		return 0;
 	}
 
-	public long getProcAddress(long libraryHandle, long function) {
-		// TODO Auto-generated method stub
-		Library l = this.libraryHandle.getLibrary(libraryHandle);
-
-		if (l.getLibraryName().equals("ws2_32.dll"))
-			if (function == 57)
-				return l.getAPIAddr("gethostname");
-			else if (function == 115)
-				return l.getAPIAddr("WSAStarup");
-
-		return 0;
-	}
-
 	public long closeHandle(long x) {
 		// TODO Auto-generated method stub
 		if (fileHandle.containFile(x))
