@@ -1,0 +1,80 @@
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal.exe
+   Runtime:                         1072ms
+   Instructions:                             256
+   Nodes:                             256
+   Edges:                             255
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal.exe
+   Runtime:                          584ms
+   Instructions:                               5
+   Nodes:                               5
+   Edges:                               4
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal.exe
+   Runtime:                          569ms
+   Instructions:                               5
+   Nodes:                               5
+   Edges:                               4
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal1.exe
+   Runtime:                          481ms
+   Instructions:                               2
+   Nodes:                               2
+   Edges:                               1
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal1.exe
+   Runtime:                          475ms
+   Instructions:                               3
+   Nodes:                               3
+   Edges:                               2
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal1.exe
+   Runtime:                      2391854ms
+   Instructions:                               3
+   Nodes:                               3
+   Edges:                               2
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal2.exe
+   Runtime:                          407ms
+   Instructions:                               6
+   Nodes:                               6
+   Edges:                               5
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal2.exe
+   Runtime:                          376ms
+   Instructions:                               6
+   Nodes:                               6
+   Edges:                               5
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal2.exe
+   Runtime:                          402ms
+   Instructions:                               6
+   Nodes:                               6
+   Edges:                               5
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     sal2.exe
+   Runtime:                          397ms
+   Instructions:                               6
+   Nodes:                               6
+   Edges:                               5

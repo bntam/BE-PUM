@@ -144,7 +144,7 @@ public class X86InstructionInterpreter {
 
 			env.getFlag().changeFlagWithCMP(destVal, acc, env, opSize);
 
-		} else if (inst.getName().startsWith("int3")) {
+		} else if (inst.getName().startsWith("int3") || inst.getName().startsWith("int1")) {
 			if (env.getSystem().getSEHHandler().isSet())
 			{
 				SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
@@ -152,7 +152,7 @@ public class X86InstructionInterpreter {
 				return rule.processSEH(curState);
 			}
 			else
-				Program.getProgram().getLog().debugString("Not processed int3 at " + curState.getLocation());
+				Program.getProgram().getLog().debugString("Not processed" + inst.getName() + " at " + curState.getLocation());
 		} else if (inst.getName().startsWith("cmovne")) {
 
 			if (inst.getName().startsWith("cmovne") || inst.getName().equals("cmovnz")) {

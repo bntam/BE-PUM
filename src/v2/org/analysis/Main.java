@@ -332,41 +332,20 @@ public class Main {
 		// pathVirus = "asm/packer/";
 		// in = "api_test_pecompact.exe";
 
-		//pathVirus = "asm/api/multithread/";
-		pathVirus = "asm/api/";
-		//in = "SillyExample.exe"; // VS 7.0 (VS C++ 6.0)
-		in = "HOSTNAME.EXE"; // VS 7.0 (VS C++ 6.0)
+		pathVirus = "asm/api/multithread/";
+		//pathVirus = "asm/api/";
+		in = "Sample.exe"; // VS 7.0 (VS C++ 6.0)
+		//in = "HOSTNAME.EXE"; // VS 7.0 (VS C++ 6.0)
 //		in = "Temp.exe"; // VS C++ 2005 Express Edition
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
+		
+		pathVirus = "asm/testcase/";
+		//pathVirus = "asm/api/";
+		in = "sal2.exe"; // VS 7.0 (VS C++ 6.0)
 
 //		pathVirus = "asm/loria/";
 //		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee"; // Check API Yen
-//		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee";
-//		in = "0268e140e3e2de94ff543fdf6bbb2854a0db59d16796e981f6ae76b9fc20903b"; // Not Found 
-//		in = "0655c468136830eae362bd268d6faa9b8fa0e51b414645599bdf32b34d0658dd"; // Unknown
-//		in = "0447f1552343eb9fc55de53fc2acafa48371c5294f2d1a46134222b67218912f"; // Not Found
-//		in = "069d840b55c4ec59ae66e1a780677e96d0032288b5aa3da4bb313d542636b110";
-//		in = "048a03ff0e0d09afe66434dcfa807630dd2a085f5930a2a7ee835f65df489b57";
-//		in = "384d1a52c5819bd689c6c214fb7e4d0bd281243abd619564c8eb140d53d89e54";
-//		in = "23049bebb53eafee17bd3b104012325e3ec782b581965b69c13617168b0e08ef";
-//		in = "38dd7d91edf475239ec84ef06138256f068ba0d730473d37df7e34fda7653085";
-//		in = "247af01e8d6c20e25572bebd4fbef59147060f8b07033451a94b302bb1544ef7";
-//		in = "18fcb63593c65b4c6c9bbc51d00ae896df60b067e3c55b151efa52efbda0ae93"; // ThunRTMain@msvbvm60.dll
-//		in = "36f939f63fe1963ff8f877bcafeb701ba19ff97cd6d7c997092bd1702fed9fdc";
-//		in = "394d648d2782516da87f0b9ee807811f1bba71ae08937412cf0438bf89f5bf20";
-//		in = "07294ae21851f77cbe2468bf9f5ea0ee8c8e14bec0f93e17250598548ae0a91e";
-//		in = "3b90fab38fcd9cff8179623e25d878fbdcd1b467b2cb857e3b0d34892c0121ab";
-//		in = "3aced03d0ee8d467fb6110e0d292fe1d1a9e7ae013debf9e4472e0fd914c7881";
-//		in = "399491fa7a61b3f78798f4b17bf3b04d9ca9df8f1471eb12d7e0322ed218a6a6";
-//		in = "24422df07ae6f55bf33dc61ad961b951c3ab24a5c6405a93ab9d7ec85b5714af";
-//		in = "01928e6b46f6687109e13130ca12e53a904fb2b657635e5d2b1beaa94bd993f5";
-//		in = "25aad4c9696d60c181a3791cd9f4cfa794fbda9ea0db320eddcc0b3e8cd0cc49"; // ord(100)@msvbvm60.dll
-//		in = "0423966052d2166071d210e8191ef934211af8e09258aed657e0b091b33a37e2";
-//		in = "3a53dd67be9b5c145737cb64122cfe8d5bae641166a1f5633d2460eb149b2cf2";
-//		in = "248245fd3b835892d401c19dbf16aef2c9ea738eeb9d48dbc5b975069d1ffd1a";
-//		in = "2f0d42504c92e6eca536121624f8124c32e1c85e3aad748e7812af49b1cf6fb3"; // ord(100)@msvbvm60.dll
-//		in = "30d15d9e908d46667b7bb0c4931aff86918561f4faed890981939c48945dbd42";
 		
 		String path = pathVirus + in;
 		isGui = false;
