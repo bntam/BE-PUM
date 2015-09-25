@@ -23,7 +23,7 @@ public class ExternalMemory {
 
 	public synchronized static ExternalMemoryReturnData getByte(long address) {
 		
-		 /*ExternalMemoryReturnData ret = (new ExternalMemory()).new ExternalMemoryReturnData(); 
+		 ExternalMemoryReturnData ret = (new ExternalMemory()).new ExternalMemoryReturnData(); 
 		 ret.address = address;
 		 
 		 if (address == 0) { 
@@ -41,9 +41,9 @@ public class ExternalMemory {
 		 }
 		 
 		 // TODO Auto-generated catch block // e.printStackTrace(); }
-		 return ret;*/
+		 return ret;
 		 
-		return null;
+		//return null;
 	}
 
 	private static long calculateDoubleWordValue(long r1, long r2, long r3, long r4) {

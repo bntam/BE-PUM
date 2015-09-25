@@ -3,6 +3,7 @@
  */
 package v2.org.analysis.environment;
 
+
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
@@ -14,6 +15,12 @@ import org.jakstab.loader.ExecutableImage;
 import org.jakstab.loader.pe.PEModule;
 import org.jakstab.util.Pair;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.WinDef.HMODULE;
+
+import v2.org.analysis.apihandle.winapi.APIHandle;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
@@ -22,9 +29,9 @@ import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
 import v2.org.analysis.value.Value;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
 /**
  * @author NMHai
  *
@@ -186,25 +193,6 @@ public class Memory {
 
 		return true;
 	}
-
-	/*
-	 * // PHONG: debug here add some function to test private void
-	 * changeValuePhong(AbsoluteAddress address, Environment env) { // TODO
-	 * Auto-generated method stub ExecutableImage module =
-	 * Program.getProgram().getModule(address);
-	 * 
-	 * for (Map.Entry<X86MemoryOperand, Value> entry : memory.entrySet()) {
-	 * X86MemoryOperand m = (X86MemoryOperand) entry.getKey(); long addr =
-	 * evaluateAddress(m); if (Math.abs(addr - address.getValue()) < 5) { Value
-	 * v = entry.getValue(); if (v instanceof LongValue) { long fp1 =
-	 * module.getFilePointer(new AbsoluteAddress(addr));
-	 * 
-	 * // PHONG: debug here Value old = new LongValue(Program.getProgram()
-	 * .getByteValueMemoryPhong(new AbsoluteAddress(addr), env));
-	 * 
-	 * module.getDisassembler().setMemoryByteValue((int) fp1, ((LongValue)
-	 * v).getValue()); reset.put(addr, old); } } } }
-	 */
 
 	public Memory clone() {
 		Memory ret = new Memory();
@@ -1268,7 +1256,7 @@ public class Memory {
 		return ret;
 	}
 
-	public void resetImportTable(Program program) {
+	/*public void resetImportTable(Program program) {
 		program.getLog().info("Reset address of import table");
 		ExecutableImage m = program.getMainModule();
 
@@ -1284,6 +1272,96 @@ public class Memory {
 				setDoubleWordMemoryValue(entry.getKey().getValue(), new LongValue(temp));
 			}
 		}
+	}*/
+	
+	public void resetImportTable(Program program) {
+		program.getLog().info("Reset address of import table");
+		ExecutableImage m = program.getMainModule();
+
+		if (m != null && m instanceof PEModule) {
+			Map<AbsoluteAddress, Pair<String, String>> importTable = ((PEModule) m).getImportTable();
+
+			for (Map.Entry<AbsoluteAddress, Pair<String, String>> entry : importTable.entrySet()) {
+				// ret += entry.getKey() + "\t" + entry.getValue() + "\n";
+				// if (entry.getValue().getRight().contains("RegSetValueExA"))
+				// System.out.println("Debug");
+				long temp = getProcAddress(entry.getValue().getLeft(), entry.getValue().getRight());
+				setDoubleWordMemoryValue(entry.getKey().getValue(), new LongValue(temp));
+			}
+		}
+	}
+
+	private HMODULE apiCallReturn = null;
+
+	class LoadLibThread extends Thread {
+		private String libName = null;
+
+		public LoadLibThread(String lib) {
+			this.libName = lib;
+		}
+
+		@Override
+		public void run() {
+			apiCallReturn = Kernel32DLL.INSTANCE.LoadLibrary(this.libName);
+		}
+	}
+
+	private long getProcAddress(String libraryName, String procName) {
+		// TODO Auto-generated method stub
+		System.out.println("Library Name:" + libraryName);
+		long libHandle = 0;
+
+		if (APIHandle.libraryHandle.containsValue(libraryName)) {
+			Iterator<Map.Entry<Long, String>> itr=  APIHandle.libraryHandle.entrySet().iterator();
+            //please check 
+            while(itr.hasNext()) {
+            	Entry<Long, String> temp = itr.next();
+                if (temp.getValue().equals(libraryName)) {
+                	libHandle = temp.getKey();
+                	break;
+                }
+            }
+		} else {
+			LoadLibThread thread = new LoadLibThread(libraryName);
+			try {
+				thread.start(); 
+				Thread.sleep(100);
+				if (apiCallReturn == null) {
+					Thread.sleep(1000);
+				}
+				thread.interrupt();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			libHandle = (apiCallReturn == null) ? 0 : Pointer.nativeValue(apiCallReturn.getPointer());
+
+			// register.mov("edx", new LongValue(0x140608));
+			// register.mov("ecx", new LongValue(0x7c801bfa));
+			System.out.println("Return Value: " + libHandle);
+			APIHandle.libraryHandle.put(libHandle, libraryName);
+		}
+		
+		System.out.println("Function Name:" + procName + ", Library Handle:" + libHandle);
+
+		HMODULE hModule = new HMODULE();
+		hModule.setPointer(new Pointer(libHandle));
+
+		int ret = Kernel32DLLwithoutOption.INSTANCE.GetProcAddress(hModule, procName);
+		
+		if (ret != 0) {
+			String libName = APIHandle.libraryHandle.get(libHandle);
+			if (libName == null) {
+				// Library temp =
+				// curState.getEnvironement().getSystem().getLibraryHandle().getLibrary(t1);
+				// if (temp != null)
+				libName = env.getSystem().getLibraryName(libHandle);
+			}
+
+			APIHandle.processAddressHandle.put((long) ret, procName + '@' + libName);
+		}
+		System.out.println("Return Value: " + ret);
+		return ret;
 	}
 
 	public void setValue(Map<String, Long> z3Value) {

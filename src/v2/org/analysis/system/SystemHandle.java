@@ -244,7 +244,7 @@ public class SystemHandle {
 		return 0;
 	}
 
-	public long getProcAddress(String libraryName, String functionName) {
+	/*public long getProcAddress(String libraryName, String functionName) {
 		if (libraryName.toLowerCase().contains("kernel32.dll"))
 			return getKernel().getProcAddress(functionName);
 
@@ -260,7 +260,7 @@ public class SystemHandle {
 			return l.getAPIAddr(functionName);
 
 		return 0;
-	}
+	}*/
 	
 	public String getLibraryName(long libraryHandle) {
 		LibImage kernel = getKernel();
