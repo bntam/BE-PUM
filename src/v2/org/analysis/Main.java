@@ -334,15 +334,15 @@ public class Main {
 
 		pathVirus = "asm/api/multithread/";
 		//pathVirus = "asm/api/";
-		in = "Sample.exe"; // VS 7.0 (VS C++ 6.0)
+		in = "SillyExampleFixed.exe"; // VS 7.0 (VS C++ 6.0)
 		//in = "HOSTNAME.EXE"; // VS 7.0 (VS C++ 6.0)
 //		in = "Temp.exe"; // VS C++ 2005 Express Edition
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
 		
-		pathVirus = "asm/testcase/";
+//		pathVirus = "asm/testcase/";
 		//pathVirus = "asm/api/";
-		in = "sal2.exe"; // VS 7.0 (VS C++ 6.0)
+//		in = "sal2.exe"; // VS 7.0 (VS C++ 6.0)
 
 //		pathVirus = "asm/loria/";
 //		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee"; // Check API Yen

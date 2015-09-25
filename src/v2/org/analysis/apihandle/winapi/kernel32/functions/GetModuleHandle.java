@@ -73,7 +73,7 @@ public class GetModuleHandle extends Kernel32API {
 
 		if (libraryName != null) {
 			value = ((LongValue) register.getRegisterValue("eax")).getValue();
-			APIHandle.libraryHandle.put(value, libraryName);
+			APIHandle.libraryHandleMap.put(value, libraryName);
 		}
 	}
 

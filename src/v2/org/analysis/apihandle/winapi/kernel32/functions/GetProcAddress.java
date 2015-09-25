@@ -38,25 +38,32 @@ public class GetProcAddress extends Kernel32API {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 		String lpProcName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-		System.out.println("Function Name:" + lpProcName + ", Library Handle:" + t1);
 
-		HMODULE hModule = new HMODULE();
-		hModule.setPointer(new Pointer(t1));
+		long ret = this.execute(t1, lpProcName);
 
-		int ret = Kernel32DLLwithoutOption.INSTANCE.GetProcAddress(hModule, lpProcName);
 		register.mov("eax", new LongValue(ret));
+	}
+
+	public long execute(long libHandle, String procName) {
+		System.out.println("Function Name:" + procName + ", Library Handle:0x" + Long.toHexString(libHandle));
+		
+		HMODULE hModule = new HMODULE();
+		hModule.setPointer(new Pointer(libHandle));
+		
+		int ret = Kernel32DLLwithoutOption.INSTANCE.GetProcAddress(hModule, procName);
 
 		if (ret != 0) {
-			String libName = APIHandle.libraryHandle.get(t1);
+			String libName = APIHandle.libraryHandleMap.get(libHandle);
 			if (libName == null) {
 				// Library temp =
 				// curState.getEnvironement().getSystem().getLibraryHandle().getLibrary(t1);
 				// if (temp != null)
-				libName = curState.getEnvironement().getSystem().getLibraryName(t1);
+				libName = curState.getEnvironement().getSystem().getLibraryName(libHandle);
 			}
 
-			APIHandle.processAddressHandle.put((long) ret, lpProcName + '@' + libName);
+			APIHandle.procAddressHandleMap.put((long) ret, procName + '@' + libName);
 		}
-	}
 
+		return ret;
+	}
 }

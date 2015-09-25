@@ -21,6 +21,8 @@ import com.sun.jna.platform.win32.WinDef.HMODULE;
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
+import v2.org.analysis.apihandle.winapi.kernel32.functions.GetProcAddress;
+import v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
@@ -1291,77 +1293,23 @@ public class Memory {
 		}
 	}
 
-	private HMODULE apiCallReturn = null;
-
-	class LoadLibThread extends Thread {
-		private String libName = null;
-
-		public LoadLibThread(String lib) {
-			this.libName = lib;
-		}
-
-		@Override
-		public void run() {
-			apiCallReturn = Kernel32DLL.INSTANCE.LoadLibrary(this.libName);
-		}
-	}
-
 	private long getProcAddress(String libraryName, String procName) {
-		// TODO Auto-generated method stub
-		System.out.println("Library Name:" + libraryName);
 		long libHandle = 0;
 
-		if (APIHandle.libraryHandle.containsValue(libraryName)) {
-			Iterator<Map.Entry<Long, String>> itr=  APIHandle.libraryHandle.entrySet().iterator();
-            //please check 
-            while(itr.hasNext()) {
-            	Entry<Long, String> temp = itr.next();
-                if (temp.getValue().equals(libraryName)) {
-                	libHandle = temp.getKey();
-                	break;
-                }
-            }
-		} else {
-			LoadLibThread thread = new LoadLibThread(libraryName);
-			try {
-				thread.start(); 
-				Thread.sleep(100);
-				if (apiCallReturn == null) {
-					Thread.sleep(1000);
+		// Try to find the handle of current library
+		if (APIHandle.libraryHandleMap.containsValue(libraryName)) {
+			for (Map.Entry<Long, String> handle : APIHandle.libraryHandleMap.entrySet()) {
+				if (handle.getValue().equals(libraryName)) {
+					libHandle = handle.getKey();
+					break;
 				}
-				thread.interrupt();
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
-
-			libHandle = (apiCallReturn == null) ? 0 : Pointer.nativeValue(apiCallReturn.getPointer());
-
-			// register.mov("edx", new LongValue(0x140608));
-			// register.mov("ecx", new LongValue(0x7c801bfa));
-			System.out.println("Return Value: " + libHandle);
-			APIHandle.libraryHandle.put(libHandle, libraryName);
+		} else {
+			// If can not find, xecute LoadLibrary API
+			libHandle = (new LoadLibrary()).execute(libraryName);
 		}
 		
-		System.out.println("Function Name:" + procName + ", Library Handle:" + libHandle);
-
-		HMODULE hModule = new HMODULE();
-		hModule.setPointer(new Pointer(libHandle));
-
-		int ret = Kernel32DLLwithoutOption.INSTANCE.GetProcAddress(hModule, procName);
-		
-		if (ret != 0) {
-			String libName = APIHandle.libraryHandle.get(libHandle);
-			if (libName == null) {
-				// Library temp =
-				// curState.getEnvironement().getSystem().getLibraryHandle().getLibrary(t1);
-				// if (temp != null)
-				libName = env.getSystem().getLibraryName(libHandle);
-			}
-
-			APIHandle.processAddressHandle.put((long) ret, procName + '@' + libName);
-		}
-		System.out.println("Return Value: " + ret);
-		return ret;
+		return (new GetProcAddress()).execute(libHandle, procName);
 	}
 
 	public void setValue(Map<String, Long> z3Value) {
