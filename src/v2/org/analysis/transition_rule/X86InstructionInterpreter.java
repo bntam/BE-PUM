@@ -42,8 +42,19 @@ public class X86InstructionInterpreter {
 		Value d = null, s = null;
 		int opSize = rule.getBitCount(inst);
 		// System.out.println("Instruction: " + inst.getName());
-
-		if (inst.getName().startsWith("rdtsc")) {
+		
+		if (inst.getName().startsWith("fld")) {
+			System.out.println("Instruction: " + inst.getName());
+			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+				if (!rule.checkAddressValid(env, (X86MemoryOperand) dest)) {
+					// SEH Exploit
+					System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
+					return rule.processSEH(path.getCurrentState());
+				}
+				d = env.getMemory().getMemoryValue((X86MemoryOperand) dest, inst);
+				 System.out.println("Value: " + d);
+			}
+		 } else if (inst.getName().startsWith("rdtsc")) {
 			// System.out.println("rdtsc");
 			long time_stamp = System.nanoTime();
 			AnalysisBit analysisBit = new AnalysisBit();
