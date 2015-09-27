@@ -21,7 +21,6 @@ public class BPState {
 	private Instruction inst;
 	private Formulas pathCondition;
 	private boolean feasible = true;
-	private int index = 0; // Binh usage
 
 	/**
 	 * @param env
@@ -97,16 +96,6 @@ public class BPState {
 
 	public void setPathCondition(Formulas pathCondition) {
 		this.pathCondition = pathCondition;
-	}
-
-	// Binh usage
-	public int getIndex() {
-		return index;
-	}
-	
-	// Binh usage
-	public void setIndex(int index) {
-		this.index = index;
 	}
 
 	public void setValue(Map<String, Long> z3Value) {
