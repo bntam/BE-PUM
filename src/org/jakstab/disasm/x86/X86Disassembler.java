@@ -119,18 +119,35 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
 				return new X86MoveInstruction("movl", new X86MemoryOperand(DataType.INT32, new X86SegmentRegister(4,
 						"%fs"), 0), new X86Register(4, "%esp"), 6, 1152);
-			/*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
+			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 143
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 6
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
 					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
 				return new X86Instruction("popl", new X86MemoryOperand(DataType.INT32,
-						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);*/
+						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
 		}
 		
-		if (firstByte == 193 && InstructionDecoder.readByte(code, byteIndex + 1) == 243)
-				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebx"), 
-						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);		
+		if (firstByte == 193) {
+			if (InstructionDecoder.readByte(code, byteIndex + 1) == 240)
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%eax"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
+			 else if (InstructionDecoder.readByte(code, byteIndex + 1) == 24)
+						return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebx"), 
+								new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
+			/*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246 || InstructionDecoder.readByte(code, byteIndex + 1) == 230)
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ecx"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
+			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 249 || InstructionDecoder.readByte(code, byteIndex + 1) == 233)
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edx"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);*/
+			 else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246)
+					return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esi"), 
+							new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+			 /*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246)
+					return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edi"), 
+							new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);*/
+		}
 
 		if (firstByte == 192 && InstructionDecoder.readByte(code, byteIndex + 1) == 240
 				     && InstructionDecoder.readByte(code, byteIndex + 2) == 3)
