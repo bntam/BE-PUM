@@ -12,7 +12,10 @@ import java.lang.reflect.Constructor;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.sql.Struct;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.jakstab.Program;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
@@ -73,6 +76,7 @@ import v2.org.analysis.apihandle.winapi.ws2_32.Ws2_32DLL;
 import v2.org.analysis.apihandle.winapi.ws2_32.functions.WSAStartup;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
+import v2.org.analysis.environment.ExternalMemory;
 import v2.org.analysis.environment.Memory;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.Storage;
@@ -87,6 +91,8 @@ import v2.org.analysis.value.LongValue;
  *
  */
 public class Test {
+	
+	private static final Logger LOGGER = Logger.getLogger(Test.class);
 
 	/**
 	 * @param args
@@ -424,7 +430,11 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		System.out.println(0x00008888);
+		Logger dblogger = Logger.getLogger("debugLogger");
+		dblogger.info("TEST");
+		
+		Logger logger = Logger.getLogger(Test.class);
+		logger.debug(new Test());
 		
 		System.out.println("Code: " + x);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());

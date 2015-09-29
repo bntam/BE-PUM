@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/jna-4.1.0.jar" sourcepath="/jna-master"/>
 	<classpathentry kind="lib" path="lib/jna-platform-4.1.0.jar" sourcepath="/jna-master"/>
 	<classpathentry kind="lib" path="lib"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
