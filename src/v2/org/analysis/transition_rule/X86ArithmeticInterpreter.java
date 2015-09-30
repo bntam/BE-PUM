@@ -1,6 +1,5 @@
 package v2.org.analysis.transition_rule;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86ArithmeticInstruction;

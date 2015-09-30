@@ -6,80 +6,12 @@
  */
 package v2.org.analysis.apihandle.winapi;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Constructor;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.sql.Struct;
+import org.apache.log4j.Logger;
 
-import org.jakstab.Program;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.Pointer;
-import com.sun.jna.Structure.ByReference;
-import com.sun.jna.WString;
-import com.sun.jna.platform.win32.Advapi32;
-import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
-import com.sun.jna.platform.win32.GDI32;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.Msi;
-import com.sun.jna.platform.win32.NtDll;
-import com.sun.jna.platform.win32.Ole32;
-import com.sun.jna.platform.win32.Shell32;
-import com.sun.jna.platform.win32.Shell32Util;
-import com.sun.jna.platform.win32.ShellAPI;
-import com.sun.jna.platform.win32.Tlhelp32.PROCESSENTRY32;
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
-import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
-import com.sun.jna.platform.win32.WinDef.BOOL;
-import com.sun.jna.platform.win32.WinDef.DWORD;
-import com.sun.jna.platform.win32.WinDef.DWORDByReference;
-import com.sun.jna.platform.win32.WinDef.HMODULE;
-import com.sun.jna.platform.win32.WinDef.HWND;
-import com.sun.jna.platform.win32.WinDef.LONG;
-import com.sun.jna.platform.win32.WinDef.PVOID;
-import com.sun.jna.platform.win32.WinDef.UINT;
-import com.sun.jna.platform.win32.WinDef.ULONG;
-import com.sun.jna.platform.win32.WinDef.ULONGByReference;
-import com.sun.jna.platform.win32.WinNT.ACL;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
-import com.sun.jna.platform.win32.WinReg;
-import com.sun.jna.platform.win32.WinReg.HKEY;
-import com.sun.jna.platform.win32.WinReg.HKEYByReference;
-import com.sun.jna.platform.win32.Winspool;
-import com.sun.jna.ptr.IntByReference;
-import com.sun.jna.ptr.PointerByReference;
-
-import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
-import v2.org.analysis.apihandle.winapi.mscoree.MsCorEEDLL;
-import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
-import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
-import v2.org.analysis.apihandle.winapi.shlwapi.ShlwapiDLL;
-import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
-import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
-import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
-import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
-import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.PROCESS_BASIC_INFORMATION;
 import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
-import v2.org.analysis.apihandle.winapi.structures.WinSock.WSADATA;
-import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-import v2.org.analysis.apihandle.winapi.ws2_32.Ws2_32DLL;
-import v2.org.analysis.apihandle.winapi.ws2_32.functions.WSAStartup;
-import v2.org.analysis.complement.BitVector;
-import v2.org.analysis.complement.Convert;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.system.Storage;
-import v2.org.analysis.system.registry.EKeyValueType;
-import v2.org.analysis.system.registry.ERegKeySecuritynAccessRights;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
+
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.WinDef.LONG;
 
 //import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
@@ -88,6 +20,8 @@ import v2.org.analysis.value.Value;
  *
  */
 public class Test {
+	
+	private static final Logger LOGGER = Logger.getLogger(Test.class);
 
 	/**
 	 * @param args
@@ -424,13 +358,10 @@ public class Test {
 		// String str = "abc";
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
-
-		Value v = null;
-		System.out.println((v instanceof LongValue));
 		
-		System.out.println("Code: " + x);
+		System.out.println(100 + ":" + 10);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
-		x = (long) 1;
+		x = 1;
 	}
 }
 
@@ -473,6 +404,7 @@ class NewThread1 extends Thread {
 	}
 
 	// This is the entry point for the Thread.
+	@Override
 	public void run() {
 		try {
 			Thread.sleep(1000);
@@ -494,6 +426,7 @@ class NewThread2 extends Thread {
 	}
 
 	// This is the entry point for the Thread.
+	@Override
 	public void run() {
 		try {
 			Thread.sleep(2000);

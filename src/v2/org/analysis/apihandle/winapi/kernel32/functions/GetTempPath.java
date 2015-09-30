@@ -11,6 +11,7 @@ import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.complement.Convert;
 
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
@@ -62,8 +63,11 @@ public class GetTempPath extends Kernel32API {
 		char[] lpBuffer = new char[(int) t1];
 		DWORD ret = Kernel32.INSTANCE.GetTempPath(new DWORD(t1), lpBuffer);
 
-		String tmpPath = new String(lpBuffer);
-		memory.setText(new X86MemoryOperand(DataType.INT32, this.params.get(1)), tmpPath, tmpPath.length());
+		String tmpPath = Convert.reduceText(lpBuffer);
+		memory.setText(this.params.get(1).longValue(), tmpPath, tmpPath.length());
+		// Null-terminated character
+		memory.setByteMemoryValue(this.params.get(1).longValue() + tmpPath.length(), new LongValue(0));
+		
 		System.out.println("Temp Path: " + tmpPath);
 		register.mov("eax", new LongValue(ret.longValue()));
 	}

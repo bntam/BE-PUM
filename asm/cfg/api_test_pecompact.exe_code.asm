@@ -155,825 +155,823 @@ VirtualAlloc@kernel32.dll: API Node
 0x004048ed:	movl 0x8(%esi), %edx
 0x004048f0:	movl %ecx, 0xc(%ebx)
 0x004048f3:	movl 0x14(%esi), %ecx
-0x004048f6:	call 0x00270188
-0x00270188:	pushl %ebx
-0x00270189:	pushl %edi
-0x0027018a:	pushl %esi
-0x0027018b:	pushl %ebp
-0x0027018c:	call 0x00270191
-0x00270191:	popl %ebp
-0x00270192:	subl %ebp, $0x1000134c<UINT32>
-0x00270198:	leal %esi, 0x10001343(%ebp)
-0x0027019e:	movl %eax, -4(%esi)
-0x002701a1:	addl %eax, $0x4<UINT8>
-0x002701a4:	subl %esi, %eax
-0x002701a6:	cld
-0x002701a7:	movl %ebx, %esi
-0x002701a9:	movl %edx, 0x8(%esi)
-0x002701ac:	movl %esi, 0x1c(%esi)
-0x002701af:	addl %esi, %edx
-0x002701b1:	leal %edi, 0x10002f2f(%ebp)
-0x002701b7:	lodsl %eax, %ds:(%esi)
-0x002701b8:	stosl %es:(%edi), %eax
-0x002701b9:	lodsl %eax, %ds:(%esi)
-0x002701ba:	stosl %es:(%edi), %eax
-0x002701bb:	lodsl %eax, %ds:(%esi)
-0x002701bc:	stosl %es:(%edi), %eax
-0x002701bd:	lodsl %eax, %ds:(%esi)
-0x002701be:	stosl %es:(%edi), %eax
-0x002701bf:	nop
-0x002701c0:	cmpl 0x48(%ebx), $0x1<UINT8>
-0x002701c4:	je 21
-0x002701c6:	movl %esi, 0x44(%ebx)
-0x002701c9:	testl %esi, %esi
-0x002701cb:	je 14
-0x002701cd:	movl %ecx, $0x23<UINT32>
-0x002701d2:	addl %esi, %edx
-0x002701d4:	movl %edi, 0x40(%ebx)
-0x002701d7:	addl %edi, %edx
-0x002701d9:	rep movsb %es:(%edi), %ds:(%esi)
-0x002701db:	movl %esi, %ebx
-0x002701dd:	leal %edi, 0x10002f1b(%ebp)
-0x002701e3:	addl (%edi), %ebp
-0x002701e5:	addl 0x4(%edi), %ebp
-0x002701e8:	addl 0x8(%edi), %ebp
-0x002701eb:	leal %ecx, 0x10002eff(%ebp)
-0x002701f1:	pushl %ecx
-0x002701f2:	call 0x0027033d
-0x0027033d:	pushl %ebp
-0x0027033e:	movl %ebp, %esp
-0x00270340:	addl %esp, $0xfffffffc<UINT8>
-0x00270343:	pushl %ebx
-0x00270344:	pushl %edi
-0x00270345:	pushl %esi
-0x00270346:	call 0x0027034b
-0x0027034b:	popl %ebx
-0x0027034c:	subl %ebx, $0x10001506<UINT32>
-0x00270352:	movl %esi, 0x8(%ebp)
-0x00270355:	movl %ecx, (%esi)
-0x00270357:	addl %ecx, %ebx
-0x00270359:	pushl %ecx
-0x0027035a:	call LoadLibraryA@kernel32.dll
+0x004048f6:	call 0x00310188
+0x00310188:	pushl %ebx
+0x00310189:	pushl %edi
+0x0031018a:	pushl %esi
+0x0031018b:	pushl %ebp
+0x0031018c:	call 0x00310191
+0x00310191:	popl %ebp
+0x00310192:	subl %ebp, $0x1000134c<UINT32>
+0x00310198:	leal %esi, 0x10001343(%ebp)
+0x0031019e:	movl %eax, -4(%esi)
+0x003101a1:	addl %eax, $0x4<UINT8>
+0x003101a4:	subl %esi, %eax
+0x003101a6:	cld
+0x003101a7:	movl %ebx, %esi
+0x003101a9:	movl %edx, 0x8(%esi)
+0x003101ac:	movl %esi, 0x1c(%esi)
+0x003101af:	addl %esi, %edx
+0x003101b1:	leal %edi, 0x10002f2f(%ebp)
+0x003101b7:	lodsl %eax, %ds:(%esi)
+0x003101b8:	stosl %es:(%edi), %eax
+0x003101b9:	lodsl %eax, %ds:(%esi)
+0x003101ba:	stosl %es:(%edi), %eax
+0x003101bb:	lodsl %eax, %ds:(%esi)
+0x003101bc:	stosl %es:(%edi), %eax
+0x003101bd:	lodsl %eax, %ds:(%esi)
+0x003101be:	stosl %es:(%edi), %eax
+0x003101bf:	nop
+0x003101c0:	cmpl 0x48(%ebx), $0x1<UINT8>
+0x003101c4:	je 21
+0x003101c6:	movl %esi, 0x44(%ebx)
+0x003101c9:	testl %esi, %esi
+0x003101cb:	je 14
+0x003101cd:	movl %ecx, $0x23<UINT32>
+0x003101d2:	addl %esi, %edx
+0x003101d4:	movl %edi, 0x40(%ebx)
+0x003101d7:	addl %edi, %edx
+0x003101d9:	rep movsb %es:(%edi), %ds:(%esi)
+0x003101db:	movl %esi, %ebx
+0x003101dd:	leal %edi, 0x10002f1b(%ebp)
+0x003101e3:	addl (%edi), %ebp
+0x003101e5:	addl 0x4(%edi), %ebp
+0x003101e8:	addl 0x8(%edi), %ebp
+0x003101eb:	leal %ecx, 0x10002eff(%ebp)
+0x003101f1:	pushl %ecx
+0x003101f2:	call 0x0031033d
+0x0031033d:	pushl %ebp
+0x0031033e:	movl %ebp, %esp
+0x00310340:	addl %esp, $0xfffffffc<UINT8>
+0x00310343:	pushl %ebx
+0x00310344:	pushl %edi
+0x00310345:	pushl %esi
+0x00310346:	call 0x0031034b
+0x0031034b:	popl %ebx
+0x0031034c:	subl %ebx, $0x10001506<UINT32>
+0x00310352:	movl %esi, 0x8(%ebp)
+0x00310355:	movl %ecx, (%esi)
+0x00310357:	addl %ecx, %ebx
+0x00310359:	pushl %ecx
+0x0031035a:	call LoadLibraryA@kernel32.dll
 LoadLibraryA@kernel32.dll: API Node	
-0x00270360:	movl -4(%ebp), %eax
-0x00270363:	movl %edx, 0x4(%esi)
-0x00270366:	movl %edi, 0x8(%esi)
-0x00270369:	addl %edx, %ebx
-0x0027036b:	addl %edi, %ebx
-0x0027036d:	xorl %eax, %eax
-0x0027036f:	addl %eax, (%edx)
-0x00270371:	je 0x00270389
-0x00270373:	pushl %edx
-0x00270374:	movl %eax, (%edx)
-0x00270376:	addl %eax, %ebx
-0x00270378:	pushl %eax
-0x00270379:	pushl -4(%ebp)
-0x0027037c:	call GetProcAddress@kernel32.dll
+0x00310360:	movl -4(%ebp), %eax
+0x00310363:	movl %edx, 0x4(%esi)
+0x00310366:	movl %edi, 0x8(%esi)
+0x00310369:	addl %edx, %ebx
+0x0031036b:	addl %edi, %ebx
+0x0031036d:	xorl %eax, %eax
+0x0031036f:	addl %eax, (%edx)
+0x00310371:	je 0x00310389
+0x00310373:	pushl %edx
+0x00310374:	movl %eax, (%edx)
+0x00310376:	addl %eax, %ebx
+0x00310378:	pushl %eax
+0x00310379:	pushl -4(%ebp)
+0x0031037c:	call GetProcAddress@kernel32.dll
 GetProcAddress@kernel32.dll: API Node	
-0x00270382:	stosl %es:(%edi), %eax
-0x00270383:	popl %edx
-0x00270384:	addl %edx, $0x4<UINT8>
-0x00270387:	jmp 0x0027036d
-0x00270389:	addl %esi, $0xc<UINT8>
-0x0027038c:	addl %eax, (%esi)
-0x0027038e:	jne 0x00270355
-0x00270390:	popl %esi
-0x00270391:	popl %edi
-0x00270392:	popl %ebx
-0x00270393:	leave
-0x00270394:	ret $0x4<UINT16>
+0x00310382:	stosl %es:(%edi), %eax
+0x00310383:	popl %edx
+0x00310384:	addl %edx, $0x4<UINT8>
+0x00310387:	jmp 0x0031036d
+0x00310389:	addl %esi, $0xc<UINT8>
+0x0031038c:	addl %eax, (%esi)
+0x0031038e:	jne 0x00310355
+0x00310390:	popl %esi
+0x00310391:	popl %edi
+0x00310392:	popl %ebx
+0x00310393:	leave
+0x00310394:	ret $0x4<UINT16>
 
-0x002701f7:	nop
-0x002701f8:	nop
-0x002701f9:	nop
-0x002701fa:	nop
-0x002701fb:	nop
-0x002701fc:	nop
-0x002701fd:	nop
-0x002701fe:	nop
-0x002701ff:	movl %ecx, 0x2c(%esi)
-0x00270202:	movl 0x10002f2b(%ebp), %ecx
-0x00270208:	pushl $0x4<UINT8>
-0x0027020a:	pushl $0x1000<UINT32>
-0x0027020f:	pushl %ecx
-0x00270210:	pushl $0x0<UINT8>
-0x00270212:	call VirtualAlloc@kernel32.dll
-0x00270218:	movl 0x10002f27(%ebp), %eax
-0x0027021e:	pushl %esi
-0x0027021f:	call 0x0027061a
-0x0027061a:	pushl %ebp
-0x0027061b:	movl %ebp, %esp
-0x0027061d:	addl %esp, $0xffffffe8<UINT8>
-0x00270620:	pushl %ebx
-0x00270621:	pushl %edi
-0x00270622:	pushl %esi
-0x00270623:	call 0x00270628
-0x00270628:	popl %ebx
-0x00270629:	subl %ebx, $0x100017e3<UINT32>
-0x0027062f:	movl %esi, 0x8(%ebp)
-0x00270632:	xorl %eax, %eax
-0x00270634:	xorl %ecx, %ecx
-0x00270636:	addl %ecx, 0x3c(%esi)
-0x00270639:	je 10
-0x0027063b:	movl %edx, 0x8(%esi)
-0x0027063e:	movl %edi, %esi
-0x00270640:	addl %esi, $0x50<UINT8>
-0x00270643:	jmp 0x0027064c
-0x0027064c:	movl -4(%ebp), %eax
-0x0027064f:	movzwl %eax, 0x2(%edi)
-0x00270653:	movl -16(%ebp), %eax
-0x00270656:	pushl %ecx
-0x00270657:	pushl %edx
-0x00270658:	pushl %esi
-0x00270659:	movzwl %eax, 0x10(%esi)
-0x0027065d:	testl %eax, $0x10<UINT32>
-0x00270662:	je 0x0027073e
-0x0027073e:	popl %esi
-0x0027073f:	popl %edx
-0x00270740:	popl %ecx
-0x00270741:	addl %esi, $0x1c<UINT8>
-0x00270744:	decl %ecx
-0x00270745:	jne 0x00270656
-0x00270668:	pushl %esi
-0x00270669:	movl %edi, 0x10002f27(%ebx)
-0x0027066f:	movl -20(%ebp), %edi
-0x00270672:	movl %ecx, 0x8(%esi)
-0x00270675:	movl %eax, 0x14(%esi)
-0x00270678:	subl %ecx, %eax
-0x0027067a:	movl %esi, (%esi)
-0x0027067c:	addl %esi, %edx
-0x0027067e:	movl %eax, %ecx
-0x00270680:	sarl %ecx, $0x2<UINT8>
-0x00270683:	rep movsl %es:(%edi), %ds:(%esi)
-0x00270685:	addl %ecx, %eax
-0x00270687:	andl %ecx, $0x3<UINT8>
-0x0027068a:	rep movsb %es:(%edi), %ds:(%esi)
-0x0027068c:	popl %esi
-0x0027068d:	nop
-0x0027068e:	nop
-0x0027068f:	nop
-0x00270690:	nop
-0x00270691:	nop
-0x00270692:	nop
-0x00270693:	nop
-0x00270694:	nop
-0x00270695:	nop
-0x00270696:	nop
-0x00270697:	nop
-0x00270698:	nop
-0x00270699:	nop
-0x0027069a:	nop
-0x0027069b:	nop
-0x0027069c:	nop
-0x0027069d:	nop
-0x0027069e:	nop
-0x0027069f:	nop
-0x002706a0:	nop
-0x002706a1:	nop
-0x002706a2:	nop
-0x002706a3:	nop
-0x002706a4:	nop
-0x002706a5:	nop
-0x002706a6:	nop
-0x002706a7:	nop
-0x002706a8:	nop
-0x002706a9:	nop
-0x002706aa:	nop
-0x002706ab:	nop
-0x002706ac:	nop
-0x002706ad:	nop
-0x002706ae:	nop
-0x002706af:	nop
-0x002706b0:	nop
-0x002706b1:	nop
-0x002706b2:	nop
-0x002706b3:	movl %eax, 0x4(%esi)
-0x002706b6:	addl %eax, %edx
-0x002706b8:	movl -24(%ebp), %eax
-0x002706bb:	movl %eax, -16(%ebp)
-0x002706be:	decl %eax
-0x002706bf:	movl -12(%ebp), %eax
-0x002706c2:	pushl %edx
-0x002706c3:	pushl %eax
-0x002706c4:	pushl 0x8(%ebp)
-0x002706c7:	call 0x00270a08
-0x00270a08:	pushl %ebp
-0x00270a09:	movl %ebp, %esp
-0x00270a0b:	addl %esp, $0xfffffffc<UINT8>
-0x00270a0e:	pushl %ebx
-0x00270a0f:	pushl %edi
-0x00270a10:	pushl %esi
-0x00270a11:	movl %ebx, 0x8(%ebp)
-0x00270a14:	movl %esi, %ebx
-0x00270a16:	movl %ecx, 0x30(%ebx)
-0x00270a19:	subl %esi, %ecx
-0x00270a1b:	movl -4(%ebp), %esi
-0x00270a1e:	xorl %ecx, %ecx
-0x00270a20:	lodsl %eax, %ds:(%esi)
-0x00270a21:	testl %eax, %eax
-0x00270a23:	je 28
-0x00270a25:	cmpl %ecx, 0xc(%ebp)
-0x00270a28:	je 0x00270a2d
-0x00270a2d:	nop
-0x00270a2e:	nop
-0x00270a2f:	nop
-0x00270a30:	nop
-0x00270a31:	nop
-0x00270a32:	nop
-0x00270a33:	nop
-0x00270a34:	nop
-0x00270a35:	nop
-0x00270a36:	nop
-0x00270a37:	nop
-0x00270a38:	nop
-0x00270a39:	nop
-0x00270a3a:	nop
-0x00270a3b:	nop
-0x00270a3c:	nop
-0x00270a3d:	nop
-0x00270a3e:	addl %eax, -4(%ebp)
-0x00270a41:	popl %esi
-0x00270a42:	popl %edi
-0x00270a43:	popl %ebx
-0x00270a44:	leave
-0x00270a45:	ret $0x8<UINT16>
+0x003101f7:	nop
+0x003101f8:	nop
+0x003101f9:	nop
+0x003101fa:	nop
+0x003101fb:	nop
+0x003101fc:	nop
+0x003101fd:	nop
+0x003101fe:	nop
+0x003101ff:	movl %ecx, 0x2c(%esi)
+0x00310202:	movl 0x10002f2b(%ebp), %ecx
+0x00310208:	pushl $0x4<UINT8>
+0x0031020a:	pushl $0x1000<UINT32>
+0x0031020f:	pushl %ecx
+0x00310210:	pushl $0x0<UINT8>
+0x00310212:	call VirtualAlloc@kernel32.dll
+0x00310218:	movl 0x10002f27(%ebp), %eax
+0x0031021e:	pushl %esi
+0x0031021f:	call 0x0031061a
+0x0031061a:	pushl %ebp
+0x0031061b:	movl %ebp, %esp
+0x0031061d:	addl %esp, $0xffffffe8<UINT8>
+0x00310620:	pushl %ebx
+0x00310621:	pushl %edi
+0x00310622:	pushl %esi
+0x00310623:	call 0x00310628
+0x00310628:	popl %ebx
+0x00310629:	subl %ebx, $0x100017e3<UINT32>
+0x0031062f:	movl %esi, 0x8(%ebp)
+0x00310632:	xorl %eax, %eax
+0x00310634:	xorl %ecx, %ecx
+0x00310636:	addl %ecx, 0x3c(%esi)
+0x00310639:	je 10
+0x0031063b:	movl %edx, 0x8(%esi)
+0x0031063e:	movl %edi, %esi
+0x00310640:	addl %esi, $0x50<UINT8>
+0x00310643:	jmp 0x0031064c
+0x0031064c:	movl -4(%ebp), %eax
+0x0031064f:	movzwl %eax, 0x2(%edi)
+0x00310653:	movl -16(%ebp), %eax
+0x00310656:	pushl %ecx
+0x00310657:	pushl %edx
+0x00310658:	pushl %esi
+0x00310659:	movzwl %eax, 0x10(%esi)
+0x0031065d:	testl %eax, $0x10<UINT32>
+0x00310662:	je 0x0031073e
+0x0031073e:	popl %esi
+0x0031073f:	popl %edx
+0x00310740:	popl %ecx
+0x00310741:	addl %esi, $0x1c<UINT8>
+0x00310744:	decl %ecx
+0x00310745:	jne 0x00310656
+0x00310668:	pushl %esi
+0x00310669:	movl %edi, 0x10002f27(%ebx)
+0x0031066f:	movl -20(%ebp), %edi
+0x00310672:	movl %ecx, 0x8(%esi)
+0x00310675:	movl %eax, 0x14(%esi)
+0x00310678:	subl %ecx, %eax
+0x0031067a:	movl %esi, (%esi)
+0x0031067c:	addl %esi, %edx
+0x0031067e:	movl %eax, %ecx
+0x00310680:	sarl %ecx, $0x2<UINT8>
+0x00310683:	rep movsl %es:(%edi), %ds:(%esi)
+0x00310685:	addl %ecx, %eax
+0x00310687:	andl %ecx, $0x3<UINT8>
+0x0031068a:	rep movsb %es:(%edi), %ds:(%esi)
+0x0031068c:	popl %esi
+0x0031068d:	nop
+0x0031068e:	nop
+0x0031068f:	nop
+0x00310690:	nop
+0x00310691:	nop
+0x00310692:	nop
+0x00310693:	nop
+0x00310694:	nop
+0x00310695:	nop
+0x00310696:	nop
+0x00310697:	nop
+0x00310698:	nop
+0x00310699:	nop
+0x0031069a:	nop
+0x0031069b:	nop
+0x0031069c:	nop
+0x0031069d:	nop
+0x0031069e:	nop
+0x0031069f:	nop
+0x003106a0:	nop
+0x003106a1:	nop
+0x003106a2:	nop
+0x003106a3:	nop
+0x003106a4:	nop
+0x003106a5:	nop
+0x003106a6:	nop
+0x003106a7:	nop
+0x003106a8:	nop
+0x003106a9:	nop
+0x003106aa:	nop
+0x003106ab:	nop
+0x003106ac:	nop
+0x003106ad:	nop
+0x003106ae:	nop
+0x003106af:	nop
+0x003106b0:	nop
+0x003106b1:	nop
+0x003106b2:	nop
+0x003106b3:	movl %eax, 0x4(%esi)
+0x003106b6:	addl %eax, %edx
+0x003106b8:	movl -24(%ebp), %eax
+0x003106bb:	movl %eax, -16(%ebp)
+0x003106be:	decl %eax
+0x003106bf:	movl -12(%ebp), %eax
+0x003106c2:	pushl %edx
+0x003106c3:	pushl %eax
+0x003106c4:	pushl 0x8(%ebp)
+0x003106c7:	call 0x00310a08
+0x00310a08:	pushl %ebp
+0x00310a09:	movl %ebp, %esp
+0x00310a0b:	addl %esp, $0xfffffffc<UINT8>
+0x00310a0e:	pushl %ebx
+0x00310a0f:	pushl %edi
+0x00310a10:	pushl %esi
+0x00310a11:	movl %ebx, 0x8(%ebp)
+0x00310a14:	movl %esi, %ebx
+0x00310a16:	movl %ecx, 0x30(%ebx)
+0x00310a19:	subl %esi, %ecx
+0x00310a1b:	movl -4(%ebp), %esi
+0x00310a1e:	xorl %ecx, %ecx
+0x00310a20:	lodsl %eax, %ds:(%esi)
+0x00310a21:	testl %eax, %eax
+0x00310a23:	je 28
+0x00310a25:	cmpl %ecx, 0xc(%ebp)
+0x00310a28:	je 0x00310a2d
+0x00310a2d:	nop
+0x00310a2e:	nop
+0x00310a2f:	nop
+0x00310a30:	nop
+0x00310a31:	nop
+0x00310a32:	nop
+0x00310a33:	nop
+0x00310a34:	nop
+0x00310a35:	nop
+0x00310a36:	nop
+0x00310a37:	nop
+0x00310a38:	nop
+0x00310a39:	nop
+0x00310a3a:	nop
+0x00310a3b:	nop
+0x00310a3c:	nop
+0x00310a3d:	nop
+0x00310a3e:	addl %eax, -4(%ebp)
+0x00310a41:	popl %esi
+0x00310a42:	popl %edi
+0x00310a43:	popl %ebx
+0x00310a44:	leave
+0x00310a45:	ret $0x8<UINT16>
 
-0x002706cc:	leal %ecx, 0x10002f2f(%ebx)
-0x002706d2:	pushl %ecx
-0x002706d3:	pushl -24(%ebp)
-0x002706d6:	pushl -20(%ebp)
-0x002706d9:	call 0x00270008
-0x00270008:	pusha
-0x00270009:	movl %esi, 0x24(%esp)
-0x0027000d:	movl %edi, 0x28(%esp)
-0x00270011:	cld
-0x00270012:	lodsl %eax, %ds:(%esi)
-0x00270013:	xorl %ecx, %ecx
-0x00270015:	testl %eax, %eax
-0x00270017:	je 17
-0x00270019:	xorl %edx, %edx
-0x0027001b:	leal %ebx, (%eax,%edi)
-0x0027001e:	movsb %es:(%edi), %ds:(%esi)
-0x0027001f:	movb %cl, $0x3<UINT8>
-0x00270021:	call 0x00270098
-0x00270098:	addl %edx, %edx
-0x0027009a:	jne 0x002700a2
-0x0027009c:	xchgl %edx, %eax
-0x0027009d:	lodsl %eax, %ds:(%esi)
-0x0027009e:	xchgl %edx, %eax
-0x0027009f:	addl %edx, %edx
-0x002700a1:	incl %edx
-0x002700a2:	ret
+0x003106cc:	leal %ecx, 0x10002f2f(%ebx)
+0x003106d2:	pushl %ecx
+0x003106d3:	pushl -24(%ebp)
+0x003106d6:	pushl -20(%ebp)
+0x003106d9:	call 0x00310008
+0x00310008:	pusha
+0x00310009:	movl %esi, 0x24(%esp)
+0x0031000d:	movl %edi, 0x28(%esp)
+0x00310011:	cld
+0x00310012:	lodsl %eax, %ds:(%esi)
+0x00310013:	xorl %ecx, %ecx
+0x00310015:	testl %eax, %eax
+0x00310017:	je 17
+0x00310019:	xorl %edx, %edx
+0x0031001b:	leal %ebx, (%eax,%edi)
+0x0031001e:	movsb %es:(%edi), %ds:(%esi)
+0x0031001f:	movb %cl, $0x3<UINT8>
+0x00310021:	call 0x00310098
+0x00310098:	addl %edx, %edx
+0x0031009a:	jne 0x003100a2
+0x0031009c:	xchgl %edx, %eax
+0x0031009d:	lodsl %eax, %ds:(%esi)
+0x0031009e:	xchgl %edx, %eax
+0x0031009f:	addl %edx, %edx
+0x003100a1:	incl %edx
+0x003100a2:	ret
 
-0x00270026:	jae 0x0027001e
-0x00270028:	cmpl %edi, %ebx
-0x0027002a:	jae 0x002700b5
-0x00270030:	pushl %ebx
-0x00270031:	pushl %ebp
-0x00270032:	pushl %edi
-0x00270033:	xorl %ebx, %ebx
-0x00270035:	incl %ebx
-0x00270036:	xorl %ebp, %ebp
-0x00270038:	movl %eax, %ebx
-0x0027003a:	leal %edi, (%ebp,%ebx)
-0x0027003e:	movl %ebp, %ebx
-0x00270040:	movl %ebx, %edi
-0x00270042:	call 0x00270098
-0x00270047:	jae 0x0027003a
-0x00270049:	leal %ebx, (%ebp,%edi)
-0x0027004d:	addl %eax, %edi
-0x0027004f:	movl %ebp, %edi
-0x00270051:	call 0x00270098
-0x00270056:	jae 0x0027003a
-0x00270058:	popl %edi
-0x00270059:	popl %ebp
-0x0027005a:	popl %ebx
-0x0027005b:	subl %eax, %ecx
-0x0027005d:	jae 0x00270068
-0x00270068:	movb %cl, $0x6<UINT8>
-0x0027006a:	call 0x00270098
-0x0027006f:	adcl %eax, %eax
-0x00270071:	decl %ecx
-0x00270072:	jne 0x0027006a
-0x00270074:	incl %eax
-0x00270075:	call 0x002700a3
-0x002700a3:	xorl %ecx, %ecx
-0x002700a5:	incl %ecx
-0x002700a6:	call 0x00270098
-0x002700ab:	adcl %ecx, %ecx
-0x002700ad:	call 0x00270098
-0x002700b2:	jb 0x002700a6
-0x002700b4:	ret
+0x00310026:	jae 0x0031001e
+0x00310028:	cmpl %edi, %ebx
+0x0031002a:	jae 0x003100b5
+0x00310030:	pushl %ebx
+0x00310031:	pushl %ebp
+0x00310032:	pushl %edi
+0x00310033:	xorl %ebx, %ebx
+0x00310035:	incl %ebx
+0x00310036:	xorl %ebp, %ebp
+0x00310038:	movl %eax, %ebx
+0x0031003a:	leal %edi, (%ebp,%ebx)
+0x0031003e:	movl %ebp, %ebx
+0x00310040:	movl %ebx, %edi
+0x00310042:	call 0x00310098
+0x00310047:	jae 0x0031003a
+0x00310049:	leal %ebx, (%ebp,%edi)
+0x0031004d:	addl %eax, %edi
+0x0031004f:	movl %ebp, %edi
+0x00310051:	call 0x00310098
+0x00310056:	jae 0x0031003a
+0x00310058:	popl %edi
+0x00310059:	popl %ebp
+0x0031005a:	popl %ebx
+0x0031005b:	subl %eax, %ecx
+0x0031005d:	jae 0x00310068
+0x00310068:	movb %cl, $0x6<UINT8>
+0x0031006a:	call 0x00310098
+0x0031006f:	adcl %eax, %eax
+0x00310071:	decl %ecx
+0x00310072:	jne 0x0031006a
+0x00310074:	incl %eax
+0x00310075:	call 0x003100a3
+0x003100a3:	xorl %ecx, %ecx
+0x003100a5:	incl %ecx
+0x003100a6:	call 0x00310098
+0x003100ab:	adcl %ecx, %ecx
+0x003100ad:	call 0x00310098
+0x003100b2:	jb 0x003100a6
+0x003100b4:	ret
 
-0x0027007a:	movl %ebp, %eax
-0x0027007c:	cmpl %eax, $0x8001<UINT32>
-0x00270081:	sbbl %ecx, $0xffffffff<UINT8>
-0x00270084:	cmpl %eax, $0x781<UINT32>
-0x00270089:	sbbl %ecx, $0xffffffff<UINT8>
-0x0027008c:	pushl %esi
-0x0027008d:	movl %esi, %edi
-0x0027008f:	subl %esi, %eax
-0x00270091:	rep movsb %es:(%edi), %ds:(%esi)
-0x00270093:	popl %esi
-0x00270094:	incl %ecx
-0x00270095:	incl %ecx
-0x00270096:	jmp 0x00270021
-0x0027005f:	movl %eax, %ebp
-0x00270061:	call 0x002700a3
-0x00270066:	jmp 0x0027008c
-0x002700b5:	subl %edi, 0x28(%esp)
-0x002700b9:	movl 0x1c(%esp), %edi
-0x002700bd:	popa
-0x002700be:	ret $0xc<UINT16>
+0x0031007a:	movl %ebp, %eax
+0x0031007c:	cmpl %eax, $0x8001<UINT32>
+0x00310081:	sbbl %ecx, $0xffffffff<UINT8>
+0x00310084:	cmpl %eax, $0x781<UINT32>
+0x00310089:	sbbl %ecx, $0xffffffff<UINT8>
+0x0031008c:	pushl %esi
+0x0031008d:	movl %esi, %edi
+0x0031008f:	subl %esi, %eax
+0x00310091:	rep movsb %es:(%edi), %ds:(%esi)
+0x00310093:	popl %esi
+0x00310094:	incl %ecx
+0x00310095:	incl %ecx
+0x00310096:	jmp 0x00310021
+0x0031005f:	movl %eax, %ebp
+0x00310061:	call 0x003100a3
+0x00310066:	jmp 0x0031008c
+0x003100b5:	subl %edi, 0x28(%esp)
+0x003100b9:	movl 0x1c(%esp), %edi
+0x003100bd:	popa
+0x003100be:	ret $0xc<UINT16>
 
-0x002706db:	movl %ecx, %eax
-0x002706dd:	incl %eax
-0x002706de:	je 116
-0x002706e0:	xorl %eax, %eax
-0x002706e2:	addl %eax, -12(%ebp)
-0x002706e5:	je 0x002706f9
-0x002706f9:	popl %edx
-0x002706fa:	pushl %esi
-0x002706fb:	movl %edi, 0x4(%esi)
-0x002706fe:	addl %edi, %edx
-0x00270700:	cmpl %edi, -24(%ebp)
-0x00270703:	jne 4
-0x00270705:	addl %edi, %ecx
-0x00270707:	jmp 0x0027071a
-0x0027071a:	movl %eax, %edi
-0x0027071c:	addl %eax, $0xfff<UINT32>
-0x00270721:	shrl %eax, $0xc<UINT8>
-0x00270724:	shll %eax, $0xc<UINT8>
-0x00270727:	subl %eax, %edi
-0x00270729:	movl %ecx, %eax
-0x0027072b:	xorl %eax, %eax
-0x0027072d:	pushl %edx
-0x0027072e:	movl %edx, %ecx
-0x00270730:	sarl %ecx, $0x2<UINT8>
-0x00270733:	rep stosl %es:(%edi), %eax
-0x00270735:	addl %ecx, %edx
-0x00270737:	andl %ecx, $0x3<UINT8>
-0x0027073a:	rep stosb %es:(%edi), %al
-0x0027073c:	popl %edx
-0x0027073d:	popl %esi
-0x0027074b:	xorl %eax, %eax
-0x0027074d:	popl %esi
-0x0027074e:	popl %edi
-0x0027074f:	popl %ebx
-0x00270750:	leave
-0x00270751:	ret $0x4<UINT16>
+0x003106db:	movl %ecx, %eax
+0x003106dd:	incl %eax
+0x003106de:	je 116
+0x003106e0:	xorl %eax, %eax
+0x003106e2:	addl %eax, -12(%ebp)
+0x003106e5:	je 0x003106f9
+0x003106f9:	popl %edx
+0x003106fa:	pushl %esi
+0x003106fb:	movl %edi, 0x4(%esi)
+0x003106fe:	addl %edi, %edx
+0x00310700:	cmpl %edi, -24(%ebp)
+0x00310703:	jne 4
+0x00310705:	addl %edi, %ecx
+0x00310707:	jmp 0x0031071a
+0x0031071a:	movl %eax, %edi
+0x0031071c:	addl %eax, $0xfff<UINT32>
+0x00310721:	shrl %eax, $0xc<UINT8>
+0x00310724:	shll %eax, $0xc<UINT8>
+0x00310727:	subl %eax, %edi
+0x00310729:	movl %ecx, %eax
+0x0031072b:	xorl %eax, %eax
+0x0031072d:	pushl %edx
+0x0031072e:	movl %edx, %ecx
+0x00310730:	sarl %ecx, $0x2<UINT8>
+0x00310733:	rep stosl %es:(%edi), %eax
+0x00310735:	addl %ecx, %edx
+0x00310737:	andl %ecx, $0x3<UINT8>
+0x0031073a:	rep stosb %es:(%edi), %al
+0x0031073c:	popl %edx
+0x0031073d:	popl %esi
+0x0031074b:	xorl %eax, %eax
+0x0031074d:	popl %esi
+0x0031074e:	popl %edi
+0x0031074f:	popl %ebx
+0x00310750:	leave
+0x00310751:	ret $0x4<UINT16>
 
-0x00270224:	leal %ecx, 0x10002dbd(%ebp)
-0x0027022a:	testl %eax, %eax
-0x0027022c:	jne 148
-0x00270232:	pushl %esi
-0x00270233:	call 0x00270578
-0x00270578:	pushl %ebp
-0x00270579:	movl %ebp, %esp
-0x0027057b:	addl %esp, $0xffffffe8<UINT8>
-0x0027057e:	pushl %ebx
-0x0027057f:	pushl %edi
-0x00270580:	pushl %esi
-0x00270581:	call 0x00270586
-0x00270586:	popl %ebx
-0x00270587:	subl %ebx, $0x10001741<UINT32>
-0x0027058d:	movl %esi, 0x8(%ebp)
-0x00270590:	xorl %eax, %eax
-0x00270592:	xorl %ecx, %ecx
-0x00270594:	addl %ecx, 0x3c(%esi)
-0x00270597:	je 10
-0x00270599:	movl %edx, 0x8(%esi)
-0x0027059c:	movl %edi, %esi
-0x0027059e:	addl %esi, $0x50<UINT8>
-0x002705a1:	jmp 0x002705aa
-0x002705aa:	movl %eax, 0x10002f27(%ebx)
-0x002705b0:	movl -4(%ebp), %eax
-0x002705b3:	movl %ebx, %esi
-0x002705b5:	movzwl %eax, 0x10(%ebx)
-0x002705b9:	testl %eax, $0x2<UINT32>
-0x002705be:	je 0x0027060d
-0x002705c0:	pushl %ecx
-0x002705c1:	movl %esi, 0x4(%ebx)
-0x002705c4:	movl %edi, -4(%ebp)
-0x002705c7:	movl %ecx, 0x8(%ebx)
-0x002705ca:	addl %esi, %edx
-0x002705cc:	movl %eax, %ecx
-0x002705ce:	sarl %ecx, $0x2<UINT8>
-0x002705d1:	rep movsl %es:(%edi), %ds:(%esi)
-0x002705d3:	addl %ecx, %eax
-0x002705d5:	andl %ecx, $0x3<UINT8>
-0x002705d8:	rep movsb %es:(%edi), %ds:(%esi)
-0x002705da:	movl %edi, 0x4(%ebx)
-0x002705dd:	movl %ecx, 0x8(%ebx)
-0x002705e0:	addl %edi, %edx
-0x002705e2:	xorl %eax, %eax
-0x002705e4:	pushl %edx
-0x002705e5:	movl %edx, %ecx
-0x002705e7:	sarl %ecx, $0x2<UINT8>
-0x002705ea:	rep stosl %es:(%edi), %eax
-0x002705ec:	addl %ecx, %edx
-0x002705ee:	andl %ecx, $0x3<UINT8>
-0x002705f1:	rep stosb %es:(%edi), %al
-0x002705f3:	popl %edx
-0x002705f4:	movl %esi, -4(%ebp)
-0x002705f7:	movl %edi, (%ebx)
-0x002705f9:	addl %edi, %edx
-0x002705fb:	movl %ecx, 0x8(%ebx)
-0x002705fe:	movl %eax, %ecx
-0x00270600:	sarl %ecx, $0x2<UINT8>
-0x00270603:	rep movsl %es:(%edi), %ds:(%esi)
-0x00270605:	addl %ecx, %eax
-0x00270607:	andl %ecx, $0x3<UINT8>
-0x0027060a:	rep movsb %es:(%edi), %ds:(%esi)
-0x0027060c:	popl %ecx
-0x0027060d:	addl %ebx, $0x1c<UINT8>
-0x00270610:	decl %ecx
-0x00270611:	jne 0x002705b5
-0x00270613:	popl %esi
-0x00270614:	popl %edi
-0x00270615:	popl %ebx
-0x00270616:	leave
-0x00270617:	ret $0x4<UINT16>
+0x00310224:	leal %ecx, 0x10002dbd(%ebp)
+0x0031022a:	testl %eax, %eax
+0x0031022c:	jne 148
+0x00310232:	pushl %esi
+0x00310233:	call 0x00310578
+0x00310578:	pushl %ebp
+0x00310579:	movl %ebp, %esp
+0x0031057b:	addl %esp, $0xffffffe8<UINT8>
+0x0031057e:	pushl %ebx
+0x0031057f:	pushl %edi
+0x00310580:	pushl %esi
+0x00310581:	call 0x00310586
+0x00310586:	popl %ebx
+0x00310587:	subl %ebx, $0x10001741<UINT32>
+0x0031058d:	movl %esi, 0x8(%ebp)
+0x00310590:	xorl %eax, %eax
+0x00310592:	xorl %ecx, %ecx
+0x00310594:	addl %ecx, 0x3c(%esi)
+0x00310597:	je 10
+0x00310599:	movl %edx, 0x8(%esi)
+0x0031059c:	movl %edi, %esi
+0x0031059e:	addl %esi, $0x50<UINT8>
+0x003105a1:	jmp 0x003105aa
+0x003105aa:	movl %eax, 0x10002f27(%ebx)
+0x003105b0:	movl -4(%ebp), %eax
+0x003105b3:	movl %ebx, %esi
+0x003105b5:	movzwl %eax, 0x10(%ebx)
+0x003105b9:	testl %eax, $0x2<UINT32>
+0x003105be:	je 0x0031060d
+0x003105c0:	pushl %ecx
+0x003105c1:	movl %esi, 0x4(%ebx)
+0x003105c4:	movl %edi, -4(%ebp)
+0x003105c7:	movl %ecx, 0x8(%ebx)
+0x003105ca:	addl %esi, %edx
+0x003105cc:	movl %eax, %ecx
+0x003105ce:	sarl %ecx, $0x2<UINT8>
+0x003105d1:	rep movsl %es:(%edi), %ds:(%esi)
+0x003105d3:	addl %ecx, %eax
+0x003105d5:	andl %ecx, $0x3<UINT8>
+0x003105d8:	rep movsb %es:(%edi), %ds:(%esi)
+0x003105da:	movl %edi, 0x4(%ebx)
+0x003105dd:	movl %ecx, 0x8(%ebx)
+0x003105e0:	addl %edi, %edx
+0x003105e2:	xorl %eax, %eax
+0x003105e4:	pushl %edx
+0x003105e5:	movl %edx, %ecx
+0x003105e7:	sarl %ecx, $0x2<UINT8>
+0x003105ea:	rep stosl %es:(%edi), %eax
+0x003105ec:	addl %ecx, %edx
+0x003105ee:	andl %ecx, $0x3<UINT8>
+0x003105f1:	rep stosb %es:(%edi), %al
+0x003105f3:	popl %edx
+0x003105f4:	movl %esi, -4(%ebp)
+0x003105f7:	movl %edi, (%ebx)
+0x003105f9:	addl %edi, %edx
+0x003105fb:	movl %ecx, 0x8(%ebx)
+0x003105fe:	movl %eax, %ecx
+0x00310600:	sarl %ecx, $0x2<UINT8>
+0x00310603:	rep movsl %es:(%edi), %ds:(%esi)
+0x00310605:	addl %ecx, %eax
+0x00310607:	andl %ecx, $0x3<UINT8>
+0x0031060a:	rep movsb %es:(%edi), %ds:(%esi)
+0x0031060c:	popl %ecx
+0x0031060d:	addl %ebx, $0x1c<UINT8>
+0x00310610:	decl %ecx
+0x00310611:	jne 0x003105b5
+0x00310613:	popl %esi
+0x00310614:	popl %edi
+0x00310615:	popl %ebx
+0x00310616:	leave
+0x00310617:	ret $0x4<UINT16>
 
-0x00270238:	pushl %esi
-0x00270239:	call 0x00270493
-0x00270493:	pushl %ebp
-0x00270494:	movl %ebp, %esp
-0x00270496:	addl %esp, $0xffffffe8<UINT8>
-0x00270499:	pushl %ebx
-0x0027049a:	pushl %edi
-0x0027049b:	pushl %esi
-0x0027049c:	call 0x002704a1
-0x002704a1:	popl %ebx
-0x002704a2:	subl %ebx, $0x1000165c<UINT32>
-0x002704a8:	movl %esi, 0x8(%ebp)
-0x002704ab:	xorl %eax, %eax
-0x002704ad:	xorl %ecx, %ecx
-0x002704af:	addl %ecx, 0x3c(%esi)
-0x002704b2:	je 10
-0x002704b4:	movl %edx, 0x8(%esi)
-0x002704b7:	movl %edi, %esi
-0x002704b9:	addl %esi, $0x50<UINT8>
-0x002704bc:	jmp 0x002704c5
-0x002704c5:	movl -8(%ebp), %edx
-0x002704c8:	movzwl %eax, 0x10(%esi)
-0x002704cc:	testl %eax, $0x200<UINT32>
-0x002704d1:	jne 125
-0x002704d3:	testl %eax, $0x8<UINT32>
-0x002704d8:	je 0x00270567
-0x00270567:	addl %esi, $0x1c<UINT8>
-0x0027056a:	decl %ecx
-0x0027056b:	jne 0x002704c8
-0x002704de:	pushl %ecx
-0x002704df:	pushl %esi
-0x002704e0:	movl %edi, 0x8(%esi)
-0x002704e3:	xorl %ecx, %ecx
-0x002704e5:	movl -4(%ebp), %ecx
-0x002704e8:	movzwl %ebx, 0x12(%esi)
-0x002704ec:	movl %esi, (%esi)
-0x002704ee:	addl %esi, -8(%ebp)
-0x002704f1:	cmpl %ecx, %edi
-0x002704f3:	jnl 0x00270529
-0x002704f5:	movl %eax, (%esi)
-0x002704f7:	incl %esi
-0x002704f8:	movzbl %edx, %al
-0x002704fb:	addl -4(%ebp), %edx
-0x002704fe:	subb %al, $0xffffffe8<UINT8>
-0x00270500:	movl %edx, %ebx
-0x00270502:	je 0x0027050a
-0x00270504:	decb %al
-0x00270506:	movb %dl, %bh
-0x00270508:	jne 0x00270526
-0x00270526:	incl %ecx
-0x00270527:	jmp 0x002704f1
-0x0027050a:	movl %eax, (%esi)
-0x0027050c:	cmpb %al, %dl
-0x0027050e:	jne 13
-0x00270510:	shrw %ax, $0x8<UINT8>
-0x00270514:	roll %eax, $0x10<UINT8>
-0x00270517:	xchgb %ah, %al
-0x00270519:	subl %eax, %ecx
-0x0027051b:	movl (%esi), %eax
-0x0027051d:	addl -4(%ebp), %eax
-0x00270520:	addl %esi, $0x4<UINT8>
-0x00270523:	addl %ecx, $0x4<UINT8>
-0x00270529:	popl %esi
-0x0027052a:	popl %ecx
-0x0027052b:	xorl %eax, %eax
-0x0027052d:	addl %eax, 0x14(%esi)
-0x00270530:	je 53
-0x00270532:	cmpl %eax, -4(%ebp)
-0x00270535:	je 0x00270567
-0x00270571:	popl %esi
-0x00270572:	popl %edi
-0x00270573:	popl %ebx
-0x00270574:	leave
-0x00270575:	ret $0x4<UINT16>
+0x00310238:	pushl %esi
+0x00310239:	call 0x00310493
+0x00310493:	pushl %ebp
+0x00310494:	movl %ebp, %esp
+0x00310496:	addl %esp, $0xffffffe8<UINT8>
+0x00310499:	pushl %ebx
+0x0031049a:	pushl %edi
+0x0031049b:	pushl %esi
+0x0031049c:	call 0x003104a1
+0x003104a1:	popl %ebx
+0x003104a2:	subl %ebx, $0x1000165c<UINT32>
+0x003104a8:	movl %esi, 0x8(%ebp)
+0x003104ab:	xorl %eax, %eax
+0x003104ad:	xorl %ecx, %ecx
+0x003104af:	addl %ecx, 0x3c(%esi)
+0x003104b2:	je 10
+0x003104b4:	movl %edx, 0x8(%esi)
+0x003104b7:	movl %edi, %esi
+0x003104b9:	addl %esi, $0x50<UINT8>
+0x003104bc:	jmp 0x003104c5
+0x003104c5:	movl -8(%ebp), %edx
+0x003104c8:	movzwl %eax, 0x10(%esi)
+0x003104cc:	testl %eax, $0x200<UINT32>
+0x003104d1:	jne 125
+0x003104d3:	testl %eax, $0x8<UINT32>
+0x003104d8:	je 0x00310567
+0x00310567:	addl %esi, $0x1c<UINT8>
+0x0031056a:	decl %ecx
+0x0031056b:	jne 0x003104c8
+0x003104de:	pushl %ecx
+0x003104df:	pushl %esi
+0x003104e0:	movl %edi, 0x8(%esi)
+0x003104e3:	xorl %ecx, %ecx
+0x003104e5:	movl -4(%ebp), %ecx
+0x003104e8:	movzwl %ebx, 0x12(%esi)
+0x003104ec:	movl %esi, (%esi)
+0x003104ee:	addl %esi, -8(%ebp)
+0x003104f1:	cmpl %ecx, %edi
+0x003104f3:	jnl 0x00310529
+0x003104f5:	movl %eax, (%esi)
+0x003104f7:	incl %esi
+0x003104f8:	movzbl %edx, %al
+0x003104fb:	addl -4(%ebp), %edx
+0x003104fe:	subb %al, $0xffffffe8<UINT8>
+0x00310500:	movl %edx, %ebx
+0x00310502:	je 0x0031050a
+0x00310504:	decb %al
+0x00310506:	movb %dl, %bh
+0x00310508:	jne 0x00310526
+0x00310526:	incl %ecx
+0x00310527:	jmp 0x003104f1
+0x0031050a:	movl %eax, (%esi)
+0x0031050c:	cmpb %al, %dl
+0x0031050e:	jne 13
+0x00310510:	shrw %ax, $0x8<UINT8>
+0x00310514:	roll %eax, $0x10<UINT8>
+0x00310517:	xchgb %ah, %al
+0x00310519:	subl %eax, %ecx
+0x0031051b:	movl (%esi), %eax
+0x0031051d:	addl -4(%ebp), %eax
+0x00310520:	addl %esi, $0x4<UINT8>
+0x00310523:	addl %ecx, $0x4<UINT8>
+0x00310529:	popl %esi
+0x0031052a:	popl %ecx
+0x0031052b:	xorl %eax, %eax
+0x0031052d:	addl %eax, 0x14(%esi)
+0x00310530:	je 53
+0x00310532:	cmpl %eax, -4(%ebp)
+0x00310535:	je 0x00310567
+0x00310571:	popl %esi
+0x00310572:	popl %edi
+0x00310573:	popl %ebx
+0x00310574:	leave
+0x00310575:	ret $0x4<UINT16>
 
-0x0027023e:	nop
-0x0027023f:	nop
-0x00270240:	nop
-0x00270241:	nop
-0x00270242:	nop
-0x00270243:	nop
-0x00270244:	nop
-0x00270245:	nop
-0x00270246:	nop
-0x00270247:	nop
-0x00270248:	nop
-0x00270249:	nop
-0x0027024a:	nop
-0x0027024b:	nop
-0x0027024c:	movl %ecx, 0x34(%esi)
-0x0027024f:	testl %ecx, %ecx
-0x00270251:	je 137
-0x00270257:	addl %ecx, 0x8(%esi)
-0x0027025a:	pushl %ecx
-0x0027025b:	pushl %esi
-0x0027025c:	call 0x002708a8
-0x002708a8:	pushl %ebp
-0x002708a9:	movl %ebp, %esp
-0x002708ab:	pushl %ebx
-0x002708ac:	pushl %edi
-0x002708ad:	pushl %esi
-0x002708ae:	movl %esi, 0xc(%ebp)
-0x002708b1:	movl %ebx, 0x8(%ebp)
-0x002708b4:	xorl %eax, %eax
-0x002708b6:	cmpl 0x10(%esi), %eax
-0x002708b9:	jne 0x002708bf
-0x002708bf:	addl %eax, (%esi)
-0x002708c1:	je 3
-0x002708c3:	addl %eax, 0x8(%ebx)
-0x002708c6:	movl %ecx, 0xc(%esi)
-0x002708c9:	addl %ecx, 0x8(%ebx)
-0x002708cc:	movl %edi, 0x10(%esi)
-0x002708cf:	testl %edi, %edi
-0x002708d1:	je 3
-0x002708d3:	addl %edi, 0x8(%ebx)
-0x002708d6:	pushl %eax
-0x002708d7:	pushl %edi
-0x002708d8:	pushl %ecx
-0x002708d9:	pushl %ebx
-0x002708da:	call 0x002708ef
-0x002708ef:	pushl %ebp
-0x002708f0:	movl %ebp, %esp
-0x002708f2:	addl %esp, $0xffffffe8<UINT8>
-0x002708f5:	pushl %ebx
-0x002708f6:	pushl %edi
-0x002708f7:	pushl %esi
-0x002708f8:	call 0x002708fd
-0x002708fd:	popl %ebx
-0x002708fe:	subl %ebx, $0x10001ab8<UINT32>
-0x00270904:	movl %eax, 0xc(%ebp)
-0x00270907:	movl 0x10002d9c(%ebx), %eax
-0x0027090d:	xorl %eax, %eax
-0x0027090f:	movl 0x10002da0(%ebx), %eax
-0x00270915:	xorl %esi, %esi
-0x00270917:	incl %esi
-0x00270918:	incl %esi
-0x00270919:	movl %edx, 0x10002eef(%ebx)
-0x0027091f:	pushl 0xc(%ebp)
-0x00270922:	call GetModuleHandleA@kernel32.dll
+0x0031023e:	nop
+0x0031023f:	nop
+0x00310240:	nop
+0x00310241:	nop
+0x00310242:	nop
+0x00310243:	nop
+0x00310244:	nop
+0x00310245:	nop
+0x00310246:	nop
+0x00310247:	nop
+0x00310248:	nop
+0x00310249:	nop
+0x0031024a:	nop
+0x0031024b:	nop
+0x0031024c:	movl %ecx, 0x34(%esi)
+0x0031024f:	testl %ecx, %ecx
+0x00310251:	je 137
+0x00310257:	addl %ecx, 0x8(%esi)
+0x0031025a:	pushl %ecx
+0x0031025b:	pushl %esi
+0x0031025c:	call 0x003108a8
+0x003108a8:	pushl %ebp
+0x003108a9:	movl %ebp, %esp
+0x003108ab:	pushl %ebx
+0x003108ac:	pushl %edi
+0x003108ad:	pushl %esi
+0x003108ae:	movl %esi, 0xc(%ebp)
+0x003108b1:	movl %ebx, 0x8(%ebp)
+0x003108b4:	xorl %eax, %eax
+0x003108b6:	cmpl 0x10(%esi), %eax
+0x003108b9:	jne 0x003108bf
+0x003108bf:	addl %eax, (%esi)
+0x003108c1:	je 3
+0x003108c3:	addl %eax, 0x8(%ebx)
+0x003108c6:	movl %ecx, 0xc(%esi)
+0x003108c9:	addl %ecx, 0x8(%ebx)
+0x003108cc:	movl %edi, 0x10(%esi)
+0x003108cf:	testl %edi, %edi
+0x003108d1:	je 3
+0x003108d3:	addl %edi, 0x8(%ebx)
+0x003108d6:	pushl %eax
+0x003108d7:	pushl %edi
+0x003108d8:	pushl %ecx
+0x003108d9:	pushl %ebx
+0x003108da:	call 0x003108ef
+0x003108ef:	pushl %ebp
+0x003108f0:	movl %ebp, %esp
+0x003108f2:	addl %esp, $0xffffffe8<UINT8>
+0x003108f5:	pushl %ebx
+0x003108f6:	pushl %edi
+0x003108f7:	pushl %esi
+0x003108f8:	call 0x003108fd
+0x003108fd:	popl %ebx
+0x003108fe:	subl %ebx, $0x10001ab8<UINT32>
+0x00310904:	movl %eax, 0xc(%ebp)
+0x00310907:	movl 0x10002d9c(%ebx), %eax
+0x0031090d:	xorl %eax, %eax
+0x0031090f:	movl 0x10002da0(%ebx), %eax
+0x00310915:	xorl %esi, %esi
+0x00310917:	incl %esi
+0x00310918:	incl %esi
+0x00310919:	movl %edx, 0x10002eef(%ebx)
+0x0031091f:	pushl 0xc(%ebp)
+0x00310922:	call GetModuleHandleA@kernel32.dll
 GetModuleHandleA@kernel32: API Node	
-0x00270924:	movl -4(%ebp), %eax
-0x00270927:	movl %edx, 0x10002f1b(%ebx)
-0x0027092d:	testl %eax, %eax
-0x0027092f:	jne 0x0027093e
-0x0027093e:	nop
-0x0027093f:	nop
-0x00270940:	nop
-0x00270941:	nop
-0x00270942:	nop
-0x00270943:	nop
-0x00270944:	nop
-0x00270945:	nop
-0x00270946:	nop
-0x00270947:	nop
-0x00270948:	nop
-0x00270949:	nop
-0x0027094a:	nop
-0x0027094b:	nop
-0x0027094c:	nop
-0x0027094d:	nop
-0x0027094e:	nop
-0x0027094f:	nop
-0x00270950:	nop
-0x00270951:	nop
-0x00270952:	nop
-0x00270953:	nop
-0x00270954:	nop
-0x00270955:	nop
-0x00270956:	nop
-0x00270957:	nop
-0x00270958:	nop
-0x00270959:	nop
-0x0027095a:	nop
-0x0027095b:	nop
-0x0027095c:	nop
-0x0027095d:	nop
-0x0027095e:	nop
-0x0027095f:	nop
-0x00270960:	nop
-0x00270961:	nop
-0x00270962:	nop
-0x00270963:	nop
-0x00270964:	nop
-0x00270965:	nop
-0x00270966:	nop
-0x00270967:	nop
-0x00270968:	movl %esi, 0x10(%ebp)
-0x0027096b:	movl %edi, 0x8(%ebp)
-0x0027096e:	movl %edx, 0x14(%ebp)
-0x00270971:	testl %edx, %edx
-0x00270973:	jne 0x00270977
-0x00270977:	testl %esi, %esi
-0x00270979:	jne 0x0027097d
-0x0027097d:	movl 0x10002da0(%ebx), $0x0<UINT32>
-0x00270987:	movl %eax, (%edx)
-0x00270989:	testl %eax, %eax
-0x0027098b:	je 0x002709d1
-0x0027098d:	pushl %edx
-0x0027098e:	movl 0x10002da0(%ebx), %eax
-0x00270994:	testl %eax, $0x80000000<UINT32>
-0x00270999:	je 0x002709a4
-0x002709a4:	movl %ecx, 0x8(%ebp)
-0x002709a7:	addl %eax, 0x8(%ecx)
-0x002709aa:	xorl %ecx, %ecx
-0x002709ac:	movw %cx, (%eax)
-0x002709af:	pushl %ecx
-0x002709b0:	incl %eax
-0x002709b1:	incl %eax
-0x002709b2:	pushl %eax
-0x002709b3:	pushl -4(%ebp)
-0x002709b6:	call 0x00270ad2
-0x00270ad2:	pushl %ebp
-0x00270ad3:	movl %ebp, %esp
-0x00270ad5:	pushl %ebx
-0x00270ad6:	pushl %edi
-0x00270ad7:	pushl %esi
-0x00270ad8:	call 0x00270add
-0x00270add:	popl %ebx
-0x00270ade:	subl %ebx, $0x10001c98<UINT32>
-0x00270ae4:	pushl 0xc(%ebp)
-0x00270ae7:	pushl 0x8(%ebp)
-0x00270aea:	call GetProcAddress@kernel32.dll
-0x00270af0:	popl %esi
-0x00270af1:	popl %edi
-0x00270af2:	popl %ebx
-0x00270af3:	leave
-0x00270af4:	ret $0xc<UINT16>
+0x00310924:	movl -4(%ebp), %eax
+0x00310927:	movl %edx, 0x10002f1b(%ebx)
+0x0031092d:	testl %eax, %eax
+0x0031092f:	jne 0x0031093e
+0x0031093e:	nop
+0x0031093f:	nop
+0x00310940:	nop
+0x00310941:	nop
+0x00310942:	nop
+0x00310943:	nop
+0x00310944:	nop
+0x00310945:	nop
+0x00310946:	nop
+0x00310947:	nop
+0x00310948:	nop
+0x00310949:	nop
+0x0031094a:	nop
+0x0031094b:	nop
+0x0031094c:	nop
+0x0031094d:	nop
+0x0031094e:	nop
+0x0031094f:	nop
+0x00310950:	nop
+0x00310951:	nop
+0x00310952:	nop
+0x00310953:	nop
+0x00310954:	nop
+0x00310955:	nop
+0x00310956:	nop
+0x00310957:	nop
+0x00310958:	nop
+0x00310959:	nop
+0x0031095a:	nop
+0x0031095b:	nop
+0x0031095c:	nop
+0x0031095d:	nop
+0x0031095e:	nop
+0x0031095f:	nop
+0x00310960:	nop
+0x00310961:	nop
+0x00310962:	nop
+0x00310963:	nop
+0x00310964:	nop
+0x00310965:	nop
+0x00310966:	nop
+0x00310967:	nop
+0x00310968:	movl %esi, 0x10(%ebp)
+0x0031096b:	movl %edi, 0x8(%ebp)
+0x0031096e:	movl %edx, 0x14(%ebp)
+0x00310971:	testl %edx, %edx
+0x00310973:	jne 0x00310977
+0x00310977:	testl %esi, %esi
+0x00310979:	jne 0x0031097d
+0x0031097d:	movl 0x10002da0(%ebx), $0x0<UINT32>
+0x00310987:	movl %eax, (%edx)
+0x00310989:	testl %eax, %eax
+0x0031098b:	je 0x003109d1
+0x0031098d:	pushl %edx
+0x0031098e:	movl 0x10002da0(%ebx), %eax
+0x00310994:	testl %eax, $0x80000000<UINT32>
+0x00310999:	je 0x003109a4
+0x003109a4:	movl %ecx, 0x8(%ebp)
+0x003109a7:	addl %eax, 0x8(%ecx)
+0x003109aa:	xorl %ecx, %ecx
+0x003109ac:	movw %cx, (%eax)
+0x003109af:	pushl %ecx
+0x003109b0:	incl %eax
+0x003109b1:	incl %eax
+0x003109b2:	pushl %eax
+0x003109b3:	pushl -4(%ebp)
+0x003109b6:	call 0x00310ad2
+0x00310ad2:	pushl %ebp
+0x00310ad3:	movl %ebp, %esp
+0x00310ad5:	pushl %ebx
+0x00310ad6:	pushl %edi
+0x00310ad7:	pushl %esi
+0x00310ad8:	call 0x00310add
+0x00310add:	popl %ebx
+0x00310ade:	subl %ebx, $0x10001c98<UINT32>
+0x00310ae4:	pushl 0xc(%ebp)
+0x00310ae7:	pushl 0x8(%ebp)
+0x00310aea:	call GetProcAddress@kernel32.dll
+0x00310af0:	popl %esi
+0x00310af1:	popl %edi
+0x00310af2:	popl %ebx
+0x00310af3:	leave
+0x00310af4:	ret $0xc<UINT16>
 
-0x002709bc:	popl %edx
-0x002709bd:	testl %eax, %eax
-0x002709bf:	je -145
-0x002709c5:	movl (%esi), %eax
-0x002709c7:	movl (%edx), %eax
-0x002709c9:	addl %edx, $0x4<UINT8>
-0x002709cc:	addl %esi, $0x4<UINT8>
-0x002709cf:	jmp 0x0027097d
-0x002709d1:	xorl %eax, %eax
-0x002709d3:	popl %esi
-0x002709d4:	popl %edi
-0x002709d5:	popl %ebx
-0x002709d6:	leave
-0x002709d7:	ret $0x10<UINT16>
+0x003109bc:	popl %edx
+0x003109bd:	testl %eax, %eax
+0x003109bf:	je -145
+0x003109c5:	movl (%esi), %eax
+0x003109c7:	movl (%edx), %eax
+0x003109c9:	addl %edx, $0x4<UINT8>
+0x003109cc:	addl %esi, $0x4<UINT8>
+0x003109cf:	jmp 0x0031097d
+0x003109d1:	xorl %eax, %eax
+0x003109d3:	popl %esi
+0x003109d4:	popl %edi
+0x003109d5:	popl %ebx
+0x003109d6:	leave
+0x003109d7:	ret $0x10<UINT16>
 
-0x002708df:	incl %eax
-0x002708e0:	jne 0x002708ea
-0x002708ea:	addl %esi, $0x14<UINT8>
-0x002708ed:	jmp 0x002708b4
+0x003108df:	incl %eax
+0x003108e0:	jne 0x003108ea
+0x003108ea:	addl %esi, $0x14<UINT8>
+0x003108ed:	jmp 0x003108b4
 GetModuleHandleA@kernel32.dll: API Node	
-0x002708bb:	cmpl (%esi), %eax
-0x002708bd:	je 0x002708e3
-0x002708e3:	popl %esi
-0x002708e4:	popl %edi
-0x002708e5:	popl %ebx
-0x002708e6:	leave
-0x002708e7:	ret $0x8<UINT16>
+0x003108bb:	cmpl (%esi), %eax
+0x003108bd:	je 0x003108e3
+0x003108e3:	popl %esi
+0x003108e4:	popl %edi
+0x003108e5:	popl %ebx
+0x003108e6:	leave
+0x003108e7:	ret $0x8<UINT16>
 
-0x00270261:	testl %eax, %eax
-0x00270263:	je 0x002702e0
-0x002702e0:	movl %edi, 0x8(%ebx)
-0x002702e3:	movl %ebx, %esi
-0x002702e5:	cmpl 0x48(%ebx), $0x1<UINT8>
-0x002702e9:	jne 0x00270300
-0x00270300:	movl %esi, %ebx
-0x00270302:	nop
-0x00270303:	nop
-0x00270304:	nop
-0x00270305:	nop
-0x00270306:	nop
-0x00270307:	nop
-0x00270308:	nop
-0x00270309:	nop
-0x0027030a:	nop
-0x0027030b:	nop
-0x0027030c:	nop
-0x0027030d:	nop
-0x0027030e:	pushl %esi
-0x0027030f:	call 0x00270af7
-0x00270af7:	pushl %ebp
-0x00270af8:	movl %ebp, %esp
-0x00270afa:	addl %esp, $0xfffffffc<UINT8>
-0x00270afd:	pushl %ebx
-0x00270afe:	pushl %edi
-0x00270aff:	pushl %esi
-0x00270b00:	call 0x00270b05
-0x00270b05:	popl %ebx
-0x00270b06:	subl %ebx, $0x10001cc0<UINT32>
-0x00270b0c:	movl %esi, 0x8(%ebp)
-0x00270b0f:	movl %eax, 0x8(%esi)
-0x00270b12:	addl %eax, 0x3c(%eax)
-0x00270b15:	leal %edi, 0x80(%eax)
-0x00270b1b:	movl %ecx, %edi
-0x00270b1d:	shrl %ecx, $0xc<UINT8>
-0x00270b20:	shll %ecx, $0xc<UINT8>
-0x00270b23:	pushl %ecx
-0x00270b24:	leal %eax, -4(%ebp)
-0x00270b27:	pushl %eax
-0x00270b28:	pushl $0x4<UINT8>
-0x00270b2a:	pushl $0x1000<UINT32>
-0x00270b2f:	pushl %ecx
-0x00270b30:	call VirtualProtect@kernel32
+0x00310261:	testl %eax, %eax
+0x00310263:	je 0x003102e0
+0x003102e0:	movl %edi, 0x8(%ebx)
+0x003102e3:	movl %ebx, %esi
+0x003102e5:	cmpl 0x48(%ebx), $0x1<UINT8>
+0x003102e9:	jne 0x00310300
+0x00310300:	movl %esi, %ebx
+0x00310302:	nop
+0x00310303:	nop
+0x00310304:	nop
+0x00310305:	nop
+0x00310306:	nop
+0x00310307:	nop
+0x00310308:	nop
+0x00310309:	nop
+0x0031030a:	nop
+0x0031030b:	nop
+0x0031030c:	nop
+0x0031030d:	nop
+0x0031030e:	pushl %esi
+0x0031030f:	call 0x00310af7
+0x00310af7:	pushl %ebp
+0x00310af8:	movl %ebp, %esp
+0x00310afa:	addl %esp, $0xfffffffc<UINT8>
+0x00310afd:	pushl %ebx
+0x00310afe:	pushl %edi
+0x00310aff:	pushl %esi
+0x00310b00:	call 0x00310b05
+0x00310b05:	popl %ebx
+0x00310b06:	subl %ebx, $0x10001cc0<UINT32>
+0x00310b0c:	movl %esi, 0x8(%ebp)
+0x00310b0f:	movl %eax, 0x8(%esi)
+0x00310b12:	addl %eax, 0x3c(%eax)
+0x00310b15:	leal %edi, 0x80(%eax)
+0x00310b1b:	movl %ecx, %edi
+0x00310b1d:	shrl %ecx, $0xc<UINT8>
+0x00310b20:	shll %ecx, $0xc<UINT8>
+0x00310b23:	pushl %ecx
+0x00310b24:	leal %eax, -4(%ebp)
+0x00310b27:	pushl %eax
+0x00310b28:	pushl $0x4<UINT8>
+0x00310b2a:	pushl $0x1000<UINT32>
+0x00310b2f:	pushl %ecx
+0x00310b30:	call VirtualProtect@kernel32
 VirtualProtect@kernel32: API Node	
-0x00270b36:	movl %edx, 0x34(%esi)
-0x00270b39:	movl (%edi), %edx
-0x00270b3b:	popl %ecx
-0x00270b3c:	leal %eax, -4(%ebp)
-0x00270b3f:	pushl %eax
-0x00270b40:	pushl -4(%ebp)
-0x00270b43:	pushl $0x1000<UINT32>
-0x00270b48:	pushl %ecx
-0x00270b49:	call VirtualProtect@kernel32
-0x00270b4f:	popl %esi
-0x00270b50:	popl %edi
-0x00270b51:	popl %ebx
-0x00270b52:	leave
-0x00270b53:	ret $0x4<UINT16>
+0x00310b36:	movl %edx, 0x34(%esi)
+0x00310b39:	movl (%edi), %edx
+0x00310b3b:	popl %ecx
+0x00310b3c:	leal %eax, -4(%ebp)
+0x00310b3f:	pushl %eax
+0x00310b40:	pushl -4(%ebp)
+0x00310b43:	pushl $0x1000<UINT32>
+0x00310b48:	pushl %ecx
+0x00310b49:	call VirtualProtect@kernel32
+0x00310b4f:	popl %esi
+0x00310b50:	popl %edi
+0x00310b51:	popl %ebx
+0x00310b52:	leave
+0x00310b53:	ret $0x4<UINT16>
 
-0x00270314:	nop
-0x00270315:	nop
-0x00270316:	nop
-0x00270317:	nop
-0x00270318:	nop
-0x00270319:	nop
-0x0027031a:	pushl %edi
-0x0027031b:	call 0x00270a48
-0x00270a48:	pushl %ebp
-0x00270a49:	movl %ebp, %esp
-0x00270a4b:	addl %esp, $0xfffffffc<UINT8>
-0x00270a4e:	pushl %ebx
-0x00270a4f:	pushl %edi
-0x00270a50:	pushl %esi
-0x00270a51:	call 0x00270a56
-0x00270a56:	popl %ebx
-0x00270a57:	subl %ebx, $0x10001c11<UINT32>
-0x00270a5d:	movl %eax, 0x8(%ebp)
-0x00270a60:	addl %eax, 0x3c(%eax)
-0x00270a63:	xorl %ecx, %ecx
-0x00270a65:	movw %cx, 0x14(%eax)
-0x00270a69:	leal %edi, 0x18(%ecx,%eax)
-0x00270a6d:	addl %edi, $0x27<UINT8>
-0x00270a70:	movl %ecx, %edi
-0x00270a72:	shrl %ecx, $0xc<UINT8>
-0x00270a75:	shll %ecx, $0xc<UINT8>
-0x00270a78:	pushl %ecx
-0x00270a79:	leal %eax, -4(%ebp)
-0x00270a7c:	pushl %eax
-0x00270a7d:	pushl $0x4<UINT8>
-0x00270a7f:	pushl $0x1000<UINT32>
-0x00270a84:	pushl %ecx
-0x00270a85:	call VirtualProtect@kernel32
-0x00270a8b:	movb %al, (%edi)
-0x00270a8d:	testb %al, $0xffffff80<UINT8>
-0x00270a8f:	je 4
-0x00270a91:	subb %al, $0xffffff80<UINT8>
-0x00270a93:	movb (%edi), %al
-0x00270a95:	popl %ecx
-0x00270a96:	leal %eax, -4(%ebp)
-0x00270a99:	pushl %eax
-0x00270a9a:	pushl -4(%ebp)
-0x00270a9d:	pushl $0x1000<UINT32>
-0x00270aa2:	pushl %ecx
-0x00270aa3:	call VirtualProtect@kernel32
-0x00270aa9:	popl %esi
-0x00270aaa:	popl %edi
-0x00270aab:	popl %ebx
-0x00270aac:	leave
-0x00270aad:	ret $0x4<UINT16>
+0x00310314:	nop
+0x00310315:	nop
+0x00310316:	nop
+0x00310317:	nop
+0x00310318:	nop
+0x00310319:	nop
+0x0031031a:	pushl %edi
+0x0031031b:	call 0x00310a48
+0x00310a48:	pushl %ebp
+0x00310a49:	movl %ebp, %esp
+0x00310a4b:	addl %esp, $0xfffffffc<UINT8>
+0x00310a4e:	pushl %ebx
+0x00310a4f:	pushl %edi
+0x00310a50:	pushl %esi
+0x00310a51:	call 0x00310a56
+0x00310a56:	popl %ebx
+0x00310a57:	subl %ebx, $0x10001c11<UINT32>
+0x00310a5d:	movl %eax, 0x8(%ebp)
+0x00310a60:	addl %eax, 0x3c(%eax)
+0x00310a63:	xorl %ecx, %ecx
+0x00310a65:	movw %cx, 0x14(%eax)
+0x00310a69:	leal %edi, 0x18(%ecx,%eax)
+0x00310a6d:	addl %edi, $0x27<UINT8>
+0x00310a70:	movl %ecx, %edi
+0x00310a72:	shrl %ecx, $0xc<UINT8>
+0x00310a75:	shll %ecx, $0xc<UINT8>
+0x00310a78:	pushl %ecx
+0x00310a79:	leal %eax, -4(%ebp)
+0x00310a7c:	pushl %eax
+0x00310a7d:	pushl $0x4<UINT8>
+0x00310a7f:	pushl $0x1000<UINT32>
+0x00310a84:	pushl %ecx
+0x00310a85:	call VirtualProtect@kernel32
+0x00310a8b:	movb %al, (%edi)
+0x00310a8d:	testb %al, $0xffffff80<UINT8>
+0x00310a8f:	je 0x00310a95
+0x00310a95:	popl %ecx
+0x00310a96:	leal %eax, -4(%ebp)
+0x00310a99:	pushl %eax
+0x00310a9a:	pushl -4(%ebp)
+0x00310a9d:	pushl $0x1000<UINT32>
+0x00310aa2:	pushl %ecx
+0x00310aa3:	call VirtualProtect@kernel32
+0x00310aa9:	popl %esi
+0x00310aaa:	popl %edi
+0x00310aab:	popl %ebx
+0x00310aac:	leave
+0x00310aad:	ret $0x4<UINT16>
 
-0x00270320:	pushl $0x8000<UINT32>
-0x00270325:	pushl $0x0<UINT8>
-0x00270327:	pushl 0x10002f27(%ebp)
-0x0027032d:	call VirtualFree@kernel32.dll
+0x00310320:	pushl $0x8000<UINT32>
+0x00310325:	pushl $0x0<UINT8>
+0x00310327:	pushl 0x10002f27(%ebp)
+0x0031032d:	call VirtualFree@kernel32.dll
 VirtualFree@kernel32.dll: API Node	
-0x00270333:	movl %eax, 0xc(%esi)
-0x00270336:	addl %eax, %edi
-0x00270338:	popl %ebp
-0x00270339:	popl %esi
-0x0027033a:	popl %edi
-0x0027033b:	popl %ebx
-0x0027033c:	ret
+0x00310333:	movl %eax, 0xc(%esi)
+0x00310336:	addl %eax, %edi
+0x00310338:	popl %ebp
+0x00310339:	popl %esi
+0x0031033a:	popl %edi
+0x0031033b:	popl %ebx
+0x0031033c:	ret
 
 0x004048f8:	movl 0x1000133f(%ebp), %eax
 0x004048fe:	movl %esi, %eax

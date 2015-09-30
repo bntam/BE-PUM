@@ -107,6 +107,14 @@ public class Storage {
 		return true;
 	}
 
+	/**
+	 * Get the mapping path in sandbox storage corresponding to the path in real
+	 * system
+	 * 
+	 * @param path
+	 *            The real path
+	 * @return The mapping path in sandbox storage
+	 */
 	public static String getMappingPath(String path) {
 		if (path == null || path.length() == 0)
 			return path;
@@ -155,5 +163,17 @@ public class Storage {
 			// Return original path if it is unvalid
 			return originalPath;
 		}
+	}
+
+	public static String getOriginalPath(String path) {
+		if (path == null)
+			return null;
+
+		if (path.length() < workingDirectory.length())
+			return path;
+
+		char driveName = path.charAt(workingDirectory.length());
+
+		return String.format("%c:%s", driveName, path.substring(workingDirectory.length() + 1, path.length()));
 	}
 }

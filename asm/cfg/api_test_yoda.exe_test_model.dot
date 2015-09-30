@@ -2395,7 +2395,6 @@ a0x004057dfmovl_ebp_edx -> a0x004057e1addl_0x42725bUINT32_edx [color="#000000"];
 a0x004057e1addl_0x42725bUINT32_edx -> a0x004057e7call_edx_ [color="#000000"];
 a0x004057e7call_edx_ -> CloseHandle_Kernel32_dll [color="#000000"];
 CloseHandle_Kernel32_dll -> a0x004057e9popl_esi [color="#000000"];
-a0x004057b6je_0x004057e9 -> a0x004057e9popl_esi [color="#000000",label="T"];
 a0x00405802jne_0x00405780 -> a0x00405808movl_0x55555555UINT32_eax [color="#000000",label="F"];
 a0x00405808movl_0x55555555UINT32_eax -> a0x0040580dmovl_ebp_edx [color="#000000"];
 a0x0040580dmovl_ebp_edx -> a0x0040580faddl_0x4285feUINT32_edx [color="#000000"];

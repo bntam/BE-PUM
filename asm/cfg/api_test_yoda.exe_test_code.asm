@@ -1076,7 +1076,7 @@ Thread32Next@Kernel32.dll: API Node
 0x004057b2:	call OpenThread@Kernel32.dll
 OpenThread@Kernel32.dll: API Node	
 0x004057b4:	testl %eax, %eax
-0x004057b6:	je 0x004057e9
+0x004057b6:	je 49
 0x004057b8:	movl %ecx, %eax
 0x004057ba:	testl %ebx, %ebx
 0x004057bc:	je 17

@@ -50,9 +50,9 @@ public class CharPrev extends User32API {
 		if (t1 == t2) {
 			ret = t1;
 		} else if ((t1 + 2) <= t2 && t2 <= (t1 + lpszStart.length() * 2)) {
-			ret = t2 - 2;
+			ret = t2 - 1;
 		} else {
-			ret = t2 - 2;
+			ret = t2 - 1;
 		}
 
 		register.mov("eax", new LongValue(ret));

@@ -49,6 +49,16 @@ public class LoadLibrary extends Kernel32API {
 		 * x1).getValue(), program);
 		 */
 		String libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
+		long value = execute(libraryName);
+
+		register.mov("eax", new LongValue(value));
+		// register.mov("edx", new LongValue(0x140608));
+		// register.mov("ecx", new LongValue(0x7c801bfa));
+
+		value = ((LongValue) register.getRegisterValue("eax")).getValue();
+	}
+
+	public long execute(String libraryName) {
 		System.out.println(" Library Name:" + libraryName);
 
 		LoadLibThread thread = new LoadLibThread(libraryName);
@@ -64,13 +74,13 @@ public class LoadLibrary extends Kernel32API {
 		}
 
 		long value = (apiCallReturn == null) ? 0 : Pointer.nativeValue(apiCallReturn.getPointer());
-		register.mov("eax", new LongValue(value));
-		// register.mov("edx", new LongValue(0x140608));
-		// register.mov("ecx", new LongValue(0x7c801bfa));
-		System.out.println("Return Value: " + value);
 
-		value = ((LongValue) register.getRegisterValue("eax")).getValue();
-		APIHandle.libraryHandle.put(value, libraryName);
+		// Store all the handle value for each library
+		if (value != 0) {
+			APIHandle.libraryHandleMap.put(value, libraryName);
+		}
+
+		return value;
 	}
 
 	class LoadLibThread extends Thread {

@@ -18,27 +18,6 @@
 
 package v2.org.analysis;
 
-import antlr.ANTLRException;
-
-import com.sun.jna.WString;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.Algorithm;
-import org.jakstab.Options;
-import org.jakstab.Program;
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.loader.BinaryParseException;
-import org.jakstab.loader.DefaultHarness;
-import org.jakstab.loader.HeuristicHarness;
-import org.jakstab.ssl.Architecture;
-import org.jakstab.util.Characters;
-import org.jakstab.util.Logger;
-
-import v2.org.analysis.algorithm.OTFModelGeneration;
-import v2.org.analysis.cfg.BPCFG;
-import v2.org.analysis.statistics.FileProcess;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -52,6 +31,25 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import javax.swing.UIManager;
+
+import org.jakstab.Algorithm;
+import org.jakstab.Options;
+import org.jakstab.Program;
+import org.jakstab.asm.AbsoluteAddress;
+import org.jakstab.loader.BinaryParseException;
+import org.jakstab.loader.DefaultHarness;
+import org.jakstab.loader.HeuristicHarness;
+import org.jakstab.ssl.Architecture;
+import org.jakstab.util.Characters;
+import org.jakstab.util.Logger;
+
+import v2.org.analysis.algorithm.OTFModelGeneration;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.cfg.BPCFG;
+import v2.org.analysis.statistics.FileProcess;
+import antlr.ANTLRException;
+
+import com.sun.jna.WString;
 
 public class Main {
 	static {
@@ -266,17 +264,17 @@ public class Main {
 		// 466 504
 
 		// Done
-		in = "api_test.exe"; // 158 160 0.1s x
-		in = "api_test_upx.exe"; // 323 353 21s x
-		//in = "api_test_fsg.exe"; // 244 268 5s x
-		//in = "api_test_pecompact.exe"; // 1127 1178 35s x
-		// in = "api_test_npack.exe"; // 602 639 10s x
-		// in = "api_test_yoda.1.2.exe"; // 622 659 80s x
-		//in = "api_test_yoda.1.3.exe"; // 909 945 54s x
-		//in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
-		//in = "api_test_aspack.exe"; // 1047 1112 101s x
+//		in = "api_test.exe"; // 158 160 0.1s x
+//		in = "api_test_upx.exe"; // 323 353 21s x
+//		in = "api_test_fsg.exe"; // 244 268 5s x
+//		in = "api_test_pecompact.exe"; // 1127 1178 35s x
+//		 in = "api_test_npack.exe"; // 602 639 10s x
+		in = "api_test_yoda.1.2.exe"; // 622 659 80s x
+		in = "api_test_yoda.1.3.exe"; // 909 945 54s x
+		in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
+		in = "api_test_aspack.exe"; // 1047 1112 101s x
 
-		// in = "api_test_yoda.exe"; // 962 1038 257s
+//		 in = "api_test_yoda.exe"; // 962 1038 257s
 		//in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
 
 		// in = "Virus.Win32.Aztec.01"; // 312 330 Done
@@ -332,41 +330,20 @@ public class Main {
 		// pathVirus = "asm/packer/";
 		// in = "api_test_pecompact.exe";
 
-		//pathVirus = "asm/api/multithread/";
-		pathVirus = "asm/api/";
-		//in = "SillyExample.exe"; // VS 7.0 (VS C++ 6.0)
-		in = "HOSTNAME.EXE"; // VS 7.0 (VS C++ 6.0)
+//		pathVirus = "asm/api/multithread/";
+		//pathVirus = "asm/api/";
+//		in = "SillyExampleFixed.exe"; // VS 7.0 (VS C++ 6.0)
+		//in = "HOSTNAME.EXE"; // VS 7.0 (VS C++ 6.0)
 //		in = "Temp.exe"; // VS C++ 2005 Express Edition
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
+		
+//		pathVirus = "asm/testcase/";
+		//pathVirus = "asm/api/";
+//		in = "fld.exe"; // VS 7.0 (VS C++ 6.0)
 
 //		pathVirus = "asm/loria/";
 //		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee"; // Check API Yen
-//		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee";
-//		in = "0268e140e3e2de94ff543fdf6bbb2854a0db59d16796e981f6ae76b9fc20903b"; // Not Found 
-//		in = "0655c468136830eae362bd268d6faa9b8fa0e51b414645599bdf32b34d0658dd"; // Unknown
-//		in = "0447f1552343eb9fc55de53fc2acafa48371c5294f2d1a46134222b67218912f"; // Not Found
-//		in = "069d840b55c4ec59ae66e1a780677e96d0032288b5aa3da4bb313d542636b110";
-//		in = "048a03ff0e0d09afe66434dcfa807630dd2a085f5930a2a7ee835f65df489b57";
-//		in = "384d1a52c5819bd689c6c214fb7e4d0bd281243abd619564c8eb140d53d89e54";
-//		in = "23049bebb53eafee17bd3b104012325e3ec782b581965b69c13617168b0e08ef";
-//		in = "38dd7d91edf475239ec84ef06138256f068ba0d730473d37df7e34fda7653085";
-//		in = "247af01e8d6c20e25572bebd4fbef59147060f8b07033451a94b302bb1544ef7";
-//		in = "18fcb63593c65b4c6c9bbc51d00ae896df60b067e3c55b151efa52efbda0ae93"; // ThunRTMain@msvbvm60.dll
-//		in = "36f939f63fe1963ff8f877bcafeb701ba19ff97cd6d7c997092bd1702fed9fdc";
-//		in = "394d648d2782516da87f0b9ee807811f1bba71ae08937412cf0438bf89f5bf20";
-//		in = "07294ae21851f77cbe2468bf9f5ea0ee8c8e14bec0f93e17250598548ae0a91e";
-//		in = "3b90fab38fcd9cff8179623e25d878fbdcd1b467b2cb857e3b0d34892c0121ab";
-//		in = "3aced03d0ee8d467fb6110e0d292fe1d1a9e7ae013debf9e4472e0fd914c7881";
-//		in = "399491fa7a61b3f78798f4b17bf3b04d9ca9df8f1471eb12d7e0322ed218a6a6";
-//		in = "24422df07ae6f55bf33dc61ad961b951c3ab24a5c6405a93ab9d7ec85b5714af";
-//		in = "01928e6b46f6687109e13130ca12e53a904fb2b657635e5d2b1beaa94bd993f5";
-//		in = "25aad4c9696d60c181a3791cd9f4cfa794fbda9ea0db320eddcc0b3e8cd0cc49"; // ord(100)@msvbvm60.dll
-//		in = "0423966052d2166071d210e8191ef934211af8e09258aed657e0b091b33a37e2";
-//		in = "3a53dd67be9b5c145737cb64122cfe8d5bae641166a1f5633d2460eb149b2cf2";
-//		in = "248245fd3b835892d401c19dbf16aef2c9ea738eeb9d48dbc5b975069d1ffd1a";
-//		in = "2f0d42504c92e6eca536121624f8124c32e1c85e3aad748e7812af49b1cf6fb3"; // ord(100)@msvbvm60.dll
-//		in = "30d15d9e908d46667b7bb0c4931aff86918561f4faed890981939c48945dbd42";
 		
 		String path = pathVirus + in;
 		isGui = false;
@@ -390,8 +367,9 @@ public class Main {
 							{
 								fName = args[1].substring(args[1].lastIndexOf("\\") + 1 
 										, args[1].length());
+							} else {
+								fName = args[1];
 							}
-							else fName = args[1];
 							String logFile = "Log - " + fName + ".log";
 							setLogToFile(logFile);
 						}
@@ -491,8 +469,9 @@ public class Main {
 
 			// Use main module as base name if we have none yet
 			// reserved for drivers, ignore
-			if (baseFileName == null)
+			if (baseFileName == null) {
 				baseFileName = getBaseFileName(mainFile);
+			}
 			program.setAbsolutePathFile(baseFileName);
 		} catch (FileNotFoundException e) {
 			logger.fatal("File not found: " + e.getMessage());
@@ -544,6 +523,7 @@ public class Main {
 		if (!Options.background.getValue() && System.console() == null) {
 			logger.info("No console detected (eclipse?). Press return to terminate analysis and print statistics.");
 			Thread eclipseShutdownThread = new Thread() {
+				@Override
 				public void run() {
 					try {
 						System.in.read();
@@ -579,8 +559,9 @@ public class Main {
 
 			if (!otfMG.isCompleted()) {
 				System.out.println(Characters.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
-			} else
+			} else {
 				System.out.println(Characters.starredBox("Analysis finished, CFG is complete!"));
+			}
 
 			if (!otfMG.isSound()) {
 				logger.error(Characters.starredBox("WARNING: Analysis was unsound!"));
@@ -640,8 +621,9 @@ public class Main {
 			try {
 				Runtime.getRuntime().removeShutdownHook(shutdownThread);
 				//YenNguyen: Start GUI from this class
-				if (!isGui)
+				if (!isGui) {
 					System.exit(0);
+				}
 			} catch (IllegalStateException e) {
 				// Happens when shutdown has already been initiated by Ctrl-C or
 				// Return

@@ -71,7 +71,7 @@ public class PeekMessage extends User32API {
 		boolean ret = User32.INSTANCE.PeekMessage(lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax, wRemoveMsg);
 		register.mov("eax", new LongValue((ret) ? 1 : 0));
 
-		long value = Pointer.nativeValue(lpMsg.hWnd.getPointer());
+		long value = (lpMsg.hWnd == null) ? 0 : Pointer.nativeValue(lpMsg.hWnd.getPointer());
 		memory.setDoubleWordMemoryValue(t1, new LongValue(value));
 
 		value = lpMsg.message;

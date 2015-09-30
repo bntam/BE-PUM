@@ -98,7 +98,7 @@ public class LoadLibraryEx extends Kernel32API {
 		System.out.println("Return Value: " + value);
 
 		value = ((LongValue) register.getRegisterValue("eax")).getValue();
-		APIHandle.libraryHandle.put(value, libraryName);
+		APIHandle.libraryHandleMap.put(value, libraryName);
 	}
 
 	class LoadLibThread extends Thread {

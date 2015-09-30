@@ -61,7 +61,7 @@ public class lstrcpyn extends Kernel32API {
 		String dest = memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
 		String src = memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
 
-		System.out.println("Destination Address:" + destAddr + ", Source String:" + src);
+		System.out.println("Destination String:" + dest + ", Source String:" + src);
 
 		WString ret = Kernel32DLL.INSTANCE.lstrcpyn(new WString(dest), new WString(src), n);
 		memory.setText(new X86MemoryOperand(DataType.INT32, destAddr), ret.toString());

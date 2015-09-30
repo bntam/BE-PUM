@@ -36,8 +36,8 @@ import java.util.Map;
 
 public class APIHandle {
 	private static HashMap<String, String> apiMapping = new HashMap<String, String>();
-	public static Map<Long, String> libraryHandle = new HashMap<Long, String>();
-	public static Map<Long, String> processAddressHandle = new HashMap<Long, String>();
+	public static Map<Long, String> libraryHandleMap = new HashMap<Long, String>();
+	public static Map<Long, String> procAddressHandleMap = new HashMap<Long, String>();
 	public static boolean isDebug = true;
 
 	static {
@@ -493,7 +493,7 @@ public class APIHandle {
 	}
 
 	public static String checkAPI(long address) {
-		String api = APIHandle.processAddressHandle.get(address);
+		String api = APIHandle.procAddressHandleMap.get(address);
 		return api;
 	}
 }

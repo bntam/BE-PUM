@@ -416,7 +416,7 @@ public class FileHandle {
 		return sH;
 	}
 
-	public boolean isInsideFIle(AbsoluteAddress addr) {
+	public boolean isInsideFile(AbsoluteAddress addr) {
 		// TODO Auto-generated method stub
 		if (addr.getValue() < this.baseAddress)
 			return false;

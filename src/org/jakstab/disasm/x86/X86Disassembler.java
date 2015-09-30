@@ -35,6 +35,7 @@
 package org.jakstab.disasm.x86;
 
 import org.jakstab.asm.DataType;
+import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operation;
 import org.jakstab.asm.x86.*;
@@ -75,8 +76,11 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 		Instruction instr = null;
 		InstructionDecoder instrDecoder = null;
 		byteIndex = 0;
+		int firstByte = InstructionDecoder.readByte(code, byteIndex);		
+		if (firstByte == 241) 			
+			return new X86Instruction("int1", 1, 512);		
 
-		if (InstructionDecoder.readByte(code, byteIndex) == 100) {
+		if (firstByte == 100) {
 			if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 255
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 54
@@ -99,25 +103,66 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 				return new X86Instruction("popl", new X86MemoryOperand(DataType.INT32,
 						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
 		}
+		
+		if (firstByte == 103) {
+			if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
+					&& InstructionDecoder.readByte(code, byteIndex + 2) == 255
+					&& InstructionDecoder.readByte(code, byteIndex + 3) == 54
+					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+				return new X86Instruction("pushl", new X86MemoryOperand(DataType.INT32,
+						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
+			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
+					&& InstructionDecoder.readByte(code, byteIndex + 2) == 137
+					&& InstructionDecoder.readByte(code, byteIndex + 3) == 38
+					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+				return new X86MoveInstruction("movl", new X86MemoryOperand(DataType.INT32, new X86SegmentRegister(4,
+						"%fs"), 0), new X86Register(4, "%esp"), 6, 1152);
+			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
+					&& InstructionDecoder.readByte(code, byteIndex + 2) == 143
+					&& InstructionDecoder.readByte(code, byteIndex + 3) == 6
+					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+				return new X86Instruction("popl", new X86MemoryOperand(DataType.INT32,
+						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
+		}
+		
+		if (firstByte == 193) {
+			if (InstructionDecoder.readByte(code, byteIndex + 1) == 240)
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%eax"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
+			 else if (InstructionDecoder.readByte(code, byteIndex + 1) == 24)
+						return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebx"), 
+								new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
+			/*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246 || InstructionDecoder.readByte(code, byteIndex + 1) == 230)
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ecx"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
+			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 249 || InstructionDecoder.readByte(code, byteIndex + 1) == 233)
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edx"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);*/
+			 else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246)
+					return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esi"), 
+							new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+			 /*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246)
+					return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edi"), 
+							new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);*/
+		}
 
-		if (InstructionDecoder.readByte(code, byteIndex) == 192
-				&& InstructionDecoder.readByte(code, byteIndex + 1) == 240
-				&& InstructionDecoder.readByte(code, byteIndex + 2) == 3)
+		if (firstByte == 192 && InstructionDecoder.readByte(code, byteIndex + 1) == 240
+				     && InstructionDecoder.readByte(code, byteIndex + 2) == 3)
 			InstructionDecoder.setByte(code, byteIndex + 1, 224);
 
-		if (InstructionDecoder.readByte(code, byteIndex) == 102
-				&& InstructionDecoder.readByte(code, byteIndex + 1) == 211
-				&& InstructionDecoder.readByte(code, byteIndex + 2) == 246)
+		if (firstByte == 102 && InstructionDecoder.readByte(code, byteIndex + 1) == 211
+				     && InstructionDecoder.readByte(code, byteIndex + 2) == 246)
 			InstructionDecoder.setByte(code, byteIndex + 2, 230);
 
-		if (InstructionDecoder.readByte(code, byteIndex) == 211
-				&& InstructionDecoder.readByte(code, byteIndex + 1) == 241)
+		if (firstByte == 211 && InstructionDecoder.readByte(code, byteIndex + 1) == 241)
 			InstructionDecoder.setByte(code, byteIndex + 1, 225);
 
-		if (InstructionDecoder.readByte(code, byteIndex) == 102
-				&& InstructionDecoder.readByte(code, byteIndex + 1) == 152)
+		if (firstByte == 102 && InstructionDecoder.readByte(code, byteIndex + 1) == 152)
 			return new X86Instruction("cbws", 2, 512);
-		if (InstructionDecoder.readByte(code, byteIndex) == 152)
+		if (firstByte == 152)
 			return new X86Instruction("cwdel", 1, 512);
 
 		int instrStartIndex = 0;
