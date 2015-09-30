@@ -430,13 +430,8 @@ public class Test {
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
 
-		Logger dblogger = Logger.getLogger("debugLogger");
-		dblogger.info("TEST");
 		
-		Logger logger = Logger.getLogger(Test.class);
-		logger.debug(new Test());
-		
-		System.out.println("Code: " + x);
+		System.out.println(100 + ":" + 10);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = (long) 1;
 	}

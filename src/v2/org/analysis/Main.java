@@ -18,27 +18,6 @@
 
 package v2.org.analysis;
 
-import antlr.ANTLRException;
-
-import com.sun.jna.WString;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.Algorithm;
-import org.jakstab.Options;
-import org.jakstab.Program;
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.loader.BinaryParseException;
-import org.jakstab.loader.DefaultHarness;
-import org.jakstab.loader.HeuristicHarness;
-import org.jakstab.ssl.Architecture;
-import org.jakstab.util.Characters;
-import org.jakstab.util.Logger;
-
-import v2.org.analysis.algorithm.OTFModelGeneration;
-import v2.org.analysis.cfg.BPCFG;
-import v2.org.analysis.statistics.FileProcess;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -52,6 +31,25 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import javax.swing.UIManager;
+
+import org.jakstab.Algorithm;
+import org.jakstab.Options;
+import org.jakstab.Program;
+import org.jakstab.asm.AbsoluteAddress;
+import org.jakstab.loader.BinaryParseException;
+import org.jakstab.loader.DefaultHarness;
+import org.jakstab.loader.HeuristicHarness;
+import org.jakstab.ssl.Architecture;
+import org.jakstab.util.Characters;
+import org.jakstab.util.Logger;
+
+import v2.org.analysis.algorithm.OTFModelGeneration;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.cfg.BPCFG;
+import v2.org.analysis.statistics.FileProcess;
+import antlr.ANTLRException;
+
+import com.sun.jna.WString;
 
 public class Main {
 	static {
@@ -266,17 +264,17 @@ public class Main {
 		// 466 504
 
 		// Done
-		in = "api_test.exe"; // 158 160 0.1s x
-		in = "api_test_upx.exe"; // 323 353 21s x
-		//in = "api_test_fsg.exe"; // 244 268 5s x
-		//in = "api_test_pecompact.exe"; // 1127 1178 35s x
-		// in = "api_test_npack.exe"; // 602 639 10s x
-		// in = "api_test_yoda.1.2.exe"; // 622 659 80s x
-		//in = "api_test_yoda.1.3.exe"; // 909 945 54s x
-		//in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
-		//in = "api_test_aspack.exe"; // 1047 1112 101s x
+//		in = "api_test.exe"; // 158 160 0.1s x
+//		in = "api_test_upx.exe"; // 323 353 21s x
+//		in = "api_test_fsg.exe"; // 244 268 5s x
+//		in = "api_test_pecompact.exe"; // 1127 1178 35s x
+//		 in = "api_test_npack.exe"; // 602 639 10s x
+//		 in = "api_test_yoda.1.2.exe"; // 622 659 80s x
+//		in = "api_test_yoda.1.3.exe"; // 909 945 54s x
+//		in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
+//		in = "api_test_aspack.exe"; // 1047 1112 101s x
 
-		// in = "api_test_yoda.exe"; // 962 1038 257s
+//		 in = "api_test_yoda.exe"; // 962 1038 257s
 		//in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
 
 		// in = "Virus.Win32.Aztec.01"; // 312 330 Done
@@ -332,9 +330,9 @@ public class Main {
 		// pathVirus = "asm/packer/";
 		// in = "api_test_pecompact.exe";
 
-		pathVirus = "asm/api/multithread/";
+//		pathVirus = "asm/api/multithread/";
 		//pathVirus = "asm/api/";
-		in = "SillyExampleFixed.exe"; // VS 7.0 (VS C++ 6.0)
+//		in = "SillyExampleFixed.exe"; // VS 7.0 (VS C++ 6.0)
 		//in = "HOSTNAME.EXE"; // VS 7.0 (VS C++ 6.0)
 //		in = "Temp.exe"; // VS C++ 2005 Express Edition
 		// pathVirus = "asm/virus/";
@@ -369,8 +367,9 @@ public class Main {
 							{
 								fName = args[1].substring(args[1].lastIndexOf("\\") + 1 
 										, args[1].length());
+							} else {
+								fName = args[1];
 							}
-							else fName = args[1];
 							String logFile = "Log - " + fName + ".log";
 							setLogToFile(logFile);
 						}
@@ -470,8 +469,9 @@ public class Main {
 
 			// Use main module as base name if we have none yet
 			// reserved for drivers, ignore
-			if (baseFileName == null)
+			if (baseFileName == null) {
 				baseFileName = getBaseFileName(mainFile);
+			}
 			program.setAbsolutePathFile(baseFileName);
 		} catch (FileNotFoundException e) {
 			logger.fatal("File not found: " + e.getMessage());
@@ -523,6 +523,7 @@ public class Main {
 		if (!Options.background.getValue() && System.console() == null) {
 			logger.info("No console detected (eclipse?). Press return to terminate analysis and print statistics.");
 			Thread eclipseShutdownThread = new Thread() {
+				@Override
 				public void run() {
 					try {
 						System.in.read();
@@ -558,8 +559,9 @@ public class Main {
 
 			if (!otfMG.isCompleted()) {
 				System.out.println(Characters.starredBox("WARNING: Analysis interrupted, CFG might be incomplete!"));
-			} else
+			} else {
 				System.out.println(Characters.starredBox("Analysis finished, CFG is complete!"));
+			}
 
 			if (!otfMG.isSound()) {
 				logger.error(Characters.starredBox("WARNING: Analysis was unsound!"));
@@ -619,8 +621,9 @@ public class Main {
 			try {
 				Runtime.getRuntime().removeShutdownHook(shutdownThread);
 				//YenNguyen: Start GUI from this class
-				if (!isGui)
+				if (!isGui) {
 					System.exit(0);
+				}
 			} catch (IllegalStateException e) {
 				// Happens when shutdown has already been initiated by Ctrl-C or
 				// Return
