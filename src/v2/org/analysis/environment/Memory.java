@@ -23,7 +23,6 @@ import v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
-import v2.org.analysis.log.BPLogger;
 import v2.org.analysis.statistics.FileProcess;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
@@ -487,7 +486,7 @@ public class Memory {
 
 		if (ret1 != UNKNOWN && ret2 != UNKNOWN) {
 			long value = calculateWordValue(ret1, ret2);
-			BPLogger.debugLogger.info(address + ":" + value);
+//			BPLogger.debugLogger.info(address + ":" + value);
 			return new LongValue(value);
 		}
 
@@ -629,7 +628,7 @@ public Value getDoubleWordMemoryValue(long address) {
 
 		if (ret1 != UNKNOWN && ret2 != UNKNOWN && ret3 != UNKNOWN && ret4 != UNKNOWN) {
 			long value = calculateDoubleWordValue(ret1, ret2, ret3, ret4);
-			BPLogger.debugLogger.info(address + ":" + value);
+//			BPLogger.debugLogger.info(address + ":" + value);
 			return new LongValue(value);
 		}
 
