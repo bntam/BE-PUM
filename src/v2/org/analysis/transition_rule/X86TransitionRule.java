@@ -5,6 +5,8 @@ package v2.org.analysis.transition_rule;
 
 import v2.org.analysis.apihandle.winapi.APIHandle;
 
+
+
 //import v2.org.analysis.apihandle.APIHandle;
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
@@ -12,6 +14,10 @@ import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
@@ -27,12 +33,16 @@ import v2.org.analysis.system.VirtualMemory;
 import v2.org.analysis.value.*;
 
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * @author NMHai
@@ -385,6 +395,80 @@ public class X86TransitionRule extends TransitionRule {
 		String result[] = line.split(" ");
 		return result[0];
 	}
+	
+	
+
+	private static HashMap<String, String> instructionMapping = new HashMap<String, String>();
+	
+	static {
+		String directory = X86InstructionInterpreter.class.getPackage().getName().replace(".", "/");
+		InputStream fXmlFile = null;
+		try {
+			fXmlFile = X86InstructionInterpreter.class.getResourceAsStream("/" + directory + "/X86AssemblyMap.xml");
+
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
+
+			doc.getDocumentElement().normalize();
+
+			if (doc.hasChildNodes()) {
+				NodeList groupList = doc.getElementsByTagName("X86AssemlyMap");
+
+				for (int count = 0; count < groupList.getLength(); count++) {
+					Node groupNode = groupList.item(count);
+
+					// make sure it's element node.
+					if (groupNode.getNodeType() == Node.ELEMENT_NODE) {
+						// get attributes names and values
+						NodeList asmList = groupNode.getChildNodes();
+
+						for (int i = 0; i < asmList.getLength(); i++) {
+							Node apiNode = asmList.item(i);
+							// make sure it's element node.
+							if (apiNode.getNodeType() == Node.ELEMENT_NODE && apiNode.hasAttributes()) {
+								// get attributes names and values
+								NamedNodeMap apiMap = apiNode.getAttributes();
+								instructionMapping.put(apiMap.getNamedItem("assemblyName").getNodeValue(),
+										apiMap.getNamedItem("className").getNodeValue());
+							}
+
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (fXmlFile != null)
+					fXmlFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private static String findClassName(String asmName) {
+		if (asmName == null)
+			return null;
+
+		String fullClassName = null;
+		
+		fullClassName = instructionMapping.get(asmName);
+		if (fullClassName == null) {
+			char lastChar = asmName.charAt(asmName.length() - 1);
+			
+			if (lastChar == 'l' || lastChar == 'b' || lastChar == 'd' || lastChar == 'w') {
+				asmName = asmName.substring(0, asmName.length() - 1);
+				fullClassName = instructionMapping.get(asmName);
+			}
+		}
+		return fullClassName;
+	}
+
+	
+	
 
 	@Override
 	public void getNewState(BPPath path, List<BPPath> pathList, boolean cond) {
@@ -395,20 +479,50 @@ public class X86TransitionRule extends TransitionRule {
 		Instruction ins = curState.getInstruction();
 		BPVertex src = cfg.getVertex(curState.getLocation(), ins);
 		
-		if (ins instanceof X86ArithmeticInstruction)
-			new X86ArithmeticInterpreter().execute((X86ArithmeticInstruction) ins, path, pathList, this);
-		else if (ins instanceof X86CallInstruction)
-			new X86CallInterpreter().execute((X86CallInstruction) ins, path, pathList, this);
-		else if (ins instanceof X86CondJmpInstruction)
-			new X86ConditionalJumpInterpreter().execute((X86CondJmpInstruction) ins, path, pathList, this);
-		else if (ins instanceof X86JmpInstruction)
-			new X86JumpInterpreter().execute((X86JmpInstruction) ins, path, pathList, this);
-		else if (ins instanceof X86MoveInstruction)
-			new X86MoveInterpreter().execute((X86MoveInstruction) ins, path, pathList, this);
-		else if (ins instanceof X86RetInstruction)
-			new X86ReturnInterpreter().execute((X86RetInstruction) ins, path, pathList, this);
-		else if (ins instanceof X86Instruction)
-			new X86InstructionInterpreter().execute((X86Instruction) ins, path, pathList, this);
+		/**
+		 * TODO
+		 */
+		
+		
+		
+		
+		String className = findClassName(ins.getName());
+		
+		if (className != null) {
+			try {
+				Class<?> clazz = Class.forName(className);
+				Constructor<?> ctor = clazz.getConstructor();
+				AssemblyInstructionStub asmObject = (AssemblyInstructionStub) ctor.newInstance();
+
+				asmObject.run((X86Instruction)ins, path, pathList, this);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			
+			
+			if (ins instanceof X86ArithmeticInstruction)
+				new X86ArithmeticInterpreter().execute((X86ArithmeticInstruction) ins, path, pathList, this);
+			else if (ins instanceof X86CallInstruction)
+				new X86CallInterpreter().execute((X86CallInstruction) ins, path, pathList, this);
+			else if (ins instanceof X86CondJmpInstruction)
+				new X86ConditionalJumpInterpreter().execute((X86CondJmpInstruction) ins, path, pathList, this);
+			else if (ins instanceof X86JmpInstruction)
+				new X86JumpInterpreter().execute((X86JmpInstruction) ins, path, pathList, this);
+			else if (ins instanceof X86MoveInstruction)
+				new X86MoveInterpreter().execute((X86MoveInstruction) ins, path, pathList, this);
+			else if (ins instanceof X86RetInstruction)
+				new X86ReturnInterpreter().execute((X86RetInstruction) ins, path, pathList, this);
+			else if (ins instanceof X86Instruction)
+				new X86InstructionInterpreter().execute((X86Instruction) ins, path, pathList, this);
+			
+			
+		}
+		
+		
+		
+		
 		if (!setCFG) {
 			BPVertex dest = new BPVertex(curState.getLocation(), curState.getInstruction());
 			dest = cfg.insertVertex(dest);

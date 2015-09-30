@@ -6,6 +6,16 @@ import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.sun.jna.platform.win32.Kernel32;
+
+import v2.org.analysis.apihandle.winapi.API;
+import v2.org.analysis.apihandle.winapi.APIException;
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.Environment;
@@ -15,10 +25,18 @@ import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.SEHHandle;
 import v2.org.analysis.value.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 public class X86InstructionInterpreter {
+	
 	public BPState execute(X86Instruction inst, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
 		// TODO Auto-generated method stub
 		BPState curState = path.getCurrentState();
@@ -43,6 +61,11 @@ public class X86InstructionInterpreter {
 		int opSize = rule.getBitCount(inst);
 		// System.out.println("Instruction: " + inst.getName());
 
+
+		
+		
+		
+		
 		if (inst.getName().startsWith("rdtsc")) {
 			// System.out.println("rdtsc");
 			long time_stamp = System.nanoTime();
