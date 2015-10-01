@@ -37,7 +37,7 @@ import com.sun.jna.platform.win32.WinDef.HMODULE;
  *
  */
 public class LoadLibrary extends Kernel32API {
-	private static final String KNOWN_LIB_NAME[] = { "mapistub.dll", "msvcrt.dll" };
+	private static final String KNOWN_LIB_NAME[] = { "mapistub.dll", "msvcrt.dll", "msvbvm60.dll" };
 	private static int generatedLibCount = 0;
 
 	private HMODULE apiCallReturn = null;
