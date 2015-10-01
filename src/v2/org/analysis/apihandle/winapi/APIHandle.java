@@ -1,5 +1,15 @@
 package v2.org.analysis.apihandle.winapi;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
@@ -7,8 +17,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import com.sun.jna.platform.win32.Kernel32;
 
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
@@ -18,25 +26,20 @@ import v2.org.analysis.environment.Stack;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.VirtualMemory;
+import v2.org.analysis.util.PairEntry;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
 import v2.org.analysis.value.Value;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.sun.jna.platform.win32.Kernel32;
 
 //import v2.org.analysis.apihandle.be_pum.winapi.kernel32.Kernel32Stub;
 
 public class APIHandle {
+	public static final int BASE_LIB_HANDLE = 0x88880000;
+	
 	private static HashMap<String, String> apiMapping = new HashMap<String, String>();
-	public static Map<Long, String> libraryHandleMap = new HashMap<Long, String>();
+	public static Map<Long, PairEntry<String, Integer>> libraryHandleMap = new HashMap<Long, PairEntry<String, Integer>>();
 	public static Map<Long, String> procAddressHandleMap = new HashMap<Long, String>();
 	public static boolean isDebug = true;
 
@@ -95,8 +98,9 @@ public class APIHandle {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (fXmlFile != null)
+				if (fXmlFile != null) {
 					fXmlFile.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -104,8 +108,9 @@ public class APIHandle {
 	}
 
 	private static String findClassName(String funcName/* , String libName */) {
-		if (funcName == null)
+		if (funcName == null) {
 			return null;
+		}
 
 		String fullClassName = null;
 		// String apiMap = apiMapping.get(libName);
@@ -212,8 +217,9 @@ public class APIHandle {
 				byte[] opcodes = getOpcodesArray(curState, addr.getValue());
 				// NEXT INSTRUCTION FOR CALL
 				newInst = Program.getProgram().getInstruction(opcodes, env);
-			} else
+			} else {
 				newInst = program.getInstruction(addr, env);
+			}
 
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
 			cfg.insertEdge(new BPEdge(v2, v1));
@@ -245,8 +251,9 @@ public class APIHandle {
 
 			Value ret = env.getStack().pop();
 			long r = 0;
-			if (ret != null && ret instanceof LongValue)
+			if (ret != null && ret instanceof LongValue) {
 				r = ((LongValue) ret).getValue();
+			}
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			// PHONG: change here for virtual memory
 			Instruction newInst;
@@ -254,8 +261,9 @@ public class APIHandle {
 				byte[] opcodes = getOpcodesArray(curState, addr.getValue());
 				// NEXT INSTRUCTION FOR CALL
 				newInst = Program.getProgram().getInstruction(opcodes, env);
-			} else
+			} else {
 				newInst = program.getInstruction(addr, env);
+			}
 
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
 			cfg.insertEdge(new BPEdge(v2, v1));
@@ -485,7 +493,7 @@ public class APIHandle {
 		// can modify here for best result, i < 10, because one asm statement
 		// needs 10 bytes or less
 		for (int i = 0; i < /* vM.getSize() - offset */10; i++) {
-			long virtualAdrr = vM.getAddress() + (long) i;
+			long virtualAdrr = vM.getAddress() + i;
 			opcodes[i] = (byte) ((LongValue) curState.getEnvironement().getMemory().getByteMemoryValue(virtualAdrr))
 					.getValue();
 		}

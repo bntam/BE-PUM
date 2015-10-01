@@ -10,15 +10,16 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.util.PairEntry;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.apihandle.winapi.APIHandle;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.value.LongValue;
 
 /**
  * Loads the specified module into the address space of the calling process. The
@@ -98,7 +99,7 @@ public class LoadLibraryEx extends Kernel32API {
 		System.out.println("Return Value: " + value);
 
 		value = ((LongValue) register.getRegisterValue("eax")).getValue();
-		APIHandle.libraryHandleMap.put(value, libraryName);
+		APIHandle.libraryHandleMap.put(value, new PairEntry<String, Integer>(libraryName, -1));
 	}
 
 	class LoadLibThread extends Thread {

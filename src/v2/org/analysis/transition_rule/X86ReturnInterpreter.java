@@ -1,11 +1,15 @@
 package v2.org.analysis.transition_rule;
 
+import java.util.List;
+
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86RetInstruction;
+
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
 import v2.org.analysis.cfg.BPVertex;
@@ -15,8 +19,6 @@ import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
-
-import java.util.List;
 
 public class X86ReturnInterpreter {
 
@@ -53,7 +55,7 @@ public class X86ReturnInterpreter {
 				
 				String api = rule.checkAPICall(ret, curState);
 				if (api != null/* !api.equals("") */) {
-					rule.getAPIHandle().executeAPI(new AbsoluteAddress(r), api, inst, path, pathList);
+					APIHandle.executeAPI(new AbsoluteAddress(r), api, inst, path, pathList);
 					rule.setCFG(true);
 					return curState;
 				}
@@ -69,10 +71,11 @@ public class X86ReturnInterpreter {
 					BPVertex s1 = cfg.getVertex(curState.getLocation(), curState.getInstruction());
 					BPVertex s2 = new BPVertex();
 
-					if (env.getSystem().getKernel().isInside(nextAddr))
+					if (env.getSystem().getKernel().isInside(nextAddr)) {
 						s2.setType(BPVertex.ExitNode);
-					else
+					} else {
 						s2.setType(BPVertex.UnknownNode);
+					}
 
 					s2.setProperty(nextAddr.toString());
 					cfg.insertVertex(s2);

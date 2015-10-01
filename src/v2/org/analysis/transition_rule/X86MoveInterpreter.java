@@ -1,12 +1,13 @@
 package v2.org.analysis.transition_rule;
 
+import java.util.List;
+
 import org.jakstab.Program;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86MemoryOperand;
 import org.jakstab.asm.x86.X86MoveInstruction;
 import org.jakstab.asm.x86.X86Register;
 //import v2.org.analysis.apihandle.APIHandle;
-
 
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.complement.BitVector;
@@ -17,14 +18,11 @@ import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
-import java.util.List;
-
 public class X86MoveInterpreter {
 	private APIHandle apiHandle = null;
 
 	public BPState execute(X86MoveInstruction inst, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
 		// TODO Auto-generated method stub
-		this.apiHandle = rule.getAPIHandle();
 		BPState curState = path.getCurrentState();
 		Environment env = curState.getEnvironement();
 		
@@ -42,16 +40,18 @@ public class X86MoveInterpreter {
 				LongValue temp = new LongValue(BitVector.extend(t, 0, opSize1, opSize));
 				//System.out.println();
 				rule.setValueOperand(dest, temp , env, inst);
-			} else
+			} else {
 				rule.setValueOperand(dest, source, env, inst);
+			}
 		} else if (inst.getName().startsWith("movsx")) {
 			Value source = rule.getValueOperand(src, env, inst);
 			if (source != null && source instanceof LongValue) {
 				long t = ((LongValue) source).getValue();
 				int sign = BitVector.getMSB(t, opSize / 2);
 				rule.setValueOperand(dest, new LongValue(BitVector.extend(t, sign, ((X86MemoryOperand)src).getDataType().bits(), opSize)), env, inst);
-			} else
+			} else {
 				rule.setValueOperand(dest, source, env, inst);
+			}
 		} else if (inst.getName().startsWith("mov")) {
 			// normal move
 			Value source = rule.getValueOperand(src, env, inst);
@@ -63,13 +63,14 @@ public class X86MoveInterpreter {
 				// Xu li truong hop mov fs:0, esp
 				// Khi do se tac dong den SEH
 				boolean b = false;
-				if (y.getDisplacement() == 0 && y.getBase() == null)
+				if (y.getDisplacement() == 0 && y.getBase() == null) {
 					b = true;
-				else {
+				} else {
 					if (y.getBase() != null) {
 						Value v = env.getRegister().getRegisterValue(y.getBase().toString());
-						if (v instanceof LongValue)
+						if (v instanceof LongValue) {
 							b = (((LongValue) v).getValue() == 0);
+						}
 					}
 				}
 

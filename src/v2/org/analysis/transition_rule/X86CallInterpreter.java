@@ -1,5 +1,9 @@
 package v2.org.analysis.transition_rule;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
@@ -7,6 +11,8 @@ import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86CallInstruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 import org.jakstab.asm.x86.X86PCRelativeAddress;
+
+import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
@@ -14,10 +20,6 @@ import v2.org.analysis.value.Formulas;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
 import v2.org.analysis.value.Value;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class X86CallInterpreter {
 	public BPState execute(X86CallInstruction inst, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
@@ -61,7 +63,7 @@ public class X86CallInterpreter {
 			String api = rule.checkAPICall(r, curState);
 			// String t[] = api.split("@");
 			if (api != null/* !api.equals("") */) {
-				rule.getAPIHandle().executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, inst, path,
+				APIHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, inst, path,
 						pathList);
 				rule.setCFG(true);
 			} else {
@@ -82,8 +84,9 @@ public class X86CallInterpreter {
 					byte[] opcodes = rule.getOpcodesArray(curState, nextAddr.getValue());
 					// NEXT INSTRUCTION FOR CALL
 					nextInst = Program.getProgram().getInstruction(opcodes, env);
-				} else
+				} else {
 					nextInst = Program.getProgram().getInstruction(nextAddr, env);
+				}
 
 				/*
 				 * if (nextInst == null) { nextInst =
@@ -126,7 +129,7 @@ public class X86CallInterpreter {
 				String api = rule.checkAPICall(r, curState);
 				// String t[] = api.split("@");
 				if (!api.equals("")) {
-					rule.getAPIHandle().executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, inst, path,
+					APIHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, inst, path,
 							pathList);
 					rule.setCFG(true);
 				} else {
@@ -142,12 +145,13 @@ public class X86CallInterpreter {
 								.setProperty(a.toString());
 						Instruction i = Program.getProgram().getInstruction(a, env);
 
-						if (i != null)
+						if (i != null) {
 							System.out.println("The new area of Concolic Testing is:" + a.getValue() + " Hex value:"
 									+ a + " Instruction: " + i.getName());
-						else
+						} else {
 							System.out.println("The new area of Concolic Testing is:" + a.getValue() + " Hex value:"
 									+ a + " Instruction: null");
+						}
 						System.out.println("**********************************************");
 
 						curState.setInstruction(i);

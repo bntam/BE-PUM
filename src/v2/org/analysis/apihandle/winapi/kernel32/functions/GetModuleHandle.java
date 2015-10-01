@@ -7,25 +7,20 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import v2.org.analysis.apihandle.winapi.APIHandle;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import java.util.Map.Entry;
 
 import org.jakstab.Program;
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
+import v2.org.analysis.apihandle.winapi.APIHandle;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.util.PairEntry;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * The GetModuleHandle function retrieves a module handle for the specified
@@ -53,27 +48,37 @@ public class GetModuleHandle extends Kernel32API {
 	@Override
 	public void execute() {
 
-		HMODULE ret;
+		HMODULE ret = null;
 		String libraryName = null;
 		long t1 = this.params.get(0);
-		if (t1 == 0L) {
-			ret = new HMODULE();
-			ret.setPointer(new Pointer(Program.getProgram().getImageBase()));
-			// returnValue = Kernel32.INSTANCE.GetModuleHandle(null);
-		} else {
-			libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-			System.out.println("Library Name: " + libraryName);
-
-			ret = Kernel32.INSTANCE.GetModuleHandle(libraryName);
+		
+		libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		System.out.println("Library Name: " + libraryName);
+		
+		// Get from cache
+		for (Entry<Long, PairEntry<String, Integer>> entry : APIHandle.libraryHandleMap.entrySet()) {
+			if (entry.getValue().getKey().equals(libraryName)) {
+				ret = new HMODULE();
+				ret.setPointer(new Pointer(entry.getKey()));
+			}
+		}
+		
+		// If fail
+		if (ret == null) {
+			if (t1 == 0L) {
+				ret = new HMODULE();
+				ret.setPointer(new Pointer(Program.getProgram().getImageBase()));
+				// returnValue = Kernel32.INSTANCE.GetModuleHandle(null);
+			} else {
+				ret = Kernel32.INSTANCE.GetModuleHandle(libraryName);
+			}
 		}
 
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 		register.mov("eax", new LongValue(value));
-		System.out.println("Return Value:" + value);
 
-		if (libraryName != null) {
-			value = ((LongValue) register.getRegisterValue("eax")).getValue();
-			APIHandle.libraryHandleMap.put(value, libraryName);
+		if (libraryName != null && value != 0) {
+			APIHandle.libraryHandleMap.put(value, new PairEntry<String, Integer>(libraryName, -1));
 		}
 	}
 

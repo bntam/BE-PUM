@@ -1,5 +1,9 @@
 package v2.org.analysis.transition_rule;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
@@ -18,16 +22,11 @@ import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
 import v2.org.analysis.value.Value;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class X86JumpInterpreter {
 	private APIHandle apiHandle = null;
 
 	public BPState execute(X86JmpInstruction inst, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
 		// TODO Auto-generated method stub
-		apiHandle = rule.getAPIHandle();
 		Formulas l = path.getPathCondition();
 		BPState curState = path.getCurrentState();
 		Environment env = curState.getEnvironement();
@@ -78,8 +77,9 @@ public class X86JumpInterpreter {
 				if (curState.getEnvironement().getSystem().isInVirtualMemory() == true) {
 					byte[] opcodes = rule.getOpcodesArray(curState, nextAddr.getValue());
 					nextInst = Program.getProgram().getInstruction(opcodes, env);
-				} else
-					nextInst = Program.getProgram().getInstruction(nextAddr, env);				
+				} else {
+					nextInst = Program.getProgram().getInstruction(nextAddr, env);
+				}				
 				curState.setInstruction(nextInst);
 				curState.setLocation(nextAddr);
 			}
@@ -108,12 +108,13 @@ public class X86JumpInterpreter {
 							.setProperty(a.toString());
 					Instruction i = Program.getProgram().getInstruction(a, env);
 
-					if (i != null)
+					if (i != null) {
 						System.out.println("The new area of Concolic Testing is:" + a.getValue() + " Hex value:" + a
 								+ " Instruction: " + i.getName());
-					else
+					} else {
 						System.out.println("The new area of Concolic Testing is:" + a.getValue() + " Hex value:" + a
 								+ " Instruction: null");
+					}
 					System.out.println("**********************************************");
 
 					curState.setInstruction(i);

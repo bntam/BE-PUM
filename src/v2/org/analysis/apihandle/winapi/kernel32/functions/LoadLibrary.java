@@ -7,17 +7,19 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.WinDef.HMODULE;
-
-import v2.org.analysis.apihandle.winapi.APIHandle;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import java.util.Map.Entry;
 
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.util.PairEntry;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.WinDef.HMODULE;
 
 /**
  * Loads the specified module into the address space of the calling process. The
@@ -35,6 +37,9 @@ import v2.org.analysis.value.LongValue;
  *
  */
 public class LoadLibrary extends Kernel32API {
+	private static final String KNOWN_LIB_NAME[] = { "mapistub.dll", "msvcrt.dll" };
+	private static int generatedLibCount = 0;
+
 	private HMODULE apiCallReturn = null;
 
 	public LoadLibrary() {
@@ -42,25 +47,41 @@ public class LoadLibrary extends Kernel32API {
 		NUM_OF_PARMS = 1;
 	}
 
+	private static boolean isKnownLib(String libName) {
+		libName = libName.toLowerCase();
+
+		for (String lib : KNOWN_LIB_NAME) {
+			if (lib.equals(libName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public void execute() {
-		/*
-		 * returnValue = APIHandler.loadLibraryA( ((ValueLongExp)
-		 * x1).getValue(), program);
-		 */
+
 		String libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
 		long value = execute(libraryName);
 
 		register.mov("eax", new LongValue(value));
-		// register.mov("edx", new LongValue(0x140608));
-		// register.mov("ecx", new LongValue(0x7c801bfa));
 
 		value = ((LongValue) register.getRegisterValue("eax")).getValue();
 	}
 
 	public long execute(String libraryName) {
 		System.out.println(" Library Name:" + libraryName);
+		long value = 0;
+		boolean isGen = false;
 
+		// Get from cache
+		for (Entry<Long, PairEntry<String, Integer>> entry : APIHandle.libraryHandleMap.entrySet()) {
+			if (entry.getValue().getKey().equals(libraryName)) {
+				return entry.getKey();
+			}
+		}
+
+		// If cache fail, call JNA to get that
 		LoadLibThread thread = new LoadLibThread(libraryName);
 		try {
 			thread.start();
@@ -73,11 +94,20 @@ public class LoadLibrary extends Kernel32API {
 			e.printStackTrace();
 		}
 
-		long value = (apiCallReturn == null) ? 0 : Pointer.nativeValue(apiCallReturn.getPointer());
+		// Fail again? Maybe the system has not been install some needed
+		// framework
+		if (this.apiCallReturn == null && isKnownLib(libraryName)) {
+			// 4000 APIs can be attached to this DLL
+			value = APIHandle.BASE_LIB_HANDLE + (4000 * generatedLibCount++);
+			isGen = true;
+		} else {
+			value = (this.apiCallReturn == null) ? 0 : Pointer.nativeValue(apiCallReturn.getPointer());
+			isGen = false;
+		}
 
 		// Store all the handle value for each library
 		if (value != 0) {
-			APIHandle.libraryHandleMap.put(value, libraryName);
+			APIHandle.libraryHandleMap.put(value, new PairEntry<String, Integer>(libraryName, ((isGen) ? 0 : -1)));
 		}
 
 		return value;

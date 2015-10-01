@@ -24,6 +24,7 @@ import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
 import v2.org.analysis.statistics.FileProcess;
+import v2.org.analysis.util.PairEntry;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
 import v2.org.analysis.value.Value;
@@ -1157,8 +1158,8 @@ public Value getDoubleWordMemoryValue(long address) {
 
 		// Try to find the handle of current library
 		if (APIHandle.libraryHandleMap.containsValue(libraryName)) {
-			for (Map.Entry<Long, String> handle : APIHandle.libraryHandleMap.entrySet()) {
-				if (handle.getValue().equals(libraryName)) {
+			for (Entry<Long, PairEntry<String, Integer>> handle : APIHandle.libraryHandleMap.entrySet()) {
+				if (handle.getValue().getKey().equals(libraryName)) {
 					libHandle = handle.getKey();
 					break;
 				}
