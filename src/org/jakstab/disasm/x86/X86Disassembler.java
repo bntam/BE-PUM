@@ -143,8 +143,14 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 			if (InstructionDecoder.readByte(code, byteIndex + 1) == 240) {
 				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%eax"), 
 						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 241) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ecx"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
 			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 243) {
 				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebx"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 242) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edx"), 
 						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
 			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246) {
 				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esi"), 
