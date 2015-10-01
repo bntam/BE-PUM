@@ -101,7 +101,9 @@ public class PackerPatterns {
 	 */
 	public boolean Overwriting()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		int opCount = this.curState.getInstruction().getOperandCount();
 		if (opCount >= 2)
@@ -126,7 +128,9 @@ public class PackerPatterns {
 	 */
 	public boolean IndirectJump()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		Instruction ins = curState.getInstruction();
 		String insName = ins.getName();
@@ -154,7 +158,9 @@ public class PackerPatterns {
 	 */
 	public boolean ObfuscatedConst()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		Instruction ins = this.curState.getInstruction();
 		int opCount = ins.getOperandCount();
@@ -168,13 +174,11 @@ public class PackerPatterns {
 				{
 					op2 = this.curState.getInstruction().getOperand(1);
 				}
-				if (op1 instanceof Immediate
-						|| this.GetOperandValue(op1) instanceof LongValue)
+				if (op1 instanceof Immediate)
 				{
 					return true;
 				}
-				if (op2 instanceof Immediate
-						|| this.GetOperandValue(op2) instanceof LongValue)
+				if (op2 instanceof Immediate)
 				{
 					return true;
 				}
@@ -188,7 +192,9 @@ public class PackerPatterns {
 	 */
 	public boolean OverlappingFunction()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		Instruction ins = this.curState.getInstruction();
 		String insName = ins.getName();
@@ -207,14 +213,16 @@ public class PackerPatterns {
 					}
 				}		
 			}
-			this.blocks.add(savedFunc);
+			this.funcs.add(savedFunc);
 		}
 		return false;
 	}
 	
 	public boolean OverlappingBlock()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		Instruction ins = this.curState.getInstruction();
 		if (ins instanceof X86JmpInstruction)
@@ -248,10 +256,12 @@ public class PackerPatterns {
 	 */
 	public boolean CodeChunking()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		Instruction ins = curState.getInstruction();
-		if (ins instanceof X86JmpInstruction || ins instanceof X86CondJmpInstruction)
+		if (ins instanceof X86JmpInstruction)
 		{
 			long insLoc = curState.getLocation().getValue();
 			PackerSavedState jmpState = new PackerSavedState(insLoc, ins.getName());
@@ -290,7 +300,9 @@ public class PackerPatterns {
 	 */
 	public boolean StolenBytes()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		String insName = this.curState.getInstruction().getName();
 		if (insName.contains("call"))
@@ -317,7 +329,9 @@ public class PackerPatterns {
 	 */
 	public boolean Checksumming()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 
 		Instruction ins = curState.getInstruction();
 		
@@ -385,7 +399,9 @@ public class PackerPatterns {
 	public boolean SEHs()
 	{
 		// Part1: Detect setup SEH
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		Environment env = curState.getEnvironement();
 		if (!this.setupSEH)
@@ -398,13 +414,14 @@ public class PackerPatterns {
 				{
 					X86MemoryOperand memAddr = (X86MemoryOperand) dest;
 					boolean base = false;
-					if (memAddr.getDisplacement() == 0 && memAddr.getBase() == null)
+					if (memAddr.getDisplacement() == 0 && memAddr.getBase() == null) {
 						base = true;
-					else {
+					} else {
 						if (memAddr.getBase() != null) {
 							Value memVal = env.getRegister().getRegisterValue(memAddr.getBase().toString());
-							if (memVal instanceof LongValue)
+							if (memVal instanceof LongValue) {
 								base = (((LongValue) memVal).getValue() == 0);
+							}
 						}
 					}
 
@@ -424,7 +441,9 @@ public class PackerPatterns {
 	 */
 	public boolean TwoAPIs()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 			
 		String insName = this.curState.getInstruction().getName();
 		if (insName.contains("call"))
@@ -460,7 +479,9 @@ public class PackerPatterns {
 	 */
 	public boolean AntiDebugging()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		String insName = this.curState.getInstruction().getName();
 		if (insName.contains("call"))
@@ -490,7 +511,9 @@ public class PackerPatterns {
 	 */
 	public boolean TimingCheck()
 	{
-		if (curState == null || curState.getInstruction() == null) return false;
+		if (curState == null || curState.getInstruction() == null) {
+			return false;
+		}
 		
 		String insName = this.curState.getInstruction().getName();
 		if (insName.contains("call"))
@@ -539,10 +562,7 @@ public class PackerPatterns {
 				if (aVal instanceof LongValue)
 				{
 					AbsoluteAddress aAddr = new AbsoluteAddress(((LongValue) aVal).getValue());
-					if (this.IsInCodeSection(aAddr))
-					{
-						this.tracingFuncLoc = aAddr.getValue();
-					}
+					this.tracingFuncLoc = aAddr.getValue();
 				}
 			}
 		}
@@ -562,8 +582,9 @@ public class PackerPatterns {
 		
 		if (api == null || api == "") {
 			api = Program.getProgram().checkAPI(((LongValue) apiAddr).getValue(), curState.getEnvironement());
-			if (api != null && api.equals(""))
+			if (api != null && api.equals("")) {
 				api = null;
+			}
 		}	
 		return api;
 	}
