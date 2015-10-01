@@ -34,16 +34,24 @@
 
 package org.jakstab.disasm.x86;
 
+import java.io.IOException;
+
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operation;
-import org.jakstab.asm.x86.*;
+import org.jakstab.asm.x86.X86ArithmeticInstruction;
+import org.jakstab.asm.x86.X86Instruction;
+import org.jakstab.asm.x86.X86InstructionFactory;
+import org.jakstab.asm.x86.X86InstructionFactoryImpl;
+import org.jakstab.asm.x86.X86MemoryOperand;
+import org.jakstab.asm.x86.X86MoveInstruction;
+import org.jakstab.asm.x86.X86Opcodes;
+import org.jakstab.asm.x86.X86Register;
+import org.jakstab.asm.x86.X86SegmentRegister;
 import org.jakstab.disasm.Disassembler;
 import org.jakstab.util.BinaryInputBuffer;
 import org.jakstab.util.Logger;
-
-import java.io.IOException;
 
 public class X86Disassembler implements Disassembler, X86Opcodes {
 	private final static Logger logger = Logger.getLogger(X86Disassembler.class);
@@ -77,31 +85,33 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 		InstructionDecoder instrDecoder = null;
 		byteIndex = 0;
 		int firstByte = InstructionDecoder.readByte(code, byteIndex);		
-		if (firstByte == 241) 			
-			return new X86Instruction("int1", 1, 512);		
+		if (firstByte == 241) {
+			return new X86Instruction("int1", 1, 512);
+		}		
 
 		if (firstByte == 100) {
 			if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 255
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 54
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86Instruction("pushl", new X86MemoryOperand(DataType.INT32,
 						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
-			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 137
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 38
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86MoveInstruction("movl", new X86MemoryOperand(DataType.INT32, new X86SegmentRegister(4,
 						"%fs"), 0), new X86Register(4, "%esp"), 6, 1152);
-			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 143
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 6
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86Instruction("popl", new X86MemoryOperand(DataType.INT32,
 						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
+			}
 		}
 		
 		if (firstByte == 103) {
@@ -109,61 +119,62 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 255
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 54
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86Instruction("pushl", new X86MemoryOperand(DataType.INT32,
 						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
-			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 137
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 38
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86MoveInstruction("movl", new X86MemoryOperand(DataType.INT32, new X86SegmentRegister(4,
 						"%fs"), 0), new X86Register(4, "%esp"), 6, 1152);
-			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 100
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 143
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 6
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86Instruction("popl", new X86MemoryOperand(DataType.INT32,
 						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
+			}
 		}
 		
 		if (firstByte == 193) {
-			if (InstructionDecoder.readByte(code, byteIndex + 1) == 240)
+			if (InstructionDecoder.readByte(code, byteIndex + 1) == 240) {
 				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%eax"), 
-						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
-			 else if (InstructionDecoder.readByte(code, byteIndex + 1) == 24)
-						return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebx"), 
-								new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
-			/*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246 || InstructionDecoder.readByte(code, byteIndex + 1) == 230)
-				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ecx"), 
-						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);			 
-			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 249 || InstructionDecoder.readByte(code, byteIndex + 1) == 233)
-				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edx"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 243) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebx"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esi"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+ /*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246)
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edi"), 
 						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);*/
-			 else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246)
-					return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esi"), 
-							new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
-			 /*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246)
-					return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edi"), 
-							new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);*/
+			}
 		}
 
 		if (firstByte == 192 && InstructionDecoder.readByte(code, byteIndex + 1) == 240
-				     && InstructionDecoder.readByte(code, byteIndex + 2) == 3)
+				     && InstructionDecoder.readByte(code, byteIndex + 2) == 3) {
 			InstructionDecoder.setByte(code, byteIndex + 1, 224);
+		}
 
 		if (firstByte == 102 && InstructionDecoder.readByte(code, byteIndex + 1) == 211
-				     && InstructionDecoder.readByte(code, byteIndex + 2) == 246)
+				     && InstructionDecoder.readByte(code, byteIndex + 2) == 246) {
 			InstructionDecoder.setByte(code, byteIndex + 2, 230);
+		}
 
-		if (firstByte == 211 && InstructionDecoder.readByte(code, byteIndex + 1) == 241)
+		if (firstByte == 211 && InstructionDecoder.readByte(code, byteIndex + 1) == 241) {
 			InstructionDecoder.setByte(code, byteIndex + 1, 225);
+		}
 
-		if (firstByte == 102 && InstructionDecoder.readByte(code, byteIndex + 1) == 152)
+		if (firstByte == 102 && InstructionDecoder.readByte(code, byteIndex + 1) == 152) {
 			return new X86Instruction("cbws", 2, 512);
-		if (firstByte == 152)
+		}
+		if (firstByte == 152) {
 			return new X86Instruction("cwdel", 1, 512);
+		}
 
 		int instrStartIndex = 0;
 		int prefixes = 0;
@@ -182,19 +193,23 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 				if ((prefixes & PREFIX_REPNZ) != 0) {
 					instrDecoder = twoBytePrefixF2Table[opcode];
 					// Remove the prefix if the instruction is from this table
-					if (instrDecoder != null)
+					if (instrDecoder != null) {
 						prefixes = prefixes & (-1 ^ PREFIX_REPNZ);
+					}
 				} else if ((prefixes & PREFIX_REPZ) != 0) {
 					instrDecoder = twoBytePrefixF3Table[opcode];
-					if (instrDecoder != null)
+					if (instrDecoder != null) {
 						prefixes = prefixes & (-1 ^ PREFIX_REPZ);
+					}
 				} else if ((prefixes & PREFIX_DATA) != 0) {
 					instrDecoder = twoBytePrefix66Table[opcode];
-					if (instrDecoder != null)
+					if (instrDecoder != null) {
 						prefixes = prefixes & (-1 ^ PREFIX_DATA);
+					}
 				}
-				if (instrDecoder == null)
+				if (instrDecoder == null) {
 					instrDecoder = twoByteTable[opcode];
+				}
 
 			} else {
 				instrDecoder = oneByteTable[opcode];
@@ -249,23 +264,24 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 255
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 54
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86Instruction("pushl", new X86MemoryOperand(DataType.INT32,
 						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
-			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 137
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 38
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86MoveInstruction("movl", new X86MemoryOperand(DataType.INT32, new X86SegmentRegister(4,
 						"%fs"), 0), new X86Register(4, "%esp"), 6, 1152);
-			else if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
 					&& InstructionDecoder.readByte(code, byteIndex + 2) == 143
 					&& InstructionDecoder.readByte(code, byteIndex + 3) == 6
 					&& InstructionDecoder.readByte(code, byteIndex + 4) == 0
-					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0)
+					&& InstructionDecoder.readByte(code, byteIndex + 5) == 0) {
 				return new X86Instruction("popl", new X86MemoryOperand(DataType.INT32,
 						new X86SegmentRegister(4, "%fs"), 0), 6, 1152);
+			}
 		}
 
 		int instrStartIndex = 0;
@@ -293,22 +309,26 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 				if ((prefixes & PREFIX_REPNZ) != 0) {
 					instrDecoder = twoBytePrefixF2Table[opcode];
 					// Remove the prefix if the instruction is from this table
-					if (instrDecoder != null)
+					if (instrDecoder != null) {
 						prefixes = prefixes & (-1 ^ PREFIX_REPNZ);
+					}
 				} else if ((prefixes & PREFIX_REPZ) != 0) {
 					instrDecoder = twoBytePrefixF3Table[opcode];
-					if (instrDecoder != null)
+					if (instrDecoder != null) {
 						prefixes = prefixes & (-1 ^ PREFIX_REPZ);
+					}
 				} else if ((prefixes & PREFIX_DATA) != 0) {
 					instrDecoder = twoBytePrefix66Table[opcode];
-					if (instrDecoder != null)
+					if (instrDecoder != null) {
 						prefixes = prefixes & (-1 ^ PREFIX_DATA);
+					}
 				} /*
 				 * does not work with prefixed standard 2-Byte instructions!
 				 * else { instrDecoder = twoByteTable[opcode]; }
 				 */
-				if (instrDecoder == null)
+				if (instrDecoder == null) {
 					instrDecoder = twoByteTable[opcode];
+				}
 
 			} else {
 				instrDecoder = oneByteTable[opcode];
@@ -395,8 +415,9 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 			default:
 				isPrefix = false;
 			}
-			if (isPrefix)
+			if (isPrefix) {
 				byteIndex++;
+			}
 		}
 		return prefixes;
 	}
