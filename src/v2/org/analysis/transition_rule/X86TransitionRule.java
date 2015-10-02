@@ -1147,7 +1147,7 @@ public class X86TransitionRule extends TransitionRule {
 
 	}
 
-	public int getBitCountOprand(Operand op) {
+	public int geSizeOprand(Operand op) {
 		// TODO Auto-generated method stub
 		if (op instanceof X86MemoryOperand) {
 			return ((X86MemoryOperand)op).getDataType().bits();

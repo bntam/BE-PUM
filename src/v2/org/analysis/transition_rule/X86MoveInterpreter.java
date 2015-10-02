@@ -36,19 +36,20 @@ public class X86MoveInterpreter {
 			Value source = rule.getValueOperand(src, env, inst);
 			if (source != null && source instanceof LongValue) {
 				long t = ((LongValue) source).getValue();
-				int opSize1 = rule.getBitCountOprand(src);
+				int opSize1 = rule.geSizeOprand(src);
 				LongValue temp = new LongValue(BitVector.extend(t, 0, opSize1, opSize));
 				//System.out.println();
 				rule.setValueOperand(dest, temp , env, inst);
 			} else {
 				rule.setValueOperand(dest, source, env, inst);
 			}
-		} else if (inst.getName().startsWith("movsx")) {
+		} else if (inst.getName().startsWith("movsx") || inst.getName().startsWith("movsb")) {
 			Value source = rule.getValueOperand(src, env, inst);
 			if (source != null && source instanceof LongValue) {
 				long t = ((LongValue) source).getValue();
-				int sign = BitVector.getMSB(t, opSize / 2);
-				rule.setValueOperand(dest, new LongValue(BitVector.extend(t, sign, ((X86MemoryOperand)src).getDataType().bits(), opSize)), env, inst);
+				int s = rule.geSizeOprand(src);
+				int sign = BitVector.getMSB(t, s);			
+				rule.setValueOperand(dest, new LongValue(BitVector.extend(t, sign, s, rule.geSizeOprand(dest))), env, inst);
 			} else {
 				rule.setValueOperand(dest, source, env, inst);
 			}

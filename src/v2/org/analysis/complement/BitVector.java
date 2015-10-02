@@ -8,8 +8,9 @@ public class BitVector {
 	public static void main(String[] args) {
 		long t = -2004820559;
 		int[] x = BitVector.longToBytes(t, 4);
-		for (int i = 0; i < x.length; i++)
+		for (int i = 0; i < x.length; i++) {
 			System.out.print(x[i] + ", ");
+		}
 
 		System.out.println(t + " = " + BitVector.bytesToLong(x, 4));
 	}
@@ -25,8 +26,9 @@ public class BitVector {
 		String className = APIHandle.class.getName();
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 		for (StackTraceElement element : stackTraceElements) {
-			if (element.getClassName().equals(className))
+			if (element.getClassName().equals(className)) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -35,8 +37,9 @@ public class BitVector {
 		int[] result = new int[num];
 		for (int i = num - 1; i >= 0; i--) {
 			int x = (byte) (l & 0x0FF);
-			if (x < 0)
+			if (x < 0) {
 				x += 256;
+			}
 			result[i] = x;
 			l >>= 8;
 		}
@@ -120,9 +123,11 @@ public class BitVector {
 		// System.out.println(input + " = " + Arrays.toString(bits));
 
 		long result = 0;
-		for (int i = 0; i < MAX_NUM_BIT; i++)
-			if (bits[i])
+		for (int i = 0; i < MAX_NUM_BIT; i++) {
+			if (bits[i]) {
 				result += Math.pow(2, i);
+			}
+		}
 
 		return result;
 	}
@@ -249,8 +254,9 @@ public class BitVector {
 	private static long getRealVal(long val) {
 		val = cut32Bit(val);
 
-		if (val >= Math.pow(2, 31))
+		if (val >= Math.pow(2, 31)) {
 			return (long) (val - Math.pow(2, 32));
+		}
 		return val;
 	}
 
@@ -318,14 +324,15 @@ public class BitVector {
 
 	public static byte getMSB(long val, long bits) {
 
-		if (bits == 8)
+		if (bits == 8) {
 			return (byte) ((val & 0x80) >>> 7);
-		else if (bits == 16)
+		} else if (bits == 16) {
 			return (byte) ((val & 0x8000) >>> 15);
-		else if (bits == 32)
+		} else if (bits == 32) {
 			return (byte) ((val & 0x80000000) >>> 31);
-		else if (bits == 64)
+		} else if (bits == 64) {
 			return (byte) ((val & 0x8000000000000000l) >>> 63);
+		}
 
 		return 0;
 	}
@@ -339,9 +346,11 @@ public class BitVector {
 		int k = (int) (t % Math.pow(2, 8));
 		String s = Integer.toBinaryString(k);
 		int r = 0;
-		for (int i = 0; i < s.length(); i++)
-			if (s.charAt(i) == '1')
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) == '1') {
 				r++;
+			}
+		}
 		return r % 2 == 0;
 	}
 
@@ -350,14 +359,15 @@ public class BitVector {
 	}
 
 	public static byte getSMSB(long val, int bits) {
-		if (bits == 8)
+		if (bits == 8) {
 			return (byte) (((val & 0xC0) >>> 6) & 1);
-		else if (bits == 16)
+		} else if (bits == 16) {
 			return (byte) (((val & 0xC000) >>> 14) & 1);
-		else if (bits == 32)
+		} else if (bits == 32) {
 			return (byte) (((val & 0xc0000000) >>> 30) & 1);
-		else if (bits == 64)
+		} else if (bits == 64) {
 			return (byte) (((val & 0xC000000000000000l) >>> 62) & 1);
+		}
 
 		return 0;
 	}
@@ -395,8 +405,9 @@ public class BitVector {
 		// return (int) (original >> bits) | (original << (32 - bits));
 		int b = (int) (bits & 0x07);
 		long t = (int) (original >> b) | (original << (32 - b));
-		if (t < 0)
+		if (t < 0) {
 			t += Math.pow(2, 32);
+		}
 		return t;
 	}
 
@@ -417,14 +428,19 @@ public class BitVector {
 	public static long extend(long t, int i, int opSize1, int opSize2) {
 		t = Convert.convetUnsignedValue(t, opSize1);
 		
-		if (i == 0)
+		if (i == 0) {
 			return t;
-		else if (i == 1) {
+		} else if (i == 1) {
 			switch (opSize2) {
 			case 16:
 				return (long) (t + 255 * Math.pow(2, 8));
 			case 32:
-				return (long) (t + 65535 * Math.pow(2, 16));
+				if (opSize1 == 16) {
+					return (long) (t + 65535 * Math.pow(2, 16));
+				}
+				if (opSize1 == 8) {
+					return (long) (t + 65535 * Math.pow(2, 16) + 65280);
+				}
 			}
 		}
 
