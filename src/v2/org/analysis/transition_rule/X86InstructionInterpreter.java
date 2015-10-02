@@ -1,11 +1,15 @@
 package v2.org.analysis.transition_rule;
 
+import java.util.Calendar;
+import java.util.List;
+
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.Environment;
@@ -13,10 +17,11 @@ import v2.org.analysis.loop.LoopAlgorithm;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.SEHHandle;
-import v2.org.analysis.value.*;
-
-import java.util.Calendar;
-import java.util.List;
+import v2.org.analysis.value.BooleanValue;
+import v2.org.analysis.value.HybridValue;
+import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.SymbolValue;
+import v2.org.analysis.value.Value;
 
 public class X86InstructionInterpreter {
 	public BPState execute(X86Instruction inst, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
@@ -129,12 +134,13 @@ public class X86InstructionInterpreter {
 		else if (inst.getName().startsWith("cmpxchg")) {
 			// ystem.out.println();
 			Value acc = null;
-			if (opSize == 8)
+			if (opSize == 8) {
 				acc = env.getRegister().getRegisterValue("al");
-			else if (opSize == 16)
+			} else if (opSize == 16) {
 				acc = env.getRegister().getRegisterValue("ax");
-			else if (opSize == 32)
+			} else if (opSize == 32) {
 				acc = env.getRegister().getRegisterValue("eax");
+			}
 
 			Value destVal = rule.getValueOperand(dest, env, inst);
 			Value srcVal = rule.getValueOperand(src, env, inst);
@@ -145,12 +151,13 @@ public class X86InstructionInterpreter {
 			} else {
 				env.getFlag().setZFlag(new BooleanValue(false));
 
-				if (opSize == 8)
+				if (opSize == 8) {
 					env.getRegister().setRegisterValue("al", destVal);
-				else if (opSize == 16)
+				} else if (opSize == 16) {
 					env.getRegister().setRegisterValue("ax", destVal);
-				else if (opSize == 32)
+				} else if (opSize == 32) {
 					env.getRegister().setRegisterValue("eax", destVal);
+				}
 			}
 
 			env.getFlag().changeFlagWithCMP(destVal, acc, env, opSize);
@@ -161,9 +168,9 @@ public class X86InstructionInterpreter {
 				SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
 				sehHandle.setSEHType(SEHHandle.INTERUPT);
 				return rule.processSEH(curState);
-			}
-			else
+			} else {
 				Program.getProgram().getLog().debugString("Not processed" + inst.getName() + " at " + curState.getLocation());
+			}
 		} else if (inst.getName().startsWith("cmovne")) {
 
 			if (inst.getName().startsWith("cmovne") || inst.getName().equals("cmovnz")) {
@@ -512,8 +519,9 @@ public class X86InstructionInterpreter {
 			// OF = ((BooleanValue) oFlag).getValue();
 
 			// if (SF == OF)
-			if (sFlag.equal(oFlag))
+			if (sFlag.equal(oFlag)) {
 				isSet = true;
+			}
 
 			if (dest.getClass().getSimpleName().equals("X86Register")
 					|| dest.getClass().getSimpleName().equals("X86RegisterPart")
@@ -553,8 +561,9 @@ public class X86InstructionInterpreter {
 			// OF = ((BooleanValue) oFlag).getValue();
 
 			// if ((ZF == false) && (SF == OF))
-			if ((zFlag.equal(new BooleanValue(false))) && (sFlag.equal(oFlag)))
+			if ((zFlag.equal(new BooleanValue(false))) && (sFlag.equal(oFlag))) {
 				isSet = true;
+			}
 
 			if (dest.getClass().getSimpleName().equals("X86Register")
 					|| dest.getClass().getSimpleName().equals("X86RegisterPart")
@@ -594,8 +603,9 @@ public class X86InstructionInterpreter {
 			// OF = ((BooleanValue) oFlag).getValue();
 
 			// if ((ZF == true) || (SF != OF))
-			if ((zFlag.equal(new BooleanValue(true))) || !(sFlag.equal(oFlag)))
+			if ((zFlag.equal(new BooleanValue(true))) || !(sFlag.equal(oFlag))) {
 				isSet = true;
+			}
 
 			if (dest.getClass().getSimpleName().equals("X86Register")
 					|| dest.getClass().getSimpleName().equals("X86RegisterPart")
@@ -629,8 +639,9 @@ public class X86InstructionInterpreter {
 			oFlag = oFlag.evaluate(oFlag.getValueMap());
 			// OF = ((BooleanValue) oFlag).getValue();
 
-			if (!(sFlag.equal(oFlag)))
+			if (!(sFlag.equal(oFlag))) {
 				isSet = true;
+			}
 
 			if (dest.getClass().getSimpleName().equals("X86Register")
 					|| dest.getClass().getSimpleName().equals("X86RegisterPart")
@@ -877,8 +888,9 @@ public class X86InstructionInterpreter {
 			Value AF = env.getFlag().getAFlag();
 			boolean isCF = false;
 			if ((AL instanceof LongValue) && ((LongValue) AL).getValue() > 9
-					|| (AF instanceof BooleanValue && ((BooleanValue) AF).getValue()))
+					|| (AF instanceof BooleanValue && ((BooleanValue) AF).getValue())) {
 				isCF = true;
+			}
 
 			if (isCF) {
 				Long t = ((LongValue) AL).getValue() - 6;
@@ -892,36 +904,44 @@ public class X86InstructionInterpreter {
 		} else if (inst.getName().startsWith("popa")) {
 			// System.out.println("Process " + inst.getName());
 			Value edi = env.getStack().pop();
-			if (edi == null)
+			if (edi == null) {
 				edi = new SymbolValue("edi");
+			}
 
 			Value esi = env.getStack().pop();
-			if (esi == null)
+			if (esi == null) {
 				esi = new SymbolValue("esi");
+			}
 
 			Value ebp = env.getStack().pop();
-			if (ebp == null)
+			if (ebp == null) {
 				ebp = new SymbolValue("ebp");
+			}
 
 			Value esp = env.getStack().pop();
-			if (esp == null)
+			if (esp == null) {
 				esp = new SymbolValue("esp");
+			}
 
 			Value ebx = env.getStack().pop();
-			if (ebx == null)
+			if (ebx == null) {
 				ebx = new SymbolValue("ebx");
+			}
 
 			Value edx = env.getStack().pop();
-			if (edx == null)
+			if (edx == null) {
 				edx = new SymbolValue("edx");
+			}
 
 			Value ecx = env.getStack().pop();
-			if (ecx == null)
+			if (ecx == null) {
 				ecx = new SymbolValue("ecx");
+			}
 
 			Value eax = env.getStack().pop();
-			if (eax == null)
+			if (eax == null) {
 				eax = new SymbolValue("eax");
+			}
 
 			env.getRegister().setRegisterValue("edi", edi);
 			env.getRegister().setRegisterValue("esi", esi);
@@ -942,10 +962,11 @@ public class X86InstructionInterpreter {
 			// Program.getProgram().getAbsolutePathFile() + "_test");
 		} else if (inst.getName().startsWith("popf")) {
 			Value v = null; 
-			if (opSize == 32)
+			if (opSize == 32) {
 				v = env.getStack().pop();
-			else if (opSize == 16)
+			} else if (opSize == 16) {
 				v = env.getStack().pop16();
+			}
 			
 			//Value v = env.getStack().pop();
 			env.getFlag().setAllFlagValue(v);
@@ -1129,15 +1150,18 @@ public class X86InstructionInterpreter {
 						if (z != null && z.equal(x)) {
 							env.getFlag().setZFlag(new BooleanValue(true));
 							break;
-						} else
+						} else {
 							env.getFlag().setZFlag(new BooleanValue(false));
+						}
 
 						// Thoat ra khi ECX = 0
 						Value ecx = env.getRegister().getRegisterValue("%ecx");
-						if (ecx instanceof LongValue && ((LongValue) ecx).getValue() == 0)
+						if (ecx instanceof LongValue && ((LongValue) ecx).getValue() == 0) {
 							break;
-					} else
+						}
+					} else {
 						break;
+					}
 				}
 
 			} else if (inst.hasPrefixREPZ()) {
@@ -1174,10 +1198,12 @@ public class X86InstructionInterpreter {
 
 						// Thoat ra khi ECX = 0
 						Value ecx = env.getRegister().getRegisterValue("%ecx");
-						if (ecx instanceof LongValue && ((LongValue) ecx).getValue() == 0)
+						if (ecx instanceof LongValue && ((LongValue) ecx).getValue() == 0) {
 							break;
-					} else
+						}
+					} else {
 						break;
+					}
 				}
 
 			} else {
@@ -1192,11 +1218,12 @@ public class X86InstructionInterpreter {
 					// PHONG: fix here
 					env.getFlag().changeFlagWithSUB(x, z, env, rule.getBitCount(inst));
 					// Dieu kien bang xay ra
-					if (z != null && z instanceof LongValue && x1 == ((LongValue) z).getValue())
+					if (z != null && z instanceof LongValue && x1 == ((LongValue) z).getValue()) {
 						// break;
 						env.getFlag().setZFlag(new BooleanValue(true));
-					else
+					} else {
 						env.getFlag().setZFlag(new BooleanValue(false));
+					}
 
 					// PHONG: fix here
 					if (((BooleanValue) env.getFlag().getDFlag()).getValue() == false) {
@@ -1310,7 +1337,7 @@ public class X86InstructionInterpreter {
 			env.getFlag().setDFlag(new BooleanValue(0));
 		} else if (inst.getName().startsWith("int")) {
 			if (dest != null && dest.getClass().getSimpleName().equals("Immediate")) {
-				long x = (long) Convert.convetUnsignedValue(((Immediate) dest).getNumber().intValue(),
+				long x = Convert.convetUnsignedValue(((Immediate) dest).getNumber().intValue(),
 						rule.getBitCount(inst));
 
 				// Process interrupt 68h
@@ -1415,49 +1442,52 @@ public class X86InstructionInterpreter {
 			}
 
 		} else if (inst.getName().startsWith("cmp") || inst.getName().startsWith("test")) {
-			if (dest.getClass().getSimpleName().equals("X86Register"))
+			if (dest.getClass().getSimpleName().equals("X86Register")) {
 				d = env.getRegister().getRegisterValue(dest.toString());
-			else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 				d = env.getRegister().getRegisterValue(dest.toString());
-			else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 				d = env.getRegister().getRegisterValue(dest.toString());
-			else if (dest.getClass().getSimpleName().equals("Immediate"))
+			} else if (dest.getClass().getSimpleName().equals("Immediate")) {
 				d = new LongValue(Convert.convetUnsignedValue(((Immediate) dest).getNumber().intValue(),
 						rule.getBitCount(inst)));
-			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+			} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				d = env.getMemory().getMemoryValue((X86MemoryOperand) dest, inst);
 			}
 
-			if (src.getClass().getSimpleName().equals("X86Register"))
+			if (src.getClass().getSimpleName().equals("X86Register")) {
 				s = env.getRegister().getRegisterValue(src.toString());
-			else if (src.getClass().getSimpleName().equals("X86RegisterPart"))
+			} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 				s = env.getRegister().getRegisterValue(src.toString());
-			else if (src.getClass().getSimpleName().equals("X86SegmentRegister"))
+			} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 				s = env.getRegister().getRegisterValue(src.toString());
-			else if (src.getClass().getSimpleName().equals("Immediate")) {
+			} else if (src.getClass().getSimpleName().equals("Immediate")) {
 				s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 						rule.getBitCount(inst)));
 			} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				s = env.getMemory().getMemoryValue((X86MemoryOperand) src, inst);
 			}
 
-			if (inst.getName().startsWith("cmp"))
+			if (inst.getName().startsWith("cmp")) {
 				env.getFlag().changeFlagWithSUB(d, s, env, rule.getBitCount(inst));
-			else
+			}
+			else {
 				env.getFlag().changeFlagWithTEST(d, s, env, rule.getBitCount(inst));
 			// set compare status
+			}
 
 		} else if (inst.getName().startsWith("pop")) {
-			if (dest == null)
+			if (dest == null) {
 				return curState;
+			}
 
 			if (dest.getClass().getSimpleName().equals("X86Register")
 					|| dest.getClass().getSimpleName().equals("X86RegisterPart")
 					|| dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 				env.getRegister().setRegisterValue(dest.toString(), env.getStack().pop());
-			} else if (dest.getClass().getSimpleName().equals("Immediate"))
+			} else if (dest.getClass().getSimpleName().equals("Immediate")) {
 				;
-			else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+			} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				env.getMemory().setMemoryValue((X86MemoryOperand) dest, env.getStack().pop(), inst);
 			}
 
@@ -1480,19 +1510,21 @@ public class X86InstructionInterpreter {
 			env.getStack().push(env.getRegister().getRegisterValue("%edi"));
 
 		} else if (inst.getName().startsWith("pushf")) {
-			if (opSize == 32)
+			if (opSize == 32) {
 				env.getStack().push(env.getFlag().getEFLAGS());
-			else if (opSize == 16)
+			} else if (opSize == 16) {
 				env.getStack().push16(env.getFlag().getEFLAGS());
+			}
 		} else if (inst.getName().startsWith("push")) {
-			if (dest == null)
+			if (dest == null) {
 				return curState;
+			}
 
-			if (dest.getClass().getSimpleName().equals("X86Register"))
+			if (dest.getClass().getSimpleName().equals("X86Register")) {
 				d = env.getRegister().getRegisterValue(dest.toString());
-			else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
+			} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 				d = env.getRegister().getRegisterValue(dest.toString());
-			else if (dest.getClass().getSimpleName().equals("Immediate")) {
+			} else if (dest.getClass().getSimpleName().equals("Immediate")) {
 				// Immediate t = (Immediate) dest;
 				// long x = t.getNumber().longValue();
 				d = new LongValue(Convert.convetUnsignedValue(((Immediate) dest).getNumber().longValue(),
@@ -1506,11 +1538,13 @@ public class X86InstructionInterpreter {
 					// PHONG: update 20150526-----------------
 					d = new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
 					// ---------------------------------------
-				} else
+				} else {
 					d = env.getMemory().getMemoryValue(t, inst);
+				}
 
-			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
+			} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 				d = env.getRegister().getRegisterValue(dest.toString());
+			}
 
 			env.getStack().push(d);
 		} else if (inst.getName().startsWith("nop")) {
@@ -1534,8 +1568,9 @@ public class X86InstructionInterpreter {
 				// = AL - 6 *)
 				Value CFlagCondition = new HybridValue(env.getRegister().getRegisterValue("al"), "<", new LongValue(6));
 				CFlagCondition = CFlagCondition.evaluate(CFlagCondition.getValueMap());
-				if (CFlagCondition instanceof BooleanValue && ((BooleanValue) CFlagCondition).getValue() == true)
+				if (CFlagCondition instanceof BooleanValue && ((BooleanValue) CFlagCondition).getValue() == true) {
 					env.getFlag().setCFlag(new BooleanValue(true));
+				}
 
 				env.getFlag().setAFlag(new BooleanValue(true));
 			} else {
@@ -1642,8 +1677,9 @@ public class X86InstructionInterpreter {
 			if (AH instanceof LongValue) {
 				long AHValue = ((LongValue) AH).getValue();
 				boolean[] AHBits = new boolean[8];
-				for (int i = 0; i < 8; i++)
+				for (int i = 0; i < 8; i++) {
 					AHBits[i] = (((AHValue & (1 << i)) >> i) == 1) ? true : false;
+				}
 				// Loads the SF, ZF, AF, PF, and CF flags of the EFLAGS register
 				// with values
 				// from the corresponding bits in the AH register (bits 7, 6, 4,
@@ -1668,10 +1704,11 @@ public class X86InstructionInterpreter {
 				long EAXValue = ((LongValue) EAX).getValue();
 				boolean signBit = (((EAXValue & (1 << 31)) >> 31) == 1) ? true : false;
 
-				if (signBit)
+				if (signBit) {
 					env.getRegister().setRegisterValue("edx", new LongValue(0xFFFFFFFF));
-				else
+				} else {
 					env.getRegister().setRegisterValue("edx", new LongValue(0x00000000));
+				}
 			}
 		}
 
@@ -1787,36 +1824,41 @@ public class X86InstructionInterpreter {
 		else if (inst.getName().startsWith("lahf")) {
 			long bit0, bit1, bit2, bit3, bit4, bit5, bit6, bit7;
 
-			if (env.getFlag().getCFlag().equal(new BooleanValue(1)))
+			if (env.getFlag().getCFlag().equal(new BooleanValue(1))) {
 				bit0 = 1;
-			else
+			} else {
 				bit0 = 0;
+			}
 
 			bit1 = 2;
 
-			if (env.getFlag().getPFlag().equal(new BooleanValue(1)))
+			if (env.getFlag().getPFlag().equal(new BooleanValue(1))) {
 				bit2 = 4;
-			else
+			} else {
 				bit2 = 0;
+			}
 
 			bit3 = 0;
 
-			if (env.getFlag().getAFlag().equal(new BooleanValue(1)))
+			if (env.getFlag().getAFlag().equal(new BooleanValue(1))) {
 				bit4 = 16;
-			else
+			} else {
 				bit4 = 0;
+			}
 
 			bit5 = 0;
 
-			if (env.getFlag().getZFlag().equal(new BooleanValue(1)))
+			if (env.getFlag().getZFlag().equal(new BooleanValue(1))) {
 				bit6 = 64;
-			else
+			} else {
 				bit6 = 0;
+			}
 
-			if (env.getFlag().getSFlag().equal(new BooleanValue(1)))
+			if (env.getFlag().getSFlag().equal(new BooleanValue(1))) {
 				bit7 = 128;
-			else
+			} else {
 				bit7 = 0;
+			}
 
 			long result = 0;
 			result = bit0 + bit1 + bit2 + bit3 + bit4 + bit5 + bit6 + bit7;
@@ -1883,8 +1925,9 @@ public class X86InstructionInterpreter {
 			boolean isCF = false;
 			if ((AL instanceof LongValue)
 					&& (((LongValue) AL).getValue() > 9 || (AF instanceof BooleanValue && ((BooleanValue) AF)
-							.getValue())))
+							.getValue()))) {
 				isCF = true;
+			}
 
 			if (isCF) {
 				Long t = ((LongValue) AL).getValue() + 6;
@@ -1900,10 +1943,12 @@ public class X86InstructionInterpreter {
 			long op2 = Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(), 8);
 			long _size = op1 + 4 * op2;
 			// xoa.
-			if (env.getRegister().getRegisterValue("ebp") instanceof LongValue)
+			if (env.getRegister().getRegisterValue("ebp") instanceof LongValue) {
 				ebp = ((LongValue) env.getRegister().getRegisterValue("ebp")).getValue();
-			if (env.getRegister().getRegisterValue("esp") instanceof LongValue)
+			}
+			if (env.getRegister().getRegisterValue("esp") instanceof LongValue) {
 				esp = ((LongValue) env.getRegister().getRegisterValue("esp")).getValue();
+			}
 
 			env.getStack().push(env.getRegister().getRegisterValue("ebp"));
 			Value tempreg = env.getRegister().getRegisterValue("esp");
@@ -1940,8 +1985,9 @@ public class X86InstructionInterpreter {
 			Value CF = env.getFlag().getCFlag();
 			boolean isCF = false;
 			if ((AL instanceof LongValue && ((LongValue) AL).getValue() > 9)
-					|| (AF instanceof BooleanValue && ((BooleanValue) AF).getValue()))
+					|| (AF instanceof BooleanValue && ((BooleanValue) AF).getValue())) {
 				isCF = true;
+			}
 
 			if (isCF) {
 				env.getRegister().add("al", new LongValue(6));
@@ -1972,8 +2018,9 @@ public class X86InstructionInterpreter {
 					temp_d = ((LongValue) d).getValue();
 					temp = new AnalysisBit().SwapBit32(temp_d);
 					env.getRegister().setRegisterValue(dest.toString(), new LongValue(temp));
-				} else
+				} else {
 					env.getRegister().setRegisterValue(dest.toString(), new SymbolValue(dest.toString()));
+				}
 			}
 		}
 
@@ -2075,8 +2122,9 @@ public class X86InstructionInterpreter {
 				if (temp_c < get_bit) {
 					long array_dest[] = new long[get_bit];
 					long temp = temp_d;
-					for (int i = 0; i < get_bit; i++)
+					for (int i = 0; i < get_bit; i++) {
 						array_dest[i] = 0;
+					}
 					int i = 0;
 					while (temp != 0) {
 						array_dest[i] = temp % 2;
@@ -2093,10 +2141,11 @@ public class X86InstructionInterpreter {
 					env.getFlag().setCFlag(cflag);
 				}
 				// ---------------------------------------------------------------------------------------
-				if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-				else
+				} else {
 					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
+				}
 			}
 		}
 
@@ -2156,8 +2205,9 @@ public class X86InstructionInterpreter {
 					if (temp_c < get_bit) {
 						long array_dest[] = new long[get_bit];
 						long temp = temp_d;
-						for (int i = 0; i < get_bit; i++)
+						for (int i = 0; i < get_bit; i++) {
 							array_dest[i] = 0;
+						}
 						int i = 0;
 						while (temp != 0) {
 							array_dest[i] = temp % 2;
@@ -2170,14 +2220,15 @@ public class X86InstructionInterpreter {
 						env.getFlag().changeFlagWithADD(destflag, srcflag, env, get_bit);
 						// change OFlag here
 						// change CFlag here
-						BooleanValue cflag = new BooleanValue(array_dest[(int) (get_bit - 1)] != 0);
+						BooleanValue cflag = new BooleanValue(array_dest[get_bit - 1] != 0);
 						env.getFlag().setCFlag(cflag);
 					}
 					// ---------------------------------------------------------------------------------------
-					if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+					if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-					else
+					} else {
 						env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
+					}
 				}
 			}
 		}
@@ -2224,14 +2275,16 @@ public class X86InstructionInterpreter {
 				temp_s = ((LongValue) s).getValue();
 				CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
 				result = new AnalysisBit().BTC(temp_d, temp_s, get_bit);
-				if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-				else
+				} else {
 					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-				if (CF == 1)
+				}
+				if (CF == 1) {
 					env.getFlag().setCFlag(new BooleanValue(true));
-				else
+				} else {
 					env.getFlag().setCFlag(new BooleanValue(false));
+				}
 			} else {
 				Program.getProgram().setLog("BTC with Symbol Value at " + curState.getLocation());
 				rule.generateNextInstruction(inst, path, pathList, true);
@@ -2278,14 +2331,16 @@ public class X86InstructionInterpreter {
 				temp_s = ((LongValue) s).getValue();
 				CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
 				result = new AnalysisBit().BTR(temp_d, temp_s, get_bit);
-				if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-				else
+				} else {
 					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-				if (CF == 1)
+				}
+				if (CF == 1) {
 					env.getFlag().setCFlag(new BooleanValue(true));
-				else
+				} else {
 					env.getFlag().setCFlag(new BooleanValue(false));
+				}
 			} else {
 				Program.getProgram().setLog("BTR with Symbol Value at " + curState.getLocation());
 				rule.generateNextInstruction(inst, path, pathList, true);
@@ -2331,14 +2386,16 @@ public class X86InstructionInterpreter {
 				temp_s = ((LongValue) s).getValue();
 				CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
 				result = new AnalysisBit().BTS(temp_d, temp_s, get_bit);
-				if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-				else
+				} else {
 					env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-				if (CF == 1)
+				}
+				if (CF == 1) {
 					env.getFlag().setCFlag(new BooleanValue(true));
-				else
+				} else {
 					env.getFlag().setCFlag(new BooleanValue(false));
+				}
 			} else {
 				Program.getProgram().setLog("BTS with Symbol Value at " + curState.getLocation());
 				rule.generateNextInstruction(inst, path, pathList, true);
@@ -2385,10 +2442,11 @@ public class X86InstructionInterpreter {
 				temp_s = ((LongValue) s).getValue();
 
 				result = new AnalysisBit().BT(temp_d, temp_s, get_bit);
-				if (result == 1)
+				if (result == 1) {
 					env.getFlag().setCFlag(new BooleanValue(true));
-				else
+				} else {
 					env.getFlag().setCFlag(new BooleanValue(false));
+				}
 			} else {
 				Program.getProgram().setLog("BT with Symbol Value at " + curState.getLocation());
 				rule.generateNextInstruction(inst, path, pathList, true);
@@ -2504,12 +2562,14 @@ public class X86InstructionInterpreter {
 		String base = "edi";
 		if (source instanceof X86MemoryOperand) {
 			load = env.getMemory().getMemoryValue((X86MemoryOperand) source, inst);
-			if (((X86MemoryOperand) source).getBase() != null)
+			if (((X86MemoryOperand) source).getBase() != null) {
 				base = ((X86MemoryOperand) source).getBase().toString();
+			}
 		}
 
-		if (load == null)
+		if (load == null) {
 			return;
+		}
 		Value df = env.getFlag().getDFlag();
 		switch (opSize) {
 		case 8:
@@ -2517,8 +2577,9 @@ public class X86InstructionInterpreter {
 
 			if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 				env.getRegister().sub(base, new LongValue(1));
-			} else
+			} else {
 				env.getRegister().add(base, new LongValue(1));
+			}
 
 			break;
 		case 16:
@@ -2526,8 +2587,9 @@ public class X86InstructionInterpreter {
 
 			if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 				env.getRegister().sub(base, new LongValue(2));
-			} else
+			} else {
 				env.getRegister().add(base, new LongValue(2));
+			}
 
 			break;
 		case 32:
@@ -2535,8 +2597,9 @@ public class X86InstructionInterpreter {
 
 			if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 				env.getRegister().sub(base, new LongValue(4));
-			} else
+			} else {
 				env.getRegister().add(base, new LongValue(4));
+			}
 
 			break;
 		}
@@ -2548,8 +2611,9 @@ public class X86InstructionInterpreter {
 
 		String base = "edi";
 		if (dest instanceof X86MemoryOperand) {
-			if (((X86MemoryOperand) dest).getBase() != null)
+			if (((X86MemoryOperand) dest).getBase() != null) {
 				base = ((X86MemoryOperand) dest).getBase().toString();
+			}
 		}
 
 		Value df = env.getFlag().getDFlag();
@@ -2561,8 +2625,9 @@ public class X86InstructionInterpreter {
 
 				if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 					env.getRegister().sub(base, new LongValue(1));
-				} else
+				} else {
 					env.getRegister().add(base, new LongValue(1));
+				}
 			}
 			break;
 		case 16:
@@ -2572,8 +2637,9 @@ public class X86InstructionInterpreter {
 
 				if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 					env.getRegister().sub(base, new LongValue(2));
-				} else
+				} else {
 					env.getRegister().add(base, new LongValue(2));
+				}
 			}
 			break;
 		case 32:
@@ -2583,10 +2649,11 @@ public class X86InstructionInterpreter {
 
 				if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 					env.getRegister().sub(base, new LongValue(4));
-				} else
+				} else {
 					env.getRegister().add(base, new LongValue(4));
+				}
 			}
 			break;
 		}
-	}
+	}	
 }
