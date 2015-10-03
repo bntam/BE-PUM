@@ -77,6 +77,7 @@
 		<API funcName="getcomputername" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetComputerName" />
 		<API funcName="getconsolecp" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetConsoleCP" />
 		<API funcName="getcpinfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCPInfo" />
+		<API funcName="getcpinfoex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCPInfoEx" />
 		<API funcName="getcurrentdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentDirectory" />
 		<API funcName="getcurrentprocess" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcess" />
 		<API funcName="getcurrentprocessid" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentProcessId" />

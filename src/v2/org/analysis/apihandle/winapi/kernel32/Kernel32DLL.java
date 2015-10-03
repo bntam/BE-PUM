@@ -8,6 +8,20 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32;
 
+import java.nio.ByteBuffer;
+
+import v2.org.analysis.apihandle.winapi.structures.WinBase.MEMORYSTATUS;
+import v2.org.analysis.apihandle.winapi.structures.WinBase.OFSTRUCT;
+import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
+import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
+import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.CPINFO;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.MEMORY_BASIC_INFORMATION;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.PRTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.Winnls.CPINFOEX;
+
 import com.sun.jna.Callback;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -20,26 +34,29 @@ import com.sun.jna.platform.win32.WinBase.FILETIME;
 import com.sun.jna.platform.win32.WinBase.OVERLAPPED;
 import com.sun.jna.platform.win32.WinBase.SECURITY_ATTRIBUTES;
 import com.sun.jna.platform.win32.WinBase.SYSTEMTIME;
+import com.sun.jna.platform.win32.WinDef.ATOM;
+import com.sun.jna.platform.win32.WinDef.BOOL;
+import com.sun.jna.platform.win32.WinDef.BOOLByReference;
+import com.sun.jna.platform.win32.WinDef.BYTE;
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.DWORDByReference;
+import com.sun.jna.platform.win32.WinDef.HMODULE;
+import com.sun.jna.platform.win32.WinDef.HRSRC;
+import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.platform.win32.WinDef.LCID;
+import com.sun.jna.platform.win32.WinDef.LONG;
+import com.sun.jna.platform.win32.WinDef.LONGByReference;
+import com.sun.jna.platform.win32.WinDef.LONGLONGByReference;
+import com.sun.jna.platform.win32.WinDef.LPVOID;
+import com.sun.jna.platform.win32.WinDef.PVOID;
+import com.sun.jna.platform.win32.WinDef.UINT;
+import com.sun.jna.platform.win32.WinDef.UINT_PTR;
+import com.sun.jna.platform.win32.WinDef.WORD;
+import com.sun.jna.platform.win32.WinDef.WORDByReference;
 import com.sun.jna.platform.win32.WinNT.ACL;
-import com.sun.jna.platform.win32.WinDef.*;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
-
-import v2.org.analysis.apihandle.winapi.structures.WinBase.MEMORYSTATUS;
-import v2.org.analysis.apihandle.winapi.structures.WinBase.OFSTRUCT;
-import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
-import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
-import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.CPINFO;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.MEMORY_BASIC_INFORMATION;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.PRTL_CRITICAL_SECTION;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
-import v2.org.analysis.apihandle.winapi.structures.WinUser.COORD;
-
-import java.nio.ByteBuffer;
 
 //import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
@@ -3676,4 +3693,32 @@ public interface Kernel32DLL extends StdCallLibrary {
 	/* _In_ */ATOM nAtom,
 	/* _Out_ */char[] lpBuffer,
 	/* _In_ */int nSize);
+
+	/**
+	 * Retrieves information about any valid installed or available code page.
+	 * 
+	 * @param CodePage
+	 *            Identifier for the code page for which to retrieve
+	 *            information. The application can specify the code page
+	 *            identifier for any installed or available code page, or one of
+	 *            the following predefined values. See Code Page Identifiers for
+	 *            a list of identifiers for ANSI and other code pages.
+	 * 
+	 * @param dwFlags
+	 *            Reserved; must be 0.
+	 * 
+	 * @param lpCPInfoEx
+	 *            Pointer to a CPINFOEX structure that receives information
+	 *            about the code page.
+	 * 
+	 * @return Returns a nonzero value if successful, or 0 otherwise. To get
+	 *         extended error information, the application can call
+	 *         GetLastError, which can return one of the following error codes:
+	 *         
+	 *         ERROR_INVALID_PARAMETER. Any of the parameter values was invalid.
+	 */
+	BOOL GetCPInfoEx(
+	/* _In_ */UINT CodePage,
+	/* _In_ */DWORD dwFlags,
+	/* _Out_ */CPINFOEX lpCPInfoEx);
 }
