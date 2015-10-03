@@ -155,10 +155,17 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246) {
 				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esi"), 
 						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
- /*else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246)
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 247) {
 				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edi"), 
-						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);*/
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 244) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esp"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 245) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebp"), 
+						new Immediate(InstructionDecoder.readByte(code, byteIndex + 2), DataType.INT8), null, 3, 0);
 			}
+			
 		}
 
 		if (firstByte == 192 && InstructionDecoder.readByte(code, byteIndex + 1) == 240

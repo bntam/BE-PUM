@@ -4,12 +4,12 @@ public final class PackerConstants {
 
 	// Techniques String
 	public static final String UPX 			= "1111001010110110";
-	public static final String FSG 			= "1111101010110110";
-	public static final String NPACK 		= "1111111010110110";
-	public static final String PECOMPACT 	= "1111011110110110";
-	public static final String PETITE 		= "1111101100110110";
-	public static final String YODA 		= "1111101111110110";
-	public static final String ASPACK 		= "1111111000110110";
+	public static final String FSG 			= "1111001010111110";
+	public static final String NPACK 		= "1111011010111110";
+	public static final String PECOMPACT 	= "1111011110111110";
+	public static final String PETITE 		= "1111001100111110";
+	public static final String YODA 		= "1111101111111110";
+	public static final String ASPACK 		= "1111111000111110";
 	
 	// Packer Header
 	public static final String[] hUPX 		= {"5E","89","F7","B9","??","??","??","??","8A"
