@@ -94,7 +94,7 @@ public class X86TransitionRule extends TransitionRule {
 			doc.getDocumentElement().normalize();
 
 			if (doc.hasChildNodes()) {
-				NodeList groupList = doc.getElementsByTagName("X86AssemlyMap");
+				NodeList groupList = doc.getElementsByTagName("GROUP");
 
 				for (int count = 0; count < groupList.getLength(); count++) {
 					Node groupNode = groupList.item(count);
