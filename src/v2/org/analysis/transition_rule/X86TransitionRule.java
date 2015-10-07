@@ -3,25 +3,15 @@
  */
 package v2.org.analysis.transition_rule;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Constructor;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import v2.org.analysis.apihandle.winapi.APIHandle;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+
+
+
+
+
+
+
 
 //import v2.org.analysis.apihandle.APIHandle;
 import org.jakstab.Program;
@@ -29,24 +19,12 @@ import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
-import org.jakstab.asm.x86.X86ArithmeticInstruction;
-import org.jakstab.asm.x86.X86CallInstruction;
-import org.jakstab.asm.x86.X86CondJmpInstruction;
-import org.jakstab.asm.x86.X86Instruction;
-import org.jakstab.asm.x86.X86JmpInstruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
-import org.jakstab.asm.x86.X86MoveInstruction;
-import org.jakstab.asm.x86.X86PCRelativeAddress;
-import org.jakstab.asm.x86.X86Register;
-import org.jakstab.asm.x86.X86RegisterPart;
-import org.jakstab.asm.x86.X86RetInstruction;
-import org.jakstab.asm.x86.X86SegmentRegister;
+import org.jakstab.asm.x86.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
 import v2.org.analysis.cfg.BPVertex;
@@ -58,12 +36,19 @@ import v2.org.analysis.loop.LoopAlgorithm;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.VirtualMemory;
-import v2.org.analysis.value.Formula;
-import v2.org.analysis.value.Formulas;
-import v2.org.analysis.value.HybridBooleanValue;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.SymbolValue;
-import v2.org.analysis.value.Value;
+import v2.org.analysis.value.*;
+
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * @author NMHai
@@ -78,7 +63,7 @@ public class X86TransitionRule extends TransitionRule {
 	private List<String> checkedFormulasFalse = new ArrayList<String>();
 
 	private SEHHandle sehHandle = new SEHHandle();
-
+	
 	private static HashMap<String, String> instructionMapping = new HashMap<String, String>();
 	
 	static {
@@ -93,19 +78,19 @@ public class X86TransitionRule extends TransitionRule {
 
 			doc.getDocumentElement().normalize();
 
-			if (doc.hasChildNodes()) {
+			if (doc.hasChildNodes()) {			
 				NodeList groupList = doc.getElementsByTagName("GROUP");
-
+				
 				for (int count = 0; count < groupList.getLength(); count++) {
-					Node groupNode = groupList.item(count);
-
+					Node groupNode = groupList.item(count);								
 					// make sure it's element node.
 					if (groupNode.getNodeType() == Node.ELEMENT_NODE) {
 						// get attributes names and values
 						NodeList asmList = groupNode.getChildNodes();
 
 						for (int i = 0; i < asmList.getLength(); i++) {
-							Node apiNode = asmList.item(i);
+							Node apiNode = asmList.item(i);					
+							
 							// make sure it's element node.
 							if (apiNode.getNodeType() == Node.ELEMENT_NODE && apiNode.hasAttributes()) {
 								// get attributes names and values
@@ -149,35 +134,30 @@ public class X86TransitionRule extends TransitionRule {
 		}
 		return fullClassName;
 	}
-
 	
 	// PHONG: 20150502 --------------------------------------------------------
 	boolean checkAddressValidJump(Environment env, long t) {
 		// TODO Auto-generated method stub
-		if (!env.getSystem().getSEHHandler().isSet()) {
+		if (!env.getSystem().getSEHHandler().isSet())
 			return true;
-		}
 		
-		if (env.getSystem().getLibraryHandle().getAPIName(t) != "") {
-			return true;
-		}		
+		if (env.getSystem().getLibraryHandle().getAPIName(t) != "")
+			return true;		
 		
 		String temp = APIHandle.checkAPI(t);
-		if (temp != null && temp != "") {
+		if (temp != null && temp != "")
 			return true;
-		}
 		
 		AbsoluteAddress addr = new AbsoluteAddress(t);
 
-		if (addr.getValue() == 0) {
+		if (addr.getValue() == 0)
 			return false;
-		}
 		boolean c1 = Program.getProgram().checkAddress(addr);
 		boolean c2 = env.getStack().isInsideStack(addr);
 		boolean c3 = env.getMemory().contains(addr);
 		boolean c4 = env.getSystem().getKernel().isInside(addr);
 		boolean c5 = env.getSystem().getUser32().isInside(addr); // YenNguyen: Have the same as isInsideKernel32(addr)
-		boolean c6 = env.getSystem().getFileHandle().isInsideFile(addr);
+		boolean c6 = env.getSystem().getFileHandle().isInsideFIle(addr);
 		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
 
 		return (c1 || c2 || c3 || c4 || c5 || c6 || c7);
@@ -193,32 +173,28 @@ public class X86TransitionRule extends TransitionRule {
 		 * true;
 		 */
 		if (d != null && d.getBase() != null && d.getBase() instanceof X86Register
-				&& d.getBase().toString().contains("esp")) {
+				&& d.getBase().toString().contains("esp"))
 			return true;
-		}
 
 		X86MemoryOperand t = env.getMemory().evaluateAddress(d, env);
 
-		if (t == null || t.getBase() != null || t.getSegmentRegister() != null || t.getIndex() != null) {
+		if (t == null || t.getBase() != null || t.getSegmentRegister() != null || t.getIndex() != null)
 			return true;
-		}
 
-		if (!env.getSystem().getSEHHandler().isSet()) {
+		if (!env.getSystem().getSEHHandler().isSet())
 			return true;
-		}
 
 		AbsoluteAddress addr = new AbsoluteAddress(t.getDisplacement());
 
-		if (addr.getValue() == 0) {
+		if (addr.getValue() == 0)
 			return false;
-		}
 
 		boolean c1 = Program.getProgram().checkAddress(addr);
 		boolean c2 = env.getStack().isInsideStack(addr);
 		boolean c3 = env.getMemory().contains(addr);
 		boolean c4 = env.getSystem().getKernel().isInside(addr);
 		boolean c5 = env.getSystem().getUser32().isInside(addr); //YenNguyen: have the same as isInsideKernel32(addr);
-		boolean c6 = env.getSystem().getFileHandle().isInsideFile(addr);
+		boolean c6 = env.getSystem().getFileHandle().isInsideFIle(addr);
 		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
 
 		return (c1 || c2 || c3 || c4 || c5 || c6 || c7);
@@ -226,16 +202,15 @@ public class X86TransitionRule extends TransitionRule {
 
 	public boolean checkAddressValid(Environment env, AbsoluteAddress addr) 
 	{
-		if (addr.getValue() == 0) {
+		if (addr.getValue() == 0)
 			return false;
-		}
 
 		boolean c1 = Program.getProgram().checkAddress(addr);
 		boolean c2 = env.getStack().isInsideStack(addr);
 		boolean c3 = env.getMemory().contains(addr);
 		boolean c4 = env.getSystem().getKernel().isInside(addr);
 		boolean c5 = env.getSystem().getUser32().isInside(addr); //YenNguyen: have the same as isInsideKernel32(addr);
-		boolean c6 = env.getSystem().getFileHandle().isInsideFile(addr);
+		boolean c6 = env.getSystem().getFileHandle().isInsideFIle(addr);
 		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
 
 		return (c1 || c2 || c3 || c4 || c5 || c6 || c7);
@@ -251,9 +226,8 @@ public class X86TransitionRule extends TransitionRule {
 		
 		if (api == null || api == "") {
 			api = Program.getProgram().checkAPI(((LongValue) r).getValue(), curState.getEnvironement());
-			if (api != null && api.equals("")) {
+			if (api != null && api.equals(""))
 				api = null;
-			}
 		}	
 		
 		return api;
@@ -267,18 +241,15 @@ public class X86TransitionRule extends TransitionRule {
 			return true;
 		}
 
-		if (formulas.isBooleanValue()) {
+		if (formulas.isBooleanValue())
 			return formulas.evaluate();
-		}
 
 		// Reuse the result of other running
-		if (checkedFormulasTrue.contains(formulas.toStringPrefix())) {
+		if (checkedFormulasTrue.contains(formulas.toStringPrefix()))
 			return true;
-		}
 
-		if (checkedFormulasFalse.contains(formulas.toStringPrefix())) {
+		if (checkedFormulasFalse.contains(formulas.toStringPrefix()))
 			return false;
-		}
 
 		// if ()
 
@@ -385,9 +356,8 @@ public class X86TransitionRule extends TransitionRule {
 			if (curState.getEnvironement().getSystem().isInVirtualMemory() == true) {
 				byte[] opcodes = this.getOpcodesArray(curState, newLocation.getValue());
 				newIns = Program.getProgram().getInstruction(opcodes, curState.getEnvironement());
-			} else {
+			} else
 				newIns = Program.getProgram().getInstruction(newLocation, curState.getEnvironement());
-			}
 
 			curState.setInstruction(newIns);
 			curState.setLocation(newLocation);
@@ -418,7 +388,7 @@ public class X86TransitionRule extends TransitionRule {
 
 					String api = checkAPICall(r, curState);
 					if (api != null/* !api.equals("") */) {
-						APIHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, ins, path, pathList);
+						apiHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, ins, path, pathList);
 						this.setCFG = true;
 					} else {
 						AbsoluteAddress nextAddr = new AbsoluteAddress(((LongValue) r).getValue());
@@ -427,9 +397,8 @@ public class X86TransitionRule extends TransitionRule {
 						if (curState.getEnvironement().getSystem().isInVirtualMemory() == true) {
 							byte[] opcodes = this.getOpcodesArray(curState, nextAddr.getValue());
 							nextInst = Program.getProgram().getInstruction(opcodes, curState.getEnvironement());
-						} else {
+						} else
 							nextInst = Program.getProgram().getInstruction(nextAddr, env);
-						}
 
 						curState.setInstruction(nextInst);
 						curState.setLocation(nextAddr);
@@ -442,39 +411,36 @@ public class X86TransitionRule extends TransitionRule {
 				if (curState.getEnvironement().getSystem().isInVirtualMemory() == true) {
 					byte[] opcodes = this.getOpcodesArray(curState, newLocation.getValue());
 					newIns = Program.getProgram().getInstruction(opcodes, curState.getEnvironement());
-				} else {
+				} else
 					newIns = Program.getProgram().getInstruction(newLocation, curState.getEnvironement());
-				}
 
 				curState.setInstruction(newIns);
 				curState.setLocation(newLocation);
 			}
-		} else if (ins instanceof X86JmpInstruction) {
+		} else if (ins instanceof X86JmpInstruction)
 			;
-		} else if (ins instanceof X86MoveInstruction) {
+		else if (ins instanceof X86MoveInstruction) {
 			AbsoluteAddress newLocation = new AbsoluteAddress(curState.getLocation().getValue() + ins.getSize());
 			// FOR MOVE HERE
 			Instruction newIns;
 			if (curState.getEnvironement().getSystem().isInVirtualMemory() == true) {
 				byte[] opcodes = this.getOpcodesArray(curState, newLocation.getValue());
 				newIns = Program.getProgram().getInstruction(opcodes, curState.getEnvironement());
-			} else {
+			} else
 				newIns = Program.getProgram().getInstruction(newLocation, curState.getEnvironement());
-			}
 
 			curState.setInstruction(newIns);
 			curState.setLocation(newLocation);
-		} else if (ins instanceof X86RetInstruction) {
+		} else if (ins instanceof X86RetInstruction)
 			;
-		} else if (ins instanceof X86Instruction) {
+		else if (ins instanceof X86Instruction) {
 			AbsoluteAddress newLocation = new AbsoluteAddress(curState.getLocation().getValue() + ins.getSize());
 			Instruction newIns;
 			if (curState.getEnvironement().getSystem().isInVirtualMemory() == true) {
 				byte[] opcodes = this.getOpcodesArray(curState, newLocation.getValue());
 				newIns = Program.getProgram().getInstruction(opcodes, curState.getEnvironement());
-			} else {
+			} else
 				newIns = Program.getProgram().getInstruction(newLocation, curState.getEnvironement());
-			}
 
 			curState.setInstruction(newIns);
 			curState.setLocation(newLocation);
@@ -490,15 +456,14 @@ public class X86TransitionRule extends TransitionRule {
 		return this.apiHandle;
 	}
 
-	int getBitCount(Instruction ins) {
+	public int getBitCount(Instruction ins) {
 		// TODO Auto-generated method stub
-		if (ins.getName().endsWith("b")) {
+		if (ins.getName().endsWith("b"))
 			return 8;
-		} else if (ins.getName().endsWith("l")) {
+		else if (ins.getName().endsWith("l"))
 			return 32;
-		} else if (ins.getName().endsWith("s") || ins.getName().endsWith("w")) {
+		else if (ins.getName().endsWith("s") || ins.getName().endsWith("w"))
 			return 16;
-		}
 		return 0;
 	}
 
@@ -517,10 +482,6 @@ public class X86TransitionRule extends TransitionRule {
 		Instruction ins = curState.getInstruction();
 		BPVertex src = cfg.getVertex(curState.getLocation(), ins);
 		
-		/*******************************
-		 * TODO: KHANH please fix here *
-		 *******************************/
-		
 		String className = findClassName(ins.getName());
 		
 		if (className != null) {
@@ -535,29 +496,21 @@ public class X86TransitionRule extends TransitionRule {
 				e.printStackTrace();
 			}
 		} else {
-			
-			
-			if (ins instanceof X86ArithmeticInstruction) {
+			if (ins instanceof X86ArithmeticInstruction)
 				new X86ArithmeticInterpreter().execute((X86ArithmeticInstruction) ins, path, pathList, this);
-			} else if (ins instanceof X86CallInstruction) {
+			else if (ins instanceof X86CallInstruction)
 				new X86CallInterpreter().execute((X86CallInstruction) ins, path, pathList, this);
-			} else if (ins instanceof X86CondJmpInstruction) {
+			else if (ins instanceof X86CondJmpInstruction)
 				new X86ConditionalJumpInterpreter().execute((X86CondJmpInstruction) ins, path, pathList, this);
-			} else if (ins instanceof X86JmpInstruction) {
+			else if (ins instanceof X86JmpInstruction)
 				new X86JumpInterpreter().execute((X86JmpInstruction) ins, path, pathList, this);
-			} else if (ins instanceof X86MoveInstruction) {
+			else if (ins instanceof X86MoveInstruction)
 				new X86MoveInterpreter().execute((X86MoveInstruction) ins, path, pathList, this);
-			} else if (ins instanceof X86RetInstruction) {
+			else if (ins instanceof X86RetInstruction)
 				new X86ReturnInterpreter().execute((X86RetInstruction) ins, path, pathList, this);
-			} else if (ins instanceof X86Instruction) {
+			else if (ins instanceof X86Instruction)
 				new X86InstructionInterpreter().execute((X86Instruction) ins, path, pathList, this);
-			}
-			
-			
 		}
-		
-		
-		
 		
 		if (!setCFG) {
 			BPVertex dest = new BPVertex(curState.getLocation(), curState.getInstruction());
@@ -569,22 +522,19 @@ public class X86TransitionRule extends TransitionRule {
 
 			BPEdge edge = new BPEdge(src, dest);
 			cfg.insertEdge(edge);
-		} else {
+		} else
 			setCFG = false;
-		}
 		// return curState;
-		if (path.getCurrentState().checkFeasiblePath()) {
+		if (path.getCurrentState().checkFeasiblePath())
 			LoopAlgorithm.getInstance().halt(path, this);
-		}
 	}
 
 	// Generate new Path Condition and check for feasibility with Z3
 	public void getNewState(X86CondJmpInstruction inst, BPPath path, List<BPPath> pathList, boolean condition) {
 		// TODO Auto-generated method stub
 		new X86ConditionalJumpInterpreter().execute(inst, path, pathList, condition, this);
-		if (path.getCurrentState().checkFeasiblePath()) {
+		if (path.getCurrentState().checkFeasiblePath())
 			LoopAlgorithm.getInstance().halt(path, this);
-		}
 	}
 
 	// PHONG: insert here
@@ -597,7 +547,7 @@ public class X86TransitionRule extends TransitionRule {
 		// can modify here for best result, i < 10, because one asm statement
 		// needs 10 bytes or less
 		for (int i = 0; i < /* vM.getSize() - offset */10; i++) {
-			long virtualAdrr = vM.getAddress() + i;
+			long virtualAdrr = vM.getAddress() + (long) i;
 			opcodes[i] = (byte) ((LongValue) curState.getEnvironement().getMemory().getByteMemoryValue(virtualAdrr))
 					.getValue();
 		}
@@ -614,30 +564,26 @@ public class X86TransitionRule extends TransitionRule {
 		String result[] = line.split(" ");
 
 		if (result[0].contains("Flag")) {
-			if (result[2].contains("false")) {
+			if (result[2].contains("false"))
 				val = 0;
-			} else if (result[2].contains("true")) {
+			else if (result[2].contains("true"))
 				val = 1;
-			}
 			return val;
 		}
 
 		if (result[2].startsWith("(")) {
 			val = Long.parseLong(result[3].substring(0, result[3].length() - 1));
 			// if (val > 100000) val = 0;
-			if (result[2].substring(1).equals("-")) {
+			if (result[2].substring(1).equals("-"))
 				val = -val;
-			}
 		} else if (result[2].contains("[")) {
 			val = Long.parseLong(result[2].substring(2, result[2].indexOf("[")));
-			if (val >= Math.pow(2, 31)) {
+			if (val >= Math.pow(2, 31))
 				val = (long) (val - Math.pow(2, 32));
-			}
 		} else {
 			val = Long.parseLong(result[2].substring(2, result[2].length()));
-			if (val >= Math.pow(2, 31)) {
+			if (val >= Math.pow(2, 31))
 				val = (long) (val - Math.pow(2, 32));
-			}
 		}
 		return val;
 	}
@@ -647,20 +593,18 @@ public class X86TransitionRule extends TransitionRule {
 		long val = 0;
 		String result[] = line.split(" ");
 		if (result[0].contains("Flag")) {
-			if (result[2].contains("false")) {
+			if (result[2].contains("false"))
 				val = 0;
-			} else if (result[2].contains("true")) {
+			else if (result[2].contains("true"))
 				val = 1;
-			}
 			return val;
 		}
 
 		if (result[2].startsWith("(")) {
 			val = Long.parseLong(result[3].substring(0, result[3].length() - 1));
 			// if (val > 100000) val = 0;
-			if (result[2].substring(1).equals("-")) {
+			if (result[2].substring(1).equals("-"))
 				val = -val;
-			}
 		} else if (result[2].contains("[")) {
 			String temp = result[2].substring(2, result[2].indexOf("["));
 			val = Long.parseLong(temp);
@@ -676,11 +620,10 @@ public class X86TransitionRule extends TransitionRule {
 	// New version: Add (not dest1) in new Formula
 	void multiDestination(Value r1, long value, Instruction inst, BPPath path, List<BPPath> pathList) {
 		// TODO Auto-generated method stub
-		if (loop_mullti > MAX_LOOP_MULTI) {
+		if (loop_mullti > MAX_LOOP_MULTI)
 			return;
-		} else {
+		else
 			loop_mullti++;
-		}
 
 		BPPath p = path.clone();
 		Formulas l = p.getPathCondition();
@@ -688,9 +631,8 @@ public class X86TransitionRule extends TransitionRule {
 		Value l1 = new HybridBooleanValue(r1, new LongValue(value), "==");
 
 		l.add(new Formula(l1, "not"));
-		if (!this.checkZ3(l)) {
+		if (!this.checkZ3(l))
 			return;
-		}
 
 		pathList.add(p);
 		//Program.getProgram().generageCFG(Program.getProgram().getAbsolutePathFile() + "_test");
@@ -704,11 +646,10 @@ public class X86TransitionRule extends TransitionRule {
 
 		// Program.getProgram().generageCFG(Program.getProgram().getAbsolutePathFile()
 		// + "_test");
-		if (loop_mullti > MAX_LOOP_MULTI) {
+		if (loop_mullti > MAX_LOOP_MULTI)
 			return;
-		} else {
+		else
 			loop_mullti++;
-		}
 
 		BPPath p = path.clone();
 		Formulas l = p.getPathCondition();
@@ -719,19 +660,16 @@ public class X86TransitionRule extends TransitionRule {
 			long value = i.getValue();
 
 			Value l1 = new HybridBooleanValue(new SymbolValue(var), new LongValue(value), "==");
-			if (l2 != null) {
+			if (l2 != null)
 				l2 = new HybridBooleanValue(l1, l2, "and");
-			}
-			else {
+			else
 				l2 = (HybridBooleanValue) l1;
 			// p.getPathCondition().add(new Formula());
-			}
 		}
 
 		l.add(new Formula(l2, "not"));
-		if (!this.checkZ3(l)) {
+		if (!this.checkZ3(l))
 			return;
-		}
 
 		pathList.add(p);
 
@@ -951,7 +889,7 @@ public class X86TransitionRule extends TransitionRule {
 
 	// PHONG: 20150501
 	// ------------------------------------------------------------------
-	void setSEHOther(BPState curState, String register) {
+	public void setSEHOther(BPState curState, String register) {
 		// TODO Auto-generated method stub
 		Program.getProgram().setTechnique("SetUpException");
 		Program.getProgram().setDetailTechnique("SetUpException:" + curState.getLocation() + " ");
@@ -959,9 +897,8 @@ public class X86TransitionRule extends TransitionRule {
 		Environment env = curState.getEnvironement();
 		Value reg = env.getRegister().getRegisterValue(register);
 		long register_value = 0;
-		if (reg != null && reg instanceof LongValue) {
+		if (reg != null && reg instanceof LongValue)
 			register_value = ((LongValue) env.getRegister().getRegisterValue(register)).getValue();
-		}
 		
 		env.getSystem()
 				.getSEHHandler()
@@ -978,7 +915,7 @@ public class X86TransitionRule extends TransitionRule {
 
 	// -----------------------------------------------------------------------------------------
 
-	void setSEH(BPState curState) {
+	public void setSEH(BPState curState) {
 		// TODO Auto-generated method stub
 		Program.getProgram().setTechnique("SetUpException");
 		Program.getProgram().setDetailTechnique("SetUpException:" + curState.getLocation() + " ");
@@ -998,6 +935,61 @@ public class X86TransitionRule extends TransitionRule {
 		env.getSystem().getSEHHandler().setSEHReady(true);
 	}
 
+	/*
+	 * private BPState specialCase(Instruction inst, BPState curState, Formulas
+	 * l) { // TODO Auto-generated method stub if (inst instanceof
+	 * X86RetInstruction) { if
+	 * (Program.getProgram().getFileName().equals("hostname.exe") &&
+	 * curState.getLocation().toString().contains("010013ac")) { AbsoluteAddress
+	 * addr = new AbsoluteAddress(16781795); Instruction ins =
+	 * Program.getProgram().getInstruction(addr, curState.getEnvironement());
+	 * 
+	 * curState.setInstruction(ins); curState.setLocation(addr);
+	 * 
+	 * return curState; } else if (Program.getProgram().getFileName()
+	 * .equals("hostname.exe") &&
+	 * curState.getLocation().toString().contains("01001472")) { AbsoluteAddress
+	 * addr = new AbsoluteAddress(16781691); Instruction ins =
+	 * Program.getProgram().getInstruction(addr, curState.getEnvironement());
+	 * 
+	 * curState.setInstruction(ins); curState.setLocation(addr);
+	 * 
+	 * return curState; } }
+	 * 
+	 * return null; }
+	 */
+	/*
+	 * BPState specialProcessSEH(BPState curState) { // TODO Auto-generated
+	 * method stub // PHONG Environment env = curState.getEnvironement();
+	 * env.getRegister().mov("ebp", "esp"); env.getRegister().add("ebp", new
+	 * LongValue(20)); long ebp_addr = ((LongValue)
+	 * env.getRegister().getRegisterValue("ebp")) .getValue(); long
+	 * exception_took_place = ((LongValue) env.getMemory()
+	 * .getDoubleWordMemoryValue(ebp_addr)).getValue();
+	 * 
+	 * AbsoluteAddress nextAddr = new AbsoluteAddress(exception_took_place);
+	 * Instruction nextIns = Program.getProgram() .getInstruction(nextAddr,
+	 * env);
+	 * 
+	 * // Restore stack long seh_address =
+	 * curState.getEnvironement().getSystem()
+	 * .getSEHHandler().getStart().getSehHandler();
+	 * 
+	 * // Stack pointer while (true) { long top_stack_address = ((LongValue)
+	 * env.getRegister() .getRegisterValue("esp")).getValue(); Value t =
+	 * env.getMemory().getDoubleWordMemoryValue( top_stack_address);
+	 * 
+	 * if (t instanceof LongValue) { long top_stack_value = ((LongValue)
+	 * t).getValue(); env.getStack().pop(); if (seh_address == top_stack_value
+	 * || env.getStack().isEmpty()) break; }
+	 * 
+	 * if (env.getStack().isEmpty()) break; env.getRegister().add("esp", new
+	 * LongValue(4)); }
+	 * 
+	 * curState.setLocation(nextAddr); curState.setInstruction(nextIns);
+	 * 
+	 * return curState; }
+	 */
 	// PHONG - 20150422
 	public BPState specialProcessSEH(BPState curState) {
 		// Restore
@@ -1024,9 +1016,8 @@ public class X86TransitionRule extends TransitionRule {
 		Value eip_value = curState.getEnvironement().getStack().getValueStackFromIndex(0xb8);
 		Value efl_value = curState.getEnvironement().getStack().getValueStackFromIndex(0xc0);
 
-		if (efl_value != null && efl_value instanceof LongValue) {
+		if (efl_value != null && efl_value instanceof LongValue)
 			curState.getEnvironement().getFlag().setflags(((LongValue) efl_value).getValue());
-		}
 
 		Value esp_value = curState.getEnvironement().getStack().getValueStackFromIndex(0xc4);
 
@@ -1057,9 +1048,8 @@ public class X86TransitionRule extends TransitionRule {
 		this.sehHandle.setExceptionAddr(curState.getEnvironement().getRegister().getRegisterValue("dr3"));
 		
 		AbsoluteAddress nextAddr = new AbsoluteAddress(0x00000000);
-		if (eip_value != null && eip_value instanceof LongValue) {
+		if (eip_value != null && eip_value instanceof LongValue)
 			nextAddr = new AbsoluteAddress(((LongValue) eip_value).getValue());
-		}
 		Instruction nextIns = Program.getProgram().getInstruction(nextAddr, curState.getEnvironement());
 		curState.setLocation(nextAddr);
 		curState.setInstruction(nextIns);
@@ -1130,10 +1120,9 @@ public class X86TransitionRule extends TransitionRule {
 
 				if (path.getLoopHandle().isCheck()
 				// && path.getLoopHandle().isStop()
-				) {
+				)
 					path.getLoopHandle().setStop(
 							newP.getLoopHandle().checkFormulas(inst.getName(), newP.getCurrentState()));
-				}
 
 				this.generateNextInstruction(inst, newP, pathList, false);
 
@@ -1143,10 +1132,9 @@ public class X86TransitionRule extends TransitionRule {
 				LoopAlgorithm.getInstance().halt(newP, this);
 			}
 
-			if (path.getLoopHandle().isCheck()) {
+			if (path.getLoopHandle().isCheck())
 				path.getLoopHandle()
 						.setStop(path.getLoopHandle().checkFormulas(inst.getName(), path.getCurrentState()));
-			}
 
 			this.generateNextInstruction(inst, path, pathList, true);
 			path.setPathCondition(p1);
@@ -1158,18 +1146,16 @@ public class X86TransitionRule extends TransitionRule {
 				path.setPathCondition(p2);
 				if (path.getLoopHandle().isCheck()
 				// && path.getLoopHandle().isStop()
-				) {
+				)
 					path.getLoopHandle().setStop(
 							path.getLoopHandle().checkFormulas(inst.getName(), path.getCurrentState()));
-				}
 
 				this.generateNextInstruction(inst, path, pathList, false);
 				path.getCurrentState().setFeasiblePath(true);
 
 				LoopAlgorithm.getInstance().halt(path, this);
-			} else {
+			} else
 				path.getCurrentState().setFeasiblePath(false);
-			}
 		}
 	}
 
@@ -1178,7 +1164,7 @@ public class X86TransitionRule extends TransitionRule {
 		if (src == null) {
 			s = new LongValue(1);
 		} else if (src.getClass().getSimpleName().equals("Immediate")) {
-			long y = Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(), getBitCount(ins));
+			long y = (long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(), getBitCount(ins));
 			s = new LongValue(y);
 		} else if (src.getClass().getSimpleName().equals("X86Register")
 				|| src.getClass().getSimpleName().equals("X86RegisterPart")
@@ -1206,9 +1192,9 @@ public class X86TransitionRule extends TransitionRule {
 
 	public int getBitCountOprand(Operand op) {
 		// TODO Auto-generated method stub
-		if (op instanceof X86MemoryOperand) {
+		if (op instanceof X86MemoryOperand) 
 			return ((X86MemoryOperand)op).getDataType().bits();
-		} else if (op instanceof X86RegisterPart) {			
+		else if (op instanceof X86RegisterPart) {			
 			return ((X86RegisterPart)op).getLength();
 		} else if (op instanceof X86SegmentRegister) {			
 			return 32;

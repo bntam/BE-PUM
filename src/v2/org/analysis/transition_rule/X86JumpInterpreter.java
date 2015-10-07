@@ -23,9 +23,11 @@ import java.util.List;
 import java.util.Map;
 
 public class X86JumpInterpreter {
+	private APIHandle apiHandle = null;
 
 	public BPState execute(X86JmpInstruction inst, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
 		// TODO Auto-generated method stub
+		apiHandle = rule.getAPIHandle();
 		Formulas l = path.getPathCondition();
 		BPState curState = path.getCurrentState();
 		Environment env = curState.getEnvironement();
@@ -66,7 +68,7 @@ public class X86JumpInterpreter {
 			String api = rule.checkAPICall(r, curState);
 			//System.out.println();
 			if (api != null/* !api.equals("") */) {
-				APIHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, inst, path, pathList);
+				apiHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, inst, path, pathList);
 				rule.setCFG(true);
 			} else {
 				AbsoluteAddress nextAddr = new AbsoluteAddress(((LongValue) r).getValue());

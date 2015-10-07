@@ -7,8 +7,6 @@ import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86CallInstruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 import org.jakstab.asm.x86.X86PCRelativeAddress;
-
-import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
@@ -59,12 +57,12 @@ public class X86CallInterpreter {
 			AbsoluteAddress r1 = new AbsoluteAddress(((LongValue) r).getValue());
 			Program.getProgram().getBPCFG().getVertex(curState.getLocation(), curState.getInstruction())
 					.setProperty(r1.toString());
-
+			
 			String api = rule.checkAPICall(r, curState);
 			// String t[] = api.split("@");
 			if (api != null/* !api.equals("") */) {
-				// rule.getAPIHandle();
-				APIHandle.executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, inst, path, pathList);
+				rule.getAPIHandle().executeAPI(new AbsoluteAddress(((LongValue) r).getValue()), api, inst, path,
+						pathList);
 				rule.setCFG(true);
 			} else {
 				// env.getRegister().sub("esp", new LongValue(4));
@@ -154,7 +152,7 @@ public class X86CallInterpreter {
 
 						curState.setInstruction(i);
 						curState.setLocation(a);
-
+						
 						curState.setValue(z3Value);
 						path.clearPathCondition();
 					} else {

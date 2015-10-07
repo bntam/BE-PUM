@@ -9,12 +9,14 @@ package v2.org.analysis.transition_rule;
 
 import java.util.List;
 
+import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86Instruction;
 
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.system.SEHHandle;
 import v2.org.analysis.value.Value;
 
 /**
@@ -56,7 +58,15 @@ public abstract class AssemblyInstructionStub {
 		if (ret != null) {
 			return ret;
 		}
-
+		
+		// PHONG - 20150921 - Check SEH before going ///////////////
+		AbsoluteAddress curAddr = curState.getLocation();
+		if (rule.getSEHHandle().causeException(curAddr)) {
+			SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
+			sehHandle.setSEHType(SEHHandle.SINGLE_STEP);
+			return rule.processSEH(curState);
+		}
+		
 		rule.generateNextInstruction(inst, path, pathList, true);
 		return curState;
 	}
