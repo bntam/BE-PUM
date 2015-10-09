@@ -5,10 +5,9 @@ package v2.org.analysis.path;
 
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
+
 import v2.org.analysis.loop.LoopHandle;
 import v2.org.analysis.value.Formulas;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author NMHai
@@ -101,15 +100,10 @@ public class BPPath {
 		this.curState.setPathCondition(this.pathCond.getCondition());
 	}
 
+	@Override
 	public BPPath clone() {
 		BPPath ret = new BPPath(curState.clone(), trace.clone(), pathCond.getCondition().clone());
-
-//		List<ProcessedAPI> p = new ArrayList<ProcessedAPI>();
-//		for (ProcessedAPI t : this.processedAPI) {
-//			p.add(new ProcessedAPI(t.getApiName(), t.getProcessedWay()));
-//		}
 		ret.setLoopHandle(l.clone());
-//		ret.setProcessedAPI(p);
 
 		return ret;
 	}
@@ -149,8 +143,9 @@ public class BPPath {
 //	}
 
 	public void addTrace(AbsoluteAddress addr) {
-		if (addr != null)
+		if (addr != null) {
 			trace.add(addr.getValue());
+		}
 	}
 
 	public AbsoluteAddress getTrace(int index) {

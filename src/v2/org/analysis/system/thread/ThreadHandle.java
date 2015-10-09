@@ -39,7 +39,7 @@ public class ThreadHandle {
 	public static final int STACK_BASE_ADDRESS = 200;
 	public static final int STACK_SIZE = 200;
 
-	private static int createdThreadCount = 0;
+	private int createdThreadCount = 0;
 
 	private Map<Long, Thread> threadMap = new HashMap<Long, Thread>();
 	private List<Thread> threadList = new ArrayList<Thread>();
@@ -61,8 +61,9 @@ public class ThreadHandle {
 				this.currentIndex = 0;
 			}
 
-			if (this.threadList.get(this.currentIndex).isActive())
+			if (this.threadList.get(this.currentIndex).isActive()) {
 				break;
+			}
 
 			if (count >= this.threadList.size() && (System.currentTimeMillis() - time) >= MAX_WAITING_TIME) {
 				// All of threads are sleeping so long or waiting for each other
@@ -141,5 +142,21 @@ public class ThreadHandle {
 		}
 		this.threadList.add(thread);
 		this.threadMap.put(handle, thread);
+	}
+	
+	public ThreadHandle clone(BPPath path) {
+		ThreadHandle tmp = new ThreadHandle();
+		tmp.createdThreadCount = this.createdThreadCount;
+		tmp.currentIndex = this.currentIndex;
+		
+		// Clone all of collections
+		for (Map.Entry<Long, Thread> entry : this.threadMap.entrySet()) {
+			Thread tmpThread = entry.getValue().clone(path);
+			
+			tmp.threadList.add(tmpThread);
+			tmp.threadMap.put(entry.getKey(), tmpThread);
+		}
+		
+		return tmp;
 	}
 }

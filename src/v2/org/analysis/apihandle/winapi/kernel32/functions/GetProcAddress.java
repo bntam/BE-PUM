@@ -7,9 +7,6 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLLwithoutOption;
@@ -38,7 +35,7 @@ public class GetProcAddress extends Kernel32API {
 		 */
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
-		String lpProcName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String lpProcName = memory.getText(t2);
 
 		long ret = this.execute(t1, lpProcName);
 
@@ -69,4 +66,4 @@ public class GetProcAddress extends Kernel32API {
 
 		return ret;
 	}
-}
+	}

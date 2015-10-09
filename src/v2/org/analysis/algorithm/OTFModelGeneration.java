@@ -10,6 +10,9 @@ package v2.org.analysis.algorithm;
  * 
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jakstab.Algorithm;
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
@@ -30,9 +33,6 @@ import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.Formulas;
 import v2.org.analysis.value.LongValue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class OTFModelGeneration implements Algorithm {
 
 	// private static final Logger logger =
@@ -40,7 +40,7 @@ public class OTFModelGeneration implements Algorithm {
 	//private static long maxTimeProgam = 3600000;
 	//private static long maxTimePath = 1500000;
 	//private static long bkTime = 2700000;
-	private static long outTime = 180000;
+	private final static long OUT_TIME = 180000;
 	// For Debug
 	private int num = 1, loopCount = 1;
 	private boolean isCompareOlly = true, isChecked = false;
@@ -149,7 +149,7 @@ public class OTFModelGeneration implements Algorithm {
 				//long time = overallEndTimeTemp - overallStartTemp;
 				//System.out.println("Times: " + time);
 				// Output file each 60s
-				if (overallEndTimeTemp - overallStartTemp > outTime) {
+				if (overallEndTimeTemp - overallStartTemp > OUT_TIME) {
 
 					// Stop running one paths after maxTimePath
 					/*
@@ -206,8 +206,9 @@ public class OTFModelGeneration implements Algorithm {
 				TIB.updateChecking(curState);
 				// --------------------------------------
 				
-				if (inst == null || location == null)
+				if (inst == null || location == null) {
 					break;
+				}
 				path.addTrace(curState.getLocation());
 
 				if (inst instanceof X86CondJmpInstruction) {
@@ -282,8 +283,9 @@ public class OTFModelGeneration implements Algorithm {
 		while (true) {
 			String temp = file.getLineAt(t);
 
-			if (temp == null || temp == "")
+			if (temp == null || temp == "") {
 				return null;
+			}
 
 			if (temp.contains("Address")) {
 				temp = temp.substring(temp.indexOf("x") + 1, temp.length());
@@ -300,9 +302,9 @@ public class OTFModelGeneration implements Algorithm {
 		while (true) {
 			String temp = file.getLineAt(t);
 
-			if (temp == null || temp == "")
+			if (temp == null || temp == "") {
 				return;
-			else if (temp.contains("Register")) {
+			} else if (temp.contains("Register")) {
 				temp = temp.substring(temp.indexOf(":") + 1, temp.length());
 				String[] reg = temp.split(",");
 				for (int i = 0; i < reg.length; i++) {
@@ -319,10 +321,11 @@ public class OTFModelGeneration implements Algorithm {
 					reg[i] = reg[i].replace(" ", "");
 					String r[] = reg[i].split("=");
 
-					if (r[1].toLowerCase().contains("true"))
+					if (r[1].toLowerCase().contains("true")) {
 						env.getFlag().setFlagValue(r[0], new BooleanValue(true));
-					else
+					} else {
 						env.getFlag().setFlagValue(r[0], new BooleanValue(false));
+					}
 				}
 				setFlag = true;
 			} else if (temp.contains("Memory")) {
@@ -340,17 +343,20 @@ public class OTFModelGeneration implements Algorithm {
 			}  
 			t++;
 			
-			if (setReg && setFlag && setMem)
+			if (setReg && setFlag && setMem) {
 				return;
+			}
 		}
 	}
 
 	private String reduce(String str, int i) {
 		// TODO Auto-generated method stub
 		String ret = str;
-		if (i == 8)
-			if (str.length() > 2)
+		if (i == 8) {
+			if (str.length() > 2) {
 				ret = str.substring(str.length()-2);
+			}
+		}
 		
 		return ret;
 	}

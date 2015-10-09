@@ -55,6 +55,7 @@ import com.sun.jna.platform.win32.WinDef.WORD;
 import com.sun.jna.platform.win32.WinDef.WORDByReference;
 import com.sun.jna.platform.win32.WinNT.ACL;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.platform.win32.WinNT.LARGE_INTEGER;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
@@ -3714,11 +3715,106 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 * @return Returns a nonzero value if successful, or 0 otherwise. To get
 	 *         extended error information, the application can call
 	 *         GetLastError, which can return one of the following error codes:
-	 *         
+	 * 
 	 *         ERROR_INVALID_PARAMETER. Any of the parameter values was invalid.
 	 */
 	BOOL GetCPInfoEx(
 	/* _In_ */UINT CodePage,
 	/* _In_ */DWORD dwFlags,
 	/* _Out_ */CPINFOEX lpCPInfoEx);
+
+	BOOL RegisterWowExec(DWORD Unknown);
+
+	/**
+	 * Retrieves the language identifier for the system default UI language of
+	 * the operating system, also known as the "install language" on Windows
+	 * Vista and later. For more information, see User Interface Language
+	 * Management.
+	 * 
+	 * @return Returns the language identifier for the system default UI
+	 *         language of the operating system. For more information, see the
+	 *         Remarks section.
+	 */
+	WORD GetSystemDefaultUILanguage();
+
+	/**
+	 * Retrieves the current input mode of a console's input buffer or the
+	 * current output mode of a console screen buffer.
+	 * 
+	 * @param hConsoleHandle
+	 *            A handle to the console input buffer or the console screen
+	 *            buffer. The handle must have the GENERIC_READ access right.
+	 *            For more information, see Console Buffer Security and Access
+	 *            Rights.
+	 * 
+	 * @param lpMode
+	 *            A pointer to a variable that receives the current mode of the
+	 *            specified buffer.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL GetConsoleMode(
+	/* _In_ */HANDLE hConsoleHandle,
+	/* _Out_ */DWORDByReference lpMode);
+
+	/**
+	 * Verifies that the calling process has read access to the specified range
+	 * of memory.
+	 * 
+	 * @param lp
+	 *            A pointer to the first byte of the memory block.
+	 * 
+	 * @param ucb
+	 *            The size of the memory block, in bytes. If this parameter is
+	 *            zero, the return value is zero.
+	 * 
+	 * @return If the calling process has read access to all bytes in the
+	 *         specified memory range, the return value is zero. If the calling
+	 *         process does not have read access to all bytes in the specified
+	 *         memory range, the return value is nonzero. If the application is
+	 *         compiled as a debugging version, and the process does not have
+	 *         read access to all bytes in the specified memory range, the
+	 *         function causes an assertion and breaks into the debugger.
+	 *         Leaving the debugger, the function continues as usual, and
+	 *         returns a nonzero value. This behavior is by design, as a
+	 *         debugging aid.
+	 */
+	BOOL IsBadReadPtr(
+	/* _In_ *//* const VOID * */LPVOID lp,
+	/* _In_ */UINT_PTR ucb);
+
+	/**
+	 * Returns the locale identifier for the user default locale.
+	 * 
+	 * @return Returns the locale identifier for the user default locale,
+	 *         represented as LOCALE_USER_DEFAULT. If the user default locale is
+	 *         a custom locale, this function always returns
+	 *         LOCALE_CUSTOM_DEFAULT, regardless of the custom locale that is
+	 *         selected. For example, whether the user locale is Hawaiian (US),
+	 *         value.
+	 */
+	LCID GetUserDefaultLCID();
+
+	/**
+	 * Retrieves the frequency of the performance counter. The frequency of the
+	 * performance counter is fixed at system boot and is consistent across all
+	 * processors. Therefore, the frequency need only be queried upon
+	 * application initialization, and the result can be cached.
+	 * 
+	 * @param lpFrequency
+	 *            A pointer to a variable that receives the current
+	 *            performance-counter frequency, in counts per second. If the
+	 *            installed hardware doesn't support a high-resolution
+	 *            performance counter, this parameter can be zero (this will not
+	 *            occur on systems that run Windows XP or later).
+	 * 
+	 * @return If the installed hardware supports a high-resolution performance
+	 *         counter, the return value is nonzero. If the function fails, the
+	 *         return value is zero. To get extended error information, call
+	 *         GetLastError. On systems that run Windows XP or later, the
+	 *         function will always succeed and will thus never return zero.
+	 */
+	BOOL QueryPerformanceFrequency(/* _Out_ */LARGE_INTEGER lpFrequency);
 }

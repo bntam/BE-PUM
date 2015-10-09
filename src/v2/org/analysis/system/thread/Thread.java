@@ -20,7 +20,7 @@ public class Thread {
 	private long funcPointer = 0;
 	private long arglistAddress = 0;
 	private int threadID = 0;
-	
+
 	private EThreadCreationFlags creationFlags;
 	private EThreadState state;
 
@@ -29,13 +29,13 @@ public class Thread {
 
 	private long timeToWakeUp = System.currentTimeMillis();
 
-	public Thread(BPPath path, long handle, long funcPointer, long arglist, EThreadCreationFlags creationFlags,
+	public Thread(BPPath path, long handle, long funcPointer, long arglistAddress, EThreadCreationFlags creationFlags,
 			int threadID) {
 		this.path = path;
 
 		this.handle = handle;
 		this.funcPointer = funcPointer;
-		this.arglistAddress = arglist;
+		this.arglistAddress = arglistAddress;
 		this.creationFlags = creationFlags;
 		this.threadID = threadID;
 
@@ -44,6 +44,21 @@ public class Thread {
 		} else {
 			this.setState(EThreadState.RUNNING);
 		}
+	}
+
+	public Thread clone(BPPath path) {
+		Thread tmp = new Thread(path, this.handle, this.funcPointer, this.arglistAddress, this.creationFlags,
+				this.threadID);
+		tmp.state = this.state;
+		tmp.isMainThread = this.isMainThread;
+
+		// TODO: This can take so many time to run in current path, cause wrong
+		// wake up time in another path, so need solve this problem in the
+		// future!
+		tmp.timeToWakeUp = this.timeToWakeUp;
+		
+		return tmp;
+
 	}
 
 	public void setMainThread() {
@@ -60,11 +75,13 @@ public class Thread {
 	 * @return TRUE if not be blocked, otherwise FALSE
 	 */
 	public boolean isActive() {
-		if (this.timeToWakeUp > System.currentTimeMillis())
+		if (this.timeToWakeUp > System.currentTimeMillis()) {
 			return false;
+		}
 
-		if (this.getState() != EThreadState.RUNNING)
+		if (this.getState() != EThreadState.RUNNING) {
 			return false;
+		}
 
 		return true;
 	}

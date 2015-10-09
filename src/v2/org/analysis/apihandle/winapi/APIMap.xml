@@ -76,6 +76,7 @@
 		<API funcName="getcommandline" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCommandLine" />
 		<API funcName="getcomputername" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetComputerName" />
 		<API funcName="getconsolecp" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetConsoleCP" />
+		<API funcName="getconsolemode" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetConsoleMode" />
 		<API funcName="getcpinfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCPInfo" />
 		<API funcName="getcpinfoex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCPInfoEx" />
 		<API funcName="getcurrentdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetCurrentDirectory" />
@@ -115,6 +116,7 @@
 		<API funcName="getstringtypea" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetStringTypeA" />
 		<API funcName="getstringtypew" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetStringTypeW" />
 		<API funcName="getsystemdefaultlcid" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemDefaultLCID" />
+		<API funcName="getsystemdefaultuilanguage" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemDefaultUILanguage" />
 		<API funcName="getsystemdirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemDirectory" />
 		<API funcName="getsysteminfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemInfo" />
 		<API funcName="getsystemtime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetSystemTime" />
@@ -125,6 +127,7 @@
 		<API funcName="getthreadpriority" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetThreadPriority" />
 		<API funcName="gettickcount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetTickCount" />
 		<API funcName="getuserdefaultlangid" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetUserDefaultLangID" />
+		<API funcName="getuserdefaultlcid" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetUserDefaultLCID" />
 		<API funcName="getversion" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVersion" />
 		<API funcName="getversionex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVersionEx" />
 		<API funcName="getvolumeinformation" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetVolumeInformation" />
@@ -145,6 +148,7 @@
 		<API funcName="initializecriticalsectionandspincount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
 		<API funcName="interlockedexchange" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedExchange" />
 		<API funcName="interlockedincrement" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedIncrement" />
+		<API funcName="isbadreadptr" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadReadPtr" />
 		<API funcName="isbadwriteptr" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isdbcsleadbyte" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDBCSLeadByte" />
 		<API funcName="isdebuggerpresent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDebuggerPresent" />
@@ -180,8 +184,10 @@
 		<API funcName="process32first" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Process32First" />
 		<API funcName="process32next" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Process32Next" />
 		<API funcName="queryperformancecounter" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceCounter" />
+		<API funcName="queryperformancefrequency" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceFrequency" />
 		<API funcName="readfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile" />
 		<API funcName="readprocessmemory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadProcessMemory" />
+		<API funcName="registerwowexec" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RegisterWowExec" />
 		<API funcName="releasemutex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReleaseMutex" />
 		<API funcName="removedirectory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RemoveDirectory" />
 		<API funcName="resumethread" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ResumeThread" />
@@ -357,9 +363,11 @@
 		<API funcName="postmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.PostMessage" />
 		<API funcName="registerclass" className="v2.org.analysis.apihandle.winapi.user32.functions.RegisterClass" />
 		<API funcName="registerclassex" className="v2.org.analysis.apihandle.winapi.user32.functions.RegisterClassEx" />
+		<API funcName="removeprop" className="v2.org.analysis.apihandle.winapi.user32.functions.RemoveProp" />
 		<API funcName="sendmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.SendMessage" />
 		<API funcName="sendnotifymessage" className="v2.org.analysis.apihandle.winapi.user32.functions.SendNotifyMessage" />
 		<API funcName="setcaretblinktime" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCaretBlinkTime" />
+		<API funcName="setclasslong" className="v2.org.analysis.apihandle.winapi.user32.functions.SetClassLong" />
 		<API funcName="setcursor" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setfocus" className="v2.org.analysis.apihandle.winapi.user32.functions.SetFocus" />
 		<API funcName="setlasterrorex" className="v2.org.analysis.apihandle.winapi.user32.functions.SetLastErrorEx" />

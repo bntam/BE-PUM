@@ -9,27 +9,43 @@
 package v2.org.analysis.apihandle.winapi.user32;
 
 import java.nio.Buffer;
-import java.nio.ByteBuffer;
 
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.WString;
-import com.sun.jna.platform.win32.WinDef.*;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
-import com.sun.jna.platform.win32.WinUser.BLENDFUNCTION;
-import com.sun.jna.platform.win32.WinUser.MSG;
-import com.sun.jna.platform.win32.WinUser.SIZE;
-import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
-import com.sun.jna.ptr.IntByReference;
-import com.sun.jna.win32.StdCallLibrary;
-import com.sun.jna.win32.W32APIOptions;
-
-import v2.org.analysis.apihandle.winapi.structures.WinUser.COORD;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGPROC;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGTEMPLATE;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.MENUITEMINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.TITLEBARINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS;
+
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.WString;
+import com.sun.jna.platform.win32.WinDef.ATOM;
+import com.sun.jna.platform.win32.WinDef.BOOL;
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.DWORDByReference;
+import com.sun.jna.platform.win32.WinDef.HBITMAP;
+import com.sun.jna.platform.win32.WinDef.HBRUSH;
+import com.sun.jna.platform.win32.WinDef.HCURSOR;
+import com.sun.jna.platform.win32.WinDef.HDC;
+import com.sun.jna.platform.win32.WinDef.HICON;
+import com.sun.jna.platform.win32.WinDef.HINSTANCE;
+import com.sun.jna.platform.win32.WinDef.HMENU;
+import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.platform.win32.WinDef.INT_PTR;
+import com.sun.jna.platform.win32.WinDef.LONG;
+import com.sun.jna.platform.win32.WinDef.LPARAM;
+import com.sun.jna.platform.win32.WinDef.LRESULT;
+import com.sun.jna.platform.win32.WinDef.POINT;
+import com.sun.jna.platform.win32.WinDef.RECT;
+import com.sun.jna.platform.win32.WinDef.UINT;
+import com.sun.jna.platform.win32.WinDef.WPARAM;
+import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.platform.win32.WinUser.BLENDFUNCTION;
+import com.sun.jna.platform.win32.WinUser.MSG;
+import com.sun.jna.platform.win32.WinUser.SIZE;
+import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
+import com.sun.jna.win32.StdCallLibrary;
+import com.sun.jna.win32.W32APIOptions;
 
 /**
  * @author Yen Nguyen
@@ -1314,4 +1330,59 @@ public interface User32DLL extends StdCallLibrary {
 	 *         error information.
 	 */
 	int GetSystemMetrics(/* _In_ */int nIndex);
+
+	/**
+	 * Replaces the specified 32-bit (long) value at the specified offset into
+	 * the extra class memory or the WNDCLASSEX structure for the class to which
+	 * the specified window belongs.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window and, indirectly, the class to which the
+	 *            window belongs.
+	 * 
+	 * @param nIndex
+	 *            The value to be replaced. To set a 32-bit value in the extra
+	 *            class memory, specify the positive, zero-based byte offset of
+	 *            the value to be set. Valid values are in the range zero
+	 *            through the number of bytes of extra class memory, minus four;
+	 *            for example, if you specified 12 or more bytes of extra class
+	 *            memory, a value of 8 would be an index to the third 32-bit
+	 *            integer. To set any other value from the WNDCLASSEX structure,
+	 *            specify one of the following values.
+	 * 
+	 * @param dwNewLong
+	 *            The replacement value.
+	 * 
+	 * @return If the function succeeds, the return value is the previous value
+	 *         of the specified 32-bit integer. If the value was not previously
+	 *         set, the return value is zero. If the function fails, the return
+	 *         value is zero. To get extended error information, call
+	 *         GetLastError.
+	 */
+	DWORD SetClassLong(
+	/* _In_ */HWND hWnd,
+	/* _In_ */int nIndex,
+	/* _In_ */LONG dwNewLong);
+
+	/**
+	 * Removes an entry from the property list of the specified window. The
+	 * specified character string identifies the entry to be removed.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window whose property list is to be changed.
+	 * 
+	 * @param lpString
+	 *            A null-terminated character string or an atom that identifies
+	 *            a string. If this parameter is an atom, it must have been
+	 *            created using the GlobalAddAtom function. The atom, a 16-bit
+	 *            value, must be placed in the low-order word of lpString; the
+	 *            high-order word must be zero.
+	 * 
+	 * @return The return value identifies the specified data. If the data
+	 *         cannot be found in the specified property list, the return value
+	 *         is NULL.
+	 */
+	HANDLE RemoveProp(
+	/* _In_ */HWND hWnd,
+	/* _In_ */String lpString);
 }
