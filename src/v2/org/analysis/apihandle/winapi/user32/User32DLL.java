@@ -30,6 +30,7 @@ import com.sun.jna.platform.win32.WinDef.HDC;
 import com.sun.jna.platform.win32.WinDef.HICON;
 import com.sun.jna.platform.win32.WinDef.HINSTANCE;
 import com.sun.jna.platform.win32.WinDef.HMENU;
+import com.sun.jna.platform.win32.WinDef.HRGN;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.INT_PTR;
 import com.sun.jna.platform.win32.WinDef.LONG;
@@ -1385,4 +1386,108 @@ public interface User32DLL extends StdCallLibrary {
 	HANDLE RemoveProp(
 	/* _In_ */HWND hWnd,
 	/* _In_ */String lpString);
+
+	/**
+	 * The ScrollDC function scrolls a rectangle of bits horizontally and
+	 * vertically.
+	 * 
+	 * @param hDC
+	 *            Handle to the device context that contains the bits to be
+	 *            scrolled.
+	 * 
+	 * @param dx
+	 *            Specifies the amount, in device units, of horizontal
+	 *            scrolling. This parameter must be a negative value to scroll
+	 *            to the left.
+	 * 
+	 * @param dy
+	 *            Specifies the amount, in device units, of vertical scrolling.
+	 *            This parameter must be a negative value to scroll up.
+	 * 
+	 * @param lprcScroll
+	 *            Pointer to a RECT structure containing the coordinates of the
+	 *            bits to be scrolled. The only bits affected by the scroll
+	 *            operation are bits in the intersection of this rectangle and
+	 *            the rectangle specified by lprcClip. If lprcScroll is NULL,
+	 *            the entire client area is used.
+	 * 
+	 * @param lprcClip
+	 *            Pointer to a RECT structure containing the coordinates of the
+	 *            clipping rectangle. The only bits that will be painted are the
+	 *            bits that remain inside this rectangle after the scroll
+	 *            operation has been completed. If lprcClip is NULL, the entire
+	 *            client area is used.
+	 * 
+	 * @param hrgnUpdate
+	 *            Handle to the region uncovered by the scrolling process.
+	 *            ScrollDC defines this region; it is not necessarily a
+	 *            rectangle.
+	 * 
+	 * @param lprcUpdate
+	 *            Pointer to a RECT structure that receives the coordinates of
+	 *            the rectangle bounding the scrolling update region. This is
+	 *            the largest rectangular area that requires repainting. When
+	 *            the function returns, the values in the structure are in
+	 *            client coordinates, regardless of the mapping mode for the
+	 *            specified device context. This allows applications to use the
+	 *            update region in a call to the InvalidateRgn function, if
+	 *            required.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL ScrollDC(
+	/* _In_ */HDC hDC,
+	/* _In_ */int dx,
+	/* _In_ */int dy,
+	/* _In_ const */RECT lprcScroll,
+	/* _In_ const */RECT lprcClip,
+	/* _In_ */HRGN hrgnUpdate,
+	/* _Out_ */RECT lprcUpdate);
+
+	/**
+	 * Moves the caret to the specified coordinates. If the window that owns the
+	 * caret was created with the CS_OWNDC class style, then the specified
+	 * coordinates are subject to the mapping mode of the device context
+	 * associated with that window.
+	 * 
+	 * @param X
+	 *            The new x-coordinate of the caret.
+	 * 
+	 * @param Y
+	 *            The new y-coordinate of the caret.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL SetCaretPos(
+	/* _In_ */int X,
+	/* _In_ */int Y);
+
+	/**
+	 * Makes the caret visible on the screen at the caret's current position.
+	 * When the caret becomes visible, it begins flashing automatically.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window that owns the caret. If this parameter
+	 *            is NULL, ShowCaret searches the current task for the window
+	 *            that owns the caret.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL ShowCaret(/* _In_opt_ */HWND hWnd);
+
+	/**
+	 * Destroys the caret's current shape, frees the caret from the window, and
+	 * removes the caret from the screen.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	BOOL DestroyCaret();
 }

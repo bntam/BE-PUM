@@ -7,6 +7,7 @@
  */
 package v2.org.analysis.apihandle.winapi.gdi32;
 
+import v2.org.analysis.apihandle.winapi.structures.Wingdi.LOGPALETTE;
 import v2.org.analysis.apihandle.winapi.structures.Wingdi.PALETTEENTRY;
 
 import com.sun.jna.Native;
@@ -106,4 +107,50 @@ public interface Gdi32DLL extends StdCallLibrary {
 	 *         return value is CLR_INVALID.
 	 */
 	DWORD GetBkColor(HDC hdc);
+
+	/**
+	 * The SetBkColor function sets the current background color to the
+	 * specified color value, or to the nearest physical color if the device
+	 * cannot represent the specified color value.
+	 * 
+	 * @param hdc
+	 *            A handle to the device context.
+	 * 
+	 * @param crColor
+	 *            The new background color. To make a COLORREF value, use the
+	 *            RGB macro.
+	 * 
+	 * @return If the function succeeds, the return value specifies the previous
+	 *         background color as a COLORREF value. If the function fails, the
+	 *         return value is CLR_INVALID.
+	 */
+	DWORD SetBkColor(
+	/* _In_ */HDC hdc,
+	/* _In_ */DWORD crColor);
+
+	/**
+	 * The CreateCompatibleDC function creates a memory device context (DC)
+	 * compatible with the specified device.
+	 * 
+	 * @param hdc
+	 *            A handle to an existing DC. If this handle is NULL, the
+	 *            function creates a memory DC compatible with the application's
+	 *            current screen.
+	 * 
+	 * @return If the function succeeds, the return value is the handle to a
+	 *         memory DC. If the function fails, the return value is NULL.
+	 */
+	HDC CreateCompatibleDC(/* _In_ */HDC hdc);
+
+	/**
+	 * The CreatePalette function creates a logical palette.
+	 * 
+	 * @param lplgpl
+	 *            A pointer to a LOGPALETTE structure that contains information
+	 *            about the colors in the logical palette.
+	 * 
+	 * @return If the function succeeds, the return value is a handle to a
+	 *         logical palette. If the function fails, the return value is NULL.
+	 */
+	HANDLE CreatePalette(/* _In_ *//* const */LOGPALETTE lplgpl);
 }

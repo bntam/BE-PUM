@@ -59,10 +59,8 @@ import com.sun.jna.platform.win32.WinNT.LARGE_INTEGER;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
 
-//import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
-
 /**
- * @author SEGFRY
+ * @author Yen Nguyen
  *
  */
 
@@ -3817,4 +3815,28 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 *         function will always succeed and will thus never return zero.
 	 */
 	BOOL QueryPerformanceFrequency(/* _Out_ */LARGE_INTEGER lpFrequency);
+
+	/**
+	 * Sets the current locale of the calling thread.
+	 * 
+	 * @param Locale
+	 *            Locale identifier that specifies the locale. You can use the
+	 *            MAKELCID macro to create a locale identifier or use one of the
+	 *            following predefined values. LOCALE_CUSTOM_DEFAULT
+	 * 
+	 *            LOCALE_CUSTOM_UI_DEFAULT
+	 * 
+	 *            LOCALE_CUSTOM_UNSPECIFIED
+	 * 
+	 *            LOCALE_INVARIANT
+	 * 
+	 *            LOCALE_SYSTEM_DEFAULT
+	 * 
+	 *            LOCALE_USER_DEFAULT
+	 * 
+	 * @return The function should return an LCID on success. This is the LCID
+	 *         of the previous thread locale.
+	 */
+	BOOL SetThreadLocale(/* _In_ */LCID Locale);
+
 }
