@@ -12,6 +12,7 @@ import v2.org.analysis.apihandle.winapi.structures.Wingdi.PALETTEENTRY;
 
 import com.sun.jna.Native;
 import com.sun.jna.WString;
+import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HDC;
 import com.sun.jna.platform.win32.WinDef.UINT;
@@ -153,4 +154,20 @@ public interface Gdi32DLL extends StdCallLibrary {
 	 *         logical palette. If the function fails, the return value is NULL.
 	 */
 	HANDLE CreatePalette(/* _In_ *//* const */LOGPALETTE lplgpl);
+
+	/**
+	 * The DeleteObject function deletes a logical pen, brush, font, bitmap,
+	 * region, or palette, freeing all system resources associated with the
+	 * object. After the object is deleted, the specified handle is no longer
+	 * valid.
+	 * 
+	 * @param hObject
+	 *            A handle to a logical pen, brush, font, bitmap, region, or
+	 *            palette.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         specified handle is not valid or is currently selected into a DC,
+	 *         the return value is zero.
+	 */
+	BOOL DeleteObject(HANDLE hObject);
 }

@@ -64,21 +64,25 @@ public class SystemHandle {
 	public long getLibraryHandle(String libraryName) {
 		// TODO Auto-generated method stub
 		String libName = libraryName.toLowerCase();
-		if (libName.equals("kernel32.dll") || libName.contains("kernel32"))
+		if (libName.equals("kernel32.dll") || libName.contains("kernel32")) {
 			return getKernel().getBaseAddress();
+		}
 
-		if (libName.equals("user32.dll") || libName.contains("user32"))
+		if (libName.equals("user32.dll") || libName.contains("user32")) {
 			return getUser32().getBaseAddress();
+		}
 		
-		if (libName.equals("advapi32.dll") || libName.contains("advapi32"))
+		if (libName.equals("advapi32.dll") || libName.contains("advapi32")) {
 			return getAdvapi32Handle().getBaseAddress();
+		}
 
 		Library l = libraryHandle.getLibrary(libName);
 
-		if (l != null)
+		if (l != null) {
 			return l.getBaseAddress();
-		else
+		} else {
 			return 0;
+		}
 	}
 
 	public long getProcAddress(long libraryHandle, String functionName) {
@@ -100,32 +104,23 @@ public class SystemHandle {
 
 		Library l = this.libraryHandle.getLibrary(libraryHandle);
 
-		if (l != null)
+		if (l != null) {
 			return l.getAPIAddr(functionName);
+		}
 
 		return 0;
 	}
 
-	public long getProcAddress(long libraryHandle, long function) {
-		// TODO Auto-generated method stub
-		Library l = this.libraryHandle.getLibrary(libraryHandle);
-
-		if (l.getLibraryName().equals("ws2_32.dll"))
-			if (function == 57)
-				return l.getAPIAddr("gethostname");
-			else if (function == 115)
-				return l.getAPIAddr("WSAStarup");
-
-		return 0;
-	}
 
 	public long closeHandle(long x) {
 		// TODO Auto-generated method stub
-		if (fileHandle.containFile(x))
+		if (fileHandle.containFile(x)) {
 			return fileHandle.closeFile(x);
+		}
 
-		if (fileHandle.containFileMappingHandle(x))
+		if (fileHandle.containFileMappingHandle(x)) {
 			return fileHandle.closeFileMappingHandle(x);
+		}
 
 		return 0;
 	}
@@ -238,8 +233,9 @@ public class SystemHandle {
 
 	public long getSTDHandle(long value) {
 		// TODO Auto-generated method stub
-		if (value == -11)
+		if (value == -11) {
 			return 7;
+		}
 
 		return 0;
 	}
@@ -280,8 +276,9 @@ public class SystemHandle {
 
 		Library l = this.libraryHandle.getLibrary(libraryHandle);
 
-		if (l != null)
+		if (l != null) {
 			return l.getLibraryName();
+		}
 
 		return null;
 

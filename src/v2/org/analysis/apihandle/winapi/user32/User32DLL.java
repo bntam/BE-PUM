@@ -1490,4 +1490,20 @@ public interface User32DLL extends StdCallLibrary {
 	 *         information, call GetLastError.
 	 */
 	BOOL DestroyCaret();
+
+	/**
+	 * Retrieves a handle to the specified window's parent or owner. To retrieve
+	 * a handle to a specified ancestor, use the GetAncestor function.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window whose parent window handle is to be
+	 *            retrieved.
+	 * 
+	 * @return If the window is a child window, the return value is a handle to
+	 *         the parent window. If the window is a top-level window with the
+	 *         WS_POPUP style, the return value is a handle to the owner window.
+	 *         If the function fails, the return value is NULL. To get extended
+	 *         error information, call GetLastError.
+	 */
+	HWND GetParent(/* _In_ */HWND hWnd);
 }

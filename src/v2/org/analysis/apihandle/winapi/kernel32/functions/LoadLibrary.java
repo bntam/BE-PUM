@@ -94,7 +94,7 @@ public class LoadLibrary extends Kernel32API {
 			e.printStackTrace();
 		}
 
-		// Fail again? Maybe the system has not been install some needed
+		// Fail again? Maybe the system has not been installed some needed
 		// framework
 		if (this.apiCallReturn == null && isKnownLib(libraryName)) {
 			// 4000 APIs can be attached to this DLL

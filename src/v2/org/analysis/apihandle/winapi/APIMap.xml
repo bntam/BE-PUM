@@ -25,11 +25,15 @@
 	<DLL name="gdi32">
 		<API funcName="addfontresource" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AddFontResource" />
 		<API funcName="animatepalette" className="v2.org.analysis.apihandle.winapi.gdi32.functions.AnimatePalette" />
+		<API funcName="createcompatibledc" className="v2.org.analysis.apihandle.winapi.gdi32.functions.CreateCompatibleDC" />
+		<API funcName="createpalette" className="v2.org.analysis.apihandle.winapi.gdi32.functions.CreatePalette" />
+		<API funcName="deleteobject" className="v2.org.analysis.apihandle.winapi.gdi32.functions.DeleteObject" />
 		<API funcName="gdiflush" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GdiFlush" />
 		<API funcName="gdigetbatchlimit" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GdiGetBatchLimit" />
 		<API funcName="getbkcolor" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetBkColor" />
 		<API funcName="getdevicecaps" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
 		<API funcName="getstockobject" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetStockObject" />
+		<API funcName="setbkcolor" className="v2.org.analysis.apihandle.winapi.gdi32.functions.SetBkColor" />
 	</DLL>
 	<DLL name="kernel32">
 		<API funcName="arefileapisansi" className="v2.org.analysis.apihandle.winapi.kernel32.functions.AreFileApisANSI" />
@@ -205,6 +209,7 @@
 		<API funcName="sethandlecount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SetHandleCount" />
 		<API funcName="setlasterror" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SetLastError" />
 		<API funcName="setpriorityclass" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SetPriorityClass" />
+		<API funcName="setthreadlocale" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SetThreadLocale" />
 		<API funcName="setthreadpriority" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SetThreadPriority" />
 		<API funcName="settimer" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SetTimer" />
 		<API funcName="setunhandledexceptionfilter" className="v2.org.analysis.apihandle.winapi.kernel32.functions.SetUnhandledExceptionFilter" />
@@ -312,6 +317,7 @@
 		<API funcName="createdialogparam" className="v2.org.analysis.apihandle.winapi.user32.functions.CreateDialogParam" />
 		<API funcName="createwindowex" className="v2.org.analysis.apihandle.winapi.user32.functions.CreateWindowEx" />
 		<API funcName="defframeproc" className="v2.org.analysis.apihandle.winapi.user32.functions.DefFrameProc" />
+		<API funcName="destroycaret" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyCaret" />
 		<API funcName="destroymenu" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyMenu" />
 		<API funcName="destroywindow" className="v2.org.analysis.apihandle.winapi.user32.functions.DestroyWindow" />
 		<API funcName="dialogboxindirectparam" className="v2.org.analysis.apihandle.winapi.user32.functions.DialogBoxIndirectParam" />
@@ -333,6 +339,7 @@
 		<API funcName="getkeyboardtype" className="v2.org.analysis.apihandle.winapi.user32.functions.GetKeyboardType" />
 		<API funcName="getlastactivepopup" className="v2.org.analysis.apihandle.winapi.user32.functions.GetLastActivePopup" />
 		<API funcName="getmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.GetMessage" />
+		<API funcName="getparent" className="v2.org.analysis.apihandle.winapi.user32.functions.GetParent" />
 		<API funcName="getprocesswindowstation" className="v2.org.analysis.apihandle.winapi.user32.functions.GetProcessWindowStation" />
 		<API funcName="getsyscolor" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSysColor" />
 		<API funcName="getsyscolorbrush" className="v2.org.analysis.apihandle.winapi.user32.functions.GetSysColorBrush" />
@@ -364,14 +371,17 @@
 		<API funcName="registerclass" className="v2.org.analysis.apihandle.winapi.user32.functions.RegisterClass" />
 		<API funcName="registerclassex" className="v2.org.analysis.apihandle.winapi.user32.functions.RegisterClassEx" />
 		<API funcName="removeprop" className="v2.org.analysis.apihandle.winapi.user32.functions.RemoveProp" />
+		<API funcName="scrolldc" className="v2.org.analysis.apihandle.winapi.user32.functions.ScrollDC" />
 		<API funcName="sendmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.SendMessage" />
 		<API funcName="sendnotifymessage" className="v2.org.analysis.apihandle.winapi.user32.functions.SendNotifyMessage" />
 		<API funcName="setcaretblinktime" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCaretBlinkTime" />
+		<API funcName="setcaretpos" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCaretPos" />
 		<API funcName="setclasslong" className="v2.org.analysis.apihandle.winapi.user32.functions.SetClassLong" />
 		<API funcName="setcursor" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setfocus" className="v2.org.analysis.apihandle.winapi.user32.functions.SetFocus" />
 		<API funcName="setlasterrorex" className="v2.org.analysis.apihandle.winapi.user32.functions.SetLastErrorEx" />
 		<API funcName="setwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
+		<API funcName="showcaret" className="v2.org.analysis.apihandle.winapi.user32.functions.ShowCaret" />
 		<API funcName="showwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.ShowWindow" />
 		<API funcName="translatemessage" className="v2.org.analysis.apihandle.winapi.user32.functions.TranslateMessage" />
 		<API funcName="unregisterclass" className="v2.org.analysis.apihandle.winapi.user32.functions.UnregisterClass" />

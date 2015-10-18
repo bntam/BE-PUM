@@ -1,11 +1,16 @@
 package v2.org.analysis.apihandle;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86CondJmpInstruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
 import v2.org.analysis.cfg.AddressList;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPEdge;
@@ -21,10 +26,6 @@ import v2.org.analysis.value.AnyValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
 import v2.org.analysis.value.Value;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 //import org.analysis.api_stub.APIHandler;
 
@@ -398,29 +399,29 @@ public class Kernel32Stub extends APIStub {
 			}
 
 		} else if (funcName.startsWith("GetProcAddress")) {
-			// HMODULE hModule, handle to DLL module
-			// LPCSTR lpProcName name of function
-			Value x1 = stack.pop();
-			Value x2 = stack.pop();
-			System.out.println("Argument:" + x1 + " " + x2 + " ");
-
-			if (x1 instanceof LongValue && x2 instanceof LongValue) {
-				/*
-				 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
-				 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(),
-				 * program);
-				 */
-				String functionName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()));
-				System.out.println("Function Name:" + functionName + ", Library Handle:" + x1);
-				long t = 0;
-				if (functionName != "")
-					t = system.getProcAddress(((LongValue) x1).getValue(), functionName);
-				else
-					t = system.getProcAddress(((LongValue) x1).getValue(), ((LongValue) x2).getValue());
-				register.mov("eax", new LongValue(t));
-				System.out.println("Return Value: " + t);
-
-			}
+//			// HMODULE hModule, handle to DLL module
+//			// LPCSTR lpProcName name of function
+//			Value x1 = stack.pop();
+//			Value x2 = stack.pop();
+//			System.out.println("Argument:" + x1 + " " + x2 + " ");
+//
+//			if (x1 instanceof LongValue && x2 instanceof LongValue) {
+//				/*
+//				 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
+//				 * x1).getValueOperand(), ((ValueLongExp) x2).getValueOperand(),
+//				 * program);
+//				 */
+//				String functionName = memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) x2).getValue()));
+//				System.out.println("Function Name:" + functionName + ", Library Handle:" + x1);
+//				long t = 0;
+//				if (functionName != "")
+//					t = system.getProcAddress(((LongValue) x1).getValue(), functionName);
+//				else
+//					t = system.getProcAddress(((LongValue) x1).getValue(), ((LongValue) x2).getValue());
+//				register.mov("eax", new LongValue(t));
+//				System.out.println("Return Value: " + t);
+//
+//			}
 
 		} else if (funcName.startsWith("LoadLibraryA")) {
 			// LPCTSTR lpLibFileName // address of filename of executable
@@ -587,8 +588,9 @@ public class Kernel32Stub extends APIStub {
 				if (str != null) {
 					memory.setText(new X86MemoryOperand(DataType.INT32, t2), str);
 					register.mov("eax", new LongValue(1));
-				} else
+				} else {
 					register.mov("eax", new LongValue(0));
+				}
 			}
 		} else if (funcName.startsWith("UnmapViewOfFile")) {
 			// LPCVOID lpBaseAddress // address where mapped view begins
@@ -971,9 +973,10 @@ public class Kernel32Stub extends APIStub {
 
 			System.out.println("Argument:" + x1 + " ");
 
-			if (x1 instanceof LongValue)
+			if (x1 instanceof LongValue) {
 				env.getRegister().setRegisterValue("eax",
 						new LongValue(env.getSystem().getSTDHandle(((LongValue) x1).getValue())));
+			}
 
 		} else if (funcName.startsWith("GetVersion")) {
 			// This function has no parameters.
@@ -2342,15 +2345,18 @@ public class Kernel32Stub extends APIStub {
 			register.mov("eax", new SymbolValue("api_eax"));
 		}
 
-		if (!contain(funcName))
+		if (!contain(funcName)) {
 			checkedAPI.add(funcName);
+		}
 	}
 
 	private boolean contain(String funcName) {
 		// TODO Auto-generated method stub
-		for (String t : checkedAPI)
-			if (t.equals(funcName))
+		for (String t : checkedAPI) {
+			if (t.equals(funcName)) {
 				return true;
+			}
+		}
 
 		return false;
 	}
@@ -4568,8 +4574,9 @@ public class Kernel32Stub extends APIStub {
 			long r = 0;
 			if (returnAddr instanceof LongValue) {
 				r = ((LongValue) returnAddr).getValue();
-			} else
+			} else {
 				r = curState.getLocation().getValue() + curState.getInstruction().getSize();
+			}
 			AbsoluteAddress addr = new AbsoluteAddress(r);
 			Instruction newInst = program.getInstruction(addr, env);
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
@@ -4608,8 +4615,9 @@ public class Kernel32Stub extends APIStub {
 				byte[] opcodes = this.getOpcodesArray(curState, addr.getValue());
 				// NEXT INSTRUCTION FOR CALL
 				newInst = Program.getProgram().getInstruction(opcodes, env);
-			} else
+			} else {
 				newInst = program.getInstruction(addr, env);
+			}
 
 			v1 = cfg.insertVertex(new BPVertex(addr, newInst));
 			cfg.insertEdge(new BPEdge(v2, v1));
@@ -4640,8 +4648,9 @@ public class Kernel32Stub extends APIStub {
 
 	private long getModuleHandleA(String library, Environment env) {
 		// TODO Auto-generated method stub
-		if (library.toLowerCase().contains("kernel32"))
+		if (library.toLowerCase().contains("kernel32")) {
 			return env.getSystem().getKernel().getBaseAddress();
+		}
 		return 0;
 	}
 
@@ -4671,17 +4680,19 @@ public class Kernel32Stub extends APIStub {
 				}
 
 				if (i1.getName().equals("je")) {
-					if (reCond)
+					if (reCond) {
 						return 0;
-					else
+					} else {
 						return 1;
+					}
 				}
 
 				if (i1.getName().equals("jne")) {
-					if (reCond)
+					if (reCond) {
 						return 1;
-					else
+					} else {
 						return 0;
+					}
 				}
 			}
 		} else if (l.length() >= 2) {
@@ -4703,17 +4714,19 @@ public class Kernel32Stub extends APIStub {
 				}
 
 				if (i1.getName().equals("je")) {
-					if (reCond)
+					if (reCond) {
 						return 0;
-					else
+					} else {
 						return 1;
+					}
 				}
 
 				if (i1.getName().equals("jne")) {
-					if (reCond)
+					if (reCond) {
 						return 1;
-					else
+					} else {
 						return 0;
+					}
 				}
 			} else if (i1 instanceof X86CondJmpInstruction) {
 				boolean reCond = false;
@@ -4726,17 +4739,19 @@ public class Kernel32Stub extends APIStub {
 				}
 
 				if (i1.getName().equals("je")) {
-					if (reCond)
+					if (reCond) {
 						return 0;
-					else
+					} else {
 						return 1;
+					}
 				}
 
 				if (i1.getName().equals("jne")) {
-					if (reCond)
+					if (reCond) {
 						return 1;
-					else
+					} else {
 						return 0;
+					}
 				}
 			}
 		}
@@ -4776,7 +4791,7 @@ public class Kernel32Stub extends APIStub {
 		// can modify here for best result, i < 10, because one asm statement
 		// needs 10 bytes or less
 		for (int i = 0; i < /* vM.getSize() - offset */10; i++) {
-			long virtualAdrr = vM.getAddress() + (long) i;
+			long virtualAdrr = vM.getAddress() + i;
 			opcodes[i] = (byte) ((LongValue) curState.getEnvironement().getMemory().getByteMemoryValue(virtualAdrr))
 					.getValue();
 		}
