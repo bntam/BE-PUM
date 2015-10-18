@@ -54,7 +54,6 @@ import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ContextRecord;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.ExceptionRecord;
-import v2.org.analysis.log.BPLogger;
 import v2.org.analysis.loop.LoopAlgorithm;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
@@ -137,7 +136,7 @@ public class X86TransitionRule extends TransitionRule {
 			return null;
 		}
 
-		asmName = asmName.toLowerCase();
+		asmName = asmName.trim().toLowerCase();
 		
 		String fullClassName = null;
 
@@ -155,116 +154,102 @@ public class X86TransitionRule extends TransitionRule {
 	}
 
 	// PHONG: 20150502 --------------------------------------------------------
-	boolean checkAddressValidJump(Environment env, long t) {
-		// TODO Auto-generated method stub
-		if (!env.getSystem().getSEHHandler().isSet()) {
-			return true;
-		}
-
-		if (env.getSystem().getLibraryHandle().getAPIName(t) != "") {
-			return true;
-		}
-
-		String temp = APIHandle.checkAPI(t);
-		if (temp != null && temp != "") {
-			return true;
-		}
-
-		AbsoluteAddress addr = new AbsoluteAddress(t);
-
-		if (addr.getValue() == 0) {
-			return false;
-		}
-		boolean c1 = Program.getProgram().checkAddress(addr);
-		boolean c2 = env.getStack().isInsideStack(addr);
-		boolean c3 = env.getMemory().contains(addr);
-		boolean c4 = env.getSystem().getKernel().isInside(addr);
-		boolean c5 = env.getSystem().getUser32().isInside(addr); // YenNguyen:
-																	// Have the
-																	// same as
-																	// isInsideKernel32(addr)
-		boolean c6 = env.getSystem().getFileHandle().isInsideFile(addr);
-		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
-
-		return (c1 || c2 || c3 || c4 || c5 || c6 || c7);
-	}
-
-	// ------------------------------------------------------------------------
-
-	public boolean checkAddressValid(Environment env, X86MemoryOperand d) {
-		// TODO Auto-generated method stub
-
-		if (d != null && d.getBase() != null && d.getBase() instanceof X86Register
-				&& d.getBase().toString().contains("esp")) {
-			return true;
-		}
-
-		X86MemoryOperand t = env.getMemory().evaluateAddress(d, env);
-
-		if (t == null || t.getBase() != null || t.getSegmentRegister() != null || t.getIndex() != null) {
-			return true;
-		}
-
-		if (!env.getSystem().getSEHHandler().isSet()) {
-			return true;
-		}
-
-		AbsoluteAddress addr = new AbsoluteAddress(t.getDisplacement());
-
-		if (addr.getValue() == 0) {
-			return false;
-		}
-
-		boolean c1 = Program.getProgram().checkAddress(addr);
-		boolean c2 = env.getStack().isInsideStack(addr);
-		boolean c3 = env.getMemory().contains(addr);
-		boolean c4 = env.getSystem().getKernel().isInside(addr);
-		boolean c5 = env.getSystem().getUser32().isInside(addr); // YenNguyen:
-																	// have the
-																	// same as
-																	// isInsideKernel32(addr);
-		boolean c6 = env.getSystem().getFileHandle().isInsideFile(addr);
-		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
-
-		return (c1 || c2 || c3 || c4 || c5 || c6 || c7);
-	}
-
-	public boolean checkAddressValid(Environment env, AbsoluteAddress addr) {
-		if (addr.getValue() == 0) {
-			return false;
-		}
-
-		boolean c1 = Program.getProgram().checkAddress(addr);
-		boolean c2 = env.getStack().isInsideStack(addr);
-		boolean c3 = env.getMemory().contains(addr);
-		boolean c4 = env.getSystem().getKernel().isInside(addr);
-		boolean c5 = env.getSystem().getUser32().isInside(addr); // YenNguyen:
-																	// have the
-																	// same as
-																	// isInsideKernel32(addr);
-		boolean c6 = env.getSystem().getFileHandle().isInsideFile(addr);
-		boolean c7 = env.getSystem().getLibraryHandle().isInside(addr);
-
-		return (c1 || c2 || c3 || c4 || c5 || c6 || c7);
-	}
-
-	public String checkAPICall(Value r, BPState curState) {
-		// YenNguyen: Check address in JNA memory
-		String api = APIHandle.checkAPI(((LongValue) r).getValue());
-		// System.out.println();
-		if (api == null || api == "") {
-			api = curState.getEnvironement().getSystem().getLibraryHandle().getAPIName(((LongValue) r).getValue());
-		}
-
-		if (api == null || api == "") {
-			api = Program.getProgram().checkAPI(((LongValue) r).getValue(), curState.getEnvironement());
-			if (api != null && api.equals("")) {
-				api = null;
+		boolean checkAddressValidJump(Environment env, long t) {
+			// TODO Auto-generated method stub
+			if (!env.getSystem().getSEHHandler().isSet()) {
+				return true;
 			}
+
+			if (env.getSystem().getLibraryHandle().getAPIName(t) != "") {
+				return true;
+			}
+
+			String temp = APIHandle.checkAPI(t);
+			if (temp != null && temp != "") {
+				return true;
+			}
+
+			AbsoluteAddress addr = new AbsoluteAddress(t);
+
+			return checkAddressValid(env, addr);
 		}
 
-		return api;
-	}
+		// ------------------------------------------------------------------------
+
+		public boolean checkAddressValid(Environment env, X86MemoryOperand d) {
+			// TODO Auto-generated method stub
+
+			if (d != null && d.getBase() != null && d.getBase() instanceof X86Register
+					&& d.getBase().toString().contains("esp")) {
+				return true;
+			}
+
+			X86MemoryOperand t = env.getMemory().evaluateAddress(d, env);
+
+			if (t == null || t.getBase() != null || t.getSegmentRegister() != null || t.getIndex() != null) {
+				return true;
+			}		
+
+			AbsoluteAddress addr = new AbsoluteAddress(t.getDisplacement());		
+			return checkAddressValid(env, addr);
+		}
+
+		public boolean checkAddressValid(Environment env, AbsoluteAddress addr) {
+			if (!env.getSystem().getSEHHandler().isSet()) {
+				return true;
+			}
+			
+			if (addr.getValue() == 0) {
+				return false;
+			}
+			if (Program.getProgram().checkAddress(addr)) {
+				return true;
+			}
+			if (env.getStack().isInsideStack(addr)) {
+				return true;
+			}
+			if (env.getMemory().contains(addr)) {
+				return true;
+			}
+			
+//			ExternalMemoryReturnData ret = ExternalMemory.getByte(addr.getValue());
+//			if (ret != null && ret.isValidAddress) {
+//				return true;
+//			}		
+
+			if (env.getSystem().getKernel().isInside(addr)) {
+				return true;
+			}
+			if (env.getSystem().getUser32().isInside(addr)) {
+				return true;
+			}
+			if (env.getSystem().getFileHandle().isInsideFile(addr)) {
+				return true;
+			}
+			if (env.getSystem().getLibraryHandle().isInside(addr)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public String checkAPICall(Value r, BPState curState) {
+			// YenNguyen: Check address in JNA memory
+			String api = APIHandle.checkAPI(((LongValue) r).getValue());
+			// System.out.println();
+			if (api == null || api == "") {
+				api = curState.getEnvironement().getSystem().getLibraryHandle().getAPIName(((LongValue) r).getValue());
+			}
+
+			if (api == null || api == "") {
+				api = Program.getProgram().checkAPI(((LongValue) r).getValue(), curState.getEnvironement());
+				if (api != null && api.equals("")) {
+					api = null;
+				}
+			}
+
+			return api;
+		}
 
 	boolean checkZ3(Formulas formulas) {
 		// TODO Auto-generated method stub
@@ -529,11 +514,6 @@ public class X86TransitionRule extends TransitionRule {
 		BPVertex src = cfg.getVertex(curState.getLocation(), ins);
 
 		String className = findClassName(ins.getName());
-		
-		if (ins.getName().startsWith("movs"))
-		{
-			BPLogger.debugLogger.info(ins.getClass().getName());
-		}
 
 		if (className != null) {
 			try {

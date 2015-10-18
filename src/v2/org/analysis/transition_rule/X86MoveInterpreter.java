@@ -29,7 +29,7 @@ public class X86MoveInterpreter {
 		int opSize = rule.getBitCount(inst);
 		{
 			Program.getProgram().getLog()
-					.error("Instruction not supported " + inst.getName() + " at " + curState.getLocation());
+					.error("Instruction Move not supported " + inst.getName() + " at " + curState.getLocation());
 		}
 
 		rule.generateNextInstruction(inst, path, pathList, true);

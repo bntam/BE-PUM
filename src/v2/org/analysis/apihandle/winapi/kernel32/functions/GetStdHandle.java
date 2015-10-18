@@ -7,14 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves a handle to the specified standard device (standard input, standard
@@ -60,7 +59,8 @@ public class GetStdHandle extends Kernel32API {
 
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());
 		register.mov("eax", new LongValue(value));
-		System.out.println("Return Value:" + value);
+
+		GetFileType.stdHandleList.add((int) value);
 	}
 
 }

@@ -98,7 +98,7 @@ public class X86InstructionInterpreter {
 
 		else {
 			Program.getProgram().getLog()
-					.error("Instruction not supported" + inst.getName() + " at " + curState.getLocation());
+					.error("Instruction Interpreter not supported" + inst.getName() + " at " + curState.getLocation());
 		}
 
 		rule.generateNextInstruction(inst, path, pathList, true);

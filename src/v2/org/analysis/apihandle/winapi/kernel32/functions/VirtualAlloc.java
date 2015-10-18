@@ -7,15 +7,14 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.BaseTSD.SIZE_T;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LPVOID;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Reserves or commits a region of pages in the virtual address space of the
@@ -78,6 +77,15 @@ public class VirtualAlloc extends Kernel32API {
 		LPVOID ret = Kernel32DLL.INSTANCE.VirtualAlloc(lpAddress, dwSize, flAllocationType, flProtect);
 
 		register.mov("eax", new LongValue(Pointer.nativeValue(ret.toPointer())));
+		
+		for (long i = t1; i < (t1 + t2); i++) {
+			memory.setByteMemoryValue(i, new LongValue(0));
+			
+//			ExternalMemoryReturnData em = ExternalMemory.getByte(i);
+//			if (ret != null && em.isValidAddress) {
+//				memory.setByteMemoryValue(i, em.value);
+//			}	
+		}
 	}
 
 }
