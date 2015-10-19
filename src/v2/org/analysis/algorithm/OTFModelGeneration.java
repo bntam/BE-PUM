@@ -390,8 +390,8 @@ public class OTFModelGeneration implements Algorithm {
 			AbsoluteAddress location = state.getLocation();
 			Environment env = state.getEnvironement();
 			if (ollyCompare == null) {
-				long memoryStartAddr = 0x409770;
-				long memoryEndAddr = 0x409780;
+				long memoryStartAddr = 0x401000;
+				long memoryEndAddr = 0x401010;
 				long stackIndex = 0xc;
 				System.out.println("Read file Olly " + "asm/olly/" + fileName + "" + num + ".txt");
 				ollyCompare = new OllyComparisonV2("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,

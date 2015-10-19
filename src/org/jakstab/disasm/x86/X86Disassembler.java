@@ -167,6 +167,35 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 			}
 			
 		}
+		
+		if (firstByte == 209) {
+			if (InstructionDecoder.readByte(code, byteIndex + 1) == 240) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%eax"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 241) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ecx"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 243) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebx"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 242) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edx"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esi"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 247) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%edi"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 244) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%esp"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 245) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebp"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			}
+			
+		}
 
 		if (firstByte == 192 && InstructionDecoder.readByte(code, byteIndex + 1) == 240
 				     && InstructionDecoder.readByte(code, byteIndex + 2) == 3) {

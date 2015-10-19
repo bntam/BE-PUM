@@ -1,6 +1,5 @@
 package v2.org.analysis.environment;
 
-import org.jakstab.Program;
 import v2.org.analysis.system.SystemHandle;
 import v2.org.analysis.value.LongValue;
 
@@ -60,7 +59,7 @@ public class Environment {
 		register.mov("esi", new LongValue(0xFFFFFFFF));
 		register.mov("ecx", new LongValue(0x12FFB0));
 		register.mov("edi", new LongValue(0x7C910208));
-		register.mov("ebx", new LongValue(0x7FFDB000));
+		register.mov("ebx", new LongValue(0x7FFD4000));
 		register.mov("eax", new LongValue(0));
 
 		register.mov("cs", new LongValue(0x0));
@@ -79,8 +78,9 @@ public class Environment {
 			// .getReturnRandomValue()));
 			//((StackV2) stack).init(new LongValue(0x7C817067));
 			((StackV2) stack).init(new LongValue(0x7c8000c0));
-		} else if (stack instanceof StackV1)
+		} else if (stack instanceof StackV1) {
 			stack.push((new LongValue(system.getKernel().getReturnRandomValue())));
+		}
 	}
 
 	public SystemHandle getSystem() {
@@ -88,22 +88,28 @@ public class Environment {
 		return system;
 	}
 
+	@Override
 	public Environment clone() {
 		Environment ret = new Environment();
-		if (register != null)
+		if (register != null) {
 			ret.setRegister(register.clone());
+		}
 
-		if (flag != null)
+		if (flag != null) {
 			ret.setFlag(flag.clone());
+		}
 
-		if (memory != null)
+		if (memory != null) {
 			ret.setMemory(memory.clone());
+		}
 
-		if (stack != null)
+		if (stack != null) {
 			ret.setStack(stack.clone());
+		}
 		ret.getMemory().setEnvironment(ret);
-		if (ret.getStack() instanceof StackV2)
+		if (ret.getStack() instanceof StackV2) {
 			((StackV2) ret.getStack()).setEnvironment(ret);
+		}
 
 		return ret;
 	}
