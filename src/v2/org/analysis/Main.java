@@ -356,6 +356,8 @@ public class Main {
 //		in = "demo1_petite.exe"; // Error
 //		in = "demo1_aspack.exe"; // 14278 14334 907s x
 		
+		 in = "api_test_asprotect.exe";
+		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export
