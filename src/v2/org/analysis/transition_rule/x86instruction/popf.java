@@ -31,7 +31,7 @@ public class popf extends X86InstructionStub {
 		}
 		// /////////////////////////////////////////
 
-		System.out.println("Restore value of Flags: " + v.toString());
+		//System.out.println("Restore value of Flags: " + v.toString());
 		return null;
 	}
 
