@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Vector;
 
 public class Function {
-	public String funcName;
-	public String libName;
-	public String description;
-	public List<String> importList;
-	public List<Variable> paramsList;
+	public String funcName = null;
+	public String libName = null;
+	public String description = null;
+	public List<String> importList = null;
+	public List<Variable> paramsList = null;
 	public Variable ret = null;
 	
 	public String extendClass;

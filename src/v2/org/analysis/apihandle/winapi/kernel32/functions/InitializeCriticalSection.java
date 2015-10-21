@@ -20,7 +20,7 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.RTL_CRITICAL_SECTION;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.Memory;
 import v2.org.analysis.environment.Register;

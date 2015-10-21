@@ -9,7 +9,7 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.PRTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.PRTL_CRITICAL_SECTION;
 
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;

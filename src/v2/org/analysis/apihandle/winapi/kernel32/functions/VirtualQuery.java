@@ -13,7 +13,7 @@ import com.sun.jna.platform.win32.WinDef.LPVOID;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.MEMORY_BASIC_INFORMATION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.MEMORY_BASIC_INFORMATION;
 
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;

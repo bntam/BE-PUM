@@ -22,8 +22,8 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.ntdll.NtdllAPI;
 import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.PROCESS_BASIC_INFORMATION;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.UNICODE_STRING;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.PROCESS_BASIC_INFORMATION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.UNICODE_STRING;
 import v2.org.analysis.value.LongValue;
 
 /**

@@ -5,8 +5,8 @@ import java.nio.Buffer;
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
 import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
 import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.CONTEXT;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.CONTEXT;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.EXCEPTION_RECORD;
 
 import com.sun.jna.Memory;
 import com.sun.jna.Native;

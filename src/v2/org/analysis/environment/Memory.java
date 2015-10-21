@@ -364,11 +364,11 @@ public class Memory {
 		return new X86MemoryOperand(m.getDataType(), val);
 	}
 
-//	public Value getByteMemoryValue(long address) {
-//		return this.getByteMemoryValue(address, false);
-//	}
+	public Value getByteMemoryValue(long address) {
+		return this.getByteMemoryValue(address, true);
+	}
 
-	public Value getByteMemoryValue(long address) {		
+	public Value getByteMemoryValue(long address, boolean isTryInExternalMemory) {		
 		// First, let find in the internal memory
 		Value memValue = memory.get(address);
 		if (memValue != null) {
@@ -398,7 +398,7 @@ public class Memory {
 				return new LongValue(program.getByteValueMemoryPhong(absoluteAddr));
 			} else {
 				// YenNguyen: Access jna's memory here
-				if (address != 0) {
+				if (address != 0 && isTryInExternalMemory) {
 					ExternalMemoryReturnData ret = ExternalMemory.getByte(address);
 					if (ret != null && ret.isValidAddress) {
 						return ret.value;
@@ -687,7 +687,7 @@ public Value getDoubleWordMemoryValue(long address) {
 		StringBuilder ret = new StringBuilder();
 
 		for (int i = 0; i < l; i++) {
-			Value t = getByteMemoryValue(addr + i);
+			Value t = getByteMemoryValue(addr + i, false);
 
 			if (t != null && t instanceof LongValue) {
 				byte t1 = (byte) (((LongValue) t).getValue() & 0xFF);
@@ -703,7 +703,7 @@ public Value getDoubleWordMemoryValue(long address) {
 		StringBuilder ret = new StringBuilder();
 
 		while (true) {
-			Value t = getByteMemoryValue(addr);
+			Value t = getByteMemoryValue(addr, false);
 
 			if (t != null && t instanceof LongValue) {
 				byte t1 = (byte) (((LongValue) t).getValue() & 0xFF);

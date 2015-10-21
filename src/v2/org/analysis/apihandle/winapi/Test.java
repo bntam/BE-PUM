@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.functions.GetProcAddress;
 import v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.RTL_CRITICAL_SECTION;
 
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.LONG;

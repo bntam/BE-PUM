@@ -56,7 +56,8 @@ public class Main {
 		// Yen Nguyen: With so many System.out.print... calls, 
 		// the console will not able to show all of informations you want.
 		// Set isLog true and them will be saved into Log.log file for you.
-		boolean isLog = false; //true;
+//		boolean isLog = true;
+		boolean isLog = false;
 		if (isLog) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 			Date date = new Date();
@@ -350,13 +351,13 @@ public class Main {
 //		in = "demo1.exe"; // 13405 13404 14s x
 //		in = "demo1_upx.exe"; // 13563 13583 337 x
 //		in = "demo1_fsg.exe"; // 13493 13510 13s 0111001010111110-NONE
-//		in = "demo1_pecompact.exe"; // 788 828 225s
+		in = "demo1_pecompact.exe"; // 788 828 225s
 //		in = "demo1_npack.exe"; // 13851 13881 685s x
 //		in = "demo1_yoda.exe";		
 //		in = "demo1_petite.exe"; // Error
 //		in = "demo1_aspack.exe"; // 14278 14334 907s x
 		
-		 in = "api_test_asprotect.exe";
+//		 in = "api_test_asprotect.exe";
 		
 		String path = pathVirus + in;
 		isGui = false;

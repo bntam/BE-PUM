@@ -1,24 +1,28 @@
 package v2.org.analysis.apihandle.generation.stub;
 
 public class Variable {
-	public String type;
+	public Type type;
 	public String name;
 	public String desc;
 	
 	public int order;
 	public String initStr;
 
-	public Variable(String type, String name, String desc) {
+	public Variable(Type type, String name) {
+		this(type, name, null);
+	}
+
+	public Variable(Type type, String name, String desc) {
 		this.type = type;
 		this.name = name;
 		this.desc = desc;
 	}
 
-	public String getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 

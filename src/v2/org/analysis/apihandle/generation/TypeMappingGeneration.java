@@ -26,12 +26,13 @@ import com.google.gson.GsonBuilder;
  * @author Yen Nguyen
  *
  */
-public class TypeMapping {
+public class TypeMappingGeneration {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		String workingDir = System.getProperty("user.dir");
-		String path = workingDir + "\\src\\" + TypeMapping.class.getPackage().getName().replace(".", "\\");
-		File jsonfile = new File(path + "\\TypeMap.json");
+		String path = workingDir + "\\src\\" + TypeMappingGeneration.class.getPackage().getName().replace(".", "\\")
+				+ "\\TypeMap.json";
+		File jsonfile = new File(path);
 
 		// if file doesn't exists, then create it
 		if (!jsonfile.exists()) {
@@ -53,10 +54,27 @@ public class TypeMapping {
 				int index = line.lastIndexOf('.');
 				if (index > 1) {
 					String typeName = line.substring(index + 1, line.length());
+					Type t = new Type(typeName, typeName, line);
+
+					typeList.add(t);
+				} else {
+					isBasic = true;
+				}
+			}
+		}
+
+		// System.out.println(gson.toJson(typeList));
+		try (BufferedReader br = new BufferedReader(new FileReader("Supported_TypeBasic.txt"))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				String[] subStr = line.split(",");
+				if (subStr.length > 0) {
 					Type t = new Type();
-					t.mapFrom = typeName;
-					t.mapTo = typeName;
-					t.fullClassName = line;
+					t.from = subStr[0];
+					t.to = subStr[1];
+					if (subStr.length == 3) {
+						t.fullClassName = subStr[2];
+					}
 
 					typeList.add(t);
 				} else {
@@ -66,8 +84,6 @@ public class TypeMapping {
 		}
 
 		bufferedWriter.write(gson.toJson(typeList));
-//		System.out.println(gson.toJson(typeList));
-		
 		bufferedWriter.close();
 		fileWriter.close();
 	}

@@ -15,11 +15,11 @@ import v2.org.analysis.apihandle.winapi.structures.WinBase.OFSTRUCT;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.CPINFO;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.MEMORY_BASIC_INFORMATION;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.PRTL_CRITICAL_SECTION;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.CPINFO;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.EXCEPTION_RECORD;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.MEMORY_BASIC_INFORMATION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.PRTL_CRITICAL_SECTION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.RTL_CRITICAL_SECTION;
 import v2.org.analysis.apihandle.winapi.structures.Winnls.CPINFOEX;
 
 import com.sun.jna.Callback;

@@ -12,7 +12,7 @@ import com.sun.jna.platform.win32.WinDef.UINT;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.CPINFO;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.CPINFO;
 
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;

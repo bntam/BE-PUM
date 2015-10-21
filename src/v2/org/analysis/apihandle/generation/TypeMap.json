@@ -1,1592 +1,1681 @@
 [
   {
-    "mapFrom": "DWORD_PTR",
-    "mapTo": "DWORD_PTR",
+    "from": "DWORD_PTR",
+    "to": "DWORD_PTR",
     "fullClassName": "com.sun.jna.platform.win32.BaseTSD.DWORD_PTR"
   },
   {
-    "mapFrom": "LONG_PTR",
-    "mapTo": "LONG_PTR",
+    "from": "LONG_PTR",
+    "to": "LONG_PTR",
     "fullClassName": "com.sun.jna.platform.win32.BaseTSD.LONG_PTR"
   },
   {
-    "mapFrom": "SSIZE_T",
-    "mapTo": "SSIZE_T",
+    "from": "SSIZE_T",
+    "to": "SSIZE_T",
     "fullClassName": "com.sun.jna.platform.win32.BaseTSD.SSIZE_T"
   },
   {
-    "mapFrom": "LPARAM",
-    "mapTo": "LPARAM",
+    "from": "LPARAM",
+    "to": "LPARAM",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.LPARAM"
   },
   {
-    "mapFrom": "LPVOID",
-    "mapTo": "LPVOID",
+    "from": "LPVOID",
+    "to": "LPVOID",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.LPVOID"
   },
   {
-    "mapFrom": "LRESULT",
-    "mapTo": "LRESULT",
+    "from": "LRESULT",
+    "to": "LRESULT",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.LRESULT"
   },
   {
-    "mapFrom": "ULONG_PTR",
-    "mapTo": "ULONG_PTR",
+    "from": "ULONG_PTR",
+    "to": "ULONG_PTR",
     "fullClassName": "com.sun.jna.platform.win32.BaseTSD.ULONG_PTR"
   },
   {
-    "mapFrom": "SIZE_T",
-    "mapTo": "SIZE_T",
+    "from": "SIZE_T",
+    "to": "SIZE_T",
     "fullClassName": "com.sun.jna.platform.win32.BaseTSD.SIZE_T"
   },
   {
-    "mapFrom": "HRESULT",
-    "mapTo": "HRESULT",
+    "from": "HRESULT",
+    "to": "HRESULT",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.HRESULT"
   },
   {
-    "mapFrom": "VARIANT_BOOL",
-    "mapTo": "VARIANT_BOOL",
+    "from": "VARIANT_BOOL",
+    "to": "VARIANT_BOOL",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.VARIANT_BOOL"
   },
   {
-    "mapFrom": "_VARIANT_BOOL",
-    "mapTo": "_VARIANT_BOOL",
+    "from": "_VARIANT_BOOL",
+    "to": "_VARIANT_BOOL",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl._VARIANT_BOOL"
   },
   {
-    "mapFrom": "BOOL",
-    "mapTo": "BOOL",
+    "from": "BOOL",
+    "to": "BOOL",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.BOOL"
   },
   {
-    "mapFrom": "CHAR",
-    "mapTo": "CHAR",
+    "from": "CHAR",
+    "to": "CHAR",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.CHAR"
   },
   {
-    "mapFrom": "DWORD",
-    "mapTo": "DWORD",
+    "from": "DWORD",
+    "to": "DWORD",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.DWORD"
   },
   {
-    "mapFrom": "HREFTYPE",
-    "mapTo": "HREFTYPE",
+    "from": "HREFTYPE",
+    "to": "HREFTYPE",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.HREFTYPE"
   },
   {
-    "mapFrom": "LCID",
-    "mapTo": "LCID",
+    "from": "LCID",
+    "to": "LCID",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.LCID"
   },
   {
-    "mapFrom": "DWORDLONG",
-    "mapTo": "DWORDLONG",
+    "from": "DWORDLONG",
+    "to": "DWORDLONG",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.DWORDLONG"
   },
   {
-    "mapFrom": "INT_PTR",
-    "mapTo": "INT_PTR",
+    "from": "INT_PTR",
+    "to": "INT_PTR",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.INT_PTR"
   },
   {
-    "mapFrom": "LONG",
-    "mapTo": "LONG",
+    "from": "LONG",
+    "to": "LONG",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.LONG"
   },
   {
-    "mapFrom": "DISPID",
-    "mapTo": "DISPID",
+    "from": "DISPID",
+    "to": "DISPID",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.DISPID"
   },
   {
-    "mapFrom": "MEMBERID",
-    "mapTo": "MEMBERID",
+    "from": "MEMBERID",
+    "to": "MEMBERID",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.MEMBERID"
   },
   {
-    "mapFrom": "LONGLONG",
-    "mapTo": "LONGLONG",
+    "from": "LONGLONG",
+    "to": "LONGLONG",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.LONGLONG"
   },
   {
-    "mapFrom": "SHORT",
-    "mapTo": "SHORT",
+    "from": "SHORT",
+    "to": "SHORT",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.SHORT"
   },
   {
-    "mapFrom": "UCHAR",
-    "mapTo": "UCHAR",
+    "from": "UCHAR",
+    "to": "UCHAR",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.UCHAR"
   },
   {
-    "mapFrom": "BYTE",
-    "mapTo": "BYTE",
+    "from": "BYTE",
+    "to": "BYTE",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.BYTE"
   },
   {
-    "mapFrom": "UINT",
-    "mapTo": "UINT",
+    "from": "UINT",
+    "to": "UINT",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.UINT"
   },
   {
-    "mapFrom": "UINT_PTR",
-    "mapTo": "UINT_PTR",
+    "from": "UINT_PTR",
+    "to": "UINT_PTR",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.UINT_PTR"
   },
   {
-    "mapFrom": "WPARAM",
-    "mapTo": "WPARAM",
+    "from": "WPARAM",
+    "to": "WPARAM",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.WPARAM"
   },
   {
-    "mapFrom": "ULONG",
-    "mapTo": "ULONG",
+    "from": "ULONG",
+    "to": "ULONG",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.ULONG"
   },
   {
-    "mapFrom": "SCODE",
-    "mapTo": "SCODE",
+    "from": "SCODE",
+    "to": "SCODE",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.SCODE"
   },
   {
-    "mapFrom": "ULONGLONG",
-    "mapTo": "ULONGLONG",
+    "from": "ULONGLONG",
+    "to": "ULONGLONG",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.ULONGLONG"
   },
   {
-    "mapFrom": "USHORT",
-    "mapTo": "USHORT",
+    "from": "USHORT",
+    "to": "USHORT",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.USHORT"
   },
   {
-    "mapFrom": "VARTYPE",
-    "mapTo": "VARTYPE",
+    "from": "VARTYPE",
+    "to": "VARTYPE",
     "fullClassName": "com.sun.jna.platform.win32.WTypes.VARTYPE"
   },
   {
-    "mapFrom": "WORD",
-    "mapTo": "WORD",
+    "from": "WORD",
+    "to": "WORD",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.WORD"
   },
   {
-    "mapFrom": "ATOM",
-    "mapTo": "ATOM",
+    "from": "ATOM",
+    "to": "ATOM",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.ATOM"
   },
   {
-    "mapFrom": "ULONG_PTRByReference",
-    "mapTo": "ULONG_PTRByReference",
+    "from": "ULONG_PTRByReference",
+    "to": "ULONG_PTRByReference",
     "fullClassName": "com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference"
   },
   {
-    "mapFrom": "NativeLong",
-    "mapTo": "NativeLong",
+    "from": "NativeLong",
+    "to": "NativeLong",
     "fullClassName": "com.sun.jna.ptr.NativeLong"
   },
   {
-    "mapFrom": "ByteByReference",
-    "mapTo": "ByteByReference",
+    "from": "ByteByReference",
+    "to": "ByteByReference",
     "fullClassName": "com.sun.jna.ptr.ByteByReference"
   },
   {
-    "mapFrom": "DoubleByReference",
-    "mapTo": "DoubleByReference",
+    "from": "DoubleByReference",
+    "to": "DoubleByReference",
     "fullClassName": "com.sun.jna.ptr.DoubleByReference"
   },
   {
-    "mapFrom": "FloatByReference",
-    "mapTo": "FloatByReference",
+    "from": "FloatByReference",
+    "to": "FloatByReference",
     "fullClassName": "com.sun.jna.ptr.FloatByReference"
   },
   {
-    "mapFrom": "IntByReference",
-    "mapTo": "IntByReference",
+    "from": "IntByReference",
+    "to": "IntByReference",
     "fullClassName": "com.sun.jna.ptr.IntByReference"
   },
   {
-    "mapFrom": "LongByReference",
-    "mapTo": "LongByReference",
+    "from": "LongByReference",
+    "to": "LongByReference",
     "fullClassName": "com.sun.jna.ptr.LongByReference"
   },
   {
-    "mapFrom": "NativeLongByReference",
-    "mapTo": "NativeLongByReference",
+    "from": "NativeLongByReference",
+    "to": "NativeLongByReference",
     "fullClassName": "com.sun.jna.ptr.NativeLongByReference"
   },
   {
-    "mapFrom": "_VARIANT_BOOLByReference",
-    "mapTo": "_VARIANT_BOOLByReference",
+    "from": "_VARIANT_BOOLByReference",
+    "to": "_VARIANT_BOOLByReference",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl._VARIANT_BOOLByReference"
   },
   {
-    "mapFrom": "DISPIDByReference",
-    "mapTo": "DISPIDByReference",
+    "from": "DISPIDByReference",
+    "to": "DISPIDByReference",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.DISPIDByReference"
   },
   {
-    "mapFrom": "MEMBERIDByReference",
-    "mapTo": "MEMBERIDByReference",
+    "from": "MEMBERIDByReference",
+    "to": "MEMBERIDByReference",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.MEMBERIDByReference"
   },
   {
-    "mapFrom": "VARIANT_BOOLByReference",
-    "mapTo": "VARIANT_BOOLByReference",
+    "from": "VARIANT_BOOLByReference",
+    "to": "VARIANT_BOOLByReference",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.VARIANT_BOOLByReference"
   },
   {
-    "mapFrom": "PointerByReference",
-    "mapTo": "PointerByReference",
+    "from": "PointerByReference",
+    "to": "PointerByReference",
     "fullClassName": "com.sun.jna.ptr.PointerByReference"
   },
   {
-    "mapFrom": "ShortByReference",
-    "mapTo": "ShortByReference",
+    "from": "ShortByReference",
+    "to": "ShortByReference",
     "fullClassName": "com.sun.jna.ptr.ShortByReference"
   },
   {
-    "mapFrom": "BOOLByReference",
-    "mapTo": "BOOLByReference",
+    "from": "BOOLByReference",
+    "to": "BOOLByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.BOOLByReference"
   },
   {
-    "mapFrom": "CHARByReference",
-    "mapTo": "CHARByReference",
+    "from": "CHARByReference",
+    "to": "CHARByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.CHARByReference"
   },
   {
-    "mapFrom": "DWORDByReference",
-    "mapTo": "DWORDByReference",
+    "from": "DWORDByReference",
+    "to": "DWORDByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.DWORDByReference"
   },
   {
-    "mapFrom": "HREFTYPEByReference",
-    "mapTo": "HREFTYPEByReference",
+    "from": "HREFTYPEByReference",
+    "to": "HREFTYPEByReference",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.HREFTYPEByReference"
   },
   {
-    "mapFrom": "LONGByReference",
-    "mapTo": "LONGByReference",
+    "from": "LONGByReference",
+    "to": "LONGByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.LONGByReference"
   },
   {
-    "mapFrom": "LONGLONGByReference",
-    "mapTo": "LONGLONGByReference",
+    "from": "LONGLONGByReference",
+    "to": "LONGLONGByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.LONGLONGByReference"
   },
   {
-    "mapFrom": "SCODEByReference",
-    "mapTo": "SCODEByReference",
+    "from": "SCODEByReference",
+    "to": "SCODEByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.SCODEByReference"
   },
   {
-    "mapFrom": "UINTByReference",
-    "mapTo": "UINTByReference",
+    "from": "UINTByReference",
+    "to": "UINTByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.UINTByReference"
   },
   {
-    "mapFrom": "ULONGByReference",
-    "mapTo": "ULONGByReference",
+    "from": "ULONGByReference",
+    "to": "ULONGByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.ULONGByReference"
   },
   {
-    "mapFrom": "ULONGLONGByReference",
-    "mapTo": "ULONGLONGByReference",
+    "from": "ULONGLONGByReference",
+    "to": "ULONGLONGByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.ULONGLONGByReference"
   },
   {
-    "mapFrom": "USHORTByReference",
-    "mapTo": "USHORTByReference",
+    "from": "USHORTByReference",
+    "to": "USHORTByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.USHORTByReference"
   },
   {
-    "mapFrom": "WORDByReference",
-    "mapTo": "WORDByReference",
+    "from": "WORDByReference",
+    "to": "WORDByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.WORDByReference"
   },
   {
-    "mapFrom": "HANDLEByReference",
-    "mapTo": "HANDLEByReference",
+    "from": "HANDLEByReference",
+    "to": "HANDLEByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.HANDLEByReference"
   },
   {
-    "mapFrom": "HGLRCByReference",
-    "mapTo": "HGLRCByReference",
+    "from": "HGLRCByReference",
+    "to": "HGLRCByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HGLRCByReference"
   },
   {
-    "mapFrom": "PSIDByReference",
-    "mapTo": "PSIDByReference",
+    "from": "PSIDByReference",
+    "to": "PSIDByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.PSIDByReference"
   },
   {
-    "mapFrom": "HKEYByReference",
-    "mapTo": "HKEYByReference",
+    "from": "HKEYByReference",
+    "to": "HKEYByReference",
     "fullClassName": "com.sun.jna.platform.win32.WinReg.HKEYByReference"
   },
   {
-    "mapFrom": "BSTRByReference",
-    "mapTo": "BSTRByReference",
+    "from": "BSTRByReference",
+    "to": "BSTRByReference",
     "fullClassName": "com.sun.jna.platform.win32.WTypes.BSTRByReference"
   },
   {
-    "mapFrom": "PVOID",
-    "mapTo": "PVOID",
+    "from": "PVOID",
+    "to": "PVOID",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.PVOID"
   },
   {
-    "mapFrom": "HDEVNOTIFY",
-    "mapTo": "HDEVNOTIFY",
+    "from": "HDEVNOTIFY",
+    "to": "HDEVNOTIFY",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.HDEVNOTIFY"
   },
   {
-    "mapFrom": "HANDLE",
-    "mapTo": "HANDLE",
+    "from": "HANDLE",
+    "to": "HANDLE",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.HANDLE"
   },
   {
-    "mapFrom": "HBITMAP",
-    "mapTo": "HBITMAP",
+    "from": "HBITMAP",
+    "to": "HBITMAP",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HBITMAP"
   },
   {
-    "mapFrom": "HBRUSH",
-    "mapTo": "HBRUSH",
+    "from": "HBRUSH",
+    "to": "HBRUSH",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HBRUSH"
   },
   {
-    "mapFrom": "HDC",
-    "mapTo": "HDC",
+    "from": "HDC",
+    "to": "HDC",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HDC"
   },
   {
-    "mapFrom": "HFONT",
-    "mapTo": "HFONT",
+    "from": "HFONT",
+    "to": "HFONT",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HFONT"
   },
   {
-    "mapFrom": "HGLRC",
-    "mapTo": "HGLRC",
+    "from": "HGLRC",
+    "to": "HGLRC",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HGLRC"
   },
   {
-    "mapFrom": "HICON",
-    "mapTo": "HICON",
+    "from": "HICON",
+    "to": "HICON",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HICON"
   },
   {
-    "mapFrom": "HCURSOR",
-    "mapTo": "HCURSOR",
+    "from": "HCURSOR",
+    "to": "HCURSOR",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HCURSOR"
   },
   {
-    "mapFrom": "HINSTANCE",
-    "mapTo": "HINSTANCE",
+    "from": "HINSTANCE",
+    "to": "HINSTANCE",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HINSTANCE"
   },
   {
-    "mapFrom": "HMODULE",
-    "mapTo": "HMODULE",
+    "from": "HMODULE",
+    "to": "HMODULE",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HMODULE"
   },
   {
-    "mapFrom": "HMENU",
-    "mapTo": "HMENU",
+    "from": "HMENU",
+    "to": "HMENU",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HMENU"
   },
   {
-    "mapFrom": "HPALETTE",
-    "mapTo": "HPALETTE",
+    "from": "HPALETTE",
+    "to": "HPALETTE",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HPALETTE"
   },
   {
-    "mapFrom": "HPEN",
-    "mapTo": "HPEN",
+    "from": "HPEN",
+    "to": "HPEN",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HPEN"
   },
   {
-    "mapFrom": "HRGN",
-    "mapTo": "HRGN",
+    "from": "HRGN",
+    "to": "HRGN",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HRGN"
   },
   {
-    "mapFrom": "HRSRC",
-    "mapTo": "HRSRC",
+    "from": "HRSRC",
+    "to": "HRSRC",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HRSRC"
   },
   {
-    "mapFrom": "HWND",
-    "mapTo": "HWND",
+    "from": "HWND",
+    "to": "HWND",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.HWND"
   },
   {
-    "mapFrom": "HKEY",
-    "mapTo": "HKEY",
+    "from": "HKEY",
+    "to": "HKEY",
     "fullClassName": "com.sun.jna.platform.win32.WinReg.HKEY"
   },
   {
-    "mapFrom": "SC_HANDLE",
-    "mapTo": "SC_HANDLE",
+    "from": "SC_HANDLE",
+    "to": "SC_HANDLE",
     "fullClassName": "com.sun.jna.platform.win32.Winsvc.SC_HANDLE"
   },
   {
-    "mapFrom": "HHOOK",
-    "mapTo": "HHOOK",
+    "from": "HHOOK",
+    "to": "HHOOK",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.HHOOK"
   },
   {
-    "mapFrom": "BSTR",
-    "mapTo": "BSTR",
+    "from": "BSTR",
+    "to": "BSTR",
     "fullClassName": "com.sun.jna.platform.win32.WTypes.BSTR"
   },
   {
-    "mapFrom": "LPOLESTR",
-    "mapTo": "LPOLESTR",
+    "from": "LPOLESTR",
+    "to": "LPOLESTR",
     "fullClassName": "com.sun.jna.platform.win32.WTypes.LPOLESTR"
   },
   {
-    "mapFrom": "LPSTR",
-    "mapTo": "LPSTR",
+    "from": "LPSTR",
+    "to": "LPSTR",
     "fullClassName": "com.sun.jna.platform.win32.WTypes.LPSTR"
   },
   {
-    "mapFrom": "LPWSTR",
-    "mapTo": "LPWSTR",
+    "from": "LPWSTR",
+    "to": "LPWSTR",
     "fullClassName": "com.sun.jna.platform.win32.WTypes.LPWSTR"
   },
   {
-    "mapFrom": "DEV_BROADCAST_DEVICEINTERFACE",
-    "mapTo": "DEV_BROADCAST_DEVICEINTERFACE",
+    "from": "DEV_BROADCAST_DEVICEINTERFACE",
+    "to": "DEV_BROADCAST_DEVICEINTERFACE",
     "fullClassName": "com.sun.jna.platform.win32.DBT.DEV_BROADCAST_DEVICEINTERFACE"
   },
   {
-    "mapFrom": "DEV_BROADCAST_DEVNODE",
-    "mapTo": "DEV_BROADCAST_DEVNODE",
+    "from": "DEV_BROADCAST_DEVNODE",
+    "to": "DEV_BROADCAST_DEVNODE",
     "fullClassName": "com.sun.jna.platform.win32.DBT.DEV_BROADCAST_DEVNODE"
   },
   {
-    "mapFrom": "DEV_BROADCAST_HANDLE",
-    "mapTo": "DEV_BROADCAST_HANDLE",
+    "from": "DEV_BROADCAST_HANDLE",
+    "to": "DEV_BROADCAST_HANDLE",
     "fullClassName": "com.sun.jna.platform.win32.DBT.DEV_BROADCAST_HANDLE"
   },
   {
-    "mapFrom": "DEV_BROADCAST_HDR",
-    "mapTo": "DEV_BROADCAST_HDR",
+    "from": "DEV_BROADCAST_HDR",
+    "to": "DEV_BROADCAST_HDR",
     "fullClassName": "com.sun.jna.platform.win32.DBT.DEV_BROADCAST_HDR"
   },
   {
-    "mapFrom": "DEV_BROADCAST_NET",
-    "mapTo": "DEV_BROADCAST_NET",
+    "from": "DEV_BROADCAST_NET",
+    "to": "DEV_BROADCAST_NET",
     "fullClassName": "com.sun.jna.platform.win32.DBT.DEV_BROADCAST_NET"
   },
   {
-    "mapFrom": "DEV_BROADCAST_OEM",
-    "mapTo": "DEV_BROADCAST_OEM",
+    "from": "DEV_BROADCAST_OEM",
+    "to": "DEV_BROADCAST_OEM",
     "fullClassName": "com.sun.jna.platform.win32.DBT.DEV_BROADCAST_OEM"
   },
   {
-    "mapFrom": "DEV_BROADCAST_PORT",
-    "mapTo": "DEV_BROADCAST_PORT",
+    "from": "DEV_BROADCAST_PORT",
+    "to": "DEV_BROADCAST_PORT",
     "fullClassName": "com.sun.jna.platform.win32.DBT.DEV_BROADCAST_PORT"
   },
   {
-    "mapFrom": "DEV_BROADCAST_VOLUME",
-    "mapTo": "DEV_BROADCAST_VOLUME",
+    "from": "DEV_BROADCAST_VOLUME",
+    "to": "DEV_BROADCAST_VOLUME",
     "fullClassName": "com.sun.jna.platform.win32.DBT.DEV_BROADCAST_VOLUME"
   },
   {
-    "mapFrom": "DOMAIN_CONTROLLER_INFO",
-    "mapTo": "DOMAIN_CONTROLLER_INFO",
+    "from": "DOMAIN_CONTROLLER_INFO",
+    "to": "DOMAIN_CONTROLLER_INFO",
     "fullClassName": "com.sun.jna.platform.win32.DsGetDC.DOMAIN_CONTROLLER_INFO"
   },
   {
-    "mapFrom": "DS_DOMAIN_TRUSTS",
-    "mapTo": "DS_DOMAIN_TRUSTS",
+    "from": "DS_DOMAIN_TRUSTS",
+    "to": "DS_DOMAIN_TRUSTS",
     "fullClassName": "com.sun.jna.platform.win32.DsGetDC.DS_DOMAIN_TRUSTS"
   },
   {
-    "mapFrom": "PDOMAIN_CONTROLLER_INFO",
-    "mapTo": "PDOMAIN_CONTROLLER_INFO",
+    "from": "PDOMAIN_CONTROLLER_INFO",
+    "to": "PDOMAIN_CONTROLLER_INFO",
     "fullClassName": "com.sun.jna.platform.win32.DsGetDC.PDOMAIN_CONTROLLER_INFO"
   },
   {
-    "mapFrom": "GUID",
-    "mapTo": "GUID",
+    "from": "GUID",
+    "to": "GUID",
     "fullClassName": "com.sun.jna.platform.win32.Guid.GUID"
   },
   {
-    "mapFrom": "CLSID",
-    "mapTo": "CLSID",
+    "from": "CLSID",
+    "to": "CLSID",
     "fullClassName": "com.sun.jna.platform.win32.Guid.CLSID"
   },
   {
-    "mapFrom": "IID",
-    "mapTo": "IID",
+    "from": "IID",
+    "to": "IID",
     "fullClassName": "com.sun.jna.platform.win32.Guid.IID"
   },
   {
-    "mapFrom": "REFIID",
-    "mapTo": "REFIID",
+    "from": "REFIID",
+    "to": "REFIID",
     "fullClassName": "com.sun.jna.platform.win32.Guid.REFIID"
   },
   {
-    "mapFrom": "GROUP_INFO_0",
-    "mapTo": "GROUP_INFO_0",
+    "from": "GROUP_INFO_0",
+    "to": "GROUP_INFO_0",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.GROUP_INFO_0"
   },
   {
-    "mapFrom": "GROUP_INFO_1",
-    "mapTo": "GROUP_INFO_1",
+    "from": "GROUP_INFO_1",
+    "to": "GROUP_INFO_1",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.GROUP_INFO_1"
   },
   {
-    "mapFrom": "GROUP_INFO_2",
-    "mapTo": "GROUP_INFO_2",
+    "from": "GROUP_INFO_2",
+    "to": "GROUP_INFO_2",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.GROUP_INFO_2"
   },
   {
-    "mapFrom": "GROUP_INFO_3",
-    "mapTo": "GROUP_INFO_3",
+    "from": "GROUP_INFO_3",
+    "to": "GROUP_INFO_3",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.GROUP_INFO_3"
   },
   {
-    "mapFrom": "GROUP_USERS_INFO_0",
-    "mapTo": "GROUP_USERS_INFO_0",
+    "from": "GROUP_USERS_INFO_0",
+    "to": "GROUP_USERS_INFO_0",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.GROUP_USERS_INFO_0"
   },
   {
-    "mapFrom": "LOCALGROUP_INFO_0",
-    "mapTo": "LOCALGROUP_INFO_0",
+    "from": "LOCALGROUP_INFO_0",
+    "to": "LOCALGROUP_INFO_0",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.LOCALGROUP_INFO_0"
   },
   {
-    "mapFrom": "LOCALGROUP_INFO_1",
-    "mapTo": "LOCALGROUP_INFO_1",
+    "from": "LOCALGROUP_INFO_1",
+    "to": "LOCALGROUP_INFO_1",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.LOCALGROUP_INFO_1"
   },
   {
-    "mapFrom": "LOCALGROUP_USERS_INFO_0",
-    "mapTo": "LOCALGROUP_USERS_INFO_0",
+    "from": "LOCALGROUP_USERS_INFO_0",
+    "to": "LOCALGROUP_USERS_INFO_0",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.LOCALGROUP_USERS_INFO_0"
   },
   {
-    "mapFrom": "USER_INFO_0",
-    "mapTo": "USER_INFO_0",
+    "from": "USER_INFO_0",
+    "to": "USER_INFO_0",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.USER_INFO_0"
   },
   {
-    "mapFrom": "USER_INFO_1",
-    "mapTo": "USER_INFO_1",
+    "from": "USER_INFO_1",
+    "to": "USER_INFO_1",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.USER_INFO_1"
   },
   {
-    "mapFrom": "USER_INFO_23",
-    "mapTo": "USER_INFO_23",
+    "from": "USER_INFO_23",
+    "to": "USER_INFO_23",
     "fullClassName": "com.sun.jna.platform.win32.LMAccess.USER_INFO_23"
   },
   {
-    "mapFrom": "LSA_FOREST_TRUST_BINARY_DATA",
-    "mapTo": "LSA_FOREST_TRUST_BINARY_DATA",
+    "from": "LSA_FOREST_TRUST_BINARY_DATA",
+    "to": "LSA_FOREST_TRUST_BINARY_DATA",
     "fullClassName": "com.sun.jna.platform.win32.NTSecApi.LSA_FOREST_TRUST_BINARY_DATA"
   },
   {
-    "mapFrom": "LSA_FOREST_TRUST_DOMAIN_INFO",
-    "mapTo": "LSA_FOREST_TRUST_DOMAIN_INFO",
+    "from": "LSA_FOREST_TRUST_DOMAIN_INFO",
+    "to": "LSA_FOREST_TRUST_DOMAIN_INFO",
     "fullClassName": "com.sun.jna.platform.win32.NTSecApi.LSA_FOREST_TRUST_DOMAIN_INFO"
   },
   {
-    "mapFrom": "LSA_FOREST_TRUST_INFORMATION",
-    "mapTo": "LSA_FOREST_TRUST_INFORMATION",
+    "from": "LSA_FOREST_TRUST_INFORMATION",
+    "to": "LSA_FOREST_TRUST_INFORMATION",
     "fullClassName": "com.sun.jna.platform.win32.NTSecApi.LSA_FOREST_TRUST_INFORMATION"
   },
   {
-    "mapFrom": "LSA_FOREST_TRUST_RECORD",
-    "mapTo": "LSA_FOREST_TRUST_RECORD",
+    "from": "LSA_FOREST_TRUST_RECORD",
+    "to": "LSA_FOREST_TRUST_RECORD",
     "fullClassName": "com.sun.jna.platform.win32.NTSecApi.LSA_FOREST_TRUST_RECORD"
   },
   {
-    "mapFrom": "LSA_UNICODE_STRING",
-    "mapTo": "LSA_UNICODE_STRING",
+    "from": "LSA_UNICODE_STRING",
+    "to": "LSA_UNICODE_STRING",
     "fullClassName": "com.sun.jna.platform.win32.NTSecApi.LSA_UNICODE_STRING"
   },
   {
-    "mapFrom": "PLSA_FOREST_TRUST_INFORMATION",
-    "mapTo": "PLSA_FOREST_TRUST_INFORMATION",
+    "from": "PLSA_FOREST_TRUST_INFORMATION",
+    "to": "PLSA_FOREST_TRUST_INFORMATION",
     "fullClassName": "com.sun.jna.platform.win32.NTSecApi.PLSA_FOREST_TRUST_INFORMATION"
   },
   {
-    "mapFrom": "PLSA_FOREST_TRUST_RECORD",
-    "mapTo": "PLSA_FOREST_TRUST_RECORD",
+    "from": "PLSA_FOREST_TRUST_RECORD",
+    "to": "PLSA_FOREST_TRUST_RECORD",
     "fullClassName": "com.sun.jna.platform.win32.NTSecApi.PLSA_FOREST_TRUST_RECORD"
   },
   {
-    "mapFrom": "ARRAYDESC",
-    "mapTo": "ARRAYDESC",
+    "from": "ARRAYDESC",
+    "to": "ARRAYDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.ARRAYDESC"
   },
   {
-    "mapFrom": "CALLCONV",
-    "mapTo": "CALLCONV",
+    "from": "CALLCONV",
+    "to": "CALLCONV",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.CALLCONV"
   },
   {
-    "mapFrom": "_CURRENCY",
-    "mapTo": "_CURRENCY",
+    "from": "_CURRENCY",
+    "to": "_CURRENCY",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.CURRENCY._CURRENCY"
   },
   {
-    "mapFrom": "DATE",
-    "mapTo": "DATE",
+    "from": "DATE",
+    "to": "DATE",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.DATE"
   },
   {
-    "mapFrom": "DECIMAL",
-    "mapTo": "DECIMAL",
+    "from": "DECIMAL",
+    "to": "DECIMAL",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.DECIMAL"
   },
   {
-    "mapFrom": "DESCKIND",
-    "mapTo": "DESCKIND",
+    "from": "DESCKIND",
+    "to": "DESCKIND",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.DESCKIND"
   },
   {
-    "mapFrom": "ELEMDESC",
-    "mapTo": "ELEMDESC",
+    "from": "ELEMDESC",
+    "to": "ELEMDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.ELEMDESC"
   },
   {
-    "mapFrom": "ElemDescArg",
-    "mapTo": "ElemDescArg",
+    "from": "ElemDescArg",
+    "to": "ElemDescArg",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.ElemDescArg"
   },
   {
-    "mapFrom": "EXCEPINFO",
-    "mapTo": "EXCEPINFO",
+    "from": "EXCEPINFO",
+    "to": "EXCEPINFO",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.EXCEPINFO"
   },
   {
-    "mapFrom": "FUNCDESC",
-    "mapTo": "FUNCDESC",
+    "from": "FUNCDESC",
+    "to": "FUNCDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.FUNCDESC"
   },
   {
-    "mapFrom": "FUNCKIND",
-    "mapTo": "FUNCKIND",
+    "from": "FUNCKIND",
+    "to": "FUNCKIND",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.FUNCKIND"
   },
   {
-    "mapFrom": "IDLDESC",
-    "mapTo": "IDLDESC",
+    "from": "IDLDESC",
+    "to": "IDLDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.IDLDESC"
   },
   {
-    "mapFrom": "INVOKEKIND",
-    "mapTo": "INVOKEKIND",
+    "from": "INVOKEKIND",
+    "to": "INVOKEKIND",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.INVOKEKIND"
   },
   {
-    "mapFrom": "LIBFLAGS",
-    "mapTo": "LIBFLAGS",
+    "from": "LIBFLAGS",
+    "to": "LIBFLAGS",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.LIBFLAGS"
   },
   {
-    "mapFrom": "PARAMDESC",
-    "mapTo": "PARAMDESC",
+    "from": "PARAMDESC",
+    "to": "PARAMDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.PARAMDESC"
   },
   {
-    "mapFrom": "PARAMDESCEX",
-    "mapTo": "PARAMDESCEX",
+    "from": "PARAMDESCEX",
+    "to": "PARAMDESCEX",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.PARAMDESCEX"
   },
   {
-    "mapFrom": "SAFEARRAY",
-    "mapTo": "SAFEARRAY",
+    "from": "SAFEARRAY",
+    "to": "SAFEARRAY",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.SAFEARRAY"
   },
   {
-    "mapFrom": "SAFEARRAYBOUND",
-    "mapTo": "SAFEARRAYBOUND",
+    "from": "SAFEARRAYBOUND",
+    "to": "SAFEARRAYBOUND",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.SAFEARRAYBOUND"
   },
   {
-    "mapFrom": "ScodeArg",
-    "mapTo": "ScodeArg",
+    "from": "ScodeArg",
+    "to": "ScodeArg",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.ScodeArg"
   },
   {
-    "mapFrom": "SYSKIND",
-    "mapTo": "SYSKIND",
+    "from": "SYSKIND",
+    "to": "SYSKIND",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.SYSKIND"
   },
   {
-    "mapFrom": "TLIBATTR",
-    "mapTo": "TLIBATTR",
+    "from": "TLIBATTR",
+    "to": "TLIBATTR",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.TLIBATTR"
   },
   {
-    "mapFrom": "TYPEATTR",
-    "mapTo": "TYPEATTR",
+    "from": "TYPEATTR",
+    "to": "TYPEATTR",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.TYPEATTR"
   },
   {
-    "mapFrom": "TYPEDESC",
-    "mapTo": "TYPEDESC",
+    "from": "TYPEDESC",
+    "to": "TYPEDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.TYPEDESC"
   },
   {
-    "mapFrom": "TYPEKIND",
-    "mapTo": "TYPEKIND",
+    "from": "TYPEKIND",
+    "to": "TYPEKIND",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.TYPEKIND"
   },
   {
-    "mapFrom": "VARDESC",
-    "mapTo": "VARDESC",
+    "from": "VARDESC",
+    "to": "VARDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.VARDESC"
   },
   {
-    "mapFrom": "VARKIND",
-    "mapTo": "VARKIND",
+    "from": "VARKIND",
+    "to": "VARKIND",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.VARKIND"
   },
   {
-    "mapFrom": "DISPPARAMS",
-    "mapTo": "DISPPARAMS",
+    "from": "DISPPARAMS",
+    "to": "DISPPARAMS",
     "fullClassName": "com.sun.jna.platform.win32.OleAuto.DISPPARAMS"
   },
   {
-    "mapFrom": "SP_DEVICE_INTERFACE_DATA",
-    "mapTo": "SP_DEVICE_INTERFACE_DATA",
+    "from": "SP_DEVICE_INTERFACE_DATA",
+    "to": "SP_DEVICE_INTERFACE_DATA",
     "fullClassName": "com.sun.jna.platform.win32.SetupApi.SP_DEVICE_INTERFACE_DATA"
   },
   {
-    "mapFrom": "SP_DEVINFO_DATA",
-    "mapTo": "SP_DEVINFO_DATA",
+    "from": "SP_DEVINFO_DATA",
+    "to": "SP_DEVINFO_DATA",
     "fullClassName": "com.sun.jna.platform.win32.SetupApi.SP_DEVINFO_DATA"
   },
   {
-    "mapFrom": "APPBARDATA",
-    "mapTo": "APPBARDATA",
+    "from": "APPBARDATA",
+    "to": "APPBARDATA",
     "fullClassName": "com.sun.jna.platform.win32.ShellAPI.APPBARDATA"
   },
   {
-    "mapFrom": "SHFILEOPSTRUCT",
-    "mapTo": "SHFILEOPSTRUCT",
+    "from": "SHFILEOPSTRUCT",
+    "to": "SHFILEOPSTRUCT",
     "fullClassName": "com.sun.jna.platform.win32.ShellAPI.SHFILEOPSTRUCT"
   },
   {
-    "mapFrom": "PSecHandle",
-    "mapTo": "PSecHandle",
+    "from": "PSecHandle",
+    "to": "PSecHandle",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.PSecHandle"
   },
   {
-    "mapFrom": "PSecPkgInfo",
-    "mapTo": "PSecPkgInfo",
+    "from": "PSecPkgInfo",
+    "to": "PSecPkgInfo",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.PSecPkgInfo"
   },
   {
-    "mapFrom": "SecBuffer",
-    "mapTo": "SecBuffer",
+    "from": "SecBuffer",
+    "to": "SecBuffer",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.SecBuffer"
   },
   {
-    "mapFrom": "SecBufferDesc",
-    "mapTo": "SecBufferDesc",
+    "from": "SecBufferDesc",
+    "to": "SecBufferDesc",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.SecBufferDesc"
   },
   {
-    "mapFrom": "SecHandle",
-    "mapTo": "SecHandle",
+    "from": "SecHandle",
+    "to": "SecHandle",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.SecHandle"
   },
   {
-    "mapFrom": "CredHandle",
-    "mapTo": "CredHandle",
+    "from": "CredHandle",
+    "to": "CredHandle",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.CredHandle"
   },
   {
-    "mapFrom": "CtxtHandle",
-    "mapTo": "CtxtHandle",
+    "from": "CtxtHandle",
+    "to": "CtxtHandle",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.CtxtHandle"
   },
   {
-    "mapFrom": "SecPkgInfo",
-    "mapTo": "SecPkgInfo",
+    "from": "SecPkgInfo",
+    "to": "SecPkgInfo",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.SecPkgInfo"
   },
   {
-    "mapFrom": "SECURITY_INTEGER",
-    "mapTo": "SECURITY_INTEGER",
+    "from": "SECURITY_INTEGER",
+    "to": "SECURITY_INTEGER",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.SECURITY_INTEGER"
   },
   {
-    "mapFrom": "TimeStamp",
-    "mapTo": "TimeStamp",
+    "from": "TimeStamp",
+    "to": "TimeStamp",
     "fullClassName": "com.sun.jna.platform.win32.Sspi.TimeStamp"
   },
   {
-    "mapFrom": "FFIType",
-    "mapTo": "FFIType",
+    "from": "FFIType",
+    "to": "FFIType",
     "fullClassName": "com.sun.jna.Structure.FFIType"
   },
   {
-    "mapFrom": "PROCESSENTRY32",
-    "mapTo": "PROCESSENTRY32",
+    "from": "PROCESSENTRY32",
+    "to": "PROCESSENTRY32",
     "fullClassName": "com.sun.jna.platform.win32.Tlhelp32.PROCESSENTRY32"
   },
   {
-    "mapFrom": "UNION",
-    "mapTo": "UNION",
+    "from": "UNION",
+    "to": "UNION",
     "fullClassName": "com.sun.jna.platform.win32.NTSecApi.LSA_FOREST_TRUST_RECORD.UNION"
   },
   {
-    "mapFrom": "BINDPTR",
-    "mapTo": "BINDPTR",
+    "from": "BINDPTR",
+    "to": "BINDPTR",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.BINDPTR"
   },
   {
-    "mapFrom": "CURRENCY",
-    "mapTo": "CURRENCY",
+    "from": "CURRENCY",
+    "to": "CURRENCY",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.CURRENCY"
   },
   {
-    "mapFrom": "_DECIMAL1",
-    "mapTo": "_DECIMAL1",
+    "from": "_DECIMAL1",
+    "to": "_DECIMAL1",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.DECIMAL._DECIMAL1"
   },
   {
-    "mapFrom": "_DECIMAL2",
-    "mapTo": "_DECIMAL2",
+    "from": "_DECIMAL2",
+    "to": "_DECIMAL2",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.DECIMAL._DECIMAL2"
   },
   {
-    "mapFrom": "_ELEMDESC",
-    "mapTo": "_ELEMDESC",
+    "from": "_ELEMDESC",
+    "to": "_ELEMDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.ELEMDESC._ELEMDESC"
   },
   {
-    "mapFrom": "_TYPEDESC",
-    "mapTo": "_TYPEDESC",
+    "from": "_TYPEDESC",
+    "to": "_TYPEDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.TYPEDESC._TYPEDESC"
   },
   {
-    "mapFrom": "_VARDESC",
-    "mapTo": "_VARDESC",
+    "from": "_VARDESC",
+    "to": "_VARDESC",
     "fullClassName": "com.sun.jna.platform.win32.OaIdl.VARDESC._VARDESC"
   },
   {
-    "mapFrom": "VARIANT",
-    "mapTo": "VARIANT",
+    "from": "VARIANT",
+    "to": "VARIANT",
     "fullClassName": "com.sun.jna.platform.win32.Variant.VARIANT"
   },
   {
-    "mapFrom": "__VARIANT",
-    "mapTo": "__VARIANT",
+    "from": "__VARIANT",
+    "to": "__VARIANT",
     "fullClassName": "com.sun.jna.platform.win32.Variant.VARIANT._VARIANT.__VARIANT"
   },
   {
-    "mapFrom": "UNION",
-    "mapTo": "UNION",
+    "from": "UNION",
+    "to": "UNION",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.SYSTEM_INFO.UNION"
   },
   {
-    "mapFrom": "UNION",
-    "mapTo": "UNION",
+    "from": "UNION",
+    "to": "UNION",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.LARGE_INTEGER.UNION"
   },
   {
-    "mapFrom": "AnonymousUnionPayload",
-    "mapTo": "AnonymousUnionPayload",
+    "from": "AnonymousUnionPayload",
+    "to": "AnonymousUnionPayload",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SYSTEM_LOGICAL_PROCESSOR_INFORMATION.AnonymousUnionPayload"
   },
   {
-    "mapFrom": "UNION",
-    "mapTo": "UNION",
+    "from": "UNION",
+    "to": "UNION",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASTUNNELENDPOINT.UNION"
   },
   {
-    "mapFrom": "INPUT_UNION",
-    "mapTo": "INPUT_UNION",
+    "from": "INPUT_UNION",
+    "to": "INPUT_UNION",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.INPUT.INPUT_UNION"
   },
   {
-    "mapFrom": "_VARIANT",
-    "mapTo": "_VARIANT",
+    "from": "_VARIANT",
+    "to": "_VARIANT",
     "fullClassName": "com.sun.jna.platform.win32.Variant.VARIANT._VARIANT"
   },
   {
-    "mapFrom": "BRECORD",
-    "mapTo": "BRECORD",
+    "from": "BRECORD",
+    "to": "BRECORD",
     "fullClassName": "com.sun.jna.platform.win32.Variant.VARIANT._VARIANT.__VARIANT.BRECORD"
   },
   {
-    "mapFrom": "VariantArg",
-    "mapTo": "VariantArg",
+    "from": "VariantArg",
+    "to": "VariantArg",
     "fullClassName": "com.sun.jna.platform.win32.Variant.VariantArg"
   },
   {
-    "mapFrom": "VS_FIXEDFILEINFO",
-    "mapTo": "VS_FIXEDFILEINFO",
+    "from": "VS_FIXEDFILEINFO",
+    "to": "VS_FIXEDFILEINFO",
     "fullClassName": "com.sun.jna.platform.win32.VerRsrc.VS_FIXEDFILEINFO"
   },
   {
-    "mapFrom": "KEY_BASIC_INFORMATION",
-    "mapTo": "KEY_BASIC_INFORMATION",
+    "from": "KEY_BASIC_INFORMATION",
+    "to": "KEY_BASIC_INFORMATION",
     "fullClassName": "com.sun.jna.platform.win32.Wdm.KEY_BASIC_INFORMATION"
   },
   {
-    "mapFrom": "FILETIME",
-    "mapTo": "FILETIME",
+    "from": "FILETIME",
+    "to": "FILETIME",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.FILETIME"
   },
   {
-    "mapFrom": "MEMORYSTATUSEX",
-    "mapTo": "MEMORYSTATUSEX",
+    "from": "MEMORYSTATUSEX",
+    "to": "MEMORYSTATUSEX",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.MEMORYSTATUSEX"
   },
   {
-    "mapFrom": "OVERLAPPED",
-    "mapTo": "OVERLAPPED",
+    "from": "OVERLAPPED",
+    "to": "OVERLAPPED",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.OVERLAPPED"
   },
   {
-    "mapFrom": "PROCESS_INFORMATION",
-    "mapTo": "PROCESS_INFORMATION",
+    "from": "PROCESS_INFORMATION",
+    "to": "PROCESS_INFORMATION",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION"
   },
   {
-    "mapFrom": "SECURITY_ATTRIBUTES",
-    "mapTo": "SECURITY_ATTRIBUTES",
+    "from": "SECURITY_ATTRIBUTES",
+    "to": "SECURITY_ATTRIBUTES",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.SECURITY_ATTRIBUTES"
   },
   {
-    "mapFrom": "STARTUPINFO",
-    "mapTo": "STARTUPINFO",
+    "from": "STARTUPINFO",
+    "to": "STARTUPINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.STARTUPINFO"
   },
   {
-    "mapFrom": "SYSTEM_INFO",
-    "mapTo": "SYSTEM_INFO",
+    "from": "SYSTEM_INFO",
+    "to": "SYSTEM_INFO",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.SYSTEM_INFO"
   },
   {
-    "mapFrom": "PI",
-    "mapTo": "PI",
+    "from": "PI",
+    "to": "PI",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.SYSTEM_INFO.PI"
   },
   {
-    "mapFrom": "SYSTEMTIME",
-    "mapTo": "SYSTEMTIME",
+    "from": "SYSTEMTIME",
+    "to": "SYSTEMTIME",
     "fullClassName": "com.sun.jna.platform.win32.WinBase.SYSTEMTIME"
   },
   {
-    "mapFrom": "CRYPTPROTECT_PROMPTSTRUCT",
-    "mapTo": "CRYPTPROTECT_PROMPTSTRUCT",
+    "from": "CRYPTPROTECT_PROMPTSTRUCT",
+    "to": "CRYPTPROTECT_PROMPTSTRUCT",
     "fullClassName": "com.sun.jna.platform.win32.WinCrypt.CRYPTPROTECT_PROMPTSTRUCT"
   },
   {
-    "mapFrom": "DATA_BLOB",
-    "mapTo": "DATA_BLOB",
+    "from": "DATA_BLOB",
+    "to": "DATA_BLOB",
     "fullClassName": "com.sun.jna.platform.win32.WinCrypt.DATA_BLOB"
   },
   {
-    "mapFrom": "POINT",
-    "mapTo": "POINT",
+    "from": "POINT",
+    "to": "POINT",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.POINT"
   },
   {
-    "mapFrom": "RECT",
-    "mapTo": "RECT",
+    "from": "RECT",
+    "to": "RECT",
     "fullClassName": "com.sun.jna.platform.win32.WinDef.RECT"
   },
   {
-    "mapFrom": "BITMAPINFO",
-    "mapTo": "BITMAPINFO",
+    "from": "BITMAPINFO",
+    "to": "BITMAPINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinGDI.BITMAPINFO"
   },
   {
-    "mapFrom": "BITMAPINFOHEADER",
-    "mapTo": "BITMAPINFOHEADER",
+    "from": "BITMAPINFOHEADER",
+    "to": "BITMAPINFOHEADER",
     "fullClassName": "com.sun.jna.platform.win32.WinGDI.BITMAPINFOHEADER"
   },
   {
-    "mapFrom": "PIXELFORMATDESCRIPTOR",
-    "mapTo": "PIXELFORMATDESCRIPTOR",
+    "from": "PIXELFORMATDESCRIPTOR",
+    "to": "PIXELFORMATDESCRIPTOR",
     "fullClassName": "com.sun.jna.platform.win32.WinGDI.PIXELFORMATDESCRIPTOR"
   },
   {
-    "mapFrom": "RGBQUAD",
-    "mapTo": "RGBQUAD",
+    "from": "RGBQUAD",
+    "to": "RGBQUAD",
     "fullClassName": "com.sun.jna.platform.win32.WinGDI.RGBQUAD"
   },
   {
-    "mapFrom": "RGNDATA",
-    "mapTo": "RGNDATA",
+    "from": "RGNDATA",
+    "to": "RGNDATA",
     "fullClassName": "com.sun.jna.platform.win32.WinGDI.RGNDATA"
   },
   {
-    "mapFrom": "RGNDATAHEADER",
-    "mapTo": "RGNDATAHEADER",
+    "from": "RGNDATAHEADER",
+    "to": "RGNDATAHEADER",
     "fullClassName": "com.sun.jna.platform.win32.WinGDI.RGNDATAHEADER"
   },
   {
-    "mapFrom": "STORAGE_DEVICE_NUMBER",
-    "mapTo": "STORAGE_DEVICE_NUMBER",
+    "from": "STORAGE_DEVICE_NUMBER",
+    "to": "STORAGE_DEVICE_NUMBER",
     "fullClassName": "com.sun.jna.platform.win32.Winioctl.STORAGE_DEVICE_NUMBER"
   },
   {
-    "mapFrom": "ACEStructure",
-    "mapTo": "ACEStructure",
+    "from": "ACEStructure",
+    "to": "ACEStructure",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.ACEStructure"
   },
   {
-    "mapFrom": "ACCESS_ACEStructure",
-    "mapTo": "ACCESS_ACEStructure",
+    "from": "ACCESS_ACEStructure",
+    "to": "ACCESS_ACEStructure",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.ACCESS_ACEStructure"
   },
   {
-    "mapFrom": "ACCESS_ALLOWED_ACE",
-    "mapTo": "ACCESS_ALLOWED_ACE",
+    "from": "ACCESS_ALLOWED_ACE",
+    "to": "ACCESS_ALLOWED_ACE",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.ACCESS_ALLOWED_ACE"
   },
   {
-    "mapFrom": "ACCESS_DENIED_ACE",
-    "mapTo": "ACCESS_DENIED_ACE",
+    "from": "ACCESS_DENIED_ACE",
+    "to": "ACCESS_DENIED_ACE",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.ACCESS_DENIED_ACE"
   },
   {
-    "mapFrom": "ACE_HEADER",
-    "mapTo": "ACE_HEADER",
+    "from": "ACE_HEADER",
+    "to": "ACE_HEADER",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.ACE_HEADER"
   },
   {
-    "mapFrom": "ACL",
-    "mapTo": "ACL",
+    "from": "ACL",
+    "to": "ACL",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.ACL"
   },
   {
-    "mapFrom": "CACHE_DESCRIPTOR",
-    "mapTo": "CACHE_DESCRIPTOR",
+    "from": "CACHE_DESCRIPTOR",
+    "to": "CACHE_DESCRIPTOR",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.CACHE_DESCRIPTOR"
   },
   {
-    "mapFrom": "EVENTLOGRECORD",
-    "mapTo": "EVENTLOGRECORD",
+    "from": "EVENTLOGRECORD",
+    "to": "EVENTLOGRECORD",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.EVENTLOGRECORD"
   },
   {
-    "mapFrom": "FILE_NOTIFY_INFORMATION",
-    "mapTo": "FILE_NOTIFY_INFORMATION",
+    "from": "FILE_NOTIFY_INFORMATION",
+    "to": "FILE_NOTIFY_INFORMATION",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.FILE_NOTIFY_INFORMATION"
   },
   {
-    "mapFrom": "GENERIC_MAPPING",
-    "mapTo": "GENERIC_MAPPING",
+    "from": "GENERIC_MAPPING",
+    "to": "GENERIC_MAPPING",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.GENERIC_MAPPING"
   },
   {
-    "mapFrom": "LARGE_INTEGER",
-    "mapTo": "LARGE_INTEGER",
+    "from": "LARGE_INTEGER",
+    "to": "LARGE_INTEGER",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.LARGE_INTEGER"
   },
   {
-    "mapFrom": "LowHigh",
-    "mapTo": "LowHigh",
+    "from": "LowHigh",
+    "to": "LowHigh",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.LARGE_INTEGER.LowHigh"
   },
   {
-    "mapFrom": "LUID",
-    "mapTo": "LUID",
+    "from": "LUID",
+    "to": "LUID",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.LUID"
   },
   {
-    "mapFrom": "LUID_AND_ATTRIBUTES",
-    "mapTo": "LUID_AND_ATTRIBUTES",
+    "from": "LUID_AND_ATTRIBUTES",
+    "to": "LUID_AND_ATTRIBUTES",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.LUID_AND_ATTRIBUTES"
   },
   {
-    "mapFrom": "OSVERSIONINFO",
-    "mapTo": "OSVERSIONINFO",
+    "from": "OSVERSIONINFO",
+    "to": "OSVERSIONINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.OSVERSIONINFO"
   },
   {
-    "mapFrom": "OSVERSIONINFOEX",
-    "mapTo": "OSVERSIONINFOEX",
+    "from": "OSVERSIONINFOEX",
+    "to": "OSVERSIONINFOEX",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.OSVERSIONINFOEX"
   },
   {
-    "mapFrom": "PRIVILEGE_SET",
-    "mapTo": "PRIVILEGE_SET",
+    "from": "PRIVILEGE_SET",
+    "to": "PRIVILEGE_SET",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.PRIVILEGE_SET"
   },
   {
-    "mapFrom": "PSID",
-    "mapTo": "PSID",
+    "from": "PSID",
+    "to": "PSID",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.PSID"
   },
   {
-    "mapFrom": "SECURITY_DESCRIPTOR",
-    "mapTo": "SECURITY_DESCRIPTOR",
+    "from": "SECURITY_DESCRIPTOR",
+    "to": "SECURITY_DESCRIPTOR",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SECURITY_DESCRIPTOR"
   },
   {
-    "mapFrom": "SECURITY_DESCRIPTOR_RELATIVE",
-    "mapTo": "SECURITY_DESCRIPTOR_RELATIVE",
+    "from": "SECURITY_DESCRIPTOR_RELATIVE",
+    "to": "SECURITY_DESCRIPTOR_RELATIVE",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SECURITY_DESCRIPTOR_RELATIVE"
   },
   {
-    "mapFrom": "SID_AND_ATTRIBUTES",
-    "mapTo": "SID_AND_ATTRIBUTES",
+    "from": "SID_AND_ATTRIBUTES",
+    "to": "SID_AND_ATTRIBUTES",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SID_AND_ATTRIBUTES"
   },
   {
-    "mapFrom": "SYSTEM_LOGICAL_PROCESSOR_INFORMATION",
-    "mapTo": "SYSTEM_LOGICAL_PROCESSOR_INFORMATION",
+    "from": "SYSTEM_LOGICAL_PROCESSOR_INFORMATION",
+    "to": "SYSTEM_LOGICAL_PROCESSOR_INFORMATION",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SYSTEM_LOGICAL_PROCESSOR_INFORMATION"
   },
   {
-    "mapFrom": "AnonymousStructNumaNode",
-    "mapTo": "AnonymousStructNumaNode",
+    "from": "AnonymousStructNumaNode",
+    "to": "AnonymousStructNumaNode",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SYSTEM_LOGICAL_PROCESSOR_INFORMATION.AnonymousStructNumaNode"
   },
   {
-    "mapFrom": "AnonymousStructProcessorCore",
-    "mapTo": "AnonymousStructProcessorCore",
+    "from": "AnonymousStructProcessorCore",
+    "to": "AnonymousStructProcessorCore",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SYSTEM_LOGICAL_PROCESSOR_INFORMATION.AnonymousStructProcessorCore"
   },
   {
-    "mapFrom": "TOKEN_GROUPS",
-    "mapTo": "TOKEN_GROUPS",
+    "from": "TOKEN_GROUPS",
+    "to": "TOKEN_GROUPS",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.TOKEN_GROUPS"
   },
   {
-    "mapFrom": "TOKEN_OWNER",
-    "mapTo": "TOKEN_OWNER",
+    "from": "TOKEN_OWNER",
+    "to": "TOKEN_OWNER",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.TOKEN_OWNER"
   },
   {
-    "mapFrom": "TOKEN_PRIVILEGES",
-    "mapTo": "TOKEN_PRIVILEGES",
+    "from": "TOKEN_PRIVILEGES",
+    "to": "TOKEN_PRIVILEGES",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.TOKEN_PRIVILEGES"
   },
   {
-    "mapFrom": "TOKEN_USER",
-    "mapTo": "TOKEN_USER",
+    "from": "TOKEN_USER",
+    "to": "TOKEN_USER",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.TOKEN_USER"
   },
   {
-    "mapFrom": "RAS_STATS",
-    "mapTo": "RAS_STATS",
+    "from": "RAS_STATS",
+    "to": "RAS_STATS",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RAS_STATS"
   },
   {
-    "mapFrom": "RASCONN",
-    "mapTo": "RASCONN",
+    "from": "RASCONN",
+    "to": "RASCONN",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASCONN"
   },
   {
-    "mapFrom": "RASCONNSTATUS",
-    "mapTo": "RASCONNSTATUS",
+    "from": "RASCONNSTATUS",
+    "to": "RASCONNSTATUS",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASCONNSTATUS"
   },
   {
-    "mapFrom": "RASCREDENTIALS",
-    "mapTo": "RASCREDENTIALS",
+    "from": "RASCREDENTIALS",
+    "to": "RASCREDENTIALS",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASCREDENTIALS"
   },
   {
-    "mapFrom": "RASDEVSPECIFICINFO",
-    "mapTo": "RASDEVSPECIFICINFO",
+    "from": "RASDEVSPECIFICINFO",
+    "to": "RASDEVSPECIFICINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASDEVSPECIFICINFO"
   },
   {
-    "mapFrom": "RASDIALEXTENSIONS",
-    "mapTo": "RASDIALEXTENSIONS",
+    "from": "RASDIALEXTENSIONS",
+    "to": "RASDIALEXTENSIONS",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASDIALEXTENSIONS"
   },
   {
-    "mapFrom": "RASDIALPARAMS",
-    "mapTo": "RASDIALPARAMS",
+    "from": "RASDIALPARAMS",
+    "to": "RASDIALPARAMS",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASDIALPARAMS"
   },
   {
-    "mapFrom": "RASEAPINFO",
-    "mapTo": "RASEAPINFO",
+    "from": "RASEAPINFO",
+    "to": "RASEAPINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASEAPINFO"
   },
   {
-    "mapFrom": "RASENTRY",
-    "mapTo": "RASENTRY",
+    "from": "RASENTRY",
+    "to": "RASENTRY",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASENTRY"
   },
   {
-    "mapFrom": "RASIPADDR",
-    "mapTo": "RASIPADDR",
+    "from": "RASIPADDR",
+    "to": "RASIPADDR",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASIPADDR"
   },
   {
-    "mapFrom": "RASIPV4ADDR",
-    "mapTo": "RASIPV4ADDR",
+    "from": "RASIPV4ADDR",
+    "to": "RASIPV4ADDR",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASIPV4ADDR"
   },
   {
-    "mapFrom": "RASIPV6ADDR",
-    "mapTo": "RASIPV6ADDR",
+    "from": "RASIPV6ADDR",
+    "to": "RASIPV6ADDR",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASIPV6ADDR"
   },
   {
-    "mapFrom": "RASPPPIP",
-    "mapTo": "RASPPPIP",
+    "from": "RASPPPIP",
+    "to": "RASPPPIP",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASPPPIP"
   },
   {
-    "mapFrom": "RASTUNNELENDPOINT",
-    "mapTo": "RASTUNNELENDPOINT",
+    "from": "RASTUNNELENDPOINT",
+    "to": "RASTUNNELENDPOINT",
     "fullClassName": "com.sun.jna.platform.win32.WinRas.RASTUNNELENDPOINT"
   },
   {
-    "mapFrom": "PRINTER_INFO_1",
-    "mapTo": "PRINTER_INFO_1",
+    "from": "PRINTER_INFO_1",
+    "to": "PRINTER_INFO_1",
     "fullClassName": "com.sun.jna.platform.win32.Winspool.PRINTER_INFO_1"
   },
   {
-    "mapFrom": "PRINTER_INFO_4",
-    "mapTo": "PRINTER_INFO_4",
+    "from": "PRINTER_INFO_4",
+    "to": "PRINTER_INFO_4",
     "fullClassName": "com.sun.jna.platform.win32.Winspool.PRINTER_INFO_4"
   },
   {
-    "mapFrom": "SERVICE_STATUS",
-    "mapTo": "SERVICE_STATUS",
+    "from": "SERVICE_STATUS",
+    "to": "SERVICE_STATUS",
     "fullClassName": "com.sun.jna.platform.win32.Winsvc.SERVICE_STATUS"
   },
   {
-    "mapFrom": "SERVICE_STATUS_PROCESS",
-    "mapTo": "SERVICE_STATUS_PROCESS",
+    "from": "SERVICE_STATUS_PROCESS",
+    "to": "SERVICE_STATUS_PROCESS",
     "fullClassName": "com.sun.jna.platform.win32.Winsvc.SERVICE_STATUS_PROCESS"
   },
   {
-    "mapFrom": "BLENDFUNCTION",
-    "mapTo": "BLENDFUNCTION",
+    "from": "BLENDFUNCTION",
+    "to": "BLENDFUNCTION",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.BLENDFUNCTION"
   },
   {
-    "mapFrom": "FLASHWINFO",
-    "mapTo": "FLASHWINFO",
+    "from": "FLASHWINFO",
+    "to": "FLASHWINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.FLASHWINFO"
   },
   {
-    "mapFrom": "GUITHREADINFO",
-    "mapTo": "GUITHREADINFO",
+    "from": "GUITHREADINFO",
+    "to": "GUITHREADINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.GUITHREADINFO"
   },
   {
-    "mapFrom": "HARDWAREINPUT",
-    "mapTo": "HARDWAREINPUT",
+    "from": "HARDWAREINPUT",
+    "to": "HARDWAREINPUT",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.HARDWAREINPUT"
   },
   {
-    "mapFrom": "INPUT",
-    "mapTo": "INPUT",
+    "from": "INPUT",
+    "to": "INPUT",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.INPUT"
   },
   {
-    "mapFrom": "KBDLLHOOKSTRUCT",
-    "mapTo": "KBDLLHOOKSTRUCT",
+    "from": "KBDLLHOOKSTRUCT",
+    "to": "KBDLLHOOKSTRUCT",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.KBDLLHOOKSTRUCT"
   },
   {
-    "mapFrom": "KEYBDINPUT",
-    "mapTo": "KEYBDINPUT",
+    "from": "KEYBDINPUT",
+    "to": "KEYBDINPUT",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.KEYBDINPUT"
   },
   {
-    "mapFrom": "LASTINPUTINFO",
-    "mapTo": "LASTINPUTINFO",
+    "from": "LASTINPUTINFO",
+    "to": "LASTINPUTINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.LASTINPUTINFO"
   },
   {
-    "mapFrom": "MOUSEINPUT",
-    "mapTo": "MOUSEINPUT",
+    "from": "MOUSEINPUT",
+    "to": "MOUSEINPUT",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.MOUSEINPUT"
   },
   {
-    "mapFrom": "MSG",
-    "mapTo": "MSG",
+    "from": "MSG",
+    "to": "MSG",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.MSG"
   },
   {
-    "mapFrom": "SIZE",
-    "mapTo": "SIZE",
+    "from": "SIZE",
+    "to": "SIZE",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.SIZE"
   },
   {
-    "mapFrom": "WINDOWINFO",
-    "mapTo": "WINDOWINFO",
+    "from": "WINDOWINFO",
+    "to": "WINDOWINFO",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.WINDOWINFO"
   },
   {
-    "mapFrom": "WNDCLASSEX",
-    "mapTo": "WNDCLASSEX",
+    "from": "WNDCLASSEX",
+    "to": "WNDCLASSEX",
     "fullClassName": "com.sun.jna.platform.win32.WinUser.WNDCLASSEX"
   },
   {
-    "mapFrom": "KEY_INFORMATION_CLASS",
-    "mapTo": "KEY_INFORMATION_CLASS",
+    "from": "KEY_INFORMATION_CLASS",
+    "to": "KEY_INFORMATION_CLASS",
     "fullClassName": "com.sun.jna.platform.win32.Wdm.KEY_INFORMATION_CLASS"
   },
   {
-    "mapFrom": "PROCESSOR_CACHE_TYPE",
-    "mapTo": "PROCESSOR_CACHE_TYPE",
+    "from": "PROCESSOR_CACHE_TYPE",
+    "to": "PROCESSOR_CACHE_TYPE",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.PROCESSOR_CACHE_TYPE"
   },
   {
-    "mapFrom": "SECURITY_IMPERSONATION_LEVEL",
-    "mapTo": "SECURITY_IMPERSONATION_LEVEL",
+    "from": "SECURITY_IMPERSONATION_LEVEL",
+    "to": "SECURITY_IMPERSONATION_LEVEL",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SECURITY_IMPERSONATION_LEVEL"
   },
   {
-    "mapFrom": "SID_NAME_USE",
-    "mapTo": "SID_NAME_USE",
+    "from": "SID_NAME_USE",
+    "to": "SID_NAME_USE",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.SID_NAME_USE"
   },
   {
-    "mapFrom": "TOKEN_INFORMATION_CLASS",
-    "mapTo": "TOKEN_INFORMATION_CLASS",
+    "from": "TOKEN_INFORMATION_CLASS",
+    "to": "TOKEN_INFORMATION_CLASS",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.TOKEN_INFORMATION_CLASS"
   },
   {
-    "mapFrom": "TOKEN_TYPE",
-    "mapTo": "TOKEN_TYPE",
+    "from": "TOKEN_TYPE",
+    "to": "TOKEN_TYPE",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.TOKEN_TYPE"
   },
   {
-    "mapFrom": "WELL_KNOWN_SID_TYPE",
-    "mapTo": "WELL_KNOWN_SID_TYPE",
+    "from": "WELL_KNOWN_SID_TYPE",
+    "to": "WELL_KNOWN_SID_TYPE",
     "fullClassName": "com.sun.jna.platform.win32.WinNT.WELL_KNOWN_SID_TYPE"
   },
   {
-    "mapFrom": "SC_STATUS_TYPE",
-    "mapTo": "SC_STATUS_TYPE",
+    "from": "SC_STATUS_TYPE",
+    "to": "SC_STATUS_TYPE",
     "fullClassName": "com.sun.jna.platform.win32.Winsvc.SC_STATUS_TYPE"
   },
   {
-    "mapFrom": "WString",
-    "mapTo": "WString",
+    "from": "WString",
+    "to": "WString",
     "fullClassName": "com.sun.jna.WString"
   },
   {
-    "mapFrom": "GUID",
-    "mapTo": "GUID",
+    "from": "GUID",
+    "to": "GUID",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Guid.GUID"
   },
   {
-    "mapFrom": "CLSID",
-    "mapTo": "CLSID",
+    "from": "CLSID",
+    "to": "CLSID",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Guid.CLSID"
   },
   {
-    "mapFrom": "ByReference",
-    "mapTo": "ByReference",
+    "from": "ByReference",
+    "to": "ByReference",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Guid.CLSID.ByReference"
   },
   {
-    "mapFrom": "IID",
-    "mapTo": "IID",
+    "from": "IID",
+    "to": "IID",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Guid.IID"
   },
   {
-    "mapFrom": "REFIID",
-    "mapTo": "REFIID",
+    "from": "REFIID",
+    "to": "REFIID",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Guid.REFIID"
   },
   {
-    "mapFrom": "_startupinfo",
-    "mapTo": "_startupinfo",
+    "from": "_startupinfo",
+    "to": "_startupinfo",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo"
   },
   {
-    "mapFrom": "SHFILEINFO",
-    "mapTo": "SHFILEINFO",
+    "from": "SHFILEINFO",
+    "to": "SHFILEINFO",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.ShellApi.SHFILEINFO"
   },
   {
-    "mapFrom": "FILE",
-    "mapTo": "FILE",
+    "from": "FILE",
+    "to": "FILE",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Stdio.FILE"
   },
   {
-    "mapFrom": "FILE2",
-    "mapTo": "FILE2",
+    "from": "FILE2",
+    "to": "FILE2",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2"
   },
   {
-    "mapFrom": "MEMORYSTATUS",
-    "mapTo": "MEMORYSTATUS",
+    "from": "MEMORYSTATUS",
+    "to": "MEMORYSTATUS",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinBase.MEMORYSTATUS"
   },
   {
-    "mapFrom": "OFSTRUCT",
-    "mapTo": "OFSTRUCT",
+    "from": "OFSTRUCT",
+    "to": "OFSTRUCT",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinBase.OFSTRUCT"
   },
   {
-    "mapFrom": "STARTUPINFO",
-    "mapTo": "STARTUPINFO",
+    "from": "STARTUPINFO",
+    "to": "STARTUPINFO",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinBase.STARTUPINFO"
   },
   {
-    "mapFrom": "THREADENTRY32",
-    "mapTo": "THREADENTRY32",
+    "from": "THREADENTRY32",
+    "to": "THREADENTRY32",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinBase.THREADENTRY32"
   },
   {
-    "mapFrom": "WIN32_FIND_DATA",
-    "mapTo": "WIN32_FIND_DATA",
+    "from": "WIN32_FIND_DATA",
+    "to": "WIN32_FIND_DATA",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA"
   },
   {
-    "mapFrom": "LOGPALETTE",
-    "mapTo": "LOGPALETTE",
+    "from": "LOGPALETTE",
+    "to": "LOGPALETTE",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Wingdi.LOGPALETTE"
   },
   {
-    "mapFrom": "PALETTEENTRY",
-    "mapTo": "PALETTEENTRY",
+    "from": "PALETTEENTRY",
+    "to": "PALETTEENTRY",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Wingdi.PALETTEENTRY"
   },
   {
-    "mapFrom": "CPINFOEX",
-    "mapTo": "CPINFOEX",
+    "from": "CPINFOEX",
+    "to": "CPINFOEX",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Winnls.CPINFOEX"
   },
   {
-    "mapFrom": "ACL_REVISION_INFORMATION",
-    "mapTo": "ACL_REVISION_INFORMATION",
+    "from": "ACL_REVISION_INFORMATION",
+    "to": "ACL_REVISION_INFORMATION",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.ACL_REVISION_INFORMATION"
   },
   {
-    "mapFrom": "ACL_SIZE_INFORMATION",
-    "mapTo": "ACL_SIZE_INFORMATION",
+    "from": "ACL_SIZE_INFORMATION",
+    "to": "ACL_SIZE_INFORMATION",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.ACL_SIZE_INFORMATION"
   },
   {
-    "mapFrom": "CONTEXT",
-    "mapTo": "CONTEXT",
+    "from": "CONTEXT",
+    "to": "CONTEXT",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.CONTEXT"
   },
   {
-    "mapFrom": "CPINFO",
-    "mapTo": "CPINFO",
+    "from": "CPINFO",
+    "to": "CPINFO",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.CPINFO"
   },
   {
-    "mapFrom": "EXCEPTION_RECORD",
-    "mapTo": "EXCEPTION_RECORD",
+    "from": "EXCEPTION_RECORD",
+    "to": "EXCEPTION_RECORD",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.EXCEPTION_RECORD"
   },
   {
-    "mapFrom": "FLOATING_SAVE_AREA",
-    "mapTo": "FLOATING_SAVE_AREA",
+    "from": "FLOATING_SAVE_AREA",
+    "to": "FLOATING_SAVE_AREA",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.FLOATING_SAVE_AREA"
   },
   {
-    "mapFrom": "LIST_ENTRY",
-    "mapTo": "LIST_ENTRY",
+    "from": "LIST_ENTRY",
+    "to": "LIST_ENTRY",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.LIST_ENTRY"
   },
   {
-    "mapFrom": "MEMORY_BASIC_INFORMATION",
-    "mapTo": "MEMORY_BASIC_INFORMATION",
+    "from": "MEMORY_BASIC_INFORMATION",
+    "to": "MEMORY_BASIC_INFORMATION",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.MEMORY_BASIC_INFORMATION"
   },
   {
-    "mapFrom": "PEB",
-    "mapTo": "PEB",
+    "from": "PEB",
+    "to": "PEB",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.PEB"
   },
   {
-    "mapFrom": "PROCESS_BASIC_INFORMATION",
-    "mapTo": "PROCESS_BASIC_INFORMATION",
+    "from": "PROCESS_BASIC_INFORMATION",
+    "to": "PROCESS_BASIC_INFORMATION",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.PROCESS_BASIC_INFORMATION"
   },
   {
-    "mapFrom": "PRTL_CRITICAL_SECTION",
-    "mapTo": "PRTL_CRITICAL_SECTION",
+    "from": "PRTL_CRITICAL_SECTION",
+    "to": "PRTL_CRITICAL_SECTION",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.PRTL_CRITICAL_SECTION"
   },
   {
-    "mapFrom": "RTL_CRITICAL_SECTION",
-    "mapTo": "RTL_CRITICAL_SECTION",
+    "from": "RTL_CRITICAL_SECTION",
+    "to": "RTL_CRITICAL_SECTION",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION"
   },
   {
-    "mapFrom": "RTL_CRITICAL_SECTION_DEBUG",
-    "mapTo": "RTL_CRITICAL_SECTION_DEBUG",
+    "from": "RTL_CRITICAL_SECTION_DEBUG",
+    "to": "RTL_CRITICAL_SECTION_DEBUG",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.RTL_CRITICAL_SECTION_DEBUG"
   },
   {
-    "mapFrom": "UNICODE_STRING",
-    "mapTo": "UNICODE_STRING",
+    "from": "UNICODE_STRING",
+    "to": "UNICODE_STRING",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinNT.UNICODE_STRING"
   },
   {
-    "mapFrom": "hostent",
-    "mapTo": "hostent",
+    "from": "hostent",
+    "to": "hostent",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinSock.hostent"
   },
   {
-    "mapFrom": "SOCKADDR",
-    "mapTo": "SOCKADDR",
+    "from": "SOCKADDR",
+    "to": "SOCKADDR",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinSock.SOCKADDR"
   },
   {
-    "mapFrom": "SOCKADDR_IN",
-    "mapTo": "SOCKADDR_IN",
+    "from": "SOCKADDR_IN",
+    "to": "SOCKADDR_IN",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinSock.SOCKADDR_IN"
   },
   {
-    "mapFrom": "WSADATA",
-    "mapTo": "WSADATA",
+    "from": "WSADATA",
+    "to": "WSADATA",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinSock.WSADATA"
   },
   {
-    "mapFrom": "OBJECT_ATTRIBUTES",
-    "mapTo": "OBJECT_ATTRIBUTES",
+    "from": "OBJECT_ATTRIBUTES",
+    "to": "OBJECT_ATTRIBUTES",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Winternl.OBJECT_ATTRIBUTES"
   },
   {
-    "mapFrom": "UNICODE_STRING",
-    "mapTo": "UNICODE_STRING",
+    "from": "UNICODE_STRING",
+    "to": "UNICODE_STRING",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.Winternl.UNICODE_STRING"
   },
   {
-    "mapFrom": "COORD",
-    "mapTo": "COORD",
+    "from": "COORD",
+    "to": "COORD",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinUser.COORD"
   },
   {
-    "mapFrom": "DLGTEMPLATE",
-    "mapTo": "DLGTEMPLATE",
+    "from": "DLGTEMPLATE",
+    "to": "DLGTEMPLATE",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinUser.DLGTEMPLATE"
   },
   {
-    "mapFrom": "MENUITEMINFO",
-    "mapTo": "MENUITEMINFO",
+    "from": "MENUITEMINFO",
+    "to": "MENUITEMINFO",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinUser.MENUITEMINFO"
   },
   {
-    "mapFrom": "MSG",
-    "mapTo": "MSG",
+    "from": "MSG",
+    "to": "MSG",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinUser.MSG"
   },
   {
-    "mapFrom": "TITLEBARINFO",
-    "mapTo": "TITLEBARINFO",
+    "from": "TITLEBARINFO",
+    "to": "TITLEBARINFO",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinUser.TITLEBARINFO"
   },
   {
-    "mapFrom": "WNDCLASS",
-    "mapTo": "WNDCLASS",
+    "from": "WNDCLASS",
+    "to": "WNDCLASS",
     "fullClassName": "v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS"
+  },
+  {
+    "from": "char",
+    "to": "byte"
+  },
+  {
+    "from": "wchar_t",
+    "to": "char"
+  },
+  {
+    "from": "short",
+    "to": "short"
+  },
+  {
+    "from": "int",
+    "to": "int"
+  },
+  {
+    "from": "bool",
+    "to": "boolean"
+  },
+  {
+    "from": "long long",
+    "to": "long"
+  },
+  {
+    "from": "__int64",
+    "to": "long"
+  },
+  {
+    "from": "float",
+    "to": "float"
+  },
+  {
+    "from": "double",
+    "to": "double"
+  },
+  {
+    "from": "WORD",
+    "to": "short"
+  },
+  {
+    "from": "DWORD",
+    "to": "int"
+  },
+  {
+    "from": "BOOL",
+    "to": "boolean"
+  },
+  {
+    "from": "CHAR",
+    "to": "byte"
+  },
+  {
+    "from": "BYTE",
+    "to": "byte"
+  },
+  {
+    "from": "SHORT",
+    "to": "short"
+  },
+  {
+    "from": "LONG",
+    "to": "NativeLong",
+    "fullClassName": "com.sun.jna.ptr.NativeLong"
+  },
+  {
+    "from": "LPCTSTR",
+    "to": "String"
+  },
+  {
+    "from": "LPTSTR",
+    "to": "String"
+  },
+  {
+    "from": "LPSTR",
+    "to": "String"
+  },
+  {
+    "from": "LPCTCH",
+    "to": "char[]"
+  },
+  {
+    "from": "PCTCH",
+    "to": "char[]"
+  },
+  {
+    "from": "LPTCH",
+    "to": "char[]"
   }
 ]

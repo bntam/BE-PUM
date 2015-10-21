@@ -1,21 +1,19 @@
 package v2.org.analysis.apihandle.winapi.structures;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.WString;
-import com.sun.jna.platform.win32.BaseTSD;
-import com.sun.jna.platform.win32.WinDef;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.platform.win32.WinNT;
 import com.sun.jna.win32.StdCallLibrary;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 
  * @author Yen Nguyen
  */
-public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
+public interface WinNTn extends StdCallLibrary, WinNT {
 	public static final int EXCEPTION_MAXIMUM_PARAMETERS = 15;
 	public static final int MAXIMUM_SUPPORTED_EXTENSION = 512;
 
@@ -26,6 +24,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public HANDLE LockSemaphore;
 		public ULONG_PTR SpinCount; // force size on 64-bit systems when packed
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "LockCount", "RecursionCount", "OwningThread", "LockSemaphore",
 					"SpinCount" });
@@ -36,6 +35,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public LPVOID Flink;
 		public LPVOID Blink;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "Flink", "Blink" });
 		}
@@ -52,6 +52,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public WORD CreatorBackTraceIndexHigh;
 		public WORD SpareWORD;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "Type", "CreatorBackTraceIndex", "CriticalSection", "ProcessLocksList",
 					"EntryCount", "ContentionCount", "Flags", "CreatorBackTraceIndexHigh", "SpareWORD" });
@@ -66,6 +67,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public HANDLE LockSemaphore;
 		public ULONG_PTR SpinCount; // force size on 64-bit systems when packed
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "DebugInfo", "LockCount", "RecursionCount", "OwningThread",
 					"LockSemaphore", "SpinCount" });
@@ -94,6 +96,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public BYTE DefaultChar[] = new BYTE[2]; // default character
 		public BYTE LeadByte[] = new BYTE[12]; // lead byte ranges
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "MaxCharSize", "DefaultChar", "LeadByte" });
 		}
@@ -126,6 +129,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public DWORD Protect;
 		public DWORD Type;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "BaseAddress", "AllocationBase", "AllocationProtect", "RegionSize",
 					"State", "Protect", "Type" });
@@ -158,6 +162,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public ULONG_PTR UniqueProcessId;
 		public ULONG_PTR InheritedFromUniqueProcessId;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "ExitStatus", "PebBaseAddress", "AffinityMask", "BasePriority",
 					"UniqueProcessId", "InheritedFromUniqueProcessId" });
@@ -196,6 +201,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public PVOID Reserved7[] = new PVOID[1];
 		public ULONG SessionId;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "Reserved1", "BeingDebugged", "Reserved2", "Reserved3", "Ldr",
 					"ProcessParameters", "Reserved4", "Reserved5", "PostProcessInitRoutine", "Reserved6", "Reserved7",
@@ -226,6 +232,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public USHORT MaximumLength;
 		public WString Buffer;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "Length", "MaximumLength", "Buffer" });
 		}
@@ -260,6 +267,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public BYTE RegisterArea[] = new BYTE[80];
 		public DWORD Cr0NpxState;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "ControlWord", "StatusWord", "TagWord", "ErrorOffset", "ErrorSelector",
 					"DataOffset", "DataSelector", "RegisterArea", "Cr0NpxState" });
@@ -367,6 +375,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 
 		BYTE ExtendedRegisters[] = new BYTE[MAXIMUM_SUPPORTED_EXTENSION];
 
+		@Override
 		protected List<String> getFieldOrder() {
 
 			return Arrays.asList(new String[] { "ContextFlags", "Dr0", "Dr1", "Dr2", "Dr3", "Dr6", "Dr7", "FloatSave",
@@ -401,6 +410,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public DWORD NumberParameters;
 		public ULONG_PTR ExceptionInformation[] = new ULONG_PTR[EXCEPTION_MAXIMUM_PARAMETERS];
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "ExceptionCode", "ExceptionFlags", "ExceptionRecord",
 					"ExceptionAddress", "NumberParameters", "ExceptionInformation" });
@@ -428,6 +438,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 	public static class ACL_REVISION_INFORMATION extends Structure {
 		public DWORD AclRevision;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "AclRevision" });
 		}
@@ -456,6 +467,7 @@ public interface WinNT extends StdCallLibrary, WinDef, BaseTSD {
 		public DWORD AclBytesInUse;
 		public DWORD AclBytesFree;
 
+		@Override
 		protected List<String> getFieldOrder() {
 			return Arrays.asList(new String[] { "AceCount", "AclBytesInUse", "AclBytesFree" });
 		}

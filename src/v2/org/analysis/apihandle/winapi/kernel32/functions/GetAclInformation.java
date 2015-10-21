@@ -17,7 +17,7 @@ import com.sun.jna.platform.win32.WinNT.ACL;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.apihandle.winapi.structures.WinNT.*;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.*;
 import v2.org.analysis.value.LongValue;
 
 /**

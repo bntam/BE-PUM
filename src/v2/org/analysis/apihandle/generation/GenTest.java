@@ -7,6 +7,10 @@
  */
 package v2.org.analysis.apihandle.generation;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +23,10 @@ import org.apache.velocity.app.Velocity;
 
 import v2.org.analysis.apihandle.generation.stub.Function;
 import v2.org.analysis.apihandle.generation.stub.ParamsList;
+import v2.org.analysis.apihandle.generation.stub.Type;
 import v2.org.analysis.apihandle.generation.stub.Variable;
+import v2.org.analysis.apihandle.winapi.structures.GeneratedStruct;
+import v2.org.analysis.util.SystemUtil;
 
 /**
  * @author Yen Nguyen
@@ -36,6 +43,12 @@ public class GenTest {
 		p.setProperty("file.resource.loader.path", "data/templates/");
 		Velocity.init(p);
 
+//		System.out.println(GenStruct());
+		
+		System.out.println(TypeMap.getInstance().getTypeMapping("WORD"));
+	}
+
+	static String GenAPI() {
 		StringWriter w = new StringWriter();
 		Template template = null;
 
@@ -59,9 +72,9 @@ public class GenTest {
 
 		VelocityContext paramContext = new VelocityContext();
 		ParamsList paramsList = new ParamsList();
-		
+
 		Variable v1 = new Variable(
-				"int",
+				new Type("int"),
 				"nBufferLength",
 				"The length of the buffer for the current directory string, in TCHARs. The buffer length must include room for a terminating null character.");
 		paramContext.put("v", v1);
@@ -72,13 +85,13 @@ public class GenTest {
 
 		paramsList
 				.add(new Variable(
-						"char[]",
+						new Type("char[]"),
 						"lpBuffer",
 						"A pointer to the buffer that receives the current directory string. This null-terminated string specifies the absolute path to the current directory. To determine the required buffer size, set this parameter to NULL and the nBufferLength parameter to 0."));
 		func.paramsList = paramsList;
 
 		func.ret = new Variable(
-				"DWORD",
+				new Type("DWORD"),
 				null,
 				"If the function succeeds, the return value specifies the number of characters that are written to the buffer, not including the terminating null character.");
 
@@ -86,10 +99,66 @@ public class GenTest {
 
 		/* lets render a template */
 
-		template = TemplateUtil.getTemplate("NewAPIDeclare.vm");
+		// template = TemplateUtil.getTemplate("NewAPIDeclare.vm");
+		template = TemplateUtil.getTemplate("StructDeclaration.vm");
 		template.merge(context, w);
 
-		System.out.println(w.toString());
+		return w.toString();
 	}
 
+	static String GenStruct() {
+		String newStruct = null;
+		StringWriter w = new StringWriter();
+		Template template = null;
+
+		/* lets make a Context and put data into it */
+
+		VelocityContext context = new VelocityContext();
+
+		Function func = new Function();
+		func.funcName = "IsValidAcl";
+
+		ParamsList paramsList = new ParamsList();
+		paramsList.add(new Variable(new Type("int"), "nBufferLength"));
+		paramsList.add(new Variable(new Type("char[]"), "lpBuffer"));
+		func.paramsList = paramsList;
+
+		context.put("func", func);
+
+		/* lets render a template */
+		template = TemplateUtil.getTemplate("StructDeclaration.vm");
+		template.merge(context, w);
+
+		// Get the declaration string for current structure
+		newStruct = w.toString();
+
+		// Reset buffer
+		w.getBuffer().setLength(0);
+
+		context.put("newStruct", newStruct);
+
+		String path = "src/" + GeneratedStruct.class.getPackage().getName().replace(".", "/")
+				+ "/GeneratedStruct.java";
+		File source = new File(path);
+
+		try {
+			SystemUtil.copyFileUsingStream(source, 
+					new File(Velocity.getProperty("file.resource.loader.path")
+					.toString() + "GeneratedStruct.vm"));
+
+			Velocity.mergeTemplate("GeneratedStruct.vm", "UTF-8", context, w);
+			
+			FileWriter fileWriter = new FileWriter(source.getAbsoluteFile());
+			@SuppressWarnings("resource")
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			
+			bufferedWriter.write(w.toString());
+			bufferedWriter.close();
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return w.toString();
+	}
 }
