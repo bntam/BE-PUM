@@ -26,11 +26,13 @@ public class PackerTechniques {
 	private boolean code_layout;
 	private boolean anti_rewriting;
 	
-	private static final boolean USING_COUNT = false;
+	private boolean USING_COUNT;
 	private static PackerCounter pCounter;
 	
 	public PackerTechniques ()
 	{
+		USING_COUNT			= false;
+		
 		pPattern 			= new PackerPatterns();
 		
 		packing_unpacking 	= false; 
@@ -60,7 +62,7 @@ public class PackerTechniques {
 			this.checkingState();
 			// BEGIN TO STATISTIC
 			pCounter.setCountingState(curState, program);
-			pCounter.Execute(USING_COUNT);
+			pCounter.Execute(this.USING_COUNT);
 		}
 	}
 	
@@ -69,113 +71,129 @@ public class PackerTechniques {
 		// Check packing/unpacking
 		if (!this.packing_unpacking)
 		{
-			if (pPattern.PackAndUnpack()) 	
+			if (pPattern.PackAndUnpack()) {
 				isPackingUnpacking();
+			}
 		}
 		
 		// Check SMC
 		if (!this.packing_unpacking)
 		{
-			if (pPattern.Overwriting()) 	
+			if (pPattern.Overwriting()) {
 				isOverwriting();
+			}
 		}
 		
 		// Check indirect - jump
 		if (!this.indirect_jump)
 		{
-			if (pPattern.IndirectJump())	
+			if (pPattern.IndirectJump()) {
 				isIndirectJump();
+			}
 		}
 		
 		// Check obfuscated constant
 		if (!this.obfuscated_const)
 		{
-			if (pPattern.ObfuscatedConst())	
+			if (pPattern.ObfuscatedConst()) {
 				isObfuscatedConst();
+			}
 		}
 		
 		// Check overlapping function
 		if (!this.overlapping_func)
 		{
-			if (pPattern.OverlappingFunction())
+			if (pPattern.OverlappingFunction()) {
 				isOverlappingFunc();
+			}
 		}
 		
 		// Check overlapping block
 		if (!this.overlapping_block)
 		{
-			if (pPattern.OverlappingBlock())
+			if (pPattern.OverlappingBlock()) {
 				isOverlappingBlock();
+			}
 		}
 		
 		// Check code chunk
 		if (!this.code_chunking)
 		{
-			if (pPattern.CodeChunking())	
+			if (pPattern.CodeChunking()) {
 				isCodeChunking();
+			}
 		}
 		
 		// Check stolen bytes
 		if (!this.stolen_bytes)
 		{
-			if (pPattern.StolenBytes())		
+			if (pPattern.StolenBytes()) {
 				isStolenBytes();
+			}
 		}
 		
 		// Check checksum
 		if (!this.checksumming)
 		{
-			if (pPattern.Checksumming())	
+			if (pPattern.Checksumming()) {
 				isChecksumming();
+			}
 		}
 		
 		// Check SEH
 		if (!this.SEHs)
 		{
-			if (pPattern.SEHs())			
+			if (pPattern.SEHs()) {
 				isSEH();
+			}
 		}
 		
 		// Check 2 special APIs
 		if (!this.two_APIs)
 		{
-			if (pPattern.TwoAPIs())			
+			if (pPattern.TwoAPIs()) {
 				isTwoAPIs();
+			}
 		}
 		
 		// Check anti-debugging
 		if (!this.anti_debugging)
 		{
-			if (pPattern.AntiDebugging())	
+			if (pPattern.AntiDebugging()) {
 				isAntiDebugging();
+			}
 		}
 		
 		// Check timing-check
 		if (!this.timing_check)
 		{
-			if (pPattern.TimingCheck())
+			if (pPattern.TimingCheck()) {
 				isTimingCheck();
+			}
 		}
 		
 		// Check dynamic code
 		if (!this.dynamic_code)
 		{
-			if (this.packing_unpacking || this.overwriting)
+			if (this.packing_unpacking || this.overwriting) {
 				isDynamicCode();
+			}
 		}
 		
 		// Check code layout
 		if (!this.code_layout)
 		{
-			if (this.overlapping_func || this.overlapping_block || this.code_chunking)
+			if (this.overlapping_func || this.overlapping_block || this.code_chunking) {
 				isCodeLayout();
+			}
 		}
 		
 		// Check anti rewriting
 		if (!this.anti_rewriting)
 		{
-			if (this.stolen_bytes || this.checksumming)
+			if (this.stolen_bytes || this.checksumming) {
 				isAntiRewriting();
+			}
 		}
 		
 	}
@@ -283,8 +301,13 @@ public class PackerTechniques {
 		return techniques;
 	}
 	
-	public void getTechniquesStatiscial ()
+	public String getTechniquesStatiscial ()
 	{
-		pCounter.getInfo();
+		return pCounter.getInfo();
+	}
+	
+	public void setCount (boolean isCounting)
+	{
+		this.USING_COUNT = isCounting;
 	}
 }

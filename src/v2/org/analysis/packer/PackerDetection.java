@@ -30,6 +30,7 @@ public class PackerDetection {
 	
 	private String curDetectionFile = "";
 	private String backupDetectionState = "";
+	private String backupDetectionCountState = "";
 	
 	public PackerDetection ()
 	{
@@ -41,13 +42,11 @@ public class PackerDetection {
 	{
 		String packedby = "File is packed by ";
 		String pTech = techniques.getDetailTechniques();
-		packedby += this.isPackedWith(PackerConstants.UPX, pTech)		? "UPX ": "";
-		packedby += this.isPackedWith(PackerConstants.FSG, pTech)		? "FSG ": "";
-		packedby += this.isPackedWith(PackerConstants.PECOMPACT, pTech) ? "PECOMPACT ": "";
-		packedby += this.isPackedWith(PackerConstants.NPACK, pTech) 	? "NPACK ": "";
-		packedby += this.isPackedWith(PackerConstants.PETITE, pTech) 	? "PETITE ": "";
-		packedby += this.isPackedWith(PackerConstants.YODA, pTech)		? "YODA ": "";
-		packedby += this.isPackedWith(PackerConstants.ASPACK, pTech) 	? "ASPACK ": "";
+		for (PackerSign pSign: PackerConstants.pTechSign)
+		{
+			packedby += this.isPackedWith(pSign.getPackerTechSign(), pTech) ? pSign.getPackerName(): "";
+			packedby += " ";
+		}
 		
 		if (packedby.equals("File is packed by "))
 		{
@@ -60,7 +59,6 @@ public class PackerDetection {
 			this.detectViaBEPUM = pTech + "-" 
 					+ packedby.substring(new String("File is packed by ").length());
 		}
-		System.out.println(detectViaBEPUM);
 	}
 	
 	public PackerTechniques getTechniques ()
@@ -88,11 +86,13 @@ public class PackerDetection {
 			e.printStackTrace();
 		}
 		
-		for (PackerHeader hP: PackerConstants.hPacker)
+		ArrayList<PackerHeader> pHeader = PackerConstants.GetData();
+		
+		for (PackerHeader hP: pHeader)
 		{
-			if (detectWithPacker(dataString, hP.getPackerSignature(), byteEP))
+			if (detectWithPacker(dataString, hP, byteEP))
 			{
-				isPackedBy(hP.getPackerName());
+				isPackedBy(hP.getPackerName() + " - version: " + hP.getPackerVersion());
 				return;
 			}
 		}
@@ -106,14 +106,14 @@ public class PackerDetection {
 		this.detectViaHeader = packedby.substring(new String("File is packed by ").length());
 	}
 	
-	private boolean detectWithPacker (String[] dataString, String[] hPacker, String byteEP)
+	private boolean detectWithPacker (String[] dataString, PackerHeader hPacker, String byteEP)
 	{
-		if (dataString == null)
+		if (dataString == null) {
 			return false;
+		}
 		
-		boolean fromEntryPoint = Boolean.parseBoolean(hPacker[hPacker.length - 1]);
 		int beginTracing = 0;
-		if (fromEntryPoint)
+		if (hPacker.isEntryPoint())
 		{
 			for (int i = 0; i < dataString.length; i++)
 			{
@@ -126,21 +126,25 @@ public class PackerDetection {
 		}
 		
 		boolean trace = true;
+		String[] sArr = hPacker.getPackerSignature();
 		// Begin tracing
 		for (int i = beginTracing; i < dataString.length && trace; i++)
-		{
-			if (dataString[i].equals(hPacker[0].toLowerCase()) 
-				&& (dataString[i+1].equals(hPacker[1].toLowerCase())
-				|| hPacker[1].equals("??")))
+		{	
+			if (dataString[i].equals(sArr[0].toLowerCase()) 
+				&& (dataString[i+1].equals(sArr[1].toLowerCase())
+				|| sArr[1].equals("??")))
 			{
-				for (int j = 0; j < hPacker.length - 1; j++)
+				for (int j = 0; j < sArr.length; j++)
 				{
-					if (!hPacker[j].toLowerCase().equals(dataString[i + j]) 
-						&& !hPacker[j].equals("??"))
+					if (i + j < dataString.length)
 					{
-						break;
+						if (!sArr[j].toLowerCase().equals(dataString[i + j]) 
+							&& !sArr[j].equals("??"))
+						{
+							break;
+						}
 					}
-					if (j == hPacker.length - 2)
+					if (j == sArr.length - 1)
 					{
 						trace = false;
 					}
@@ -169,52 +173,14 @@ public class PackerDetection {
 	public void setToLog (Program prog)
 	{
 		FileProcess packerResultFile = prog.getPackerResultFile();
+		String packerResultFileName = Program.getPackerResultFileName();
+		String content = this.backupDetectionState;
+		this.writeFileUpdate(packerResultFile, packerResultFileName, content);
 		
-		ArrayList<String> resultString = new ArrayList<String>();
-		
-		try {
-			BufferedReader input = new BufferedReader(
-					new FileReader(Program.getPackerResultFileName()));
-
-		    try {
-		    	String lastLine = "", curLine = "";
-		    	
-				while ((curLine = input.readLine()) != null) {
-					resultString.add(curLine);
-				    lastLine = curLine;
-				}
-				
-				input.close();
-				
-				String curFile = this.curDetectionFile;
-				
-				if (!lastLine.contains(curFile))
-				{
-					packerResultFile.appendFile(this.backupDetectionState);
-				}
-				else 
-				{
-					resultString.remove(resultString.size() - 1);
-					resultString.add(this.backupDetectionState);
-					PrintWriter pResFileTemp = new PrintWriter(
-							Program.getPackerResultFileName());
-					pResFileTemp.close();
-					
-					PrintWriter pResFile = new PrintWriter(
-							Program.getPackerResultFileName());
-					for (String line : resultString)
-				        pResFile.println(line);
-				    pResFile.close();
-				}
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		FileProcess packerResultCountFile = prog.getPackerResultCountFile();
+		String packerResultCountFileName = Program.getPackerResultCountFileName();
+		String contentC = this.backupDetectionCountState;
+		this.writeFileUpdate(packerResultCountFile, packerResultCountFileName, contentC);
 	}
 	
 	public boolean isPackedWith(String packerStr, String techStr)
@@ -251,9 +217,11 @@ public class PackerDetection {
 		String result = fileName + "\t" + viaHeader + "\t";
 		for(int i = 0; i < viaBEPUM.split("-")[0].length(); i++)
 		{
-			if (viaBEPUM.split("-")[0].charAt(i) == '1')
+			if (viaBEPUM.split("-")[0].charAt(i) == '1') {
 				result += ("x" + "\t");
-			else result += (" " + "\t");
+			} else {
+				result += (" " + "\t");
+			}
 		}
 		result += (viaBEPUM.split("-")[1] + "\t"
 				+ nodes + "\t"
@@ -263,5 +231,59 @@ public class PackerDetection {
 		
 		this.curDetectionFile = fileName;
 		this.backupDetectionState = result;
+		
+		// Update packer count
+		String resultC = fileName + "\t" + viaHeader + "\t";
+		resultC += this.getTechniques().getTechniquesStatiscial();
+		resultC += viaBEPUM.split("-")[1] + "\t";
+		resultC += nodes + "\t" + edges + "\t" + times + "\t" + convergence + "\t";
+		this.backupDetectionCountState = resultC;	
+	}
+	
+	private void writeFileUpdate (FileProcess file, String fileName, String content)
+	{		
+		ArrayList<String> resultString = new ArrayList<String>();
+		
+		try {
+			BufferedReader input = new BufferedReader(new FileReader(fileName));
+
+		    try {
+		    	String lastLine = "", curLine = "";
+		    	
+				while ((curLine = input.readLine()) != null) {
+					resultString.add(curLine);
+				    lastLine = curLine;
+				}
+				
+				input.close();
+				
+				String curFile = this.curDetectionFile;
+				
+				if (!lastLine.contains(curFile))
+				{
+					file.appendFile(content);
+				}
+				else 
+				{
+					resultString.remove(resultString.size() - 1);
+					resultString.add(content);
+					PrintWriter pResFileTemp = new PrintWriter(fileName);
+					pResFileTemp.close();
+					
+					PrintWriter pResFile = new PrintWriter(fileName);
+					for (String line : resultString) {
+						pResFile.println(line);
+					}
+				    pResFile.close();
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

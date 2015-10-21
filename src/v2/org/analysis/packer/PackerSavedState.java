@@ -33,4 +33,10 @@ public class PackerSavedState {
 		this.insName = insName;
 	}
 	
+	public void reset ()
+	{
+		this.insLocation = 0x0;
+		this.insName = null;
+	}
+	
 }

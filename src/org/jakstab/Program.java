@@ -161,6 +161,7 @@ public final class Program {
 	final static String resultFileTempTXT = "data/data/Result_Temp.txt";
 	final static String fullResultFileTXT = "data/data/fullResult.txt";
 	final static String packerResultFileTXT = "data/data/packerResult.txt";
+	final static String packerResultCountFileTXT = "data/data/packerResultCount.txt";
 	static final int MAX_BYTE_PER_INSTRUCTION = 15;
 
 	/**
@@ -196,7 +197,8 @@ public final class Program {
 	private StubProvider stubLibrary;
 	private Harness harness;
 	Disassembler disassembler;
-	private FileProcess resultFile, fullResultFile, resultFile_Temp, packerResultFile, logFile;
+	private FileProcess resultFile, fullResultFile, resultFile_Temp, logFile;
+	private FileProcess packerResultFile, packerResultCountFile;
 	private TargetOS targetOS;
 
 	private Instruction analyzedInstruction = null;;
@@ -231,6 +233,10 @@ public final class Program {
 		
 		setPackerResultFile(new FileProcess(packerResultFileTXT));
 		this.packerResultFile.appendFile("");
+		
+		setPackerResultCountFile(new FileProcess(packerResultCountFileTXT));
+		this.packerResultCountFile.appendFile("");
+		
 		pDetection = new PackerDetection();
 	}
 
@@ -2178,10 +2184,11 @@ public final class Program {
 		return pDetection;
 	}
 	
+	//////////////////////////////////////////////
 	public void setPackerResultFile(FileProcess packerResultFile) {
 		this.packerResultFile = packerResultFile;
 	}
-	
+
 	public FileProcess getPackerResultFile() {
 		return packerResultFile;
 	}
@@ -2191,6 +2198,21 @@ public final class Program {
 		return packerResultFileTXT;
 	}
 	
+	///////////////////////////////////////////////
+	public void setPackerResultCountFile(FileProcess packerResultCountFile) {
+		this.packerResultCountFile = packerResultCountFile;
+	}
+
+	public FileProcess getPackerResultCountFile() {
+		return packerResultCountFile;
+	}
+	
+	public static String getPackerResultCountFileName ()
+	{
+		return packerResultCountFileTXT;
+	}
+	
+	////////////////////////////////////////////////
 	public void SetAnalyzingTime (long time)
 	{
 		this.analyzingTime = time;

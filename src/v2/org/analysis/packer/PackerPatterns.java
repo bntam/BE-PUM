@@ -398,7 +398,6 @@ public class PackerPatterns {
 	 */
 	public boolean SEHs()
 	{
-		// Part1: Detect setup SEH
 		if (curState == null || curState.getInstruction() == null) {
 			return false;
 		}
