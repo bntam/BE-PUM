@@ -7,15 +7,13 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.transition_rule.AnalysisBit;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 
 public class btr extends X86InstructionStub {
-
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		long temp_d = 0;
 		temp_s = 0;
 		long result = 0;
@@ -52,20 +50,22 @@ public class btr extends X86InstructionStub {
 			temp_s = ((LongValue) s).getValue();
 			CF = new AnalysisBit().BT(temp_d, temp_s, get_bit);
 			result = new AnalysisBit().BTR(temp_d, temp_s, get_bit);
-			if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-			else
+			} else {
 				env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
-			if (CF == 1)
+			}
+			if (CF == 1) {
 				env.getFlag().setCFlag(new BooleanValue(true));
-			else
+			} else {
 				env.getFlag().setCFlag(new BooleanValue(false));
+			}
 		} else {
 			Program.getProgram().setLog("BTR with Symbol Value at " + curState.getLocation());
 			rule.generateNextInstruction(inst, path, pathList, true);
 			return curState;
 		}
-		
+
 		return null;
 	}
 

@@ -7,7 +7,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.transition_rule.AnalysisBit;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 
@@ -15,7 +15,6 @@ public class bt extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		long temp_d = 0;
 		temp_s = 0;
 		long result = 0;
@@ -51,16 +50,17 @@ public class bt extends X86InstructionStub {
 			temp_s = ((LongValue) s).getValue();
 
 			result = new AnalysisBit().BT(temp_d, temp_s, get_bit);
-			if (result == 1)
+			if (result == 1) {
 				env.getFlag().setCFlag(new BooleanValue(true));
-			else
+			} else {
 				env.getFlag().setCFlag(new BooleanValue(false));
+			}
 		} else {
 			Program.getProgram().setLog("BT with Symbol Value at " + curState.getLocation());
 			rule.generateNextInstruction(inst, path, pathList, true);
 			return curState;
 		}
-		
+
 		return null;
 	}
 

@@ -5,7 +5,7 @@ import org.jakstab.asm.Immediate;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
@@ -14,8 +14,7 @@ public class aam extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
-		// TODO: 51104402 - AAM - ASCII Adjust AX After Multiply
+		// TODO: Yen Nguyen - AAM - ASCII Adjust AX After Multiply
 		Value AL = env.getRegister().getRegisterValue("al");
 		AL = AL.evaluate(AL.getValueMap());
 		long ALValue = Long.MIN_VALUE;
@@ -62,7 +61,6 @@ public class aam extends X86InstructionStub {
 			env.getFlag().setSFlag(new BooleanValue(t < 0));
 			env.getFlag().setZFlag(new BooleanValue(t == 0));
 		}
-
 		return null;
 	}
 

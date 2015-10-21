@@ -1,7 +1,7 @@
 package v2.org.analysis.transition_rule.x86instruction;
 
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.HybridValue;
 import v2.org.analysis.value.LongValue;
@@ -11,7 +11,7 @@ public class das extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
+		// TODO: Yen Nguyen - DAS - Decimal Adjust for Subtraction
 		Value firstCondition = new HybridValue(env.getRegister().getRegisterValue("al")
 				.andFunction(new LongValue(0x0F)), ">", new LongValue(9));
 		firstCondition = firstCondition.evaluate(firstCondition.getValueMap());
@@ -28,8 +28,9 @@ public class das extends X86InstructionStub {
 			// = AL - 6 *)
 			Value CFlagCondition = new HybridValue(env.getRegister().getRegisterValue("al"), "<", new LongValue(6));
 			CFlagCondition = CFlagCondition.evaluate(CFlagCondition.getValueMap());
-			if (CFlagCondition instanceof BooleanValue && ((BooleanValue) CFlagCondition).getValue() == true)
+			if (CFlagCondition instanceof BooleanValue && ((BooleanValue) CFlagCondition).getValue() == true) {
 				env.getFlag().setCFlag(new BooleanValue(true));
+			}
 
 			env.getFlag().setAFlag(new BooleanValue(true));
 		} else {
@@ -50,8 +51,6 @@ public class das extends X86InstructionStub {
 		} else {
 			env.getFlag().setCFlag(new BooleanValue(false));
 		}
-		
-		
 		return null;
 	}
 

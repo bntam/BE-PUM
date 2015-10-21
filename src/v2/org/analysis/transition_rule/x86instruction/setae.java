@@ -3,16 +3,14 @@ package v2.org.analysis.transition_rule.x86instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 
-public class setae extends X86InstructionStub  {
+public class setae extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
-		
 		boolean isSet = false;
 		if (env.getFlag().getCFlag().equal(new BooleanValue(0))) {
 			isSet = true;

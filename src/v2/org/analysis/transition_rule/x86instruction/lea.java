@@ -6,15 +6,13 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 public class lea extends X86InstructionStub {
-
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		// just like MOV but with minor difference - Come back later
 		// http://stackoverflow.com/questions/1699748/what-is-the-difference-between-mov-and-lea
 

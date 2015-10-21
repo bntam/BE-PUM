@@ -5,22 +5,22 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.LongValue;
 
 public class push extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
-		if (dest == null)
+		if (dest == null) {
 			return curState;
+		}
 
-		if (dest.getClass().getSimpleName().equals("X86Register"))
+		if (dest.getClass().getSimpleName().equals("X86Register")) {
 			d = env.getRegister().getRegisterValue(dest.toString());
-		else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
+		} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 			d = env.getRegister().getRegisterValue(dest.toString());
-		else if (dest.getClass().getSimpleName().equals("Immediate")) {
+		} else if (dest.getClass().getSimpleName().equals("Immediate")) {
 			// Immediate t = (Immediate) dest;
 			// long x = t.getNumber().longValue();
 			d = new LongValue(Convert.convetUnsignedValue(((Immediate) dest).getNumber().longValue(),
@@ -34,14 +34,16 @@ public class push extends X86InstructionStub {
 				// PHONG: update 20150526-----------------
 				d = new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
 				// ---------------------------------------
-			} else
+			} else {
 				d = env.getMemory().getMemoryValue(t, inst);
+			}
 
-		} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
+		} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 			d = env.getRegister().getRegisterValue(dest.toString());
+		}
 
 		env.getStack().push(d);
-		
+
 		return null;
 	}
 

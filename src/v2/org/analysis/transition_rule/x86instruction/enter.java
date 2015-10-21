@@ -4,7 +4,7 @@ import org.jakstab.asm.Immediate;
 
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
@@ -12,17 +12,18 @@ public class enter extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		long ebp = 0;
 		long esp = 0;
 		long op1 = Convert.convetUnsignedValue(((Immediate) dest).getNumber().intValue(), 16);
 		long op2 = Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(), 8);
 		long _size = op1 + 4 * op2;
 		// xoa.
-		if (env.getRegister().getRegisterValue("ebp") instanceof LongValue)
+		if (env.getRegister().getRegisterValue("ebp") instanceof LongValue) {
 			ebp = ((LongValue) env.getRegister().getRegisterValue("ebp")).getValue();
-		if (env.getRegister().getRegisterValue("esp") instanceof LongValue)
+		}
+		if (env.getRegister().getRegisterValue("esp") instanceof LongValue) {
 			esp = ((LongValue) env.getRegister().getRegisterValue("esp")).getValue();
+		}
 
 		env.getStack().push(env.getRegister().getRegisterValue("ebp"));
 		Value tempreg = env.getRegister().getRegisterValue("esp");
@@ -52,8 +53,7 @@ public class enter extends X86InstructionStub {
 		// xoa.
 		ebp = ((LongValue) env.getRegister().getRegisterValue("ebp")).getValue();
 		esp = ((LongValue) env.getRegister().getRegisterValue("esp")).getValue();
-		
-		
+
 		return null;
 	}
 

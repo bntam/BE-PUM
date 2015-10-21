@@ -5,7 +5,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.transition_rule.AnalysisBit;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 
@@ -13,7 +13,6 @@ public class bsr extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		temp_s = 0;
 		long result = 0;
 		int get_bit = rule.getBitCount(inst);
@@ -60,7 +59,6 @@ public class bsr extends X86InstructionStub {
 			rule.generateNextInstruction(inst, path, pathList, true);
 			return curState;
 		}
-		
 		return null;
 	}
 

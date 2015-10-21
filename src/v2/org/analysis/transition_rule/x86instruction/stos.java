@@ -7,17 +7,14 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.loop.LoopAlgorithm;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 public class stos extends X86InstructionStub {
-
 	@Override
-	public BPState execute() {
-		// TODO Auto-generated method stub
-		// Load String
+	public BPState execute() {// Load String
 		if (inst.hasPrefixREPZ() || inst.hasPrefixREPNZ()) {
 			// System.out.println("Debug Instruction REPZ STOS:" +
 			// inst.toString());
@@ -52,18 +49,18 @@ public class stos extends X86InstructionStub {
 			// inst.toString());
 			storeString(env, inst, opSize);
 		}
-
 		return null;
 	}
-	
+
 	private void storeString(Environment env, X86Instruction inst, int opSize) {
 		Operand dest = inst.getOperand1();
 		Value store = null;
 
 		String base = "edi";
 		if (dest instanceof X86MemoryOperand) {
-			if (((X86MemoryOperand) dest).getBase() != null)
+			if (((X86MemoryOperand) dest).getBase() != null) {
 				base = ((X86MemoryOperand) dest).getBase().toString();
+			}
 		}
 
 		Value df = env.getFlag().getDFlag();
@@ -75,8 +72,9 @@ public class stos extends X86InstructionStub {
 
 				if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 					env.getRegister().sub(base, new LongValue(1));
-				} else
+				} else {
 					env.getRegister().add(base, new LongValue(1));
+				}
 			}
 			break;
 		case 16:
@@ -86,8 +84,9 @@ public class stos extends X86InstructionStub {
 
 				if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 					env.getRegister().sub(base, new LongValue(2));
-				} else
+				} else {
 					env.getRegister().add(base, new LongValue(2));
+				}
 			}
 			break;
 		case 32:
@@ -97,11 +96,11 @@ public class stos extends X86InstructionStub {
 
 				if (df != null && df instanceof BooleanValue && ((BooleanValue) df).getValue()) {
 					env.getRegister().sub(base, new LongValue(4));
-				} else
+				} else {
 					env.getRegister().add(base, new LongValue(4));
+				}
 			}
 			break;
 		}
 	}
-
 }

@@ -2,7 +2,7 @@ package v2.org.analysis.transition_rule.x86instruction;
 
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
@@ -10,8 +10,6 @@ public class cbw extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
-		
 		if (opSize == 16) {
 			Value al = env.getRegister().getRegisterValue("al");
 			// Value ah = env.getRegister().getRegisterValue("ah");
@@ -35,7 +33,7 @@ public class cbw extends X86InstructionStub {
 				env.getRegister().setRegisterValue("eax", new LongValue(eax));
 			}
 		}
-		
+
 		return null;
 	}
 

@@ -7,7 +7,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.loop.LoopAlgorithm;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
@@ -16,7 +16,6 @@ public class movs extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		if (inst.hasPrefixREPZ() || inst.hasPrefixREPNZ()) {
 			Value ecx = env.getRegister().getRegisterValue("ecx");
 			Value cx = env.getRegister().getRegisterValue("cx");
@@ -46,10 +45,9 @@ public class movs extends X86InstructionStub {
 		} else {
 			movString(env, inst, opSize);
 		}
-		
 		return null;
 	}
-	
+
 	private void movString(Environment env, X86Instruction inst, int opSize) {
 		int s = opSize;
 		switch (opSize) {
@@ -84,6 +82,4 @@ public class movs extends X86InstructionStub {
 			}
 		}
 	}
-
-	
 }

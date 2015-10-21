@@ -7,7 +7,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.transition_rule.AnalysisBit;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
@@ -16,7 +16,6 @@ public class shld extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		Operand count = inst.getOperand3();
 		Value c = null;
 
@@ -68,8 +67,9 @@ public class shld extends X86InstructionStub {
 			if (temp_c < get_bit) {
 				long array_dest[] = new long[get_bit];
 				long temp = temp_d;
-				for (int i = 0; i < get_bit; i++)
+				for (int i = 0; i < get_bit; i++) {
 					array_dest[i] = 0;
+				}
 				int i = 0;
 				while (temp != 0) {
 					array_dest[i] = temp % 2;
@@ -86,12 +86,13 @@ public class shld extends X86InstructionStub {
 				env.getFlag().setCFlag(cflag);
 			}
 			// ---------------------------------------------------------------------------------------
-			if (dest.getClass().getSimpleName().equals("X86MemoryOperand"))
+			if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
-			else
+			} else {
 				env.getRegister().setRegisterValue(dest.toString(), new LongValue(result));
+			}
 		}
-		
+
 		return null;
 	}
 

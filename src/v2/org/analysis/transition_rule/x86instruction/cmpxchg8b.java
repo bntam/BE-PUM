@@ -2,7 +2,7 @@
  * Project: BE-PUMv2
  * Package name: v2.org.analysis.transition_rule.x86instruction
  * File name: cmpxchg8b.java
- * Created date: Sep 23, 2015
+ * Created date: Oct 12, 2015
  * Description:
  */
 package v2.org.analysis.transition_rule.x86instruction;
@@ -12,7 +12,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.transition_rule.AnalysisBit;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
@@ -23,11 +23,8 @@ import v2.org.analysis.value.Value;
  */
 public class cmpxchg8b extends X86InstructionStub {
 
-	public cmpxchg8b() {
-	}
-
 	/* (non-Javadoc)
-	 * @see v2.org.analysis.transition_rule.AssemblyInstructionStub#execute()
+	 * @see v2.org.analysis.transition_rule.stub.AssemblyInstructionStub#execute()
 	 */
 	@Override
 	public BPState execute() {

@@ -3,7 +3,7 @@ package v2.org.analysis.transition_rule.x86instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
@@ -11,7 +11,6 @@ public class setl extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		boolean isSet = false;
 		// boolean SF, OF;
 
@@ -23,8 +22,9 @@ public class setl extends X86InstructionStub {
 		oFlag = oFlag.evaluate(oFlag.getValueMap());
 		// OF = ((BooleanValue) oFlag).getValue();
 
-		if (!(sFlag.equal(oFlag)))
+		if (!(sFlag.equal(oFlag))) {
 			isSet = true;
+		}
 
 		if (dest.getClass().getSimpleName().equals("X86Register")
 				|| dest.getClass().getSimpleName().equals("X86RegisterPart")
@@ -39,10 +39,9 @@ public class setl extends X86InstructionStub {
 				System.out.println("SEH:" + path.getCurrentState().getLocation().toString());
 				return rule.processSEH(path.getCurrentState());
 			}
-			env.getMemory().setByteMemoryValue((X86MemoryOperand) dest,
-					((isSet) ? new LongValue(1) : new LongValue(0)));
+			env.getMemory()
+					.setByteMemoryValue((X86MemoryOperand) dest, ((isSet) ? new LongValue(1) : new LongValue(0)));
 		}
-		
 		return null;
 	}
 

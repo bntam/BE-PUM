@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <X86AssemlyMap>
-	<GROUP name="X86ConditionalJump">
-		<API assemblyName="loop" className="v2.org.analysis.transition_rule.X86ConditionalJump.loop" />
-	</GROUP>
 	<GROUP name="x86instruction">
 		<API assemblyName="aaa" className="v2.org.analysis.transition_rule.x86instruction.aaa" />
+		<API assemblyName="aad" className="v2.org.analysis.transition_rule.x86instruction.aad" />
 		<API assemblyName="aam" className="v2.org.analysis.transition_rule.x86instruction.aam" />
 		<API assemblyName="aas" className="v2.org.analysis.transition_rule.x86instruction.aas" />
-		<API assemblyName="add" className="v2.org.analysis.transition_rule.x86instruction.add" />
 		<API assemblyName="bsf" className="v2.org.analysis.transition_rule.x86instruction.bsf" />
 		<API assemblyName="bsr" className="v2.org.analysis.transition_rule.x86instruction.bsr" />
 		<API assemblyName="bswap" className="v2.org.analysis.transition_rule.x86instruction.bswap" />
@@ -22,6 +19,7 @@
 		<API assemblyName="cli" className="v2.org.analysis.transition_rule.x86instruction.cli" />
 		<API assemblyName="cltd" className="v2.org.analysis.transition_rule.x86instruction.cltd" />
 		<API assemblyName="cmc" className="v2.org.analysis.transition_rule.x86instruction.cmc" />
+		<API assemblyName="cmovne" className="v2.org.analysis.transition_rule.x86instruction.cmovne" />
 		<API assemblyName="cmp" className="v2.org.analysis.transition_rule.x86instruction.cmp" />
 		<API assemblyName="cmps" className="v2.org.analysis.transition_rule.x86instruction.cmps" />
 		<API assemblyName="cmpxchg" className="v2.org.analysis.transition_rule.x86instruction.cmpxchg" />
@@ -33,7 +31,28 @@
 		<API assemblyName="daa" className="v2.org.analysis.transition_rule.x86instruction.daa" />
 		<API assemblyName="das" className="v2.org.analysis.transition_rule.x86instruction.das" />
 		<API assemblyName="enter" className="v2.org.analysis.transition_rule.x86instruction.enter" />
+		<API assemblyName="f2xm1" className="v2.org.analysis.transition_rule.x86instruction.f2xm1" />
+		<API assemblyName="fabs" className="v2.org.analysis.transition_rule.x86instruction.fabs" />
+		<API assemblyName="fchs" className="v2.org.analysis.transition_rule.x86instruction.fchs" />
+		<API assemblyName="fclex" className="v2.org.analysis.transition_rule.x86instruction.fclex" />
+		<API assemblyName="fdecstp" className="v2.org.analysis.transition_rule.x86instruction.fdecstp" />
+		<API assemblyName="fincstp" className="v2.org.analysis.transition_rule.x86instruction.fincstp" />
+		<API assemblyName="fld" className="v2.org.analysis.transition_rule.x86instruction.fld" />
+		<API assemblyName="fld1" className="v2.org.analysis.transition_rule.x86instruction.fld1" />
+		<API assemblyName="fldl2e" className="v2.org.analysis.transition_rule.x86instruction.fldl2e" />
+		<API assemblyName="fldl2t" className="v2.org.analysis.transition_rule.x86instruction.fldl2t" />
+		<API assemblyName="fldlg2" className="v2.org.analysis.transition_rule.x86instruction.fldlg2" />
+		<API assemblyName="fldln2" className="v2.org.analysis.transition_rule.x86instruction.fldln2" />
+		<API assemblyName="fldpi" className="v2.org.analysis.transition_rule.x86instruction.fldpi" />
+		<API assemblyName="fldz" className="v2.org.analysis.transition_rule.x86instruction.fldz" />
+		<API assemblyName="fnclex" className="v2.org.analysis.transition_rule.x86instruction.fnclex" />
+		<API assemblyName="fninit" className="v2.org.analysis.transition_rule.x86instruction.fninit" />
+		<API assemblyName="fnop" className="v2.org.analysis.transition_rule.x86instruction.fnop" />
+		<API assemblyName="fnstsw" className="v2.org.analysis.transition_rule.x86instruction.fnstsw" />
+		<API assemblyName="fwait" className="v2.org.analysis.transition_rule.x86instruction.fwait" />
+		<API assemblyName="fxam" className="v2.org.analysis.transition_rule.x86instruction.fxam" />
 		<API assemblyName="in" className="v2.org.analysis.transition_rule.x86instruction.in" />
+		<API assemblyName="int1" className="v2.org.analysis.transition_rule.x86instruction.int1" />
 		<API assemblyName="int3" className="v2.org.analysis.transition_rule.x86instruction.int3" />
 		<API assemblyName="lahf" className="v2.org.analysis.transition_rule.x86instruction.lahf" />
 		<API assemblyName="lea" className="v2.org.analysis.transition_rule.x86instruction.lea" />
@@ -90,6 +109,7 @@
 		<API assemblyName="stos" className="v2.org.analysis.transition_rule.x86instruction.stos" />
 		<API assemblyName="test" className="v2.org.analysis.transition_rule.x86instruction.test" />
 		<API assemblyName="xlat" className="v2.org.analysis.transition_rule.x86instruction.xlat" />
+		<API assemblyName="int" className="v2.org.analysis.transition_rule.x86instruction._int" />
 	</GROUP>
 	<GROUP name="x86move">
 		<API assemblyName="cmova" className="v2.org.analysis.transition_rule.x86move.cmova" />
@@ -120,8 +140,11 @@
 		<API assemblyName="cmovs" className="v2.org.analysis.transition_rule.x86move.cmovs" />
 		<API assemblyName="cmovz" className="v2.org.analysis.transition_rule.x86move.cmovz" />
 		<API assemblyName="mov" className="v2.org.analysis.transition_rule.x86move.mov" />
+		<API assemblyName="movsb" className="v2.org.analysis.transition_rule.x86move.movsb" />
+		<API assemblyName="movsw" className="v2.org.analysis.transition_rule.x86move.movsw" />
 		<API assemblyName="movsx" className="v2.org.analysis.transition_rule.x86move.movsx" />
-		<API assemblyName="movz" className="v2.org.analysis.transition_rule.x86move.movz" />
+		<API assemblyName="movzb" className="v2.org.analysis.transition_rule.x86move.movzb" />
+		<API assemblyName="movzw" className="v2.org.analysis.transition_rule.x86move.movzw" />
 		<API assemblyName="xchg" className="v2.org.analysis.transition_rule.x86move.xchg" />
 	</GROUP>
 </X86AssemlyMap>

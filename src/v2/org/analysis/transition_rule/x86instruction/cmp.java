@@ -5,46 +5,45 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.LongValue;
 
 public class cmp extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
-		if (dest.getClass().getSimpleName().equals("X86Register"))
+		if (dest.getClass().getSimpleName().equals("X86Register")) {
 			d = env.getRegister().getRegisterValue(dest.toString());
-		else if (dest.getClass().getSimpleName().equals("X86RegisterPart"))
+		} else if (dest.getClass().getSimpleName().equals("X86RegisterPart")) {
 			d = env.getRegister().getRegisterValue(dest.toString());
-		else if (dest.getClass().getSimpleName().equals("X86SegmentRegister"))
+		} else if (dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 			d = env.getRegister().getRegisterValue(dest.toString());
-		else if (dest.getClass().getSimpleName().equals("Immediate"))
+		} else if (dest.getClass().getSimpleName().equals("Immediate")) {
 			d = new LongValue(Convert.convetUnsignedValue(((Immediate) dest).getNumber().intValue(),
 					rule.getBitCount(inst)));
-		else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
+		} else if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			d = env.getMemory().getMemoryValue((X86MemoryOperand) dest, inst);
 		}
 
-		if (src.getClass().getSimpleName().equals("X86Register"))
+		if (src.getClass().getSimpleName().equals("X86Register")) {
 			s = env.getRegister().getRegisterValue(src.toString());
-		else if (src.getClass().getSimpleName().equals("X86RegisterPart"))
+		} else if (src.getClass().getSimpleName().equals("X86RegisterPart")) {
 			s = env.getRegister().getRegisterValue(src.toString());
-		else if (src.getClass().getSimpleName().equals("X86SegmentRegister"))
+		} else if (src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 			s = env.getRegister().getRegisterValue(src.toString());
-		else if (src.getClass().getSimpleName().equals("Immediate")) {
+		} else if (src.getClass().getSimpleName().equals("Immediate")) {
 			s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 					rule.getBitCount(inst)));
 		} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			s = env.getMemory().getMemoryValue((X86MemoryOperand) src, inst);
 		}
 
-		if (inst.getName().startsWith("cmp"))
+		if (inst.getName().startsWith("cmp")) {
 			env.getFlag().changeFlagWithSUB(d, s, env, rule.getBitCount(inst));
-		else
+		} else {
 			env.getFlag().changeFlagWithTEST(d, s, env, rule.getBitCount(inst));
-		// set compare status
-		
+			// set compare status
+		}
 		return null;
 	}
 

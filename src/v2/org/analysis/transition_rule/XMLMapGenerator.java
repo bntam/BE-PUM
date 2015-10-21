@@ -16,9 +16,9 @@ import java.io.IOException;
  * @author Yen Nguyen
  *
  */
-public class X86InstructionXMLMapGenerator {
-private static BufferedWriter bufferedWriter;
-	
+public class XMLMapGenerator {
+	private static BufferedWriter bufferedWriter;
+
 	private static void println(String packageName, String asmName, String fileName) throws IOException {
 		String str = "\t\t<API assemblyName=\"" + asmName.toLowerCase() + "\" className=\"" + packageName + fileName
 				+ "\" />";
@@ -33,7 +33,7 @@ private static BufferedWriter bufferedWriter;
 	public static void main(String[] args) {
 		int count = 0;
 		String workingDir = System.getProperty("user.dir");
-		String path = workingDir + "\\src\\" + X86InstructionXMLMapGenerator.class.getPackage().getName().replace(".", "\\");
+		String path = workingDir + "\\src\\" + XMLMapGenerator.class.getPackage().getName().replace(".", "\\");
 
 		try {
 			File XMLfile = new File(path + "\\X86AssemblyMap.xml");
@@ -50,19 +50,30 @@ private static BufferedWriter bufferedWriter;
 			bufferedWriter.write("\r\n");
 			File directory = new File(path);
 			for (File file : directory.listFiles()) {
-				if (file.isDirectory() && !file.getName().equals("structures")) {
+				if (file.isDirectory() && !file.getName().equals("stub")) {
 					bufferedWriter.write("\t<GROUP name=\"" + file.getName() + "\">");
 					bufferedWriter.write("\r\n");
 
-					File subDir = new File(file.getAbsolutePath()/* + "\\functions"*/);
+					File subDir = new File(file.getAbsolutePath()/*
+																 * +
+																 * "\\functions"
+																 */);
 					for (File api : subDir.listFiles()) {
-						String packageName = X86InstructionXMLMapGenerator.class.getPackage().getName() + "." + file.getName() + ".";
-//								+ ".functions.";
+						String packageName = XMLMapGenerator.class.getPackage().getName() + "." + file.getName() + ".";
+						// + ".functions.";
 						String asmName = api.getName().replace(".java", "");
+						String fileName = asmName;
+						
+						/***********************************************
+						 * SPECIAL NAME THAT JAVA DONT ALLOW TO DEFINE *
+						 ***********************************************/
+						if (asmName.charAt(0) == '_') {
+							asmName = asmName.substring(1, asmName.length());
+						}
 
 						// System.out.println("\t\t" + funcName);
 
-						println(packageName, asmName, asmName);
+						println(packageName, asmName, fileName);
 						count++;
 					}
 

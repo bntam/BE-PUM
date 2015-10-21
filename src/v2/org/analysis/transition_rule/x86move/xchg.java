@@ -3,15 +3,13 @@ package v2.org.analysis.transition_rule.x86move;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86MoveStub;
+import v2.org.analysis.transition_rule.stub.X86MoveStub;
 import v2.org.analysis.value.Value;
 
 public class xchg extends X86MoveStub {
 
 	@Override
-	public BPState execute() {
-		// TODO Auto-generated method stub
-		// normal move
+	public BPState execute() {// normal move
 		Value temp = rule.getValueOperand(dest, env, inst);
 		Value source = rule.getValueOperand(src, env, inst);
 
@@ -27,7 +25,6 @@ public class xchg extends X86MoveStub {
 
 		rule.setValueOperand(dest, source, env, inst);
 		rule.setValueOperand(src, temp, env, inst);
-
 		return null;
 	}
 

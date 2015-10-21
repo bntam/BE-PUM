@@ -1,7 +1,7 @@
 package v2.org.analysis.transition_rule.x86instruction;
 
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
@@ -9,7 +9,6 @@ public class xlat extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		Value ebx = env.getRegister().getRegisterValue("ebx");
 		if (ebx instanceof LongValue) {
 			long e = ((LongValue) ebx).getValue();
@@ -29,8 +28,6 @@ public class xlat extends X86InstructionStub {
 		}
 		// long print = ((LongValue) temp).getValueOperand();
 		// System.out.println(print);
-
-		
 		return null;
 	}
 

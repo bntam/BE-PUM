@@ -3,16 +3,16 @@ package v2.org.analysis.transition_rule.x86instruction;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
-public class add  extends X86InstructionStub {
+public class aad extends X86InstructionStub {
 
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
+		// Khanh: Check later
 		Value al = env.getRegister().getRegisterValue("al");
 		Value ah = env.getRegister().getRegisterValue("ah");
 		if (al instanceof LongValue && ah instanceof LongValue) {
@@ -29,7 +29,6 @@ public class add  extends X86InstructionStub {
 			env.getFlag().setSFlag(new BooleanValue(t < 0));
 			env.getFlag().setZFlag(new BooleanValue(t == 0));
 		}
-		
 		return null;
 	}
 

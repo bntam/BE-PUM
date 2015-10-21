@@ -4,16 +4,14 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import org.jakstab.asm.x86.X86Register;
 
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.transition_rule.X86MoveStub;
+import v2.org.analysis.transition_rule.stub.X86MoveStub;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
 public class mov extends X86MoveStub {
 
 	@Override
-	public BPState execute() {
-		// TODO Auto-generated method stub
-		// normal move
+	public BPState execute() {// normal move
 		Value source = rule.getValueOperand(src, env, inst);
 		// System.out.println();
 		if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
@@ -23,13 +21,14 @@ public class mov extends X86MoveStub {
 			// Xu li truong hop mov fs:0, esp
 			// Khi do se tac dong den SEH
 			boolean b = false;
-			if (y.getDisplacement() == 0 && y.getBase() == null)
+			if (y.getDisplacement() == 0 && y.getBase() == null) {
 				b = true;
-			else {
+			} else {
 				if (y.getBase() != null) {
 					Value v = env.getRegister().getRegisterValue(y.getBase().toString());
-					if (v instanceof LongValue)
+					if (v instanceof LongValue) {
 						b = (((LongValue) v).getValue() == 0);
+					}
 				}
 			}
 
@@ -62,7 +61,6 @@ public class mov extends X86MoveStub {
 			// PHONG - 20150422
 			rule.setValueOperand(dest, source, env, inst);
 		}
-		
 		return null;
 	}
 

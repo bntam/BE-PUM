@@ -5,18 +5,17 @@
  * Created date: Sep 23, 2015
  * Description:
  */
-package v2.org.analysis.transition_rule;
+package v2.org.analysis.transition_rule.stub;
 
 import java.util.List;
 
-import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86Instruction;
 
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
-import v2.org.analysis.system.SEHHandle;
+import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.Value;
 
 /**
@@ -53,18 +52,15 @@ public abstract class AssemblyInstructionStub {
 		this.rule = rule;
 
 		this.initAttributes();
-		BPState ret = this.execute();
+		
+		BPState ret = null;
 
-		if (ret != null) {
+		if ((ret = this.preExecute()) != null) {
 			return ret;
 		}
-		
-		// PHONG - 20150921 - Check SEH before going ///////////////
-		AbsoluteAddress curAddr = curState.getLocation();
-		if (rule.getSEHHandle().causeException(curAddr)) {
-			SEHHandle sehHandle = curState.getEnvironement().getSystem().getSEHHandler();
-			sehHandle.setSEHType(SEHHandle.SINGLE_STEP);
-			return rule.processSEH(curState);
+
+		if ((ret = this.execute()) != null) {
+			return ret;
 		}
 		
 		rule.generateNextInstruction(inst, path, pathList, true);
@@ -91,5 +87,9 @@ public abstract class AssemblyInstructionStub {
 		opSize = rule.getBitCount(inst);
 	}
 
+	protected abstract BPState preExecute();
+	
+	protected abstract void postExecute();
+	
 	public abstract BPState execute();
 }

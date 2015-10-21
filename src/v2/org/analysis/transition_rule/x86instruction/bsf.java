@@ -5,15 +5,18 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.transition_rule.AnalysisBit;
-import v2.org.analysis.transition_rule.X86InstructionStub;
+import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.LongValue;
 
 public class bsf extends X86InstructionStub {
 
+	public bsf() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public BPState execute() {
-		// TODO Auto-generated method stub
 		long temp_d = 0;
 		temp_s = 0;
 		long result = 0;
@@ -66,14 +69,13 @@ public class bsf extends X86InstructionStub {
 			return curState;
 		}
 		/*
-		 * PHONG: change here env.getFlag().setCFlag(new
-		 * BooleanValue(false)); env.getFlag().setOFlag(new
-		 * BooleanValue(false)); env.getFlag().setSFlag(new
-		 * BooleanValue(false)); env.getFlag().setAFlag(new
-		 * BooleanValue(false)); env.getFlag().setPFlag(new
-		 * BooleanValue(false));
+		 * PHONG: change here env.getFlag().setCFlag(new BooleanValue(false));
+		 * env.getFlag().setOFlag(new BooleanValue(false));
+		 * env.getFlag().setSFlag(new BooleanValue(false));
+		 * env.getFlag().setAFlag(new BooleanValue(false));
+		 * env.getFlag().setPFlag(new BooleanValue(false));
 		 */
-		
+
 		return null;
 	}
 
