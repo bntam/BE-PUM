@@ -69,7 +69,7 @@ public class PackerDetection {
 	public void detectViaHeader (Program prog)
 	{	
 		// Entry point
-		String byteEP = String.format("%02x", prog.getByteValueMemory(prog.getEntryPoint()));
+		long EP = prog.getDoubleWordValueMemory(prog.getEntryPoint());
 		
 		// Read file
 		String file = prog.getAbsolutePathFile();
@@ -90,12 +90,13 @@ public class PackerDetection {
 		
 		for (PackerHeader hP: pHeader)
 		{
-			if (detectWithPacker(dataString, hP, byteEP))
+			if (detectWithPacker(dataString, hP, EP))
 			{
 				isPackedBy(hP.getPackerName() + " - version: " + hP.getPackerVersion());
 				return;
 			}
 		}
+		
 		this.detectViaHeader = "NONE";
 	}
 	
@@ -106,28 +107,31 @@ public class PackerDetection {
 		this.detectViaHeader = packedby.substring(new String("File is packed by ").length());
 	}
 	
-	private boolean detectWithPacker (String[] dataString, PackerHeader hPacker, String byteEP)
+	private boolean detectWithPacker (String[] dataString, PackerHeader hPacker, long EP)
 	{
 		if (dataString == null) {
 			return false;
 		}
-		
 		int beginTracing = 0;
 		if (hPacker.isEntryPoint())
 		{
-			for (int i = 0; i < dataString.length; i++)
+			if (EP != 0x0)
 			{
-				if (dataString[i].toLowerCase().equals(byteEP))
+				for (int i = 0; i < dataString.length - 3; i++)
 				{
-					beginTracing = i;
-					break;
+					String dword = dataString[i+3] + dataString[i+2] + dataString[i+1] + dataString[i];
+					long dwordL = Long.parseLong(dword, 16);
+					if (dwordL == EP)
+					{
+						beginTracing = i;
+						break;
+					}
 				}
 			}
 		}
 		
 		boolean trace = true;
 		String[] sArr = hPacker.getPackerSignature();
-		// Begin tracing
 		for (int i = beginTracing; i < dataString.length && trace; i++)
 		{	
 			if (dataString[i].equals(sArr[0].toLowerCase()) 
@@ -143,16 +147,24 @@ public class PackerDetection {
 						{
 							break;
 						}
+						else if (j == sArr.length - 1)
+						{
+							trace = false;
+						}
 					}
-					if (j == sArr.length - 1)
+					else
 					{
-						trace = false;
+						return false;
 					}
 				}
 			}
-			else if (i == dataString.length - 2)
+			else
 			{
-				return false;
+				if (hPacker.isEntryPoint() 
+						|| i == dataString.length - 2)
+				{
+					return false;
+				}
 			}
 		}
 		return true;
