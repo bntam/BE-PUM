@@ -23,7 +23,12 @@ public class fld extends X86InstructionStub {
 			}
 			d = env.getMemory().getMemoryValue((X86MemoryOperand) dest, inst);
 		}
-		// char[] t = Convert.convertBinary(d, 32);
+		
+		if (dest.getClass().getSimpleName().equals("X86FloatRegister")) {			
+			//d = env.getRegister().getRegisterValue(dest.toString());
+			d = env.getFPUregister().getFPURegisterValue(dest.toString());
+		}
+		
 		if (d instanceof DoubleValue) {
 			double temp_d = ((DoubleValue) d).getValue();
 			long temp_top;
@@ -37,7 +42,11 @@ public class fld extends X86InstructionStub {
 			} else {
 				env.getFPUregister().FLD(temp_d);
 			}
-		} else {
+		} else if (d == null){
+			env.getFPUregister().FLD(Double.NaN);
+			env.getFST().changeUnderflow();
+		}
+		else {
 			System.out.println("Operand is not double value");
 		}
 		//System.out.println("Value FST: " + Convert.longToHex(env.getFST().getValueFST()));
