@@ -8,49 +8,43 @@ public class PackerTechniques {
 	
 	private PackerPatterns pPattern;
 	
-	private boolean packing_unpacking;	
-	private boolean overwriting;	
-	private boolean indirect_jump; 	
-	private boolean obfuscated_const;	
-	private boolean overlapping_func;
-	private boolean overlapping_block;
-	private boolean code_chunking;	
-	private boolean stolen_bytes;	
-	private boolean checksumming;	
-	private boolean SEHs; 
-	private boolean two_APIs;
 	private boolean anti_debugging;	
+	private boolean checksumming;	
+	private boolean code_chunking;
+	private boolean indirect_jump; 
+	private boolean obfuscated_const;
+	private boolean overlapping_block;
+	private boolean overlapping_func;
+	private boolean overwriting;
+	private boolean packing_unpacking;	
+	private boolean SEHs; 
+	private boolean stolen_bytes;	
 	private boolean timing_check;
-	
-	private boolean dynamic_code;
-	private boolean code_layout;
-	private boolean anti_rewriting;
+	private boolean two_APIs;
 	
 	private boolean USING_COUNT;
 	private static PackerCounter pCounter;
 	
 	public PackerTechniques ()
 	{
-		USING_COUNT			= false;
+		USING_COUNT			= true;
 		
 		pPattern 			= new PackerPatterns();
 		
-		packing_unpacking 	= false; 
-		overwriting 		= false; 
-		indirect_jump 		= false; 
-		obfuscated_const	= false; 
-		code_chunking		= false; 
-		stolen_bytes		= false; 
-		checksumming		= false; 
-		SEHs				= false; 
-		two_APIs			= false; 
 		anti_debugging		= false;
+		checksumming		= false;
+		code_chunking		= false;
+		indirect_jump 		= false; 
+		obfuscated_const	= false;
+		overlapping_block	= false;
+		overlapping_func	= false;
+		overwriting 		= false;
+		packing_unpacking 	= false; 
+		SEHs				= false;
+		stolen_bytes		= false; 
 		timing_check		= false;
-		
-		dynamic_code		= false;
-		code_layout			= false;
-		anti_rewriting		= false;
-		
+		two_APIs			= false; 
+
 		pCounter			= new PackerCounter();
 	}
 	
@@ -58,11 +52,11 @@ public class PackerTechniques {
 	{
 		if (curState != null)
 		{
-			pPattern.setCheckingState(curState, program);
-			this.checkingState();
 			// BEGIN TO STATISTIC
 			pCounter.setCountingState(curState, program);
 			pCounter.Execute(this.USING_COUNT);
+			pPattern.setCheckingState(pCounter);
+			this.checkingState();
 		}
 	}
 	
@@ -171,31 +165,6 @@ public class PackerTechniques {
 				isTimingCheck();
 			}
 		}
-		
-		// Check dynamic code
-		if (!this.dynamic_code)
-		{
-			if (this.packing_unpacking || this.overwriting) {
-				isDynamicCode();
-			}
-		}
-		
-		// Check code layout
-		if (!this.code_layout)
-		{
-			if (this.overlapping_func || this.overlapping_block || this.code_chunking) {
-				isCodeLayout();
-			}
-		}
-		
-		// Check anti rewriting
-		if (!this.anti_rewriting)
-		{
-			if (this.stolen_bytes || this.checksumming) {
-				isAntiRewriting();
-			}
-		}
-		
 	}
 	
 	public void isPackingUnpacking ()
@@ -262,41 +231,24 @@ public class PackerTechniques {
 	{
 		this.timing_check = true;
 	}
-	
-	public void isDynamicCode ()
-	{
-		this.dynamic_code = true;
-	}
-	
-	public void isCodeLayout ()
-	{
-		this.code_layout = true;
-	}
-	
-	public void isAntiRewriting ()
-	{
-		this.anti_rewriting = true;
-	}
-	
+
 	public String getDetailTechniques ()
 	{
 		String techniques = "";
-		techniques += (packing_unpacking) 	? "1" : "0"; 
-		techniques += (overwriting) 		? "1" : "0"; 
-		techniques += (indirect_jump) 		? "1" : "0"; 
-		techniques += (obfuscated_const) 	? "1" : "0"; 
-		techniques += (code_chunking) 		? "1" : "0"; 
-		techniques += (stolen_bytes) 		? "1" : "0"; 
-		techniques += (checksumming) 		? "1" : "0"; 
-		techniques += (SEHs) 				? "1" : "0"; 
-		techniques += (two_APIs) 			? "1" : "0"; 
+		
 		techniques += (anti_debugging) 		? "1" : "0";
-		techniques += (dynamic_code)		? "1" : "0";
-		techniques += (code_layout)			? "1" : "0";
-		techniques += (overlapping_func)	? "1" : "0";
+		techniques += (checksumming) 		? "1" : "0"; 
+		techniques += (code_chunking) 		? "1" : "0";
+		techniques += (indirect_jump) 		? "1" : "0"; 
+		techniques += (obfuscated_const) 	? "1" : "0";
 		techniques += (overlapping_block)	? "1" : "0";
-		techniques += (anti_rewriting)		? "1" : "0";
+		techniques += (overlapping_func)	? "1" : "0";
+		techniques += (overwriting) 		? "1" : "0"; 
+		techniques += (packing_unpacking) 	? "1" : "0"; 
+		techniques += (SEHs) 				? "1" : "0"; 
+		techniques += (stolen_bytes) 		? "1" : "0"; 
 		techniques += (timing_check)		? "1" : "0";
+		techniques += (two_APIs) 			? "1" : "0"; 
 		
 		return techniques;
 	}

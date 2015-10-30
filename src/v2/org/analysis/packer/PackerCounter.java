@@ -101,4 +101,9 @@ public class PackerCounter {
 		
 		return result;
 	}
+	
+	public PackerTechnique getTechniques(int index)
+	{
+		return pTechs.get(index);
+	}
 }
