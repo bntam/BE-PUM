@@ -114,4 +114,12 @@ public class PackerPatterns {
 	{
 		return pCounter.getTechniques(PackerConstants.TIMING_CHECK).GetInfo() > 0;
 	}
+	
+	/*
+	 * Check if it is Hardware breakpoints
+	 */
+	public boolean HardwareBPX()
+	{
+		return pCounter.getTechniques(PackerConstants.HARDWARE_BPX).GetInfo() > 0;
+	}
 }

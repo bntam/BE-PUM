@@ -55,6 +55,12 @@ public class PackerDetection {
 		
 		ArrayList<PackerHeader> pHeader = PackerConstants.GetData();
 		
+		for (int i = 0; i < dataString.length; i++)
+		{
+			System.out.print(dataString[i]);
+		}
+		System.out.println("\n");
+		
 		for (PackerHeader hP: pHeader)
 		{
 			if (detectWithHeaderSignature(dataString, hP, EP))
@@ -161,7 +167,7 @@ public class PackerDetection {
 			this.detectViaTechniques = pTech + "-" + packedByTech;
 		}
 		
-		System.out.println("TECHNIQUES: File is packed by " + pTech);
+		System.out.println("TECHNIQUES: File is packed by " + packedByTech);
 	}
 	
 	public void packedByTechniquesFrequency ()
@@ -251,7 +257,7 @@ public class PackerDetection {
 		// Update packer count
 		String viaTechniquesFrequency = this.detectViaTechniquesFrequency;
 		String resultC = fileName + "\t" + viaHeader + "\t";
-		resultC += viaTechniquesFrequency.split("-")[0] + "\t";
+		resultC += viaTechniquesFrequency.split("-")[0];
 		resultC += viaTechniquesFrequency.split("-")[1] + "\t";
 		resultC += nodes + "\t" + edges + "\t" + times + "\t" + convergence + "\t";
 		

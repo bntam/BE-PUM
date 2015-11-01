@@ -21,6 +21,7 @@ public class PackerTechniques {
 	private boolean stolen_bytes;	
 	private boolean timing_check;
 	private boolean two_APIs;
+	private boolean hardware_bpx;
 	
 	private boolean USING_COUNT;
 	private static PackerCounter pCounter;
@@ -44,6 +45,7 @@ public class PackerTechniques {
 		stolen_bytes		= false; 
 		timing_check		= false;
 		two_APIs			= false; 
+		hardware_bpx		= false;
 
 		pCounter			= new PackerCounter();
 	}
@@ -165,6 +167,14 @@ public class PackerTechniques {
 				isTimingCheck();
 			}
 		}
+		
+		// Check hardware breakpoints
+		if (!this.hardware_bpx)
+		{
+			if (pPattern.HardwareBPX()) {
+				isHardwareBPX();
+			}
+		}
 	}
 	
 	public void isPackingUnpacking ()
@@ -231,6 +241,11 @@ public class PackerTechniques {
 	{
 		this.timing_check = true;
 	}
+	
+	public void isHardwareBPX ()
+	{
+		this.hardware_bpx = true;
+	}
 
 	public String getDetailTechniques ()
 	{
@@ -249,6 +264,7 @@ public class PackerTechniques {
 		techniques += (stolen_bytes) 		? "1" : "0"; 
 		techniques += (timing_check)		? "1" : "0";
 		techniques += (two_APIs) 			? "1" : "0"; 
+		techniques += (hardware_bpx)		? "1" : "0";	
 		
 		return techniques;
 	}
