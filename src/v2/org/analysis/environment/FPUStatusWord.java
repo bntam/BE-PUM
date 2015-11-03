@@ -476,9 +476,8 @@ public class FPUStatusWord {
 		changeUFlag(number);
 		BigDecimal x = new BigDecimal(Math.pow(2, st0) - 1);
 		int index = Double.toString(number).length();			
-		if (index >= 18) { 
-			changePFlag(x, index);
-		}		
+		changePFlag(x, number, index);
+				
 	}
 	
 	public void changeFADD(double number, BigDecimal exact_number){
@@ -493,11 +492,9 @@ public class FPUStatusWord {
 			changeDFlag(number);
 			changeUFlag(number);
 			changeOFlag(number);
-			int index = Double.toString(number).length();		
-			String str = exact_number.toString();
-			if (index >= 18) { 
-				changePFlag(exact_number, index);
-			}
+			int index = Double.toString(number).length();			
+			changePFlag(exact_number, number, index);
+			
 		}		
 	}
 	
@@ -513,11 +510,8 @@ public class FPUStatusWord {
 			changeDFlag(number);
 			changeUFlag(number);
 			changeOFlag(number);
-			int index = Double.toString(number).length();		
-			String str = exact_number.toString();
-			if (index >= 18) { 
-				changePFlag(exact_number, index);
-			}
+			int index = Double.toString(number).length();			
+			changePFlag(exact_number, number, index);		
 		}		
 	}
 	
@@ -544,23 +538,33 @@ public class FPUStatusWord {
 		}			
 	}
 	
-	private void changePFlag(BigDecimal unrounded, int index){		
-		String str_unrounded = unrounded.toPlainString();
-		int intNumber_0 = Integer.parseInt(Character.toString(str_unrounded.charAt(index)));
-		int intNumber_1 = Integer.parseInt(Character.toString(str_unrounded.charAt(index + 1)));
-		if(intNumber_0 >= 5){
-			this.PE = new BooleanValue(true);
-			this.C1 = new BooleanValue(true);
+	private void changePFlag(BigDecimal unrounded, double number, int index){	
+		if (index >= 18) { 
+			String str_unrounded = unrounded.toPlainString();
+			int intNumber_0 = Integer.parseInt(Character.toString(str_unrounded.charAt(index)));
+			int intNumber_1 = Integer.parseInt(Character.toString(str_unrounded.charAt(index + 1)));
+			if (intNumber_0 >= 5) {
+				this.PE = new BooleanValue(true);
+				this.C1 = new BooleanValue(true);
+			}
+			// number 0 1
+			// if (number_1) >5 => round = (number 0) + 1
+			// example 1.2345 => 1.235 => 1.24
+			else if (intNumber_1 >= 5 && (intNumber_0 + 1) >= 5) {
+				this.PE = new BooleanValue(true);
+				this.C1 = new BooleanValue(true);
+			} else {
+				this.PE = new BooleanValue(false);
+			}
 		}
-		// number 0 1
-		// if (number_1) >5 => round = (number 0) + 1
-		// example 1.2345 => 1.235 => 1.24 
-		else if (intNumber_1 >= 5 && (intNumber_0 + 1) >= 5) {
-			this.PE = new BooleanValue(true);
-			this.C1 = new BooleanValue(true);
-		}
-		else {
-			this.PE = new BooleanValue(false);
+		else if (index >=1 ){
+			String str = unrounded.toPlainString();
+			String str_exact = str.substring(0,17);
+			double exact = Double.parseDouble(str_exact);
+			if (exact < number) {
+				this.PE = new BooleanValue(true);
+				this.C1 = new BooleanValue(true);
+			}
 		}
 	}
 	
@@ -594,7 +598,14 @@ public class FPUStatusWord {
 		}
 		else {
 			double temp_st0 = ((DoubleValue) st0).getValue();
-			double temp_src = ((DoubleValue) src).getValue();
+			double temp_src = 0.0;
+			if (src instanceof LongValue){
+				temp_src = ((LongValue)src).getValue();
+			}
+			else {
+				temp_src = ((DoubleValue) src).getValue();
+			}
+			
 			if (Double.isNaN(temp_src) || Double.isNaN(temp_st0)){
 				this.C3 = new BooleanValue(true);
 				this.C2 = new BooleanValue(true);

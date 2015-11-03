@@ -1,5 +1,9 @@
 package v2.org.analysis.environment;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
+import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.DoubleValue;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.SymbolValue;
@@ -250,7 +254,72 @@ public class FPURegister {
 			array[i] = array[i + 1];
 		}
 		array[7] = temp;
-		setArrayST(array);	
-		
+		setArrayST(array);		
 	}	
+	
+	public void FDIV(Value divisor , Value dividend, String str_dest, Environment env){
+		
+		// ST0 || divisor == null, divided with NULL		
+		if (divisor == null || dividend == null) {
+			setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+			env.getFST().changeUnderflow();
+		} else {
+			double temp_dividend = 0.0;
+			double temp_divisor = 0.0;		
+			if(dividend instanceof LongValue) {
+				temp_dividend = ((LongValue)dividend).getValue();
+			}
+			else {
+				temp_dividend = ((DoubleValue) dividend).getValue();
+			}	
+			if (divisor instanceof LongValue){
+				temp_divisor = ((LongValue)divisor).getValue();
+			}
+			else {
+				temp_divisor = ((DoubleValue) divisor).getValue();
+			}
+				
+			// ST0 || divisor == NaN, divided == NaN
+			if (Double.isNaN(temp_divisor) || Double.isNaN(temp_dividend)) {
+				setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+				env.getFST().setC1(new BooleanValue(false));
+			}
+			// xu ly divisor == infinity va divided == infinity
+			// ST0 || divisor = infinity
+			// // ST0/divisor == 0 and dest == 0
+			else if ((Double.isInfinite(temp_divisor) && Double.isInfinite(temp_dividend))
+					|| (temp_divisor == 0 && temp_dividend == 0)) {
+				setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+				env.getFST().setIE(new BooleanValue(true));
+			}
+			// ST0 || divisor = infinity
+			else if ((Double.isInfinite(temp_divisor) && !Double.isInfinite(temp_dividend))) {
+				// not change FST
+				// st0 = infinity (neg or positive) belong st0
+			}
+			// divided == infinity
+			else if (Double.isInfinite(temp_dividend) && !Double.isInfinite(temp_divisor)) {
+				// st0/divisor = 0
+				setFPURegisterValue(str_dest, new DoubleValue(0.0));
+			}
+
+			// divided == 0, ST0 != 0
+			else if (temp_divisor > 0 && temp_dividend == 0) {
+				setFPURegisterValue(str_dest, new DoubleValue(Double.POSITIVE_INFINITY));
+				env.getFST().setZE(new BooleanValue(true));
+			} else if (temp_divisor < 0 && temp_dividend == 0) {
+				setFPURegisterValue(str_dest, new DoubleValue(Double.NEGATIVE_INFINITY));
+				env.getFST().setZE(new BooleanValue(true));
+			}
+			// ST0 = finity
+			else {
+				double result = temp_divisor / temp_dividend;
+				BigDecimal y = new BigDecimal(temp_dividend);
+				BigDecimal x = new BigDecimal(temp_divisor);
+				BigDecimal exact_result = x.divide(y, MathContext.DECIMAL128);
+				setFPURegisterValue(str_dest, new DoubleValue(result));
+				env.getFST().changeFDIV(result, exact_result);
+			}
+		}
+	}
 }
