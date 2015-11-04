@@ -9,10 +9,9 @@ package v2.org.analysis.apihandle.winapi;
 import org.apache.log4j.Logger;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.apihandle.winapi.kernel32.functions.GetProcAddress;
-import v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary;
 import v2.org.analysis.apihandle.winapi.structures.WinNTn.RTL_CRITICAL_SECTION;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.LONG;
 
@@ -361,15 +360,13 @@ public class Test {
 		// String str = "abc";
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
+		
+		String lpFileName = "API_Note.txt";
+		int nBufferLength = 50;
+		char[] lpBuffer = new char[50];
+		Pointer lpFilePart = null;
+		Kernel32DLL.INSTANCE.GetFullPathName(lpFileName, nBufferLength, lpBuffer, lpFilePart);
 
-		LoadLibrary loadLibrary = new LoadLibrary();
-		GetProcAddress address = new GetProcAddress();
-		
-		System.out.println(loadLibrary.execute("kernel32.dll"));
-		System.out.println(loadLibrary.execute("user32.dll"));
-		System.out.println(Kernel32DLL.INSTANCE.LoadLibrary("abc"));
-		System.out.println(address.execute(loadLibrary.execute("kernel32.dll"), "CreateThread"));
-		
 		System.out.println(100 + ":" + 10);
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = 1;

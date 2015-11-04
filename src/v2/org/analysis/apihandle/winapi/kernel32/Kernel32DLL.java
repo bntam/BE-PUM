@@ -52,7 +52,6 @@ import com.sun.jna.platform.win32.WinDef.PVOID;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinDef.UINT_PTR;
 import com.sun.jna.platform.win32.WinDef.WORD;
-import com.sun.jna.platform.win32.WinDef.WORDByReference;
 import com.sun.jna.platform.win32.WinNT.ACL;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.platform.win32.WinNT.LARGE_INTEGER;
@@ -1492,7 +1491,7 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	BOOL GetStringTypeA(/* _In_ */LCID Locale, /* _In_ */DWORD dwInfoType, /* _In_reads_ */
 			String lpSrcStr, /* _In_ */
-			int cchSrc, /* _Out_ */WORDByReference lpCharType);
+			int cchSrc, /* _Out_ */short[] lpCharType);
 
 	/**
 	 * Creates a name for a temporary file. If a unique file name is generated,
@@ -3839,4 +3838,46 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	BOOL SetThreadLocale(/* _In_ */LCID Locale);
 
+	/**
+	 * Retrieves the full path and file name of the specified file. To perform
+	 * this operation as a transacted operation, use the
+	 * GetFullPathNameTransacted function.
+	 * 
+	 * @param lpFileName
+	 *            The name of the file. This parameter can be a short (the 8.3
+	 *            form) or long file name. This string can also be a share or
+	 *            volume name. In the ANSI version of this function, the name is
+	 *            limited to MAX_PATH characters. To extend this limit to 32,767
+	 *            wide characters, call the Unicode version of the function and
+	 *            prepend "\\?\" to the path. For more information, see Naming a
+	 *            File.
+	 * 
+	 * @param nBufferLength
+	 *            The size of the buffer to receive the null-terminated string
+	 *            for the drive and path, in TCHARs.
+	 * 
+	 * @param lpBuffer
+	 *            A pointer to a buffer that receives the null-terminated string
+	 *            for the drive and path.
+	 * 
+	 * @param lpFilePart
+	 *            A pointer to a buffer that receives the address (within
+	 *            lpBuffer) of the final file name component in the path. This
+	 *            parameter can be NULL. If lpBuffer refers to a directory and
+	 *            not a file, lpFilePart receives zero.
+	 * 
+	 * @return If the function succeeds, the return value is the length, in
+	 *         TCHARs, of the string copied to lpBuffer, not including the
+	 *         terminating null character. If the lpBuffer buffer is too small
+	 *         to contain the path, the return value is the size, in TCHARs, of
+	 *         the buffer that is required to hold the path and the terminating
+	 *         null character. If the function fails for any other reason, the
+	 *         return value is zero. To get extended error information, call
+	 *         GetLastError.
+	 */
+	int GetFullPathName(
+	/* _In_ */String lpFileName,
+	/* _In_ */int nBufferLength,
+	/* _Out_ */char[] lpBuffer,
+	/* _Out_ */Pointer lpFilePart);
 }

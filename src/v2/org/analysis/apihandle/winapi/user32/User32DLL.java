@@ -1506,4 +1506,64 @@ public interface User32DLL extends StdCallLibrary {
 	 *         error information, call GetLastError.
 	 */
 	HWND GetParent(/* _In_ */HWND hWnd);
+
+	/**
+	 * Retrieves the length, in characters, of the specified window's title bar
+	 * text (if the window has a title bar). If the specified window is a
+	 * control, the function retrieves the length of the text within the
+	 * control. However, GetWindowTextLength cannot retrieve the length of the
+	 * text of an edit control in another application.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window or control.
+	 * 
+	 * @return If the function succeeds, the return value is the length, in
+	 *         characters, of the text. Under certain conditions, this value may
+	 *         actually be greater than the length of the text. For more
+	 *         information, see the following Remarks section. If the window has
+	 *         no text, the return value is zero. To get extended error
+	 *         information, call GetLastError.
+	 */
+	int GetWindowTextLength(/* _In_ */HWND hWnd);
+
+	/**
+	 * Brings the thread that created the specified window into the foreground
+	 * and activates the window. Keyboard input is directed to the window, and
+	 * various visual cues are changed for the user. The system assigns a
+	 * slightly higher priority to the thread that created the foreground window
+	 * than it does to other threads.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window that should be activated and brought to
+	 *            the foreground.
+	 * 
+	 * @return If the window was brought to the foreground, the return value is
+	 *         nonzero. If the window was not brought to the foreground, the
+	 *         return value is zero.
+	 */
+	BOOL SetForegroundWindow(/* _In_ */HWND hWnd);
+
+	/**
+	 * Determines whether the specified window is minimized (iconic).
+	 * 
+	 * @param hWnd
+	 *            A handle to the window to be tested.
+	 * 
+	 * @return If the window is iconic, the return value is nonzero. If the
+	 *         window is not iconic, the return value is zero.
+	 */
+	BOOL IsIconic(/* _In_ */HWND hWnd);
+
+	/**
+	 * Determines whether the specified window is a native Unicode window.
+	 * 
+	 * @param hWnd
+	 *            A handle to the window to be tested.
+	 * 
+	 * @return If the window is a native Unicode window, the return value is
+	 *         nonzero. If the window is not a native Unicode window, the return
+	 *         value is zero. The window is a native ANSI window.
+	 */
+	BOOL IsWindowUnicode(/* _In_ */HWND hWnd);
+
 }

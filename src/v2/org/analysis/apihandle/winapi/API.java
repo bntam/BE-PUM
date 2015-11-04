@@ -29,7 +29,7 @@ import v2.org.analysis.value.Value;
  * @version 0.2
  */
 public abstract class API {
-	protected static int NUM_OF_PARMS;
+	protected int NUM_OF_PARMS = 0;
 
 	protected String libraryName;
 

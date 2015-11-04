@@ -7,17 +7,17 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.WinDef.DWORD;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.complement.Convert;
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.WinDef.DWORD;
 
 /**
  * Searches for a specified file in a specified path.
@@ -85,7 +85,7 @@ public class SearchPath extends Kernel32API {
 		String lpExtension = (t3 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t3)) : null;
 		DWORD nBufferLength = new DWORD(t4);
 		char[] lpBuffer = new char[(int) t4];
-		Pointer lpFilePart = (t6 != 0L) ? new Pointer(0) : null;
+		Pointer lpFilePart = null;
 
 		DWORD ret = null;
 		if (t1 != 0L && lpPath.length() > 0) {
@@ -98,11 +98,18 @@ public class SearchPath extends Kernel32API {
 		}
 		register.mov("eax", new LongValue(ret.longValue()));
 
-		if (lpBuffer != null)
-			memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpBuffer));
-		if (lpFilePart != null)
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t6),
-					new LongValue(Pointer.nativeValue(lpFilePart)));
+		if (lpBuffer != null) {
+			String path = Convert.reduceText(lpBuffer);
+			memory.setText(new X86MemoryOperand(DataType.INT32, t5), path);
+
+			if (t6 != 0L && ret.intValue() > 0 && ret.intValue() <= nBufferLength.intValue()) {
+				int index = path.lastIndexOf('\\');
+				if (index > -1) {
+					index += t5;
+					memory.setDoubleWordMemoryValue(t6, new LongValue(t5));
+				}
+			}
+		}
 	}
 
 }

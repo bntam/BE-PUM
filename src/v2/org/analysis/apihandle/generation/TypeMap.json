@@ -1656,15 +1656,18 @@
   },
   {
     "from": "LPCTSTR",
-    "to": "String"
+    "to": "String",
+    "fullClassName": "java.lang.String"
   },
   {
     "from": "LPTSTR",
-    "to": "String"
+    "to": "String",
+    "fullClassName": "java.lang.String"
   },
   {
     "from": "LPSTR",
-    "to": "String"
+    "to": "String",
+    "fullClassName": "java.lang.String"
   },
   {
     "from": "LPCTCH",

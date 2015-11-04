@@ -2,12 +2,13 @@ package v2.org.analysis.environment;
 
 import org.jakstab.Program;
 
-import com.sun.jna.Pointer;
-
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
 import v2.org.analysis.log.BPLogger;
+import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.Pointer;
 
 /**
  * This class is used to get the memory value that is not handled by Memory
@@ -26,6 +27,7 @@ public class ExternalMemory {
 		public boolean isValidAddress = false;
 		public LongValue value;
 
+		@Override
 		public String toString() {
 			return "JNA's Address: " + this.address + " is "
 					+ ((this.isValidAddress) ? ("valid, value = " + this.value) : "invalid ");
@@ -60,16 +62,18 @@ public class ExternalMemory {
 		}
 
 		if (!ret.isValidAddress) {
-			BPLogger.reportLogger.warn(String.format("INVALID - Address:%d", ret.address), new Exception());
+			BPLogger.reportLogger.warn(String.format("INVALID - Inst:%s - Address:%d", X86TransitionRule.currentState
+					.getLocation().toString(), ret.address), new Exception());
 		} else {
-			BPLogger.reportLogger.info(String.format("VALID - Address:%d, VALUE:%d", ret.address, ret.value.getValue()));
+			BPLogger.reportLogger.info(String.format("VALID - Inst:%s - Address:%d, VALUE:%d",
+					X86TransitionRule.currentState.getLocation().toString(), ret.address, ret.value.getValue()));
 		}
 
 		return ret;
 
 		// return null;
 	}
-	
+
 	private static long calculateDoubleWordValue(long r1, long r2, long r3, long r4) {
 		/*
 		 * int ret = 0; ret = (int) r1; ret |= r2 << 8; ret |= r3 << 16; ret |=
@@ -133,7 +137,7 @@ class AccessPointerThread implements Runnable {
 			// Thread.sleep(1000);
 			// }
 			byte ret = ptr.getByte(0);
-			this.data.value = new LongValue((long) ret);
+			this.data.value = new LongValue(ret);
 			this.data.isValidAddress = true;
 		} catch (Exception e) {
 			BPLogger.reportLogger.error(e.getMessage(), e);

@@ -524,6 +524,8 @@ public class X86TransitionRule extends TransitionRule {
 		String result[] = line.split(" ");
 		return result[0];
 	}
+	
+	public static BPState currentState = null;
 
 	@Override
 	public void getNewState(BPPath path, List<BPPath> pathList, boolean cond) {
@@ -535,6 +537,14 @@ public class X86TransitionRule extends TransitionRule {
 		BPVertex src = cfg.getVertex(curState.getLocation(), ins);
 
 		String className = findClassName(ins);
+		currentState = curState;
+		
+		if (curState.getLocation().getValue() == 0x40a1c5L) {
+			System.out.println("BUSTED!!!");
+		}
+		if (curState.getLocation().getValue() == 0x40a1c7L) {
+			System.out.println("BUSTED!!!");
+		}
 
 		if (className != null) {
 			try {

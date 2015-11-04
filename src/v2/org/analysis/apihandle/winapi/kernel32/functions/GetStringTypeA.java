@@ -7,18 +7,16 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LCID;
-import com.sun.jna.platform.win32.WinDef.WORDByReference;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Deprecated. Retrieves character type information for the characters in the
@@ -92,13 +90,14 @@ public class GetStringTypeA extends Kernel32API {
 		DWORD dwInfoType = new DWORD(t2);
 		String lpSrcStr = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
 		int cchSrc = (int) t4;
-		WORDByReference lpCharType = new WORDByReference();
+		short[] lpCharType = new short[cchSrc + 1];
 		BOOL ret = Kernel32DLL.INSTANCE.GetStringTypeA(Locale, dwInfoType, lpSrcStr, cchSrc, lpCharType);
 
 		register.mov("eax", new LongValue(ret.longValue()));
 
-		memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(lpCharType.getValue()
-				.longValue()));
+		for (int i = 0; i < lpCharType.length; i++) {
+			memory.setWordMemoryValue(t5 + i, new LongValue(lpCharType[i]));
+		}
 	}
 
 }

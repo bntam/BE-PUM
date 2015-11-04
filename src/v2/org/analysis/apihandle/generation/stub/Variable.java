@@ -18,6 +18,12 @@ public class Variable {
 		this.desc = desc;
 	}
 
+	public Variable(Type type, String name, int order) {
+		this.type = type;
+		this.name = name;
+		this.order = order;
+	}
+
 	public Type getType() {
 		return type;
 	}

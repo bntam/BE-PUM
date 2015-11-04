@@ -30,7 +30,7 @@ import $classPath;
  
 public class $func.funcName extends $func.extendClass {
 
-	public $func.funcName() {
+	public $func.funcName () {
 		super();
 		NUM_OF_PARMS = $func.paramsList.size();
 	}
@@ -48,7 +48,7 @@ public class $func.funcName extends $func.extendClass {
 
 #if ($func.paramsList.size() > 0)
 #foreach( $param in $func.paramsList )
-		$param.type $param.name = $param.initStr;
+		$param.type $param.name = $param.initStr
 #end
 #end
 
