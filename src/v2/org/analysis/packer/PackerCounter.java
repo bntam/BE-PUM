@@ -7,6 +7,7 @@ import org.jakstab.Program;
 import v2.org.analysis.packer.techniques.AntiDebugging;
 import v2.org.analysis.packer.techniques.Checksumming;
 import v2.org.analysis.packer.techniques.CodeChunking;
+import v2.org.analysis.packer.techniques.HardwareBPX;
 import v2.org.analysis.packer.techniques.IndirectJump;
 import v2.org.analysis.packer.techniques.ObfuscatedConst;
 import v2.org.analysis.packer.techniques.OverlappingBlock;
@@ -40,6 +41,7 @@ public class PackerCounter {
 	private PackerTechnique stolenBytesC;
 	private PackerTechnique timingCheckC;
 	private PackerTechnique twoAPIsC;
+	private PackerTechnique	hardwareBpxC;
 	
 	public PackerCounter ()
 	{	
@@ -56,6 +58,7 @@ public class PackerCounter {
 		stolenBytesC		= new StolenBytes();
 		timingCheckC		= new TimingCheck();
 		twoAPIsC			= new TwoSpecialAPIs();
+		hardwareBpxC		= new HardwareBPX();
 		
 		pTechs.add(antiDebuggingC);
 		pTechs.add(checksummingC);
@@ -70,6 +73,7 @@ public class PackerCounter {
 		pTechs.add(stolenBytesC);
 		pTechs.add(timingCheckC);
 		pTechs.add(twoAPIsC);
+		pTechs.add(hardwareBpxC);
 	}
 	
 	public void Execute (boolean run)
@@ -100,5 +104,10 @@ public class PackerCounter {
 		}
 		
 		return result;
+	}
+	
+	public PackerTechnique getTechniques(int index)
+	{
+		return pTechs.get(index);
 	}
 }

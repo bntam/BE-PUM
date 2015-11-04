@@ -3,15 +3,15 @@
  */
 package v2.org.analysis.algorithm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author NMHai
  * 
  * The main algorithm of On-the-fly Model Generation
  * 
  */
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jakstab.Algorithm;
 import org.jakstab.Program;
@@ -40,7 +40,7 @@ public class OTFModelGeneration implements Algorithm {
 	//private static long maxTimeProgam = 3600000;
 	//private static long maxTimePath = 1500000;
 	//private static long bkTime = 2700000;
-	private final static long OUT_TIME = 180000;
+	private static long outTime = 180000;
 	// For Debug
 	private int num = 1, loopCount = 1;
 	private boolean isCompareOlly = true, isChecked = false;
@@ -55,6 +55,7 @@ public class OTFModelGeneration implements Algorithm {
 	private final Program program;
 
 	private boolean detectPacker = true;
+	private int countOEP = 0;
 	
 	public OTFModelGeneration(Program program) {
 		super();
@@ -125,12 +126,6 @@ public class OTFModelGeneration implements Algorithm {
 		/////////////////////////////////////////////////
 		
 		while (!pathList.isEmpty()) {
-			
-			/*if (System.currentTimeMillis() - overallStartTime > maxTimeProgam) { 
-				System.out.println("Stop Program after " + maxTimeProgam); 
-				overallStartTime = System.currentTimeMillis();
-				break;
-			}*/
 
 			path = pathList.remove(pathList.size() - 1);
 			curState = path.getCurrentState();
@@ -138,26 +133,31 @@ public class OTFModelGeneration implements Algorithm {
 			// long overallStartTimePath = System.currentTimeMillis();
 			while (true) {
 				
+				/*
+				if (curState != null && curState.getLocation() != null)
+				{
+					if (curState.getLocation().toString().contains("401000"))
+					{
+						countOEP++;
+						//if (countOEP >= 2)
+						{
+							program.getDetection().packedBy();
+							this.detectPacker = false;
+						}
+					}
+				}
+				*/
+			
 				////////////////////////////////// VIA OTF ////////////////////////////////////////
 				if (this.detectPacker)
 				{
 					program.getDetection().getTechniques().updateChecking(curState, program);
 				}
 				///////////////////////////////////////////////////////////////////////////////////
-				
+				 
 				long overallEndTimeTemp = System.currentTimeMillis();
-				//long time = overallEndTimeTemp - overallStartTemp;
-				//System.out.println("Times: " + time);
 				// Output file each 60s
-				if (overallEndTimeTemp - overallStartTemp > OUT_TIME) {
-
-					// Stop running one paths after maxTimePath
-					/*
-					 * if (overallEndTimeTemp - overallStartTimePath >
-					 * maxTimePath) { Program.getProgram().getLog()
-					 * .info("Stop Path after " + maxTimePath + " at " +
-					 * curState.getLocation()); // break; }
-					 */
+				if (overallEndTimeTemp - overallStartTemp > outTime) {
 
 					backupState(curState);
 					overallStartTemp = overallEndTimeTemp;
@@ -168,27 +168,13 @@ public class OTFModelGeneration implements Algorithm {
 					{
 						program.SetAnalyzingTime(System.currentTimeMillis()
 						- overallStartTime); 
-						program.getDetection().packedBy();
+						program.getDetection().packedByTechniques();
+						program.getDetection().packedByTechniquesFrequency();
 						program.getDetection().updateBackupDetectionState(program, this);
 						program.getDetection().setToLog(program);
 					}
 					////////////////////////////////////////////////////
-					
 				}
-
-				/*if (overallEndTimeTemp - overallStartTime > bkTime) {
-
-					// Stop running one paths after maxTimePath
-					
-					 * if (overallEndTimeTemp - overallStartTimePath >
-					 * maxTimePath) { Program.getProgram().getLog()
-					 * .info("Stop Path after " + maxTimePath + " at " +
-					 * curState.getLocation()); // break; }
-					 
-
-					backupStateAll(curState, bkFile);
-					overallStartTime = overallEndTimeTemp;
-				}*/
 
 				if (path.isStop()) {
 					break;
@@ -196,9 +182,6 @@ public class OTFModelGeneration implements Algorithm {
 
 				inst = curState.getInstruction();
 				location = curState.getLocation();
-								
-				//debugProgram(location, curState, fileState, bkFile);
-				//compareOlly(curState);
 				
 				// PHONG: 20150506 - Update TIB
 				// --------------------------------------
@@ -220,12 +203,12 @@ public class OTFModelGeneration implements Algorithm {
 				} else {
 					rule.getNewState(path, pathList, true);
 				}
-				//path.setPreviousInst(inst);
 			}
 		}
 		// PHONG - 20150724
 		System.out.println("================PACKER DETECTION VIA OTF======================");
-		program.getDetection().packedBy();
+		program.getDetection().packedByTechniques();
+		program.getDetection().packedByTechniquesFrequency();
 		System.out.println("==============================================================");
 	}
 
@@ -390,8 +373,8 @@ public class OTFModelGeneration implements Algorithm {
 			AbsoluteAddress location = state.getLocation();
 			Environment env = state.getEnvironement();
 			if (ollyCompare == null) {
-				long memoryStartAddr = 0x401000;
-				long memoryEndAddr = 0x401010;
+				long memoryStartAddr = 0x409770;
+				long memoryEndAddr = 0x409780;
 				long stackIndex = 0xc;
 				System.out.println("Read file Olly " + "asm/olly/" + fileName + "" + num + ".txt");
 				ollyCompare = new OllyComparisonV2("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
