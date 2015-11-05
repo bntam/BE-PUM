@@ -53,10 +53,10 @@ import com.sun.jna.WString;
 
 public class Main {
 	static {
-		// Yen Nguyen: With so many System.out.print... calls,
+		// Yen Nguyen: With so many System.out.print... calls, 
 		// the console will not able to show all of informations you want.
 		// Set isLog true and them will be saved into Log.log file for you.
-		// boolean isLog = true;
+//		boolean isLog = true;
 		boolean isLog = false;
 		if (isLog) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
@@ -65,7 +65,7 @@ public class Main {
 			setLogToFile(logFile);
 		}
 	}
-
+	
 	private static void setLogToFile(String logFile) {
 		try {
 			System.out.println("================== LOG TO FILE ==================");
@@ -78,7 +78,7 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private static Logger logger = Logger.getLogger(Main.class);
 	private final static String version = "2.0";
 	private static volatile Algorithm activeAlgorithm;
@@ -111,13 +111,13 @@ public class Main {
 		String pathVirus = "";
 		// Path Virus
 		// pathVirus = "asm/sefm14/";
-		// pathVirus = "asm/api/";
+		//pathVirus = "asm/api/";
 		// pathVirus = "asm/APLAS14/";
 		// pathVirus = "asm/virus/";
 		pathVirus = "asm/packer/";
 		// pathVirus = "D:/Temp/Test_week_6/";
 		// pathVirus = "asm/mcvecto/";
-		// pathVirus = "C:/Work/Virus/viruses-20070914/vx.netlux.org/";
+		//pathVirus = "C:/Work/Virus/viruses-20070914/vx.netlux.org/";
 		// pathVirus = "C:/Software/Virus/API/";
 		// pathVirus = "asm/WindowsXP/";
 		// pathVirus = "asm/demo1/";
@@ -175,20 +175,20 @@ public class Main {
 		// SEFM 2015
 		in = "Virus.Win32.Seppuku.3426";
 		in = "Virus.Win32.Seppuku.3291"; // 61 63
-		// in = "Virus.Win32.Savior.1832";
-		// in = "Virus.Win32.Savior.1740"; // 91 94
-		// in = "Virus.Win32.Canabas.2999"; // 385 404 41s
-		// in = "Virus.Win32.Cabanas.b"; // 385 404 41s
-		// in = "Virus.Win32.Cabanas.a"; // 385 404 41s
-		// in = "Email-Worm.Win32.Bagle.af"; // loop Vo tan
-		// in = "Virus.Win32.Wit.a";
-		// in = "Virus.Win32.Htrip.a";
+		//in = "Virus.Win32.Savior.1832";
+		//in = "Virus.Win32.Savior.1740"; // 91 94
+		//in = "Virus.Win32.Canabas.2999"; // 385 404 41s
+		//in = "Virus.Win32.Cabanas.b"; // 385 404 41s
+		//in = "Virus.Win32.Cabanas.a"; //  385 404 41s 
+		//in = "Email-Worm.Win32.Bagle.af"; // loop Vo tan
+		//in = "Virus.Win32.Wit.a";
+		//in = "Virus.Win32.Htrip.a";
 		// in = "Virus.Win32.Eva.a";
 		// in = "Virus.Win32.Cornad";
 		// in = "Virus.Win32.Compan.a"; // 79 87
 		// in = "Virus.Win32.Cerebrus.1482";
 		// in = "Virus.Win32.Bogus.4096"; // 97 107 45s
-		// in = "Virus.Win32.Brof.a"; // 190 210 4s
+		// in = "Virus.Win32.Brof.a"; // 190 210 4s 
 		// in = "Virus.Win32.Benny.3223"; //210 226 4s
 		// in = "Virus.Win32.Benny.3219.a"; // 210 226 5s
 		// in = "Virus.Win32.Belial.a"; // 86 86 5s Yen
@@ -196,18 +196,17 @@ public class Main {
 		// in = "Trojan-PSW.Win32.QQRob.16.d"; // 348 382 2618
 		// in = "Email-Worm.Win32.Coronex.a"; // 219 229 11s
 		// in = "Email-Worm.Win32.Klez.h"; // Header false
-		// in = "Virus.Win32.Artelad.2173"; // 220 228 70 7c817067 - Checked
-		// later
-		// in = "Email-Worm.Win32.Apbost.c"; // 432 462 3
-		// in = "Email-Worm.Win32.LoveLetter.b"; //> 7000 Checked
-		// in = "Virus.Win32.Pulkfer.a"; // 8377 8385 87 Checked later
+		//in = "Virus.Win32.Artelad.2173"; // 220 228 70 7c817067 - Checked later
+		//in = "Email-Worm.Win32.Apbost.c"; // 432 462 3
+		//in = "Email-Worm.Win32.LoveLetter.b"; //> 7000 Checked
+		//in = "Virus.Win32.Pulkfer.a"; // 8377 8385 87 Checked later
 		// in = "Worm.Win32.Deborm.ah"; // Fail due to MOVS with too high loop
 		// SEH
 		in = "Virus.Win32.HLLO.Momac.a"; // Fail due to MOVS with too high
 		// loop
-		in = "Virus.Win32.Donut"; // 4542 4543 truy cap 77e60000
-		// in = "Email-Worm.Win32.Atak.e"; // 5654 5653 2
-		// in = "Email-Worm.Win32.Atak.c"; // 6132 6131 2
+		 in = "Virus.Win32.Donut"; // 4542 4543 truy cap 77e60000
+		//in = "Email-Worm.Win32.Atak.e"; // 5654 5653 2
+		//in = "Email-Worm.Win32.Atak.c"; // 6132 6131 2
 		// in = "Email-Worm.Win32.Kipis.p"; // 40 41 Done
 		// in = "Worm.Win32.Leebad.a"; // 206 209; 49 48 0.7s
 		// in = "Email-Worm.Win32.Bagle.am"; // loop too long
@@ -215,29 +214,27 @@ public class Main {
 		// in = "Virus.Win32.Henky.772.b"; // 16 16 0.5
 		// in = "Virus.Win32.Champ.5495"; // 1057 1105 285 825 865 576s
 		in = "Email-Worm.Win32.Navidad.b"; // 639 688 7161 x
-		// in = "Email-Worm.Win32.Nohoper.7397"; // 746 741 165 x 648 671 623
-		// 645 4769s
-		// in = "Email-Worm.Win32.Apbost.c"; // 304 332 1s SEH C
-		// in = "Email-Worm.Win32.Mydoom.az"; // 952 981 47s x
-		// in = "Email-Worm.Win32.Zeynep.j"; // 442 470 317s 439 467 875 x
-		// in = "Virus.Win32.Cabanas.2999"; // 385 404 45s; 298 310 C
-		// in = "Virus.Win32.Adson.1559"; // 200 219
-		// in = "Virus.Win32.Weird.d"; // 294 312
-		// in = "Virus.Win32.HLLP.Delf.d"; // REP MOVS with too high loop
-		// in = "Virus.Win32.HLLC.Asive"; // 657 671
-		// in = "Virus.Win32.Anuir.3818"; // 26 27 Check later
-		// in = "Email-Worm.Win32.Blebla.A"; // 464 482
-		// in = "Email-Worm.Win32.Lindodia"; // 541 595
-		// in = "Email-Worm.Win32.Sircam.a"; // 538 571
-		// in = "Email-Worm.Win32.Sircam.c"; // 538 571
-		// in = "Email-Worm.Win32.Sober.m"; // 31 32 Checked later
-		// in = "Email-Worm.Win32.Zoek.e"; // 570 587
-		// in = "Email-Worm.Win32.ZippedFiles.a"; // 415 431
-		// in = "Email-Worm.Win32.ZippedFiles.d"; // 333 352
-		// in = "Virus.Win32.Wit.a"; // 102 109 Checked later
+		// in = "Email-Worm.Win32.Nohoper.7397"; // 746 741 165 x 648 671 623 645 4769s
+		//in = "Email-Worm.Win32.Apbost.c"; // 304 332 1s SEH C
+		//in = "Email-Worm.Win32.Mydoom.az"; // 952 981 47s x
+		//in = "Email-Worm.Win32.Zeynep.j"; // 442 470 317s 439 467 875 x
+		//in = "Virus.Win32.Cabanas.2999"; // 385 404 45s; 298 310 C
+		//in = "Virus.Win32.Adson.1559"; // 200 219
+		//in = "Virus.Win32.Weird.d"; // 294 312
+		//in = "Virus.Win32.HLLP.Delf.d"; // REP MOVS with too high loop
+		//in = "Virus.Win32.HLLC.Asive"; // 657 671
+		//in = "Virus.Win32.Anuir.3818"; // 26 27 Check later
+		//in = "Email-Worm.Win32.Blebla.A"; // 464 482
+		//in = "Email-Worm.Win32.Lindodia"; // 541 595
+		//in = "Email-Worm.Win32.Sircam.a"; // 538 571
+		//in = "Email-Worm.Win32.Sircam.c"; // 538 571
+		//in = "Email-Worm.Win32.Sober.m"; // 31 32 Checked later
+		//in = "Email-Worm.Win32.Zoek.e"; // 570 587
+		//in = "Email-Worm.Win32.ZippedFiles.a"; // 415 431
+		//in = "Email-Worm.Win32.ZippedFiles.d"; // 333 352
+		//in = "Virus.Win32.Wit.a"; // 102 109 Checked later
 		in = "Virus.Win32.Weird.c"; // Yen Checked
-		in = "Virus.Win32.FunLove.dam"; // Seek position outside of file bounds:
-										// 1970565737
+		in = "Virus.Win32.FunLove.dam"; // Seek position outside of file bounds: 1970565737
 		in = "Worm.Win32.Rahak.a"; // Checked later
 
 		// Windows
@@ -257,9 +254,6 @@ public class Main {
 		// Undone
 		// in = "api_test_pelock.exe";
 		// in = "api_test_pespin.exe";
-		// in = "api_test_upack.exe"; // Header
-		// in = "api_test_mew.exe"; // Header
-		// in = "api_test_mpess.exe"; // 149 166 50
 		// in = "demo1_fastpack.exe"; // 47 49 98s
 		// in = "api_test_armadillo.exe";
 		// in = "api_test_asprotect.exe";
@@ -267,8 +261,8 @@ public class Main {
 		// in = "api_test_vmprotect.exe"; // 488 532 456s
 		// 466 504
 
-		// in = "api_test_yoda.exe"; // 962 1038 257s
-		// in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
+//		in = "api_test_yoda.exe"; // 962 1038 257s
+		//in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
 
 		// in = "Virus.Win32.Aztec.01"; // 312 330 Done
 
@@ -323,49 +317,50 @@ public class Main {
 		// pathVirus = "asm/packer/";
 		// in = "api_test_pecompact.exe";
 
-		// pathVirus = "asm/api/multithread/";
-		// pathVirus = "asm/api/";
-		// in = "SillyExampleFixed.exe"; // VS 7.0 (VS C++ 6.0)
-		// in = "HOSTNAME.EXE"; // VS 7.0 (VS C++ 6.0)
-		// in = "Temp.exe"; // VS C++ 2005 Express Edition
+//		pathVirus = "asm/api/multithread/";
+		//pathVirus = "asm/api/";
+//		in = "SillyExampleFixed.exe"; // VS 7.0 (VS C++ 6.0)
+		//in = "HOSTNAME.EXE"; // VS 7.0 (VS C++ 6.0)
+//		in = "Temp.exe"; // VS C++ 2005 Express Edition
 		// pathVirus = "asm/virus/";
 		// in = "Virus.Win32.Aztec.01"; // 265 281 113182ms => 324 files
+		
+//		pathVirus = "asm/testcase/";
+		//pathVirus = "asm/api/";
+//		in = "fld.exe"; // VS 7.0 (VS C++ 6.0)
 
-		// pathVirus = "asm/testcase/";
-		// pathVirus = "asm/api/";
-		// in = "fld.exe"; // VS 7.0 (VS C++ 6.0)
-
-		// pathVirus = "asm/loria/";
-		// in =
-		// "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee";
-		// // Check API Yen
-
+//		pathVirus = "asm/loria/";
+//		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee"; // Check API Yen
+		
 		pathVirus = "asm/packer/";
 		in = "api_testv2.exe"; // 2087 2183 16s
-		// in = "api_test.exe"; // 158 160 0.1s x
-		// in = "api_test_upx.exe"; // 323 353 6s x
-		// in = "api_test_fsg.exe"; // 244 268 3s x
-		in = "api_test_pecompact.exe"; // 1127 1178 28s x
-		// in = "api_test_npack.exe"; // 602 639 10s x
-		// in = "api_test_yoda.1.2.exe"; // 625 659 129s x
-		// in = "api_test_yoda.1.3.exe"; // 924 960 54s x
-		in = "api_test_petite_2.3.exe"; // 1569 1637 144s Checked later
-		// in = "api_test_aspack.exe"; // 1047 1112 42s x
-		// in = "api_test_pelock.exe";
-//		in = "api_test_petite.exe"; // 1569 1637 144s Checked later
+//		in = "api_test.exe"; // 158 160 0.1s x
+//		in = "api_test_upx.exe"; // 323 353 6s x
+//		in = "api_test_fsg.exe"; // 244 268 3s x
+//		in = "api_test_pecompact.exe"; // 1127 1178 28s x
+//		in = "api_test_npack.exe"; // 602 639 10s x
+//		in = "api_test_yoda.1.2.exe"; // 625 659 129s x
+//		in = "api_test_yoda.1.3.exe"; // 924 960 54s x
+//		in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
+//		in = "api_test_aspack.exe"; // 1047 1112 42s x
+//		in = "api_test_mew.exe"; // 253 279 5s
+//		in = "api_test_mpess.exe"; // 459 489 103 x
 
-		// in = "demo1.exe"; // 13405 13404 14s x
-		// in = "demo1_upx.exe"; // 13563 13583 337 x
-		// in = "demo1_fsg.exe"; // 13493 13510 13s 0111001010111110-NONE
+//		in = "api_test_pelock.exe";
+//		in = "api_test_upack.exe"; // 269 306 15s
+		
+//		in = "demo1.exe"; // 13405 13404 14s x
+//		in = "demo1_upx.exe"; // 13563 13583 337 x
+//		in = "demo1_fsg.exe"; // 13493 13510 13s 0111001010111110-NONE
 //		in = "demo1_pecompact.exe"; // 788 828 225s
-		// in = "demo1_npack.exe"; // 13851 13881 685s x
-		// in = "demo1_yoda.exe";
-		 in = "demo1_petite.exe"; // Error
-		// in = "demo1_aspack.exe"; // 14278 14334 907s x
-
-//		pathVirus = "asm/packer_count/api_test_v2/";
-//		in = "api_testv2_aspack.exe";
-
+//		in = "demo1_npack.exe"; // 13851 13881 685s x
+//		in = "demo1_yoda.exe";		
+//		in = "demo1_petite.exe"; // Error
+//		in = "demo1_aspack.exe"; // 14278 14334 907s x
+		
+//		 in = "api_test_asprotect.exe";
+//		in = "api_test_upack.exe";
+		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export
@@ -384,8 +379,10 @@ public class Main {
 							new MainWindows();
 						} else if (input.equals("-log")) {
 							String fName = "";
-							if (args[1].contains("\\")) {
-								fName = args[1].substring(args[1].lastIndexOf("\\") + 1, args[1].length());
+							if (args[1].contains("\\"))
+							{
+								fName = args[1].substring(args[1].lastIndexOf("\\") + 1 
+										, args[1].length());
 							} else {
 								fName = args[1];
 							}
@@ -402,7 +399,7 @@ public class Main {
 				path = user_input.next();
 			}
 		}
-
+		
 		if (!isGui) {
 			System.out.println(path);
 			analyzeFile(path);
@@ -631,15 +628,15 @@ public class Main {
 
 			// PHONG: 20150508
 			// DETECT VIA OTF IF COMPLETED
-			// ////////////////////////////////////////////////////////////////////
-			program.SetAnalyzingTime(overallEndTime - overallStartTime);
+			//////////////////////////////////////////////////////////////////////
+			program.SetAnalyzingTime(overallEndTime - overallStartTime); 
 			program.getDetection().updateBackupDetectionState(program, otfMG);
 			program.getDetection().setToLog(program);
-			// ////////////////////////////////////////////////////////////////////
-
+			//////////////////////////////////////////////////////////////////////
+			
 			try {
 				Runtime.getRuntime().removeShutdownHook(shutdownThread);
-				// YenNguyen: Start GUI from this class
+				//YenNguyen: Start GUI from this class
 				if (!isGui) {
 					System.exit(0);
 				}

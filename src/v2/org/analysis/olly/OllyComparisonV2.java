@@ -1,11 +1,16 @@
 package v2.org.analysis.olly;
 
-import org.jakstab.asm.AbsoluteAddress;
-import v2.org.analysis.environment.Environment;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+import org.jakstab.asm.AbsoluteAddress;
+
+import v2.org.analysis.environment.Environment;
 
 public class OllyComparisonV2 {
 	private long nextCheck = 0;
@@ -154,30 +159,32 @@ public class OllyComparisonV2 {
 
 			if (l != null) {
 				nextCheck = l.getLoopID() + 1;
-			} else
+			} else {
 				return "Olly does not contain loop " + count;
+			}
 		}
 
 		if (l.getAddress().getValue() != addr.getValue()) {
-			ret += "Address is not right " + addr + " vs " + l.getAddress()
+			ret += "Address is not right: Expect " + addr + " but Olly contains " + l.getAddress()
 					+ " Bug \n";
 			l = getAddr(addr.getValue(), count);
 
-			if (l != null)
+			if (l != null) {
 				nextCheck = (int) (l.getLoopID() + 1);
-			else {
+			} else {
 				return "Olly does not contain address " + addr + " Bug";
 			}
 		}
 
-		if (count == 1 || count == firstCount)
+		if (count == 1 || count == firstCount) {
 			ret += l.compareBEPUM(env, l, memoryStartAddr, memoryEndAddr,
 					stackIndex);
-		else {
+		} else {
 			OllyLoop l1 = get(count - 1);
 
-			if (l1 == null || l == null)
+			if (l1 == null || l == null) {
 				System.out.println("debug");
+			}
 
 			ret += l.compareBEPUM(env, l1, memoryStartAddr, memoryEndAddr,
 					stackIndex);
@@ -187,10 +194,11 @@ public class OllyComparisonV2 {
 
 	private OllyLoop getAddr(long value, long count) {
 		// TODO Auto-generated method stub
-		for (OllyLoop l : ollyLoop)
-			if (l.getAddress().getValue() == value && l.getLoopID() >= count)
+		for (OllyLoop l : ollyLoop) {
+			if (l.getAddress().getValue() == value && l.getLoopID() >= count) {
 				return l;
-		
+			}
+		}		
 		//List<OllyLoop> old = ollyLoop;
 		//OllyLoop temp = get(count);
 		File olly = new File(this.ollyFileName);
@@ -198,6 +206,7 @@ public class OllyComparisonV2 {
 			Scanner sc = new Scanner(olly);
 			int i = 0;
 			boolean isRead = false;
+			this.ollyLoop.clear();
 			while (sc.hasNextLine() && i < MAXINDEX) {
 				String loop = sc.nextLine();
 				if (loop.contains("loop")) {
@@ -207,10 +216,10 @@ public class OllyComparisonV2 {
 					String stack_line = sc.nextLine();
 					// Get value
 					long id = getLoopIdentifer(loop);
+					
 					long addr = getAddress(loop);
 					if (id >= count && addr == value) {
-						isRead = true;
-						this.ollyLoop.clear();
+						isRead = true;						
 					}
 
 					if (isRead) {
@@ -251,15 +260,18 @@ public class OllyComparisonV2 {
 		if (count < firstCount || count > lastCount) {
 			refreshOllyData(count);
 			
-			if (isFinished())
-				return null; 
+			if (isFinished()) {
+				return null;
+			} 
 			
 			return ollyLoop.get(0);
 		}
 
-		for (OllyLoop l : ollyLoop)
-			if (l.getLoopID() == count)
+		for (OllyLoop l : ollyLoop) {
+			if (l.getLoopID() == count) {
 				return l;
+			}
+		}
 		
 		return null;
 	}
@@ -281,8 +293,9 @@ public class OllyComparisonV2 {
 					String stack_line = sc.nextLine();
 					// Get value
 					long id = getLoopIdentifer(loop);
-					if (id == count)
+					if (id == count) {
 						isRead = true;
+					}
 
 					if (isRead) {
 						long addr = getAddress(loop);

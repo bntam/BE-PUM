@@ -89,15 +89,20 @@ public class SectionHeader {
 
 		StringBuilder nBuilder = new StringBuilder();
 		for (int i = 0; i < 8; i++) {
-			if ((NameArray[i] & 0xFF) > 32 && (NameArray[i] & 0xFF) < 128)
+			if ((NameArray[i] & 0xFF) > 32 && (NameArray[i] & 0xFF) < 128) {
 				nBuilder.append((char) (NameArray[i] & 0xFF));
+			}
 		}
 		name = nBuilder.toString();
 
 		VirtualSize = in.readDWORD();
 		VirtualAddress = in.readDWORD();
-		SizeOfRawData = in.readDWORD();
-		PointerToRawData = in.readDWORD();
+		SizeOfRawData = in.readDWORD();		
+//		if a section's physical start is lower than 200h (the lower limit for standard alignment), it is rounded down to 0. 
+//		Thus, it's a legitimate way to map the header.
+		long temp = in.readDWORD();
+		PointerToRawData = temp<512? 0:temp;
+//		PointerToRawData = temp;		
 		PointerToRelocations = in.readDWORD();
 		PointerToLinenumbers = in.readDWORD();
 		NumberOfRelocations = in.readWORD();

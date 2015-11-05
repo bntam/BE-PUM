@@ -154,16 +154,19 @@ public class PE_Header {
 			// obsolete, ==0
 
 			NumberOfRvaAndSizes = in.readDWORD();
-		} else
+		} else {
 			throw new BinaryParseException("PE_Header: Invalid magic number");
+		}
 
-		if (NumberOfRvaAndSizes < 16)
-			NumberOfRvaAndSizes = 16;
+//		if (NumberOfRvaAndSizes < 16)
+//			NumberOfRvaAndSizes = 16;
 		
 		DataDirectory = new ImageDataDirectory[(int) NumberOfRvaAndSizes];
 		for (int i = 0; i < NumberOfRvaAndSizes; i++)
+		 {
 			DataDirectory[i] = new ImageDataDirectory(in);
 		// output();
+		}
 	}
 
 	public void output() {
@@ -205,8 +208,9 @@ public class PE_Header {
 		for (int i = 0; i < NumberOfRvaAndSizes; i++) {
 			logger.debug("    {\n      VirtualAddress = " + "0x" + Long.toHexString(DataDirectory[i].VirtualAddress)
 					+ "\n      Size = " + DataDirectory[i].Size + "\n    }");
-			if (i < 16)
+			if (i < 16) {
 				logger.debug(ImageDataDirectory.STRINGS[i]);
+			}
 		}
 		logger.debug("  }\n}");
 	}
