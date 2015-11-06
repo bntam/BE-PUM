@@ -199,16 +199,26 @@ public class PEModule extends AbstractCOFFModule {
 
 					/* Read Import Address Table or Import Name Table */
 					long iatFilePtr;
-					if (bound) {
-						iatFilePtr = getFilePointerFromRVA(descriptor.OriginalFirstThunk);
-					} else {
-						iatFilePtr = getFilePointerFromRVA(descriptor.FirstThunk);
-					}
 					// import names will be associated to IAT addresses in any
 					// case
 					// AbsoluteAddress iatAddress = (new RVAPointer(this,
 					// descriptor.FirstThunk)).getVAPointer();
 					AbsoluteAddress iatAddress = new AbsoluteAddress(descriptor.FirstThunk + getBaseAddress());
+					if (bound) {
+						iatFilePtr = getFilePointerFromRVA(descriptor.OriginalFirstThunk);
+						if (iatFilePtr < 0) {
+							long temp = descriptor.OriginalFirstThunk & 0xFFFF;
+							iatFilePtr = getFilePointerFromRVA(temp);
+							iatAddress = new AbsoluteAddress(temp + getBaseAddress());
+						}
+					} else {
+						iatFilePtr = getFilePointerFromRVA(descriptor.FirstThunk);
+						if (iatFilePtr < 0) {
+							long temp = descriptor.FirstThunk & 0xFFFF;
+							iatFilePtr = getFilePointerFromRVA(temp);
+							iatAddress = new AbsoluteAddress(temp + getBaseAddress());
+						}
+					}
 
 					while (true) {
 						inBuf.seek(iatFilePtr);
@@ -235,12 +245,17 @@ public class PEModule extends AbstractCOFFModule {
 
 							long rva = getFilePointerFromRVA(thunk);
 							if (rva < 0) {
-								throw new BinaryParseException("RVA in thunk points outside of image!");
+								// throw new
+								// BinaryParseException("RVA in thunk points outside of image!");
+								inBuf.seek(thunk + 2);
+								String funcName = inBuf.readASCII();
+								importTable.put(iatAddress, Pair.create(libraryFileName, funcName));
+							} else {
+								// Just skip the ord hint (WORD), we don't need it.
+								inBuf.seek(rva + 2);
+								String funcName = inBuf.readASCII();
+								importTable.put(iatAddress, Pair.create(libraryFileName, funcName));
 							}
-							// Just skip the ord hint (WORD), we don't need it.
-							inBuf.seek(rva + 2);
-							String funcName = inBuf.readASCII();
-							importTable.put(iatAddress, Pair.create(libraryFileName, funcName));
 						}
 						// Advance IAT entry by one DWORD
 						iatAddress = new AbsoluteAddress(iatAddress.getValue() + 4);

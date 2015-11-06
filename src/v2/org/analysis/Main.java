@@ -333,33 +333,33 @@ public class Main {
 //		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee"; // Check API Yen
 		
 		pathVirus = "asm/packer/";
-		in = "api_testv2.exe"; // 2087 2183 16s
+//		in = "api_testv2.exe"; // 2064 2151 26s
 //		in = "api_test.exe"; // 158 160 0.1s x
 //		in = "api_test_upx.exe"; // 323 353 6s x
 //		in = "api_test_fsg.exe"; // 244 268 3s x
 //		in = "api_test_pecompact.exe"; // 1127 1178 28s x
 //		in = "api_test_npack.exe"; // 602 639 10s x
-//		in = "api_test_yoda.1.2.exe"; // 625 659 129s x
-//		in = "api_test_yoda.1.3.exe"; // 924 960 54s x
-//		in = "api_test_petite_2.3.exe"; // 1569 1637 144s x
-//		in = "api_test_aspack.exe"; // 1047 1112 42s x
-//		in = "api_test_mew.exe"; // 253 279 5s
+//		in = "api_test_yoda.1.2.exe"; // 625 659 173s x
+//		in = "api_test_yoda.1.3.exe"; // 924 960 163s x
+//		in = "api_test_petite_2.3.exe"; // 1569 1637 86s x
+//		in = "api_test_aspack.exe"; // 1047 1112 73s x
 //		in = "api_test_mpess.exe"; // 459 489 103 x
-
+//		in = "api_test_upack.exe"; // 443 490 153s x
+				
+		in = "api_test_mew.exe"; // 253 279 5s
 //		in = "api_test_pelock.exe";
-//		in = "api_test_upack.exe"; // 269 306 15s
+//		 in = "api_test_asprotect.exe";
+		in = "api_test_pebundle.exe";
 		
 //		in = "demo1.exe"; // 13405 13404 14s x
-//		in = "demo1_upx.exe"; // 13563 13583 337 x
+//		in = "demo1_upx.exe"; // 13563 13583 465 x
 //		in = "demo1_fsg.exe"; // 13493 13510 13s 0111001010111110-NONE
 //		in = "demo1_pecompact.exe"; // 788 828 225s
 //		in = "demo1_npack.exe"; // 13851 13881 685s x
 //		in = "demo1_yoda.exe";		
 //		in = "demo1_petite.exe"; // Error
 //		in = "demo1_aspack.exe"; // 14278 14334 907s x
-		
-//		 in = "api_test_asprotect.exe";
-//		in = "api_test_upack.exe";
+//		in = "demo1_fastpack.exe";
 		
 		String path = pathVirus + in;
 		isGui = false;
