@@ -6,17 +6,16 @@ package v2.org.analysis.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jakstab.Algorithm;
+import org.jakstab.Program;
+import org.jakstab.asm.AbsoluteAddress;
+import org.jakstab.asm.Instruction;
 /**
  * @author NMHai
  * 
  * The main algorithm of On-the-fly Model Generation
  * 
  */
-
-import org.jakstab.Algorithm;
-import org.jakstab.Program;
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86CondJmpInstruction;
 
 import v2.org.analysis.cfg.BPCFG;
@@ -55,7 +54,7 @@ public class OTFModelGeneration implements Algorithm {
 	private final Program program;
 
 	private boolean detectPacker = true;
-	private int countOEP = 0;
+//	private int countOEP = 0;
 	
 	public OTFModelGeneration(Program program) {
 		super();
@@ -67,7 +66,7 @@ public class OTFModelGeneration implements Algorithm {
 		// --------------------------
 		//FileProcess fileState = new FileProcess("data/data/stateValue.txt");
 		//FileProcess bkFile = new FileProcess("data/data/restore.txt");
-		//fileName = "out_" + Program.getProgram().getFileName() + "_";
+		fileName = "out_" + Program.getProgram().getFileName() + "_";
 		//fileName = "out_themida_";
 
 		//fileState.clearContentFile();
@@ -181,8 +180,10 @@ public class OTFModelGeneration implements Algorithm {
 				}
 
 				inst = curState.getInstruction();
-				location = curState.getLocation();
-				
+				location = curState.getLocation();				
+					
+//				compareOlly(curState);
+								
 				// PHONG: 20150506 - Update TIB
 				// --------------------------------------
 				TIB.updateTIB(curState);
@@ -203,6 +204,17 @@ public class OTFModelGeneration implements Algorithm {
 				} else {
 					rule.getNewState(path, pathList, true);
 				}
+				
+				if (this.detectPacker && isOEP(curState.getLocation(), program.getFileName())) {
+					program.SetAnalyzingTime(System.currentTimeMillis()
+							- overallStartTime); 
+					program.getDetection().packedByTechniques();
+					program.getDetection().packedByTechniquesFrequency();
+					program.getDetection().updateBackupDetectionState(program, this);
+					program.getDetection().setToLog(program);
+					
+					this.detectPacker = false;
+				}
 			}
 		}
 		// PHONG - 20150724
@@ -210,6 +222,20 @@ public class OTFModelGeneration implements Algorithm {
 		program.getDetection().packedByTechniques();
 		program.getDetection().packedByTechniquesFrequency();
 		System.out.println("==============================================================");
+	}
+
+	private boolean isOEP(AbsoluteAddress location, String fileName) {
+		// TODO Auto-generated method stub
+		return (location != null) && (fileName.contains("api_test") && location.toString().contains("401000")
+				|| fileName.contains("bof") && location.toString().contains("401000")
+				|| fileName.contains("demo1") && location.toString().contains("401000")
+				|| fileName.contains("demo2") && location.toString().contains("401000")
+				|| fileName.contains("Aztec") && location.toString().contains("401000")
+				|| fileName.contains("Benny") && location.toString().contains("401000")
+				|| fileName.contains("Cabanas") && location.toString().contains("401000")
+				|| fileName.contains("Adson") && location.toString().contains("401000")
+				|| fileName.contains("api_testv2") && location.toString().contains("401131")
+				);
 	}
 
 	private void backupState(BPState curState) {
@@ -373,11 +399,11 @@ public class OTFModelGeneration implements Algorithm {
 			AbsoluteAddress location = state.getLocation();
 			Environment env = state.getEnvironement();
 			if (ollyCompare == null) {
-				long memoryStartAddr = 0x409770;
-				long memoryEndAddr = 0x409780;
+				long memoryStartAddr = 0x401000;
+				long memoryEndAddr = 0x401010;
 				long stackIndex = 0xc;
-				System.out.println("Read file Olly " + "asm/olly/" + fileName + "" + num + ".txt");
-				ollyCompare = new OllyComparisonV2("asm/olly/" + fileName + "" + num + ".txt", memoryStartAddr,
+				System.out.println("Read file Olly " + "data/data/" + fileName + "" + num + ".txt");
+				ollyCompare = new OllyComparisonV2("data/data/" + fileName + "" + num + ".txt", memoryStartAddr,
 						memoryEndAddr, stackIndex);
 				// ollyCompare = new OllyCompare("asm/olly/" + fileName +
 				// ".txt", memoryStartAddr,

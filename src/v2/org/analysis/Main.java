@@ -251,21 +251,6 @@ public class Main {
 		// in = "demo2.exe";
 		// in = "Packed_IczEdit.exe";
 
-		// Undone
-		// in = "api_test_pelock.exe";
-		// in = "api_test_pespin.exe";
-		// in = "demo1_fastpack.exe"; // 47 49 98s
-		// in = "api_test_armadillo.exe";
-		// in = "api_test_asprotect.exe";
-		// in = "api_test_thermida.exe";
-		// in = "api_test_vmprotect.exe"; // 488 532 456s
-		// 466 504
-
-//		in = "api_test_yoda.exe"; // 962 1038 257s
-		//in = "api_test_v2.3_lvl1.exe"; // 19177 19384 179963
-
-		// in = "Virus.Win32.Aztec.01"; // 312 330 Done
-
 		// in = "hostname.exe"; // 291 306 6s x
 		// in = "hostname_upx.exe"; // 339 365 12s 425 461 40 x
 		// in = "hostname_fsg.exe"; // 379 414 172s x
@@ -289,34 +274,7 @@ public class Main {
 		// in = "messagebox_mew.exe";
 		// in = "messagebox_mpress.exe";
 
-		// in = "demo1.exe"; // 13405 13404 10s x
-		// in = "demo1_upx.exe"; // 13563 13583 493s x
-		// in = "demo1_fsg.exe"; // 13493 13510 226s x
-		// in = "demo1_upack.exe"; //
-		// in = "demo1_fastpack.exe"; // 47 49 98s
-		// in = "demo1_asprotect.exe";
-
-		// in = "demo2.exe"; // 8707 8706 5s x
-		// in = "demo2_upx.exe"; // 8867 8887 260s x
-		// in = "demo2_fsg.exe"; // 8795 8812 116 x
-
 		// in = "iexplore_themida.exe";
-
-		// in = "movsb.exe";
-		// in = "BASECALC.EXE";
-
-		// in = "bsf_Test_1.exe";
-		// in = "shrd_1.exe";
-		// in = "bsr.exe";
-		// in = "shld_1.exe";
-		// in = "aam.exe";
-		// Test-case
-		// in = "memory.exe";
-		// in = args[0];
-		// System.out.println(in);
-		// pathVirus = "asm/packer/";
-		// in = "api_test_pecompact.exe";
-
 //		pathVirus = "asm/api/multithread/";
 		//pathVirus = "asm/api/";
 //		in = "SillyExampleFixed.exe"; // VS 7.0 (VS C++ 6.0)
@@ -337,19 +295,33 @@ public class Main {
 //		in = "api_test.exe"; // 158 160 0.1s x
 //		in = "api_test_upx.exe"; // 323 353 6s x
 //		in = "api_test_fsg.exe"; // 244 268 3s x
-//		in = "api_test_pecompact.exe"; // 1127 1178 28s x
+		in = "api_test_pecompact.exe"; // 1127 1178 28s x
 //		in = "api_test_npack.exe"; // 602 639 10s x
 //		in = "api_test_yoda.1.2.exe"; // 625 659 173s x
 //		in = "api_test_yoda.1.3.exe"; // 924 960 163s x
 //		in = "api_test_petite_2.3.exe"; // 1569 1637 86s x
 //		in = "api_test_aspack.exe"; // 1047 1112 73s x
-//		in = "api_test_mpess.exe"; // 459 489 103 x
+//		in = "api_test_mpress.exe"; // 459 489 103 x
 //		in = "api_test_upack.exe"; // 443 490 153s x
-				
-		in = "api_test_mew.exe"; // 253 279 5s
+//		in = "api_test_wwpack32.exe"; // 329 360 4s x
+//		in = "api_test_exepack.exe"; // 323 353 6s x
+//		in = "api_test_WinUpack.exe"; // 443 490 19s
+//		in = "api_test_telock.exe"; // x
+
+		// Undone
+		// in = "api_test_pespin.exe";
+		// in = "demo1_fastpack.exe"; // 47 49 98s
+		// in = "api_test_armadillo.exe";
+		// in = "api_test_asprotect.exe";
+		// in = "api_test_thermida.exe";
+		// in = "api_test_vmprotect.exe"; // 488 532 456s
+//		in = "api_test_mew.exe"; // 253 279 5s
 //		in = "api_test_pelock.exe";
 //		 in = "api_test_asprotect.exe";
-		in = "api_test_pebundle.exe";
+//		in = "api_test_pebundle.exe";
+//		in = "api_test_polycryptpe_1.exe"; // 106 109
+//		in = "api_test_LZEXE.EXE"; // Error parse file
+//		in = "api_test_RLPack.exe";		
 		
 //		in = "demo1.exe"; // 13405 13404 14s x
 //		in = "demo1_upx.exe"; // 13563 13583 465 x
