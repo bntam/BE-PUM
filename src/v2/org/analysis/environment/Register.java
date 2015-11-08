@@ -1441,7 +1441,7 @@ public class Register {
 		uDiv(dest, s);
 	}
 
-	public void setValue(Map<String, Long> z3Value) {
+	public void resetValue(Map<String, Long> z3Value) {
 		// TODO Auto-generated method stub
 		setRegisterValue("eax", eax.evaluate(z3Value));
 		setRegisterValue("ebx", ebx.evaluate(z3Value));

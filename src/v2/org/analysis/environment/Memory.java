@@ -462,7 +462,8 @@ public class Memory {
 				ret1 = ((LongValue) v1).getValue();
 				p = true;
 			} else {
-				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
+//				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
+				return v1;
 			}
 		}
 
@@ -578,7 +579,8 @@ public Value getDoubleWordMemoryValue(long address) {
 				ret1 = ((LongValue) v1).getValue();
 				p = true;
 			} else {
-				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
+//				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
+				return v1;
 			}
 		}
 
@@ -1172,13 +1174,14 @@ public Value getDoubleWordMemoryValue(long address) {
 		return (new GetProcAddress()).execute(libHandle, procName);
 	}
 
-	public void setValue(Map<String, Long> z3Value) {
+	public void resetValue(Map<String, Long> z3Value) {
 		// TODO Auto-generated method stub
-		System.out.println("Implement the memory later.");
-		for (Entry<String, Long> entry : z3Value.entrySet()) {
-
+		//System.out.println("Implement the memory later.");
+		for (Map.Entry<Long, Value> entry : memory.entrySet()) {
+			if (!(entry.getValue() instanceof LongValue)) {
+				entry.setValue(entry.getValue().evaluate(z3Value));
+			}			
 		}
-
 	}
 
 	/*

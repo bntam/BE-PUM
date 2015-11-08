@@ -102,9 +102,9 @@ public class BPState {
 
 	public void setValue(Map<String, Long> z3Value) {
 		// TODO Auto-generated method stub
-		env.getRegister().setValue(z3Value);
-//		env.getMemory().setValue(z3Value);
-		env.getFlag().setValue(z3Value);
+		env.getRegister().resetValue(z3Value);
+		env.getMemory().resetValue(z3Value);
+		env.getFlag().resetValue(z3Value);
 	}
 
 }

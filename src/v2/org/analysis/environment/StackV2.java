@@ -7,6 +7,7 @@ import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
@@ -41,15 +42,17 @@ public class StackV2 extends Stack {
 
 			env.getMemory().setDoubleWordMemoryValue(topAddr, pushedElement);
 			env.getRegister().sub("esp", new LongValue(4));
-		} else
+		} else {
 			System.out.println("Cannot pushed to stack!!!");
+		}
 	}
 
 	@Override
 	public boolean equals(Stack s) {
 		// TODO Auto-generated method stub
-		if (s instanceof StackV2)
+		if (s instanceof StackV2) {
 			return baseAddr == ((StackV2) s).getBaseAddress() && topAddr == ((StackV2) s).getTopAddress();
+		}
 		return false;
 	}
 
@@ -79,14 +82,17 @@ public class StackV2 extends Stack {
 		// TODO Auto-generated method stub
 		Value esp = env.getRegister().getRegisterValue("esp");
 		if (esp instanceof LongValue) {
-			if (num == 32)
+			if (num == 32) {
 				return env.getMemory().getDoubleWordMemoryValue(desp + ((LongValue) esp).getValue());
+			}
 
-			if (num == 8)
+			if (num == 8) {
 				return env.getMemory().getByteMemoryValue(desp + ((LongValue) esp).getValue());
+			}
 
-			if (num == 16)
+			if (num == 16) {
 				return env.getMemory().getWordMemoryValue(desp + ((LongValue) esp).getValue());
+			}
 		}
 
 		return null;
@@ -106,14 +112,17 @@ public class StackV2 extends Stack {
 		// TODO Auto-generated method stub
 		Value esp = env.getRegister().getRegisterValue("esp");
 		if (esp instanceof LongValue) {
-			if (num == 32)
+			if (num == 32) {
 				env.getMemory().setDoubleWordMemoryValue(desp + ((LongValue) esp).getValue(), v);
+			}
 
-			if (num == 16)
+			if (num == 16) {
 				env.getMemory().setWordMemoryValue(desp + ((LongValue) esp).getValue(), v);
+			}
 
-			if (num == 8)
+			if (num == 8) {
 				env.getMemory().setByteMemoryValue(desp + ((LongValue) esp).getValue(), v);
+			}
 		}
 	}
 
@@ -238,8 +247,8 @@ public class StackV2 extends Stack {
 		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
 
 		// push(new LongValue((long) (Math.random() * Math.pow(10, 5))));
-		push(new LongValue(0x1));
-		// push(new LongValue((long) (Math.random() * Math.pow(10, 7))));
+		//push(new LongValue(0x2));
+		push(new LongValue((long) (Math.random() * Math.pow(10, 7))));
 		push(new LongValue(0x7C910208));
 		push(longValue);
 	}
@@ -292,7 +301,7 @@ public class StackV2 extends Stack {
 	private Value normalizeValue(Value v, Instruction inst) {
 		if (v instanceof LongValue) {
 			long t = ((LongValue) v).getValue();
-			return new LongValue((long) Convert.convetUnsignedValue(t, Convert.getBitCount(inst)));
+			return new LongValue(Convert.convetUnsignedValue(t, Convert.getBitCount(inst)));
 		}
 
 		return v;
@@ -319,14 +328,17 @@ public class StackV2 extends Stack {
 			}
 
 			if (ebp != null && ebp instanceof LongValue)
+			 {
 				result += "EBP: "
 						+ env.getMemory().getDoubleWordMemoryValue(
 								new X86MemoryOperand(DataType.INT32, ((LongValue) ebp).getValue()));
 			// return result + " " + (topAddr == ((LongValue) esp).getValue());
+			}
 		}
 
-		if (result == "")
+		if (result == "") {
 			return "Stack is undefined";
+		}
 
 		return result;
 	}
@@ -351,13 +363,16 @@ public class StackV2 extends Stack {
 			}
 
 			if (ebp != null && ebp instanceof LongValue)
+			 {
 				result += "EBP: "
 						+ env.getMemory().getDoubleWordMemoryValue(
 								new X86MemoryOperand(DataType.INT32, ((LongValue) ebp).getValue()));
 			// return result + " " + (topAddr == ((LongValue) esp).getValue());
+			}
 		}
-		if (result == "")
+		if (result == "") {
 			return "Stack is undefined";
+		}
 
 		return result;
 	}
@@ -391,8 +406,9 @@ public class StackV2 extends Stack {
 
 			env.getMemory().setWordMemoryValue(topAddr, pushedElement);
 			env.getRegister().sub("esp", new LongValue(2));
-		} else
+		} else {
 			System.out.println("Cannot pushed to stack!!!");
+		}
 
 	}
 

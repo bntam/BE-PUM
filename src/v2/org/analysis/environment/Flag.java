@@ -2306,7 +2306,7 @@ public class Flag {
 			iFlag = value;
 	}
 
-	public void setValue(Map<String, Long> z3Value) {
+	public void resetValue(Map<String, Long> z3Value) {
 		// TODO Auto-generated method stub
 		setFlagValue("af", aFlag.evaluate(z3Value));
 		setFlagValue("cf", cFlag.evaluate(z3Value));

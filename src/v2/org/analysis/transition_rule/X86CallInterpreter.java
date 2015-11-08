@@ -108,7 +108,7 @@ public class X86CallInterpreter {
 					+ curState.getLocation().toString());
 			Map<String, Long> z3Value = new HashMap<String, Long>();
 
-			z3Value = rule.executeZ3(l);
+			z3Value = rule.executeZ3(l);			
 
 			if (z3Value != null) {
 				Value r1 = r.clone();

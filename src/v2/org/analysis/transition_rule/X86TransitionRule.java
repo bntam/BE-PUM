@@ -951,7 +951,7 @@ public class X86TransitionRule extends TransitionRule {
 				 * 
 				 * //sr.getEnvWeight().addWeight(e); }
 				 */
-				return result;
+				return insertRelatedValue(result);
 			} else {
 				System.out.println("UNSAT");
 			}
@@ -1298,5 +1298,49 @@ public class X86TransitionRule extends TransitionRule {
 
 	public SEHHandle getSEHHandle() {
 		return this.sehHandle;
+	}
+
+	private Map<String, Long> insertRelatedValue(Map<String, Long> list) {
+		// TODO Auto-generated method stub
+		Map<String, Long> clone = new HashMap<String, Long>();
+		for (Map.Entry<String, Long> entry : list.entrySet()) {
+			String t = entry.getKey();
+			long v = entry.getValue();
+			clone.put(t, v);
+			if (t.equals("eax")) {
+				long x = v % 65536;
+				clone.put("ax", x);
+				clone.put("ah", x / 256);
+				clone.put("al", x % 256);
+			} else if (t.equals("ebx")) {
+				long x = v % 65536;
+				clone.put("bx", x);
+				clone.put("bh", x / 256);
+				clone.put("bl", x % 256);
+			} else if (t.equals("ecx")) {
+				long x = v % 65536;
+				clone.put("cx", x);
+				clone.put("ch", x / 256);
+				clone.put("cl", x % 256);
+			} else if (t.equals("edx")) {
+				long x = v % 65536;
+				clone.put("dx", x);
+				clone.put("dh", x / 256);
+				clone.put("dl", x % 256);
+			} else if (t.equals("esi")) {
+				long x = v % 65536;
+				clone.put("si", x);				
+			} else if (t.equals("edi")) {
+				long x = v % 65536;
+				clone.put("di", x);				
+			} else if (t.equals("esp")) {
+				long x = v % 65536;
+				clone.put("sp", x);				
+			} else if (t.equals("ebp")) {
+				long x = v % 65536;
+				clone.put("bp", x);				
+			} 				
+		}
+		return clone;
 	}
 }
