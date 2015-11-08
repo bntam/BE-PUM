@@ -1,5 +1,7 @@
 package v2.org.analysis.complement;
 
+import java.math.BigInteger;
+
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86MemoryOperand;
@@ -14,30 +16,37 @@ public class Convert {
 		// if (v == 4294967295l)
 		// System.out.println("Debug " + 4294967295l);
 
-		if (numCount == 8)
+		if (numCount == 8) {
 			return v & 0x0FF;
-		if (numCount == 16)
+		}
+		if (numCount == 16) {
 			return v & 0x0FFFF;
-		if (numCount == 32)
+		}
+		if (numCount == 32) {
 			return v & 0x0FFFFFFFFl;
-		if (numCount == 64)
+		}
+		if (numCount == 64) {
 			return v & 0x0FFFFFFFFFFFFFFFFl;
+		}
 
 		return v;
 	}
 
 	public static long convertSignedValue(long value, int numBits) {
-		value = (long) Convert.convetUnsignedValue(value, numBits);
+		value = Convert.convetUnsignedValue(value, numBits);
 
 		if (numBits == 8) {
-			if (value >= 128)
+			if (value >= 128) {
 				return value - 256;
+			}
 		} else if (numBits == 16) {
-			if (value >= 32768)
+			if (value >= 32768) {
 				return value - 65536;
+			}
 		} else if (numBits == 32) {
-			if (value >= 2147483648l)
+			if (value >= 2147483648l) {
 				return value - 4294967296l;
+			}
 		}
 
 		return value;
@@ -46,22 +55,26 @@ public class Convert {
 	public static String generateString(Operand op) {
 		if (op.getClass().getSimpleName().equals("X86Register")
 				|| op.getClass().getSimpleName().equals("X86RegisterPart")
-				|| op.getClass().getSimpleName().equals("X86SegmentRegister"))
+				|| op.getClass().getSimpleName().equals("X86SegmentRegister")) {
 			return op.toString().replace("%", "");
-		else if (op.getClass().getSimpleName().equals("X86MemoryOperand")) {
+		} else if (op.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			X86MemoryOperand o = (X86MemoryOperand) op;
 			String ret = "memory";
-			if (o.getBase() != null)
+			if (o.getBase() != null) {
 				ret += "_base_" + o.getBase().toString();
+			}
 
-			if (o.getDisplacement() != 0)
+			if (o.getDisplacement() != 0) {
 				ret += "_disp_" + o.getDisplacement();
+			}
 
-			if (o.getIndex() != null)
+			if (o.getIndex() != null) {
 				ret += "_index_" + o.getIndex().toString();
+			}
 
-			if (o.getSegmentRegister() != null)
+			if (o.getSegmentRegister() != null) {
 				ret += "_segment_" + o.getSegmentRegister().toString();
+			}
 
 			ret = ret.replace("%", "");
 			return ret;
@@ -75,36 +88,39 @@ public class Convert {
 		// int temp = t & 0xff;
 		if (d == 8) {
 			String temp = Long.toHexString(t & 0xff);
-			if (temp.length() == 1)
+			if (temp.length() == 1) {
 				temp = "0" + temp;
+			}
 			return temp;
 		} else if (d == 16) {
 			String temp = Long.toHexString(t & 0xffff);
-			if (temp.length() == 1)
+			if (temp.length() == 1) {
 				temp = "000" + temp;
-			else if (temp.length() == 2)
+			} else if (temp.length() == 2) {
 				temp = "00" + temp;
-			else if (temp.length() == 3)
+			} else if (temp.length() == 3) {
 				temp = "0" + temp;
+			}
 			return temp;
 
 		} else if (d == 32) {
 			String temp = Long.toHexString(t & 0xffffffff);
 
-			if (temp.length() == 1)
+			if (temp.length() == 1) {
 				temp = "00000000" + temp;
-			else if (temp.length() == 2)
+			} else if (temp.length() == 2) {
 				temp = "000000" + temp;
-			else if (temp.length() == 3)
+			} else if (temp.length() == 3) {
 				temp = "00000" + temp;
-			else if (temp.length() == 4)
+			} else if (temp.length() == 4) {
 				temp = "0000" + temp;
-			else if (temp.length() == 5)
+			} else if (temp.length() == 5) {
 				temp = "000" + temp;
-			else if (temp.length() == 6)
+			} else if (temp.length() == 6) {
 				temp = "00" + temp;
-			else if (temp.length() == 7)
+			} else if (temp.length() == 7) {
 				temp = "0" + temp;
+			}
 
 			return temp;
 		}
@@ -131,12 +147,13 @@ public class Convert {
 
 	public static int getBitCount(Instruction ins) {
 		// TODO Auto-generated method stub
-		if (ins.getName().endsWith("b"))
+		if (ins.getName().endsWith("b")) {
 			return 8;
-		else if (ins.getName().endsWith("l"))
+		} else if (ins.getName().endsWith("l")) {
 			return 32;
-		else if (ins.getName().endsWith("s") || ins.toString().endsWith("w"))
+		} else if (ins.getName().endsWith("s") || ins.toString().endsWith("w")) {
 			return 16;
+		}
 		return 0;
 	}
 
@@ -144,16 +161,17 @@ public class Convert {
 		// TODO Auto-generated method stub
 		if (regName.contains("eax") || regName.contains("ebx") || regName.contains("ecx") || regName.contains("edx")
 				|| regName.contains("esi") || regName.contains("edi") || regName.contains("esp")
-				|| regName.contains("ebp") || regName.contains("efl"))
+				|| regName.contains("ebp") || regName.contains("efl")) {
 			return 32;
-		else if (regName.contains("ax") || regName.contains("bx") || regName.contains("cx") || regName.contains("dx")
-				|| regName.contains("si") || regName.contains("di") || regName.contains("sp") || regName.contains("bp"))
+		} else if (regName.contains("ax") || regName.contains("bx") || regName.contains("cx") || regName.contains("dx")
+				|| regName.contains("si") || regName.contains("di") || regName.contains("sp") || regName.contains("bp")) {
 			return 16;
-		else if (regName.contains("al") || regName.contains("ah") || regName.contains("bh") || regName.contains("bl")
+		} else if (regName.contains("al") || regName.contains("ah") || regName.contains("bh") || regName.contains("bl")
 				|| regName.contains("cl") || regName.contains("ch") || regName.contains("dl") || regName.contains("dh")
 		// || regName.contains("sp") || regName.contains("bp")
-		)
+		) {
 			return 8;
+		}
 
 		return 0;
 	}
@@ -161,8 +179,9 @@ public class Convert {
 	public static int getSignBit(long d, int num) {
 		// TODO Auto-generated method stub
 		if ((num == 8 && d >= Math.pow(2, 7)) || (num == 16 && d >= Math.pow(2, 15))
-				|| (num == 32 && d >= Math.pow(2, 31)))
+				|| (num == 32 && d >= Math.pow(2, 31))) {
 			return 1;
+		}
 
 		return 0;
 	}
@@ -202,16 +221,24 @@ public class Convert {
 			// if (v == 4294967295l)
 			// System.out.println("Debug " + 4294967295l);
 
-			if (numCount == 8)
+			if (numCount == 8) {
 				return v | 0x80;
-			if (numCount == 16)
+			}
+			if (numCount == 16) {
 				return v | 0x8000;
-			if (numCount == 32)
+			}
+			if (numCount == 32) {
 				return v | 0x80000000l;
-			if (numCount == 64)
+			}
+			if (numCount == 64) {
 				return v & 0x8000000000000000l;
+			}
 
 			return v;
-		}
+	}
 
+	public static long parseLongFromString(String temp) {
+		// TODO Auto-generated method stub
+		return (new BigInteger(temp, 16)).longValue();
+	}
 }

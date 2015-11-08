@@ -180,8 +180,8 @@ public class OTFModelGeneration implements Algorithm {
 				}
 
 				inst = curState.getInstruction();
-				location = curState.getLocation();				
-					
+				location = curState.getLocation();	
+				
 //				compareOlly(curState);
 								
 				// PHONG: 20150506 - Update TIB

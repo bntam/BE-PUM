@@ -65,15 +65,17 @@ public class BPState {
 		this.inst = inst;
 	}
 
+	@Override
 	public BPState clone() {
 		BPState ret = new BPState();
 		ret.setEnvironment(env.clone());
 		ret.setFeasiblePath(feasible);
 		ret.setInstruction(inst);
-		if (location != null)
+		if (location != null) {
 			ret.setLocation(new AbsoluteAddress(location.getValue()));
-		else
+		} else {
 			ret.setLocation(null);
+		}
 		return ret;
 	}
 
@@ -101,7 +103,7 @@ public class BPState {
 	public void setValue(Map<String, Long> z3Value) {
 		// TODO Auto-generated method stub
 		env.getRegister().setValue(z3Value);
-		//env.getMemory().setValue(z3Value);
+//		env.getMemory().setValue(z3Value);
 		env.getFlag().setValue(z3Value);
 	}
 

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 import org.jakstab.Program;
 
-import com.sun.jna.WString;
-
 import v2.org.analysis.algorithm.OTFModelGeneration;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.cfg.BPCFG;
+
+import com.sun.jna.WString;
 
 public class PackerDetection {
 
@@ -237,7 +237,11 @@ public class PackerDetection {
 		String times = Long.toString(prog.GetAnalyzingTime());
 		String convergence = otfMG.isCompleted() ? "x": " ";
 		
-		String result = fileName + "\t" + viaHeader + "\t";
+		String result = fileName + "\t" + viaHeader + "\t";	
+		if (viaTechniques == null) {
+			return;
+		}
+		
 		for(int i = 0; i < viaTechniques.split("-")[0].length(); i++)
 		{
 			if (viaTechniques.split("-")[0].charAt(i) == '1') {

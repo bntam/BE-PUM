@@ -628,6 +628,7 @@ public class X86TransitionRule extends TransitionRule {
 		// TODO Auto-generated method stub
 		long val = 0;
 		String result[] = line.split(" ");
+		String temp = "";
 
 		if (result[0].contains("Flag")) {
 			if (result[2].contains("false")) {
@@ -639,18 +640,21 @@ public class X86TransitionRule extends TransitionRule {
 		}
 
 		if (result[2].startsWith("(")) {
-			val = Long.parseLong(result[3].substring(0, result[3].length() - 1));
+			temp = result[3].substring(0, result[3].length() - 1);
+			val = Convert.parseLongFromString(temp);
 			// if (val > 100000) val = 0;
 			if (result[2].substring(1).equals("-")) {
 				val = -val;
 			}
 		} else if (result[2].contains("[")) {
-			val = Long.parseLong(result[2].substring(2, result[2].indexOf("[")));
+			temp = result[2].substring(2, result[2].indexOf("["));
+			val = Convert.parseLongFromString(temp);
 			if (val >= Math.pow(2, 31)) {
 				val = (long) (val - Math.pow(2, 32));
 			}
 		} else {
-			val = Long.parseLong(result[2].substring(2, result[2].length()));
+			temp = result[2].substring(2, result[2].length());
+			val = Convert.parseLongFromString(temp);
 			if (val >= Math.pow(2, 31)) {
 				val = (long) (val - Math.pow(2, 32));
 			}
@@ -662,6 +666,7 @@ public class X86TransitionRule extends TransitionRule {
 		// TODO Auto-generated method stub
 		long val = 0;
 		String result[] = line.split(" ");
+		String temp = "";
 		if (result[0].contains("Flag")) {
 			if (result[2].contains("false")) {
 				val = 0;
@@ -672,17 +677,18 @@ public class X86TransitionRule extends TransitionRule {
 		}
 
 		if (result[2].startsWith("(")) {
-			val = Long.parseLong(result[3].substring(0, result[3].length() - 1));
+			temp = result[3].substring(0, result[3].length() - 1);
+			val = Convert.parseLongFromString(temp);
 			// if (val > 100000) val = 0;
 			if (result[2].substring(1).equals("-")) {
 				val = -val;
 			}
 		} else if (result[2].contains("[")) {
-			String temp = result[2].substring(2, result[2].indexOf("["));
-			val = Long.parseLong(temp);
+			temp = result[2].substring(2, result[2].indexOf("["));
+			val = Convert.parseLongFromString(temp);
 		} else {
-			String temp = result[2].substring(2, result[2].length());
-			val = Long.parseLong(temp);
+			temp = result[2].substring(2, result[2].length());
+			val = Convert.parseLongFromString(temp);
 			// if (val >= Math.pow(2, 31))
 			// val = (long) (val - Math.pow(2, 32));
 		}

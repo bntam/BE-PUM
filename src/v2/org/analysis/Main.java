@@ -333,6 +333,9 @@ public class Main {
 //		in = "demo1_aspack.exe"; // 14278 14334 907s x
 //		in = "demo1_fastpack.exe";
 		
+		pathVirus = "asm/testcase/";
+		in = "multiMemorySymbol.exe";
+		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export
