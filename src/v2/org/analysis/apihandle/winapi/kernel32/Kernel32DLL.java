@@ -3880,4 +3880,20 @@ public interface Kernel32DLL extends StdCallLibrary {
 	/* _In_ */int nBufferLength,
 	/* _Out_ */char[] lpBuffer,
 	/* _Out_ */Pointer lpFilePart);
+
+	/**
+	 * Determines whether the specified processor feature is supported by the
+	 * current computer.
+	 * 
+	 * @param ProcessorFeature
+	 *            The processor feature to be tested. This parameter can be one
+	 *            of the following values.
+	 * 
+	 * @return If the feature is supported, the return value is a nonzero value.
+	 *         If the feature is not supported, the return value is zero. If the
+	 *         HAL does not support detection of the feature, whether or not the
+	 *         hardware supports the feature, the return value is also zero.
+	 */
+	BOOL IsProcessorFeaturePresent(/* _In_ */int ProcessorFeature);
+
 }

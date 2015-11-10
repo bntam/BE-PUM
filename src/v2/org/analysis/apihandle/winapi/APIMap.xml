@@ -157,6 +157,7 @@
 		<API funcName="isbadwriteptr" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadWritePtr" />
 		<API funcName="isdbcsleadbyte" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDBCSLeadByte" />
 		<API funcName="isdebuggerpresent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDebuggerPresent" />
+		<API funcName="isprocessorfeaturepresent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsProcessorFeaturePresent" />
 		<API funcName="iswow64process" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsWow64Process" />
 		<API funcName="lcmapstring" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LCMapString" />
 		<API funcName="leavecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LeaveCriticalSection" />
@@ -190,7 +191,6 @@
 		<API funcName="process32next" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Process32Next" />
 		<API funcName="queryperformancecounter" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceCounter" />
 		<API funcName="queryperformancefrequency" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceFrequency" />
-		<API funcName="readfile.class" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile.class" />
 		<API funcName="readfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile" />
 		<API funcName="readprocessmemory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadProcessMemory" />
 		<API funcName="registerwowexec" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RegisterWowExec" />
