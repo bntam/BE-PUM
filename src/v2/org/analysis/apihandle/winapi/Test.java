@@ -8,12 +8,14 @@ package v2.org.analysis.apihandle.winapi;
 
 import org.apache.log4j.Logger;
 
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
+import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
 import v2.org.analysis.apihandle.winapi.structures.WinNTn.RTL_CRITICAL_SECTION;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.LONG;
+import com.sun.jna.ptr.IntByReference;
 
 //import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
@@ -22,7 +24,7 @@ import com.sun.jna.platform.win32.WinDef.LONG;
  *
  */
 public class Test {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(Test.class);
 
 	/**
@@ -360,14 +362,47 @@ public class Test {
 		// String str = "abc";
 		// x = Advapi32.INSTANCE.RegSetValueEx(phkResult.getValue(), "testPath",
 		// 0, EKeyValueType.REG_SZ.getValue(), str.toCharArray(), 7);
-		
-		String lpFileName = "API_Note.txt";
-		int nBufferLength = 50;
-		char[] lpBuffer = new char[50];
-		Pointer lpFilePart = null;
-		Kernel32DLL.INSTANCE.GetFullPathName(lpFileName, nBufferLength, lpBuffer, lpFilePart);
+
+		// String lpFileName = "API_Note.txt";
+		// int nBufferLength = 50;
+		// char[] lpBuffer = new char[50];
+		// Pointer lpFilePart = null;
+		// Kernel32DLL.INSTANCE.GetFullPathName(lpFileName, nBufferLength,
+		// lpBuffer, lpFilePart);
+
+		Pointer ret = MSVCRTDLL.INSTANCE.__p___initenv();
+		System.out.println(Pointer.nativeValue(ret.getPointer(0)));
+		int c = 0;
+		while (true) {
+			try {
+				String env = ret.getPointer(0).getPointer(c * 4).getString(0);
+				System.out.println(String.format("ret[%d]: %s", c, env));
+				c += 1;
+			} catch (Exception ex) {
+				break;
+			}
+		}
 
 		System.out.println(100 + ":" + 10);
+
+		IntByReference _Argc = new IntByReference();
+		com.sun.jna.Memory _Argv = new com.sun.jna.Memory(4);
+		com.sun.jna.Memory _Env = new com.sun.jna.Memory(4);
+		int _DoWildCard = 0;
+		_startupinfo _StartInfo = new _startupinfo();
+
+		MSVCRTDLL.INSTANCE.__getmainargs(_Argc, _Argv, _Env, _DoWildCard, null);
+		c = 0;
+		while (true) {
+			try {
+				String env = _Env.getPointer(0).getPointer(c * 4).getString(0);
+				System.out.println(String.format("_Env[%d]: %s", c, env));
+				c += 1;
+			} catch (Exception ex) {
+				break;
+			}
+		}
+
 		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
 		x = 1;
 	}

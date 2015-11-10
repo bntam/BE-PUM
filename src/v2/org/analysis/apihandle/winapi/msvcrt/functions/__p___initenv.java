@@ -12,9 +12,11 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
+import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
 import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
 
 /**
  * @author Yen Nguyen
@@ -31,10 +33,15 @@ public class __p___initenv extends MSVCRTAPI {
 	public void execute() {
 		Pointer ret = MSVCRTDLL.INSTANCE.__p___initenv();
 
-		// Pointer to memory space of ret
-		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer(0))));
-
 		int c = 0;
+
+		if (Pointer.nativeValue(ret.getPointer(0)) == 0L) {
+			com.sun.jna.Memory _Env = new com.sun.jna.Memory(4);
+
+			MSVCRTDLL.INSTANCE.__getmainargs(new IntByReference(), new com.sun.jna.Memory(4), _Env, 0, new _startupinfo());
+			ret = _Env;
+		}
+
 		while (true) {
 			try {
 				memory.setDoubleWordMemoryValue(
@@ -54,6 +61,9 @@ public class __p___initenv extends MSVCRTAPI {
 				break;
 			}
 		}
+
+		// Pointer to memory space of ret
+		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer(0))));
 	}
 
 }
