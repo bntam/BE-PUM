@@ -598,9 +598,7 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	int fputs(String content, FILE fp);
 
 	String fgets(Memory memory, int size, FILE fp);
-
-	int fclose(FILE fp);
-
+	
 	/**
 	 * Deallocate memory block
 	 * 
@@ -679,4 +677,25 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *         str1 than in str2
 	 */
 	int strncmp(String str1, String str2, int num);
+
+	/**
+	 * Close file
+	 * 
+	 * Closes the file associated with the stream and disassociates it.
+	 * 
+	 * All internal buffers associated with the stream are disassociated from it
+	 * and flushed: the content of any unwritten output buffer is written and
+	 * the content of any unread input buffer is discarded.
+	 * 
+	 * Even if the call fails, the stream passed as parameter will no longer be
+	 * associated with the file nor its buffers.
+	 * 
+	 * @param stream
+	 *            Pointer to a FILE object that specifies the stream to be
+	 *            closed.
+	 * 
+	 * @return If the stream is successfully closed, a zero value is returned.
+	 *         On failure, EOF is returned.
+	 */
+	int fclose(Pointer stream);
 }

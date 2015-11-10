@@ -7,15 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.Pointer;
-
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
+import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.Pointer;
 
 /**
  * Open file
@@ -106,6 +104,8 @@ public class fopen extends MSVCRTAPI {
 
 		String filename = memory.getText(t1);
 		String mode = memory.getText(t2);
+		
+		filename = Storage.getMappingPath(filename);
 
 		System.out.println(String.format("Path: %s, Mode: %s", filename, mode));
 
@@ -123,37 +123,35 @@ public class fopen extends MSVCRTAPI {
 
 			long ptr = Pointer.nativeValue(ret.getPointer());
 			if (ret._ptr != null && Pointer.nativeValue(ret._ptr) != 0L) {
-				memory.setText(new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret._ptr)),
-						ret._ptr.getString(0));
+				memory.setText(Pointer.nativeValue(ret._ptr), ret._ptr.getString(0));
 			}
 			ptr += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, ptr), new LongValue(ret._cnt));
+			memory.setDoubleWordMemoryValue(ptr, new LongValue(ret._cnt));
 			ptr += 4;
 
 			if (ret._base != null && Pointer.nativeValue(ret._base) != 0L) {
-				memory.setText(new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret._base)),
-						ret._base.getString(0));
+				memory.setText(Pointer.nativeValue(ret._base), ret._base.getString(0));
 			}
 			ptr += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, ptr), new LongValue(ret._flag));
+			memory.setDoubleWordMemoryValue(ptr, new LongValue(ret._flag));
 			ptr += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, ptr), new LongValue(ret._file));
+			memory.setDoubleWordMemoryValue(ptr, new LongValue(ret._file));
 			ptr += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, ptr), new LongValue(ret._charbuf));
+			memory.setDoubleWordMemoryValue(ptr, new LongValue(ret._charbuf));
 			ptr += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, ptr), new LongValue(ret._bufsiz));
+			memory.setDoubleWordMemoryValue(ptr, new LongValue(ret._bufsiz));
 			ptr += 4;
 
 			if (ret._tmpfname != null && Pointer.nativeValue(ret._tmpfname) != 0L) {
-				memory.setText(new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret._tmpfname)),
-						ret._tmpfname.getString(0));
+				memory.setText(Pointer.nativeValue(ret._tmpfname), ret._tmpfname.getString(0));
 			}
+
+			register.mov("eax", new LongValue(ptr));
 		}
 	}
-
 }

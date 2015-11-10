@@ -987,16 +987,20 @@ public Value getDoubleWordMemoryValue(long address) {
 		}
 	}
 
-	public void setText(X86MemoryOperand m, String str) {
+	public void setText(long address, String str) {
 		str = Convert.reduceText(str);
 		char[] t = str.toCharArray();
-		long disp = evaluateAddress(m);
 
 		for (int i = 0; i < t.length; i++) {
 			int x = t[i];
-			this.setByteMemoryValue(disp, new LongValue(x));
-			disp++;
+			this.setByteMemoryValue(address, new LongValue(x));
+			address++;
 		}
+	}
+
+	public void setText(X86MemoryOperand m, String str) {
+		long disp = evaluateAddress(m);
+		this.setText(disp, str);
 	}
 
 	public long setText(X86MemoryOperand m, String str, long value) {
