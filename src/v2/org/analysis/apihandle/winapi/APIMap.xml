@@ -99,6 +99,7 @@
 		<API funcName="getfilesize" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetFileSize" />
 		<API funcName="getfiletime" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetFileTime" />
 		<API funcName="getfiletype" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetFileType" />
+		<API funcName="getfullpathname" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetFullPathName" />
 		<API funcName="getlargestconsolewindowsize" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetLargestConsoleWindowSize" />
 		<API funcName="getlasterror" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetLastError" />
 		<API funcName="getlocaleinfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetLocaleInfo" />
@@ -189,6 +190,7 @@
 		<API funcName="process32next" className="v2.org.analysis.apihandle.winapi.kernel32.functions.Process32Next" />
 		<API funcName="queryperformancecounter" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceCounter" />
 		<API funcName="queryperformancefrequency" className="v2.org.analysis.apihandle.winapi.kernel32.functions.QueryPerformanceFrequency" />
+		<API funcName="readfile.class" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile.class" />
 		<API funcName="readfile" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadFile" />
 		<API funcName="readprocessmemory" className="v2.org.analysis.apihandle.winapi.kernel32.functions.ReadProcessMemory" />
 		<API funcName="registerwowexec" className="v2.org.analysis.apihandle.winapi.kernel32.functions.RegisterWowExec" />
@@ -262,10 +264,13 @@
 		<API funcName="memset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
 		<API funcName="remove" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.remove" />
 		<API funcName="srand" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.srand" />
+		<API funcName="strncat" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strncat" />
+		<API funcName="strncmp" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strncmp" />
 		<API funcName="strrchr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strrchr" />
 		<API funcName="strstr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.strstr" />
 		<API funcName="time" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.time" />
 		<API funcName="_cexit" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._cexit" />
+		<API funcName="_chkesp" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._chkesp" />
 		<API funcName="_controlfp" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._controlfp" />
 		<API funcName="_except_handler3" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._except_handler3" />
 		<API funcName="_fpreset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
@@ -279,6 +284,7 @@
 		<API funcName="__p__commode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__commode" />
 		<API funcName="__p__environ" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__environ" />
 		<API funcName="__p__fmode" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p__fmode" />
+		<API funcName="__p___initenv" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__p___initenv" />
 		<API funcName="__set_app_type" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.__set_app_type" />
 	</DLL>
 	<DLL name="ntdll">
@@ -351,11 +357,14 @@
 		<API funcName="getwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowLong" />
 		<API funcName="getwindowrect" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowRect" />
 		<API funcName="getwindowtext" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowText" />
+		<API funcName="getwindowtextlength" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowTextLength" />
 		<API funcName="getwindowthreadprocessid" className="v2.org.analysis.apihandle.winapi.user32.functions.GetWindowThreadProcessId" />
 		<API funcName="inflaterect" className="v2.org.analysis.apihandle.winapi.user32.functions.InflateRect" />
 		<API funcName="insertmenuitem" className="v2.org.analysis.apihandle.winapi.user32.functions.InsertMenuItem" />
 		<API funcName="ischild" className="v2.org.analysis.apihandle.winapi.user32.functions.IsChild" />
 		<API funcName="isdialogmessage" className="v2.org.analysis.apihandle.winapi.user32.functions.IsDialogMessage" />
+		<API funcName="isiconic" className="v2.org.analysis.apihandle.winapi.user32.functions.IsIconic" />
+		<API funcName="iswindowunicode" className="v2.org.analysis.apihandle.winapi.user32.functions.IsWindowUnicode" />
 		<API funcName="iswindowvisible" className="v2.org.analysis.apihandle.winapi.user32.functions.IsWindowVisible" />
 		<API funcName="iszoomed" className="v2.org.analysis.apihandle.winapi.user32.functions.IsZoomed" />
 		<API funcName="loadbitmap" className="v2.org.analysis.apihandle.winapi.user32.functions.LoadBitmap" />
@@ -379,6 +388,7 @@
 		<API funcName="setclasslong" className="v2.org.analysis.apihandle.winapi.user32.functions.SetClassLong" />
 		<API funcName="setcursor" className="v2.org.analysis.apihandle.winapi.user32.functions.SetCursor" />
 		<API funcName="setfocus" className="v2.org.analysis.apihandle.winapi.user32.functions.SetFocus" />
+		<API funcName="setforegroundwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.SetForegroundWindow" />
 		<API funcName="setlasterrorex" className="v2.org.analysis.apihandle.winapi.user32.functions.SetLastErrorEx" />
 		<API funcName="setwindowlong" className="v2.org.analysis.apihandle.winapi.user32.functions.SetWindowLong" />
 		<API funcName="showcaret" className="v2.org.analysis.apihandle.winapi.user32.functions.ShowCaret" />

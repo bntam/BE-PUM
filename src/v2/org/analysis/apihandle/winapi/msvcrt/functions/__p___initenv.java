@@ -1,0 +1,59 @@
+/**
+ * Project: BE-PUMv2
+ * Package name: v2.org.analysis.apihandle.winapi.msvcrt.functions
+ * File name: __p___initenv.java
+ * Created date: Nov 10, 2015
+ * Description:
+ */
+package v2.org.analysis.apihandle.winapi.msvcrt.functions;
+
+import org.jakstab.asm.DataType;
+import org.jakstab.asm.x86.X86MemoryOperand;
+
+import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
+import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
+import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.Pointer;
+
+/**
+ * @author Yen Nguyen
+ *
+ */
+public class __p___initenv extends MSVCRTAPI {
+
+	public __p___initenv() {
+		super();
+		NUM_OF_PARMS = 0;
+	}
+
+	@Override
+	public void execute() {
+		Pointer ret = MSVCRTDLL.INSTANCE.__p___initenv();
+
+		// Pointer to memory space of ret
+		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer(0))));
+
+		int c = 0;
+		while (true) {
+			try {
+				memory.setDoubleWordMemoryValue(
+						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret.getPointer(0))), new LongValue(
+								Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4))));
+				memory.setDoubleWordMemoryValue(
+						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4))),
+						new LongValue(Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4).getPointer(0))));
+
+				String env = ret.getPointer(0).getPointer(c * 4).getString(0);
+				memory.setText(
+						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4)
+								.getPointer(0))), env);
+				System.out.println(String.format("ret[%d]: %s", c, env));
+				c += 1;
+			} catch (Exception ex) {
+				break;
+			}
+		}
+	}
+
+}
