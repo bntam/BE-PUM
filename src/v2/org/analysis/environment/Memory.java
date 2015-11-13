@@ -1130,8 +1130,10 @@ public Value getDoubleWordMemoryValue(long address) {
 		long addr = address.getValue();
 
 		long[] ret = new long[n];
-		for (int i = 0; i < n; i++) {
-			Value v = memory.get(addr + i);
+		for (int i = 0; i < n; i++) {	
+			// Phong - 20151113 - Fixed get byte memory value without value
+			//Value v = memory.get(addr + i);
+			Value v  = getByteMemoryValue(addr + i);
 			if (v != null && v instanceof LongValue) {
 				ret[i] = ((LongValue) v).getValue();
 			} else {
