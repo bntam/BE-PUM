@@ -4,11 +4,11 @@ import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import com.sun.jna.platform.win32.Kernel32;
-
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
+
+import com.sun.jna.platform.win32.Kernel32;
 
 public class TIB {
 	private static boolean beUpdated;
@@ -72,8 +72,9 @@ public class TIB {
 
 	public static void updateChecking(BPState curState) {
 		Instruction ins = curState.getInstruction();
-		if (ins == null)
+		if (ins == null) {
 			return;
+		}
 		int i = 0;
 		while (i < ins.getOperandCount()) {
 			Operand op = ins.getOperand(i);
@@ -98,13 +99,15 @@ public class TIB {
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address, new LongValue(FS_0));
 		// Update EBP
 		Value ebp = curState.getEnvironement().getRegister().getRegisterValue("ebp");
-		if (ebp != null && ebp instanceof LongValue)
+		if (ebp != null && ebp instanceof LongValue) {
 			FS_4 = ((LongValue) ebp).getValue();
+		}
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address + 0x4, new LongValue(FS_4));
 		// Update ESP
 		Value esp = curState.getEnvironement().getRegister().getRegisterValue("esp");
-		if (esp != null && ebp instanceof LongValue)
+		if (esp != null && esp instanceof LongValue) {
 			FS_8 = ((LongValue) esp).getValue();
+		}
 		//FS_8 = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp")).getValue();
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address + 0x8, new LongValue(FS_8));
 		// More: Update Environment pointer FS_1C
@@ -113,10 +116,10 @@ public class TIB {
 		// Update Address of TIB
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address + 0x18, new LongValue(FS_18));
 		// Update Process ID
-		FS_20 = (long) Kernel32.INSTANCE.GetCurrentProcessId();
+		FS_20 = Kernel32.INSTANCE.GetCurrentProcessId();
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address + 0x20, new LongValue(FS_20));
 		// Update Thread ID
-		FS_24 = (long) Kernel32.INSTANCE.GetCurrentThreadId();
+		FS_24 = Kernel32.INSTANCE.GetCurrentThreadId();
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address + 0x24, new LongValue(FS_24));
 		// Update Address of PEB
 		curState.getEnvironement().getMemory().setDoubleWordMemoryValue(TIB_Base_Address + 0x30, new LongValue(FS_30));
