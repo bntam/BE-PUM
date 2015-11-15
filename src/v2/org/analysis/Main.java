@@ -290,12 +290,12 @@ public class Main {
 //		pathVirus = "asm/loria/";
 //		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee"; // Check API Yen
 		
-		pathVirus = "asm/packer/";
+		pathVirus = "asm/packer/new/";
 //		in = "api_testv2.exe"; // 2064 2151 26s
 //		in = "api_test.exe"; // 158 160 0.1s x
 //		in = "api_test_upx.exe"; // 323 353 6s x
 //		in = "api_test_fsg.exe"; // 244 268 3s x
-		in = "api_test_pecompact.exe"; // 1127 1178 28s x
+//		in = "api_test_pecompact.exe"; // 1127 1178 28s x
 //		in = "api_test_npack.exe"; // 602 639 10s x
 //		in = "api_test_yoda.1.2.exe"; // 625 659 173s x
 //		in = "api_test_yoda.1.3.exe"; // 924 960 163s x
@@ -307,21 +307,33 @@ public class Main {
 //		in = "api_test_exepack.exe"; // 323 353 6s x
 //		in = "api_test_WinUpack.exe"; // 443 490 19s
 //		in = "api_test_telock.exe"; // x
-
+//		in = "api_test_RLPack.exe"; // 467 501 212s x
+//		in = "api_test_upack.exe"; // 443 490 21s x 
+//		in = "api_test_mew.exe"; // 265 291 5s
+//		in = "api_test_BJFNT.exe"; // x
+		
 		// Undone
-		// in = "api_test_pespin.exe";
-		// in = "demo1_fastpack.exe"; // 47 49 98s
-		// in = "api_test_armadillo.exe";
-		// in = "api_test_asprotect.exe";
-		// in = "api_test_thermida.exe";
-		// in = "api_test_vmprotect.exe"; // 488 532 456s
-//		in = "api_test_mew.exe"; // 253 279 5s
+//		in = "api_test_Enigma.exe"; // Run long time
+//		in = "api_test_ALEXProtector.exe"; // Error VirtualAlloc
+//		in = "api_test_ACProtect.exe"; // Error Call Memory Run OllyDbg later
+		in = "protected_CRYPToCRACk.exe";
+//		in = "api_test_PolyCryptPE.exe";
+//		in = "api_test_Yodaprotect.exe";
+//		in = "api_test_zprotect.exe"; // Run long time
+//		in = "api_test_sercure.exe"; // 5328 5625 270s
+//		in = "api_test_MSLRH.exe"; // Error with Int3		
+//		in = "UnPackMe_MSLRH0.32a.exe"; // RDTSC problem
+//		in = "api_test_pespin.exe";
+//		in = "demo1_fastpack.exe"; // 47 49 98s
+//		in = "api_test_armadillo.exe";
+//		in = "api_test_asprotect.exe";
+//		in = "api_test_thermida.exe";
+//		in = "api_test_vmprotect.exe"; // 488 532 456s
 //		in = "api_test_pelock.exe";
 //		 in = "api_test_asprotect.exe";
 //		in = "api_test_pebundle.exe";
 //		in = "api_test_polycryptpe_1.exe"; // 106 109
 //		in = "api_test_LZEXE.EXE"; // Error parse file
-//		in = "api_test_RLPack.exe";		
 		
 //		in = "demo1.exe"; // 13405 13404 14s x
 //		in = "demo1_upx.exe"; // 13563 13583 465 x
@@ -333,8 +345,8 @@ public class Main {
 //		in = "demo1_aspack.exe"; // 14278 14334 907s x
 //		in = "demo1_fastpack.exe";
 		
-		pathVirus = "asm/testcase/";
-		in = "multiMemorySymbol.exe";
+//		pathVirus = "asm/virus/";
+//		in = "Email-Worm.Win32.Mydoom.az";
 		
 		String path = pathVirus + in;
 		isGui = false;
