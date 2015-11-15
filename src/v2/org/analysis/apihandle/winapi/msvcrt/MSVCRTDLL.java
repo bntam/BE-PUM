@@ -697,5 +697,5 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 * @return If the stream is successfully closed, a zero value is returned.
 	 *         On failure, EOF is returned.
 	 */
-	int fclose(Pointer stream);
+	int fclose(FILE stream);
 }
