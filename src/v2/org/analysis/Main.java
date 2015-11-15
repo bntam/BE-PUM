@@ -311,12 +311,18 @@ public class Main {
 //		in = "api_test_upack.exe"; // 443 490 21s x 
 //		in = "api_test_mew.exe"; // 265 291 5s
 //		in = "api_test_BJFNT.exe"; // x
+//		in = "api_test_ExeStealth.exe"; // 735 770 220s x
+//		in = "api_test_eXPressor.exe"; // 1172 1233 85s
 		
 		// Undone
+		in = "api_test_EXEfog.exe";
+		in = "api_test_EXEJonier.exe";
+		in = "api_test_KKrunchy.exe"; // Disassembled at: 0x003f11ab
 //		in = "api_test_Enigma.exe"; // Run long time
 //		in = "api_test_ALEXProtector.exe"; // Error VirtualAlloc
 //		in = "api_test_ACProtect.exe"; // Error Call Memory Run OllyDbg later
-		in = "protected_CRYPToCRACk.exe";
+//		in = "protected_CRYPToCRACk.exe"; // Error file
+//		in = "api_test_diet.exe"; // Error parse file
 //		in = "api_test_PolyCryptPE.exe";
 //		in = "api_test_Yodaprotect.exe";
 //		in = "api_test_zprotect.exe"; // Run long time
@@ -329,7 +335,7 @@ public class Main {
 //		in = "api_test_asprotect.exe";
 //		in = "api_test_thermida.exe";
 //		in = "api_test_vmprotect.exe"; // 488 532 456s
-//		in = "api_test_pelock.exe";
+//		in = "api_test_pelock.exe"; // Run too long
 //		 in = "api_test_asprotect.exe";
 //		in = "api_test_pebundle.exe";
 //		in = "api_test_polycryptpe_1.exe"; // 106 109
