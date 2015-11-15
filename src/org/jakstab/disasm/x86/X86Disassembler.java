@@ -87,7 +87,13 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 		int firstByte = InstructionDecoder.readByte(code, byteIndex);		
 		if (firstByte == 241) {
 			return new X86Instruction("int1", 1, 512);
-		}		
+		}
+		
+		if (firstByte == 255) {
+			if (InstructionDecoder.readByte(code, byteIndex + 1) == 255) {
+				return new X86Instruction("nop", 2, 512);
+			}
+		}
 
 		if (firstByte == 100) {
 			if (InstructionDecoder.readByte(code, byteIndex + 1) == 103
