@@ -10,6 +10,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.SymbolValue;
 import v2.org.analysis.value.Value;
 
 /**
@@ -74,7 +75,8 @@ public class StackV2 extends Stack {
 		}
 
 		System.out.println("Cannot pop out of stack!!!");
-		return null;
+//		return null;
+		return new SymbolValue("stack");
 	}
 
 	@Override

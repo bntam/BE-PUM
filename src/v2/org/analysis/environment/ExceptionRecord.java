@@ -3,6 +3,7 @@ package v2.org.analysis.environment;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.SEHHandle;
 import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.Value;
 
 public class ExceptionRecord {
 
@@ -53,8 +54,11 @@ public class ExceptionRecord {
 		curState.getEnvironement().getStack().push(new LongValue(this.NestedExceptionRecord));
 		curState.getEnvironement().getStack().push(new LongValue(this.ExceptionFlag));
 		curState.getEnvironement().getStack().push(new LongValue(this.ExceptionCode));
-		this.setException_record_ptr(((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp"))
-				.getValue());
+		Value esp = curState.getEnvironement().getRegister().getRegisterValue("esp");
+		if (esp != null && esp instanceof LongValue) {
+			this.setException_record_ptr(((LongValue) esp)
+					.getValue());
+		}
 	}
 
 	public long getException_record_ptr() {
