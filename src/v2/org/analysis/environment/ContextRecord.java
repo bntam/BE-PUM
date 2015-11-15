@@ -55,8 +55,9 @@ public class ContextRecord {
 		this.DataOffset = 0;
 		this.DataSelector = 0;
 		long[] fpr = new long[20];
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 20; i++) {
 			fpr[i] = 0;
+		}
 		this.FPRegisters = fpr;
 		this.Cr0NpxState = 0xa6e7160;
 		this.gs_register = 0x2b;
@@ -64,52 +65,59 @@ public class ContextRecord {
 		this.es_register = 0x2b;
 		this.ds_register = 0x2b;
 		Value edi = curState.getEnvironement().getRegister().getRegisterValue("edi");
-		if (edi instanceof LongValue)
+		if (edi instanceof LongValue) {
 			this.edi_register = ((LongValue) edi).getValue();
-		else 
+		} else {
 			this.edi_register = 0;
+		}
 		
 		//this.esi_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esi")).getValue();
 		Value esi = curState.getEnvironement().getRegister().getRegisterValue("esi");
-		if (esi instanceof LongValue)
+		if (esi instanceof LongValue) {
 			this.esi_register = ((LongValue) esi).getValue();
-		else 
+		} else {
 			this.esi_register = 0;
+		}
 		
 		//this.ebx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ebx")).getValue();
 		Value ebx = curState.getEnvironement().getRegister().getRegisterValue("ebx");
-		if (ebx instanceof LongValue)
+		if (ebx instanceof LongValue) {
 			this.ebx_register = ((LongValue) ebx).getValue();
-		else 
+		} else {
 			this.ebx_register = 0;
+		}
 		
 		//this.edx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("edx")).getValue();
 		Value edx = curState.getEnvironement().getRegister().getRegisterValue("edx");
-		if (edx instanceof LongValue)
+		if (edx instanceof LongValue) {
 			this.edx_register = ((LongValue) edx).getValue();
-		else 
+		} else {
 			this.edx_register = 0;
+		}
 		
 		//this.ecx_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ecx")).getValue();
 		Value ecx = curState.getEnvironement().getRegister().getRegisterValue("ecx");
-		if (ecx instanceof LongValue)
+		if (ecx instanceof LongValue) {
 			this.ecx_register = ((LongValue) ecx).getValue();
-		else 
+		} else {
 			this.ecx_register = 0;
+		}
 		
 		//this.eax_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("eax")).getValue();
 		Value eax = curState.getEnvironement().getRegister().getRegisterValue("eax");
-		if (eax instanceof LongValue)
+		if (eax instanceof LongValue) {
 			this.eax_register = ((LongValue) eax).getValue();
-		else 
+		} else {
 			this.eax_register = 0;
+		}
 		
 		//this.ebp_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("ebp")).getValue();
 		Value ebp = curState.getEnvironement().getRegister().getRegisterValue("ebp");
-		if (ebp instanceof LongValue)
+		if (ebp instanceof LongValue) {
 			this.ebp_register = ((LongValue) ebp).getValue();
-		else 
+		} else {
 			this.ebp_register = 0;
+		}
 		
 		this.eip_register = curState.getLocation().getValue();
 		/*Value eip = curState.getEnvironement().getRegister().getRegisterValue("eip");
@@ -122,10 +130,11 @@ public class ContextRecord {
 		this.efl_register = curState.getEnvironement().getFlag().getEFlags();
 		//this.esp_register = ((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp")).getValue();
 		Value esp = curState.getEnvironement().getRegister().getRegisterValue("esp");
-		if (esp instanceof LongValue)
+		if (esp instanceof LongValue) {
 			this.esp_register = ((LongValue) esp).getValue();
-		else 
+		} else {
 			this.esp_register = 0;
+		}
 		this.ss_register = 0x2b;
 	}
 
@@ -147,8 +156,9 @@ public class ContextRecord {
 		curState.getEnvironement().getStack().push(new LongValue(this.fs_register));
 		curState.getEnvironement().getStack().push(new LongValue(this.gs_register));
 		curState.getEnvironement().getStack().push(new LongValue(this.Cr0NpxState));
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 20; i++) {
 			curState.getEnvironement().getStack().push(new LongValue(this.FPRegisters[i]));
+		}
 		curState.getEnvironement().getStack().push(new LongValue(this.DataSelector));
 		curState.getEnvironement().getStack().push(new LongValue(this.DataOffset));
 		curState.getEnvironement().getStack().push(new LongValue(this.ErrorSelector));
@@ -156,12 +166,16 @@ public class ContextRecord {
 		curState.getEnvironement().getStack().push(new LongValue(this.TagWord));
 		curState.getEnvironement().getStack().push(new LongValue(this.StatusWord));
 		curState.getEnvironement().getStack().push(new LongValue(this.ControlWord));
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 6; i++) {
 			curState.getEnvironement().getStack().push(new LongValue(this.debug_registers[i]));
+		}
 		curState.getEnvironement().getStack().push(new LongValue(context_flag));
 		// Set context record pointer
-		this.setContext_record_ptr(((LongValue) curState.getEnvironement().getRegister().getRegisterValue("esp"))
-				.getValue());
+		Value esp = curState.getEnvironement().getRegister().getRegisterValue("esp");
+		if (esp != null && esp instanceof LongValue) {
+			this.setContext_record_ptr(((LongValue) esp)
+					.getValue());
+		}
 	}
 
 	public long getContext_record_ptr() {

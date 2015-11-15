@@ -23,8 +23,9 @@ public class AnalysisBit {
 
 		for(int j=0; j<= 31; j++)
 		{
-			if ( array[j] == 1 )
+			if ( array[j] == 1 ) {
 				result += array[j]*Math.pow(2,count);
+			}
 			count++;
 		}
 
@@ -53,8 +54,9 @@ public class AnalysisBit {
 
 		for(int j=32; j<= 63; j++)
 		{
-			if ( array[j] == 1 )
+			if ( array[j] == 1 ) {
 				result += array[j]*Math.pow(2,count);
+			}
 			count++;
 		}
 
@@ -116,8 +118,9 @@ public class AnalysisBit {
 		long result = 0;
 
 		for (int j = 0; j <= range; j++) {
-			if (array[j] == 1)
+			if (array[j] == 1) {
 				result += array[j] * Math.pow(2, count);
+			}
 			count++;
 		}
 
@@ -236,8 +239,9 @@ public class AnalysisBit {
 
 		// chuyen ve so nguyen
 		for (j = 0; j <= 63; j++) {
-			if (array64[j] == 1)
+			if (array64[j] == 1) {
 				result += array64[j] * Math.pow(2, count);
+			}
 			count++;
 		}
 		// System.out.println(" ");
@@ -269,8 +273,9 @@ public class AnalysisBit {
 
 		// chuyen chuoi 32 bit dau thanh so nguyen
 		for (int j = 0; j <= 31; j++) {
-			if (array64[j] == 1)
+			if (array64[j] == 1) {
 				result += array64[j] * Math.pow(2, count);
+			}
 			count++;
 		}
 
@@ -304,8 +309,9 @@ public class AnalysisBit {
 
 		// chuyen chuoi 32bit sau thanh so nguyen
 		for (int j = 32; j <= 63; j++) {
-			if (array64[j] == 1)
+			if (array64[j] == 1) {
 				result += array64[j] * Math.pow(2, count);
+			}
 			count++;
 		}
 		// System.out.print(result);
@@ -366,10 +372,12 @@ public class AnalysisBit {
 
 		// Truong hop cout nho hon so bit.
 		if (count <= get_bit) {
-			for (i = get_bit - 1; i >= count; --i)
+			for (i = get_bit - 1; i >= count; --i) {
 				array_dest[i] = array_dest[(int) (i - count)];
-			for (i = (int) (count - 1); i >= 0; --i)
+			}
+			for (i = (int) (count - 1); i >= 0; --i) {
 				array_dest[i] = array_src[(int) (i - count + get_bit)];
+			}
 			result = Bit2Dec(array_dest, get_bit - 1);
 		}
 		// truong hop count lon hon so bit
@@ -400,8 +408,9 @@ public class AnalysisBit {
 				// chuyen bit sang so nguyen
 				int chiso = 0;
 				for (int j = 0; j < get_bit; j++) {
-					if (array[j] == 1)
+					if (array[j] == 1) {
 						result += array[j] * Math.pow(2, chiso);
+					}
 					chiso++;
 				}
 			}
@@ -441,11 +450,13 @@ public class AnalysisBit {
 		// PHONG: change here
 		// count < get_bit, it is not <=
 		if (/* count <= get_bit */count < get_bit) {
-			for (i = 0; i < get_bit - count; i++)
+			for (i = 0; i < get_bit - count; i++) {
 				// CONFIRM for i + count or i - count
 				array_dest[i] = array_dest[(int) (i + count)];
-			for (i = (int) (get_bit - count); i <= get_bit - 1; i++)
+			}
+			for (i = (int) (get_bit - count); i <= get_bit - 1; i++) {
 				array_dest[i] = array_src[(int) (i + count - get_bit)];
+			}
 			result = Bit2Dec(array_dest, get_bit - 1);
 		}
 		// truong hop count lon hon so bit
@@ -481,8 +492,9 @@ public class AnalysisBit {
 				// chuyen bit sang so nguyen
 				int chiso = 0;
 				for (int j = 0; j < get_bit; j++) {
-					if (array_dest[j] == 1)
+					if (array_dest[j] == 1) {
 						result += array_dest[j] * Math.pow(2, chiso);
+					}
 					chiso++;
 				}
 
@@ -515,10 +527,11 @@ public class AnalysisBit {
 		while (count > 0) {
 			// chen mang
 			for (i = 0; i <= get_bit; i++) {
-				if (i == get_bit)
+				if (i == get_bit) {
 					array_temp[0] = array[i];
-				else
+				} else {
 					array_temp[i + 1] = array[i];
+				}
 			}
 
 			// gan mang
@@ -531,8 +544,9 @@ public class AnalysisBit {
 		// chuyen bit sang so nguyen
 		int chiso = 0;
 		for (int j = 0; j < get_bit; j++) {
-			if (array[j] == 1)
+			if (array[j] == 1) {
 				result += array[j] * Math.pow(2, chiso);
+			}
 			chiso++;
 		}
 		return result;
@@ -561,10 +575,11 @@ public class AnalysisBit {
 		array[get_bit] = CF;
 		while (count > 0) {
 			for (i = 0; i <= get_bit; i++) {
-				if (i == get_bit)
+				if (i == get_bit) {
 					array_temp[0] = array[i];
-				else
+				} else {
 					array_temp[i + 1] = array[i];
+				}
 			}
 			// gan mang
 			for (i = 0; i <= get_bit; i++) {
@@ -595,8 +610,9 @@ public class AnalysisBit {
 			i++;
 		}
 
-		if (CF == array[get_bit - 1])
+		if (CF == array[get_bit - 1]) {
 			result = 0;
+		}
 
 		return result;
 	}
@@ -638,8 +654,9 @@ public class AnalysisBit {
 		// chuyen bit sang so nguyen
 		int chiso = 0;
 		for (int j = 1; j <= get_bit; j++) {
-			if (array[j] == 1)
+			if (array[j] == 1) {
 				result += array[j] * Math.pow(2, chiso);
+			}
 			chiso++;
 		}
 
@@ -702,8 +719,9 @@ public class AnalysisBit {
 			i++;
 		}
 
-		if (array[get_bit] == 0 && array[get_bit - 1] == 0)
+		if (array[get_bit] == 0 && array[get_bit - 1] == 0) {
 			result = 0;
+		}
 
 		return result;
 	}
@@ -754,8 +772,9 @@ public class AnalysisBit {
 		// chuyen bit sang so nguyen
 		int chiso = 0;
 		for (int j = 0; j < get_bit; j++) {
-			if (array[j] == 1)
+			if (array[j] == 1) {
 				result += array[j] * Math.pow(2, chiso);
+			}
 			chiso++;
 		}
 
@@ -786,8 +805,9 @@ public class AnalysisBit {
 		// chuyen bit sang so nguyen
 		int chiso = 0;
 		for (int j = 0; j < get_bit; j++) {
-			if (array[j] == 1)
+			if (array[j] == 1) {
 				result += array[j] * Math.pow(2, chiso);
+			}
 			chiso++;
 		}
 
@@ -813,16 +833,18 @@ public class AnalysisBit {
 			i++;
 		}
 
-		if (array[(int) ofset] == 1)
+		if (array[(int) ofset] == 1) {
 			array[(int) ofset] = 0;
-		else
+		} else {
 			array[(int) ofset] = 1;
+		}
 
 		// chuyen bit sang so nguyen
 		int chiso = 0;
 		for (int j = 0; j < get_bit; j++) {
-			if (array[j] == 1)
+			if (array[j] == 1) {
 				result += array[j] * Math.pow(2, chiso);
+			}
 			chiso++;
 		}
 
@@ -848,7 +870,7 @@ public class AnalysisBit {
 		}
 
 		i = 0;
-		while (array[i] == 0) {
+		while (i < get_bit && array[i] == 0) {
 			count = count + 1;
 			i++;
 		}
@@ -875,7 +897,7 @@ public class AnalysisBit {
 		}
 
 		i = get_bit - 1;
-		while (array[i] == 0) {
+		while (i >= 0 && array[i] == 0) {
 			count = count - 1;
 			i--;
 		}

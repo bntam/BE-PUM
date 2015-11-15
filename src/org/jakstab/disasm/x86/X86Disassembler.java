@@ -193,8 +193,63 @@ public class X86Disassembler implements Disassembler, X86Opcodes {
 			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 245) {
 				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ebp"), 
 						new Immediate(1, DataType.INT8), null, 3, 0);
-			}
-			
+			}			
+		}
+		
+		if (firstByte == 210) {
+			if (InstructionDecoder.readByte(code, byteIndex + 1) == 240) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%al"), 
+						new X86Register(3, "%cl"), null, 2, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 241) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%cl"), 
+						new X86Register(3, "%cl"), null, 2, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 242) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%dl"), 
+						new X86Register(3, "%cl"), null, 2, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 243) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%bl"), 
+						new X86Register(3, "%cl"), null, 2, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 244) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ah"), 
+						new X86Register(3, "%cl"), null, 2, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 245) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ch"), 
+						new X86Register(3, "%cl"), null, 2, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%dh"), 
+						new X86Register(3, "%cl"), null, 2, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 247) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%bh"), 
+						new X86Register(3, "%cl"), null, 2, 0);
+			} 		
+		}
+		
+		if (firstByte == 208) {
+			if (InstructionDecoder.readByte(code, byteIndex + 1) == 240) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%al"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 241) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%cl"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 242) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%dl"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 243) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%bl"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 244) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ah"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 245) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%ch"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 246) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%dh"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} else if (InstructionDecoder.readByte(code, byteIndex + 1) == 247) {
+				return new X86ArithmeticInstruction("sall", Operation.SLL, new X86Register(3, "%bh"), 
+						new Immediate(1, DataType.INT8), null, 3, 0);
+			} 		
 		}
 
 		if (firstByte == 192 && InstructionDecoder.readByte(code, byteIndex + 1) == 240
