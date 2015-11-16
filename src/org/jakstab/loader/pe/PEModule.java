@@ -195,7 +195,7 @@ public class PEModule extends AbstractCOFFModule {
 					libraryFileName = libraryFileName.toLowerCase();
 
 					// Check if the library is bound.
-					boolean bound = descriptor.TimeDateStamp != 0;
+					boolean bound = descriptor.TimeDateStamp != 0 || descriptor.OriginalFirstThunk != 0;
 
 					/* Read Import Address Table or Import Name Table */
 					long iatFilePtr;
