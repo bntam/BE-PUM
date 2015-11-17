@@ -25,7 +25,6 @@ public class fld extends X86InstructionStub {
 		}
 		
 		if (dest.getClass().getSimpleName().equals("X86FloatRegister")) {			
-			//d = env.getRegister().getRegisterValue(dest.toString());
 			d = env.getFPUregister().getFPURegisterValue(dest.toString());
 		}
 		

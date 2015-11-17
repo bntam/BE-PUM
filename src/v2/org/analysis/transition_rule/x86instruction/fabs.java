@@ -21,10 +21,10 @@ public class fabs extends X86InstructionStub {
 		if (((BooleanValue) env.getFST().getC1()).getValue()) {
 			env.getFST().setC1(new BooleanValue(false));
 		} else {
-			Value st0 = env.getFPUregister().getFPURegisterValue("ST0");
+			Value st0 = env.getFPUregister().getFPURegisterValue("st0");
 			double t_st0 = ((DoubleValue) st0).getValue();
 			t_st0 = Math.abs(t_st0);
-			env.getFPUregister().setFPURegisterValue("ST0", new DoubleValue(t_st0));
+			env.getFPUregister().setFPURegisterValue("st0", new DoubleValue(t_st0));
 		}		
 		return null;
 	}

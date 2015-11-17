@@ -515,6 +515,23 @@ public class FPUStatusWord {
 		}		
 	}
 	
+	public void changeResult(double number, BigDecimal exact_number){
+		boolean temp_C1 = ((BooleanValue)this.C1).getValue();
+		if (Double.isNaN(number) && temp_C1) {
+			this.C1 = new BooleanValue(false);
+		}
+		else if (Double.isInfinite(number)){
+			this.IE = new BooleanValue(true);
+		}
+		else {
+			changeDFlag(number);
+			changeUFlag(number);
+			changeOFlag(number);
+			int index = Double.toString(number).length();			
+			changePFlag(exact_number, number, index);		
+		}		
+	}
+	
 	private void changeUFlag(double number){
 		double Max = 1 * Math.pow(2, -1022);
     	double Min = -1 * Math.pow(2, -1022);
@@ -553,15 +570,24 @@ public class FPUStatusWord {
 			else if (intNumber_1 >= 5 && (intNumber_0 + 1) >= 5) {
 				this.PE = new BooleanValue(true);
 				this.C1 = new BooleanValue(true);
-			} else {
-				this.PE = new BooleanValue(false);
+			} 
+			// co xu khong chinh xac cua result, ko lam tron
+			else {
+				this.PE = new BooleanValue(true);
 			}
 		}
 		else if (index >=1 ){
 			String str = unrounded.toPlainString();
-			String str_exact = str.substring(0,17);
-			double exact = Double.parseDouble(str_exact);
-			if (exact < number) {
+			double exact = 0.0;
+			if (str.length() >= 17) {
+				String str_exact = str.substring(0,17);
+				exact = Double.parseDouble(str_exact);
+			}
+			else {
+				exact = Double.parseDouble(str);
+			}
+			
+			if (Math.abs(exact) < Math.abs(number)) {
 				this.PE = new BooleanValue(true);
 				this.C1 = new BooleanValue(true);
 			}

@@ -10,11 +10,8 @@ public class fucomp extends X86InstructionStub {
 	@Override
 	public BPState execute() {
 		// TODO Auto-generated method stub
-		long temp_top;
-		Value top = env.getFST().getTOP();
-		top = top.evaluate(top.getValueMap());
-		temp_top = ((LongValue) top).getValue();
-		env.getFST().changePOP(temp_top);
+		Value top = env.getFST().getTOP();		
+		env.getFST().changePOP(((LongValue) top).getValue());
 		Value st0 = env.getFPUregister().getFPURegisterValue("st0");
 		// Opreand is ST(1)
 		if (dest.getClass().getSimpleName().equals("X86FloatRegister")) {				

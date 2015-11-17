@@ -9,7 +9,7 @@ public class fxam extends X86InstructionStub {
 	@Override
 	public BPState execute() {
 		// TODO Auto-generated method stub		
-		Value st0 = env.getFPUregister().getFPURegisterValue("ST0");			
+		Value st0 = env.getFPUregister().getFPURegisterValue("st0");			
 		env.getFST().changeFXAM(st0);
 		return null;
 	}

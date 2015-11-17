@@ -2,9 +2,9 @@ package v2.org.analysis.transition_rule;
 
 public class InfoCPU {
 	long EAX = 0;
-	public long EBX = 0;
-	public long ECX = 0;
-	public long EDX = 0;
+	long EBX = 0;
+	long ECX = 0;
+	long EDX = 0;
 
 	public long getEAX() {
 		return EAX;

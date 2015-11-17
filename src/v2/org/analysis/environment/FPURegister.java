@@ -3,6 +3,11 @@ package v2.org.analysis.environment;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import org.jakstab.asm.DataType;
+import org.jakstab.asm.Operand;
+import org.jakstab.asm.x86.X86Instruction;
+import org.jakstab.asm.x86.X86MemoryOperand;
+
 import v2.org.analysis.value.BooleanValue;
 import v2.org.analysis.value.DoubleValue;
 import v2.org.analysis.value.LongValue;
@@ -89,6 +94,7 @@ public class FPURegister {
 		} else if(reg.equals("st7")) {
 			st7 = value;
 		}
+		FPUTagWord();
 	}
 	
 	private String checkRegisterName(String registerName) {
@@ -131,6 +137,7 @@ public class FPURegister {
 		this.st5 = null;
 		this.st6 = null;
 		this.st7 = null;
+		FPUTagWord();
 	}
 	
 	private int checkValue(Value number){
@@ -153,7 +160,7 @@ public class FPURegister {
 		}		
 		return result;
 	}
-	
+		
 	public void FPUTagWord(){
 		tag0 = new LongValue(checkValue(this.st0));
 		tag1 = new LongValue(checkValue(this.st1));
@@ -217,6 +224,7 @@ public class FPURegister {
 		this.st5 = array[5];
 		this.st6 = array[6];
 		this.st7 = array[7];
+		FPUTagWord();
 	}
 	
 	public Value[] getArrayST(Value array[]){		
@@ -322,4 +330,203 @@ public class FPURegister {
 			}
 		}
 	}
+	
+	public void FSUB(Value suntract , Value subtrahend, String str_suntract, Environment env){	
+		// ST0 || suntract == null, subtrahend with NULL
+		if (suntract == null || subtrahend == null) {
+			env.getFPUregister().setFPURegisterValue(str_suntract, new DoubleValue(Double.NaN));
+			env.getFST().changeUnderflow();
+		} else {
+			double temp_subtrahend = 0.0;
+			double temp_suntract = 0.0;
+			if (subtrahend instanceof LongValue) {
+				temp_subtrahend = ((LongValue) subtrahend).getValue();
+			} else {
+				temp_subtrahend = ((DoubleValue) subtrahend).getValue();
+			}
+			if (suntract instanceof LongValue) {
+				temp_suntract = ((LongValue) suntract).getValue();
+			} else {
+				temp_suntract = ((DoubleValue) suntract).getValue();
+			}
+
+			// ST0 || suntract == NaN, subtrahend == NaN
+			if (Double.isNaN(temp_suntract) || Double.isNaN(temp_subtrahend)) {
+				env.getFPUregister().setFPURegisterValue(str_suntract, new DoubleValue(Double.NaN));
+				env.getFST().setC1(new BooleanValue(false));
+			}
+
+			// xu ly suntract == infinity va subtrahend == infinity
+			// ST0 || suntract = infinity
+			else if ((Double.isInfinite(temp_suntract) && Double.isInfinite(temp_subtrahend))) {
+				env.getFPUregister().setFPURegisterValue(str_suntract, new DoubleValue(Double.NaN));
+				env.getFST().setIE(new BooleanValue(true));
+			}
+
+			// ST0 || suntract = infinity || subtrahend == infinity
+			else if ((Double.isInfinite(temp_suntract) || Double.isInfinite(temp_subtrahend))) {
+				double result = temp_suntract - temp_subtrahend;
+				env.getFPUregister().setFPURegisterValue(str_suntract, new DoubleValue(result));
+			}
+
+			// ST0 = finity
+			else {
+				double result = temp_suntract - temp_subtrahend;
+				BigDecimal y = new BigDecimal(temp_subtrahend);
+				BigDecimal x = new BigDecimal(temp_suntract);
+				BigDecimal exact_result = x.subtract(y, MathContext.DECIMAL128);
+				env.getFPUregister().setFPURegisterValue(str_suntract, new DoubleValue(result));
+				env.getFST().changeResult(result, exact_result);
+			}
+		}
+	}
+	
+	public void FMUL(Value multi_x , Value multi_y, String str_dest, Environment env){	
+		// ST0 || multi_x == null, multi_y with NULL
+		if (multi_x == null || multi_y == null) {
+			env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+			env.getFST().changeUnderflow();
+		} else {
+			double temp_multi_x = 0.0;
+			double temp_multi_y = 0.0;
+			if (multi_x instanceof LongValue) {
+				temp_multi_x = ((LongValue) multi_x).getValue();
+			} else {
+				temp_multi_x = ((DoubleValue) multi_x).getValue();
+			}
+			if (multi_y instanceof LongValue) {
+				temp_multi_y = ((LongValue) multi_y).getValue();
+			} else {
+				temp_multi_y = ((DoubleValue) multi_y).getValue();
+			}
+
+			// ST0 || multi_x == NaN, multi_y == NaN
+			if (Double.isNaN(temp_multi_x) || Double.isNaN(temp_multi_y)) {
+				env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+				env.getFST().setC1(new BooleanValue(false));
+			}
+			// xu ly multi_x == infinity va multi_y == 0
+			// ST0 || multi_x = infinity
+			// multi_y == infinity va multi_x == 0
+			else if ((Double.isInfinite(temp_multi_x) && temp_multi_y == 0)
+					|| (temp_multi_x == 0 && (Double.isInfinite(temp_multi_y)))) {
+				env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+				env.getFST().setIE(new BooleanValue(true));
+			}
+			// ST0 || multi_x = infinity || multi_y = infinity
+			else if ((Double.isInfinite(temp_multi_x) || Double.isInfinite(temp_multi_y))) {
+				double result = temp_multi_x * temp_multi_y;
+				env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(result));
+			}
+
+			// ST0 = finity
+			else {
+				double result = temp_multi_x * temp_multi_y;
+				BigDecimal y = new BigDecimal(temp_multi_y);
+				BigDecimal x = new BigDecimal(temp_multi_x);
+				BigDecimal exact_result = x.multiply(y, MathContext.DECIMAL128);
+				env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(result));
+				env.getFST().changeResult(result, exact_result);
+			}
+		}
+	}
+	
+	public void FADD(Value add_x , Value add_y, String str_dest, Environment env){	
+		// ST0 || add_x == null, add_y with NULL
+		if (add_x == null || add_y == null) {
+			env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+			env.getFST().changeUnderflow();
+		} else {
+			double temp_add_x = 0.0;
+			double temp_add_y = 0.0;
+			if (add_x instanceof LongValue) {
+				temp_add_x = ((LongValue) add_x).getValue();
+			} else {
+				temp_add_x = ((DoubleValue) add_x).getValue();
+			}
+			if (add_y instanceof LongValue) {
+				temp_add_y = ((LongValue) add_y).getValue();
+			} else {
+				temp_add_y = ((DoubleValue) add_y).getValue();
+			}
+
+			// ST0 || add_x == NaN, add_y == NaN
+			if (Double.isNaN(temp_add_x) || Double.isNaN(temp_add_y)) {
+				env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+				env.getFST().setC1(new BooleanValue(false));
+			}
+			// xu ly add_x == infinity va add_y == infinity
+			// ST0 || add_x = infinity
+			else if ((Double.isInfinite(temp_add_x) && (Double.isInfinite(temp_add_y)))) {
+				env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(Double.NaN));
+				env.getFST().setIE(new BooleanValue(true));
+			}
+			// ST0 || add_x = infinity || add_y = infinity
+			else if ((Double.isInfinite(temp_add_x) || Double.isInfinite(temp_add_y))) {
+				double result = temp_add_x + temp_add_y;
+				env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(result));
+			}
+
+			// ST0 = finity
+			else {
+				double result = temp_add_x + temp_add_y;
+				BigDecimal y = new BigDecimal(temp_add_y);
+				BigDecimal x = new BigDecimal(temp_add_x);
+				BigDecimal exact_result = x.add(y, MathContext.DECIMAL128);
+				env.getFPUregister().setFPURegisterValue(str_dest, new DoubleValue(result));
+				env.getFST().changeResult(result, exact_result);
+			}
+		}
+	}
+	
+
+	public void FIST(Value st02, Operand dest, Environment env, X86Instruction inst) {
+		// TODO Auto-generated method stub
+		// NULL || NaN || Infinity => 8000 0000 (32), 8000 (16)
+		if (st0 == null) {
+			if (((X86MemoryOperand) dest).getDataType() == DataType.INT64) {
+				// 8000 0000 0000 0000 
+				// chua xu ly
+			}
+			if (((X86MemoryOperand) dest).getDataType() == DataType.INT32) {
+				// 8000 0000
+				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(-2147483648), inst);
+			}
+			if (((X86MemoryOperand) dest).getDataType() == DataType.INT16) {
+				// 8000
+				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(32768), inst);
+			}
+			env.getFST().changeUnderflow();
+		} else {
+			double temp_st0 = ((DoubleValue) st0).getValue();
+			// NaN
+			if (Double.isNaN(temp_st0) || Double.isInfinite(temp_st0)) {
+				if (((X86MemoryOperand) dest).getDataType() == DataType.INT32) {
+					// 8000 0000
+					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(-2147483648), inst);
+				}
+				if (((X86MemoryOperand) dest).getDataType() == DataType.INT16) {
+					// 8000
+					env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(32768), inst);
+				}
+				if (Double.isInfinite(temp_st0)) {
+					env.getFST().setIE(new BooleanValue(true));
+				}
+				env.getFST().setC1(new BooleanValue(false));
+			}
+			// finity
+			else {
+				Long temp = Math.round(temp_st0);
+				long result = Integer.valueOf(temp.intValue());
+				double temp_result = result;
+				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
+				if (Math.abs(temp_result) < Math.abs(temp_st0)) {
+					env.getFST().setPE(new BooleanValue(true));
+				} else if (Math.abs(temp_result) > Math.abs(temp_st0)) {
+					env.getFST().setPE(new BooleanValue(true));
+					env.getFST().setC1(new BooleanValue(true));
+				}
+			}
+		}
+	}	
 }
