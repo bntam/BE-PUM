@@ -2,12 +2,6 @@ package v2.org.analysis.apihandle.winapi.msvcrt;
 
 import java.nio.Buffer;
 
-import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
-import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
-import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
-import v2.org.analysis.apihandle.winapi.structures.WinNTn.CONTEXT;
-import v2.org.analysis.apihandle.winapi.structures.WinNTn.EXCEPTION_RECORD;
-
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -18,6 +12,12 @@ import com.sun.jna.platform.win32.WinDef.USHORT;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.win32.StdCallLibrary;
+
+import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
+import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
+import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.CONTEXT;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.EXCEPTION_RECORD;
 
 /**
  * 
@@ -341,9 +341,8 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *         If the exception should be passed up a level to the encapsulating
 	 *         exception handlers, returns DISPOSITION_CONTINUE_SEARCH.
 	 */
-	int _except_handler3(EXCEPTION_RECORD exception_record,
-	/* PEXCEPTION_REGISTRATION */Pointer registration, CONTEXT context,
-	/* PEXCEPTION_REGISTRATION */Pointer dispatcher);
+	int _except_handler3(EXCEPTION_RECORD exception_record, /* PEXCEPTION_REGISTRATION */Pointer registration,
+			CONTEXT context, /* PEXCEPTION_REGISTRATION */Pointer dispatcher);
 
 	/**
 	 * Copy block of memory
@@ -598,7 +597,7 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	int fputs(String content, FILE fp);
 
 	String fgets(Memory memory, int size, FILE fp);
-	
+
 	/**
 	 * Deallocate memory block
 	 * 
@@ -698,4 +697,35 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *         On failure, EOF is returned.
 	 */
 	int fclose(FILE stream);
+
+	/**
+	 * Write formatted data to stream
+	 * 
+	 * Writes the C string pointed by format to the stream. If format includes
+	 * format specifiers (subsequences beginning with %), the additional
+	 * arguments following format are formatted and inserted in the resulting
+	 * string replacing their respective specifiers.
+	 * 
+	 * After the format parameter, the function expects at least as many
+	 * additional arguments as specified by format.
+	 * 
+	 * @param stream
+	 *            Pointer to a FILE object that identifies an output stream.
+	 * 
+	 * @param format
+	 *            C string that contains the text to be written to the stream.
+	 *            It can optionally contain embedded format specifiers that are
+	 *            replaced by the values specified in subsequent additional
+	 *            arguments and formatted as requested.
+	 * 
+	 * @return On success, the total number of characters written is returned.
+	 * 
+	 *         If a writing error occurs, the error indicator (ferror) is set
+	 *         and a negative number is returned.
+	 * 
+	 *         If a multibyte character encoding error occurs while writing wide
+	 *         characters, errno is set to EILSEQ and a negative number is
+	 *         returned.
+	 */
+	int fprintf(FILE stream, String... format);
 }

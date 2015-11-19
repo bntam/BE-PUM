@@ -41,6 +41,7 @@ public class strncat extends MSVCRTAPI {
 	public strncat() {
 		super();
 		NUM_OF_PARMS = 3;
+		IS_POP_STACK_VALUE = false;
 	}
 
 	@Override

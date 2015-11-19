@@ -699,17 +699,17 @@ public Value getDoubleWordMemoryValue(long address) {
 
 		return ret.toString();
 	}
-
-	public String getText(long addr) {
+	
+	private String getText(long addr, int charSize) {
 		// YenNguyen: Using StringBuilder will help to improve executing time
 		StringBuilder ret = new StringBuilder();
 
 		while (true) {
-			Value t = getByteMemoryValue(addr, false);
+			Value t = (charSize == 1) ? getByteMemoryValue(addr, false) : getWordMemoryValue(addr);
 
 			if (t != null && t instanceof LongValue) {
 				byte t1 = (byte) (((LongValue) t).getValue() & 0xFF);
-				if (t1 == 0) {
+				if (t1 == 0 || t1 < 0) { // Over-size
 					break;
 				}
 
@@ -723,9 +723,19 @@ public Value getDoubleWordMemoryValue(long address) {
 		return ret.toString();
 	}
 
+	public String getText(long addr) {
+		// ASCII - 1-byte per char
+		return getText(addr, 1);
+	}
+
 	public String getText(X86MemoryOperand x86MemoryOperand) {
 		long addr = evaluateAddress(x86MemoryOperand);
 		return this.getText(addr);
+	}
+	
+	public String getTextUnicode(long addr) {
+		// Unicode - 2-byte per char
+		return getText(addr, 2);
 	}
 
 	public Value getMemoryValue(long dest, Instruction inst) {

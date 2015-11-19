@@ -9,6 +9,7 @@ package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
+import v2.org.analysis.value.LongValue;
 
 /**
  * Sets the current application type.
@@ -36,6 +37,8 @@ public class __set_app_type extends MSVCRTAPI {
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
+		// Re-push because it doesn't pop
+		stack.push(new LongValue(t1));
 
 		int at = (int) t1;
 		MSVCRTDLL.INSTANCE.__set_app_type(at);

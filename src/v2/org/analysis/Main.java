@@ -43,13 +43,13 @@ import org.jakstab.ssl.Architecture;
 import org.jakstab.util.Characters;
 import org.jakstab.util.Logger;
 
+import com.sun.jna.WString;
+
+import antlr.ANTLRException;
 import v2.org.analysis.algorithm.OTFModelGeneration;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.statistics.FileProcess;
-import antlr.ANTLRException;
-
-import com.sun.jna.WString;
 
 public class Main {
 	static {
@@ -352,7 +352,8 @@ public class Main {
 //		in = "demo1_fastpack.exe";
 		
 //		pathVirus = "asm/virus/";
-//		in = "Email-Worm.Win32.Mydoom.az";
+		pathVirus = "C:/Work/Virus/viruses-20070914/vx.netlux.org/";
+		in = "Email-Worm.Win32.Mydoom.az";
 		
 		String path = pathVirus + in;
 		isGui = false;
