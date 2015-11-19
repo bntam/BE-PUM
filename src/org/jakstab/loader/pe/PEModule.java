@@ -25,7 +25,6 @@ package org.jakstab.loader.pe;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -35,11 +34,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jakstab.Options;
-import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.SymbolFinder;
 import org.jakstab.loader.BinaryParseException;
-import org.jakstab.loader.ExecutableImage;
 import org.jakstab.loader.ExportedSymbol;
 import org.jakstab.loader.UnresolvedSymbol;
 import org.jakstab.loader.UnresolvedSymbol.AddressingType;
@@ -64,7 +61,7 @@ public class PEModule extends AbstractCOFFModule {
 	private Map<AbsoluteAddress, Pair<String, String>> importTable;
 	private String fileName;
 	private final PESymbolFinder symbolFinder;
-	
+
 	/**
 	 * Parses a PEModule from a specified file
 	 */
@@ -236,10 +233,7 @@ public class PEModule extends AbstractCOFFModule {
 							 * 64 bit files this would be the lower 63 bits.
 							 */
 							int ord = (int) (thunk & 0x7FFFFFFF);
-							String ordName = extractNameFromOrdinalNumber(libraryFileName, ord);
-							if (ordName == null) {
-								ordName = "ord(" + ord + ")";
-							}
+							String ordName = "ord(" + ord + ")";
 							importTable.put(iatAddress, Pair.create(libraryFileName, ordName));
 						} else {
 							/*
@@ -281,45 +275,6 @@ public class PEModule extends AbstractCOFFModule {
 		symbolFinder = new PESymbolFinder(this);
 	}
 
-	private String extractNameFromOrdinalNumber(String libraryFileName, int ord) {
-		// TODO Auto-generated method stub
-		File f = new File(Program.pathLibrary);
-		final String t = libraryFileName.toLowerCase();
-		File[] matchingFiles = f.listFiles(new FilenameFilter() {
-		    @Override
-			public boolean accept(File dir, String name) {
-		        return name.toLowerCase().equals(t);
-		    }
-		});
-		
-		if (matchingFiles.length > 0) {
-			return extractOrdinalName(matchingFiles[0], ord);
-		}
-		
-		return null;
-	}
-
-	private String extractOrdinalName(File file, int ord){
-		// TODO Auto-generated method stub
-		if (file != null) {
-			try {
-				ExecutableImage module = Program.getProgram().loadModule(file);
-				if (module != null && module instanceof PEModule) {
-					return ((PEModule) module).getExportOrdinal(ord).getName();
-				}
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (BinaryParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return null;
-	}
-
 	private long getPEHeaderAddress(BinaryFileInputBuffer inBuf) {
 		try {
 			inBuf.seek(60);
@@ -345,15 +300,6 @@ public class PEModule extends AbstractCOFFModule {
 
 	public ExportEntry getExport(int num) {
 		return exportEntries[num];
-	}
-	
-	public ExportEntry getExportOrdinal(int ordinal) {
-		for (ExportEntry e: exportEntries) {
-			if (e.getOrdinal() == ordinal) {
-				return e;
-			}
-		}
-		return null;
 	}
 
 	@Override
