@@ -163,6 +163,7 @@ public final class Program {
 	final static String packerResultFileTXT = "data/data/packerResult.txt";
 	final static String packerResultCountFileTXT = "data/data/packerResultCount.txt";
 	static final int MAX_BYTE_PER_INSTRUCTION = 15;
+	public static final String pathLibrary = "data/lib/win32/";
 
 	/**
 	 * Get the singleton Program object.
