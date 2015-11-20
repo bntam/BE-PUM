@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 import org.jakstab.Program;
 
+import com.sun.jna.WString;
+
 import v2.org.analysis.algorithm.OTFModelGeneration;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.cfg.BPCFG;
-
-import com.sun.jna.WString;
 
 public class PackerDetection {
 
@@ -55,12 +55,6 @@ public class PackerDetection {
 		
 		ArrayList<PackerHeader> pHeader = PackerConstants.GetData();
 		
-		for (int i = 0; i < dataString.length; i++)
-		{
-			System.out.print(dataString[i]);
-		}
-		System.out.println("\n");
-		
 		for (PackerHeader hP: pHeader)
 		{
 			if (detectWithHeaderSignature(dataString, hP, EP))
@@ -78,27 +72,28 @@ public class PackerDetection {
 		if (dataString == null) {
 			return false;
 		}
-		int beginTracing = 0;
-		if (hPacker.isEntryPoint())
+		int oep_index = 0;
+		if (EP != 0x0)
 		{
-			if (EP != 0x0)
+			for (int i = 0; i < dataString.length - 3; i++)
 			{
-				for (int i = 0; i < dataString.length - 3; i++)
+				String dword = dataString[i+3] + dataString[i+2] + dataString[i+1] + dataString[i];
+				long dwordL = Long.parseLong(dword, 16);
+				if (dwordL == EP)
 				{
-					String dword = dataString[i+3] + dataString[i+2] + dataString[i+1] + dataString[i];
-					long dwordL = Long.parseLong(dword, 16);
-					if (dwordL == EP)
-					{
-						beginTracing = i;
-						break;
-					}
+					oep_index = i;
+					break;
 				}
 			}
 		}
 		
 		boolean trace = true;
 		String[] sArr = hPacker.getPackerSignature();
-		for (int i = beginTracing; i < dataString.length && trace; i++)
+		
+		int endTracing 	 = (hPacker.isEntryPoint()) ? dataString.length: oep_index - 1;
+		int beginTracing = (hPacker.isEntryPoint()) ? oep_index: 0;
+		
+		for (int i = beginTracing; i < endTracing && trace; i++)
 		{	
 			if (dataString[i].equals(sArr[0].toLowerCase()) 
 				&& (dataString[i+1].equals(sArr[1].toLowerCase())
