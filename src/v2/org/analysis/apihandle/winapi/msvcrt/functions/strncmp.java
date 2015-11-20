@@ -51,6 +51,7 @@ public class strncmp extends MSVCRTAPI {
 	public strncmp() {
 		super();
 		NUM_OF_PARMS = 3;
+		IS_POP_STACK_VALUE = false;
 	}
 
 	@Override

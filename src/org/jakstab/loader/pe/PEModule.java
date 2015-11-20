@@ -25,6 +25,7 @@ package org.jakstab.loader.pe;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -34,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jakstab.Options;
+import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.SymbolFinder;
 import org.jakstab.loader.BinaryParseException;
@@ -61,7 +63,7 @@ public class PEModule extends AbstractCOFFModule {
 	private Map<AbsoluteAddress, Pair<String, String>> importTable;
 	private String fileName;
 	private final PESymbolFinder symbolFinder;
-
+	
 	/**
 	 * Parses a PEModule from a specified file
 	 */
@@ -232,8 +234,11 @@ public class PEModule extends AbstractCOFFModule {
 							 * Thunk contains ordinal value in low 31 bits. (for
 							 * 64 bit files this would be the lower 63 bits.
 							 */
-							int ord = (int) (thunk & 0x7FFFFFFF);
-							String ordName = "ord(" + ord + ")";
+							int ord = (int) (thunk & 0x7FFFFFFF);												
+							String ordName = extractNameFromOrdinalNumber(libraryFileName, ord);
+							if (ordName == null) {
+								ordName = "ord(" + ord + ")";
+							}
 							importTable.put(iatAddress, Pair.create(libraryFileName, ordName));
 						} else {
 							/*
@@ -275,6 +280,122 @@ public class PEModule extends AbstractCOFFModule {
 		symbolFinder = new PESymbolFinder(this);
 	}
 
+	private String extractNameFromOrdinalNumber(String libraryFileName, int ord) {
+		// TODO Auto-generated method stub
+		File f = new File(Program.pathLibrary);
+		final String t = libraryFileName.toLowerCase();
+		File[] matchingFiles = f.listFiles(new FilenameFilter() {
+		    @Override
+			public boolean accept(File dir, String name) {
+		        return name.toLowerCase().equals(t);
+		    }
+		});
+		
+		if (matchingFiles.length > 0) {
+			return extractOrdinalName(matchingFiles[0], ord);
+		}
+		
+		return null;
+	}
+
+	private String extractOrdinalName(File file, int ordinal){
+		// TODO Auto-generated method stub
+		if (file != null) {
+			try {
+				InputStream inStream = new FileInputStream(file);				
+				BinaryFileInputBuffer buf = new BinaryFileInputBuffer(inStream);
+				try {
+					MSDOS_Stub msdos = new MSDOS_Stub(buf);
+					buf.seek(msdos.getHeaderAddress());
+				} catch (Exception e) {
+					System.out.println("MS-DOS executables are not supported.");
+					buf.seek(getPEHeaderAddress(buf));
+				}
+
+				// Verify PE signature ///////////
+
+				if (!buf.match(PE_Header.PE_TAG)) {
+					throw new BinaryParseException("PEModule: Missing PE signature");
+				}
+				// ////////////////////////////////
+				COFF_Header coff = new COFF_Header(buf);
+				// long optionalHeaderPos = inBuf.getCurrent();
+				// long sectionPos = optionalHeaderPos +
+				// coff_header.getSizeOfOptionalHeader();
+				long posOptionalHeader = buf.getCurrent();
+				PE_Header pe = new PE_Header(buf);
+				long posSectionHeader = posOptionalHeader + coff.getSizeOfOptionalHeader();
+				// /// Parse Section Headers and sections /////////////////////////
+				// if (sectionPos != tempSectionPos)
+				buf.seek(posSectionHeader);
+				SectionHeader[] section = new SectionHeader[coff.getNumberOfSections()];
+				for (int i = 0; i < coff.getNumberOfSections(); i++) {
+					section[i] = new SectionHeader(buf);
+				}
+				// if (sectionPos != tempSectionPos)
+				// inBuf.seek(tempSectionPos);
+				// ///////////////////////////////////////////////////////////////
+
+				long expTableRVA = pe.getDataDirectory()[ImageDataDirectory.EXPORT_TABLE_INDEX].VirtualAddress;
+				if (expTableRVA > 0) { // We have an export table
+					logger.debug("-- Reading export table...");
+					buf.seek(getFilePointerFromRVA(expTableRVA));
+					ImageExportDirectory imageExportDirectory = new ImageExportDirectory(buf);
+
+					buf.seek(getFilePointerFromRVA(imageExportDirectory.AddressOfFunctions));
+					// Parse EAT
+					ExportEntry[] tmpEntries = new ExportEntry[(int) imageExportDirectory.NumberOfFunctions];
+					int eatEntries = 0;
+					for (int i = 0; i < tmpEntries.length; i++) {
+						long rva = buf.readDWORD();
+						if (rva > 0) {
+							tmpEntries[i] = new ExportEntry((int) (i + imageExportDirectory.Base), new AbsoluteAddress(rva
+									+ getBaseAddress()));
+							eatEntries++;
+						}
+					}
+
+					long namePtr = getFilePointerFromRVA(imageExportDirectory.AddressOfNames);
+					long ordPtr = getFilePointerFromRVA(imageExportDirectory.AddressOfNameOrdinals);
+					for (int i = 0; i < imageExportDirectory.NumberOfNames; i++) {
+						// read next ENT entry
+						buf.seek(namePtr);
+						long rva = buf.readDWORD();
+						namePtr = buf.getCurrent();
+						// read export name
+						buf.seek(getFilePointerFromRVA(rva));
+						String expName = buf.readASCII();
+						// read next EOT entry
+						buf.seek(ordPtr);
+						int ord = buf.readWORD();
+						ordPtr = buf.getCurrent();
+						tmpEntries[ord].setName(expName);
+						if (tmpEntries[ord].getOrdinal() == ordinal) {
+							return expName;
+						}
+					}
+					exportEntries = new ExportEntry[eatEntries];
+					int j = 0;
+					for (int i = 0; i < tmpEntries.length; i++) {
+						if (tmpEntries[i] != null) {
+							exportEntries[j++] = tmpEntries[i];
+						}
+					}
+					logger.debug("-- Got " + exportEntries.length + " exported symbols.");
+				} else {
+					logger.debug("-- File contains no exports");
+				}				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BinaryParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+		return null;
+	}
+	
 	private long getPEHeaderAddress(BinaryFileInputBuffer inBuf) {
 		try {
 			inBuf.seek(60);
@@ -282,7 +403,6 @@ public class PEModule extends AbstractCOFFModule {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-
 		return 0;
 	}
 
@@ -300,6 +420,15 @@ public class PEModule extends AbstractCOFFModule {
 
 	public ExportEntry getExport(int num) {
 		return exportEntries[num];
+	}
+	
+	public ExportEntry getExportOrdinal(int ordinal) {
+		for (ExportEntry e: exportEntries) {
+			if (e.getOrdinal() == ordinal) {
+				return e;
+			}
+		}
+		return null;
 	}
 
 	@Override

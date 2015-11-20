@@ -317,7 +317,7 @@ public class APIHandle {
 				Constructor<?> ctor = clazz.getConstructor();
 				API apiObject = (API) ctor.newInstance();
 
-				apiObject.run(address, path.getCurrentState(), inst);
+				apiObject.run(address, path.getCurrentState(), inst, t[0]);
 
 				System.out.println("\tLast Error: " + Kernel32.INSTANCE.GetLastError());
 			} catch (APIException ex) {
@@ -394,44 +394,6 @@ public class APIHandle {
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
 			} else if (funcName.startsWith("__p___initenv")) {
 				System.out.println("Argument: No");
-				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else if (funcName.startsWith("_chkesp")) {
-				System.out.println("Argument: No");
-				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else if (funcName.startsWith("strncmp")) {
-				Value x1 = stack.pop();
-				Value x2 = stack.pop();
-				Value x3 = stack.pop();
-
-				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
-				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else if (funcName.startsWith("strncat")) {
-				Value x1 = stack.pop();
-				Value x2 = stack.pop();
-				Value x3 = stack.pop();
-
-				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
-				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else if (funcName.startsWith("fopen")) {
-				Value x1 = stack.pop();
-				Value x2 = stack.pop();
-				Value x3 = stack.pop();
-
-				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
-				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else if (funcName.startsWith("fprintf")) {
-				Value x1 = stack.pop();
-				Value x2 = stack.pop();
-				Value x3 = stack.pop();
-				Value x4 = stack.pop();
-				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3 + ", " + x4);
-				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
-			} else if (funcName.startsWith("strncat")) {
-				Value x1 = stack.pop();
-				Value x2 = stack.pop();
-				Value x3 = stack.pop();
-
-				System.out.println("Argument: " + x1 + ", " + x2 + ", " + x3);
 				env.getRegister().setRegisterValue("eax", new SymbolValue("api_eax_" + funcName));
 			} else if (funcName.startsWith("printf")) {
 				Value x1 = stack.pop();

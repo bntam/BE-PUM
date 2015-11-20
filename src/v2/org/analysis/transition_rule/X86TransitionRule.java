@@ -539,12 +539,11 @@ public class X86TransitionRule extends TransitionRule {
 		String className = findClassName(ins);
 		currentState = curState;
 		
-		if (curState.getLocation().getValue() == 0x40a1c5L) {
-			System.out.println("BUSTED!!!");
-		}
-		if (curState.getLocation().getValue() == 0x40a1c7L) {
-			System.out.println("BUSTED!!!");
-		}
+
+//		if (curState.getLocation().getValue() >= 0x401af4L && curState.getLocation().getValue() <= 0x401b0dL) {
+//			System.out.println("BUSTED!!!");
+//		}
+		
 
 		if (className != null) {
 			try {

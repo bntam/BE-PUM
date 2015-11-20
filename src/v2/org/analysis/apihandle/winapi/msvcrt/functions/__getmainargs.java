@@ -56,6 +56,7 @@ public class __getmainargs extends MSVCRTAPI {
 	public __getmainargs() {
 		super();
 		NUM_OF_PARMS = 5;
+		IS_POP_STACK_VALUE = false;
 	}
 
 	@Override

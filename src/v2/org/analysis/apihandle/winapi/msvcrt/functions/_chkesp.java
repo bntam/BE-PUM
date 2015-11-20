@@ -7,8 +7,9 @@
  */
 package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
+import com.sun.jna.platform.win32.Kernel32;
+
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
-import v2.org.analysis.value.LongValue;
 
 /**
  * @author Yen Nguyen
@@ -27,7 +28,8 @@ public class _chkesp extends MSVCRTAPI {
 	@Override
 	public void execute() {
 		// Do nothing
-		register.mov("eax", new LongValue(0));
+//		register.mov("eax", new LongValue(0));
+		Kernel32.INSTANCE.SetLastError(0);
 	}
 
 }

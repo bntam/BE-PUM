@@ -7,13 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
+import com.sun.jna.Pointer;
+
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
-
-import com.sun.jna.Pointer;
 
 /**
  * Open file
@@ -95,6 +95,7 @@ public class fopen extends MSVCRTAPI {
 	public fopen() {
 		super();
 		NUM_OF_PARMS = 2;
+		IS_POP_STACK_VALUE = false;
 	}
 
 	@Override

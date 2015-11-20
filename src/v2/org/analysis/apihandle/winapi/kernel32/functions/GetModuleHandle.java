@@ -10,8 +10,6 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import java.util.Map.Entry;
 
 import org.jakstab.Program;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
 
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
@@ -51,10 +49,14 @@ public class GetModuleHandle extends Kernel32API {
 		HMODULE ret = null;
 		String libraryName = null;
 		long t1 = this.params.get(0);
-		
-		libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+
+		if (this.getAPIName().charAt(this.getAPIName().length() - 1) == 'W') {
+			libraryName = memory.getTextUnicode(t1);
+		} else {
+			libraryName = memory.getText(t1);
+		}
 		System.out.println("Library Name: " + libraryName);
-		
+
 		// Get from cache
 		for (Entry<Long, PairEntry<String, Integer>> entry : APIHandle.libraryHandleMap.entrySet()) {
 			if (entry.getValue().getKey().equals(libraryName)) {
@@ -62,7 +64,7 @@ public class GetModuleHandle extends Kernel32API {
 				ret.setPointer(new Pointer(entry.getKey()));
 			}
 		}
-		
+
 		// If fail
 		if (ret == null) {
 			if (t1 == 0L) {

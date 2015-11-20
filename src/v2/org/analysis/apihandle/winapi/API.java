@@ -30,8 +30,10 @@ import v2.org.analysis.value.Value;
  */
 public abstract class API {
 	protected int NUM_OF_PARMS = 0;
+	protected boolean IS_POP_STACK_VALUE = true;
 
 	protected String libraryName;
+	protected String apiName;
 
 	protected BPState curState = null;
 	protected Stack stack = null;
@@ -40,7 +42,8 @@ public abstract class API {
 
 	protected List<Long> params = null;
 
-	public void run(AbsoluteAddress address, BPState curState, Instruction inst) throws APIException {
+	public void run(AbsoluteAddress address, BPState curState, Instruction inst, String apiName) throws APIException {
+		this.apiName = apiName;
 		this.curState = curState;
 		this.initAttributes();
 		this.execute();
@@ -51,7 +54,7 @@ public abstract class API {
 	}
 
 	public String getAPIName() {
-		return getClass().getSimpleName();
+		return this.apiName;
 	}
 
 	public String getFullName() {
@@ -81,6 +84,12 @@ public abstract class API {
 				System.out.print(String.format("\tx%d: %s\t", i + 1, value.toString()));
 			}
 			System.out.println();
+			
+			if (!IS_POP_STACK_VALUE) {
+				for (int i = this.params.size(); i > 0; i--) {
+					stack.push(new LongValue(this.params.get(i - 1)));
+				}
+			}
 		}
 	}
 

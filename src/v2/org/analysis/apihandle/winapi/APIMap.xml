@@ -255,6 +255,7 @@
 		<API funcName="atexit" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.atexit" />
 		<API funcName="fclose" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fclose" />
 		<API funcName="fopen" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fopen" />
+		<API funcName="fprintf" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fprintf" />
 		<API funcName="fread" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fread" />
 		<API funcName="free" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.free" />
 		<API funcName="fwrite" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fwrite" />
