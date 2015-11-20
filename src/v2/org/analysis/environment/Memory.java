@@ -714,7 +714,7 @@ public Value getDoubleWordMemoryValue(long address) {
 				}
 
 				ret.append((char) t1);
-				addr++;
+				addr += charSize;
 			} else if (t instanceof SymbolValue) {
 				return ret.toString();
 			}
