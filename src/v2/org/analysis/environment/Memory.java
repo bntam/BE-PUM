@@ -1200,6 +1200,143 @@ public Value getDoubleWordMemoryValue(long address) {
 		}
 	}
 
+	public Value getExDoubleWordMemoryValue(X86MemoryOperand dest) {
+		// TODO Auto-generated method stub
+		long d = evaluateAddress(dest);
+
+		// PHONG: 20150506 If segment is FS
+		// ------------------------------------------------------
+		/*
+		 * if (dest.getSegmentRegister() != null &&
+		 * dest.getSegmentRegister().toString() == "%fs") { d =
+		 * TIB.getTIB_Base_Address() + d; }
+		 */
+		// ---------------------------------------------------------------------------------------
+		if (d == UNKNOWN) {
+			return new SymbolValue(Convert.generateString(dest));
+		}
+
+		return this.getDoubleWordMemoryValueEx(d);
+	}
+
+	private Value getDoubleWordMemoryValueEx(long address) {
+		// TODO Auto-generated method stub
+		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getKernel().readDoubleWord((int) address));
+		}
+		
+		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getUser32().readDoubleWord((int) address));
+		}
+		
+		if (env.getSystem().getAdvapi32Handle().isInside(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getAdvapi32Handle().readDoubleWord((int) address));
+		}
+
+		if (env.getSystem().getFileHandle().isInsideFile(new AbsoluteAddress(address))) {
+			return new LongValue(env.getSystem().getFileHandle().readDoubleWord((int) address));
+		}
+
+		long ret1 = UNKNOWN, ret2 = UNKNOWN, ret3 = UNKNOWN, ret4 = UNKNOWN;
+		boolean p = false;
+
+		Value v1 = memory.get(address);
+		Value v2 = memory.get(address + 1);
+		Value v3 = memory.get(address + 2);
+		Value v4 = memory.get(address + 3);
+
+		if (v1 != null) {
+			if (v1 instanceof LongValue) {
+				ret1 = ((LongValue) v1).getValue();
+				p = true;
+			} else {
+//				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
+				return v1;
+			}
+		}
+
+		if (v2 != null) {
+			if (v2 instanceof LongValue) {
+				ret2 = ((LongValue) v2).getValue();
+				p = true;
+			} else {
+				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
+			}
+		}
+
+		if (v3 != null) {
+			if (v3 instanceof LongValue) {
+				ret3 = ((LongValue) v3).getValue();
+				p = true;
+			} else {
+				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
+			}
+		}
+
+		if (v4 != null) {
+			if (v4 instanceof LongValue) {
+				ret4 = ((LongValue) v4).getValue();
+				p = true;
+			} else {
+				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
+			}
+		}
+
+		if (p) {
+			if (ret1 == UNKNOWN) {
+				ret1 = program.getByteValueMemory(new AbsoluteAddress(address));
+			}
+
+			if (ret2 == UNKNOWN) {
+				ret2 = program.getByteValueMemory(new AbsoluteAddress(address + 1));
+			}
+
+			if (ret3 == UNKNOWN) {
+				ret3 = program.getByteValueMemory(new AbsoluteAddress(address + 2));
+			}
+
+			if (ret4 == UNKNOWN) {
+				ret4 = program.getByteValueMemory(new AbsoluteAddress(address + 3));
+			}
+		}
+
+		if (ret1 != UNKNOWN && ret2 != UNKNOWN && ret3 != UNKNOWN && ret4 != UNKNOWN) {
+			long value = calculateDoubleWordValue(ret1, ret2, ret3, ret4);
+//			BPLogger.debugLogger.info(address + ":" + value);
+			return new LongValue(value);
+		}
+
+		/*
+		 * if (ret1 != UNKNOWN) { try { return new
+		 * LongValue(calculateWordValue(ret1, program.getWordValueMemory(new
+		 * AbsoluteAddress(address + 1)))); } catch (Exception e) { return new
+		 * TopValue(); } } else if (ret2 != UNKNOWN) { try { return new
+		 * LongValue(calculateWordValue(program.getWordValueMemory(new
+		 * AbsoluteAddress(address)), ret2)); } catch (Exception e) { return new
+		 * TopValue(); } }
+		 */
+		// Chinh sua sau van de nay
+
+		try {
+			if (program.isInside(new AbsoluteAddress(address))) {
+				return new LongValue(program.getDoubleWordValueMemory(new AbsoluteAddress(address)));
+			} else {
+//				if (address != 0) {
+//					ExternalMemoryReturnData ret = ExternalMemory.getDoubleWord(address);
+//					if (ret != null && ret.isValidAddress) {
+//						return ret.value;
+//					}
+//				}
+				return new LongValue(0);
+			}
+		} catch (Exception e) {
+			// return new SymbolValue(Convert.generateString(new
+			// X86MemoryOperand(
+			// DataType.INT32, address)));
+			return new LongValue(0);
+		}
+	}
+
 	/*
 	 * private long normalizeValue(long v, Instruction inst) { // TODO
 	 * Auto-generated method stub return Convert.convetUnsignedValue(v,
