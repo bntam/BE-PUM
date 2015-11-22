@@ -18,15 +18,15 @@
 
 package org.jakstab.loader;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.SymbolFinder;
 import org.jakstab.disasm.Disassembler;
 import org.jakstab.rtl.expressions.RTLMemoryLocation;
 import org.jakstab.rtl.expressions.RTLNumber;
-
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  * {@code ExecutableImage} provides an interface to information about the

@@ -530,5 +530,4 @@ public class PEModule extends AbstractCOFFModule {
 		// return t >= 0 && t < pe_header.getSizeOfImage();
 		return t > 0 && t < pe_header.getSizeOfImage();
 	}
-
 }

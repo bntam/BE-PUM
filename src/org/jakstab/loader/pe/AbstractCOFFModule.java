@@ -17,6 +17,9 @@
  */
 package org.jakstab.loader.pe;
 
+import java.io.IOException;
+import java.util.Iterator;
+
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.disasm.Disassembler;
 import org.jakstab.disasm.x86.X86Disassembler;
@@ -26,10 +29,8 @@ import org.jakstab.rtl.expressions.RTLMemoryLocation;
 import org.jakstab.rtl.expressions.RTLNumber;
 import org.jakstab.util.BinaryFileInputBuffer;
 import org.jakstab.util.Logger;
-import v2.org.analysis.complement.Convert;
 
-import java.io.IOException;
-import java.util.Iterator;
+import v2.org.analysis.complement.Convert;
 
 /**
  * An abstract class that encapsulates the common features of MS COFF and PE
@@ -48,16 +49,60 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 
 	public long getByteValue(long va) {
 		long t = va - getBaseAddress();
-		if (t >= 0 && t < inBuf.getSize())
+		if (t >= 0 && t < inBuf.getSize()) {
 			return inBuf.getByteAt((int) t);
+		}
 
 		return Long.MIN_VALUE;
 	}
 
-	public boolean isInside(long va) {
+	public boolean isInsideHeader(long va) {
+//		long z = getBaseAddress();
+//		long t = (va & 0xFFFFFFFF) - z;
+//		return t >= 0 && t < inBuf.getSize() * 8;
 		long z = getBaseAddress();
-		long t = (va & 0xFFFFFFFF) - z;
-		return t >= 0 && t < inBuf.getSize() * 8;
+		long t = (va & 0xFFFFFFFF) - z;		
+//		boolean x = t >= 0 && t < inBuf.getSize() * 8;
+		boolean y = true;
+		
+		if (t < 0) {
+			y = false; 
+//			return false;
+		}
+		for (int i=0; i < section_headers.length; i++) {
+			if (t > getSectionHeader(i).VirtualAddress) {
+				y = false;
+			}
+		}
+		
+//		if (x != y) {
+//			System.out.println("Debug");
+//		}
+		
+		return y;
+	}
+	
+	public boolean isBetweenSections(long va) {
+//		long z = getBaseAddress();
+//		long t = (va & 0xFFFFFFFF) - z;
+//		return t >= 0 && t < inBuf.getSize() * 8;
+		long z = getBaseAddress();
+		long t = (va & 0xFFFFFFFF) - z;		
+		
+		if (t < 0 || section_headers.length < 2 || t < getSectionHeader(0). VirtualAddress) {
+			return false;
+		}
+		for (int i=1; i < section_headers.length; i++) {
+			if (t <= getSectionHeader(i).VirtualAddress) {
+				return true;
+			}
+		}
+		
+//		if (x != y) {
+//			System.out.println("Debug");
+//		}
+		
+		return false;
 	}
 
 	public long getWordValue(long va) {
@@ -79,10 +124,11 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 	public final long getFilePointer(AbsoluteAddress va) {
 		// long t = va.getValueOperand() - getBaseAddress();
 		long fp = getFilePointerFromRVA(va.getValue() - getBaseAddress());
-		if (fp >= 0)
+		if (fp >= 0) {
 			return fp;
-		else
+		} else {
 			return -1;
+		}
 	}
 
 	public int get32ValueMemory(AbsoluteAddress address) {
@@ -92,10 +138,11 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 	@Override
 	public final boolean isCodeArea(AbsoluteAddress va) {
 		int section = getSectionNumber(va);
-		if (section < 0)
+		if (section < 0) {
 			return false;
-		else
+		} else {
 			return isCodeSection(section);
+		}
 	}
 
 	/**
@@ -115,11 +162,13 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 		 * )) return (rva - getSectionHeader(sct).VirtualAddress) +
 		 * getSectionHeader(sct).PointerToRawData;
 		 */
-		if (sct < 0)
+		if (sct < 0) {
 			return -1;
+		}
 
-		if (rva - getSectionHeader(sct).VirtualAddress > getSectionHeader(sct).SizeOfRawData)
+		if (rva - getSectionHeader(sct).VirtualAddress > getSectionHeader(sct).SizeOfRawData) {
 			return -1;
+		}
 		return (rva - getSectionHeader(sct).VirtualAddress) + getSectionHeader(sct).PointerToRawData;
 	}
 
@@ -128,18 +177,21 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 	 */
 	protected final long getRVAFromFilePointer(long filePointer) {
 		int sct = getSectionNumber(filePointer);
-		if (sct < 0)
+		if (sct < 0) {
 			return -1;
+		}
 		return ((filePointer - getSectionHeader(sct).PointerToRawData) + getSectionHeader(sct).VirtualAddress);
 	}
 
 	public long getRVA(long filePointer) {
 		int sct = getSectionNumber(filePointer);
 		if (sct < 0)
+		 {
 			return -1;
 		// long x = getSectionHeader(sct).PointerToRawData;
 		// long y = getSectionHeader(sct).VirtualAddress;
 		// long z = filePointer - y + x;
+		}
 
 		return ((filePointer + getSectionHeader(sct).PointerToRawData) - getSectionHeader(sct).VirtualAddress);
 	}
@@ -163,10 +215,12 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 	 * @return the section number
 	 */
 	protected final int getSectionNumber(long fp) {
-		for (int i = 0; i < getNumberOfSections(); i++)
+		for (int i = 0; i < getNumberOfSections(); i++) {
 			if (getSectionHeader(i).PointerToRawData <= fp
-					&& (getSectionHeader(i).PointerToRawData + getSectionHeader(i).SizeOfRawData) > fp)
+					&& (getSectionHeader(i).PointerToRawData + getSectionHeader(i).SizeOfRawData) > fp) {
 				return i;
+			}
+		}
 		return -1;
 	}
 
@@ -186,18 +240,21 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 	 *            the file pointer
 	 * @return the virtual address
 	 */
+	@Override
 	public final AbsoluteAddress getVirtualAddress(long fp) {
 		long rva = getRVAFromFilePointer(fp);
-		if (rva >= 0)
+		if (rva >= 0) {
 			return new AbsoluteAddress(rva + getBaseAddress());
-		else
+		} else {
 			return null;
+		}
 	}
 
 	protected final int getNumberOfSections() {
 		return section_headers.length;
 	}
 
+	@Override
 	public AbsoluteAddress getMaxAddress() {
 		long highAddress = Long.MIN_VALUE;
 		for (int i = 0; i < getNumberOfSections(); i++) {
@@ -207,6 +264,7 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 		return new AbsoluteAddress(highAddress);
 	}
 
+	@Override
 	public AbsoluteAddress getMinAddress() {
 		long lowAddress = Long.MAX_VALUE;
 		for (int i = 0; i < getNumberOfSections(); i++) {
@@ -228,8 +286,9 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 
 	@Override
 	public RTLNumber readMemoryLocation(RTLMemoryLocation m) throws IOException {
-		if (!(m.getAddress() instanceof RTLNumber))
+		if (!(m.getAddress() instanceof RTLNumber)) {
 			return null;
+		}
 		AbsoluteAddress va = new AbsoluteAddress((RTLNumber) m.getAddress());
 		long fp = getFilePointer(va);
 		if (getSectionNumber(fp) >= 0) {
@@ -251,6 +310,7 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 		return null;
 	}
 
+	@Override
 	public byte[] getByteArray() {
 		return inBuf.getByteArray();
 	}
@@ -299,8 +359,9 @@ public abstract class AbstractCOFFModule implements ExecutableImage {
 
 			@Override
 			public AbsoluteAddress next() {
-				if (!hasNext())
+				if (!hasNext()) {
 					throw new IndexOutOfBoundsException();
+				}
 				AbsoluteAddress res = getVirtualAddress(fp);
 				moveToNextCodeByte();
 				return res;

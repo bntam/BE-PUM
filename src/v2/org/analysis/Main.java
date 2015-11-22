@@ -43,13 +43,13 @@ import org.jakstab.ssl.Architecture;
 import org.jakstab.util.Characters;
 import org.jakstab.util.Logger;
 
-import com.sun.jna.WString;
-
-import antlr.ANTLRException;
 import v2.org.analysis.algorithm.OTFModelGeneration;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.statistics.FileProcess;
+import antlr.ANTLRException;
+
+import com.sun.jna.WString;
 
 public class Main {
 	static {
@@ -290,19 +290,18 @@ public class Main {
 //		pathVirus = "asm/loria/";
 //		in = "06a21eaa6b476b96111d39d1558405184039733ffc1d39dee65736426cc32dee"; // Check API Yen
 		
-		pathVirus = "asm/packer/new/";
-//		in = "api_testv2.exe"; // 2064 2151 26s
+		pathVirus = "asm/packer/done/";
+		in = "api_testv2.exe"; // 2064 2151 26s ?
 //		in = "api_test.exe"; // 158 160 0.1s x
 //		in = "api_test_upx.exe"; // 323 353 6s x
 //		in = "api_test_fsg.exe"; // 244 268 3s x
 //		in = "api_test_pecompact.exe"; // 1127 1178 28s x
-//		in = "api_test_npack.exe"; // 602 639 10s x
+//		in = "api_test_npack.exe"; // 602 639 10s x 
 //		in = "api_test_yoda.1.2.exe"; // 625 659 173s x
 //		in = "api_test_yoda.1.3.exe"; // 924 960 163s x
 //		in = "api_test_petite_2.3.exe"; // 1569 1637 86s x
 //		in = "api_test_aspack.exe"; // 1047 1112 73s x
 //		in = "api_test_mpress.exe"; // 459 489 103 x
-//		in = "api_test_upack.exe"; // 443 490 153s x
 //		in = "api_test_wwpack32.exe"; // 329 360 4s x
 //		in = "api_test_exepack.exe"; // 323 353 6s x
 //		in = "api_test_WinUpack.exe"; // 443 490 19s
@@ -315,9 +314,9 @@ public class Main {
 //		in = "api_test_eXPressor.exe"; // 1172 1233 85s
 		
 		// Undone
-		in = "api_test_EXEfog.exe";
-		in = "api_test_EXEJonier.exe";
-		in = "api_test_KKrunchy.exe"; // Disassembled at: 0x003f11ab
+//		in = "api_test_EXEfog.exe";
+//		in = "api_test_EXEJonier.exe";
+//		in = "api_test_KKrunchy.exe"; // Disassembled at: 0x003f11ab
 //		in = "api_test_Enigma.exe"; // Run long time
 //		in = "api_test_ALEXProtector.exe"; // Error VirtualAlloc
 //		in = "api_test_ACProtect.exe"; // Error Call Memory Run OllyDbg later
@@ -351,9 +350,10 @@ public class Main {
 //		in = "demo1_aspack.exe"; // 14278 14334 907s x
 //		in = "demo1_fastpack.exe";
 		
-//		pathVirus = "asm/virus/";
-		pathVirus = "C:/Work/Virus/viruses-20070914/vx.netlux.org/";
-		in = "Email-Worm.Win32.Mydoom.az";
+		pathVirus = "asm/virus/";
+//		pathVirus = "C:/Work/Virus/viruses-20070914/vx.netlux.org/";
+//		in = "Email-Worm.Win32.Mydoom.az"; // 641 651 
+		in = "003ba46362d1c2643a690cd7e912441b0ee04ee0f8026789f677b873389c0361";
 		
 		String path = pathVirus + in;
 		isGui = false;

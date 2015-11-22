@@ -68,10 +68,10 @@ public class Memory {
 
 	public String outputMemory() {
 		FileProcess fp = new FileProcess("/data/data/memory.txt"); // YenNguyen
-		// fp.clearContentFile();
+		fp.clearContentFile();
 		String ret = "";
 		for (Map.Entry<Long, Value> entry : memory.entrySet()) {
-			ret += entry.getKey() + "\t" + entry.getValue() + "\n";
+			ret += "0x" + Long.toHexString(entry.getKey()) + "\t" + entry.getValue() + "\n";
 		}
 
 		fp.clearContentFile();
@@ -84,7 +84,7 @@ public class Memory {
 		// FileProcess fp = new FileProcess("/data/data/memory.txt");
 		String ret = "";
 		for (Map.Entry<Long, Value> entry : memory.entrySet()) {
-			ret += entry.getKey() + "=" + entry.getValue() + ",";
+			ret += "0x" + Long.toHexString(entry.getKey()) + "\t" + entry.getValue() + "\n";
 		}
 
 		// fp.clearContentFile();
@@ -396,6 +396,8 @@ public class Memory {
 			AbsoluteAddress absoluteAddr = new AbsoluteAddress(address);
 			if (program.isInside(absoluteAddr)) {
 				return new LongValue(program.getByteValueMemoryPhong(absoluteAddr));
+			} else if (program.isBetweenSection(absoluteAddr)) {
+				return new LongValue(0);
 			} else {
 				// YenNguyen: Access jna's memory here
 				if (address != 0 && isTryInExternalMemory) {
@@ -451,81 +453,18 @@ public class Memory {
 			return new LongValue(env.getSystem().getFileHandle().readWord((int) address));
 		}
 
-		long ret1 = UNKNOWN, ret2 = UNKNOWN;
-		boolean p = false;
+		Value v1 = getByteMemoryValue(address);
+		Value v2 = getByteMemoryValue(address + 1);		
 
-		Value v1 = memory.get(address);
-		Value v2 = memory.get(address + 1);
-
-		if (v1 != null) {
-			if (v1 instanceof LongValue) {
-				ret1 = ((LongValue) v1).getValue();
-				p = true;
-			} else {
-//				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
-				return v1;
-			}
-		}
-
-		if (v2 != null) {
-			if (v2 instanceof LongValue) {
-				ret2 = ((LongValue) v2).getValue();
-				p = true;
-			} else {
-				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
-			}
-		}
-
-		if (p) {
-			if (ret1 == UNKNOWN) {
-				ret1 = program.getByteValueMemory(new AbsoluteAddress(address));
-			}
-
-			if (ret2 == UNKNOWN) {
-				ret2 = program.getByteValueMemory(new AbsoluteAddress(address + 1));
-			}
-		}
-
-		if (ret1 != UNKNOWN && ret2 != UNKNOWN) {
-			long value = calculateWordValue(ret1, ret2);
+		if (v1 != null && v2 != null && 
+				v1 instanceof LongValue && v2 instanceof LongValue) {
+			long value = calculateWordValue(((LongValue)v1).getValue(), 
+						((LongValue)v2).getValue());
 //			BPLogger.debugLogger.info(address + ":" + value);
-			return new LongValue(value);
+			return new LongValue(value);			
 		}
-
-		if (ret1 != UNKNOWN) {
-			try {
-				return new LongValue(calculateWordValue(ret1,
-						program.getWordValueMemory(new AbsoluteAddress(address + 1))));
-			} catch (Exception e) {
-				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)).toString());
-			}
-		} else if (ret2 != UNKNOWN) {
-			try {
-				return new LongValue(calculateWordValue(program.getWordValueMemory(new AbsoluteAddress(address)), ret2));
-			} catch (Exception e) {
-				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
-			}
-		}
-
-		try {
-			if (program.isInside(new AbsoluteAddress(address))) {
-				return new LongValue(program.getWordValueMemory(new AbsoluteAddress(address)));
-			} else {
-				// YenNguyen: Access jna's memory here
-				if (address != 0) {
-					ExternalMemoryReturnData ret = ExternalMemory.getWord(address);
-					if (ret != null && ret.isValidAddress) {
-						return ret.value;
-					}
-				}
-				// return new SymbolValue(Convert.generateString(
-				// new X86MemoryOperand(DataType.INT8, address))
-				// .toString());
-				return new LongValue(0);
-			}
-		} catch (Exception e) {
-			return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
-		}
+		
+		return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));	
 	}
 
 
@@ -566,104 +505,26 @@ public Value getDoubleWordMemoryValue(long address) {
 			return new LongValue(env.getSystem().getFileHandle().readDoubleWord((int) address));
 		}
 
-		long ret1 = UNKNOWN, ret2 = UNKNOWN, ret3 = UNKNOWN, ret4 = UNKNOWN;
-		boolean p = false;
-
-		Value v1 = memory.get(address);
-		Value v2 = memory.get(address + 1);
-		Value v3 = memory.get(address + 2);
-		Value v4 = memory.get(address + 3);
-
-		if (v1 != null) {
-			if (v1 instanceof LongValue) {
-				ret1 = ((LongValue) v1).getValue();
-				p = true;
-			} else {
-//				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
-				return v1;
-			}
-		}
-
-		if (v2 != null) {
-			if (v2 instanceof LongValue) {
-				ret2 = ((LongValue) v2).getValue();
-				p = true;
-			} else {
-				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
-			}
-		}
-
-		if (v3 != null) {
-			if (v3 instanceof LongValue) {
-				ret3 = ((LongValue) v3).getValue();
-				p = true;
-			} else {
-				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
-			}
-		}
-
-		if (v4 != null) {
-			if (v4 instanceof LongValue) {
-				ret4 = ((LongValue) v4).getValue();
-				p = true;
-			} else {
-				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
-			}
-		}
-
-		if (p) {
-			if (ret1 == UNKNOWN) {
-				ret1 = program.getByteValueMemory(new AbsoluteAddress(address));
-			}
-
-			if (ret2 == UNKNOWN) {
-				ret2 = program.getByteValueMemory(new AbsoluteAddress(address + 1));
-			}
-
-			if (ret3 == UNKNOWN) {
-				ret3 = program.getByteValueMemory(new AbsoluteAddress(address + 2));
-			}
-
-			if (ret4 == UNKNOWN) {
-				ret4 = program.getByteValueMemory(new AbsoluteAddress(address + 3));
-			}
-		}
-
-		if (ret1 != UNKNOWN && ret2 != UNKNOWN && ret3 != UNKNOWN && ret4 != UNKNOWN) {
-			long value = calculateDoubleWordValue(ret1, ret2, ret3, ret4);
+		Value v1 = getByteMemoryValue(address);
+		Value v2 = getByteMemoryValue(address + 1);
+		Value v3 = getByteMemoryValue(address + 2);
+		Value v4 = getByteMemoryValue(address + 3);
+		
+		if (v1 != null && v1 instanceof LongValue && 
+				v2 != null && v2 instanceof LongValue &&
+				v3 != null && v3 instanceof LongValue &&
+				v4 != null && v4 instanceof LongValue) {
+			long value = calculateDoubleWordValue(((LongValue)v1).getValue(), 
+					((LongValue)v2).getValue(),
+					((LongValue)v3).getValue(),
+					((LongValue)v4).getValue());
 //			BPLogger.debugLogger.info(address + ":" + value);
 			return new LongValue(value);
 		}
-
-		/*
-		 * if (ret1 != UNKNOWN) { try { return new
-		 * LongValue(calculateWordValue(ret1, program.getWordValueMemory(new
-		 * AbsoluteAddress(address + 1)))); } catch (Exception e) { return new
-		 * TopValue(); } } else if (ret2 != UNKNOWN) { try { return new
-		 * LongValue(calculateWordValue(program.getWordValueMemory(new
-		 * AbsoluteAddress(address)), ret2)); } catch (Exception e) { return new
-		 * TopValue(); } }
-		 */
-		// Chinh sua sau van de nay
-
-		try {
-			if (program.isInside(new AbsoluteAddress(address))) {
-				return new LongValue(program.getDoubleWordValueMemory(new AbsoluteAddress(address)));
-			} else {
-				if (address != 0) {
-					ExternalMemoryReturnData ret = ExternalMemory.getDoubleWord(address);
-					if (ret != null && ret.isValidAddress) {
-						return ret.value;
-					}
-				}
-				return new LongValue(0);
-			}
-		} catch (Exception e) {
-			// return new SymbolValue(Convert.generateString(new
-			// X86MemoryOperand(
-			// DataType.INT32, address)));
-			return new LongValue(0);
-		}
+		
+		return new SymbolValue(Convert.generateString(new X86MemoryOperand(
+				DataType.INT32, address)));
+//		return new LongValue(0);
 	}
 
 	public Value getDoubleWordMemoryValue(X86MemoryOperand dest) {
@@ -942,7 +803,11 @@ public Value getDoubleWordMemoryValue(long address) {
 
 	public void setDoubleWordMemoryValue(X86MemoryOperand dest, Value v) {
 		long d = evaluateAddress(dest);
-
+		
+		/*if (d == 4202596) {
+			System.out.println("Debug");
+		}*/
+		
 		if (d == UNKNOWN) {
 			return;
 		}
