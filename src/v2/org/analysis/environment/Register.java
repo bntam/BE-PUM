@@ -4,7 +4,6 @@
 package v2.org.analysis.environment;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.value.LongValue;
@@ -20,7 +19,9 @@ public class Register {
 			sp, bp, ds, es, fs, cs, ss, gs;
 
 	private Value dr0, dr1, dr2, dr3, dr4, dr5, dr6, dr7;
-	
+	private Value mm0, mm1, mm2, mm3, mm4, mm5, mm6, mm7;
+		
+	@Override
 	public Register clone() {
 		Register ret = new Register();
 		ret.setRegisterValue("eax", eax.clone());
@@ -49,16 +50,18 @@ public class Register {
 		ret.setRegisterValue("edi", edi.clone());
 		ret.setRegisterValue("di", di.clone());
 
-		if (esp != null)
+		if (esp != null) {
 			ret.setRegisterValue("esp", esp.clone());
-		else
+		} else {
 			ret.setRegisterValue("esp", new SymbolValue("esp"));
+		}
 		ret.setRegisterValue("sp", sp.clone());
 
-		if (ebp != null)
+		if (ebp != null) {
 			ret.setRegisterValue("ebp", ebp.clone());
-		else
+		} else {
 			ret.setRegisterValue("ebp", new SymbolValue("ebp"));
+		}
 		ret.setRegisterValue("bp", bp.clone());
 
 		ret.setRegisterValue("eip", eip.clone());
@@ -77,6 +80,15 @@ public class Register {
 		ret.setRegisterValue("dr5", dr5.clone());
 		ret.setRegisterValue("dr6", dr6.clone());
 		ret.setRegisterValue("dr7", dr7.clone());
+		
+		ret.setRegisterValue("mm0", mm0.clone());
+		ret.setRegisterValue("mm1", mm1.clone());
+		ret.setRegisterValue("mm2", mm2.clone());
+		ret.setRegisterValue("mm3", mm3.clone());
+		ret.setRegisterValue("mm4", mm4.clone());
+		ret.setRegisterValue("mm5", mm5.clone());
+		ret.setRegisterValue("mm6", mm6.clone());
+		ret.setRegisterValue("mm7", mm7.clone());
 		
 		return ret;
 	}
@@ -130,111 +142,191 @@ public class Register {
 		dr5 = new SymbolValue("dr5");
 		dr6 = new SymbolValue("dr6");
 		dr7 = new SymbolValue("dr7");
+		
+		mm0 = new SymbolValue("mm0");
+		mm1 = new SymbolValue("mm1");
+		mm2 = new SymbolValue("mm2");
+		mm3 = new SymbolValue("mm3");
+		mm4 = new SymbolValue("mm4");
+		mm5 = new SymbolValue("mm5");
+		mm6 = new SymbolValue("mm6");
+		mm7 = new SymbolValue("mm7");
 	}
 
 	public Value getRegisterValue(String registerName) {
 		String reg = checkRegisterName(registerName);
 
-		if (reg.equals("eax"))
+		if (reg.equals("eax")) {
 			return eax;
-		if (reg.equals("ax"))
+		}
+		if (reg.equals("ax")) {
 			return ax;
-		if (reg.equals("ah"))
+		}
+		if (reg.equals("ah")) {
 			return ah;
-		if (reg.equals("al"))
+		}
+		if (reg.equals("al")) {
 			return al;
+		}
 
-		if (reg.equals("ebx"))
+		if (reg.equals("ebx")) {
 			return ebx;
-		if (reg.equals("bx"))
+		}
+		if (reg.equals("bx")) {
 			return bx;
-		if (reg.equals("bh"))
+		}
+		if (reg.equals("bh")) {
 			return bh;
-		if (reg.equals("bl"))
+		}
+		if (reg.equals("bl")) {
 			return bl;
+		}
 
-		if (reg.equals("ecx"))
+		if (reg.equals("ecx")) {
 			return ecx;
-		if (reg.equals("cx"))
+		}
+		if (reg.equals("cx")) {
 			return cx;
-		if (reg.equals("ch"))
+		}
+		if (reg.equals("ch")) {
 			return ch;
-		if (reg.equals("cl"))
+		}
+		if (reg.equals("cl")) {
 			return cl;
+		}
 
-		if (reg.equals("edx"))
+		if (reg.equals("edx")) {
 			return edx;
-		if (reg.equals("dx"))
+		}
+		if (reg.equals("dx")) {
 			return dx;
-		if (reg.equals("dh"))
+		}
+		if (reg.equals("dh")) {
 			return dh;
-		if (reg.equals("dl"))
+		}
+		if (reg.equals("dl")) {
 			return dl;
+		}
 
-		if (reg.equals("esi"))
+		if (reg.equals("esi")) {
 			return esi;
-		if (reg.equals("si"))
+		}
+		if (reg.equals("si")) {
 			return si;
+		}
 
-		if (reg.equals("edi"))
+		if (reg.equals("edi")) {
 			return edi;
-		if (reg.equals("di"))
+		}
+		if (reg.equals("di")) {
 			return di;
+		}
 
-		if (reg.equals("esp"))
+		if (reg.equals("esp")) {
 			return esp;
-		if (reg.equals("sp"))
+		}
+		if (reg.equals("sp")) {
 			return sp;
+		}
 
-		if (reg.equals("ebp"))
+		if (reg.equals("ebp")) {
 			return ebp;
-		if (reg.equals("bp"))
+		}
+		if (reg.equals("bp")) {
 			return bp;
+		}
 
-		if (reg.equals("eip"))
+		if (reg.equals("eip")) {
 			return eip;
+		}
 
-		if (reg.equals("cs"))
+		if (reg.equals("cs")) {
 			return cs;
+		}
 		
-		if (reg.equals("ds"))
+		if (reg.equals("ds")) {
 			return ds;
+		}
 		
-		if (reg.equals("es"))
+		if (reg.equals("es")) {
 			return es;
+		}
 		
-		if (reg.equals("fs"))
+		if (reg.equals("fs")) {
 			return fs;
+		}
 		
-		if (reg.equals("gs"))
+		if (reg.equals("gs")) {
 			return gs;
+		}
 		
-		if (reg.equals("ss"))
+		if (reg.equals("ss")) {
 			return ss;
+		}
 
-		if (reg.equals("dr0"))
+		if (reg.equals("dr0")) {
 			return dr0;
+		}
 		
-		if (reg.equals("dr1"))
+		if (reg.equals("dr1")) {
 			return dr1;
+		}
 		
-		if (reg.equals("dr2"))
+		if (reg.equals("dr2")) {
 			return dr2;
+		}
 		
-		if (reg.equals("dr3"))
+		if (reg.equals("dr3")) {
 			return dr3;
+		}
 		
-		if (reg.equals("dr4"))
+		if (reg.equals("dr4")) {
 			return dr4;
+		}
 		
-		if (reg.equals("dr5"))
+		if (reg.equals("dr5")) {
 			return dr5;
+		}
 		
-		if (reg.equals("dr6"))
+		if (reg.equals("dr6")) {
 			return dr6;
+		}
 		
-		if (reg.equals("dr7"))
+		if (reg.equals("dr7")) {
 			return dr7;
+		}
+		
+		if (reg.equals("mm0")) {
+			return mm0;
+		}
+		
+		if (reg.equals("mm1")) {
+			return mm1;
+		}
+		
+		if (reg.equals("mm2")) {
+			return mm2;
+		}
+		
+		if (reg.equals("mm3")) {
+			return mm3;
+		}
+		
+		if (reg.equals("mm4")) {
+			return mm4;
+		}
+		
+		if (reg.equals("mm5")) {
+			return mm5;
+		}
+		
+		if (reg.equals("mm6")) {
+			return mm6;
+		}
+		
+		if (reg.equals("mm7")) {
+			return mm7;
+		}
 		
 		return null;
 	}
@@ -243,8 +335,23 @@ public class Register {
 		String reg = checkRegisterName(registerName);
 		Value v = this.normalizeValue(value, registerName);
 		
-
-		if (reg.equals("dr0")){
+		if (reg.equals("mm0")){
+			mm0 = v;
+		}else if (reg.equals("mm1")){
+			mm1 = v;
+		}else if (reg.equals("mm2")){
+			mm2 = v;
+		}else if (reg.equals("mm3")){
+			mm3 = v;
+		}else if (reg.equals("mm4")){
+			mm4 = v;
+		}else if (reg.equals("mm5")){
+			mm5 = v;
+		}else if (reg.equals("mm6")){
+			mm6 = v;
+		}else if (reg.equals("mm7")){
+			mm7 = v;
+		}else if (reg.equals("dr0")){
 			dr0 = v;
 		}else if (reg.equals("dr1")){
 			dr1 = v;
@@ -326,8 +433,8 @@ public class Register {
 				if (t instanceof LongValue) {
 					long h = ((LongValue) t).getValue();
 					long t1 = (long) (h / Math.pow(2, 16));
-					long t2 = (long) (h % (long) Math.pow(2, 16));
-					long t3 = (long) (t2 % (long) Math.pow(2, 8));
+					long t2 = h % (long) Math.pow(2, 16);
+					long t3 = t2 % (long) Math.pow(2, 8);
 					ax = new LongValue((long) (p * Math.pow(2, 8) + t3));
 					// al = new LongValue(t3);
 					eax = new LongValue((long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
@@ -375,8 +482,8 @@ public class Register {
 				if (t instanceof LongValue) {
 					long h = ((LongValue) t).getValue();
 					long t1 = (long) (h / Math.pow(2, 16));
-					long t2 = (long) (h % (long) Math.pow(2, 16));
-					long t3 = (long) (t2 % (long) Math.pow(2, 8));
+					long t2 = h % (long) Math.pow(2, 16);
+					long t3 = t2 % (long) Math.pow(2, 8);
 					bx = new LongValue((long) (p * Math.pow(2, 8) + t3));
 					// al = new LongValue(t3);
 					ebx = new LongValue((long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
@@ -423,8 +530,8 @@ public class Register {
 				if (t instanceof LongValue) {
 					long h = ((LongValue) t).getValue();
 					long t1 = (long) (h / Math.pow(2, 16));
-					long t2 = (long) (h % (long) Math.pow(2, 16));
-					long t3 = (long) (t2 % (long) Math.pow(2, 8));
+					long t2 = h % (long) Math.pow(2, 16);
+					long t3 = t2 % (long) Math.pow(2, 8);
 					cx = new LongValue((long) (p * Math.pow(2, 8) + t3));
 					// al = new LongValue(t3);
 					ecx = new LongValue((long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
@@ -471,8 +578,8 @@ public class Register {
 				if (t instanceof LongValue) {
 					long h = ((LongValue) t).getValue();
 					long t1 = (long) (h / Math.pow(2, 16));
-					long t2 = (long) (h % (long) Math.pow(2, 16));
-					long t3 = (long) (t2 % (long) Math.pow(2, 8));
+					long t2 = h % (long) Math.pow(2, 16);
+					long t3 = t2 % (long) Math.pow(2, 8);
 					dx = new LongValue((long) (p * Math.pow(2, 8) + t3));
 					// al = new LongValue(t3);
 					edx = new LongValue((long) (t1 * Math.pow(2, 16) + p * Math.pow(2, 8) + t3));
@@ -502,40 +609,40 @@ public class Register {
 					}
 				}
 			} else if (reg.equals("esi")) {
-				si = new LongValue((long) (p % (long) Math.pow(2, 16)));
+				si = new LongValue(p % (long) Math.pow(2, 16));
 				esi = v;
 			} else if (reg.equals("edi")) {
-				di = new LongValue((long) (p % (long) Math.pow(2, 16)));
+				di = new LongValue(p % (long) Math.pow(2, 16));
 				edi = v;
 			} else if (reg.equals("ebp")) {
-				bp = new LongValue((long) (p % (long) Math.pow(2, 16)));
+				bp = new LongValue(p % (long) Math.pow(2, 16));
 				ebp = v;
 			} else if (reg.equals("esp")) {
-				sp = new LongValue((long) (p % (long) Math.pow(2, 16)));
+				sp = new LongValue(p % (long) Math.pow(2, 16));
 				esp = v;
 			} else if (reg.equals("eax")) {
 				long t = p % (long) Math.pow(2, 16);
 				ax = new LongValue(t);
-				ah = new LongValue((long) (t / (long) Math.pow(2, 8)));
-				al = new LongValue((long) (t % (long) Math.pow(2, 8)));
+				ah = new LongValue(t / (long) Math.pow(2, 8));
+				al = new LongValue(t % (long) Math.pow(2, 8));
 				eax = v;
 			} else if (reg.equals("ebx")) {
 				long t = p % (long) Math.pow(2, 16);
 				bx = new LongValue(t);
-				bh = new LongValue((long) (t / (long) Math.pow(2, 8)));
-				bl = new LongValue((long) (t % (long) Math.pow(2, 8)));
+				bh = new LongValue(t / (long) Math.pow(2, 8));
+				bl = new LongValue(t % (long) Math.pow(2, 8));
 				ebx = v;
 			} else if (reg.equals("ecx")) {
 				long t = p % (long) Math.pow(2, 16);
 				cx = new LongValue(t);
-				ch = new LongValue((long) (t / (long) Math.pow(2, 8)));
-				cl = new LongValue((long) (t % (long) Math.pow(2, 8)));
+				ch = new LongValue(t / (long) Math.pow(2, 8));
+				cl = new LongValue(t % (long) Math.pow(2, 8));
 				ecx = v;
 			} else if (reg.equals("edx")) {
 				long t = p % (long) Math.pow(2, 16);
 				dx = new LongValue(t);
-				dh = new LongValue((long) (t / (long) Math.pow(2, 8)));
-				dl = new LongValue((long) (t % (long) Math.pow(2, 8)));
+				dh = new LongValue(t / (long) Math.pow(2, 8));
+				dl = new LongValue(t % (long) Math.pow(2, 8));
 				edx = v;
 			}
 		} else {
@@ -551,12 +658,11 @@ public class Register {
 				// al = ax.modFunction(new LongValue((long) Math.pow(2, 8)));
 				// ah = ax.unsignedDivFunction(new LongValue((long) Math.pow(2,
 				// 8)));
-			} else if (reg.equals("ah"))
+			} else if (reg.equals("ah")) {
 				ah = v;
-			else if (reg.equals("al"))
+			} else if (reg.equals("al")) {
 				al = v;
-
-			else if (reg.equals("ebx")) {
+			} else if (reg.equals("ebx")) {
 				ebx = v;
 				// bx = v.modFunction(new LongValue((long) Math.pow(2, 16)));
 				// bl = bx.modFunction(new LongValue((long) Math.pow(2, 8)));
@@ -567,12 +673,11 @@ public class Register {
 				// bl = bx.modFunction(new LongValue((long) Math.pow(2, 8)));
 				// bh = bx.unsignedDivFunction(new LongValue((long) Math.pow(2,
 				// 8)));
-			} else if (reg.equals("bh"))
+			} else if (reg.equals("bh")) {
 				bh = v;
-			else if (reg.equals("bl"))
+			} else if (reg.equals("bl")) {
 				bl = v;
-
-			else if (reg.equals("ecx")) {
+			} else if (reg.equals("ecx")) {
 				ecx = v;
 				// cx = v.modFunction(new LongValue((long) Math.pow(2, 16)));
 				// cl = cx.modFunction(new LongValue((long) Math.pow(2, 8)));
@@ -583,12 +688,11 @@ public class Register {
 				// cl = cx.modFunction(new LongValue((long) Math.pow(2, 8)));
 				// ch = cx.unsignedDivFunction(new LongValue((long) Math.pow(2,
 				// 8)));
-			} else if (reg.equals("ch"))
+			} else if (reg.equals("ch")) {
 				ch = v;
-			else if (reg.equals("cl"))
+			} else if (reg.equals("cl")) {
 				cl = v;
-
-			else if (reg.equals("edx")) {
+			} else if (reg.equals("edx")) {
 				edx = v;
 				// dx = v.modFunction(new LongValue((long) Math.pow(2, 16)));
 				// dl = dx.modFunction(new LongValue((long) Math.pow(2, 8)));
@@ -599,46 +703,44 @@ public class Register {
 				// dl = dx.modFunction(new LongValue((long) Math.pow(2, 8)));
 				// dh = dx.unsignedDivFunction(new LongValue((long) Math.pow(2,
 				// 8)));
-			} else if (reg.equals("dh"))
+			} else if (reg.equals("dh")) {
 				dh = v;
-			else if (reg.equals("dl"))
+			} else if (reg.equals("dl")) {
 				dl = v;
-
-			else if (reg.equals("esi")) {
+			} else if (reg.equals("esi")) {
 				esi = v;
 				// si = v.modFunction(new LongValue((long) Math.pow(2, 16)));
-			} else if (reg.equals("si"))
+			} else if (reg.equals("si")) {
 				si = v;
-
-			else if (reg.equals("edi")) {
+			} else if (reg.equals("edi")) {
 				edi = v;
 				// di = v.modFunction(new LongValue((long) Math.pow(2, 16)));
-			} else if (reg.equals("di"))
+			} else if (reg.equals("di")) {
 				di = v;
-
-			else if (reg.equals("esp")) {
+			} else if (reg.equals("esp")) {
 				esp = v;
 				// sp = v.modFunction(new LongValue((long) Math.pow(2, 16)));
-			} else if (reg.equals("sp"))
+			} else if (reg.equals("sp")) {
 				sp = v;
-
-			else if (reg.equals("ebp")) {
+			} else if (reg.equals("ebp")) {
 				ebp = v;
 				// bp = v.modFunction(new LongValue((long) Math.pow(2, 16)));
-			} else if (reg.equals("bp"))
+			} else if (reg.equals("bp")) {
 				bp = v;
-			else if (reg.equals("eip"))
-				eip = v;			
+			} else if (reg.equals("eip")) {
+				eip = v;
+			}			
 		}
 	}
 
 	private String checkRegisterName(String registerName) {
 		// TODO Auto-generated method stub
 		String ret = "";
-		if (registerName.startsWith("%"))
+		if (registerName.startsWith("%")) {
 			ret = registerName.substring(1).toLowerCase();
-		else
+		} else {
 			ret = registerName.toLowerCase();
+		}
 
 		return ret;
 	}
@@ -1198,9 +1300,9 @@ public class Register {
 			System.out.println("RL Function Fail:" + dest + " Src:" + src);
 			return;
 		}
-		if (dest.startsWith("e"))
+		if (dest.startsWith("e")) {
 			d = d.rlFunction(s);
-		else {
+		} else {
 			d = d.rl8Function(s);
 		}
 		setRegisterValue(dest, d);
@@ -1216,11 +1318,12 @@ public class Register {
 	private int checkBitCount(String regName) {
 		if (regName.contains("eax") || regName.contains("ebx") || regName.contains("ecx") || regName.contains("edx")
 				|| regName.contains("esi") || regName.contains("edi") || regName.contains("esp")
-				|| regName.contains("ebp"))
+				|| regName.contains("ebp")) {
 			return 32;
-		else if (regName.contains("ax") || regName.contains("bx") || regName.contains("cx") || regName.contains("dx")
-				|| regName.contains("si") || regName.contains("di") || regName.contains("sp") || regName.contains("bp"))
+		} else if (regName.contains("ax") || regName.contains("bx") || regName.contains("cx") || regName.contains("dx")
+				|| regName.contains("si") || regName.contains("di") || regName.contains("sp") || regName.contains("bp")) {
 			return 16;
+		}
 		return 8;
 	}
 
@@ -1288,11 +1391,13 @@ public class Register {
 			long l = ((LongValue) val).getValue();
 			int i = Convert.getSignBit(c, checkBitCount(dest));
 			int b = checkBitCount(dest);
-			for (int j = 1; j <= l; j++)
+			for (int j = 1; j <= l; j++) {
 				c = c / 2;
+			}
 
-			for (int j = 1; j <= l; j++)
+			for (int j = 1; j <= l; j++) {
 				c += i * Math.pow(2, b - j);
+			}
 			setRegisterValue(dest, new LongValue(c));
 			return;
 		}
@@ -1374,8 +1479,9 @@ public class Register {
 			if (dest.contains("al")) {
 				Value t = getRegisterValue("ax");
 
-				if (t instanceof LongValue)
+				if (t instanceof LongValue) {
 					divident = ((LongValue) t).getValue();
+				}
 
 				long quotient = divident / val;
 				if (quotient > 255) {
@@ -1388,12 +1494,13 @@ public class Register {
 			} else if (dest.contains("eax")) {
 				Value t = getRegisterValue("edx");
 
-				if (t instanceof LongValue)
+				if (t instanceof LongValue) {
 					divident += (long) (((LongValue) t).getValue() * Math.pow(2, 32));
-				else {
+				} else {
 					t = getRegisterValue("dx");
-					if (t instanceof LongValue)
+					if (t instanceof LongValue) {
 						divident += (long) (((LongValue) t).getValue() * Math.pow(2, 32));
+					}
 				}
 				long quotient = divident / val;
 				if (quotient > 4294967295l) {
@@ -1407,8 +1514,9 @@ public class Register {
 			} else if (dest.contains("ax")) {
 				Value t = getRegisterValue("dx");
 
-				if (t instanceof LongValue)
+				if (t instanceof LongValue) {
 					divident += (long) (((LongValue) t).getValue() * Math.pow(2, 16));
+				}
 
 				long quotient = divident / val;
 				if (quotient > 65535) {
