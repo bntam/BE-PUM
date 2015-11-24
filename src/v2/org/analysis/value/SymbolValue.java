@@ -51,6 +51,8 @@ public class SymbolValue implements Value {
 					((HybridValue) exp).getRight());
 		else if (exp instanceof TopValue)
 			return new TopValue();
+		else if (exp instanceof DoubleValue)
+			result = new DoubleValue(((DoubleValue) exp).getValue());
 		return result;
 	}
 

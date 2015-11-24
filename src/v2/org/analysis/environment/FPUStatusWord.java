@@ -155,7 +155,11 @@ public class FPUStatusWord {
 	public Value getDE(){
 		return IE;
 	}
-		
+	
+	public int getOverflow(){
+		return overflow;
+	}
+	
 	//Set value of FPU startus word
 	public void setB(Value B){
 		this.B = B;
@@ -212,11 +216,7 @@ public class FPUStatusWord {
 	public void setIE(Value IE){
 		this.IE = IE;
 	}
-	
-	public int getoverflow(){
-		return  overflow;
-	}
-	
+		
 	public long getValueFST(){
 		long temp = 0;
 		long bit_0, bit_1, bit_2, bit_3, bit_4, bit_5,
@@ -324,7 +324,7 @@ public class FPUStatusWord {
 		this.IE = new BooleanValue(true);
 	}
 	
-	public void changFLD(long top){		
+	public void changeFLD(long top){		
 		if (top == 0) {
 			this.TOP = new LongValue(7);
 			overflow++;
@@ -532,7 +532,7 @@ public class FPUStatusWord {
 		}		
 	}
 	
-	private void changeUFlag(double number){
+	public void changeUFlag(double number){
 		double Max = 1 * Math.pow(2, -1022);
     	double Min = -1 * Math.pow(2, -1022);
     	if (number <= Max && number >= Min && number!= 0.0){
@@ -571,7 +571,7 @@ public class FPUStatusWord {
 				this.PE = new BooleanValue(true);
 				this.C1 = new BooleanValue(true);
 			} 
-			// co xu khong chinh xac cua result, ko lam tron
+			// co su khong chinh xac cua result, ko lam tron
 			else {
 				this.PE = new BooleanValue(true);
 			}
@@ -612,6 +612,7 @@ public class FPUStatusWord {
 		} else {			
 			this.TOP = new LongValue(top + 1);			
 		}
+		overflow = overflow - 1;
 	}
 	
 	public void changeFCOM(Value st0, Value src) {
@@ -649,6 +650,46 @@ public class FPUStatusWord {
 				this.C0 = new BooleanValue(true);
 			}
 			if (temp_st0 == temp_src){
+				this.C3 = new BooleanValue(true);
+				this.C2 = new BooleanValue(false);
+				this.C0 = new BooleanValue(false);
+			}
+		}
+	}
+
+	public void changeFTST(Value st0) {
+		// TODO Auto-generated method stub
+		// ST0 = null
+		if (st0 == null){
+			changeUnderflow();
+			this.C3 = new BooleanValue(true);
+			this.C2 = new BooleanValue(true);
+			this.C0 = new BooleanValue(true);
+		}
+		else {
+			double temp_st0 = ((DoubleValue) st0).getValue();
+			//ST0 = NaN
+			if (Double.isNaN(temp_st0)){
+				this.C3 = new BooleanValue(true);
+				this.C2 = new BooleanValue(true);
+				this.C0 = new BooleanValue(true);
+				this.IE = new BooleanValue(true);
+			}			
+			// ST0 = finity || ST0 = infinity
+			// ST0 > 0
+			else if (temp_st0 > 0){
+				this.C3 = new BooleanValue(false);
+				this.C2 = new BooleanValue(false);
+				this.C0 = new BooleanValue(false);
+			}
+			// ST0 < 0
+			else if (temp_st0 < 0){
+				this.C3 = new BooleanValue(false);
+				this.C2 = new BooleanValue(false);
+				this.C0 = new BooleanValue(true);
+			}
+			// ST0 == 0
+			else {
 				this.C3 = new BooleanValue(true);
 				this.C2 = new BooleanValue(false);
 				this.C0 = new BooleanValue(false);

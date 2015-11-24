@@ -16,7 +16,7 @@ public class fld1 extends X86InstructionStub {
 		top = top.evaluate(top.getValueMap());
 		temp_top = ((LongValue) top).getValue();
 		
-		env.getFST().changFLD(temp_top);
+		env.getFST().changeFLD(temp_top);
 		if (((BooleanValue) env.getFST().getC1()).getValue()) {
 			env.getFPUregister().FLD(Double.NaN);
 		} else {

@@ -1,6 +1,5 @@
 package v2.org.analysis.environment;
 
-import org.jakstab.Program;
 import v2.org.analysis.system.SystemHandle;
 import v2.org.analysis.value.LongValue;
 
@@ -9,8 +8,13 @@ public class Environment {
 	private Flag flag;
 	private Memory memory;
 	private Register register;
+	
+	// Moidfy Khanh: 51101594
+	private FPUStatusWord FST;
+	private FPURegister FPUregister;
+	private FPUControlWord FCW;
+	
 	public final static SystemHandle system = new SystemHandle();
-
 	public Stack getStack() {
 		return stack;
 	}
@@ -43,6 +47,31 @@ public class Environment {
 		this.flag = flag;
 	}
 
+	// Modify Khanh: 51101594
+	public FPUStatusWord getFST() {
+		return FST;
+	}
+
+	public void setFST(FPUStatusWord FST) {
+		this.FST = FST;
+	}
+	
+	public FPUControlWord getFCW(){
+		return FCW;
+	}
+	
+	public void setFCW(FPUControlWord FCW){
+		this.FCW = FCW;
+	}
+	
+	public FPURegister getFPUregister() {
+		return FPUregister;
+	}
+
+	public void setFPUregister(FPURegister FPUregister) {
+		this.FPUregister = FPUregister;
+	}
+	
 	public Environment() {
 		stack = new StackV2();
 
@@ -51,7 +80,23 @@ public class Environment {
 		memory = new Memory();
 		memory.setEnvironment(this);
 		//memory.resetImportTable(Program.getProgram());
-
+		
+		// Modify Khanh: 51101594
+		FST = new FPUStatusWord();
+		FST.inti();
+		FCW = new FPUControlWord();
+		FCW.inti();
+		FPUregister = new FPURegister();
+		FPUregister.mov("st0", null);
+		FPUregister.mov("st1", null);
+		FPUregister.mov("st2", null);
+		FPUregister.mov("st3", null);
+		FPUregister.mov("st4", null);
+		FPUregister.mov("st5", null);
+		FPUregister.mov("st6", null);
+		FPUregister.mov("st7", null);
+		FPUregister.FPUTagWord();
+		
 		register = new Register();
 		// register.mov("edx", new
 		// LongValue(Program.getProgram().getEntryPoint()
@@ -79,8 +124,9 @@ public class Environment {
 			// .getReturnRandomValue()));
 			//((StackV2) stack).init(new LongValue(0x7C817067));
 			((StackV2) stack).init(new LongValue(0x7c8000c0));
-		} else if (stack instanceof StackV1)
+		} else if (stack instanceof StackV1) {
 			stack.push((new LongValue(system.getKernel().getReturnRandomValue())));
+		}
 	}
 
 	public SystemHandle getSystem() {
@@ -88,34 +134,37 @@ public class Environment {
 		return system;
 	}
 
+	@Override
 	public Environment clone() {
 		Environment ret = new Environment();
-		if (register != null)
+		if (register != null) {
 			ret.setRegister(register.clone());
+		}
 
-		if (flag != null)
+		if (flag != null) {
 			ret.setFlag(flag.clone());
+		}
 
-		if (memory != null)
+		if (memory != null) {
 			ret.setMemory(memory.clone());
+		}
 
-		if (stack != null)
+		if (stack != null) {
 			ret.setStack(stack.clone());
+		}
 		ret.getMemory().setEnvironment(ret);
-		if (ret.getStack() instanceof StackV2)
+		if (ret.getStack() instanceof StackV2) {
 			((StackV2) ret.getStack()).setEnvironment(ret);
+		}
 
 		return ret;
 	}
 
-	/**
-	 * YenNguyen: Unused method
-	 */
-//	public boolean equals(Environment e) {
-//		return register.equals(e.getRegister()) && memory.equals(e.getMemory()) && stack.equals(e.getStack())
-//		// && flag.equals(e.getFlag())
-//		;
-//	}
+	public boolean equals(Environment e) {
+		return register.equals(e.getRegister()) && memory.equals(e.getMemory()) && stack.equals(e.getStack())
+		// && flag.equals(e.getFlag())
+		;
+	}
 
 	public void reset() {
 		// TODO Auto-generated method stub

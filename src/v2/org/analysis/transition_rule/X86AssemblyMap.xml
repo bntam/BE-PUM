@@ -33,10 +33,34 @@
 		<API assemblyName="enter" className="v2.org.analysis.transition_rule.x86instruction.enter" />
 		<API assemblyName="f2xm1" className="v2.org.analysis.transition_rule.x86instruction.f2xm1" />
 		<API assemblyName="fabs" className="v2.org.analysis.transition_rule.x86instruction.fabs" />
+		<API assemblyName="fadd" className="v2.org.analysis.transition_rule.x86instruction.fadd" />
+		<API assemblyName="faddp" className="v2.org.analysis.transition_rule.x86instruction.faddp" />
 		<API assemblyName="fchs" className="v2.org.analysis.transition_rule.x86instruction.fchs" />
 		<API assemblyName="fclex" className="v2.org.analysis.transition_rule.x86instruction.fclex" />
+		<API assemblyName="fcmovb" className="v2.org.analysis.transition_rule.x86instruction.fcmovb" />
+		<API assemblyName="fcom" className="v2.org.analysis.transition_rule.x86instruction.fcom" />
+		<API assemblyName="fcomi" className="v2.org.analysis.transition_rule.x86instruction.fcomi" />
+		<API assemblyName="fcomp" className="v2.org.analysis.transition_rule.x86instruction.fcomp" />
+		<API assemblyName="fcompp" className="v2.org.analysis.transition_rule.x86instruction.fcompp" />
+		<API assemblyName="fcos" className="v2.org.analysis.transition_rule.x86instruction.fcos" />
 		<API assemblyName="fdecstp" className="v2.org.analysis.transition_rule.x86instruction.fdecstp" />
+		<API assemblyName="fdiv" className="v2.org.analysis.transition_rule.x86instruction.fdiv" />
+		<API assemblyName="fdivp" className="v2.org.analysis.transition_rule.x86instruction.fdivp" />
+		<API assemblyName="fdivr" className="v2.org.analysis.transition_rule.x86instruction.fdivr" />
+		<API assemblyName="fdivrp" className="v2.org.analysis.transition_rule.x86instruction.fdivrp" />
+		<API assemblyName="ffree" className="v2.org.analysis.transition_rule.x86instruction.ffree" />
+		<API assemblyName="fiadd" className="v2.org.analysis.transition_rule.x86instruction.fiadd" />
+		<API assemblyName="ficom" className="v2.org.analysis.transition_rule.x86instruction.ficom" />
+		<API assemblyName="ficomp" className="v2.org.analysis.transition_rule.x86instruction.ficomp" />
+		<API assemblyName="fidiv" className="v2.org.analysis.transition_rule.x86instruction.fidiv" />
+		<API assemblyName="fidivr" className="v2.org.analysis.transition_rule.x86instruction.fidivr" />
+		<API assemblyName="fild" className="v2.org.analysis.transition_rule.x86instruction.fild" />
+		<API assemblyName="fimul" className="v2.org.analysis.transition_rule.x86instruction.fimul" />
 		<API assemblyName="fincstp" className="v2.org.analysis.transition_rule.x86instruction.fincstp" />
+		<API assemblyName="fist" className="v2.org.analysis.transition_rule.x86instruction.fist" />
+		<API assemblyName="fistp" className="v2.org.analysis.transition_rule.x86instruction.fistp" />
+		<API assemblyName="fisub" className="v2.org.analysis.transition_rule.x86instruction.fisub" />
+		<API assemblyName="fisubr" className="v2.org.analysis.transition_rule.x86instruction.fisubr" />
 		<API assemblyName="fld" className="v2.org.analysis.transition_rule.x86instruction.fld" />
 		<API assemblyName="fld1" className="v2.org.analysis.transition_rule.x86instruction.fld1" />
 		<API assemblyName="fldl2e" className="v2.org.analysis.transition_rule.x86instruction.fldl2e" />
@@ -45,12 +69,36 @@
 		<API assemblyName="fldln2" className="v2.org.analysis.transition_rule.x86instruction.fldln2" />
 		<API assemblyName="fldpi" className="v2.org.analysis.transition_rule.x86instruction.fldpi" />
 		<API assemblyName="fldz" className="v2.org.analysis.transition_rule.x86instruction.fldz" />
+		<API assemblyName="fmul" className="v2.org.analysis.transition_rule.x86instruction.fmul" />
+		<API assemblyName="fmulp" className="v2.org.analysis.transition_rule.x86instruction.fmulp" />
 		<API assemblyName="fnclex" className="v2.org.analysis.transition_rule.x86instruction.fnclex" />
 		<API assemblyName="fninit" className="v2.org.analysis.transition_rule.x86instruction.fninit" />
 		<API assemblyName="fnop" className="v2.org.analysis.transition_rule.x86instruction.fnop" />
 		<API assemblyName="fnstsw" className="v2.org.analysis.transition_rule.x86instruction.fnstsw" />
+		<API assemblyName="fpatan" className="v2.org.analysis.transition_rule.x86instruction.fpatan" />
+		<API assemblyName="fprem" className="v2.org.analysis.transition_rule.x86instruction.fprem" />
+		<API assemblyName="fprem1" className="v2.org.analysis.transition_rule.x86instruction.fprem1" />
+		<API assemblyName="fptan" className="v2.org.analysis.transition_rule.x86instruction.fptan" />
+		<API assemblyName="frndint" className="v2.org.analysis.transition_rule.x86instruction.frndint" />
+		<API assemblyName="fscale" className="v2.org.analysis.transition_rule.x86instruction.fscale" />
+		<API assemblyName="fsin" className="v2.org.analysis.transition_rule.x86instruction.fsin" />
+		<API assemblyName="fsincos" className="v2.org.analysis.transition_rule.x86instruction.fsincos" />
+		<API assemblyName="fsqrt" className="v2.org.analysis.transition_rule.x86instruction.fsqrt" />
+		<API assemblyName="fst" className="v2.org.analysis.transition_rule.x86instruction.fst" />
+		<API assemblyName="fsub" className="v2.org.analysis.transition_rule.x86instruction.fsub" />
+		<API assemblyName="fsubp" className="v2.org.analysis.transition_rule.x86instruction.fsubp" />
+		<API assemblyName="fsubr" className="v2.org.analysis.transition_rule.x86instruction.fsubr" />
+		<API assemblyName="fsubrp" className="v2.org.analysis.transition_rule.x86instruction.fsubrp" />
+		<API assemblyName="ftst" className="v2.org.analysis.transition_rule.x86instruction.ftst" />
+		<API assemblyName="fucom" className="v2.org.analysis.transition_rule.x86instruction.fucom" />
+		<API assemblyName="fucomi" className="v2.org.analysis.transition_rule.x86instruction.fucomi" />
+		<API assemblyName="fucomp" className="v2.org.analysis.transition_rule.x86instruction.fucomp" />
+		<API assemblyName="fucompp" className="v2.org.analysis.transition_rule.x86instruction.fucompp" />
 		<API assemblyName="fwait" className="v2.org.analysis.transition_rule.x86instruction.fwait" />
 		<API assemblyName="fxam" className="v2.org.analysis.transition_rule.x86instruction.fxam" />
+		<API assemblyName="fxtract" className="v2.org.analysis.transition_rule.x86instruction.fxtract" />
+		<API assemblyName="fyl2x" className="v2.org.analysis.transition_rule.x86instruction.fyl2x" />
+		<API assemblyName="fyl2xp1" className="v2.org.analysis.transition_rule.x86instruction.fyl2xp1" />
 		<API assemblyName="in" className="v2.org.analysis.transition_rule.x86instruction.in" />
 		<API assemblyName="int1" className="v2.org.analysis.transition_rule.x86instruction.int1" />
 		<API assemblyName="int3" className="v2.org.analysis.transition_rule.x86instruction.int3" />

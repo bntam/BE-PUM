@@ -31,7 +31,7 @@ public class fild extends X86InstructionStub {
 			top = top.evaluate(top.getValueMap());
 			temp_top = ((LongValue) top).getValue();
 			// System.out.println("Value dest: " + temp_d);
-			env.getFST().changFLD(temp_top);
+			env.getFST().changeFLD(temp_top);
 			if (((BooleanValue) env.getFST().getC1()).getValue()) {
 				env.getFPUregister().FLD(Double.NaN);
 			} else {

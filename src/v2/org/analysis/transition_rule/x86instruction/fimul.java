@@ -2,7 +2,6 @@ package v2.org.analysis.transition_rule.x86instruction;
 
 import org.jakstab.asm.x86.X86MemoryOperand;
 
-import v2.org.analysis.complement.Convert;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.transition_rule.stub.X86InstructionStub;
 import v2.org.analysis.value.Value;
@@ -12,7 +11,7 @@ public class fimul extends X86InstructionStub {
 	@Override
 	public BPState execute() {
 		// TODO Auto-generated method stub
-		System.out.println("Instruction: " + inst.getName());
+		//System.out.println("Instruction: " + inst.getName());
 		Value multi_x = null; 
 		Value multi_y = null;
 		String str_dest = "";		
@@ -30,7 +29,7 @@ public class fimul extends X86InstructionStub {
 				
 		env.getFPUregister().FMUL(multi_x, multi_y, str_dest, env);
 		
-		System.out.println("Value FST: " + Convert.longToHex(env.getFST().getValueFST()));
+		//System.out.println("Value FST: " + Convert.longToHex(env.getFST().getValueFST()));
 		return null;
 	}
 

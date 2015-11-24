@@ -517,7 +517,7 @@ public class FPURegister {
 			// finity
 			else {
 				Long temp = Math.round(temp_st0);
-				long result = Integer.valueOf(temp.intValue());
+				long result = Long.valueOf(temp.intValue());
 				double temp_result = result;
 				env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(result), inst);
 				if (Math.abs(temp_result) < Math.abs(temp_st0)) {
