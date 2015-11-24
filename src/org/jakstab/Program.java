@@ -811,7 +811,7 @@ public final class Program {
 				;
 				// PHONG: 20150501 ------------------------------------------
 				if (mainModule instanceof PEModule) {
-					if (((PEModule) mainModule).isInside(address.getValue())) {
+					if (((PEModule) mainModule).isInsideHeader(address.getValue())) {
 						result = (int) ((PEModule) mainModule).getByteValue(address.getValue());
 					}
 				}
@@ -874,7 +874,7 @@ public final class Program {
 				// logger.error("No module for address " + address
 				// + ". Cannot disassemble instruction!");
 				if (mainModule instanceof PEModule) {
-					if (((PEModule) mainModule).isInside(address.getValue())) {
+					if (((PEModule) mainModule).isInsideHeader(address.getValue())) {
 						result = (int) ((PEModule) mainModule).getDoubleWordValue(address.getValue());
 					}
 				}
@@ -1056,7 +1056,7 @@ public final class Program {
 	public final Instruction getInstruction(AbsoluteAddress address, Environment env) {
 		// Instruction instr = assemblyMap.get(address);
 		Instruction instr = null;
-
+		
 		// if (!mainModule.insideFileArea(address))
 		// return null;
 
@@ -1817,6 +1817,10 @@ public final class Program {
 	}
 
 	public boolean isInside(AbsoluteAddress address) {
+//		if (address.getValue() == 4198400) {
+//			System.out.println("Debug");
+//		}
+		
 		boolean result = false;
 		try {
 			if (harness.contains(address) || address.getValue() >= StubProvider.STUB_BASE) {
@@ -1829,7 +1833,7 @@ public final class Program {
 				// logger.error("No module for address " + address
 				// + ". Cannot disassemble instruction!");
 				if (mainModule instanceof PEModule) {
-					return ((PEModule) mainModule).isInside(address.getValue());
+					return ((PEModule) mainModule).isInsideHeader(address.getValue());
 				}
 				//
 			} else {
@@ -2227,5 +2231,14 @@ public final class Program {
 	public void setLog(String string) {
 		// TODO Auto-generated method stub
 		System.out.println(string);
+	}
+
+	public boolean isBetweenSection(AbsoluteAddress address) {
+		// TODO Auto-generated method stub
+		if (mainModule!= null && mainModule instanceof PEModule) {
+			return ((PEModule) mainModule).isBetweenSections(address.getValue());
+		}
+		
+		return false;
 	}
 }

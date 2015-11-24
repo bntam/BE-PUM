@@ -1258,7 +1258,8 @@ public class X86TransitionRule extends TransitionRule {
 			s = new LongValue(y);
 		} else if (src.getClass().getSimpleName().equals("X86Register")
 				|| src.getClass().getSimpleName().equals("X86RegisterPart")
-				|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+				|| src.getClass().getSimpleName().equals("X86SegmentRegister")
+				|| src.getClass().getSimpleName().equals("X86MMXRegister")) {
 			s = env.getRegister().getRegisterValue(src.toString());
 		} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -1272,7 +1273,8 @@ public class X86TransitionRule extends TransitionRule {
 			return;
 		} else if (src.getClass().getSimpleName().equals("X86Register")
 				|| src.getClass().getSimpleName().equals("X86RegisterPart")
-				|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
+				|| src.getClass().getSimpleName().equals("X86SegmentRegister")
+				|| src.getClass().getSimpleName().equals("X86MMXRegister")) {
 			env.getRegister().setRegisterValue(src.toString(), val);
 		} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			env.getMemory().setMemoryValue((X86MemoryOperand) src, val, inst);

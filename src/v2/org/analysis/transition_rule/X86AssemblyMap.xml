@@ -121,6 +121,7 @@
 		<API assemblyName="cmovs" className="v2.org.analysis.transition_rule.x86move.cmovs" />
 		<API assemblyName="cmovz" className="v2.org.analysis.transition_rule.x86move.cmovz" />
 		<API assemblyName="mov" className="v2.org.analysis.transition_rule.x86move.mov" />
+		<API assemblyName="movd" className="v2.org.analysis.transition_rule.x86move.movd" />
 		<API assemblyName="movsb" className="v2.org.analysis.transition_rule.x86move.movsb" />
 		<API assemblyName="movsw" className="v2.org.analysis.transition_rule.x86move.movsw" />
 		<API assemblyName="movsx" className="v2.org.analysis.transition_rule.x86move.movsx" />
