@@ -7,18 +7,14 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinBase.SYSTEMTIME;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LCID;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Formats a date as a date string for a locale specified by the locale
@@ -69,7 +65,6 @@ public class GetDateFormat extends Kernel32API {
 		NUM_OF_PARMS = 6;
 	}
 
-
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
@@ -84,24 +79,16 @@ public class GetDateFormat extends Kernel32API {
 		SYSTEMTIME lpDate = null;
 		if (t3 != 0L) {
 			lpDate = new SYSTEMTIME();
-			lpDate.wYear = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3)))
-					.getValue();
-			lpDate.wMonth = (short) ((LongValue) memory
-					.getWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 2))).getValue();
-			lpDate.wDayOfWeek = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t3 += 2))).getValue();
-			lpDate.wDay = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 2)))
-					.getValue();
-			lpDate.wHour = (short) ((LongValue) memory
-					.getWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 2))).getValue();
-			lpDate.wMinute = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t3 += 2))).getValue();
-			lpDate.wSecond = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t3 += 2))).getValue();
-			lpDate.wMilliseconds = (short) ((LongValue) memory.getWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-					t3 += 2))).getValue();
+			lpDate.wYear = (short) ((LongValue) memory.getWordMemoryValue(t3)).getValue();
+			lpDate.wMonth = (short) ((LongValue) memory.getWordMemoryValue(t3 += 2)).getValue();
+			lpDate.wDayOfWeek = (short) ((LongValue) memory.getWordMemoryValue(t3 += 2)).getValue();
+			lpDate.wDay = (short) ((LongValue) memory.getWordMemoryValue(t3 += 2)).getValue();
+			lpDate.wHour = (short) ((LongValue) memory.getWordMemoryValue(t3 += 2)).getValue();
+			lpDate.wMinute = (short) ((LongValue) memory.getWordMemoryValue(t3 += 2)).getValue();
+			lpDate.wSecond = (short) ((LongValue) memory.getWordMemoryValue(t3 += 2)).getValue();
+			lpDate.wMilliseconds = (short) ((LongValue) memory.getWordMemoryValue(t3 += 2)).getValue();
 		}
-		WString lpFormat = (t4 == 0L) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t4)));
+		WString lpFormat = (t4 == 0L) ? null : new WString(memory.getText(this, t4));
 		char[] lpDateStr = (t5 == 0L) ? null : new char[(int) t6 + 1];
 		int cchDate = (int) t6;
 
@@ -110,8 +97,7 @@ public class GetDateFormat extends Kernel32API {
 		register.mov("eax", new LongValue(ret));
 
 		if (t5 != 0L && cchDate != 0) {
-			memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpDateStr), ret);
+			memory.setText(t5, new String(lpDateStr), ret);
 		}
 	}
-
 }

@@ -7,9 +7,6 @@
  */
 package v2.org.analysis.apihandle.winapi.advapi32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
 import v2.org.analysis.system.registry.EPredefinedKeys;
 import v2.org.analysis.system.registry.ERegKeySecuritynAccessRights;
@@ -130,7 +127,7 @@ public class RegCreateKeyEx extends Advapi32API {
 		}
 
 		ERegKeySecuritynAccessRights accessRights = ERegKeySecuritynAccessRights.fromLong(t6);
-		String lpSubKey = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String lpSubKey = memory.getText(this, t2);
 
 		switch (accessRights) {
 		case KEY_ALL_ACCESS:

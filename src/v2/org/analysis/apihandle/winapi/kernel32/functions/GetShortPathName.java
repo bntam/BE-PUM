@@ -8,21 +8,9 @@
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.Kernel32;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves the short path form of the specified path.
@@ -55,20 +43,19 @@ public class GetShortPathName extends Kernel32API {
 		NUM_OF_PARMS = 3;
 	}
 
-
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		String lpszLongPath = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String lpszLongPath = memory.getText(this, t1);
 		char[] lpdzShortPath = new char[(int) t3];
 		int cchBuffer = (int) t3;
 		int ret = Kernel32.INSTANCE.GetShortPathName(lpszLongPath, lpdzShortPath, cchBuffer);
 
 		String shortPathName = new String(lpdzShortPath);
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), shortPathName, ret);
+		memory.setText(t2, shortPathName, ret);
 
 		register.mov("eax", new LongValue(ret));
 	}

@@ -7,17 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.system.Storage;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.system.Storage;
-import v2.org.analysis.value.LongValue;
 
 /**
  * The CreateFile function creates or opens a file, file stream, directory,
@@ -82,7 +78,7 @@ public class CreateFile extends Kernel32API {
 		long t5 = this.params.get(4);
 		long t6 = this.params.get(5);
 		long t7 = this.params.get(6);
-		String fileName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String fileName = memory.getText(this, t1);
 		fileName = Storage.getMappingPath(fileName);
 		System.out.println("FileName:" + fileName + ", Access:" + t2 + ", ShareMode:" + t3 + ", pSecurity:" + t4
 				+ ", Mode:" + t5 + ", Attributes:" + t6 + ", hTemplate:" + t7);

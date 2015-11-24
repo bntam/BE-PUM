@@ -59,8 +59,8 @@ public class ShellAbout extends Shell32API {
 		long t4 = this.params.get(3);
 
 		HWND hWnd = (t1 == 0L) ? null : new HWND(new Pointer(t1));
-		String szApp = (t2 == 0L) ? null : memory.getText(t2);
-		String szOtherStuff = (t3 == 0L) ? null : memory.getText(t3);
+		String szApp = (t2 == 0L) ? null : memory.getText(this, t2);
+		String szOtherStuff = (t3 == 0L) ? null : memory.getText(this, t3);
 		HICON hIcon = (t4 == 0L) ? null : new HICON(new Pointer(t4));
 		
 		int ret = Shell32DLL.INSTANCE.ShellAbout(hWnd, szApp, szOtherStuff, hIcon);

@@ -3,17 +3,13 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import com.sun.jna.platform.win32.WinDef.UINT;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.OFSTRUCT;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.platform.win32.WinDef.UINT;
 
 /**
  * Creates, opens, reopens, or deletes a file.
@@ -48,7 +44,7 @@ public class OpenFile extends Kernel32API {
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		String lpFileName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String lpFileName = memory.getText(this, t1);
 		lpFileName = Storage.getMappingPath(lpFileName);
 		OFSTRUCT lpReOpenBuff = new OFSTRUCT();
 		UINT uStyle = new UINT(t3);
@@ -63,17 +59,13 @@ public class OpenFile extends Kernel32API {
 		// public WORD Reserved2;
 		// public char szPathName[] = new char[128];
 
-		memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
-				new LongValue(lpReOpenBuff.cBytes.longValue()));
-		memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1),
-				new LongValue(lpReOpenBuff.fFixedDisk.longValue()));
-		memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 1),
-				new LongValue(lpReOpenBuff.nErrCode.longValue()));
-		memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 2), new LongValue(
-				lpReOpenBuff.Reserved1 == null ? 0 : lpReOpenBuff.Reserved1.longValue()));
-		memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 2), new LongValue(
-				lpReOpenBuff.Reserved2 == null ? 0 : lpReOpenBuff.Reserved2.longValue()));
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2 += 2), new String(lpReOpenBuff.szPathName));
+		memory.setByteMemoryValue(t2, new LongValue(lpReOpenBuff.cBytes.longValue()));
+		memory.setByteMemoryValue(t2 += 1, new LongValue(lpReOpenBuff.fFixedDisk.longValue()));
+		memory.setWordMemoryValue(t2 += 1, new LongValue(lpReOpenBuff.nErrCode.longValue()));
+		memory.setWordMemoryValue(t2 += 2,
+				new LongValue(lpReOpenBuff.Reserved1 == null ? 0 : lpReOpenBuff.Reserved1.longValue()));
+		memory.setWordMemoryValue(t2 += 2,
+				new LongValue(lpReOpenBuff.Reserved2 == null ? 0 : lpReOpenBuff.Reserved2.longValue()));
+		memory.setText(t2 += 2, new String(lpReOpenBuff.szPathName));
 	}
-
 }

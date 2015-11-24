@@ -9,19 +9,7 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Determines the length of the specified string (not including the terminating
@@ -49,7 +37,7 @@ public class lstrlen extends Kernel32API {
 	@Override
 	public void execute() {
 		long t = this.params.get(0);
-		String dest = t == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t));
+		String dest = t == 0 ? null : memory.getText(this, t);
 		System.out.println("Destination String:" + dest);
 
 		register.mov("eax", new LongValue(Kernel32DLL.INSTANCE.lstrlen(dest)));

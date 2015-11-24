@@ -3,19 +3,15 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Opens an existing named mutex object.
@@ -59,7 +55,7 @@ public class OpenMutex extends Kernel32API {
 
 		DWORD dwDesiredAccess = new DWORD(t1);
 		BOOL bInheritHandle = new BOOL(t2);
-		WString lpName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
+		WString lpName = new WString(memory.getText(this, t3));
 		HANDLE ret = Kernel32DLL.INSTANCE.OpenMutex(dwDesiredAccess, bInheritHandle, lpName);
 
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());

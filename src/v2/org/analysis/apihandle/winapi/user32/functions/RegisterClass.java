@@ -7,19 +7,24 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.WString;
-import com.sun.jna.platform.win32.WinDef.*;
-
 import v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.WNDCLASS.WNDPROC;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.Pointer;
+import com.sun.jna.WString;
+import com.sun.jna.platform.win32.WinDef.ATOM;
+import com.sun.jna.platform.win32.WinDef.HBRUSH;
+import com.sun.jna.platform.win32.WinDef.HCURSOR;
+import com.sun.jna.platform.win32.WinDef.HICON;
+import com.sun.jna.platform.win32.WinDef.HINSTANCE;
+import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.platform.win32.WinDef.LPARAM;
+import com.sun.jna.platform.win32.WinDef.LRESULT;
+import com.sun.jna.platform.win32.WinDef.UINT;
+import com.sun.jna.platform.win32.WinDef.WPARAM;
 
 /**
  * Registers a window class for subsequent use in calls to the CreateWindow or
@@ -83,10 +88,10 @@ public class RegisterClass extends User32API {
 		lpWndClass.hCursor = new HCURSOR(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
 		lpWndClass.hbrBackground = new HBRUSH(new Pointer(
 				((LongValue) memory.getDoubleWordMemoryValue(t1 += 4)).getValue()));
-		lpWndClass.lpszMenuName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) memory
-				.getDoubleWordMemoryValue(t1 += 4)).getValue())));
-		lpWndClass.lpszClassName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, ((LongValue) memory
-				.getDoubleWordMemoryValue(t1 += 4)).getValue())));
+		lpWndClass.lpszMenuName = new WString(memory.getText(this, ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4))
+				.getValue()));
+		lpWndClass.lpszClassName = new WString(memory.getText(this, ((LongValue) memory.getDoubleWordMemoryValue(t1 += 4))
+				.getValue()));
 
 		ATOM ret = User32DLL.INSTANCE.RegisterClass(lpWndClass);
 

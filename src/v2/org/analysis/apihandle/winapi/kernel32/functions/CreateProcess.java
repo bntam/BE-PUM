@@ -7,6 +7,9 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
@@ -16,13 +19,6 @@ import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.WORD;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.ptr.ByteByReference;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * 
@@ -78,7 +74,6 @@ public class CreateProcess extends Kernel32API {
 		NUM_OF_PARMS = 10;
 	}
 
-
 	@Override
 	public void execute() {
 		/*
@@ -96,10 +91,10 @@ public class CreateProcess extends Kernel32API {
 		long t9 = this.params.get(8);
 		long t10 = this.params.get(9);
 
-		String moduleFileName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-		String commandLine = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-		String curDir = memory.getText(new X86MemoryOperand(DataType.INT32, t8));
-		String pStarupInfo = memory.getText(new X86MemoryOperand(DataType.INT32, t9));
+		String moduleFileName = memory.getText(this, t1);
+		String commandLine = memory.getText(this, t2);
+		String curDir = memory.getText(this, t8);
+		String pStarupInfo = memory.getText(this, t9);
 		System.out.println("Module File Name:" + moduleFileName + ", Command Line:" + commandLine
 				+ ", Process Attribute Security:" + t3 + ", Thread Attribute Security:" + t4 + ", Handle Flag:" + t5
 				+ ", Creation Flag:" + t6 + ", Environemnt Block:" + t7 + ", Current Directory:" + curDir
@@ -182,9 +177,9 @@ public class CreateProcess extends Kernel32API {
 			lpStartupInfo = new STARTUPINFO();
 
 			DWORD cb = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t9)).getValue());
-			String lpReserved = memory.getText(new X86MemoryOperand(DataType.INT32, t9 = t9 + 4));
-			String lpDesktop = memory.getText(new X86MemoryOperand(DataType.INT32, t9 = t9 + 4));
-			String lpTitle = memory.getText(new X86MemoryOperand(DataType.INT32, t9 = t9 + 4));
+			String lpReserved = memory.getText(this, t9 = t9 + 4);
+			String lpDesktop = memory.getText(this, t9 = t9 + 4);
+			String lpTitle = memory.getText(this, t9 = t9 + 4);
 			DWORD dwX = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t9 = t9 + 4)).getValue());
 			DWORD dwY = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t9 = t9 + 4)).getValue());
 			DWORD dwXSize = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t9 = t9 + 4)).getValue());

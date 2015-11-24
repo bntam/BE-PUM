@@ -60,6 +60,13 @@ public abstract class API {
 	public String getFullName() {
 		return String.format("%s@%s.DLL", this.getAPIName(), this.getLibraryName());
 	}
+	
+	public boolean is64bit() {
+		if (this.apiName.charAt(this.apiName.length() - 1) == 'W') {
+			return true;
+		}
+		return false;
+	}
 
 	protected void initAttributes() throws APIException {
 		Environment env = curState.getEnvironement();

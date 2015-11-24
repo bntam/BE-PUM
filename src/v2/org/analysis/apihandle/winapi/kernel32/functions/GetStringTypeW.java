@@ -7,18 +7,16 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
-import com.sun.jna.platform.win32.WinDef.WORDByReference;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves character type information for the characters in the specified
@@ -83,7 +81,7 @@ public class GetStringTypeW extends Kernel32API {
 		long t4 = this.params.get(3);
 
 		DWORD dwInfoType = new DWORD(t1);
-		WString lpSrcStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+		WString lpSrcStr = new WString(memory.getText(this, t2));
 		int cchSrc = (int) t3;
 		short[] lpCharType = new short[cchSrc + 1];
 		BOOL ret = Kernel32DLL.INSTANCE.GetStringTypeW(dwInfoType, lpSrcStr, cchSrc, lpCharType);

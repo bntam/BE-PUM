@@ -9,10 +9,6 @@ package v2.org.analysis.apihandle.winapi.user32.functions;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -41,9 +37,9 @@ public class CharNext extends User32API {
 	public void execute() {
 		long x = this.params.get(0);
 
-		char[] lpsz = memory.getText(new X86MemoryOperand(DataType.INT32, x)).toCharArray();
+		char[] lpsz = memory.getText(this, x).toCharArray();
 		User32DLL.INSTANCE.CharNext(lpsz);
-		
+
 		System.out.println(new String(lpsz));
 
 		register.mov("eax", new LongValue((lpsz.length == 0) ? x : (x + 1)));

@@ -7,17 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 import com.sun.jna.platform.win32.WinDef.HRSRC;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Determines the location of a resource with the specified type and name in the
@@ -65,8 +61,8 @@ public class FindResource extends Kernel32API {
 
 		HMODULE hModule = new HMODULE();
 		hModule.setPointer(new Pointer(t1));
-		String lpName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-		String lpType = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
+		String lpName = memory.getText(this, t2);
+		String lpType = memory.getText(this, t3);
 
 		HRSRC ret = Kernel32DLL.INSTANCE.FindResource(hModule, lpName, lpType);
 

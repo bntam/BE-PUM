@@ -5,15 +5,11 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LCID;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * For a locale specified by identifier, maps one input character string to
@@ -93,7 +89,7 @@ public class LCMapString extends Kernel32API {
 
 		LCID Locale = new LCID(t1);
 		DWORD dwMapFlags = new DWORD(t2);
-		WString lpSrcStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
+		WString lpSrcStr = new WString(memory.getText(this, t3));
 		int cchSrc = (int) t4;
 		char[] lpDestStr = (t5 != 0L && t6 != 0L) ? new char[(int) t6] : null;
 		int cchDest = (int) t6;
@@ -101,8 +97,9 @@ public class LCMapString extends Kernel32API {
 
 		register.mov("eax", new LongValue(ret));
 
-		if (lpDestStr != null)
-			memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpDestStr));
+		if (lpDestStr != null) {
+			memory.setText(t5, new String(lpDestStr));
+		}
 
 	}
 

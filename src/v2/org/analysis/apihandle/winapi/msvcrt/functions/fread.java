@@ -78,18 +78,18 @@ public class fread extends MSVCRTAPI {
 			// int _charbuf;
 			// int _bufsiz;
 			// char *_tmpfname;
-			stream._ptr = memory.getText(t4);
+			stream._ptr = memory.getText(this, t4);
 			if (stream._ptr.length() == 0)
 				stream._ptr = null;
 			stream._cnt = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
-			stream._base = memory.getText(t4 += 4);
+			stream._base = memory.getText(this, t4 += 4);
 			if (stream._base.length() == 0)
 				stream._base = null;
 			stream._flag = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 			stream._file = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 			stream._charbuf = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 			stream._bufsiz = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
-			stream._tmpfname = memory.getText(t4 += 4);
+			stream._tmpfname = memory.getText(this, t4 += 4);
 			if (stream._tmpfname.length() == 0)
 				stream._tmpfname = null;
 		}

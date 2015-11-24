@@ -7,19 +7,15 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.WString;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
 import v2.org.analysis.complement.Convert;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.Pointer;
+import com.sun.jna.WString;
+import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 /**
  * Searches a directory for a file or subdirectory with a name that matches a
@@ -49,13 +45,12 @@ public class FindFirstFile extends Kernel32API {
 		NUM_OF_PARMS = 2;
 	}
 
-
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
 		long pFind = this.params.get(1);
 
-		String searchName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String searchName = memory.getText(this, t1);
 		System.out.println("Search File:" + searchName + ", Memory Operand:" + pFind);
 
 		WIN32_FIND_DATA lpFindFileData = new WIN32_FIND_DATA();
@@ -79,12 +74,11 @@ public class FindFirstFile extends Kernel32API {
 		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved0.longValue()));
 		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved1.longValue()));
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, pFind += 4), new String(lpFindFileData.cFileName));
+		memory.setText(pFind += 4, new String(lpFindFileData.cFileName));
 		String t = new String(lpFindFileData.cFileName);
 		t = Convert.reduceText(t);
-		memory.setText(new X86MemoryOperand(DataType.INT32, pFind += (2 * t.length())), new String(
-				lpFindFileData.cAlternateFileName));
-		
+		memory.setText(pFind += (2 * t.length()), new String(lpFindFileData.cAlternateFileName));
+
 		register.setRegisterValue("edx", new LongValue(0));
 	}
 }

@@ -6,9 +6,7 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
@@ -17,8 +15,6 @@ import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves information about the first process encountered in a system
@@ -62,28 +58,21 @@ public class Process32First extends Kernel32API {
 		// memory.getDoubleWordMemoryValue(new
 		// X86MemoryOperand(DataType.INT32,
 		// t2))).getValue());
-		lppe.cntUsage = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-				t2 += 4))).getValue());
-		lppe.th32ProcessID = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-				DataType.INT32, t2 += 4))).getValue());
-		lppe.th32DefaultHeapID = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-				DataType.INT32, t2 += 4))).getValue());
-		lppe.th32ModuleID = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-				t2 += 4))).getValue());
-		lppe.cntThreads = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-				t2 += 4))).getValue());
-		lppe.th32ParentProcessID = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-				DataType.INT32, t2 += 4))).getValue());
-		lppe.pcPriClassBase = new LONG(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-				DataType.INT32, t2 += 4))).getValue());
-		lppe.dwFlags = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-				t2 += 4))).getValue());
+		lppe.cntUsage = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t2 += 4)).getValue());
+		lppe.th32ProcessID = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t2 += 4)).getValue());
+		lppe.th32DefaultHeapID = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t2 += 4)).getValue());
+		lppe.th32ModuleID = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t2 += 4)).getValue());
+		lppe.cntThreads = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t2 += 4)).getValue());
+		lppe.th32ParentProcessID = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t2 += 4)).getValue());
+		lppe.pcPriClassBase = new LONG(((LongValue) memory.getDoubleWordMemoryValue(t2 += 4)).getValue());
+		lppe.dwFlags = new DWORD(((LongValue) memory.getDoubleWordMemoryValue(t2 += 4)).getValue());
 
-		char[] szExeFile = memory.getText(new X86MemoryOperand(DataType.INT32, t2 += 4)).toCharArray();
+		char[] szExeFile = memory.getText(this, t2 += 4).toCharArray();
 		for (int i = 0; i < szExeFile.length; i++) {
 			lppe.szExeFile[i] = szExeFile[i];
-			if (APIHandle.isDebug)
+			if (APIHandle.isDebug) {
 				System.out.println("[" + i + "]: " + lppe.szExeFile[i]);
+			}
 		}
 
 		if (APIHandle.isDebug) {
@@ -105,24 +94,16 @@ public class Process32First extends Kernel32API {
 		// memory.setDoubleWordMemoryValue(new
 		// X86MemoryOperand(DataType.INT32, t2),
 		// new LongValue(lppe.dwSize.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
-				new LongValue(lppe.cntUsage.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
-				new LongValue(lppe.th32ProcessID.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
-				lppe.th32DefaultHeapID.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
-				new LongValue(lppe.th32ModuleID.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
-				new LongValue(lppe.cntThreads.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
-				lppe.th32ParentProcessID.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4), new LongValue(
-				lppe.pcPriClassBase.longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2 += 4),
-				new LongValue(lppe.dwFlags.longValue()));
+		memory.setDoubleWordMemoryValue(t2 += 4, new LongValue(lppe.cntUsage.longValue()));
+		memory.setDoubleWordMemoryValue(t2 += 4, new LongValue(lppe.th32ProcessID.longValue()));
+		memory.setDoubleWordMemoryValue(t2 += 4, new LongValue(lppe.th32DefaultHeapID.longValue()));
+		memory.setDoubleWordMemoryValue(t2 += 4, new LongValue(lppe.th32ModuleID.longValue()));
+		memory.setDoubleWordMemoryValue(t2 += 4, new LongValue(lppe.cntThreads.longValue()));
+		memory.setDoubleWordMemoryValue(t2 += 4, new LongValue(lppe.th32ParentProcessID.longValue()));
+		memory.setDoubleWordMemoryValue(t2 += 4, new LongValue(lppe.pcPriClassBase.longValue()));
+		memory.setDoubleWordMemoryValue(t2 += 4, new LongValue(lppe.dwFlags.longValue()));
 		for (int i = 0; i < lppe.szExeFile.length; i++) {
-			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t2 + i), new LongValue(lppe.szExeFile[i]));
+			memory.setByteMemoryValue(t2 + i, new LongValue(lppe.szExeFile[i]));
 		}
 	}
 

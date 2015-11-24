@@ -1,10 +1,16 @@
 package org.analysis.api_stub;
 
+import java.util.Map;
+
 import org.analysis.concrete_execution.ConcreteExecution;
 import org.analysis.concrete_execution.ConcreteStack;
 import org.analysis.concrete_execution.ConcreteValueMemoryOperand;
 import org.analysis.concrete_execution.ConcreteValueRegister;
-import org.analysis.formula.*;
+import org.analysis.formula.AnyExp;
+import org.analysis.formula.Formula;
+import org.analysis.formula.LongValue;
+import org.analysis.formula.SymbolExp;
+import org.analysis.formula.Value;
 import org.analysis.symbolic_execution.SymbolStack;
 import org.analysis.symbolic_execution.SymbolValueMemoryOperand;
 import org.analysis.symbolic_execution.SymbolValueRegister;
@@ -15,10 +21,9 @@ import org.jakstab.asm.DataType;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.x86.X86CondJmpInstruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
 import v2.org.analysis.cfg.AddressList;
 import v2.org.analysis.system.SystemHandle;
-
-import java.util.Map;
 
 public class APIStub {
 
@@ -335,8 +340,9 @@ public class APIStub {
 					if (str != null) {
 						symbolValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, t2), str);
 						symbolValueRegister.mov("%eax", new LongValue(1));
-					} else
+					} else {
 						symbolValueRegister.mov("%eax", new LongValue(0));
+					}
 				}
 			} else if (funcName.startsWith("UnMapViewOfFile")) {
 				// LPCVOID lpBaseAddress // address where mapped view begins
@@ -1240,17 +1246,19 @@ public class APIStub {
 				}
 
 				if (i1.getName().equals("je")) {
-					if (reCond)
+					if (reCond) {
 						return 0;
-					else
+					} else {
 						return 1;
+					}
 				}
 
 				if (i1.getName().equals("jne")) {
-					if (reCond)
+					if (reCond) {
 						return 1;
-					else
+					} else {
 						return 0;
+					}
 				}
 			}
 		} else if (l.length() >= 2) {
@@ -1272,17 +1280,19 @@ public class APIStub {
 				}
 
 				if (i1.getName().equals("je")) {
-					if (reCond)
+					if (reCond) {
 						return 0;
-					else
+					} else {
 						return 1;
+					}
 				}
 
 				if (i1.getName().equals("jne")) {
-					if (reCond)
+					if (reCond) {
 						return 1;
-					else
+					} else {
 						return 0;
+					}
 				}
 			} else if (i1 instanceof X86CondJmpInstruction) {
 				boolean reCond = false;
@@ -1295,17 +1305,19 @@ public class APIStub {
 				}
 
 				if (i1.getName().equals("je")) {
-					if (reCond)
+					if (reCond) {
 						return 0;
-					else
+					} else {
 						return 1;
+					}
 				}
 
 				if (i1.getName().equals("jne")) {
-					if (reCond)
+					if (reCond) {
 						return 1;
-					else
+					} else {
 						return 0;
+					}
 				}
 			}
 		}
@@ -1501,8 +1513,9 @@ public class APIStub {
 				if (str != null) {
 					concreteValueMemoryOperand.setText(new X86MemoryOperand(DataType.INT32, x2), str);
 					concreteValueRegister.mov("%eax", 1);
-				} else
+				} else {
 					concreteValueRegister.mov("%eax", 0);
+				}
 
 			} else if (funcName.startsWith("UnMapViewOfFile")) {
 				// LPCVOID lpBaseAddress // address where mapped view begins

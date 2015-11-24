@@ -7,16 +7,12 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
+import v2.org.analysis.apihandle.winapi.user32.User32API;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
-
-import v2.org.analysis.apihandle.winapi.user32.User32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * This function retrieves the handle to the top-level window whose class name
@@ -59,10 +55,8 @@ public class FindWindow extends User32API {
 		 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
 		 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
 		 */
-		String className = (this.params.get(0) == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32,
-				this.params.get(0)));
-		String windowName = (this.params.get(1) == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32,
-				this.params.get(1)));
+		String className = (this.params.get(0) == 0L) ? null : memory.getText(this, this.params.get(0));
+		String windowName = (this.params.get(1) == 0L) ? null : memory.getText(this, this.params.get(1));
 
 		System.out.println("Class Name:" + className + ", Window Name Address:" + this.params.get(1) + ", Window Name:"
 				+ windowName);

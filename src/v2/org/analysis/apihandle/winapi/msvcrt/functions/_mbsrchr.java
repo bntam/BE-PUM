@@ -15,7 +15,7 @@ public class _mbsrchr extends MSVCRTAPI {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 
-		String str = memory.getText(t1);
+		String str = memory.getText(this, t1);
 		char character = (char) t2;
 		
 		System.out.println(String.format("str:%s|char:%c", str, character));

@@ -7,14 +7,11 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.platform.win32.WinDef.ATOM;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.platform.win32.WinDef.ATOM;
 
 /**
  * Searches the local atom table for the specified character string and
@@ -43,7 +40,7 @@ public class FindAtom extends Kernel32API {
 	public void execute() {
 		long t1 = this.params.get(0);
 
-		String lpString = (t1 == 0) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String lpString = (t1 == 0) ? null : memory.getText(this, t1);
 		ATOM ret = Kernel32DLL.INSTANCE.FindAtom(lpString);
 
 		register.mov("eax", new LongValue(ret.longValue()));

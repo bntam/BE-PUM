@@ -7,11 +7,9 @@
  */
 package v2.org.analysis.apihandle.winapi.shell32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.shell32.Shell32API;
 import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Shell32;
 import com.sun.jna.platform.win32.WinDef;
@@ -122,10 +120,10 @@ public class ShellExecute extends Shell32API {
 		long t6 = this.params.get(5);
 
 		HWND hwnd = (t1 == 0L) ? null : new HWND(new Pointer(t1));
-		String lpOperation = (t2 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-		String lpFile = (t3 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t3));
-		String lpParameters = (t4 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t4));
-		String lpDirectory = (t5 == 0L) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t5));
+		String lpOperation = (t2 == 0L) ? null : memory.getText(this, t2);
+		String lpFile = (t3 == 0L) ? null : memory.getText(this, t3);
+		String lpParameters = (t4 == 0L) ? null : memory.getText(this, t4);
+		String lpDirectory = (t5 == 0L) ? null : memory.getText(this, t5);
 		int nShowCmd = (int) t6;
 
 		System.out.println("hwnd: " + t1 + ", lpOperation: " + lpOperation + ", lpFile: " + lpFile + ", lpParameters: "

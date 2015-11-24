@@ -8,10 +8,6 @@
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -43,7 +39,7 @@ public class CharPrev extends User32API {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 
-		String lpszStart = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String lpszStart = memory.getText(this, t1);
 
 		long ret;
 

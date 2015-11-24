@@ -8,13 +8,9 @@
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.Kernel32;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves the contents of the specified variable from the environment block
@@ -52,19 +48,18 @@ public class GetEnvironmentVariable extends Kernel32API {
 		NUM_OF_PARMS = 3;
 	}
 
-
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		String lpName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String lpName = memory.getText(this, t1);
 		char[] lpBuffer = new char[(int) t3];
 		int ret = Kernel32.INSTANCE.GetEnvironmentVariable(lpName, lpBuffer, (int) t3);
 
 		String variable = new String(lpBuffer);
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), variable, variable.length());
+		memory.setText(t2, variable, variable.length());
 
 		register.mov("eax", new LongValue(ret));
 	}

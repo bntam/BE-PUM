@@ -128,9 +128,9 @@ public class HeapCreate extends Kernel32API {
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		// String fileNameOld = symbolValueMemoryOperand.getText(new
+		// String fileNameOld = symbolValueMemoryOperand.getText(this, new
 		// X86MemoryOperand(DataType.INT32, t1));
-		// String fileNameNew = symbolValueMemoryOperand.getText(new
+		// String fileNameNew = symbolValueMemoryOperand.getText(this, new
 		// X86MemoryOperand(DataType.INT32, t2));
 		System.out.println("fOption:" + t1 + ", Initial Size:" + t2 + ", Maximum Size:" + t3);
 

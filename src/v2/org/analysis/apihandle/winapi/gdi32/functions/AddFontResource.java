@@ -7,14 +7,11 @@
  */
 package v2.org.analysis.apihandle.winapi.gdi32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.WString;
-
 import v2.org.analysis.apihandle.winapi.gdi32.Gdi32API;
 import v2.org.analysis.apihandle.winapi.gdi32.Gdi32DLL;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.WString;
 
 /**
  * The AddFontResource function adds the font resource from the specified file
@@ -44,12 +41,10 @@ public class AddFontResource extends Gdi32API {
 	public void execute() {
 		long t1 = this.params.get(0);
 
-		WString lpszFilename = (t1 == 0L) ? null
-				: new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
+		WString lpszFilename = (t1 == 0L) ? null : new WString(memory.getText(this, t1));
 		int ret = Gdi32DLL.INSTANCE.AddFontResource(lpszFilename);
-		
+
 		register.mov("eax", new LongValue(ret));
 		System.out.println("Return Value: " + ret);
 	}
-
 }

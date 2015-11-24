@@ -3,18 +3,14 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
+import v2.org.analysis.apihandle.winapi.user32.User32API;
+import v2.org.analysis.apihandle.winapi.user32.User32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.HINSTANCE;
 import com.sun.jna.platform.win32.WinDef.HMENU;
-
-import v2.org.analysis.apihandle.winapi.user32.User32API;
-import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Loads the specified menu resource from the executable (.exe) file associated
@@ -53,7 +49,7 @@ public class LoadMenu extends User32API {
 			hInstance = new HINSTANCE();
 			hInstance.setPointer(new Pointer(t1));
 		}
-		WString lpMenuName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+		WString lpMenuName = new WString(memory.getText(this, t2));
 		HMENU ret = User32DLL.INSTANCE.LoadMenu(hInstance, lpMenuName);
 
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());

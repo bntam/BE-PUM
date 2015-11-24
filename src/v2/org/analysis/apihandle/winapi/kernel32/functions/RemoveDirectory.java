@@ -48,7 +48,7 @@ public class RemoveDirectory extends Kernel32API {
 	public void execute() {
 		long t1 = this.params.get(0);
 
-		String lpPathName = (t1 == 0L) ? null : memory.getText(t1);
+		String lpPathName = (t1 == 0L) ? null : memory.getText(this, t1);
 		
 		lpPathName = Storage.getMappingPath(lpPathName);
 		

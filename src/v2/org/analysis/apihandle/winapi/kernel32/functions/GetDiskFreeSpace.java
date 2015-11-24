@@ -9,16 +9,12 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.DWORDByReference;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves information about the specified disk, including the amount of free
@@ -66,7 +62,6 @@ public class GetDiskFreeSpace extends Kernel32API {
 		NUM_OF_PARMS = 5;
 	}
 
-
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
@@ -75,7 +70,7 @@ public class GetDiskFreeSpace extends Kernel32API {
 		long t4 = this.params.get(3);
 		long t5 = this.params.get(4);
 
-		WString lpRootPathName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
+		WString lpRootPathName = new WString(memory.getText(this, t1));
 		DWORDByReference lpSectorsPerCluster = new DWORDByReference(new DWORD(t2));
 		DWORDByReference lpBytesPerSector = new DWORDByReference(new DWORD(t3));
 		DWORDByReference lpNumberOfFreeClusters = new DWORDByReference(new DWORD(t4));
@@ -85,13 +80,9 @@ public class GetDiskFreeSpace extends Kernel32API {
 
 		register.mov("eax", new LongValue(ret.longValue()));
 
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2), new LongValue(lpSectorsPerCluster
-				.getValue().longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(lpBytesPerSector
-				.getValue().longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(lpNumberOfFreeClusters
-				.getValue().longValue()));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(lpTotalNumberOfClusters
-				.getValue().longValue()));
+		memory.setDoubleWordMemoryValue(t2, new LongValue(lpSectorsPerCluster.getValue().longValue()));
+		memory.setDoubleWordMemoryValue(t3, new LongValue(lpBytesPerSector.getValue().longValue()));
+		memory.setDoubleWordMemoryValue(t4, new LongValue(lpNumberOfFreeClusters.getValue().longValue()));
+		memory.setDoubleWordMemoryValue(t5, new LongValue(lpTotalNumberOfClusters.getValue().longValue()));
 	}
 }

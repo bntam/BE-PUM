@@ -7,27 +7,15 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinBase.OVERLAPPED;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.ptr.IntByReference;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Writes data to the specified file or input/output (I/O) device.
@@ -83,7 +71,7 @@ public class WriteFile extends Kernel32API {
 		long t4 = this.params.get(3);
 		long t5 = this.params.get(4);
 
-		String str = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String str = memory.getText(this, t2);
 
 		System.out.println("Handle File:" + t1 + ", String written:" + str + ", Number of Byte:" + t3 + ", Pointer:"
 				+ t4 + ", Overlapped:" + t5);

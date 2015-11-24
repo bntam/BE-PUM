@@ -5,14 +5,10 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.UINT;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Maps a character string to a UTF-16 (wide character) string. The character
@@ -77,7 +73,7 @@ public class MultiByteToWideChar extends Kernel32API {
 
 		UINT CodePage = new UINT(t1);
 		DWORD dwFlags = new DWORD(t2);
-		String lpMultiByteStr = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
+		String lpMultiByteStr = memory.getText(this, t3);
 		int cbMultiByte = (int) t4;
 		char[] lpWideCharStr = (t5 != 0L && t6 > 0) ? new char[(int) t6] : null;
 		int cchWideChar = (int) t6;
@@ -87,8 +83,9 @@ public class MultiByteToWideChar extends Kernel32API {
 
 		register.mov("eax", new LongValue(ret));
 
-		if (lpWideCharStr != null)
-			memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpWideCharStr));
+		if (lpWideCharStr != null) {
+			memory.setText(t5, new String(lpWideCharStr));
+		}
 	}
 
 }

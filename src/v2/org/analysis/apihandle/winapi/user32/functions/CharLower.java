@@ -9,10 +9,6 @@ package v2.org.analysis.apihandle.winapi.user32.functions;
 
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.value.LongValue;
 
 /**
@@ -44,13 +40,13 @@ public class CharLower extends User32API {
 
 	@Override
 	public void execute() {
-			long x = this.params.get(0);
+		long x = this.params.get(0);
 
-			char[] lpsz = memory.getText(new X86MemoryOperand(DataType.INT32, x)).toCharArray();
-			User32DLL.INSTANCE.CharLower(lpsz);
-			register.mov("eax", new LongValue(x));
+		char[] lpsz = memory.getText(this, x).toCharArray();
+		User32DLL.INSTANCE.CharLower(lpsz);
+		register.mov("eax", new LongValue(x));
 
-			memory.setText(new X86MemoryOperand(DataType.INT32, x), new String(lpsz));
+		memory.setText(x, new String(lpsz));
 	}
 
 }

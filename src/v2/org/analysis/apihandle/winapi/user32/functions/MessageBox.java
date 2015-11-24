@@ -7,17 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
+import v2.org.analysis.apihandle.winapi.user32.User32API;
+import v2.org.analysis.apihandle.winapi.user32.User32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.UINT;
-
-import v2.org.analysis.apihandle.winapi.user32.User32API;
-import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Displays a modal dialog box that contains a system icon, a set of buttons,
@@ -67,8 +63,8 @@ public class MessageBox extends User32API {
 		long t4 = this.params.get(3);
 
 		HWND hWnd = new HWND(new Pointer(t1));
-		String lpText = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
-		String lpCaption = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
+		String lpText = memory.getText(this, t2);
+		String lpCaption = memory.getText(this, t3);
 		UINT uType = new UINT(t4);
 
 		System.out.print("Handle:" + t1);
@@ -97,8 +93,9 @@ public class MessageBox extends User32API {
 		// IDYES 6 The Yes button was selected.
 
 		register.mov("eax", new LongValue(1));
-		
-		System.out.println("\t\tSPECIAL WINDOWS API: The return code must be based on user interaction! Simulator always return 0!");
+
+		System.out
+				.println("\t\tSPECIAL WINDOWS API: The return code must be based on user interaction! Simulator always return 0!");
 	}
 
 	class MBThread extends Thread {

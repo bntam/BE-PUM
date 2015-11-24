@@ -8,14 +8,10 @@
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.platform.win32.Kernel32;
-
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.platform.win32.Kernel32;
 
 /**
  * Retrieves file system attributes for a specified file or directory.
@@ -39,7 +35,7 @@ public class GetFileAttributes extends Kernel32API {
 
 	@Override
 	public void execute() {
-		String fName = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
+		String fName = memory.getText(this, this.params.get(0));
 		fName = Storage.getMappingPath(fName);
 
 		long attr = Kernel32.INSTANCE.GetFileAttributes(fName);

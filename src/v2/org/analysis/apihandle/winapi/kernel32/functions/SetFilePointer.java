@@ -79,7 +79,7 @@ public class SetFilePointer extends Kernel32API {
 		long t3 = this.params.get(2);
 		long t4 = this.params.get(3);
 
-		// String str = symbolValueMemoryOperand.getText(new
+		// String str = symbolValueMemoryOperand.getText(this, new
 		// X86MemoryOperand(DataType.INT32, t2));
 		System.out.println("Handle File:" + t1 + ", Number of Bytes:" + t2 + ", Address of High-Order:" + t3
 				+ ", Move Type:" + t4);

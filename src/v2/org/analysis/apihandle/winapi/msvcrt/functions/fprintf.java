@@ -38,7 +38,7 @@ public class fprintf extends MSVCRTAPI {
 		}
 
 		long pFILE = this.params.get(0);
-		String format = memory.getText(this.params.get(1));
+		String format = memory.getText(this, this.params.get(1));
 
 		System.out.println(String.format("FILE: %d, Format String: %s", pFILE, format));
 
@@ -54,7 +54,7 @@ public class fprintf extends MSVCRTAPI {
 					long p = ((LongValue) value).getValue();
 
 					this.params.add(p);
-					argsList[i + 1] = memory.getText(p);
+					argsList[i + 1] = memory.getText(this, p);
 					System.out.println(String.format("[%d]:%s", i, argsList[i + 1]));
 				}
 			}

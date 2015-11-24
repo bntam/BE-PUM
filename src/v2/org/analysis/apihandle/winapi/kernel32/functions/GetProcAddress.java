@@ -35,7 +35,7 @@ public class GetProcAddress extends Kernel32API {
 		 */
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
-		String lpProcName = memory.getText(t2);
+		String lpProcName = memory.getText(this, t2);
 
 		long ret = this.execute(t1, lpProcName);
 

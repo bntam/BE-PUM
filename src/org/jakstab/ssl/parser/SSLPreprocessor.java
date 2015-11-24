@@ -2,6 +2,25 @@
 
 package org.jakstab.ssl.parser;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.TreeMap;
+
+import org.jakstab.rtl.expressions.ExpressionFactory;
+import org.jakstab.rtl.expressions.RTLExpression;
+import org.jakstab.rtl.expressions.RTLVariable;
+import org.jakstab.rtl.expressions.SetOfVariables;
+import org.jakstab.rtl.expressions.Writable;
+import org.jakstab.rtl.statements.AssignmentTemplate;
+import org.jakstab.rtl.statements.RTLHalt;
+import org.jakstab.rtl.statements.RTLMemcpy;
+import org.jakstab.rtl.statements.RTLMemset;
+import org.jakstab.rtl.statements.RTLSkip;
+import org.jakstab.rtl.statements.StatementSequence;
+
 import antlr.ASTPair;
 import antlr.MismatchedTokenException;
 import antlr.NoViableAltException;
@@ -9,10 +28,6 @@ import antlr.RecognitionException;
 import antlr.collections.AST;
 import antlr.collections.impl.ASTArray;
 import antlr.collections.impl.BitSet;
-import org.jakstab.rtl.expressions.*;
-import org.jakstab.rtl.statements.*;
-
-import java.util.*;
 
 @SuppressWarnings("all")
 public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenTypes {
@@ -51,7 +66,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		specification(_t);
 		_t = _retTree;
 		astFactory.addASTChild(currentAST, returnAST);
-		start_AST = (AST) currentAST.root;
+		start_AST = currentAST.root;
 		returnAST = start_AST;
 		_retTree = _t;
 	}
@@ -66,8 +81,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST __t3323 = _t;
 		AST tmp1_AST = null;
 		AST tmp1_AST_in = null;
-		tmp1_AST = astFactory.create((AST) _t);
-		tmp1_AST_in = (AST) _t;
+		tmp1_AST = astFactory.create(_t);
+		tmp1_AST_in = _t;
 		astFactory.addASTChild(currentAST, tmp1_AST);
 		ASTPair __currentAST3323 = currentAST.copy();
 		currentAST.root = currentAST.child;
@@ -76,8 +91,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		_t = _t.getFirstChild();
 		{
 			_loop3325: do {
-				if (_t == null)
+				if (_t == null) {
 					_t = ASTNULL;
+				}
 				if ((_tokenSet_0.member(_t.getType()))) {
 					part(_t);
 					_t = _retTree;
@@ -91,7 +107,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		currentAST = __currentAST3323;
 		_t = __t3323;
 		_t = _t.getNextSibling();
-		specification_AST = (AST) currentAST.root;
+		specification_AST = currentAST.root;
 		returnAST = specification_AST;
 		_retTree = _t;
 	}
@@ -118,21 +134,22 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		List<String> pl;
 		List<SSLInstructionName> inam;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		switch (_t.getType()) {
 		case CONSTANT: {
 			AST __t3327 = _t;
 			AST tmp2_AST = null;
 			AST tmp2_AST_in = null;
-			tmp2_AST = astFactory.create((AST) _t);
-			tmp2_AST_in = (AST) _t;
+			tmp2_AST = astFactory.create(_t);
+			tmp2_AST_in = _t;
 			ASTPair __currentAST3327 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, CONSTANT);
 			_t = _t.getFirstChild();
-			cn = (AST) _t;
+			cn = _t;
 			AST cn_AST_in = null;
 			cn_AST = astFactory.create(cn);
 			match(_t, NAME);
@@ -151,16 +168,17 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3328 = _t;
 			AST tmp3_AST = null;
 			AST tmp3_AST_in = null;
-			tmp3_AST = astFactory.create((AST) _t);
-			tmp3_AST_in = (AST) _t;
+			tmp3_AST = astFactory.create(_t);
+			tmp3_AST_in = _t;
 			ASTPair __currentAST3328 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, REGDECL);
 			_t = _t.getFirstChild();
 			{
-				if (_t == null)
+				if (_t == null) {
 					_t = ASTNULL;
+				}
 				switch (_t.getType()) {
 				case LITERAL_INTEGER: {
 					AST tmp4_AST_in = null;
@@ -181,8 +199,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			}
 			{
 				_loop3331: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if (((_t.getType() >= REG_ID && _t.getType() <= LSQUARE))) {
 						register_decl(_t);
 						_t = _retTree;
@@ -201,14 +220,14 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3332 = _t;
 			AST tmp6_AST = null;
 			AST tmp6_AST_in = null;
-			tmp6_AST = astFactory.create((AST) _t);
-			tmp6_AST_in = (AST) _t;
+			tmp6_AST = astFactory.create(_t);
+			tmp6_AST_in = _t;
 			ASTPair __currentAST3332 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, TABLE);
 			_t = _t.getFirstChild();
-			tn = (AST) _t;
+			tn = _t;
 			AST tn_AST_in = null;
 			tn_AST = astFactory.create(tn);
 			match(_t, NAME);
@@ -227,21 +246,21 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3333 = _t;
 			AST tmp7_AST = null;
 			AST tmp7_AST_in = null;
-			tmp7_AST = astFactory.create((AST) _t);
-			tmp7_AST_in = (AST) _t;
+			tmp7_AST = astFactory.create(_t);
+			tmp7_AST_in = _t;
 			ASTPair __currentAST3333 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, FUNCTION);
 			_t = _t.getFirstChild();
-			fn = (AST) _t;
+			fn = _t;
 			AST fn_AST_in = null;
 			fn_AST = astFactory.create(fn);
 			match(_t, NAME);
 			_t = _t.getNextSibling();
 			pl = param_list(_t);
 			_t = _retTree;
-			fb = (AST) _t;
+			fb = _t;
 			AST fb_AST_in = null;
 			fb_AST = astFactory.create(fb);
 			match(_t, RTL);
@@ -256,8 +275,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3334 = _t;
 			AST tmp8_AST = null;
 			AST tmp8_AST_in = null;
-			tmp8_AST = astFactory.create((AST) _t);
-			tmp8_AST_in = (AST) _t;
+			tmp8_AST = astFactory.create(_t);
+			tmp8_AST_in = _t;
 			ASTPair __currentAST3334 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
@@ -267,7 +286,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _retTree;
 			pl = param_list(_t);
 			_t = _retTree;
-			ib = (AST) _t;
+			ib = _t;
 			AST ib_AST_in = null;
 			ib_AST = astFactory.create(ib);
 			match(_t, RTL);
@@ -277,10 +296,11 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _t.getNextSibling();
 
 			for (SSLInstructionName in : inam) {
-				if (in.getVarMap() != null)
+				if (in.getVarMap() != null) {
 					locals.push(in.getVarMap());
-				else
+				} else {
 					locals.push(new HashMap<String, AST>());
+				}
 				rtl_expand(astFactory.dupTree(ib));
 				locals.pop();
 				AST rtl = getAST();
@@ -292,10 +312,12 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 					 * throw new SemanticException(#ib,
 					 * "parameter list of '%s' changed" % n)
 					 */
-					if (rtl.getFirstChild() != null)
+					if (rtl.getFirstChild() != null) {
 						oldIns.getAST().addChild(rtl.getFirstChild());
-				} else
+					}
+				} else {
 					instructions.put(in.getName(), new SSLFunction(in.getName(), pl, rtl));
+				}
 			}
 
 			break;
@@ -319,11 +341,12 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST n_AST = null;
 		long l, r;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		switch (_t.getType()) {
 		case NUM: {
-			n = (AST) _t;
+			n = _t;
 			AST n_AST_in = null;
 			n_AST = astFactory.create(n);
 			match(_t, NUM);
@@ -335,8 +358,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3342 = _t;
 			AST tmp9_AST = null;
 			AST tmp9_AST_in = null;
-			tmp9_AST = astFactory.create((AST) _t);
-			tmp9_AST_in = (AST) _t;
+			tmp9_AST = astFactory.create(_t);
+			tmp9_AST_in = _t;
 			ASTPair __currentAST3342 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
@@ -356,8 +379,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3343 = _t;
 			AST tmp10_AST = null;
 			AST tmp10_AST_in = null;
-			tmp10_AST = astFactory.create((AST) _t);
-			tmp10_AST_in = (AST) _t;
+			tmp10_AST = astFactory.create(_t);
+			tmp10_AST_in = _t;
 			ASTPair __currentAST3343 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
@@ -406,17 +429,18 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		int shareTo = -1;
 		List<String> regList;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		switch (_t.getType()) {
 		case INDEX: {
 			AST tmp11_AST = null;
 			AST tmp11_AST_in = null;
-			tmp11_AST = astFactory.create((AST) _t);
-			tmp11_AST_in = (AST) _t;
+			tmp11_AST = astFactory.create(_t);
+			tmp11_AST_in = _t;
 			match(_t, INDEX);
 			_t = _t.getNextSibling();
-			r1 = (AST) _t;
+			r1 = _t;
 			AST r1_AST_in = null;
 			r1_AST = astFactory.create(r1);
 			match(_t, REG_ID);
@@ -430,53 +454,54 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			break;
 		}
 		case REG_ID: {
-			r2 = (AST) _t;
+			r2 = _t;
 			AST r2_AST_in = null;
 			r2_AST = astFactory.create(r2);
 			match(_t, REG_ID);
 			_t = _t.getNextSibling();
 			AST tmp12_AST = null;
 			AST tmp12_AST_in = null;
-			tmp12_AST = astFactory.create((AST) _t);
-			tmp12_AST_in = (AST) _t;
+			tmp12_AST = astFactory.create(_t);
+			tmp12_AST_in = _t;
 			match(_t, LSQUARE);
 			_t = _t.getNextSibling();
 			bitWidth = intValue(_t);
 			_t = _retTree;
 			AST tmp13_AST = null;
 			AST tmp13_AST_in = null;
-			tmp13_AST = astFactory.create((AST) _t);
-			tmp13_AST_in = (AST) _t;
+			tmp13_AST = astFactory.create(_t);
+			tmp13_AST_in = _t;
 			match(_t, RSQUARE);
 			_t = _t.getNextSibling();
 			AST tmp14_AST = null;
 			AST tmp14_AST_in = null;
-			tmp14_AST = astFactory.create((AST) _t);
-			tmp14_AST_in = (AST) _t;
+			tmp14_AST = astFactory.create(_t);
+			tmp14_AST_in = _t;
 			match(_t, INDEX);
 			_t = _t.getNextSibling();
 			regIdFrom = intValue(_t);
 			_t = _retTree;
 			{
-				if (_t == null)
+				if (_t == null) {
 					_t = ASTNULL;
+				}
 				switch (_t.getType()) {
 				case LITERAL_COVERS: {
 					AST tmp15_AST_in = null;
 					match(_t, LITERAL_COVERS);
 					_t = _t.getNextSibling();
-					coveredRegFrom = (AST) _t;
+					coveredRegFrom = _t;
 					AST coveredRegFrom_AST_in = null;
 					coveredRegFrom_AST = astFactory.create(coveredRegFrom);
 					match(_t, REG_ID);
 					_t = _t.getNextSibling();
 					AST tmp16_AST = null;
 					AST tmp16_AST_in = null;
-					tmp16_AST = astFactory.create((AST) _t);
-					tmp16_AST_in = (AST) _t;
+					tmp16_AST = astFactory.create(_t);
+					tmp16_AST_in = _t;
 					match(_t, TO);
 					_t = _t.getNextSibling();
-					coveredRegTo = (AST) _t;
+					coveredRegTo = _t;
 					AST coveredRegTo_AST_in = null;
 					coveredRegTo_AST = astFactory.create(coveredRegTo);
 					match(_t, REG_ID);
@@ -487,37 +512,37 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 					AST tmp17_AST_in = null;
 					match(_t, LITERAL_SHARES);
 					_t = _t.getNextSibling();
-					sharedReg = (AST) _t;
+					sharedReg = _t;
 					AST sharedReg_AST_in = null;
 					sharedReg_AST = astFactory.create(sharedReg);
 					match(_t, REG_ID);
 					_t = _t.getNextSibling();
 					AST tmp18_AST = null;
 					AST tmp18_AST_in = null;
-					tmp18_AST = astFactory.create((AST) _t);
-					tmp18_AST_in = (AST) _t;
+					tmp18_AST = astFactory.create(_t);
+					tmp18_AST_in = _t;
 					match(_t, AT);
 					_t = _t.getNextSibling();
 					AST tmp19_AST = null;
 					AST tmp19_AST_in = null;
-					tmp19_AST = astFactory.create((AST) _t);
-					tmp19_AST_in = (AST) _t;
+					tmp19_AST = astFactory.create(_t);
+					tmp19_AST_in = _t;
 					match(_t, LSQUARE);
 					_t = _t.getNextSibling();
 					shareFrom = intValue(_t);
 					_t = _retTree;
 					AST tmp20_AST = null;
 					AST tmp20_AST_in = null;
-					tmp20_AST = astFactory.create((AST) _t);
-					tmp20_AST_in = (AST) _t;
+					tmp20_AST = astFactory.create(_t);
+					tmp20_AST_in = _t;
 					match(_t, TO);
 					_t = _t.getNextSibling();
 					shareTo = intValue(_t);
 					_t = _retTree;
 					AST tmp21_AST = null;
 					AST tmp21_AST_in = null;
-					tmp21_AST = astFactory.create((AST) _t);
-					tmp21_AST_in = (AST) _t;
+					tmp21_AST = astFactory.create(_t);
+					tmp21_AST_in = _t;
 					match(_t, RSQUARE);
 					_t = _t.getNextSibling();
 					break;
@@ -534,8 +559,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 				}
 			}
 
-			if (coveredRegFrom != null)
+			if (coveredRegFrom != null) {
 				throw new RuntimeException("COVERS not yet supported!");
+			}
 			if (sharedReg != null) {
 				ExpressionFactory.createSharedRegisterVariable(r2.getText(), sharedReg.getText(), shareFrom, shareTo);
 			} else {
@@ -547,49 +573,50 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		case LSQUARE: {
 			AST tmp22_AST = null;
 			AST tmp22_AST_in = null;
-			tmp22_AST = astFactory.create((AST) _t);
-			tmp22_AST_in = (AST) _t;
+			tmp22_AST = astFactory.create(_t);
+			tmp22_AST_in = _t;
 			match(_t, LSQUARE);
 			_t = _t.getNextSibling();
 			regList = register_list(_t);
 			_t = _retTree;
 			AST tmp23_AST = null;
 			AST tmp23_AST_in = null;
-			tmp23_AST = astFactory.create((AST) _t);
-			tmp23_AST_in = (AST) _t;
+			tmp23_AST = astFactory.create(_t);
+			tmp23_AST_in = _t;
 			match(_t, RSQUARE);
 			_t = _t.getNextSibling();
 			AST tmp24_AST = null;
 			AST tmp24_AST_in = null;
-			tmp24_AST = astFactory.create((AST) _t);
-			tmp24_AST_in = (AST) _t;
+			tmp24_AST = astFactory.create(_t);
+			tmp24_AST_in = _t;
 			match(_t, LSQUARE);
 			_t = _t.getNextSibling();
 			bitWidth = intValue(_t);
 			_t = _retTree;
 			AST tmp25_AST = null;
 			AST tmp25_AST_in = null;
-			tmp25_AST = astFactory.create((AST) _t);
-			tmp25_AST_in = (AST) _t;
+			tmp25_AST = astFactory.create(_t);
+			tmp25_AST_in = _t;
 			match(_t, RSQUARE);
 			_t = _t.getNextSibling();
 			AST tmp26_AST = null;
 			AST tmp26_AST_in = null;
-			tmp26_AST = astFactory.create((AST) _t);
-			tmp26_AST_in = (AST) _t;
+			tmp26_AST = astFactory.create(_t);
+			tmp26_AST_in = _t;
 			match(_t, INDEX);
 			_t = _t.getNextSibling();
 			regIdFrom = intValue(_t);
 			_t = _retTree;
 			{
-				if (_t == null)
+				if (_t == null) {
 					_t = ASTNULL;
+				}
 				switch (_t.getType()) {
 				case TO: {
 					AST tmp27_AST = null;
 					AST tmp27_AST_in = null;
-					tmp27_AST = astFactory.create((AST) _t);
-					tmp27_AST_in = (AST) _t;
+					tmp27_AST = astFactory.create(_t);
+					tmp27_AST_in = _t;
 					match(_t, TO);
 					_t = _t.getNextSibling();
 					regIdTo = intValue(_t);
@@ -635,15 +662,16 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST n_AST = null;
 		List<AST> h, t;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		switch (_t.getType()) {
 		case LCURLY: {
 			AST __t3345 = _t;
 			AST tmp28_AST = null;
 			AST tmp28_AST_in = null;
-			tmp28_AST = astFactory.create((AST) _t);
-			tmp28_AST_in = (AST) _t;
+			tmp28_AST = astFactory.create(_t);
+			tmp28_AST_in = _t;
 			ASTPair __currentAST3345 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
@@ -659,8 +687,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 
 			{
 				_loop3347: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if ((_tokenSet_1.member(_t.getType()))) {
 						t = table_expr(_t);
 						_t = _retTree;
@@ -680,8 +709,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3348 = _t;
 			AST tmp29_AST = null;
 			AST tmp29_AST_in = null;
-			tmp29_AST = astFactory.create((AST) _t);
-			tmp29_AST_in = (AST) _t;
+			tmp29_AST = astFactory.create(_t);
+			tmp29_AST_in = _t;
 			ASTPair __currentAST3348 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
@@ -695,9 +724,11 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 				_t = _retTree;
 
 				res = new LinkedList<AST>();
-				for (AST tt : t)
-					for (AST hh : h)
+				for (AST tt : t) {
+					for (AST hh : h) {
 						res.add(astFactory.create(NAME, hh.getText() + tt.getText()));
+					}
+				}
 
 			}
 			currentAST = __currentAST3348;
@@ -709,18 +740,19 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3350 = _t;
 			AST tmp30_AST = null;
 			AST tmp30_AST_in = null;
-			tmp30_AST = astFactory.create((AST) _t);
-			tmp30_AST_in = (AST) _t;
+			tmp30_AST = astFactory.create(_t);
+			tmp30_AST_in = _t;
 			ASTPair __currentAST3350 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, QUOTE);
 			_t = _t.getFirstChild();
-			any = (AST) _t;
+			any = _t;
 			AST any_AST_in = null;
 			any_AST = astFactory.create(any);
-			if (_t == null)
+			if (_t == null) {
 				throw new MismatchedTokenException();
+			}
 			_t = _t.getNextSibling();
 			currentAST = __currentAST3350;
 			_t = __t3350;
@@ -730,15 +762,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			break;
 		}
 		case NAME: {
-			n = (AST) _t;
+			n = _t;
 			AST n_AST_in = null;
 			n_AST = astFactory.create(n);
 			match(_t, NAME);
 			_t = _t.getNextSibling();
 
-			if (tables.containsKey(n.getText()))
+			if (tables.containsKey(n.getText())) {
 				res = tables.get(n.getText());
-			else {
+			} else {
 				res = new LinkedList<AST>();
 				res.add(n);
 				/*
@@ -773,8 +805,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST __t3352 = _t;
 		AST tmp31_AST = null;
 		AST tmp31_AST_in = null;
-		tmp31_AST = astFactory.create((AST) _t);
-		tmp31_AST_in = (AST) _t;
+		tmp31_AST = astFactory.create(_t);
+		tmp31_AST_in = _t;
 		ASTPair __currentAST3352 = currentAST.copy();
 		currentAST.root = currentAST.child;
 		currentAST.child = null;
@@ -783,10 +815,11 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		res = new LinkedList<String>();
 		{
 			_loop3354: do {
-				if (_t == null)
+				if (_t == null) {
 					_t = ASTNULL;
+				}
 				if ((_t.getType() == NAME)) {
-					n = (AST) _t;
+					n = _t;
 					AST n_AST_in = null;
 					n_AST = astFactory.create(n);
 					match(_t, NAME);
@@ -819,8 +852,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST __t3356 = _t;
 		AST tmp32_AST = null;
 		AST tmp32_AST_in = null;
-		tmp32_AST = astFactory.create((AST) _t);
-		tmp32_AST_in = (AST) _t;
+		tmp32_AST = astFactory.create(_t);
+		tmp32_AST_in = _t;
 		ASTPair __currentAST3356 = currentAST.copy();
 		currentAST.root = currentAST.child;
 		currentAST.child = null;
@@ -829,27 +862,28 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		res = new LinkedList<SSLInstructionName>();
 		{
 			_loop3358: do {
-				if (_t == null)
+				if (_t == null) {
 					_t = ASTNULL;
+				}
 				if ((_t.getType() == NAME || _t.getType() == LSQUARE || _t.getType() == DECOR)) {
 					e = instr_name_elem(_t);
 					_t = _retTree;
 
 					// If this is the first element, set result to this
 					// element's return value e.
-					if (res.size() == 0)
+					if (res.size() == 0) {
 						res = e;
-					// Otherwise, do a cross product of the previous result with
-					// e
-					else {
+					} else {
 						List<SSLInstructionName> tmp = new LinkedList<SSLInstructionName>();
 						for (SSLInstructionName lhsIn : res) {
 							for (SSLInstructionName rhsIn : e) {
 								Map newMap = new HashMap();
-								if (lhsIn.getVarMap() != null)
+								if (lhsIn.getVarMap() != null) {
 									newMap.putAll(lhsIn.getVarMap());
-								if (rhsIn.getVarMap() != null)
+								}
+								if (rhsIn.getVarMap() != null) {
 									newMap.putAll(rhsIn.getVarMap());
+								}
 								tmp.add(new SSLInstructionName(lhsIn.getName() + rhsIn.getName(), newMap));
 							}
 						}
@@ -881,14 +915,14 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST number = null;
 		AST number_AST = null;
 
-		number = (AST) _t;
+		number = _t;
 		AST number_AST_in = null;
 		number_AST = astFactory.create(number);
 		astFactory.addASTChild(currentAST, number_AST);
 		match(_t, NUM);
 		_t = _t.getNextSibling();
 		value = Integer.parseInt(number.getText());
-		intValue_AST = (AST) currentAST.root;
+		intValue_AST = currentAST.root;
 		returnAST = intValue_AST;
 		_retTree = _t;
 		return value;
@@ -906,7 +940,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST rn = null;
 		AST rn_AST = null;
 
-		r = (AST) _t;
+		r = _t;
 		AST r_AST_in = null;
 		r_AST = astFactory.create(r);
 		match(_t, REG_ID);
@@ -914,10 +948,11 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		res.add(r.getText());
 		{
 			_loop3340: do {
-				if (_t == null)
+				if (_t == null) {
 					_t = ASTNULL;
+				}
 				if ((_t.getType() == REG_ID)) {
-					rn = (AST) _t;
+					rn = _t;
 					AST rn_AST_in = null;
 					rn_AST = astFactory.create(rn);
 					match(_t, REG_ID);
@@ -956,11 +991,12 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		res = new LinkedList<SSLInstructionName>();
 		List<AST> table = null;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		switch (_t.getType()) {
 		case NAME: {
-			name = (AST) _t;
+			name = _t;
 			AST name_AST_in = null;
 			name_AST = astFactory.create(name);
 			match(_t, NAME);
@@ -974,30 +1010,32 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3360 = _t;
 			AST tmp33_AST = null;
 			AST tmp33_AST_in = null;
-			tmp33_AST = astFactory.create((AST) _t);
-			tmp33_AST_in = (AST) _t;
+			tmp33_AST = astFactory.create(_t);
+			tmp33_AST_in = _t;
 			ASTPair __currentAST3360 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, LSQUARE);
 			_t = _t.getFirstChild();
-			tname = (AST) _t;
+			tname = _t;
 			AST tname_AST_in = null;
 			tname_AST = astFactory.create(tname);
 			match(_t, NAME);
 			_t = _t.getNextSibling();
 
-			if (tables.containsKey(tname.getText()))
+			if (tables.containsKey(tname.getText())) {
 				table = tables.get(tname.getText());
-			else
+			} else {
 				throw new RecognitionException("Undefined table: " + tname.getText());
+			}
 
 			{
-				if (_t == null)
+				if (_t == null) {
 					_t = ASTNULL;
+				}
 				switch (_t.getType()) {
 				case NAME: {
-					vname = (AST) _t;
+					vname = _t;
 					AST vname_AST_in = null;
 					vname_AST = astFactory.create(vname);
 					match(_t, NAME);
@@ -1006,7 +1044,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 					int i = 0;
 					for (AST tableEntry : table) {
 						Map<String, AST> curVars = new HashMap<String, AST>();
-						curVars.put(vname.getText(), (AST) astFactory.make((new ASTArray(1)).add(astFactory.create(NUM,
+						curVars.put(vname.getText(), astFactory.make((new ASTArray(1)).add(astFactory.create(NUM,
 								Integer.toString(i)))));
 						res.add(new SSLInstructionName(tableEntry.getText(), curVars));
 						i++;
@@ -1015,7 +1053,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 					break;
 				}
 				case NUM: {
-					tidx = (AST) _t;
+					tidx = _t;
 					AST tidx_AST_in = null;
 					tidx_AST = astFactory.create(tidx);
 					match(_t, NUM);
@@ -1024,9 +1062,10 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 					int index = Integer.parseInt(tidx.getText());
 					if (index < table.size()) {
 						res.add(new SSLInstructionName(table.get(index).getText()));
-					} else
+					} else {
 						throw new RecognitionException("Index " + index + " out of bounds for table " + tname.getText()
 								+ "!");
+					}
 
 					break;
 				}
@@ -1041,7 +1080,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			break;
 		}
 		case DECOR: {
-			d = (AST) _t;
+			d = _t;
 			AST d_AST_in = null;
 			d_AST = astFactory.create(d);
 			match(_t, DECOR);
@@ -1087,20 +1126,21 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST farg_AST = null;
 		AST farg = null;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		if ((_t.getType() == RTL)) {
 			AST __t3363 = _t;
 			AST tmp34_AST = null;
 			AST tmp34_AST_in = null;
-			tmp34_AST = astFactory.create((AST) _t);
-			tmp34_AST_in = (AST) _t;
+			tmp34_AST = astFactory.create(_t);
+			tmp34_AST_in = _t;
 			ASTPair __currentAST3363 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, RTL);
 			_t = _t.getFirstChild();
-			rtl_expand_AST = (AST) currentAST.root;
+			rtl_expand_AST = currentAST.root;
 			rtl_expand_AST = astFactory.create(RTL, "RTL");
 			currentAST.root = rtl_expand_AST;
 			currentAST.child = rtl_expand_AST != null && rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
@@ -1108,21 +1148,24 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			currentAST.advanceChildToEnd();
 			{
 				_loop3365: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if (((_t.getType() >= SEMI && _t.getType() <= DOT))) {
 						rt = _t == ASTNULL ? null : (AST) _t;
 						rtl_expand(_t);
 						_t = _retTree;
-						rt_AST = (AST) returnAST;
-						rtl_expand_AST = (AST) currentAST.root;
+						rt_AST = returnAST;
+						rtl_expand_AST = currentAST.root;
 
 						// do not nest RTL blocks
 						if (rt.getType() == RTL) {
-							if (rt.getFirstChild() != null)
+							if (rt.getFirstChild() != null) {
 								rtl_expand_AST.addChild(rt.getFirstChild());
-						} else
+							}
+						} else {
 							rtl_expand_AST.addChild(rt_AST);
+						}
 
 					} else {
 						break _loop3365;
@@ -1134,20 +1177,21 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3363;
 			_t = _t.getNextSibling();
 		} else if ((_t.getType() == NAME)) {
-			name = (AST) _t;
+			name = _t;
 			AST name_AST_in = null;
 			name_AST = astFactory.create(name);
 			match(_t, NAME);
 			_t = _t.getNextSibling();
-			rtl_expand_AST = (AST) currentAST.root;
+			rtl_expand_AST = currentAST.root;
 
 			String s = name_AST.getText();
-			if (locals.peek().containsKey(s))
+			if (locals.peek().containsKey(s)) {
 				rtl_expand_AST = astFactory.dupTree(locals.peek().get(s));
-			else if (constants.containsKey(s))
+			} else if (constants.containsKey(s)) {
 				rtl_expand_AST = astFactory.create(NUM, Long.toString(constants.get(s)));
-			else
+			} else {
 				rtl_expand_AST = astFactory.dupTree(name_AST);
+			}
 
 			currentAST.root = rtl_expand_AST;
 			currentAST.child = rtl_expand_AST != null && rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
@@ -1157,14 +1201,14 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3366 = _t;
 			AST tmp35_AST = null;
 			AST tmp35_AST_in = null;
-			tmp35_AST = astFactory.create((AST) _t);
-			tmp35_AST_in = (AST) _t;
+			tmp35_AST = astFactory.create(_t);
+			tmp35_AST_in = _t;
 			ASTPair __currentAST3366 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, LSQUARE);
 			_t = _t.getFirstChild();
-			etname = (AST) _t;
+			etname = _t;
 			AST etname_AST_in = null;
 			etname_AST = astFactory.create(etname);
 			match(_t, NAME);
@@ -1172,11 +1216,11 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			etindex = _t == ASTNULL ? null : (AST) _t;
 			rtl_expand(_t);
 			_t = _retTree;
-			etindex_AST = (AST) returnAST;
+			etindex_AST = returnAST;
 			currentAST = __currentAST3366;
 			_t = __t3366;
 			_t = _t.getNextSibling();
-			rtl_expand_AST = (AST) currentAST.root;
+			rtl_expand_AST = currentAST.root;
 
 			List<AST> table = tables.get(etname_AST.getText());
 			int index = Integer.parseInt(etindex_AST.getText());
@@ -1191,8 +1235,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3367 = _t;
 			AST tmp36_AST = null;
 			AST tmp36_AST_in = null;
-			tmp36_AST = astFactory.create((AST) _t);
-			tmp36_AST_in = (AST) _t;
+			tmp36_AST = astFactory.create(_t);
+			tmp36_AST_in = _t;
 			ASTPair __currentAST3367 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
@@ -1201,8 +1245,8 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			lexpr = _t == ASTNULL ? null : (AST) _t;
 			rtl_expand(_t);
 			_t = _retTree;
-			lexpr_AST = (AST) returnAST;
-			otname = (AST) _t;
+			lexpr_AST = returnAST;
+			otname = _t;
 			AST otname_AST_in = null;
 			otname_AST = astFactory.create(otname);
 			match(_t, NAME);
@@ -1210,21 +1254,21 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			otindex = _t == ASTNULL ? null : (AST) _t;
 			rtl_expand(_t);
 			_t = _retTree;
-			otindex_AST = (AST) returnAST;
+			otindex_AST = returnAST;
 			rexpr = _t == ASTNULL ? null : (AST) _t;
 			rtl_expand(_t);
 			_t = _retTree;
-			rexpr_AST = (AST) returnAST;
+			rexpr_AST = returnAST;
 			currentAST = __currentAST3367;
 			_t = __t3367;
 			_t = _t.getNextSibling();
-			rtl_expand_AST = (AST) currentAST.root;
+			rtl_expand_AST = currentAST.root;
 
 			List<AST> table = tables.get(otname_AST.getText());
 			int index = Integer.parseInt(otindex_AST.getText());
 			AST op = table.get(index);
 			op = astFactory.dupTree(op);
-			rtl_expand_AST = (AST) astFactory.make((new ASTArray(3)).add(op).add(lexpr_AST).add(rexpr_AST));
+			rtl_expand_AST = astFactory.make((new ASTArray(3)).add(op).add(lexpr_AST).add(rexpr_AST));
 
 			currentAST.root = rtl_expand_AST;
 			currentAST.child = rtl_expand_AST != null && rtl_expand_AST.getFirstChild() != null ? rtl_expand_AST
@@ -1234,14 +1278,14 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3368 = _t;
 			AST tmp37_AST = null;
 			AST tmp37_AST_in = null;
-			tmp37_AST = astFactory.create((AST) _t);
-			tmp37_AST_in = (AST) _t;
+			tmp37_AST = astFactory.create(_t);
+			tmp37_AST_in = _t;
 			ASTPair __currentAST3368 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
 			match(_t, FUNCTION);
 			_t = _t.getFirstChild();
-			fname = (AST) _t;
+			fname = _t;
 			AST fname_AST_in = null;
 			fname_AST = astFactory.create(fname);
 			match(_t, NAME);
@@ -1249,13 +1293,14 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			List<AST> fargs = new LinkedList<AST>();
 			{
 				_loop3370: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if (((_t.getType() >= SEMI && _t.getType() <= DOT))) {
 						farg = _t == ASTNULL ? null : (AST) _t;
 						rtl_expand(_t);
 						_t = _retTree;
-						farg_AST = (AST) returnAST;
+						farg_AST = returnAST;
 						fargs.add(farg_AST);
 					} else {
 						break _loop3370;
@@ -1266,16 +1311,18 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			currentAST = __currentAST3368;
 			_t = __t3368;
 			_t = _t.getNextSibling();
-			rtl_expand_AST = (AST) currentAST.root;
+			rtl_expand_AST = currentAST.root;
 
 			SSLFunction f = functions.get(fname.getText());
 			Map<String, AST> assignment = new HashMap<String, AST>();
-			for (int i = 0; i < f.getParameterCount(); i++)
+			for (int i = 0; i < f.getParameterCount(); i++) {
 				assignment.put(f.getParameter(i), fargs.get(i));
-			if (assignment != null)
+			}
+			if (assignment != null) {
 				locals.push(assignment);
-			else
+			} else {
 				locals.push(new HashMap<String, AST>());
+			}
 			rtl_expand(f.getAST());
 			rtl_expand_AST = this.getAST();
 			locals.pop();
@@ -1288,19 +1335,21 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			AST __t3371 = _t;
 			AST tmp38_AST = null;
 			AST tmp38_AST_in = null;
-			tmp38_AST = astFactory.create((AST) _t);
-			tmp38_AST_in = (AST) _t;
+			tmp38_AST = astFactory.create(_t);
+			tmp38_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp38_AST);
 			ASTPair __currentAST3371 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
-			if (_t == null)
+			if (_t == null) {
 				throw new MismatchedTokenException();
+			}
 			_t = _t.getFirstChild();
 			{
 				_loop3373: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if (((_t.getType() >= SEMI && _t.getType() <= DOT))) {
 						rtl_expand(_t);
 						_t = _retTree;
@@ -1314,7 +1363,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			currentAST = __currentAST3371;
 			_t = __t3371;
 			_t = _t.getNextSibling();
-			rtl_expand_AST = (AST) currentAST.root;
+			rtl_expand_AST = currentAST.root;
 		} else {
 			throw new NoViableAltException(_t);
 		}
@@ -1342,14 +1391,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		StatementSequence subStatements = null;
 		int bitWidth = -1;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		if ((_t.getType() == RTL)) {
 			AST __t3375 = _t;
 			AST tmp39_AST = null;
 			AST tmp39_AST_in = null;
-			tmp39_AST = astFactory.create((AST) _t);
-			tmp39_AST_in = (AST) _t;
+			tmp39_AST = astFactory.create(_t);
+			tmp39_AST_in = _t;
 			ASTPair __currentAST3375 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
@@ -1357,8 +1407,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _t.getFirstChild();
 			{
 				_loop3377: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if (((_t.getType() >= SEMI && _t.getType() <= DOT))) {
 						subStatements = convertToRTL(_t);
 						_t = _retTree;
@@ -1384,12 +1435,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _t.getFirstChild();
 
 			String aType = type.getText();
-			if (aType.length() >= 3)
+			if (aType.length() >= 3) {
 				aType = aType.substring(1, aType.length() - 1);
-			else
+			} else {
 				aType = "0";
+			}
 			if (aType.startsWith("f"))
+			 {
 				aType = aType.substring(1); // Float assigntype
+			}
 			bitWidth = Integer.parseInt(aType);
 
 			lhs = rtlExpr(_t, bitWidth);
@@ -1453,17 +1507,20 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			ASTPair __currentAST3381 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
-			if (_t == null)
+			if (_t == null) {
 				throw new MismatchedTokenException();
+			}
 			_t = _t.getFirstChild();
 			{
 				_loop3383: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if (((_t.getType() >= SEMI && _t.getType() <= DOT))) {
 						AST tmp42_AST_in = null;
-						if (_t == null)
+						if (_t == null) {
 							throw new MismatchedTokenException();
+						}
 						_t = _t.getNextSibling();
 					} else {
 						break _loop3383;
@@ -1477,8 +1534,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 
 			if (other.getText().equals("halt")) {
 				statements.addFirst(new RTLHalt());
-			} else
+			} else {
 				statements.addFirst(new RTLSkip());
+			}
 
 		} else {
 			throw new NoViableAltException(_t);
@@ -1510,15 +1568,16 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		double f1 = Double.NaN;
 		String str = null;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		switch (_t.getType()) {
 		case EQ: {
 			AST __t3390 = _t;
 			AST tmp43_AST = null;
 			AST tmp43_AST_in = null;
-			tmp43_AST = astFactory.create((AST) _t);
-			tmp43_AST_in = (AST) _t;
+			tmp43_AST = astFactory.create(_t);
+			tmp43_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp43_AST);
 			ASTPair __currentAST3390 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1535,15 +1594,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3390;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createEqual(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case NE: {
 			AST __t3391 = _t;
 			AST tmp44_AST = null;
 			AST tmp44_AST_in = null;
-			tmp44_AST = astFactory.create((AST) _t);
-			tmp44_AST_in = (AST) _t;
+			tmp44_AST = astFactory.create(_t);
+			tmp44_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp44_AST);
 			ASTPair __currentAST3391 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1560,15 +1619,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3391;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createNotEqual(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case GT: {
 			AST __t3392 = _t;
 			AST tmp45_AST = null;
 			AST tmp45_AST_in = null;
-			tmp45_AST = astFactory.create((AST) _t);
-			tmp45_AST_in = (AST) _t;
+			tmp45_AST = astFactory.create(_t);
+			tmp45_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp45_AST);
 			ASTPair __currentAST3392 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1585,15 +1644,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3392;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createGreaterThan(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LT: {
 			AST __t3393 = _t;
 			AST tmp46_AST = null;
 			AST tmp46_AST_in = null;
-			tmp46_AST = astFactory.create((AST) _t);
-			tmp46_AST_in = (AST) _t;
+			tmp46_AST = astFactory.create(_t);
+			tmp46_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp46_AST);
 			ASTPair __currentAST3393 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1610,15 +1669,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3393;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createLessThan(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case GE: {
 			AST __t3394 = _t;
 			AST tmp47_AST = null;
 			AST tmp47_AST_in = null;
-			tmp47_AST = astFactory.create((AST) _t);
-			tmp47_AST_in = (AST) _t;
+			tmp47_AST = astFactory.create(_t);
+			tmp47_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp47_AST);
 			ASTPair __currentAST3394 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1635,15 +1694,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3394;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createGreaterOrEqual(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LE: {
 			AST __t3395 = _t;
 			AST tmp48_AST = null;
 			AST tmp48_AST_in = null;
-			tmp48_AST = astFactory.create((AST) _t);
-			tmp48_AST_in = (AST) _t;
+			tmp48_AST = astFactory.create(_t);
+			tmp48_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp48_AST);
 			ASTPair __currentAST3395 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1660,15 +1719,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3395;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createLessOrEqual(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case GTU: {
 			AST __t3396 = _t;
 			AST tmp49_AST = null;
 			AST tmp49_AST_in = null;
-			tmp49_AST = astFactory.create((AST) _t);
-			tmp49_AST_in = (AST) _t;
+			tmp49_AST = astFactory.create(_t);
+			tmp49_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp49_AST);
 			ASTPair __currentAST3396 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1685,15 +1744,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3396;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createUnsignedGreaterThan(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LTU: {
 			AST __t3397 = _t;
 			AST tmp50_AST = null;
 			AST tmp50_AST_in = null;
-			tmp50_AST = astFactory.create((AST) _t);
-			tmp50_AST_in = (AST) _t;
+			tmp50_AST = astFactory.create(_t);
+			tmp50_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp50_AST);
 			ASTPair __currentAST3397 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1710,15 +1769,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3397;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createUnsignedLessThan(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case GEU: {
 			AST __t3398 = _t;
 			AST tmp51_AST = null;
 			AST tmp51_AST_in = null;
-			tmp51_AST = astFactory.create((AST) _t);
-			tmp51_AST_in = (AST) _t;
+			tmp51_AST = astFactory.create(_t);
+			tmp51_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp51_AST);
 			ASTPair __currentAST3398 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1735,15 +1794,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3398;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createUnsignedGreaterOrEqual(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LEU: {
 			AST __t3399 = _t;
 			AST tmp52_AST = null;
 			AST tmp52_AST_in = null;
-			tmp52_AST = astFactory.create((AST) _t);
-			tmp52_AST_in = (AST) _t;
+			tmp52_AST = astFactory.create(_t);
+			tmp52_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp52_AST);
 			ASTPair __currentAST3399 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1760,15 +1819,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3399;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createUnsignedLessOrEqual(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case PLUS: {
 			AST __t3400 = _t;
 			AST tmp53_AST = null;
 			AST tmp53_AST_in = null;
-			tmp53_AST = astFactory.create((AST) _t);
-			tmp53_AST_in = (AST) _t;
+			tmp53_AST = astFactory.create(_t);
+			tmp53_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp53_AST);
 			ASTPair __currentAST3400 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1785,15 +1844,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3400;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createPlus(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case PLUS_F: {
 			AST __t3401 = _t;
 			AST tmp54_AST = null;
 			AST tmp54_AST_in = null;
-			tmp54_AST = astFactory.create((AST) _t);
-			tmp54_AST_in = (AST) _t;
+			tmp54_AST = astFactory.create(_t);
+			tmp54_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp54_AST);
 			ASTPair __currentAST3401 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1810,15 +1869,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3401;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createPlus(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case PLUS_FD: {
 			AST __t3402 = _t;
 			AST tmp55_AST = null;
 			AST tmp55_AST_in = null;
-			tmp55_AST = astFactory.create((AST) _t);
-			tmp55_AST_in = (AST) _t;
+			tmp55_AST = astFactory.create(_t);
+			tmp55_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp55_AST);
 			ASTPair __currentAST3402 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1835,15 +1894,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3402;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createPlus(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case PLUS_FQ: {
 			AST __t3403 = _t;
 			AST tmp56_AST = null;
 			AST tmp56_AST_in = null;
-			tmp56_AST = astFactory.create((AST) _t);
-			tmp56_AST_in = (AST) _t;
+			tmp56_AST = astFactory.create(_t);
+			tmp56_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp56_AST);
 			ASTPair __currentAST3403 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1860,15 +1919,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3403;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createPlus(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MINUS: {
 			AST __t3404 = _t;
 			AST tmp57_AST = null;
 			AST tmp57_AST_in = null;
-			tmp57_AST = astFactory.create((AST) _t);
-			tmp57_AST_in = (AST) _t;
+			tmp57_AST = astFactory.create(_t);
+			tmp57_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp57_AST);
 			ASTPair __currentAST3404 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1885,15 +1944,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3404;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createMinus(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MINUS_F: {
 			AST __t3405 = _t;
 			AST tmp58_AST = null;
 			AST tmp58_AST_in = null;
-			tmp58_AST = astFactory.create((AST) _t);
-			tmp58_AST_in = (AST) _t;
+			tmp58_AST = astFactory.create(_t);
+			tmp58_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp58_AST);
 			ASTPair __currentAST3405 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1910,15 +1969,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3405;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createMinus(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MINUS_FD: {
 			AST __t3406 = _t;
 			AST tmp59_AST = null;
 			AST tmp59_AST_in = null;
-			tmp59_AST = astFactory.create((AST) _t);
-			tmp59_AST_in = (AST) _t;
+			tmp59_AST = astFactory.create(_t);
+			tmp59_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp59_AST);
 			ASTPair __currentAST3406 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1935,15 +1994,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3406;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createMinus(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MINUS_FQ: {
 			AST __t3407 = _t;
 			AST tmp60_AST = null;
 			AST tmp60_AST_in = null;
-			tmp60_AST = astFactory.create((AST) _t);
-			tmp60_AST_in = (AST) _t;
+			tmp60_AST = astFactory.create(_t);
+			tmp60_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp60_AST);
 			ASTPair __currentAST3407 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1960,15 +2019,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3407;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createMinus(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MUL: {
 			AST __t3408 = _t;
 			AST tmp61_AST = null;
 			AST tmp61_AST_in = null;
-			tmp61_AST = astFactory.create((AST) _t);
-			tmp61_AST_in = (AST) _t;
+			tmp61_AST = astFactory.create(_t);
+			tmp61_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp61_AST);
 			ASTPair __currentAST3408 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -1985,15 +2044,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3408;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createMultiply(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MUL_F: {
 			AST __t3409 = _t;
 			AST tmp62_AST = null;
 			AST tmp62_AST_in = null;
-			tmp62_AST = astFactory.create((AST) _t);
-			tmp62_AST_in = (AST) _t;
+			tmp62_AST = astFactory.create(_t);
+			tmp62_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp62_AST);
 			ASTPair __currentAST3409 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2010,15 +2069,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3409;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createFloatMultiply(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MUL_FD: {
 			AST __t3410 = _t;
 			AST tmp63_AST = null;
 			AST tmp63_AST_in = null;
-			tmp63_AST = astFactory.create((AST) _t);
-			tmp63_AST_in = (AST) _t;
+			tmp63_AST = astFactory.create(_t);
+			tmp63_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp63_AST);
 			ASTPair __currentAST3410 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2035,15 +2094,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3410;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createFloatMultiply(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MUL_FQ: {
 			AST __t3411 = _t;
 			AST tmp64_AST = null;
 			AST tmp64_AST_in = null;
-			tmp64_AST = astFactory.create((AST) _t);
-			tmp64_AST_in = (AST) _t;
+			tmp64_AST = astFactory.create(_t);
+			tmp64_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp64_AST);
 			ASTPair __currentAST3411 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2060,15 +2119,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3411;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createFloatMultiply(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MUL_FSD: {
 			AST __t3412 = _t;
 			AST tmp65_AST = null;
 			AST tmp65_AST_in = null;
-			tmp65_AST = astFactory.create((AST) _t);
-			tmp65_AST_in = (AST) _t;
+			tmp65_AST = astFactory.create(_t);
+			tmp65_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp65_AST);
 			ASTPair __currentAST3412 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2085,15 +2144,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3412;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createFloatMultiply(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MUL_FDQ: {
 			AST __t3413 = _t;
 			AST tmp66_AST = null;
 			AST tmp66_AST_in = null;
-			tmp66_AST = astFactory.create((AST) _t);
-			tmp66_AST_in = (AST) _t;
+			tmp66_AST = astFactory.create(_t);
+			tmp66_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp66_AST);
 			ASTPair __currentAST3413 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2110,15 +2169,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3413;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createFloatMultiply(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case SMUL: {
 			AST __t3414 = _t;
 			AST tmp67_AST = null;
 			AST tmp67_AST_in = null;
-			tmp67_AST = astFactory.create((AST) _t);
-			tmp67_AST_in = (AST) _t;
+			tmp67_AST = astFactory.create(_t);
+			tmp67_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp67_AST);
 			ASTPair __currentAST3414 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2135,15 +2194,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3414;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createMultiply(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case DIV: {
 			AST __t3415 = _t;
 			AST tmp68_AST = null;
 			AST tmp68_AST_in = null;
-			tmp68_AST = astFactory.create((AST) _t);
-			tmp68_AST_in = (AST) _t;
+			tmp68_AST = astFactory.create(_t);
+			tmp68_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp68_AST);
 			ASTPair __currentAST3415 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2160,15 +2219,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3415;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createDivide(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case DIV_F: {
 			AST __t3416 = _t;
 			AST tmp69_AST = null;
 			AST tmp69_AST_in = null;
-			tmp69_AST = astFactory.create((AST) _t);
-			tmp69_AST_in = (AST) _t;
+			tmp69_AST = astFactory.create(_t);
+			tmp69_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp69_AST);
 			ASTPair __currentAST3416 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2185,15 +2244,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3416;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createFloatDivide(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case DIV_FD: {
 			AST __t3417 = _t;
 			AST tmp70_AST = null;
 			AST tmp70_AST_in = null;
-			tmp70_AST = astFactory.create((AST) _t);
-			tmp70_AST_in = (AST) _t;
+			tmp70_AST = astFactory.create(_t);
+			tmp70_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp70_AST);
 			ASTPair __currentAST3417 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2210,15 +2269,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3417;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createFloatDivide(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case DIV_FQ: {
 			AST __t3418 = _t;
 			AST tmp71_AST = null;
 			AST tmp71_AST_in = null;
-			tmp71_AST = astFactory.create((AST) _t);
-			tmp71_AST_in = (AST) _t;
+			tmp71_AST = astFactory.create(_t);
+			tmp71_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp71_AST);
 			ASTPair __currentAST3418 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2235,15 +2294,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3418;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createFloatDivide(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case SDIV: {
 			AST __t3419 = _t;
 			AST tmp72_AST = null;
 			AST tmp72_AST_in = null;
-			tmp72_AST = astFactory.create((AST) _t);
-			tmp72_AST_in = (AST) _t;
+			tmp72_AST = astFactory.create(_t);
+			tmp72_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp72_AST);
 			ASTPair __currentAST3419 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2260,15 +2319,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3419;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createDivide(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MOD: {
 			AST __t3420 = _t;
 			AST tmp73_AST = null;
 			AST tmp73_AST_in = null;
-			tmp73_AST = astFactory.create((AST) _t);
-			tmp73_AST_in = (AST) _t;
+			tmp73_AST = astFactory.create(_t);
+			tmp73_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp73_AST);
 			ASTPair __currentAST3420 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2285,15 +2344,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3420;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createModulo(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case SMOD: {
 			AST __t3421 = _t;
 			AST tmp74_AST = null;
 			AST tmp74_AST_in = null;
-			tmp74_AST = astFactory.create((AST) _t);
-			tmp74_AST_in = (AST) _t;
+			tmp74_AST = astFactory.create(_t);
+			tmp74_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp74_AST);
 			ASTPair __currentAST3421 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2310,15 +2369,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3421;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createModulo(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LITERAL_pow: {
 			AST __t3422 = _t;
 			AST tmp75_AST = null;
 			AST tmp75_AST_in = null;
-			tmp75_AST = astFactory.create((AST) _t);
-			tmp75_AST_in = (AST) _t;
+			tmp75_AST = astFactory.create(_t);
+			tmp75_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp75_AST);
 			ASTPair __currentAST3422 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2335,15 +2394,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3422;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createPowerOf(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case AND: {
 			AST __t3423 = _t;
 			AST tmp76_AST = null;
 			AST tmp76_AST_in = null;
-			tmp76_AST = astFactory.create((AST) _t);
-			tmp76_AST_in = (AST) _t;
+			tmp76_AST = astFactory.create(_t);
+			tmp76_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp76_AST);
 			ASTPair __currentAST3423 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2360,15 +2419,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3423;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createAnd(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LAND: {
 			AST __t3424 = _t;
 			AST tmp77_AST = null;
 			AST tmp77_AST_in = null;
-			tmp77_AST = astFactory.create((AST) _t);
-			tmp77_AST_in = (AST) _t;
+			tmp77_AST = astFactory.create(_t);
+			tmp77_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp77_AST);
 			ASTPair __currentAST3424 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2385,15 +2444,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3424;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createAnd(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case OR: {
 			AST __t3425 = _t;
 			AST tmp78_AST = null;
 			AST tmp78_AST_in = null;
-			tmp78_AST = astFactory.create((AST) _t);
-			tmp78_AST_in = (AST) _t;
+			tmp78_AST = astFactory.create(_t);
+			tmp78_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp78_AST);
 			ASTPair __currentAST3425 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2410,15 +2469,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3425;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createOr(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LOR: {
 			AST __t3426 = _t;
 			AST tmp79_AST = null;
 			AST tmp79_AST_in = null;
-			tmp79_AST = astFactory.create((AST) _t);
-			tmp79_AST_in = (AST) _t;
+			tmp79_AST = astFactory.create(_t);
+			tmp79_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp79_AST);
 			ASTPair __currentAST3426 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2435,15 +2494,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3426;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createOr(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case XOR: {
 			AST __t3427 = _t;
 			AST tmp80_AST = null;
 			AST tmp80_AST_in = null;
-			tmp80_AST = astFactory.create((AST) _t);
-			tmp80_AST_in = (AST) _t;
+			tmp80_AST = astFactory.create(_t);
+			tmp80_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp80_AST);
 			ASTPair __currentAST3427 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2460,15 +2519,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3427;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createXor(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case ANDNOT: {
 			AST __t3428 = _t;
 			AST tmp81_AST = null;
 			AST tmp81_AST_in = null;
-			tmp81_AST = astFactory.create((AST) _t);
-			tmp81_AST_in = (AST) _t;
+			tmp81_AST = astFactory.create(_t);
+			tmp81_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp81_AST);
 			ASTPair __currentAST3428 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2485,15 +2544,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3428;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createAnd(e1, ExpressionFactory.createNot(e2));
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case ORNOT: {
 			AST __t3429 = _t;
 			AST tmp82_AST = null;
 			AST tmp82_AST_in = null;
-			tmp82_AST = astFactory.create((AST) _t);
-			tmp82_AST_in = (AST) _t;
+			tmp82_AST = astFactory.create(_t);
+			tmp82_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp82_AST);
 			ASTPair __currentAST3429 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2510,15 +2569,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3429;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createOr(e1, ExpressionFactory.createNot(e2));
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case XORNOT: {
 			AST __t3430 = _t;
 			AST tmp83_AST = null;
 			AST tmp83_AST_in = null;
-			tmp83_AST = astFactory.create((AST) _t);
-			tmp83_AST_in = (AST) _t;
+			tmp83_AST = astFactory.create(_t);
+			tmp83_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp83_AST);
 			ASTPair __currentAST3430 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2535,15 +2594,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3430;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createXor(e1, ExpressionFactory.createNot(e2));
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case NOT: {
 			AST __t3431 = _t;
 			AST tmp84_AST = null;
 			AST tmp84_AST_in = null;
-			tmp84_AST = astFactory.create((AST) _t);
-			tmp84_AST_in = (AST) _t;
+			tmp84_AST = astFactory.create(_t);
+			tmp84_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp84_AST);
 			ASTPair __currentAST3431 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2557,15 +2616,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3431;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createNot(e1);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LNOT: {
 			AST __t3432 = _t;
 			AST tmp85_AST = null;
 			AST tmp85_AST_in = null;
-			tmp85_AST = astFactory.create((AST) _t);
-			tmp85_AST_in = (AST) _t;
+			tmp85_AST = astFactory.create(_t);
+			tmp85_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp85_AST);
 			ASTPair __currentAST3432 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2579,15 +2638,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3432;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createNot(e1);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case FNEG: {
 			AST __t3433 = _t;
 			AST tmp86_AST = null;
 			AST tmp86_AST_in = null;
-			tmp86_AST = astFactory.create((AST) _t);
-			tmp86_AST_in = (AST) _t;
+			tmp86_AST = astFactory.create(_t);
+			tmp86_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp86_AST);
 			ASTPair __currentAST3433 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2601,15 +2660,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3433;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createNeg(e1);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LITERAL_rlc: {
 			AST __t3434 = _t;
 			AST tmp87_AST = null;
 			AST tmp87_AST_in = null;
-			tmp87_AST = astFactory.create((AST) _t);
-			tmp87_AST_in = (AST) _t;
+			tmp87_AST = astFactory.create(_t);
+			tmp87_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp87_AST);
 			ASTPair __currentAST3434 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2626,15 +2685,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3434;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createRotateLeftWithCarry(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LITERAL_rrc: {
 			AST __t3435 = _t;
 			AST tmp88_AST = null;
 			AST tmp88_AST_in = null;
-			tmp88_AST = astFactory.create((AST) _t);
-			tmp88_AST_in = (AST) _t;
+			tmp88_AST = astFactory.create(_t);
+			tmp88_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp88_AST);
 			ASTPair __currentAST3435 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2651,15 +2710,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3435;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createRotateRightWithCarry(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LITERAL_rl: {
 			AST __t3436 = _t;
 			AST tmp89_AST = null;
 			AST tmp89_AST_in = null;
-			tmp89_AST = astFactory.create((AST) _t);
-			tmp89_AST_in = (AST) _t;
+			tmp89_AST = astFactory.create(_t);
+			tmp89_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp89_AST);
 			ASTPair __currentAST3436 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2676,15 +2735,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3436;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createRotateLeft(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LITERAL_rr: {
 			AST __t3437 = _t;
 			AST tmp90_AST = null;
 			AST tmp90_AST_in = null;
-			tmp90_AST = astFactory.create((AST) _t);
-			tmp90_AST_in = (AST) _t;
+			tmp90_AST = astFactory.create(_t);
+			tmp90_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp90_AST);
 			ASTPair __currentAST3437 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2701,15 +2760,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3437;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createRotateRight(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case RSHIFT: {
 			AST __t3438 = _t;
 			AST tmp91_AST = null;
 			AST tmp91_AST_in = null;
-			tmp91_AST = astFactory.create((AST) _t);
-			tmp91_AST_in = (AST) _t;
+			tmp91_AST = astFactory.create(_t);
+			tmp91_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp91_AST);
 			ASTPair __currentAST3438 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2726,15 +2785,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3438;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createShiftRight(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case LSHIFT: {
 			AST __t3439 = _t;
 			AST tmp92_AST = null;
 			AST tmp92_AST_in = null;
-			tmp92_AST = astFactory.create((AST) _t);
-			tmp92_AST_in = (AST) _t;
+			tmp92_AST = astFactory.create(_t);
+			tmp92_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp92_AST);
 			ASTPair __currentAST3439 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2751,15 +2810,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3439;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createShiftLeft(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case RSHIFTA: {
 			AST __t3440 = _t;
 			AST tmp93_AST = null;
 			AST tmp93_AST_in = null;
-			tmp93_AST = astFactory.create((AST) _t);
-			tmp93_AST_in = (AST) _t;
+			tmp93_AST = astFactory.create(_t);
+			tmp93_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp93_AST);
 			ASTPair __currentAST3440 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2776,11 +2835,11 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3440;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createShiftArithmeticRight(e1, e2);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case NAME: {
-			vname = (AST) _t;
+			vname = _t;
 			AST vname_AST_in = null;
 			vname_AST = astFactory.create(vname);
 			astFactory.addASTChild(currentAST, vname_AST);
@@ -2788,11 +2847,11 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createRegisterVariable(vname.getText(),
 					(bw > 0 ? bw : RTLVariable.UNKNOWN_BITWIDTH));
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case REG_ID: {
-			rname = (AST) _t;
+			rname = _t;
 			AST rname_AST_in = null;
 			rname_AST = astFactory.create(rname);
 			astFactory.addASTChild(currentAST, rname_AST);
@@ -2800,7 +2859,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createRegisterVariable(rname.getText(),
 					(bw > 0 ? bw : RTLVariable.UNKNOWN_BITWIDTH));
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case NUM: {
@@ -2808,7 +2867,7 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _retTree;
 			astFactory.addASTChild(currentAST, returnAST);
 			ret = ExpressionFactory.createNumber(n1, RTLVariable.UNKNOWN_BITWIDTH);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case FLOATNUM: {
@@ -2816,15 +2875,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _retTree;
 			astFactory.addASTChild(currentAST, returnAST);
 			ret = ExpressionFactory.createNumber((long) f1, 80);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case MEM_IDX: {
 			AST __t3441 = _t;
 			AST tmp94_AST = null;
 			AST tmp94_AST_in = null;
-			tmp94_AST = astFactory.create((AST) _t);
-			tmp94_AST_in = (AST) _t;
+			tmp94_AST = astFactory.create(_t);
+			tmp94_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp94_AST);
 			ASTPair __currentAST3441 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2838,15 +2897,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3441;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createMemoryLocation(e1, (bw != 0 ? Math.abs(bw) : RTLVariable.UNKNOWN_BITWIDTH));
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case CAST: {
 			AST __t3442 = _t;
 			AST tmp95_AST = null;
 			AST tmp95_AST_in = null;
-			tmp95_AST = astFactory.create((AST) _t);
-			tmp95_AST_in = (AST) _t;
+			tmp95_AST = astFactory.create(_t);
+			tmp95_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp95_AST);
 			ASTPair __currentAST3442 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2868,15 +2927,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			// RTLVariable.UNKNOWN_BITWIDTH));
 			ret = e1;
 
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case AT: {
 			AST __t3443 = _t;
 			AST tmp96_AST = null;
 			AST tmp96_AST_in = null;
-			tmp96_AST = astFactory.create((AST) _t);
-			tmp96_AST_in = (AST) _t;
+			tmp96_AST = astFactory.create(_t);
+			tmp96_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp96_AST);
 			ASTPair __currentAST3443 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2896,15 +2955,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3443;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createBitRange(e1, e2, e3);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case QUEST: {
 			AST __t3444 = _t;
 			AST tmp97_AST = null;
 			AST tmp97_AST_in = null;
-			tmp97_AST = astFactory.create((AST) _t);
-			tmp97_AST_in = (AST) _t;
+			tmp97_AST = astFactory.create(_t);
+			tmp97_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp97_AST);
 			ASTPair __currentAST3444 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2924,15 +2983,15 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3444;
 			_t = _t.getNextSibling();
 			ret = ExpressionFactory.createConditionalExpression(e1, e2, e3);
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		case BUILTIN: {
 			AST __t3445 = _t;
 			AST tmp98_AST = null;
 			AST tmp98_AST_in = null;
-			tmp98_AST = astFactory.create((AST) _t);
-			tmp98_AST_in = (AST) _t;
+			tmp98_AST = astFactory.create(_t);
+			tmp98_AST_in = _t;
 			astFactory.addASTChild(currentAST, tmp98_AST);
 			ASTPair __currentAST3445 = currentAST.copy();
 			currentAST.root = currentAST.child;
@@ -2944,8 +3003,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			astFactory.addASTChild(currentAST, returnAST);
 			{
 				_loop3447: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if ((_tokenSet_2.member(_t.getType()))) {
 						e1 = rtlExpr(_t, bw);
 						_t = _retTree;
@@ -2961,21 +3021,21 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = __t3445;
 			_t = _t.getNextSibling();
 
-			if (str.equals("sgnex"))
+			if (str.equals("sgnex")) {
 				ret = ExpressionFactory.createSignExtend(exprList[0], exprList[1], exprList[2]);
-			else if (str.equals("zfill"))
+			} else if (str.equals("zfill")) {
 				ret = ExpressionFactory.createZeroFill(exprList[0], exprList[1], exprList[2]);
-			else if (str.equals("fsize"))
+			} else if (str.equals("fsize")) {
 				ret = ExpressionFactory.createFloatResize(exprList[0], exprList[1], exprList[2]);
-			// temporary solution until real float support
-			else if (str.equals("ftoi"))
+			} else if (str.equals("ftoi")) {
 				ret = ExpressionFactory.createFloatResize(exprList[0], exprList[1], exprList[2]);
-			else if (str.equals("itof"))
+			} else if (str.equals("itof")) {
 				ret = ExpressionFactory.createFloatResize(exprList[0], exprList[1], exprList[2]);
-			else
+			} else {
 				ret = ExpressionFactory.createSpecialExpression(str, exprList);
+			}
 
-			rtlExpr_AST = (AST) currentAST.root;
+			rtlExpr_AST = currentAST.root;
 			break;
 		}
 		default: {
@@ -3002,15 +3062,16 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		int bitWidth = -1;
 		Map<RTLExpression, RTLExpression> subMap = null;
 
-		if (_t == null)
+		if (_t == null) {
 			_t = ASTNULL;
+		}
 		switch (_t.getType()) {
 		case RTL: {
 			AST __t3385 = _t;
 			AST tmp99_AST = null;
 			AST tmp99_AST_in = null;
-			tmp99_AST = astFactory.create((AST) _t);
-			tmp99_AST_in = (AST) _t;
+			tmp99_AST = astFactory.create(_t);
+			tmp99_AST_in = _t;
 			ASTPair __currentAST3385 = currentAST.copy();
 			currentAST.root = currentAST.child;
 			currentAST.child = null;
@@ -3018,8 +3079,9 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 			_t = _t.getFirstChild();
 			{
 				_loop3387: do {
-					if (_t == null)
+					if (_t == null) {
 						_t = ASTNULL;
+					}
 					if ((_t.getType() == ASSIGNTYPE || _t.getType() == RTL)) {
 						subMap = convertSimplificationTemplates(_t);
 						_t = _retTree;
@@ -3077,14 +3139,14 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST number = null;
 		AST number_AST = null;
 
-		number = (AST) _t;
+		number = _t;
 		AST number_AST_in = null;
 		number_AST = astFactory.create(number);
 		astFactory.addASTChild(currentAST, number_AST);
 		match(_t, FLOATNUM);
 		_t = _t.getNextSibling();
 		value = Double.parseDouble(number.getText());
-		floatValue_AST = (AST) currentAST.root;
+		floatValue_AST = currentAST.root;
 		returnAST = floatValue_AST;
 		_retTree = _t;
 		return value;
@@ -3101,14 +3163,14 @@ public class SSLPreprocessor extends antlr.TreeParser implements SSLParserTokenT
 		AST str = null;
 		AST str_AST = null;
 
-		str = (AST) _t;
+		str = _t;
 		AST str_AST_in = null;
 		str_AST = astFactory.create(str);
 		astFactory.addASTChild(currentAST, str_AST);
 		match(_t, NAME);
 		_t = _t.getNextSibling();
 		value = str.getText();
-		nameValue_AST = (AST) currentAST.root;
+		nameValue_AST = currentAST.root;
 		returnAST = nameValue_AST;
 		_retTree = _t;
 		return value;

@@ -3,18 +3,14 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
+import v2.org.analysis.apihandle.winapi.user32.User32API;
+import v2.org.analysis.apihandle.winapi.user32.User32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.HICON;
 import com.sun.jna.platform.win32.WinDef.HINSTANCE;
-
-import v2.org.analysis.apihandle.winapi.user32.User32API;
-import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Loads the specified icon resource from the executable (.exe) file associated
@@ -55,7 +51,7 @@ public class LoadIcon extends User32API {
 			hInstance = new HINSTANCE();
 			hInstance.setPointer(new Pointer(t1));
 		}
-		WString lpIconName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+		WString lpIconName = new WString(memory.getText(this, t2));
 		HICON ret = User32DLL.INSTANCE.LoadIcon(hInstance, lpIconName);
 
 		long value = (ret == null) ? 0 : Pointer.nativeValue(ret.getPointer());

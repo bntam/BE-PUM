@@ -33,7 +33,7 @@ public class PathUndecorate extends ShlwapiAPI {
 	public void execute() {
 		long t1 = this.params.get(0);
 
-		String path = memory.getText(t1);
+		String path = memory.getText(this, t1);
 		char[] temp = path.toCharArray();
 		char[] pszPath = new char[260];
 		

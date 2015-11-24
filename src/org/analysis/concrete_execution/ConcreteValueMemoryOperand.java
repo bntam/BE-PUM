@@ -9,6 +9,7 @@ import org.jakstab.asm.x86.X86MemoryOperand;
 import org.jakstab.asm.x86.X86Register;
 import org.jakstab.asm.x86.X86RegisterPart;
 import org.jakstab.asm.x86.X86SegmentRegister;
+
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 
@@ -77,12 +78,13 @@ public class ConcreteValueMemoryOperand {
 			Register base = dest.getBase();
 			long addr = 0;
 			if (base != null) {
-				if (base instanceof X86Register)
+				if (base instanceof X86Register) {
 					addr = this.conReg.getRegVal(base.toString());
-				else if (base instanceof X86RegisterPart)
+				} else if (base instanceof X86RegisterPart) {
 					addr = this.conRegPart.getRegVal(base.toString());
-				else if (base instanceof X86SegmentRegister)
+				} else if (base instanceof X86SegmentRegister) {
 					addr = this.conSegReg.getRegVal(base.toString());
+				}
 			}
 
 			addr = BitVector.add(addr, dest.getDisplacement());
@@ -104,12 +106,13 @@ public class ConcreteValueMemoryOperand {
 			Register base = dest.getBase();
 			long addr = 0;
 			if (base != null) {
-				if (base instanceof X86Register)
+				if (base instanceof X86Register) {
 					addr = this.conReg.getRegVal(base.toString());
-				else if (base instanceof X86RegisterPart)
+				} else if (base instanceof X86RegisterPart) {
 					addr = this.conRegPart.getRegVal(base.toString());
-				else if (base instanceof X86SegmentRegister)
+				} else if (base instanceof X86SegmentRegister) {
 					addr = this.conSegReg.getRegVal(base.toString());
+				}
 			}
 
 			addr = BitVector.add(addr, dest.getDisplacement());
@@ -209,9 +212,9 @@ public class ConcreteValueMemoryOperand {
 
 	public long getMemoryOperandVal(X86MemoryOperand dest) {
 		// TODO Auto-generated method stub
-		if (this.memoryOperandList.contain(dest))
+		if (this.memoryOperandList.contain(dest)) {
 			return this.memoryOperandList.getVal(dest);
-		else {
+		} else {
 			long t = this.getMemoryOperandByte(dest);
 			// long t = this.getMemoryOperand(dest);
 			// Chinh sua cai nay, neu sai thi nen chinh lai
@@ -223,9 +226,9 @@ public class ConcreteValueMemoryOperand {
 
 	public long getMemoryOperandValByte(X86MemoryOperand dest) {
 		// TODO Auto-generated method stub
-		if (this.memoryOperandList.contain(dest))
+		if (this.memoryOperandList.contain(dest)) {
 			return this.memoryOperandList.getVal(dest);
-		else {
+		} else {
 			long t = this.getMemoryOperandByte(dest);
 			this.memoryOperandList.addNew(dest, t);
 			// this.memoryOperandList.addNew(dest);
@@ -246,10 +249,11 @@ public class ConcreteValueMemoryOperand {
 	public long getRegVal(X86MemoryOperand s) {
 		// TODO Auto-generated method stub
 		long result = 0;
-		if (this.memoryOperandList.contain(s))
+		if (this.memoryOperandList.contain(s)) {
 			result = this.memoryOperandList.getVal(s);
-		else
+		} else {
 			result = getMemoryOperandDoubleWord(s);
+		}
 		return result;
 	}
 
@@ -368,9 +372,10 @@ public class ConcreteValueMemoryOperand {
 		long disp = x86MemoryOperand.getDisplacement();
 
 		for (int i = 0; i < t.length; i++) {
-			int x = (int) t[i];
-			if (x == 47)
+			int x = t[i];
+			if (x == 47) {
 				x = 92;
+			}
 
 			this.movByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp), x);
 			disp++;
@@ -386,8 +391,9 @@ public class ConcreteValueMemoryOperand {
 		while (true) {
 			disp++;
 
-			if (v == 0)
+			if (v == 0) {
 				return ret;
+			}
 
 			ret += (char) v;
 			v = getMemoryOperandValByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp));
@@ -402,9 +408,10 @@ public class ConcreteValueMemoryOperand {
 		long disp = x86MemoryOperand.getDisplacement();
 
 		for (int i = 0; i < l; i++) {
-			int x = (int) t[i];
-			if (x == 47)
+			int x = t[i];
+			if (x == 47) {
 				x = 92;
+			}
 
 			this.movByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp), x);
 			disp++;
@@ -422,8 +429,9 @@ public class ConcreteValueMemoryOperand {
 		while (true) {
 			disp++;
 
-			if (size < 1)
+			if (size < 1) {
 				return ret;
+			}
 
 			ret += (char) v;
 			v = getMemoryOperandValByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp));

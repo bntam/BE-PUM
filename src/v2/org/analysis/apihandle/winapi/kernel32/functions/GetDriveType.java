@@ -7,14 +7,10 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import com.sun.jna.platform.win32.Kernel32;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.platform.win32.Kernel32;
 
 /**
  * The GetDriveType function determines whether a disk drive is a removable,
@@ -38,12 +34,11 @@ public class GetDriveType extends Kernel32API {
 		NUM_OF_PARMS = 1;
 	}
 
-
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
 
-		String lpRootPathName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String lpRootPathName = memory.getText(this, t1);
 		int ret = Kernel32.INSTANCE.GetDriveType(lpRootPathName);
 		register.mov("eax", new LongValue(ret));
 	}

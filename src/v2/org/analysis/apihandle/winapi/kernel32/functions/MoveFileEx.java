@@ -63,9 +63,9 @@ public class MoveFileEx extends Kernel32API {
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		String lpExistingFileName = (t1 == 0L) ? null : memory.getText(t1);
+		String lpExistingFileName = (t1 == 0L) ? null : memory.getText(this, t1);
 		lpExistingFileName = Storage.getMappingPath(lpExistingFileName);
-		String lpNewFileName = (t1 == 0L) ? null : memory.getText(t2);
+		String lpNewFileName = (t1 == 0L) ? null : memory.getText(this, t2);
 		lpNewFileName = Storage.getMappingPath(lpNewFileName);
 		DWORD dwFlags = new DWORD(t3);
 

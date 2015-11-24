@@ -50,8 +50,8 @@ public class strncat extends MSVCRTAPI {
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		String destination = memory.getText(t1);
-		String source = memory.getText(t2);
+		String destination = memory.getText(this, t1);
+		String source = memory.getText(this, t2);
 		int num = (int) t3;
 
 		if (num > 0 && source.length() > 0) {

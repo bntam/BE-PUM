@@ -8,23 +8,11 @@
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.system.Storage;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.DWORD;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.system.Storage;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Sets the attributes for a file or directory.
@@ -62,14 +50,13 @@ public class SetFileAttributes extends Kernel32API {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 
-		String fileName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String fileName = memory.getText(this, t1);
 		fileName = Storage.getMappingPath(fileName);
 		System.out.println("FileName:" + fileName + ", Attribute:" + t2);
 
 		boolean ret = Kernel32.INSTANCE.SetFileAttributes(fileName, new DWORD(t2));
 
 		register.mov("eax", new LongValue(ret ? 1 : 0));
-		System.out.println("Return Value:" + (ret ? 1 : 0));
 	}
 
 }

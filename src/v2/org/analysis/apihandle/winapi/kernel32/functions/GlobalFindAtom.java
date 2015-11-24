@@ -42,7 +42,7 @@ public class GlobalFindAtom extends Kernel32API {
 	public void execute() {
 		long t1 = this.params.get(0);
 
-		String lpString = (t1 == 0L) ? null : memory.getText(t1);
+		String lpString = (t1 == 0L) ? null : memory.getText(this, t1);
 		ATOM ret = Kernel32DLL.INSTANCE.GlobalFindAtom(lpString);
 
 		register.mov("eax", new LongValue(ret.longValue()));

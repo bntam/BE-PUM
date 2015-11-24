@@ -44,8 +44,8 @@ public class _strcmpi extends MSVCRTAPI {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 
-		String _Str1 = memory.getText(t1);
-		String _Str2 = memory.getText(t2);
+		String _Str1 = memory.getText(this, t1);
+		String _Str2 = memory.getText(this, t2);
 
 		System.out.println(String.format("Str1: %s, Str2 %s", _Str1, _Str2));
 

@@ -10,9 +10,7 @@ package v2.org.analysis.apihandle.winapi.user32.functions;
 import v2.org.analysis.apihandle.winapi.structures.WinUser.DLGPROC;
 import v2.org.analysis.apihandle.winapi.user32.User32API;
 import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HINSTANCE;
@@ -21,8 +19,6 @@ import com.sun.jna.platform.win32.WinDef.INT_PTR;
 import com.sun.jna.platform.win32.WinDef.LPARAM;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinDef.WPARAM;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Creates a modal dialog box from a dialog box template resource. Before
@@ -80,10 +76,10 @@ public class DialogBoxParam extends User32API {
 		long t3 = this.params.get(2);
 		long t4 = this.params.get(3);
 		long t5 = this.params.get(4);
-		
+
 		HINSTANCE hInstance = new HINSTANCE();
 		hInstance.setPointer(new Pointer(t1));
-		String lpTemplateName = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String lpTemplateName = memory.getText(this, t2);
 		HWND hWndParent = new HWND(new Pointer(t3));
 		DLGPROC lpDialogFunc = new DLGPROC() {
 			@Override
@@ -93,12 +89,13 @@ public class DialogBoxParam extends User32API {
 			}
 		};
 		LPARAM dwInitParam = new LPARAM(t5);
-		
+
 		System.out.println("\t\tSPECIAL WINDOWS API: CALLBACK");
-		
-		INT_PTR ret = User32DLL.INSTANCE.DialogBoxParam(hInstance, lpTemplateName, hWndParent, lpDialogFunc, dwInitParam);
+
+		INT_PTR ret = User32DLL.INSTANCE.DialogBoxParam(hInstance, lpTemplateName, hWndParent, lpDialogFunc,
+				dwInitParam);
 		long value = ret.longValue();
-		
+
 		register.mov("eax", new LongValue(value));
 	}
 }

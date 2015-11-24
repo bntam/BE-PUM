@@ -9,23 +9,11 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.system.Storage;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.BOOL;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.system.Storage;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Copies a string into the specified section of an initialization file.
@@ -73,11 +61,10 @@ public class WritePrivateProfileString extends Kernel32API {
 		long t3 = this.params.get(2);
 		long t4 = this.params.get(3);
 
-		WString lpAppName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
-		WString lpKeyName = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
-		WString lpString = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
-		WString lpFileName = new WString(Storage.getMappingPath(memory
-				.getText(new X86MemoryOperand(DataType.INT32, t4))));
+		WString lpAppName = new WString(memory.getText(this, t1));
+		WString lpKeyName = new WString(memory.getText(this, t2));
+		WString lpString = new WString(memory.getText(this, t3));
+		WString lpFileName = new WString(Storage.getMappingPath(memory.getText(this, t4)));
 		BOOL ret = Kernel32DLL.INSTANCE.WritePrivateProfileString(lpAppName, lpKeyName, lpString, lpFileName);
 
 		register.mov("eax", new LongValue(ret.longValue()));

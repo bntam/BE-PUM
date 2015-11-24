@@ -66,7 +66,7 @@ public class NtCreateSection extends NtdllAPI {
 			UNICODE_STRING objectName = new UNICODE_STRING();
 			objectName.Length = new USHORT(((LongValue) memory.getWordMemoryValue(pObjectName)).getValue());
 			objectName.MaximumLength = new USHORT(((LongValue) memory.getWordMemoryValue(pObjectName += 2)).getValue());
-			objectName.Buffer = new WString(memory.getText(pObjectName += 2));
+			objectName.Buffer = new WString(memory.getText(this, pObjectName += 2));
 			ObjectAttributes.ObjectName = objectName;
 
 			// public ULONG Attributes;

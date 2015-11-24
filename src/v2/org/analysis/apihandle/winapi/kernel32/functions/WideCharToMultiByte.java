@@ -9,16 +9,12 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.BOOLByReference;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.UINT;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Maps a UTF-16 (wide character) string to a new character string. The new
@@ -102,22 +98,23 @@ public class WideCharToMultiByte extends Kernel32API {
 
 		UINT CodePage = new UINT(t1);
 		DWORD dwFlags = new DWORD(t2);
-		WString lpWideCharStr = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
+		WString lpWideCharStr = new WString(memory.getText(this, t3));
 		int cchWideChar = (int) t4;
 		char[] lpMultiByteStr = (t6 > 0) ? new char[(int) t6] : null;
 		int cbMultiByte = (int) t6;
-		String lpDefaultChar = (t7 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t7)) : null;
+		String lpDefaultChar = (t7 != 0L) ? memory.getText(this, t7) : null;
 		BOOLByReference lpUsedDefaultChar = (t8 != 0L) ? new BOOLByReference() : null;
 		int ret = Kernel32DLL.INSTANCE.WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar,
 				lpMultiByteStr, cbMultiByte, lpDefaultChar, lpUsedDefaultChar);
 
 		register.mov("eax", new LongValue(ret));
 
-		if (lpMultiByteStr != null)
-			memory.setText(new X86MemoryOperand(DataType.INT32, t5), new String(lpMultiByteStr));
-		if (lpUsedDefaultChar != null)
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8), new LongValue(lpUsedDefaultChar
-					.getValue().longValue()));
+		if (lpMultiByteStr != null) {
+			memory.setText(t5, new String(lpMultiByteStr));
+		}
+		if (lpUsedDefaultChar != null) {
+			memory.setDoubleWordMemoryValue(t8, new LongValue(lpUsedDefaultChar.getValue().longValue()));
+		}
 	}
 
 }

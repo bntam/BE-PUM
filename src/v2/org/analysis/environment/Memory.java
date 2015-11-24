@@ -17,6 +17,7 @@ import org.jakstab.loader.ExecutableImage;
 import org.jakstab.loader.pe.PEModule;
 import org.jakstab.util.Pair;
 
+import v2.org.analysis.apihandle.winapi.API;
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.functions.GetProcAddress;
 import v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary;
@@ -35,7 +36,7 @@ import v2.org.analysis.value.Value;
  */
 public class Memory {
 	private static final int UNKNOWN = Integer.MAX_VALUE;
-	
+
 	private Environment env;
 	private Map<Long, Value> memory;
 	private Program program;
@@ -368,7 +369,7 @@ public class Memory {
 		return this.getByteMemoryValue(address, true);
 	}
 
-	public Value getByteMemoryValue(long address, boolean isTryInExternalMemory) {		
+	public Value getByteMemoryValue(long address, boolean isTryInExternalMemory) {
 		// First, let find in the internal memory
 		Value memValue = memory.get(address);
 		if (memValue != null) {
@@ -379,11 +380,11 @@ public class Memory {
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getKernel().readByte((int) address));
 		}
-		
+
 		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getUser32().readByte((int) address));
 		}
-		
+
 		if (env.getSystem().getAdvapi32Handle().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getAdvapi32Handle().readByte((int) address));
 		}
@@ -438,11 +439,11 @@ public class Memory {
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getKernel().readWord((int) address));
 		}
-		
+
 		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getUser32().readWord((int) address));
 		}
-		
+
 		if (env.getSystem().getAdvapi32Handle().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getAdvapi32Handle().readWord((int) address));
 		}
@@ -462,7 +463,8 @@ public class Memory {
 				ret1 = ((LongValue) v1).getValue();
 				p = true;
 			} else {
-//				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT16, address)));
+				// return new SymbolValue(Convert.generateString(new
+				// X86MemoryOperand(DataType.INT16, address)));
 				return v1;
 			}
 		}
@@ -488,7 +490,7 @@ public class Memory {
 
 		if (ret1 != UNKNOWN && ret2 != UNKNOWN) {
 			long value = calculateWordValue(ret1, ret2);
-//			BPLogger.debugLogger.info(address + ":" + value);
+			// BPLogger.debugLogger.info(address + ":" + value);
 			return new LongValue(value);
 		}
 
@@ -528,7 +530,6 @@ public class Memory {
 		}
 	}
 
-
 	public Value getWordMemoryValue(X86MemoryOperand dest) {
 		long d = evaluateAddress(dest);
 
@@ -547,17 +548,17 @@ public class Memory {
 
 		return this.getWordMemoryValue(d);
 	}
-	
-public Value getDoubleWordMemoryValue(long address) {
-		
+
+	public Value getDoubleWordMemoryValue(long address) {
+
 		if (env.getSystem().getKernel().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getKernel().readDoubleWord((int) address));
 		}
-		
+
 		if (env.getSystem().getUser32().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getUser32().readDoubleWord((int) address));
 		}
-		
+
 		if (env.getSystem().getAdvapi32Handle().isInside(new AbsoluteAddress(address))) {
 			return new LongValue(env.getSystem().getAdvapi32Handle().readDoubleWord((int) address));
 		}
@@ -579,7 +580,8 @@ public Value getDoubleWordMemoryValue(long address) {
 				ret1 = ((LongValue) v1).getValue();
 				p = true;
 			} else {
-//				return new SymbolValue(Convert.generateString(new X86MemoryOperand(DataType.INT32, address)));
+				// return new SymbolValue(Convert.generateString(new
+				// X86MemoryOperand(DataType.INT32, address)));
 				return v1;
 			}
 		}
@@ -631,7 +633,7 @@ public Value getDoubleWordMemoryValue(long address) {
 
 		if (ret1 != UNKNOWN && ret2 != UNKNOWN && ret3 != UNKNOWN && ret4 != UNKNOWN) {
 			long value = calculateDoubleWordValue(ret1, ret2, ret3, ret4);
-//			BPLogger.debugLogger.info(address + ":" + value);
+			// BPLogger.debugLogger.info(address + ":" + value);
 			return new LongValue(value);
 		}
 
@@ -684,7 +686,7 @@ public Value getDoubleWordMemoryValue(long address) {
 		return this.getDoubleWordMemoryValue(d);
 	}
 
-	public String getText(int addr, long l) {
+	public String getText(API api, int addr, long l) {
 		// YenNguyen: Using StringBuilder will help to improve executing time
 		StringBuilder ret = new StringBuilder();
 
@@ -699,7 +701,7 @@ public Value getDoubleWordMemoryValue(long address) {
 
 		return ret.toString();
 	}
-	
+
 	private String getText(long addr, int charSize) {
 		// YenNguyen: Using StringBuilder will help to improve executing time
 		StringBuilder ret = new StringBuilder();
@@ -723,19 +725,11 @@ public Value getDoubleWordMemoryValue(long address) {
 		return ret.toString();
 	}
 
-	public String getText(long addr) {
+	public String getText(API api, long addr) {
 		// ASCII - 1-byte per char
-		return getText(addr, 1);
-	}
-
-	public String getText(X86MemoryOperand x86MemoryOperand) {
-		long addr = evaluateAddress(x86MemoryOperand);
-		return this.getText(addr);
-	}
-	
-	public String getTextUnicode(long addr) {
 		// Unicode - 2-byte per char
-		return getText(addr, 2);
+		int numOfBytes = (api.is64bit()) ? 2 : 1;
+		return getText(addr, numOfBytes);
 	}
 
 	public Value getMemoryValue(long dest, Instruction inst) {
@@ -765,7 +759,6 @@ public Value getDoubleWordMemoryValue(long address) {
 		}
 		// --------------------------------------------------------------------------------------
 
-
 		if (dest.getDataType() == DataType.INT32) {
 			return getDoubleWordMemoryValue(dest);
 		} else if (dest.getDataType() == DataType.INT8) {
@@ -773,7 +766,6 @@ public Value getDoubleWordMemoryValue(long address) {
 		} else if (dest.getDataType() == DataType.INT16) {
 			return getWordMemoryValue(dest);
 		}
-
 
 		return getDoubleWordMemoryValue(dest);
 	}
@@ -960,7 +952,7 @@ public Value getDoubleWordMemoryValue(long address) {
 		}
 
 		x = this.normalizeValue(x, inst);
-		
+
 		// YenNguyen: Change from conditions of "endWith(String)" method to
 		// switch/case by last character in order to reduce computing
 		char lastChar = inst.getName().charAt(inst.getName().length() - 1);
@@ -1140,10 +1132,10 @@ public Value getDoubleWordMemoryValue(long address) {
 		long addr = address.getValue();
 
 		long[] ret = new long[n];
-		for (int i = 0; i < n; i++) {	
+		for (int i = 0; i < n; i++) {
 			// Phong - 20151113 - Fixed get byte memory value without value
-			//Value v = memory.get(addr + i);
-			Value v  = getByteMemoryValue(addr + i);
+			// Value v = memory.get(addr + i);
+			Value v = getByteMemoryValue(addr + i);
 			if (v != null && v instanceof LongValue) {
 				ret[i] = ((LongValue) v).getValue();
 			} else {
@@ -1192,11 +1184,11 @@ public Value getDoubleWordMemoryValue(long address) {
 
 	public void resetValue(Map<String, Long> z3Value) {
 		// TODO Auto-generated method stub
-		//System.out.println("Implement the memory later.");
+		// System.out.println("Implement the memory later.");
 		for (Map.Entry<Long, Value> entry : memory.entrySet()) {
 			if (!(entry.getValue() instanceof LongValue)) {
 				entry.setValue(entry.getValue().evaluate(z3Value));
-			}			
+			}
 		}
 	}
 

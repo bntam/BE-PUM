@@ -7,19 +7,15 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
+import v2.org.analysis.apihandle.winapi.user32.User32API;
+import v2.org.analysis.apihandle.winapi.user32.User32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.HINSTANCE;
 import com.sun.jna.platform.win32.WinUser.WNDCLASSEX;
-
-import v2.org.analysis.apihandle.winapi.user32.User32API;
-import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves information about a window class, including a handle to the small
@@ -64,36 +60,29 @@ public class GetClassInfoEx extends User32API {
 
 		HINSTANCE hinst = new HINSTANCE();
 		hinst.setPointer(new Pointer(t1));
-		WString lpszClass = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+		WString lpszClass = new WString(memory.getText(this, t2));
 		WNDCLASSEX lpwcx = new WNDCLASSEX();
 
 		BOOL ret = User32DLL.INSTANCE.GetClassInfoEx(hinst, lpszClass, lpwcx);
 
 		register.mov("eax", new LongValue(ret.longValue()));
 
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(lpwcx.cbSize));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(lpwcx.style));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(0 /*
-																										 * lpfnWndProc
-																										 */));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(lpwcx.cbClsExtra));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(lpwcx.cbWndExtra));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4),
-				new LongValue(Pointer.nativeValue(lpwcx.hInstance.getPointer())));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4),
-				new LongValue(Pointer.nativeValue(lpwcx.hIcon.getPointer())));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4),
-				new LongValue(Pointer.nativeValue(lpwcx.hCursor.getPointer())));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4),
-				new LongValue(Pointer.nativeValue(lpwcx.hbrBackground.getPointer())));
-		long pointer = ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4)))
-				.getValue();
-		memory.setText(new X86MemoryOperand(DataType.INT32, pointer), lpwcx.lpszMenuName);
-		pointer = ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4)))
-				.getValue();
-		memory.setText(new X86MemoryOperand(DataType.INT32, pointer), lpwcx.lpszClassName.toString());
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4),
-				new LongValue(Pointer.nativeValue(lpwcx.hIconSm.getPointer())));
+		memory.setDoubleWordMemoryValue(t3, new LongValue(lpwcx.cbSize));
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(lpwcx.style));
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(0 /*
+																 * lpfnWndProc
+																 */));
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(lpwcx.cbClsExtra));
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(lpwcx.cbWndExtra));
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(Pointer.nativeValue(lpwcx.hInstance.getPointer())));
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(Pointer.nativeValue(lpwcx.hIcon.getPointer())));
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(Pointer.nativeValue(lpwcx.hCursor.getPointer())));
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(Pointer.nativeValue(lpwcx.hbrBackground.getPointer())));
+		long pointer = ((LongValue) memory.getDoubleWordMemoryValue(t3 += 4)).getValue();
+		memory.setText(pointer, lpwcx.lpszMenuName);
+		pointer = ((LongValue) memory.getDoubleWordMemoryValue(t3 += 4)).getValue();
+		memory.setText(pointer, lpwcx.lpszClassName.toString());
+		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(Pointer.nativeValue(lpwcx.hIconSm.getPointer())));
 	}
 
 }

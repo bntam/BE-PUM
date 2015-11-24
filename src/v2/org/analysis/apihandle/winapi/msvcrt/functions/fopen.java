@@ -103,8 +103,8 @@ public class fopen extends MSVCRTAPI {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 
-		String filename = memory.getText(t1);
-		String mode = memory.getText(t2);
+		String filename = memory.getText(this, t1);
+		String mode = memory.getText(this, t2);
 		
 		filename = Storage.getMappingPath(filename);
 

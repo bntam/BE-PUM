@@ -66,7 +66,7 @@ public class GetFullPathName extends Kernel32API {
 		long t3 = this.params.get(2);
 		long t4 = this.params.get(3);
 
-		String lpFileName = memory.getText(t1);
+		String lpFileName = memory.getText(this, t1);
 		int nBufferLength = (int) t2;
 		char[] lpBuffer = new char[nBufferLength];
 		Pointer lpFilePart = new Memory(4);

@@ -7,14 +7,11 @@
  */
 package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.WString;
-
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.WString;
 
 /**
  * Converts an integer to a string. More secure versions of these functions are
@@ -48,13 +45,13 @@ public class _itow extends MSVCRTAPI {
 		long t3 = this.params.get(2);
 		
 		int value = (int) t1;
-		WString str = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
+		WString str = new WString(memory.getText(this, t2));
 		int radix = (int) t3;
 		WString ret = MSVCRTDLL.INSTANCE._itow(value, str, radix);
 		
 		register.mov("eax", new LongValue(t2));
 		System.out.println("Return Value: " + t2);
 		
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), ret.toString());
+		memory.setText(t2, ret.toString());
 	}
 }

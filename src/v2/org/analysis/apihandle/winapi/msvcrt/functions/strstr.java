@@ -47,8 +47,8 @@ public class strstr extends MSVCRTAPI {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 
-		String str1 = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
-		String str2 = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String str1 = memory.getText(this, t1);
+		String str2 = memory.getText(this, t2);
 
 		int index = str1.indexOf(str2);
 

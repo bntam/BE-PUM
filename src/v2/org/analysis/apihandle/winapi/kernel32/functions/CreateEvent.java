@@ -9,16 +9,12 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinBase.SECURITY_ATTRIBUTES;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Creates or opens a named or unnamed event object.
@@ -70,7 +66,7 @@ public class CreateEvent extends Kernel32API {
 		SECURITY_ATTRIBUTES lpEventAttributes = null;
 		BOOL bManualReset = new BOOL(t2);
 		BOOL bInitialState = new BOOL(t3);
-		String lpName = (t4 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t4)) : null;
+		String lpName = (t4 != 0L) ? memory.getText(this, t4) : null;
 		
 		System.out.println(String.format("lpName:%s", lpName));
 		

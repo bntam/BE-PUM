@@ -3,23 +3,11 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import com.sun.jna.WString;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
+
+import com.sun.jna.WString;
 
 /**
  * Copies a specified number of characters from a source string into a buffer.
@@ -58,13 +46,13 @@ public class lstrcpyn extends Kernel32API {
 		long scrAddr = this.params.get(1);
 		int n = this.params.get(2).intValue();
 
-		String dest = memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
-		String src = memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
+		String dest = memory.getText(this, destAddr);
+		String src = memory.getText(this, scrAddr);
 
 		System.out.println("Destination String:" + dest + ", Source String:" + src);
 
 		WString ret = Kernel32DLL.INSTANCE.lstrcpyn(new WString(dest), new WString(src), n);
-		memory.setText(new X86MemoryOperand(DataType.INT32, destAddr), ret.toString());
+		memory.setText(destAddr, ret.toString());
 		register.mov("eax", new LongValue(1));
 	}
 

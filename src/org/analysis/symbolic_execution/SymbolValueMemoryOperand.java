@@ -8,6 +8,7 @@ import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86ArithmeticInstruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
 import v2.org.analysis.complement.Convert;
 
 public class SymbolValueMemoryOperand {
@@ -18,6 +19,7 @@ public class SymbolValueMemoryOperand {
 	SymbolValueSegment conSegReg;
 	TestCaseValue var;
 
+	@Override
 	public SymbolValueMemoryOperand clone() {
 		return null;
 	}
@@ -63,8 +65,9 @@ public class SymbolValueMemoryOperand {
 		// TODO Auto-generated method stub
 		if (this.memoryOperandList.contain(dest)) {
 			this.memoryOperandList.add(dest, l);
-		} else
+		} else {
 			this.memoryOperandList.addNew(dest, l);
+		}
 	}
 
 	public void sub(X86MemoryOperand dest, Value l) {
@@ -79,9 +82,9 @@ public class SymbolValueMemoryOperand {
 
 	public Value getMemoryOperandValByte(X86MemoryOperand dest) {
 		// TODO Auto-generated method stub
-		if (this.memoryOperandList.contain(dest))
+		if (this.memoryOperandList.contain(dest)) {
 			return this.memoryOperandList.getVal(dest);
-		else {
+		} else {
 			Value d = new LongValue(program.getByteValueMemory(new AbsoluteAddress(dest.getDisplacement())));
 			this.memoryOperandList.addNew(dest, d);
 			// this.memoryOperandList.add
@@ -139,26 +142,30 @@ public class SymbolValueMemoryOperand {
 		Value z = getMemoryOperandVal(x86MemoryOperand.getDisplacement() + 2);
 		Value t = getMemoryOperandVal(x86MemoryOperand.getDisplacement() + 3);
 		String temp;
-		if (t instanceof LongValue)
+		if (t instanceof LongValue) {
 			temp = Convert.longToHex((int) ((LongValue) t).getValue(), 8);
-		else
+		} else {
 			return this.getMemoryOperandValByte(x86MemoryOperand);
+		}
 
-		if (z instanceof LongValue)
+		if (z instanceof LongValue) {
 			temp += Convert.longToHex((int) ((LongValue) z).getValue(), 8);
-		else
+		} else {
 			return this.getMemoryOperandValByte(x86MemoryOperand);
+		}
 
-		if (y instanceof LongValue)
+		if (y instanceof LongValue) {
 			temp += Convert.longToHex((int) ((LongValue) y).getValue(), 8);
-		else
+		} else {
 			return this.getMemoryOperandValByte(x86MemoryOperand);
+		}
 
 		// System.out.println("Debug:" + x.toString());
-		if (x instanceof LongValue)
+		if (x instanceof LongValue) {
 			temp += Convert.longToHex((int) ((LongValue) x).getValue(), 8);
-		else
+		} else {
 			return this.getMemoryOperandValByte(x86MemoryOperand);
+		}
 
 		return new LongValue(Convert.hexToLong(temp));
 	}
@@ -255,8 +262,9 @@ public class SymbolValueMemoryOperand {
 
 		while (v != null && v instanceof LongValue) {
 			disp++;
-			if (((LongValue) v).getValue() == 0)
+			if (((LongValue) v).getValue() == 0) {
 				return ret;
+			}
 
 			ret += (char) ((LongValue) v).getValue();
 			v = getMemoryOperandValByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp));
@@ -270,9 +278,10 @@ public class SymbolValueMemoryOperand {
 		long disp = x86MemoryOperand.getDisplacement();
 
 		for (int i = 0; i < t.length; i++) {
-			int x = (int) t[i];
-			if (x == 47)
+			int x = t[i];
+			if (x == 47) {
 				x = 92;
+			}
 
 			this.movByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp), new LongValue(x));
 			disp++;
@@ -285,9 +294,10 @@ public class SymbolValueMemoryOperand {
 		long disp = x86MemoryOperand.getDisplacement();
 		long l = Math.min(t.length, size);
 		for (int i = 0; i < l; i++) {
-			int x = (int) t[i];
-			if (x == 47)
+			int x = t[i];
+			if (x == 47) {
 				x = 92;
+			}
 
 			this.movByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp), new LongValue(x));
 			disp++;
@@ -303,8 +313,9 @@ public class SymbolValueMemoryOperand {
 
 		while (v != null && v instanceof LongValue) {
 			disp++;
-			if (size < 1)
+			if (size < 1) {
 				return ret;
+			}
 
 			ret += (char) ((LongValue) v).getValue();
 			v = getMemoryOperandValByte(new X86MemoryOperand(x86MemoryOperand.getDataType(), disp));
@@ -323,8 +334,9 @@ public class SymbolValueMemoryOperand {
 		if (ins.getName().endsWith("l")) {
 			String x = Convert.longToHex(v, 32);
 			int l = x.length();
-			if (l < 8)
+			if (l < 8) {
 				return;
+			}
 			setSymbolMemoryOperandValue(t, new LongValue(Convert.hexToLong(x.substring(l - 2, l))));
 			setSymbolMemoryOperandValue(new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 1), new LongValue(
 					Convert.hexToLong(x.substring(l - 4, l - 2))));
@@ -335,8 +347,9 @@ public class SymbolValueMemoryOperand {
 		} else if (ins.getName().endsWith("w") || ins.getName().endsWith("s")) {
 			String x = Convert.longToHex(v, 16);
 			int l = x.length();
-			if (l < 4)
+			if (l < 4) {
 				return;
+			}
 			setSymbolMemoryOperandValue(t, new LongValue(Convert.hexToLong(x.substring(l - 2, l))));
 			setSymbolMemoryOperandValue(new X86MemoryOperand(t.getDataType(), t.getDisplacement() + 1), new LongValue(
 					Convert.hexToLong(x.substring(l - 4, l - 2))));
@@ -344,8 +357,9 @@ public class SymbolValueMemoryOperand {
 		} else if (ins.getName().endsWith("b")) {
 			String x = Convert.longToHex(v, 8);
 			int l = x.length();
-			if (l < 2)
+			if (l < 2) {
 				return;
+			}
 			setSymbolMemoryOperandValue(t, new LongValue(Convert.hexToLong(x.substring(l - 2, l))));
 		}
 	}

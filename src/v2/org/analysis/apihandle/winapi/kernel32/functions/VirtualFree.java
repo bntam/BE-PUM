@@ -61,7 +61,7 @@ public class VirtualFree extends Kernel32API {
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		// String fileName = symbolValueMemoryOperand.getText(new
+		// String fileName = symbolValueMemoryOperand.getText(this, new
 		// X86MemoryOperand(DataType.INT32, t1));
 		System.out.println("Base Address:" + t1 + ", Size:" + t2 + ", Free Type:" + t3);
 

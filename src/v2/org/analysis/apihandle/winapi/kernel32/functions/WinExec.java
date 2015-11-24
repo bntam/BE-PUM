@@ -8,20 +8,8 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.Storage;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Runs the specified application.
@@ -80,7 +68,7 @@ public class WinExec extends Kernel32API {
 			 * returnValue = APIHandler.getProcAddress( ((ValueLongExp)
 			 * x1).getValue(), ((ValueLongExp) x2).getValue(), program);
 			 */
-			String commandLine = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
+			String commandLine = memory.getText(this, this.params.get(0));
 			commandLine = Storage.getMappingPath(commandLine);
 			System.out.println("Command Line:" + commandLine + ", Window Style:" + this.params.get(1));
 

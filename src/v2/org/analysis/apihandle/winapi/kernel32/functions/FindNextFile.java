@@ -11,15 +11,11 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.structures.WinBase.WIN32_FIND_DATA;
 import v2.org.analysis.complement.Convert;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Continues a file search from a previous call to the FindFirstFile,
@@ -56,7 +52,7 @@ public class FindNextFile extends Kernel32API {
 		long t1 = this.params.get(0);
 		long pFind = this.params.get(1);
 
-		String searchName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String searchName = memory.getText(this, t1);
 		System.out.println("Search File:" + searchName + ", Memory Operand:" + pFind);
 
 		WIN32_FIND_DATA lpFindFileData = new WIN32_FIND_DATA();
@@ -81,7 +77,7 @@ public class FindNextFile extends Kernel32API {
 		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved0.longValue()));
 		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved1.longValue()));
 
-		// memory.setText(new X86MemoryOperand(DataType.INT32, pFind += 4), new
+		// memory.setText(pFind += 4), new
 		// String(lpFindFileData.cFileName));
 
 		pFind += 4; // Passed lpFindFileData.dwReserved1
@@ -89,13 +85,13 @@ public class FindNextFile extends Kernel32API {
 
 		// Store byte by byte of lpFindFileData.cFileName array
 		for (char c : lpFindFileData.cFileName) {
-			memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, pFind), new LongValue(c));
+			memory.setByteMemoryValue(pFind, new LongValue(c));
 			pFind++;
 		}
 
 		// The size of lpFindFileData.cFileName array is fixed, length is 260.
 		// After lpFindFileData.cFileName has been stored by above loop,
 		// pFind pointer reaches to address of lpFindFileData.cAlternateFileName
-		memory.setText(new X86MemoryOperand(DataType.INT32, pFind), new String(lpFindFileData.cAlternateFileName));
+		memory.setText(pFind, new String(lpFindFileData.cAlternateFileName));
 	}
 }

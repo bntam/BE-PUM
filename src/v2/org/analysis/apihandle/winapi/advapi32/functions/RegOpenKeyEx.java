@@ -7,19 +7,15 @@
  */
 package v2.org.analysis.apihandle.winapi.advapi32.functions;
 
+import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
+import v2.org.analysis.system.registry.ERegKeySecuritynAccessRights;
+import v2.org.analysis.system.registry.RegistryHandle;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Advapi32;
 import com.sun.jna.platform.win32.WinReg.HKEY;
 import com.sun.jna.platform.win32.WinReg.HKEYByReference;
-
-import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.system.registry.ERegKeySecuritynAccessRights;
-import v2.org.analysis.system.registry.RegistryHandle;
-import v2.org.analysis.value.LongValue;
 
 /**
  * The RegOpenKeyEx function opens the specified registry key. Note that key
@@ -68,7 +64,7 @@ public class RegOpenKeyEx extends Advapi32API {
 		long t4 = this.params.get(3);
 		long t5 = this.params.get(4);
 
-		String lpSubKey = (t2 == 0) ? null : memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String lpSubKey = (t2 == 0) ? null : memory.getText(this, t2);
 		HKEYByReference phkResult = new HKEYByReference();
 
 		int ret = Advapi32.INSTANCE.RegOpenKeyEx(new HKEY(new Pointer(hKeyValue)), lpSubKey, 0 /*NULL - reversed*/, (int) t4, phkResult);
@@ -84,7 +80,7 @@ public class RegOpenKeyEx extends Advapi32API {
 			}
 		}
 		
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(keyResult));
+		memory.setDoubleWordMemoryValue(t5, new LongValue(keyResult));
 		
 		// Add handle to map
 		RegistryHandle.addHandle(keyResult, hKeyValue, lpSubKey, ERegKeySecuritynAccessRights.fromLong(t4));

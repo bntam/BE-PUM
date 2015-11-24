@@ -60,8 +60,8 @@ public class strncmp extends MSVCRTAPI {
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		String str1 = memory.getText(t1);
-		String str2 = memory.getText(t2);
+		String str1 = memory.getText(this, t1);
+		String str2 = memory.getText(this, t2);
 		int num = (int) t3;
 		int ret = MSVCRTDLL.INSTANCE.strncmp(str1, str2, num);
 		

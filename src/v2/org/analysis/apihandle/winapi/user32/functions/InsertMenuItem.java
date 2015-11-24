@@ -3,6 +3,14 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
+import org.jakstab.asm.DataType;
+import org.jakstab.asm.x86.X86MemoryOperand;
+
+import v2.org.analysis.apihandle.winapi.structures.WinUser.MENUITEMINFO;
+import v2.org.analysis.apihandle.winapi.user32.User32API;
+import v2.org.analysis.apihandle.winapi.user32.User32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
@@ -10,15 +18,6 @@ import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.HBITMAP;
 import com.sun.jna.platform.win32.WinDef.HMENU;
 import com.sun.jna.platform.win32.WinDef.UINT;
-
-import v2.org.analysis.apihandle.winapi.structures.WinUser.MENUITEMINFO;
-import v2.org.analysis.apihandle.winapi.user32.User32API;
-import v2.org.analysis.apihandle.winapi.user32.User32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Inserts a new menu item at the specified position in a menu.
@@ -75,32 +74,19 @@ public class InsertMenuItem extends User32API {
 		// public WString dwTypeData;
 		// public UINT cch; // used if MIIM_TYPE (4.0) or MIIM_STRING (>4.0)
 		// public HBITMAP hbmpItem; // used if MIIM_BITMAP
-		lpmii.cbSize = new UINT(
-				((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4))).getValue());
-		lpmii.fMask = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-				t4 += 4))).getValue());
-		lpmii.fType = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-				t4 += 4))).getValue());
-		lpmii.fState = new UINT(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32,
-				t4 += 4))).getValue());
-		lpmii.wID = new UINT(
-				((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 += 4))).getValue());
-		lpmii.hSubMenu = new HMENU(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-				DataType.INT32, t4 += 4))).getValue()));
-		lpmii.hbmpChecked = new HBITMAP(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-				DataType.INT32, t4 += 4))).getValue()));
+		lpmii.cbSize = new UINT(((LongValue) memory.getDoubleWordMemoryValue(t4)).getValue());
+		lpmii.fMask = new UINT(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
+		lpmii.fType = new UINT(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
+		lpmii.fState = new UINT(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
+		lpmii.wID = new UINT(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
+		lpmii.hSubMenu = new HMENU(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue()));
+		lpmii.hbmpChecked = new HBITMAP(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue()));
 		lpmii.hbmpUnchecked = new HBITMAP(
-				new Pointer(
-						((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 += 4)))
-								.getValue()));
-		lpmii.dwItemData = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
-				DataType.INT32, t4 += 4))).getValue());
-		long strPtr = ((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 += 40)))
-				.getValue();
-		lpmii.dwTypeData = new WString((strPtr != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, strPtr))
-				: null);
-		lpmii.cch = new UINT(
-				((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4 += 4))).getValue());
+				new Pointer(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue()));
+		lpmii.dwItemData = new ULONG_PTR(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
+		long strPtr = ((LongValue) memory.getDoubleWordMemoryValue(t4 += 40)).getValue();
+		lpmii.dwTypeData = new WString((strPtr != 0L) ? memory.getText(this, strPtr) : null);
+		lpmii.cch = new UINT(((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 		lpmii.hbmpItem = new HBITMAP(new Pointer(((LongValue) memory.getDoubleWordMemoryValue(new X86MemoryOperand(
 				DataType.INT32, t4 += 4))).getValue()));
 

@@ -9,9 +9,6 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import java.util.Map.Entry;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
@@ -61,7 +58,7 @@ public class LoadLibrary extends Kernel32API {
 	@Override
 	public void execute() {
 
-		String libraryName = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
+		String libraryName = memory.getText(this, this.params.get(0));
 		long value = execute(libraryName);
 
 		register.mov("eax", new LongValue(value));

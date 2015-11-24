@@ -1,8 +1,5 @@
 package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.system.Storage;
@@ -40,7 +37,7 @@ public class remove extends MSVCRTAPI {
 
 	@Override
 	public void execute() {
-		String filename = memory.getText(new X86MemoryOperand(DataType.INT32, this.params.get(0)));
+		String filename = memory.getText(this, this.params.get(0));
 		filename = Storage.getMappingPath(filename);
 
 		System.out.println("Delete file: " + filename);

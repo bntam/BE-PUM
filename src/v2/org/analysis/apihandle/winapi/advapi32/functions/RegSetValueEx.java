@@ -7,12 +7,9 @@
  */
 package v2.org.analysis.apihandle.winapi.advapi32.functions;
 
-import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
-
 import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
 
+import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
 import v2.org.analysis.system.registry.RegistryHandle;
 import v2.org.analysis.value.LongValue;
 
@@ -71,7 +68,7 @@ public class RegSetValueEx extends Advapi32API {
 		long lpData = this.params.get(4);
 		long cbData = this.params.get(5);
 
-		String valueName = memory.getText(new X86MemoryOperand(DataType.INT32, lpValueName));
+		String valueName = memory.getText(this, lpValueName);
 		long[] data = memory.getBytesArray(new AbsoluteAddress(lpData), (int) cbData);
 		
 		char[] convertedData = new char[data.length];
@@ -79,7 +76,7 @@ public class RegSetValueEx extends Advapi32API {
 			convertedData[i] = (char) data[i];
 		}
 		
-		RegistryHandle.setRegValue((Long) hKey, valueName, dwType, convertedData);
+		RegistryHandle.setRegValue(hKey, valueName, dwType, convertedData);
 
 		int ret = 0;
 		// Advapi32.INSTANCE.RegSetValueEx(new HKEY((int) t1), lpValueName,

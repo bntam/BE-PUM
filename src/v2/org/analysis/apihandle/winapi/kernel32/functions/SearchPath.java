@@ -7,9 +7,6 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.complement.Convert;
@@ -80,9 +77,9 @@ public class SearchPath extends Kernel32API {
 		long t5 = this.params.get(4);
 		long t6 = this.params.get(5);
 
-		String lpPath = (t1 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t1)) : null;
-		String lpFileName = (t2 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t2)) : null;
-		String lpExtension = (t3 != 0L) ? memory.getText(new X86MemoryOperand(DataType.INT32, t3)) : null;
+		String lpPath = (t1 != 0L) ? memory.getText(this, t1) : null;
+		String lpFileName = (t2 != 0L) ? memory.getText(this, t2) : null;
+		String lpExtension = (t3 != 0L) ? memory.getText(this, t3) : null;
 		DWORD nBufferLength = new DWORD(t4);
 		char[] lpBuffer = new char[(int) t4];
 		Pointer lpFilePart = null;
@@ -100,7 +97,7 @@ public class SearchPath extends Kernel32API {
 
 		if (lpBuffer != null) {
 			String path = Convert.reduceText(lpBuffer);
-			memory.setText(new X86MemoryOperand(DataType.INT32, t5), path);
+			memory.setText(t5, path);
 
 			if (t6 != 0L && ret.intValue() > 0 && ret.intValue() <= nBufferLength.intValue()) {
 				int index = path.lastIndexOf('\\');

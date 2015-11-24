@@ -7,17 +7,14 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.value.LongValue;
 
 /**
  * Opens a named file mapping object.
@@ -69,7 +66,7 @@ public class OpenFileMapping extends Kernel32API {
 
 		DWORD dwDesiredAccess = new DWORD(t1);
 		BOOL bInheritHandle = new BOOL(t2);
-		String lpName = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
+		String lpName = memory.getText(this, t3);
 		HANDLE ret = Kernel32DLL.INSTANCE.OpenFileMapping(dwDesiredAccess, bInheritHandle, lpName);
 
 		register.mov("eax", new LongValue(Pointer.nativeValue(ret.getPointer())));

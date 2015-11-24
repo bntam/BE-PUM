@@ -48,7 +48,7 @@ public class RemoveProp extends User32API {
 		long t2 = this.params.get(1);
 
 		HWND hWnd = new HWND(new Pointer(t1));
-		String lpString = memory.getText(t2);
+		String lpString = memory.getText(this, t2);
 		
 		HANDLE ret = User32DLL.INSTANCE.RemoveProp(hWnd, lpString);
 		

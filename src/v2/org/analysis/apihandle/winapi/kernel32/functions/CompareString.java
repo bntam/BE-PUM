@@ -7,17 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LCID;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Compares two character strings, for a locale specified by identifier.
@@ -64,7 +60,6 @@ public class CompareString extends Kernel32API {
 		NUM_OF_PARMS = 6;
 	}
 
-
 	@Override
 	public void execute() {
 		long t1 = this.params.get(0);
@@ -76,9 +71,9 @@ public class CompareString extends Kernel32API {
 
 		LCID Locale = new LCID(t1);
 		DWORD dwCmpFlags = new DWORD(t2);
-		WString lpString1 = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
+		WString lpString1 = new WString(memory.getText(this, t3));
 		int cchCount1 = (int) t4;
-		WString lpString2 = new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t5)));
+		WString lpString2 = new WString(memory.getText(this, t5));
 		int cchCount2 = (int) t6;
 
 		int ret = Kernel32DLL.INSTANCE.CompareString(Locale, dwCmpFlags, lpString1, cchCount1, lpString2, cchCount2);

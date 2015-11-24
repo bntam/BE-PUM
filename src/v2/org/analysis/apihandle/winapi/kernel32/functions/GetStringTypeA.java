@@ -7,9 +7,6 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.value.LongValue;
@@ -88,7 +85,7 @@ public class GetStringTypeA extends Kernel32API {
 
 		LCID Locale = new LCID(t1);
 		DWORD dwInfoType = new DWORD(t2);
-		String lpSrcStr = memory.getText(new X86MemoryOperand(DataType.INT32, t3));
+		String lpSrcStr = memory.getText(this, t3);
 		int cchSrc = (int) t4;
 		short[] lpCharType = new short[cchSrc + 1];
 		BOOL ret = Kernel32DLL.INSTANCE.GetStringTypeA(Locale, dwInfoType, lpSrcStr, cchSrc, lpCharType);

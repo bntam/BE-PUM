@@ -50,11 +50,7 @@ public class GetModuleHandle extends Kernel32API {
 		String libraryName = null;
 		long t1 = this.params.get(0);
 
-		if (this.getAPIName().charAt(this.getAPIName().length() - 1) == 'W') {
-			libraryName = memory.getTextUnicode(t1);
-		} else {
-			libraryName = memory.getText(t1);
-		}
+		libraryName = memory.getText(this, t1);
 		System.out.println("Library Name: " + libraryName);
 
 		// Get from cache

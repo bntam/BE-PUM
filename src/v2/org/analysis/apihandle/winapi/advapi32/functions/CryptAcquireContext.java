@@ -10,14 +10,14 @@ package v2.org.analysis.apihandle.winapi.advapi32.functions;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
+import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
+import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTRByReference;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
-
-import v2.org.analysis.apihandle.winapi.advapi32.Advapi32API;
-import v2.org.analysis.apihandle.winapi.advapi32.Advapi32DLL;
-import v2.org.analysis.value.LongValue;
 
 /**
  * The CryptAcquireContext function is used to acquire a handle to a particular
@@ -75,9 +75,8 @@ public class CryptAcquireContext extends Advapi32API {
 		long t5 = this.params.get(4);
 
 		ULONG_PTRByReference phProv = new ULONG_PTRByReference();
-		WString pszContainer = (t2 == 0L) ? null
-				: new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t2)));
-		WString pszProvider = (t3 == 0L) ? null : new WString(memory.getText(new X86MemoryOperand(DataType.INT32, t3)));
+		WString pszContainer = (t2 == 0L) ? null : new WString(memory.getText(this, t2));
+		WString pszProvider = (t3 == 0L) ? null : new WString(memory.getText(this, t3));
 		DWORD dwProvType = new DWORD(t4);
 		DWORD dwFlags = new DWORD(t5);
 

@@ -28,7 +28,7 @@ public class OutputDebugString extends Kernel32API {
 	public void execute() {
 		long t1 = this.params.get(0);
 
-		WString lpOutputString = new WString(memory.getText(t1));
+		WString lpOutputString = new WString(memory.getText(this, t1));
 		Kernel32DLL.INSTANCE.OutputDebugString(lpOutputString);
 
 	}

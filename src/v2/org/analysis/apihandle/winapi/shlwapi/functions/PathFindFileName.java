@@ -7,9 +7,6 @@
  */
 package v2.org.analysis.apihandle.winapi.shlwapi.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.shlwapi.ShlwapiAPI;
 import v2.org.analysis.apihandle.winapi.shlwapi.ShlwapiDLL;
 import v2.org.analysis.value.LongValue;
@@ -32,7 +29,7 @@ public class PathFindFileName extends ShlwapiAPI {
 		long returnValue = 0;
 
 		if (t1 != 0) {
-			String pPath = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+			String pPath = memory.getText(this, t1);
 			String ret = ShlwapiDLL.INSTANCE.PathFindFileName(pPath);
 
 			returnValue = t1 + pPath.indexOf(ret);

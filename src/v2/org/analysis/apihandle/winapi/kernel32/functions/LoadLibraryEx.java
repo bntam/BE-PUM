@@ -7,9 +7,6 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
@@ -74,7 +71,7 @@ public class LoadLibraryEx extends Kernel32API {
 		long t2 = this.params.get(1);
 		long t3 = this.params.get(2);
 
-		String lpFileName = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String lpFileName = memory.getText(this, t1);
 		HANDLE hFile = (this.params.get(1) == 0L) ? null : new HANDLE(new Pointer(t2));
 		DWORD dwFlags = new DWORD(t3);
 

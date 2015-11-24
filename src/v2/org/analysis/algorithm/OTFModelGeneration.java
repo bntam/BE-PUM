@@ -557,7 +557,7 @@ public class OTFModelGeneration implements Algorithm {
 		 * Program.getProgram().getFileName()
 		 * .equals("Virus.Win32.Cabanas.2999")) { // Value ecx =
 		 * env.getRegister().getRegisterValue("ecx"); String s1 =
-		 * curState.getEnvironement().getMemory() .getText(4215362, 650);
+		 * curState.getEnvironement().getMemory() .getText(this, 4215362, 650);
 		 * System.out.println("Decrypted String: " + s1); }
 		 */
 	}

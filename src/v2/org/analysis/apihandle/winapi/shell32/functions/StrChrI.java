@@ -7,9 +7,6 @@
  */
 package v2.org.analysis.apihandle.winapi.shell32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.shell32.Shell32API;
 import v2.org.analysis.value.LongValue;
 
@@ -29,7 +26,7 @@ public class StrChrI extends Shell32API {
 		long t1 = this.params.get(0);
 		long t2 = this.params.get(1);
 
-		String pszStart = memory.getText(new X86MemoryOperand(DataType.INT32, t1));
+		String pszStart = memory.getText(this, t1);
 		int index = pszStart.indexOf((char) t2);
 
 		// NULL pointer

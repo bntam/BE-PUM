@@ -7,18 +7,15 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.complement.Convert;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.DWORDByReference;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.complement.Convert;
-import v2.org.analysis.value.LongValue;
 
 /**
  * @author Yen Nguyen
@@ -42,8 +39,7 @@ public class GetVolumeInformation extends Kernel32API {
 		long t7 = this.params.get(6);
 		long t8 = this.params.get(7);
 
-		WString lpRootPathName = (t1 == 0L) ? null : new WString(
-				memory.getText(new X86MemoryOperand(DataType.INT32, t1)));
+		WString lpRootPathName = (t1 == 0L) ? null : new WString(memory.getText(this, t1));
 		char[] lpVolumeNameBuffer = (t2 == 0L) ? null : new char[(int) t3];
 		DWORD nVolumeNameSize = new DWORD(t3);
 		DWORDByReference lpVolumeSerialNumber = (t4 == 0L) ? null : new DWORDByReference();
@@ -63,28 +59,25 @@ public class GetVolumeInformation extends Kernel32API {
 		if (t2 != 0) {
 			String volumeNameBuffer = Convert.reduceText(lpVolumeNameBuffer);
 			System.out.println(String.format("lpVolumeNameBuffer: %s", volumeNameBuffer));
-			memory.setText(new X86MemoryOperand(DataType.INT32, t2), volumeNameBuffer);
+			memory.setText(t2, volumeNameBuffer);
 		}
 
 		if (t7 != 0) {
 			String fileSystemNameBuffer = Convert.reduceText(lpFileSystemNameBuffer);
 			System.out.println(String.format("lpFileSystemNameBuffer: %s", fileSystemNameBuffer));
-			memory.setText(new X86MemoryOperand(DataType.INT32, t7), fileSystemNameBuffer);
+			memory.setText(t7, fileSystemNameBuffer);
 		}
 
 		if (t4 != 0) {
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(
-					lpVolumeSerialNumber.getValue().longValue()));
+			memory.setDoubleWordMemoryValue(t4, new LongValue(lpVolumeSerialNumber.getValue().longValue()));
 		}
 
 		if (t5 != 0) {
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(
-					lpMaximumComponentLength.getValue().longValue()));
+			memory.setDoubleWordMemoryValue(t5, new LongValue(lpMaximumComponentLength.getValue().longValue()));
 		}
 
 		if (t6 != 0) {
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t6), new LongValue(lpFileSystemFlags
-					.getValue().longValue()));
+			memory.setDoubleWordMemoryValue(t6, new LongValue(lpFileSystemFlags.getValue().longValue()));
 		}
 	}
 

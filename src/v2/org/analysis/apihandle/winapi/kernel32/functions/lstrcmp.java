@@ -9,19 +9,7 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
 import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Compares two character strings. The comparison is case-sensitive.
@@ -56,8 +44,8 @@ public class lstrcmp extends Kernel32API {
 		long destAddr = this.params.get(0);
 		long scrAddr = this.params.get(1);
 
-		String dest = destAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, destAddr));
-		String src = scrAddr == 0 ? null : memory.getText(new X86MemoryOperand(DataType.INT32, scrAddr));
+		String dest = destAddr == 0 ? null : memory.getText(this, destAddr);
+		String src = scrAddr == 0 ? null : memory.getText(this, scrAddr);
 
 		System.out.println("Destination String:" + dest + ", Source String:" + src);
 

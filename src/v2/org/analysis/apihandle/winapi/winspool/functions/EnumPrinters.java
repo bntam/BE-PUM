@@ -10,13 +10,13 @@ package v2.org.analysis.apihandle.winapi.winspool.functions;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
+import v2.org.analysis.apihandle.winapi.winspool.WinspoolAPI;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Winspool;
 import com.sun.jna.ptr.IntByReference;
-
-import v2.org.analysis.apihandle.winapi.winspool.WinspoolAPI;
-import v2.org.analysis.value.LongValue;
 
 /**
  * The EnumPrinters function enumerates available printers, print servers,
@@ -103,7 +103,7 @@ public class EnumPrinters extends WinspoolAPI {
 		long t7 = this.params.get(6);
 
 		int Flags = (int) t1;
-		String Name = memory.getText(new X86MemoryOperand(DataType.INT32, t2));
+		String Name = memory.getText(this, t2);
 		int Level = (int) t3;
 		Pointer pPrinterEnum = new Memory(Pointer.SIZE);
 		int cbBuf = (int) t5;
