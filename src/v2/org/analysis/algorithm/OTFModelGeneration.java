@@ -190,7 +190,7 @@ public class OTFModelGeneration implements Algorithm {
 				// PHONG: 20150506 - Update TIB
 				// --------------------------------------
 				TIB.updateTIB(curState);
-				TIB.updateChecking(curState);
+//				TIB.updateChecking(curState);
 				// --------------------------------------
 				
 				if (inst == null || location == null) {

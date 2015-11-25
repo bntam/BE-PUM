@@ -67,17 +67,11 @@ public class Memory {
 
 	// //////////////////////////////////////////////////////////////////
 
-	public String outputMemory() {
+	private void outputMemory(String ret) {
 		FileProcess fp = new FileProcess("/data/data/memory.txt"); // YenNguyen
-		fp.clearContentFile();
-		String ret = "";
-		for (Map.Entry<Long, Value> entry : memory.entrySet()) {
-			ret += "0x" + Long.toHexString(entry.getKey()) + "\t" + entry.getValue() + "\n";
-		}
-
-		fp.clearContentFile();
-		fp.appendFile(ret);
-		return ret;
+		fp.clearContentFile();		
+//		fp.clearContentFile();
+		fp.appendFile(ret);		
 	}
 
 	@Override
@@ -90,7 +84,7 @@ public class Memory {
 
 		// fp.clearContentFile();
 		// fp.appendFile(ret);
-		outputMemory();
+//		outputMemory(ret);
 		return ret;
 	}
 
@@ -613,10 +607,10 @@ public Value getDoubleWordMemoryValue(long address) {
 
 		// PHONG: 20150507
 		// ---------------------------------------------------------------------
-		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"
-				&& dest.getDisplacement() == 0) {
-			return new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
-		}
+//		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"
+//				&& dest.getDisplacement() == 0) {
+//			return new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
+//		}
 		// --------------------------------------------------------------------------------------
 
 

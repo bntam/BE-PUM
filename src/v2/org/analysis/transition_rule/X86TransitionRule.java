@@ -54,6 +54,7 @@ import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.ContextRecord;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.environment.ExceptionRecord;
+import v2.org.analysis.environment.processthread.TIB;
 import v2.org.analysis.loop.LoopAlgorithm;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
@@ -831,6 +832,7 @@ public class X86TransitionRule extends TransitionRule {
 				.setSEHHandler(((LongValue) env.getStack().getValueStackFromIndex(4)).getValue(),
 						((LongValue) env.getRegister().getRegisterValue("esp")).getValue() + 4);
 		// env.getSystem().getSEHHandler().setSEHReady(true);
+		TIB.setBeUpdated(true);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -878,6 +880,7 @@ public class X86TransitionRule extends TransitionRule {
 		curState.getEnvironement().getRegister().setRegisterValue("ecx", new LongValue(addr.getValue()));
 		// Set False for SEH
 		curState.getEnvironement().getSystem().getSEHHandler().setSEHReady(false);
+		TIB.setBeUpdated(true);
 		// ---------------------------------------------------------------------------------
 
 		BPCFG cfg = Program.getProgram().getBPCFG();
@@ -995,6 +998,7 @@ public class X86TransitionRule extends TransitionRule {
 				.setSEHHandler(((LongValue) env.getMemory().getDoubleWordMemoryValue(register_value + 4)).getValue(),
 						register_value + 4);
 		env.getSystem().getSEHHandler().setSEHReady(true);
+		TIB.setBeUpdated(true);
 	}
 
 	// -----------------------------------------------------------------------------------------
@@ -1017,6 +1021,7 @@ public class X86TransitionRule extends TransitionRule {
 				.setSEHHandler(((LongValue) env.getStack().getValueStackFromIndex(4)).getValue(),
 						((LongValue) env.getRegister().getRegisterValue("esp")).getValue() + 4);
 		env.getSystem().getSEHHandler().setSEHReady(true);
+		TIB.setBeUpdated(true);
 	}
 
 	/*
@@ -1131,6 +1136,7 @@ public class X86TransitionRule extends TransitionRule {
 		this.sehHandle.setExceptionAddr(curState.getEnvironement().getRegister().getRegisterValue("dr1"));
 		this.sehHandle.setExceptionAddr(curState.getEnvironement().getRegister().getRegisterValue("dr2"));
 		this.sehHandle.setExceptionAddr(curState.getEnvironement().getRegister().getRegisterValue("dr3"));
+		TIB.setBeUpdated(true);
 
 		AbsoluteAddress nextAddr = new AbsoluteAddress(0x00000000);
 		if (eip_value != null && eip_value instanceof LongValue) {
