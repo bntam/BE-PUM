@@ -1,14 +1,27 @@
 package v2.org.analysis.environment.processthread;
 
+import java.io.File;
+import java.util.Map.Entry;
+
+import org.jakstab.Program;
 import org.jakstab.asm.Instruction;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86MemoryOperand;
 
+import v2.org.analysis.apihandle.winapi.APIHandle;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary;
+import v2.org.analysis.environment.ExternalMemory;
+import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
 import v2.org.analysis.path.BPState;
+import v2.org.analysis.util.PairEntry;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.HMODULE;
 
 public class TIB {
 	private static boolean beUpdated;
@@ -132,5 +145,96 @@ public class TIB {
 
 	public static long getTIB_Base_Address() {
 		return TIB_Base_Address;
+	}
+	
+	public void getLoaderData(String libraryName) {
+		// Get DLL's Base Address /////////////////////
+		long libHandle = 0;
+		// Try to find the handle of current library
+		if (APIHandle.libraryHandleMap.containsValue(libraryName)) {
+			for (Entry<Long, PairEntry<String, Integer>> handle : APIHandle.libraryHandleMap.entrySet()) {
+				if (handle.getValue().getKey().equals(libraryName)) {
+					libHandle = handle.getKey(); // DLL's Base Address
+					break;
+				}
+			}
+		} else {
+			// If can not find, execute LoadLibrary API
+			libHandle = (new LoadLibrary()).execute(libraryName); // DLL's Base
+																	// Address
+		}
+		// ///////////////////////////////////////////////
+
+		// Get DLL's Entry Point/////////////////////////
+		long x = getWordExternalMemory(libHandle);
+		if (x != 0x5A4D) {
+			return; // fail to reach the MZ in PE File
+		}
+		
+		x = getDoubleWordExternalMemory(libHandle + 0x3c);
+		if (x == Long.MIN_VALUE) {
+			return; // fail to reach the MZ in PE File
+		}
+		
+		long entryPoint = getDoubleWordExternalMemory(libHandle + x + 0x28) + libHandle;
+		/////////////////////////////////////////////////
+		
+		// Get Full DLL's name/////////////////////////
+		long t3 = 100;
+		
+		char Filename[] = new char[(int) t3];
+		HMODULE module = new HMODULE();
+		module.setPointer(new Pointer(libHandle));
+
+		String output = null;
+		DWORD ret = null;
+
+		if (libHandle == 0L) {
+			output = Program.getProgram().getAbsolutePathFile();
+			ret = new DWORD(output.length());
+			Kernel32.INSTANCE.SetLastError(0);
+		} else {
+			ret = Kernel32DLL.INSTANCE.GetModuleFileName(module, Filename, new DWORD(t3));
+			output = new String(Filename, 0, ret.intValue());
+		}
+		
+		String jre_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator
+				+ "java";
+		String jdk_location = System.getProperties().getProperty("java.home") + File.separator + "java";
+		if (jdk_location.contains("jre")) {
+			jdk_location = jdk_location.replace("jre", "bin");
+		}
+		
+		if (output.startsWith(jre_location) || output.startsWith(jdk_location)) {
+			output = Program.getProgram().getAbsolutePathFile();
+			ret = new DWORD(output.length());
+			Kernel32.INSTANCE.SetLastError(0);
+		}
+		
+		System.out.println("DLL's Base Address=0x" +Long.toHexString(libHandle) + ", Module's Entry Point=0x" + Long.toHexString(entryPoint) + 
+				", Full DLL's name= " + output+ ", Base DLL's name=" + libraryName);
+		System.out.println();
+		/////////////////////////////////////////////////
+	}
+
+	private long getWordExternalMemory(long address) {
+		// TODO Auto-generated method stub
+		if (address != 0) {
+			ExternalMemoryReturnData ret = ExternalMemory.getWord(address);
+			if (ret != null && ret.isValidAddress) {
+				return ret.value.getValue();
+			}
+		}
+		return Long.MIN_VALUE;
+	}
+
+	private long getDoubleWordExternalMemory(long address) {
+		if (address != 0) {
+			ExternalMemoryReturnData ret = ExternalMemory.getDoubleWord(address);
+			if (ret != null && ret.isValidAddress) {
+				return ret.value.getValue();
+			}
+		}
+		return Long.MIN_VALUE;
 	}
 }

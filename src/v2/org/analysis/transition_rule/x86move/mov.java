@@ -13,7 +13,7 @@ public class mov extends X86MoveStub {
 	@Override
 	public BPState execute() {// normal move
 		Value source = rule.getValueOperand(src, env, inst);
-		// System.out.println();
+//		 System.out.println();
 		if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 			// prevState.getMemoryValues().put((MemoryOperand) dest,
 			// toMoveVal);
