@@ -61,7 +61,7 @@ public class strncat extends MSVCRTAPI {
 
 			destination = destination.concat(source);
 
-			memory.setText(t1, destination, destination.length());
+			memory.setText(this, t1, destination, destination.length());
 			// Null-terminated
 			memory.setByteMemoryValue(t1 + destination.length(), new LongValue(0));
 		}

@@ -77,9 +77,9 @@ public class SHGetFileInfo extends Shell32API {
 				new LongValue((psfi.hIcon == null) ? 0 : Pointer.nativeValue(psfi.hIcon.getPointer())));
 		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(psfi.iIcon));
 		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(psfi.dwAttributes.longValue()));
-		memory.setText(t3, Convert.reduceText(psfi.szDisplayName));
+		memory.setText(this, t3, Convert.reduceText(psfi.szDisplayName));
 		t3 += 260;
-		memory.setText(t3, Convert.reduceText(psfi.szTypeName));
+		memory.setText(this, t3, Convert.reduceText(psfi.szTypeName));
 	}
 
 }

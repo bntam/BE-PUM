@@ -12,9 +12,7 @@ import java.nio.ByteBuffer;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
@@ -23,8 +21,6 @@ import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.DWORDByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Sends a control code directly to a specified device driver, causing the
@@ -120,39 +116,41 @@ public class DeviceIoControl extends Kernel32API {
 
 		register.mov("eax", new LongValue(ret.longValue()));
 
-		if (lpInBuffer != null)
+		if (lpInBuffer != null) {
 			try {
 				String str = new String(lpInBuffer.array(), "UTF-8");
-				memory.setText(new X86MemoryOperand(DataType.INT32, t3), str);
+				memory.setText(this, t3, str);
 				System.out.println("Data: " + str);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+		}
 
-		if (lpOutBuffer != null)
+		if (lpOutBuffer != null) {
 			try {
 				String str = new String(lpOutBuffer.array(), "UTF-8");
-				memory.setText(new X86MemoryOperand(DataType.INT32, t5), str);
+				memory.setText(this, t5, str);
 				System.out.println("Data: " + str);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+		}
 
 		if (t7 != 0L) {
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t7), new LongValue(lpBytesReturned
+			memory.setDoubleWordMemoryValue(t7, new LongValue(lpBytesReturned
 					.getValue().longValue()));
 		}
 
 		if (t8 != 0L) {
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8), new LongValue(
+			memory.setDoubleWordMemoryValue(t8, new LongValue(
 					lpOverlapped.Internal.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8 += 4), new LongValue(
+			memory.setDoubleWordMemoryValue(t8 += 4, new LongValue(
 					lpOverlapped.InternalHigh.longValue()));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8 += 4), new LongValue(
+			memory.setDoubleWordMemoryValue(t8 += 4, new LongValue(
 					lpOverlapped.Offset));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8 += 4), new LongValue(
+			memory.setDoubleWordMemoryValue(t8 += 4, new LongValue(
 					lpOverlapped.OffsetHigh));
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t8 += 4),
+			memory.setDoubleWordMemoryValue(t8 += 4,
 					new LongValue(Pointer.nativeValue(lpOverlapped.hEvent.getPointer())));
 		}
 	}

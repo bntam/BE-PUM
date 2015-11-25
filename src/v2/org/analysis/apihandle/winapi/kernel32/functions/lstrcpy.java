@@ -51,7 +51,7 @@ public class lstrcpy extends Kernel32API {
 		System.out.println("Destination Address:" + destAddr + ", Source String:" + src);
 
 		WString ret = Kernel32DLL.INSTANCE.lstrcpy(new WString(dest), new WString(src));
-		memory.setText(destAddr, ret.toString());
+		memory.setText(this, destAddr, ret.toString());
 
 		// TODO: Fix here
 		register.mov("eax", new LongValue((ret != null) ? destAddr : 0));

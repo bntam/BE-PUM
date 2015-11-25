@@ -7,22 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
+import org.jakstab.Program;
+
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.Program;
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves the command-line string for the current process.
@@ -57,7 +48,7 @@ public class GetCommandLine extends Kernel32API {
 		long ptr = Pointer.nativeValue(ret);
 		System.out.println("Memory Operand:" + ptr + ", Command Line:" + commandLine);
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, ptr), commandLine);
+		memory.setText(this, ptr, commandLine);
 		register.mov("eax", new LongValue(ptr));
 	}
 

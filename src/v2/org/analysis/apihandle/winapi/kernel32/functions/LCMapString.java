@@ -98,7 +98,7 @@ public class LCMapString extends Kernel32API {
 		register.mov("eax", new LongValue(ret));
 
 		if (lpDestStr != null) {
-			memory.setText(t5, new String(lpDestStr));
+			memory.setText(this, t5, new String(lpDestStr));
 		}
 
 	}

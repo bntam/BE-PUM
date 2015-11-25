@@ -64,7 +64,7 @@ public class GetTempPath extends Kernel32API {
 		DWORD ret = Kernel32.INSTANCE.GetTempPath(new DWORD(t1), lpBuffer);
 
 		String tmpPath = Convert.reduceText(lpBuffer);
-		memory.setText(this.params.get(1).longValue(), tmpPath, tmpPath.length());
+		memory.setText(this, this.params.get(1).longValue(), tmpPath, tmpPath.length());
 		// Null-terminated character
 		memory.setByteMemoryValue(this.params.get(1).longValue() + tmpPath.length(), new LongValue(0));
 		

@@ -77,7 +77,7 @@ public class FindNextFile extends Kernel32API {
 		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved0.longValue()));
 		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved1.longValue()));
 
-		// memory.setText(pFind += 4), new
+		// memory.setText(this, pFind += 4), new
 		// String(lpFindFileData.cFileName));
 
 		pFind += 4; // Passed lpFindFileData.dwReserved1
@@ -92,6 +92,6 @@ public class FindNextFile extends Kernel32API {
 		// The size of lpFindFileData.cFileName array is fixed, length is 260.
 		// After lpFindFileData.cFileName has been stored by above loop,
 		// pFind pointer reaches to address of lpFindFileData.cAlternateFileName
-		memory.setText(pFind, new String(lpFindFileData.cAlternateFileName));
+		memory.setText(this, pFind, new String(lpFindFileData.cAlternateFileName));
 	}
 }

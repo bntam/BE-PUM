@@ -7,16 +7,12 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import com.sun.jna.platform.win32.WinDef.DWORD;
-import com.sun.jna.platform.win32.WinDef.LCID;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.LCID;
 
 /**
  * Retrieves information about a locale specified by identifier.
@@ -76,8 +72,9 @@ public class GetLocaleInfo extends Kernel32API {
 
 		register.mov("eax", new LongValue(ret));
 
-		if (lpLCData != null && t4 != 0)
-			memory.setText(new X86MemoryOperand(DataType.INT32, t3), new String(lpLCData), ret);
+		if (lpLCData != null && t4 != 0) {
+			memory.setText(this, t3, new String(lpLCData), ret);
+		}
 	}
 
 }

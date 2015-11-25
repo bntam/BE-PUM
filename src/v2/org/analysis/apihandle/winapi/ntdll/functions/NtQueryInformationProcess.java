@@ -7,8 +7,12 @@
  */
 package v2.org.analysis.apihandle.winapi.ntdll.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
+import v2.org.analysis.apihandle.winapi.ntdll.NtdllAPI;
+import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.PROCESS_BASIC_INFORMATION;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.UNICODE_STRING;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
@@ -18,13 +22,6 @@ import com.sun.jna.platform.win32.WinDef.DWORDByReference;
 import com.sun.jna.platform.win32.WinDef.ULONG;
 import com.sun.jna.platform.win32.WinDef.ULONGByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
-
-import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-import v2.org.analysis.apihandle.winapi.ntdll.NtdllAPI;
-import v2.org.analysis.apihandle.winapi.ntdll.NtdllDLL;
-import v2.org.analysis.apihandle.winapi.structures.WinNTn.PROCESS_BASIC_INFORMATION;
-import v2.org.analysis.apihandle.winapi.structures.WinNTn.UNICODE_STRING;
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves information about the specified process.
@@ -105,19 +102,15 @@ public class NtQueryInformationProcess extends NtdllAPI {
 					ProcessInformation.InheritedFromUniqueProcessId.setValue(explorerPID.longValue());
 				}
 
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
-						ProcessInformation.ExitStatus.longValue()));
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(
+				memory.setDoubleWordMemoryValue(t3, new LongValue(ProcessInformation.ExitStatus.longValue()));
+				memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(
 				// Pointer.nativeValue(ProcessInformation.PebBaseAddress)
 						0));
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(
-						ProcessInformation.AffinityMask.longValue()));
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(
-						ProcessInformation.BasePriority.longValue()));
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(
-						ProcessInformation.UniqueProcessId.longValue()));
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3 += 4), new LongValue(
-						ProcessInformation.InheritedFromUniqueProcessId.longValue()));
+				memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(ProcessInformation.AffinityMask.longValue()));
+				memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(ProcessInformation.BasePriority.longValue()));
+				memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(ProcessInformation.UniqueProcessId.longValue()));
+				memory.setDoubleWordMemoryValue(t3 += 4,
+						new LongValue(ProcessInformation.InheritedFromUniqueProcessId.longValue()));
 			}
 			break;
 		}
@@ -131,8 +124,7 @@ public class NtQueryInformationProcess extends NtdllAPI {
 					ProcessInformation, ProcessInformationLength, ReturnLength);
 
 			if (ProcessInformation != null) {
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
-						ProcessInformation.getValue().longValue()));
+				memory.setDoubleWordMemoryValue(t3, new LongValue(ProcessInformation.getValue().longValue()));
 			}
 		}
 		case 27: {
@@ -141,11 +133,9 @@ public class NtQueryInformationProcess extends NtdllAPI {
 					ProcessInformation, ProcessInformationLength, ReturnLength);
 
 			if (ProcessInformation != null) {
-				memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT16, t3), new LongValue(
-						ProcessInformation.Length.longValue()));
-				memory.setWordMemoryValue(new X86MemoryOperand(DataType.INT16, t3 += 2), new LongValue(
-						ProcessInformation.MaximumLength.longValue()));
-				memory.setText(new X86MemoryOperand(DataType.INT32, t3 += 2), ProcessInformation.Buffer.toString());
+				memory.setWordMemoryValue(t3, new LongValue(ProcessInformation.Length.longValue()));
+				memory.setWordMemoryValue(t3 += 2, new LongValue(ProcessInformation.MaximumLength.longValue()));
+				memory.setText(this, t3 += 2, ProcessInformation.Buffer.toString());
 			}
 		}
 		case 29:
@@ -155,8 +145,7 @@ public class NtQueryInformationProcess extends NtdllAPI {
 					ProcessInformation, ProcessInformationLength, ReturnLength);
 
 			if (ProcessInformation != null) {
-				memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3), new LongValue(
-						ProcessInformation.getValue().longValue()));
+				memory.setDoubleWordMemoryValue(t3, new LongValue(ProcessInformation.getValue().longValue()));
 			}
 		}
 		}
@@ -164,9 +153,9 @@ public class NtQueryInformationProcess extends NtdllAPI {
 		System.out.println("Return value:" + ret);
 		register.mov("eax", new LongValue(ret));
 
-		if (ReturnLength != null)
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(ReturnLength
-					.getValue().longValue()));
+		if (ReturnLength != null) {
+			memory.setDoubleWordMemoryValue(t5, new LongValue(ReturnLength.getValue().longValue()));
+		}
 
 	}
 

@@ -124,7 +124,7 @@ public class fopen extends MSVCRTAPI {
 
 			long ptr = Pointer.nativeValue(ret.getPointer());
 			if (ret._ptr != null && Pointer.nativeValue(ret._ptr) != 0L) {
-				memory.setText(Pointer.nativeValue(ret._ptr), ret._ptr.getString(0));
+				memory.setText(this, Pointer.nativeValue(ret._ptr), ret._ptr.getString(0));
 			}
 			ptr += 4;
 
@@ -132,7 +132,7 @@ public class fopen extends MSVCRTAPI {
 			ptr += 4;
 
 			if (ret._base != null && Pointer.nativeValue(ret._base) != 0L) {
-				memory.setText(Pointer.nativeValue(ret._base), ret._base.getString(0));
+				memory.setText(this, Pointer.nativeValue(ret._base), ret._base.getString(0));
 			}
 			ptr += 4;
 
@@ -149,7 +149,7 @@ public class fopen extends MSVCRTAPI {
 			ptr += 4;
 
 			if (ret._tmpfname != null && Pointer.nativeValue(ret._tmpfname) != 0L) {
-				memory.setText(Pointer.nativeValue(ret._tmpfname), ret._tmpfname.getString(0));
+				memory.setText(this, Pointer.nativeValue(ret._tmpfname), ret._tmpfname.getString(0));
 			}
 
 			register.mov("eax", new LongValue(ptr));

@@ -59,13 +59,13 @@ public class GetVolumeInformation extends Kernel32API {
 		if (t2 != 0) {
 			String volumeNameBuffer = Convert.reduceText(lpVolumeNameBuffer);
 			System.out.println(String.format("lpVolumeNameBuffer: %s", volumeNameBuffer));
-			memory.setText(t2, volumeNameBuffer);
+			memory.setText(this, t2, volumeNameBuffer);
 		}
 
 		if (t7 != 0) {
 			String fileSystemNameBuffer = Convert.reduceText(lpFileSystemNameBuffer);
 			System.out.println(String.format("lpFileSystemNameBuffer: %s", fileSystemNameBuffer));
-			memory.setText(t7, fileSystemNameBuffer);
+			memory.setText(this, t7, fileSystemNameBuffer);
 		}
 
 		if (t4 != 0) {

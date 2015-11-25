@@ -8,22 +8,10 @@
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.DWORD;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * The GetLogicalDriveStrings function fills a buffer with strings that specify
@@ -68,7 +56,7 @@ public class GetLogicalDriveStrings extends Kernel32API {
 		DWORD ret = Kernel32.INSTANCE.GetLogicalDriveStrings(nBufferLength, lpBuffer);
 
 		String logicalDriveStrings = new String(lpBuffer);
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), logicalDriveStrings, ret.longValue());
+		memory.setText(this, t2, logicalDriveStrings, ret.intValue());
 		System.out.println("Logical Drive Strings:" + logicalDriveStrings);
 		register.mov("eax", new LongValue(ret.longValue()));
 	}

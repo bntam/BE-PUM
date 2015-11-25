@@ -42,7 +42,7 @@ public class CharNext extends User32API {
 
 		System.out.println(new String(lpsz));
 
-		register.mov("eax", new LongValue((lpsz.length == 0) ? x : (x + 1)));
+		register.mov("eax", new LongValue((lpsz.length == 0) ? x : (x + (this.is64bit() ? 2 : 1))));
 	}
 
 }

@@ -3,15 +3,12 @@ package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.platform.win32.WinDef.UINT;
-
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.platform.win32.WinDef.UINT;
 
 /**
  * Read block of data from stream
@@ -79,19 +76,22 @@ public class fread extends MSVCRTAPI {
 			// int _bufsiz;
 			// char *_tmpfname;
 			stream._ptr = memory.getText(this, t4);
-			if (stream._ptr.length() == 0)
+			if (stream._ptr.length() == 0) {
 				stream._ptr = null;
+			}
 			stream._cnt = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 			stream._base = memory.getText(this, t4 += 4);
-			if (stream._base.length() == 0)
+			if (stream._base.length() == 0) {
 				stream._base = null;
+			}
 			stream._flag = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 			stream._file = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 			stream._charbuf = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 			stream._bufsiz = ((int) ((LongValue) memory.getDoubleWordMemoryValue(t4 += 4)).getValue());
 			stream._tmpfname = memory.getText(this, t4 += 4);
-			if (stream._tmpfname.length() == 0)
+			if (stream._tmpfname.length() == 0) {
 				stream._tmpfname = null;
+			}
 		}
 
 		UINT ret = MSVCRTDLL.INSTANCE.fread(ptr, size, count, stream);
@@ -108,42 +108,41 @@ public class fread extends MSVCRTAPI {
 		if (stream != null) {
 
 			if (stream._ptr != null) {
-				memory.setText(new X86MemoryOperand(DataType.INT32, t4), stream._ptr);
+				memory.setText(this, t4, stream._ptr);
 			}
 			t4 += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(stream._cnt));
+			memory.setDoubleWordMemoryValue(t4, new LongValue(stream._cnt));
 			t4 += 4;
 
 			if (stream._base != null) {
-				memory.setText(new X86MemoryOperand(DataType.INT32, t4), stream._base);
+				memory.setText(this, t4, stream._base);
 			}
 			t4 += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(stream._flag));
+			memory.setDoubleWordMemoryValue(t4, new LongValue(stream._flag));
 			t4 += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(stream._file));
+			memory.setDoubleWordMemoryValue(t4, new LongValue(stream._file));
 			t4 += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(stream._charbuf));
+			memory.setDoubleWordMemoryValue(t4, new LongValue(stream._charbuf));
 			t4 += 4;
 
-			memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t4), new LongValue(stream._bufsiz));
+			memory.setDoubleWordMemoryValue(t4, new LongValue(stream._bufsiz));
 			t4 += 4;
 
 			if (stream._tmpfname != null) {
-				memory.setText(new X86MemoryOperand(DataType.INT32, t4), stream._tmpfname);
+				memory.setText(this, t4, stream._tmpfname);
 			}
 		}
 
 		if (ptr != null && ptr.capacity() > 0) {
 			int i = 0;
 			for (byte b : ptr.array()) {
-				memory.setByteMemoryValue(new X86MemoryOperand(DataType.INT8, t1 + i), new LongValue(b));
+				memory.setByteMemoryValue(t1 + i, new LongValue(b));
 				i++;
 			}
 		}
 	}
-
 }

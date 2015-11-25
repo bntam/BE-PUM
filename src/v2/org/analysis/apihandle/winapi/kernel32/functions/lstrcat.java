@@ -49,7 +49,7 @@ public class lstrcat extends Kernel32API {
 		dest = dest.concat(src);
 		System.out.println("Out:" + dest);
 
-		memory.setText(destAddr, dest);
+		memory.setText(this, destAddr, dest);
 		// Null-terminated character
 		memory.setByteMemoryValue(destAddr + dest.length(), new LongValue(0));
 		register.mov("eax", new LongValue(1));

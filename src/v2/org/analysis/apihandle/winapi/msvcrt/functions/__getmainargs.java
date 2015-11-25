@@ -8,16 +8,14 @@
 package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
 import org.jakstab.Program;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.IntByReference;
 
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
 
 /**
  * Invokes command-line parsing and copies the arguments to main() back through
@@ -78,20 +76,17 @@ public class __getmainargs extends MSVCRTAPI {
 		register.mov("eax", new LongValue(ret));
 		System.out.println("Return Value: " + ret);
 
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t1), new LongValue(_Argc.getValue()));
+		memory.setDoubleWordMemoryValue(t1, new LongValue(_Argc.getValue()));
 
 		// Store the absolute path instead of the real value
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t2),
-				new LongValue(Pointer.nativeValue(_Argv.getPointer(0))));
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(_Argv.getPointer(0))),
+		memory.setDoubleWordMemoryValue(t2, new LongValue(Pointer.nativeValue(_Argv.getPointer(0))));
+		memory.setDoubleWordMemoryValue(Pointer.nativeValue(_Argv.getPointer(0)),
 				new LongValue(Pointer.nativeValue(_Argv.getPointer(0).getPointer(0))));
-		memory.setDoubleWordMemoryValue(
-				new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(_Argv.getPointer(0).getPointer(0))),
+		memory.setDoubleWordMemoryValue(Pointer.nativeValue(_Argv.getPointer(0).getPointer(0)),
 				new LongValue(Pointer.nativeValue(_Argv.getPointer(0).getPointer(0).getPointer(0))));
 
-		memory.setText(
-				new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(_Argv.getPointer(0).getPointer(0)
-						.getPointer(0))), Program.getProgram().getAbsolutePathFile());
+		memory.setText(this, Pointer.nativeValue(_Argv.getPointer(0).getPointer(0).getPointer(0)), Program.getProgram()
+				.getAbsolutePathFile());
 		System.out.println("_Argv[0]: " + Program.getProgram().getAbsolutePathFile());
 		// for (int i = 0; i < _Argc.getValue(); i++) {
 		// System.out.println(i + ": " + _Argv.getPointer(0).getPointer(i *
@@ -99,23 +94,18 @@ public class __getmainargs extends MSVCRTAPI {
 		// }
 
 		// Pointer to memory space of _Env
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t3),
-				new LongValue(Pointer.nativeValue(_Env.getPointer(0))));
+		memory.setDoubleWordMemoryValue(t3, new LongValue(Pointer.nativeValue(_Env.getPointer(0))));
 
 		int c = 0;
 		while (true) {
 			try {
-				memory.setDoubleWordMemoryValue(
-						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(_Env.getPointer(0))), new LongValue(
-								Pointer.nativeValue(_Env.getPointer(0).getPointer(c * 4))));
-				memory.setDoubleWordMemoryValue(
-						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(_Env.getPointer(0).getPointer(c * 4))),
+				memory.setDoubleWordMemoryValue(Pointer.nativeValue(_Env.getPointer(0)),
+						new LongValue(Pointer.nativeValue(_Env.getPointer(0).getPointer(c * 4))));
+				memory.setDoubleWordMemoryValue(Pointer.nativeValue(_Env.getPointer(0).getPointer(c * 4)),
 						new LongValue(Pointer.nativeValue(_Env.getPointer(0).getPointer(c * 4).getPointer(0))));
 
 				String env = _Env.getPointer(0).getPointer(c * 4).getString(0);
-				memory.setText(
-						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(_Env.getPointer(0).getPointer(c * 4)
-								.getPointer(0))), env);
+				memory.setText(this, Pointer.nativeValue(_Env.getPointer(0).getPointer(c * 4).getPointer(0)), env);
 				System.out.println(String.format("_Env[%d]: %s", c, env));
 				c += 1;
 			} catch (Exception ex) {
@@ -123,6 +113,6 @@ public class __getmainargs extends MSVCRTAPI {
 			}
 		}
 
-		memory.setDoubleWordMemoryValue(new X86MemoryOperand(DataType.INT32, t5), new LongValue(_StartInfo.newmode));
+		memory.setDoubleWordMemoryValue(t5, new LongValue(_StartInfo.newmode));
 	}
 }

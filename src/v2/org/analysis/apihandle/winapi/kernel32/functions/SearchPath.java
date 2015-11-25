@@ -97,7 +97,7 @@ public class SearchPath extends Kernel32API {
 
 		if (lpBuffer != null) {
 			String path = Convert.reduceText(lpBuffer);
-			memory.setText(t5, path);
+			memory.setText(this, t5, path);
 
 			if (t6 != 0L && ret.intValue() > 0 && ret.intValue() <= nBufferLength.intValue()) {
 				int index = path.lastIndexOf('\\');

@@ -48,12 +48,12 @@ public class GetStartupInfo extends Kernel32API {
 
 		pointer = Pointer.nativeValue(lpStartupInfo.lpReserved);
 		memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
-		// memory.setText(new X86MemoryOperand(DataType.INT32, pointer),
+		// memory.setText(this, new X86MemoryOperand(DataType.INT32, pointer),
 		// lpStartupInfo.lpReserved.getWideString(0));
 
 		pointer = Pointer.nativeValue(lpStartupInfo.lpDesktop);
 		memory.setDoubleWordMemoryValue(t += 4, new LongValue(pointer));
-		// memory.setText(new X86MemoryOperand(DataType.INT32, pointer),
+		// memory.setText(this, new X86MemoryOperand(DataType.INT32, pointer),
 		// lpStartupInfo.lpDesktop.toString());
 
 		pointer = Pointer.nativeValue(lpStartupInfo.lpTitle);
@@ -92,7 +92,7 @@ public class GetStartupInfo extends Kernel32API {
 
 		// String sInfo =
 		// "D...Â¨Â¡^.ÃˆÂ¡^.Ã°Â¡^.l).*.dll.Any file (*.*).*.*.Â�...........Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿Ã¿";
-		// memory.setText(new X86MemoryOperand(DataType.INT32, ((LongValue)
+		// memory.setText(this, new X86MemoryOperand(DataType.INT32, ((LongValue)
 		// x1).getValue()), sInfo);
 
 	}

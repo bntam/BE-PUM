@@ -7,16 +7,12 @@
  */
 package v2.org.analysis.apihandle.winapi.user32.functions;
 
+import v2.org.analysis.apihandle.winapi.user32.User32API;
+import v2.org.analysis.value.LongValue;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
-
-import v2.org.analysis.apihandle.winapi.user32.User32API;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * This function retrieves the name of the class to which the specified window
@@ -61,7 +57,7 @@ public class GetClassName extends User32API {
 		int ret = User32.INSTANCE.GetClassName(hWnd, lpClassName, nMaxCount);
 
 		String className = new String(lpClassName);
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), className, ret);
+		memory.setText(this, t2, className, ret);
 
 		register.mov("eax", new LongValue(ret));
 	}

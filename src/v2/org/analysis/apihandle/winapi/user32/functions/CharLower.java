@@ -46,7 +46,7 @@ public class CharLower extends User32API {
 		User32DLL.INSTANCE.CharLower(lpsz);
 		register.mov("eax", new LongValue(x));
 
-		memory.setText(x, new String(lpsz));
+		memory.setText(this, x, new String(lpsz));
 	}
 
 }

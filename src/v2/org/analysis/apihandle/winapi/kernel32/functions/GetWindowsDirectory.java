@@ -9,21 +9,9 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.AbsoluteAddress;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.Instruction;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.WinDef.UINT;
-
-import v2.org.analysis.environment.Environment;
-import v2.org.analysis.environment.Memory;
-import v2.org.analysis.environment.Register;
-import v2.org.analysis.environment.Stack;
-import v2.org.analysis.path.BPState;
-import v2.org.analysis.value.LongValue;
-import v2.org.analysis.value.Value;
 
 /**
  * Retrieves the path of the Windows directory.
@@ -68,7 +56,7 @@ public class GetWindowsDirectory extends Kernel32API {
 		String curDir = new String(lpBuffer);
 		curDir = curDir.substring(0, ret.intValue());
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, t1), curDir, ret.longValue());
+		memory.setText(this, t1, curDir, ret.intValue());
 		System.out.println("Windows Directory:" + curDir);
 		register.mov("eax", new LongValue(ret.longValue()));
 	}

@@ -1,15 +1,16 @@
 package v2.org.analysis.system;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import org.analysis.concrete_execution.ConcreteValueMemoryOperand;
 import org.analysis.symbolic_execution.SymbolValueMemoryOperand;
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.DataType;
 import org.jakstab.asm.x86.X86MemoryOperand;
-import v2.org.analysis.environment.Memory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
+import v2.org.analysis.environment.Memory;
 
 /**
  * This class defines the management of files
@@ -73,8 +74,9 @@ public class FileHandle {
 	public long getFileAttribute(String fName) {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
-			if (f.getFileName().equals(fName))
+			if (f.getFileName().equals(fName)) {
 				return f.getAttribute();
+			}
 		}
 
 		return 4294967295l;
@@ -178,8 +180,9 @@ public class FileHandle {
 		File s = getFile(src);
 		File d = getFile(dest);
 
-		if (s == null)
+		if (s == null) {
 			return 0;
+		}
 		if (d == null) {
 			d = new File(dest, s.getAccess(), s.getShareMode(), s.getpSecurity(), s.getMode(), s.getAttribute(),
 					s.gethTemplateFile(), 0);
@@ -237,8 +240,9 @@ public class FileHandle {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
 			// String ret = "";
-			if (f.getFileHandle() == t1)
+			if (f.getFileHandle() == t1) {
 				return f.getContent(t3, t4);
+			}
 		}
 
 		return null;
@@ -305,8 +309,9 @@ public class FileHandle {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
 			// String ret = "";
-			if (f.getFileHandle() == x1)
+			if (f.getFileHandle() == x1) {
 				return f.getContent(x2, x3, x4);
+			}
 		}
 
 		return null;
@@ -374,8 +379,9 @@ public class FileHandle {
 	public boolean containFileMappingHandle(long x) {
 		// TODO Auto-generated method stub
 		for (File f : fList) {
-			if (f != null && f.getMapView() != null && f.getMapView().getMapViewHandle() == x)
+			if (f != null && f.getMapView() != null && f.getMapView().getMapViewHandle() == x) {
 				return true;
+			}
 		}
 
 		return false;
@@ -386,45 +392,17 @@ public class FileHandle {
 		return 1;
 	}
 
-	public long findFirstFile(String search, Memory memory, long t2) {
-		// TODO Auto-generated method stub
-		long sH = 0;
-		for (File f : fList) {
-			if (f.getFileName().equals(search)) {
-				sH = Math.round(Math.random() * Math.pow(10, 6));
-				f.setSearchHandle(sH);
-				String t = "...Dz����Dz����s./'��............../.." + f.getFileName();
-				memory.setText(new X86MemoryOperand(DataType.INT32, t2), t);
-
-				return sH;
-			}
-		}
-
-		sH = Math.round(Math.random() * Math.pow(10, 6));
-		File f = new File();
-		final String re = Pattern.quote("*");
-		// expression = expression.replaceFirst(re, "");
-		String fileName = search.replaceAll(re, "demo");
-		f.setFileHandle(Math.round(Math.random() * Math.pow(10, 6)));
-		f.setSearchHandle(sH);
-		f.setFileName(fileName);
-		f.readFile();
-		fList.add(f);
-		String t = "...Dz����Dz����s./'��............../.." + fileName;
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), t);
-
-		return sH;
-	}
-
 	public boolean isInsideFile(AbsoluteAddress addr) {
 		// TODO Auto-generated method stub
-		if (addr.getValue() < this.baseAddress)
+		if (addr.getValue() < this.baseAddress) {
 			return false;
+		}
 
 		for (File f : fList) {
 			if (f.getStatus()) {
-				if (f.getFileImage().getLength() > (addr.getValue() - f.getFileImage().getBaseAddress() - this.baseAddress))
+				if (f.getFileImage().getLength() > (addr.getValue() - f.getFileImage().getBaseAddress() - this.baseAddress)) {
 					return true;
+				}
 			}
 		}
 

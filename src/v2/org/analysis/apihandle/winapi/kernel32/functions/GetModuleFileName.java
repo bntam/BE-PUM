@@ -9,19 +9,16 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import java.io.File;
 
+import org.jakstab.Program;
+
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.Program;
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves the fully qualified path for the file that contains the specified
@@ -81,26 +78,26 @@ public class GetModuleFileName extends Kernel32API {
 			ret = Kernel32DLL.INSTANCE.GetModuleFileName(module, Filename, new DWORD(t3));
 			output = new String(Filename, 0, ret.intValue());
 		}
-		
+
 		String jre_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator
 				+ "java";
 		String jdk_location = System.getProperties().getProperty("java.home") + File.separator + "java";
 		if (jdk_location.contains("jre")) {
 			jdk_location = jdk_location.replace("jre", "bin");
 		}
-		
+
 		if (output.startsWith(jre_location) || output.startsWith(jdk_location)) {
 			output = Program.getProgram().getAbsolutePathFile();
 			ret = new DWORD(output.length());
 			Kernel32.INSTANCE.SetLastError(0);
 		}
-		
+
 		System.out.println("Filename:" + output + " \r\nReturn: " + ret);
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), output);
+		memory.setText(this, t2, output);
 		// Null-terminated string
 		memory.setByteMemoryValue(t2 + ret.longValue(), new LongValue(0));
-		
+
 		register.mov("eax", new LongValue(ret.longValue()));
 	}
 

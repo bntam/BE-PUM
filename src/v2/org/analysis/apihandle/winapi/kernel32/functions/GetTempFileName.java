@@ -82,7 +82,7 @@ public class GetTempFileName extends Kernel32API {
 			tempFileName = Storage.getOriginalPath(tempFileName);
 		}
 
-		memory.setText(t4, tempFileName);
+		memory.setText(this, t4, tempFileName);
 		// Set all tail null character array
 		for (int i = tempFileName.length(); i < 260; i++) {
 			memory.setByteMemoryValue(t4 + i, new LongValue(0));

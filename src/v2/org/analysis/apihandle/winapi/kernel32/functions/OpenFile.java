@@ -66,6 +66,6 @@ public class OpenFile extends Kernel32API {
 				new LongValue(lpReOpenBuff.Reserved1 == null ? 0 : lpReOpenBuff.Reserved1.longValue()));
 		memory.setWordMemoryValue(t2 += 2,
 				new LongValue(lpReOpenBuff.Reserved2 == null ? 0 : lpReOpenBuff.Reserved2.longValue()));
-		memory.setText(t2 += 2, new String(lpReOpenBuff.szPathName));
+		memory.setText(this, t2 += 2, new String(lpReOpenBuff.szPathName));
 	}
 }

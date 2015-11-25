@@ -7,16 +7,13 @@
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.platform.win32.WinDef.ATOM;
-import com.sun.jna.platform.win32.WinDef.UINT;
-
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.platform.win32.WinDef.ATOM;
+import com.sun.jna.platform.win32.WinDef.UINT;
 
 /**
  * Retrieves a copy of the character string associated with the specified global
@@ -62,7 +59,7 @@ public class GlobalGetAtomName extends Kernel32API {
 		System.out.println("Return value:" + ret.intValue());
 		register.mov("eax", new LongValue(ret.intValue()));
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), Convert.reduceText(lpBuffer));
+		memory.setText(this, t2, Convert.reduceText(lpBuffer));
 	}
 
 }

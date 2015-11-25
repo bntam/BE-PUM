@@ -7,9 +7,6 @@
  */
 package v2.org.analysis.apihandle.winapi.msvcrt.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTAPI;
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
@@ -38,23 +35,20 @@ public class __p___initenv extends MSVCRTAPI {
 		if (Pointer.nativeValue(ret.getPointer(0)) == 0L) {
 			com.sun.jna.Memory _Env = new com.sun.jna.Memory(4);
 
-			MSVCRTDLL.INSTANCE.__getmainargs(new IntByReference(), new com.sun.jna.Memory(4), _Env, 0, new _startupinfo());
+			MSVCRTDLL.INSTANCE.__getmainargs(new IntByReference(), new com.sun.jna.Memory(4), _Env, 0,
+					new _startupinfo());
 			ret = _Env;
 		}
 
 		while (true) {
 			try {
-				memory.setDoubleWordMemoryValue(
-						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret.getPointer(0))), new LongValue(
-								Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4))));
-				memory.setDoubleWordMemoryValue(
-						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4))),
+				memory.setDoubleWordMemoryValue(Pointer.nativeValue(ret.getPointer(0)),
+						new LongValue(Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4))));
+				memory.setDoubleWordMemoryValue(Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4)),
 						new LongValue(Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4).getPointer(0))));
 
 				String env = ret.getPointer(0).getPointer(c * 4).getString(0);
-				memory.setText(
-						new X86MemoryOperand(DataType.INT32, Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4)
-								.getPointer(0))), env);
+				memory.setText(this, Pointer.nativeValue(ret.getPointer(0).getPointer(c * 4).getPointer(0)), env);
 				System.out.println(String.format("ret[%d]: %s", c, env));
 				c += 1;
 			} catch (Exception ex) {

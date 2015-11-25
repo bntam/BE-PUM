@@ -55,7 +55,7 @@ public class GetShortPathName extends Kernel32API {
 		int ret = Kernel32.INSTANCE.GetShortPathName(lpszLongPath, lpdzShortPath, cchBuffer);
 
 		String shortPathName = new String(lpdzShortPath);
-		memory.setText(t2, shortPathName, ret);
+		memory.setText(this, t2, shortPathName, ret);
 
 		register.mov("eax", new LongValue(ret));
 	}

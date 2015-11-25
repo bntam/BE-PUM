@@ -79,9 +79,9 @@ public class GetClassInfoEx extends User32API {
 		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(Pointer.nativeValue(lpwcx.hCursor.getPointer())));
 		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(Pointer.nativeValue(lpwcx.hbrBackground.getPointer())));
 		long pointer = ((LongValue) memory.getDoubleWordMemoryValue(t3 += 4)).getValue();
-		memory.setText(pointer, lpwcx.lpszMenuName);
+		memory.setText(this, pointer, lpwcx.lpszMenuName);
 		pointer = ((LongValue) memory.getDoubleWordMemoryValue(t3 += 4)).getValue();
-		memory.setText(pointer, lpwcx.lpszClassName.toString());
+		memory.setText(this, pointer, lpwcx.lpszClassName.toString());
 		memory.setDoubleWordMemoryValue(t3 += 4, new LongValue(Pointer.nativeValue(lpwcx.hIconSm.getPointer())));
 	}
 

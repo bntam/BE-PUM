@@ -59,7 +59,7 @@ public class GetEnvironmentVariable extends Kernel32API {
 		int ret = Kernel32.INSTANCE.GetEnvironmentVariable(lpName, lpBuffer, (int) t3);
 
 		String variable = new String(lpBuffer);
-		memory.setText(t2, variable, variable.length());
+		memory.setText(this, t2, variable, variable.length());
 
 		register.mov("eax", new LongValue(ret));
 	}

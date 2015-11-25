@@ -52,6 +52,6 @@ public class _itow extends MSVCRTAPI {
 		register.mov("eax", new LongValue(t2));
 		System.out.println("Return Value: " + t2);
 		
-		memory.setText(t2, ret.toString());
+		memory.setText(this, t2, ret.toString());
 	}
 }

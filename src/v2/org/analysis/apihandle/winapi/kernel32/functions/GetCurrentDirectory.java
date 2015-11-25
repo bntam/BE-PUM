@@ -9,13 +9,9 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.WinDef.DWORD;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves the current directory for the current process.
@@ -57,7 +53,7 @@ public class GetCurrentDirectory extends Kernel32API {
 
 		String curDir = new String(lpBuffer);
 		curDir = curDir.substring(0, ret.intValue());
-		memory.setText(new X86MemoryOperand(DataType.INT32, this.params.get(1)), curDir, curDir.length());
+		memory.setText(this, this.params.get(1), curDir, curDir.length());
 		System.out.println("Current Directory:" + curDir);
 		register.mov("eax", new LongValue(ret.longValue()));
 	}

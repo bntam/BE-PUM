@@ -84,7 +84,7 @@ public class MultiByteToWideChar extends Kernel32API {
 		register.mov("eax", new LongValue(ret));
 
 		if (lpWideCharStr != null) {
-			memory.setText(t5, new String(lpWideCharStr));
+			memory.setText(this, t5, new String(lpWideCharStr));
 		}
 	}
 

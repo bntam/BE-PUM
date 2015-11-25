@@ -97,7 +97,7 @@ public class GetDateFormat extends Kernel32API {
 		register.mov("eax", new LongValue(ret));
 
 		if (t5 != 0L && cchDate != 0) {
-			memory.setText(t5, new String(lpDateStr), ret);
+			memory.setText(this, t5, new String(lpDateStr), ret);
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class CharUpperBuff extends User32API {
 
 		register.mov("eax", new LongValue(ret.longValue()));
 
-		memory.setText(t1, new String(lpsz));
+		memory.setText(this, t1, new String(lpsz));
 	}
 
 }

@@ -9,13 +9,9 @@ package v2.org.analysis.apihandle.winapi.kernel32.functions;
 
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
-
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
+import v2.org.analysis.value.LongValue;
 
 import com.sun.jna.platform.win32.WinDef.UINT;
-
-import v2.org.analysis.value.LongValue;
 
 /**
  * Retrieves the path of the system directory. The system directory contains
@@ -61,7 +57,7 @@ public class GetSystemDirectory extends Kernel32API {
 		String curDir = new String(lpBuffer);
 		curDir = curDir.substring(0, ret.intValue());
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, t1), curDir, ret.longValue());
+		memory.setText(this, t1, curDir, ret.intValue());
 		System.out.println("System Directory:" + curDir);
 		register.mov("eax", new LongValue(ret.longValue()));
 	}

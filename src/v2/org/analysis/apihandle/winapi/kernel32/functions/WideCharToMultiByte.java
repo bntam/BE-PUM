@@ -110,7 +110,7 @@ public class WideCharToMultiByte extends Kernel32API {
 		register.mov("eax", new LongValue(ret));
 
 		if (lpMultiByteStr != null) {
-			memory.setText(t5, new String(lpMultiByteStr));
+			memory.setText(this, t5, new String(lpMultiByteStr));
 		}
 		if (lpUsedDefaultChar != null) {
 			memory.setDoubleWordMemoryValue(t8, new LongValue(lpUsedDefaultChar.getValue().longValue()));

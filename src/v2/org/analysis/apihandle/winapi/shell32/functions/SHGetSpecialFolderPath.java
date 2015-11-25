@@ -7,14 +7,11 @@
  */
 package v2.org.analysis.apihandle.winapi.shell32.functions;
 
-import org.jakstab.asm.DataType;
-import org.jakstab.asm.x86.X86MemoryOperand;
-
-import com.sun.jna.platform.win32.Shell32;
-
 import v2.org.analysis.apihandle.winapi.shell32.Shell32API;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.value.LongValue;
+
+import com.sun.jna.platform.win32.Shell32;
 
 /**
  * Retrieves the path of a special folder, identified by its CSIDL.
@@ -65,7 +62,7 @@ public class SHGetSpecialFolderPath extends Shell32API {
 
 		String reducedPath = Convert.reduceText(path);
 
-		memory.setText(new X86MemoryOperand(DataType.INT32, t2), reducedPath);
+		memory.setText(this, t2, reducedPath);
 	}
 
 }

@@ -52,7 +52,7 @@ public class lstrcpyn extends Kernel32API {
 		System.out.println("Destination String:" + dest + ", Source String:" + src);
 
 		WString ret = Kernel32DLL.INSTANCE.lstrcpyn(new WString(dest), new WString(src), n);
-		memory.setText(destAddr, ret.toString());
+		memory.setText(this, destAddr, ret.toString());
 		register.mov("eax", new LongValue(1));
 	}
 

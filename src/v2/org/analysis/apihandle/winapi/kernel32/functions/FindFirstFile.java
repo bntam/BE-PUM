@@ -74,10 +74,10 @@ public class FindFirstFile extends Kernel32API {
 		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved0.longValue()));
 		memory.setDoubleWordMemoryValue(pFind += 4, new LongValue(lpFindFileData.dwReserved1.longValue()));
 
-		memory.setText(pFind += 4, new String(lpFindFileData.cFileName));
+		memory.setText(this, pFind += 4, new String(lpFindFileData.cFileName));
 		String t = new String(lpFindFileData.cFileName);
 		t = Convert.reduceText(t);
-		memory.setText(pFind += (2 * t.length()), new String(lpFindFileData.cAlternateFileName));
+		memory.setText(this, pFind += (2 * t.length()), new String(lpFindFileData.cAlternateFileName));
 
 		register.setRegisterValue("edx", new LongValue(0));
 	}
