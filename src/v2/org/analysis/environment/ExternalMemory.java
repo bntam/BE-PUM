@@ -5,6 +5,7 @@ import org.jakstab.Program;
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
 import v2.org.analysis.log.BPLogger;
+import v2.org.analysis.path.BPState;
 import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.LongValue;
 
@@ -40,7 +41,9 @@ public class ExternalMemory {
 	public synchronized static ExternalMemoryReturnData getByte(long address) {
 		if (isFirst) {
 			isFirst = false;
-			BPLogger.reportLogger.info(Program.getProgram().getAbsolutePathFile());
+			if (Program.getProgram() != null) {
+				BPLogger.reportLogger.info(Program.getProgram().getAbsolutePathFile());
+			}
 		}
 
 		ExternalMemoryReturnData ret = new ExternalMemoryReturnData();
@@ -60,13 +63,18 @@ public class ExternalMemory {
 		} catch (InterruptedException e) {
 			BPLogger.reportLogger.error(String.format("JNA Pointer InterruptedException:%d", address), e);
 		}
-
+		
+		BPState curState = X86TransitionRule.currentState;
 		if (!ret.isValidAddress) {
-			BPLogger.reportLogger.warn(String.format("INVALID - Inst:%s - Address:%d", X86TransitionRule.currentState
-					.getLocation().toString(), ret.address), new Exception());
+			if (curState != null && curState.getLocation() != null) {
+				BPLogger.reportLogger.warn(String.format("INVALID - Inst:%s - Address:%d", X86TransitionRule.currentState
+						.getLocation().toString(), ret.address), new Exception());
+			}
 		} else {
-			BPLogger.reportLogger.info(String.format("VALID - Inst:%s - Address:%d, VALUE:%d",
-					X86TransitionRule.currentState.getLocation().toString(), ret.address, ret.value.getValue()));
+			if (curState != null && curState.getLocation() != null) {
+				BPLogger.reportLogger.info(String.format("VALID - Inst:%s - Address:%d, VALUE:%d",
+						X86TransitionRule.currentState.getLocation().toString(), ret.address, ret.value.getValue()));
+			}
 		}
 
 		return ret;
