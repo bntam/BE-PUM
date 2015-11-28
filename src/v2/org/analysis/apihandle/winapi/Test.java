@@ -8,13 +8,13 @@ package v2.org.analysis.apihandle.winapi;
 
 import org.apache.log4j.Logger;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinDef.LONG;
-
 import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
 import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
 import v2.org.analysis.apihandle.winapi.structures.WinNTn.RTL_CRITICAL_SECTION;
+
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.WinDef.LONG;
 
 //import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
@@ -403,14 +403,18 @@ public class Test {
 		// }
 		// }
 
-		long pointer = funcOpen();
-		String argsm[] = new String[2];
-		argsm[0] = "\n%s";
-		argsm[1] = "test";
-		FILE fff = new FILE(new Pointer(pointer));
-		int ret = MSVCRTDLL.INSTANCE.fprintf(fff, argsm);
-		System.out.println(ret);
-		MSVCRTDLL.INSTANCE.fclose(new FILE(new Pointer(pointer)));
+//		long pointer = funcOpen();
+//		String argsm[] = new String[2];
+//		argsm[0] = "\n%s";
+//		argsm[1] = "test";
+//		FILE fff = new FILE(new Pointer(pointer));
+//		int ret = MSVCRTDLL.INSTANCE.fprintf(fff, argsm);
+//		System.out.println(ret);
+//		MSVCRTDLL.INSTANCE.fclose(new FILE(new Pointer(pointer)));
+		
+		char[] buf = new char[255];
+		MSVCRTDLL.INSTANCE.sprintf(buf, "%s:%d", "abc", "1");
+		System.out.println(new String(buf));
 		x = 1;
 	}
 	

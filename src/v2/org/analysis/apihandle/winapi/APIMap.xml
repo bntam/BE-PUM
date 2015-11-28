@@ -108,6 +108,7 @@
 		<API funcName="getlogicaldrivestrings" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetLogicalDriveStrings" />
 		<API funcName="getmodulefilename" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetModuleFileName" />
 		<API funcName="getmodulehandle" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetModuleHandle" />
+		<API funcName="getmodulehandleex" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetModuleHandleEx" />
 		<API funcName="getnativesysteminfo" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetNativeSystemInfo" />
 		<API funcName="getoemcp" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetOEMCP" />
 		<API funcName="getpriorityclass" className="v2.org.analysis.apihandle.winapi.kernel32.functions.GetPriorityClass" />
@@ -151,6 +152,7 @@
 		<API funcName="heapsize" className="v2.org.analysis.apihandle.winapi.kernel32.functions.HeapSize" />
 		<API funcName="initializecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSection" />
 		<API funcName="initializecriticalsectionandspincount" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InitializeCriticalSectionAndSpinCount" />
+		<API funcName="interlockeddecrement" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedDecrement" />
 		<API funcName="interlockedexchange" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedExchange" />
 		<API funcName="interlockedincrement" className="v2.org.analysis.apihandle.winapi.kernel32.functions.InterlockedIncrement" />
 		<API funcName="isbadreadptr" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsBadReadPtr" />
@@ -158,6 +160,7 @@
 		<API funcName="isdbcsleadbyte" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDBCSLeadByte" />
 		<API funcName="isdebuggerpresent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsDebuggerPresent" />
 		<API funcName="isprocessorfeaturepresent" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsProcessorFeaturePresent" />
+		<API funcName="isvalidcodepage" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsValidCodePage" />
 		<API funcName="iswow64process" className="v2.org.analysis.apihandle.winapi.kernel32.functions.IsWow64Process" />
 		<API funcName="lcmapstring" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LCMapString" />
 		<API funcName="leavecriticalsection" className="v2.org.analysis.apihandle.winapi.kernel32.functions.LeaveCriticalSection" />
@@ -253,6 +256,7 @@
 	</DLL>
 	<DLL name="msvcrt">
 		<API funcName="atexit" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.atexit" />
+		<API funcName="calloc" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.calloc" />
 		<API funcName="fclose" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fclose" />
 		<API funcName="fopen" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fopen" />
 		<API funcName="fprintf" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.fprintf" />
@@ -263,6 +267,7 @@
 		<API funcName="is_wctype" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.is_wctype" />
 		<API funcName="malloc" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.malloc" />
 		<API funcName="memcpy" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memcpy" />
+		<API funcName="memmove" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memmove" />
 		<API funcName="memset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.memset" />
 		<API funcName="remove" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.remove" />
 		<API funcName="srand" className="v2.org.analysis.apihandle.winapi.msvcrt.functions.srand" />

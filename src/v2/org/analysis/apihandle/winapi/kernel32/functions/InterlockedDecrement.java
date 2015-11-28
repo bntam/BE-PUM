@@ -1,8 +1,8 @@
 /**
  * Project: BE-PUMv2
  * Package name: v2.org.analysis.apihandle.winapi.kernel32.functions
- * File name: InterlockedIncrement.java
- * Created date: Sep 17, 2015
+ * File name: InterlockedDecrement.java
+ * Created date: Nov 28, 2015
  * Description:
  */
 package v2.org.analysis.apihandle.winapi.kernel32.functions;
@@ -11,21 +11,21 @@ import v2.org.analysis.apihandle.winapi.kernel32.Kernel32API;
 import v2.org.analysis.value.LongValue;
 
 /**
- * Increments (increases by one) the value of the specified 32-bit variable as
+ * Decrements (decreases by one) the value of the specified 32-bit variable as
  * an atomic operation. To operate on 64-bit values, use the
- * InterlockedIncrement64 function.
+ * InterlockedDecrement64 function.
  * 
  * @param Addend
- *            A pointer to the variable to be incremented.
+ *            A pointer to the variable to be decremented.
  * 
- * @return The function returns the resulting incremented value.
+ * @return The function returns the resulting decremented value.
  * 
  * @author Yen Nguyen
  *
  */
-public class InterlockedIncrement extends Kernel32API {
+public class InterlockedDecrement extends Kernel32API {
 
-	public InterlockedIncrement() {
+	public InterlockedDecrement() {
 		super();
 		NUM_OF_PARMS = 1;
 	}
@@ -35,13 +35,13 @@ public class InterlockedIncrement extends Kernel32API {
 		long t1 = this.params.get(0);
 
 		LongValue value = (LongValue) memory.getDoubleWordMemoryValue(t1);
-
+		
 		long v = value.getValue();
-		v++;
+		v--;
 		value = new LongValue(v);
-
+		
 		memory.setDoubleWordMemoryValue(t1, value);
-
+		
 		register.mov("eax", value);
 	}
 

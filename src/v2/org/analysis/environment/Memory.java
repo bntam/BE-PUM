@@ -69,9 +69,9 @@ public class Memory {
 
 	private void outputMemory(String ret) {
 		FileProcess fp = new FileProcess("/data/data/memory.txt"); // YenNguyen
-		fp.clearContentFile();		
-//		fp.clearContentFile();
-		fp.appendFile(ret);		
+		fp.clearContentFile();
+		// fp.clearContentFile();
+		fp.appendFile(ret);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class Memory {
 
 		// fp.clearContentFile();
 		// fp.appendFile(ret);
-//		outputMemory(ret);
+		// outputMemory(ret);
 		return ret;
 	}
 
@@ -556,12 +556,14 @@ public class Memory {
 			Value t = (charSize == 1) ? getByteMemoryValue(addr, false) : getWordMemoryValue(addr);
 
 			if (t != null && t instanceof LongValue) {
-				byte t1 = (byte) (((LongValue) t).getValue() & 0xFF);
+				char t1 = (charSize == 1) //
+						? (char) (byte) (((LongValue) t).getValue() & 0xFF) //
+						: (char) (((LongValue) t).getValue() & 0xFFFF);
 				if (t1 == 0 || t1 < 0) { // Over-size
 					break;
 				}
 
-				ret.append((char) t1);
+				ret.append(t1);
 				addr += charSize;
 			} else if (t instanceof SymbolValue) {
 				return ret.toString();
@@ -599,10 +601,12 @@ public class Memory {
 
 		// PHONG: 20150507
 		// ---------------------------------------------------------------------
-//		if (dest.getSegmentRegister() != null && dest.getSegmentRegister().toString() == "%fs"
-//				&& dest.getDisplacement() == 0) {
-//			return new LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
-//		}
+		// if (dest.getSegmentRegister() != null &&
+		// dest.getSegmentRegister().toString() == "%fs"
+		// && dest.getDisplacement() == 0) {
+		// return new
+		// LongValue(env.getSystem().getSEHHandler().getStart().getAddrSEHRecord());
+		// }
 		// --------------------------------------------------------------------------------------
 
 		if (dest.getDataType() == DataType.INT32) {

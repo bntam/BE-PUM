@@ -54,6 +54,7 @@ import com.sun.jna.platform.win32.WinDef.UINT_PTR;
 import com.sun.jna.platform.win32.WinDef.WORD;
 import com.sun.jna.platform.win32.WinNT.ACL;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.platform.win32.WinNT.HANDLEByReference;
 import com.sun.jna.platform.win32.WinNT.LARGE_INTEGER;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APIOptions;
@@ -3896,4 +3897,44 @@ public interface Kernel32DLL extends StdCallLibrary {
 	 */
 	BOOL IsProcessorFeaturePresent(/* _In_ */int ProcessorFeature);
 
+	/**
+	 * Determines if a specified code page is valid.
+	 * 
+	 * @param CodePage
+	 *            Code page identifier for the code page to check.
+	 * 
+	 * @return Returns a nonzero value if the code page is valid, or 0 if the
+	 *         code page is invalid.
+	 */
+	BOOL IsValidCodePage(/* _In_ */UINT CodePage);
+
+	/**
+	 * Retrieves a module handle for the specified module and increments the
+	 * module's reference count unless
+	 * GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT is specified. The module
+	 * must have been loaded by the calling process.
+	 * 
+	 * @param dwFlags
+	 *            This parameter can be zero or one or more of the following
+	 *            values. If the module's reference count is incremented, the
+	 *            caller must use the FreeLibrary function to decrement the
+	 *            reference count when the module handle is no longer needed.
+	 * 
+	 * @param lpModuleName
+	 *            The name of the loaded module (either a .dll or .exe file), or
+	 *            an address in the module (if dwFlags is
+	 *            GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS).
+	 * 
+	 * @param phModule
+	 *            A handle to the specified module. If the function fails, this
+	 *            parameter is NULL.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero. To get extended error
+	 *         information, see GetLastError.
+	 */
+	BOOL GetModuleHandleEx(
+	/* _In_ */int dwFlags,
+	/* _In_opt_ */String lpModuleName,
+	/* _Out_ */HANDLEByReference phModule);
 }

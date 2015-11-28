@@ -2,6 +2,12 @@ package v2.org.analysis.apihandle.winapi.msvcrt;
 
 import java.nio.Buffer;
 
+import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
+import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
+import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.CONTEXT;
+import v2.org.analysis.apihandle.winapi.structures.WinNTn.EXCEPTION_RECORD;
+
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -12,12 +18,6 @@ import com.sun.jna.platform.win32.WinDef.USHORT;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.win32.StdCallLibrary;
-
-import v2.org.analysis.apihandle.winapi.structures.Internal._startupinfo;
-import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
-import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE2;
-import v2.org.analysis.apihandle.winapi.structures.WinNTn.CONTEXT;
-import v2.org.analysis.apihandle.winapi.structures.WinNTn.EXCEPTION_RECORD;
 
 /**
  * 
@@ -728,4 +728,34 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *         returned.
 	 */
 	int fprintf(FILE stream, String... format);
+
+	/**
+	 * Allocate and zero-initialize array
+	 * 
+	 * Allocates a block of memory for an array of num elements, each of them
+	 * size bytes long, and initializes all its bits to zero.
+	 * 
+	 * The effective result is the allocation of a zero-initialized memory block
+	 * of (num*size) bytes.
+	 * 
+	 * If size is zero, the return value depends on the particular library
+	 * implementation (it may or may not be a null pointer), but the returned
+	 * pointer shall not be dereferenced.
+	 * 
+	 * @param num
+	 *            Number of elements to allocate.
+	 * 
+	 * @param size
+	 *            Size of each element.
+	 * 
+	 * @return On success, a pointer to the memory block allocated by the
+	 *         function. The type of this pointer is always void*, which can be
+	 *         cast to the desired type of data pointer in order to be
+	 *         dereferenceable. If the function failed to allocate the requested
+	 *         block of memory, a null pointer is returned.
+	 */
+	Pointer calloc(int num, int size);
+	
+	
+	int sprintf (char[] str, String... format);
 }
