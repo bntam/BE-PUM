@@ -339,10 +339,10 @@ public class PEModule extends AbstractCOFFModule {
 				long expTableRVA = pe.getDataDirectory()[ImageDataDirectory.EXPORT_TABLE_INDEX].VirtualAddress;
 				if (expTableRVA > 0) { // We have an export table
 					logger.debug("-- Reading export table...");
-					buf.seek(getFilePointer(expTableRVA));
+					buf.seek(getFilePointerRVA(expTableRVA));
 					ImageExportDirectory imageExportDirectory = new ImageExportDirectory(buf);
 
-					buf.seek(getFilePointer(imageExportDirectory.AddressOfFunctions));
+					buf.seek(getFilePointerRVA(imageExportDirectory.AddressOfFunctions));
 					// Parse EAT
 					ExportEntry[] tmpEntries = new ExportEntry[(int) imageExportDirectory.NumberOfFunctions];
 					int eatEntries = 0;
@@ -355,15 +355,15 @@ public class PEModule extends AbstractCOFFModule {
 						}
 					}
 
-					long namePtr = getFilePointer(imageExportDirectory.AddressOfNames);
-					long ordPtr = getFilePointer(imageExportDirectory.AddressOfNameOrdinals);
+					long namePtr = getFilePointerRVA(imageExportDirectory.AddressOfNames);
+					long ordPtr = getFilePointerRVA(imageExportDirectory.AddressOfNameOrdinals);
 					for (int i = 0; i < imageExportDirectory.NumberOfNames; i++) {
 						// read next ENT entry
 						buf.seek(namePtr);
 						long rva = buf.readDWORD();
 						namePtr = buf.getCurrent();
 						// read export name
-						buf.seek(getFilePointer(rva));
+						buf.seek(getFilePointerRVA(rva));
 						String expName = buf.readASCII();
 						// read next EOT entry
 						buf.seek(ordPtr);
@@ -396,7 +396,7 @@ public class PEModule extends AbstractCOFFModule {
 		return null;
 	}
 	
-	private long getFilePointer(long rva) {
+	private long getFilePointerRVA(long rva) {
 		// TODO Auto-generated method stub
 		int sct = getSectionNumberByRVA(rva);
 
