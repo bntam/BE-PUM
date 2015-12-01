@@ -93,13 +93,14 @@ public class PEModule extends AbstractCOFFModule {
 		// coff_header.getSizeOfOptionalHeader();
 		long posOptionalHeader = inBuf.getCurrent();
 		pe_header = new PE_Header(inBuf);
+		long alignment = pe_header.getFileAlignment();
 		long posSectionHeader = posOptionalHeader + coff_header.getSizeOfOptionalHeader();
 		// /// Parse Section Headers and sections /////////////////////////
 		// if (sectionPos != tempSectionPos)
 		inBuf.seek(posSectionHeader);
 		section_headers = new SectionHeader[coff_header.getNumberOfSections()];
 		for (int i = 0; i < coff_header.getNumberOfSections(); i++) {
-			section_headers[i] = new SectionHeader(inBuf);
+			section_headers[i] = new SectionHeader(inBuf, alignment);
 		}
 		// if (sectionPos != tempSectionPos)
 		// inBuf.seek(tempSectionPos);
@@ -328,9 +329,10 @@ public class PEModule extends AbstractCOFFModule {
 				// /// Parse Section Headers and sections /////////////////////////
 				// if (sectionPos != tempSectionPos)
 				buf.seek(posSectionHeader);
+				long alignment = pe.getFileAlignment();
 				SectionHeader[] section = new SectionHeader[coff.getNumberOfSections()];
 				for (int i = 0; i < coff.getNumberOfSections(); i++) {
-					section[i] = new SectionHeader(buf);
+					section[i] = new SectionHeader(buf, alignment);
 				}
 				// if (sectionPos != tempSectionPos)
 				// inBuf.seek(tempSectionPos);

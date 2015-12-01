@@ -237,4 +237,9 @@ public class PE_Header {
 		// TODO Auto-generated method stub
 		return SizeOfImage;
 	}
+
+	public long getFileAlignment() {
+		// TODO Auto-generated method stub
+		return FileAlignment;
+	}
 }

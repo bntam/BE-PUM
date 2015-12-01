@@ -111,6 +111,36 @@ public class SectionHeader {
 		// output();
 	}
 
+	public SectionHeader (BinaryInputBuffer in, long align) throws java.io.IOException {
+		// TODO Auto-generated constructor stub
+		startFP = in.getCurrent();
+
+		NameArray = new byte[8];
+		in.read(NameArray);
+
+		StringBuilder nBuilder = new StringBuilder();
+		for (int i = 0; i < 8; i++) {
+			if ((NameArray[i] & 0xFF) > 32 && (NameArray[i] & 0xFF) < 128) {
+				nBuilder.append((char) (NameArray[i] & 0xFF));
+			}
+		}
+		name = nBuilder.toString();
+
+		VirtualSize = in.readDWORD();
+		VirtualAddress = in.readDWORD();
+		SizeOfRawData = in.readDWORD();		
+//		if a section's physical start is lower than file alignment (the lower limit for standard alignment), it is rounded down to 0. 
+//		Thus, it's a legitimate way to map the header.
+		long temp = in.readDWORD();
+		PointerToRawData = temp<align? 0:temp;
+//		PointerToRawData = temp;		
+		PointerToRelocations = in.readDWORD();
+		PointerToLinenumbers = in.readDWORD();
+		NumberOfRelocations = in.readWORD();
+		NumberOfLinenumbers = in.readWORD();
+		Characteristics = in.readDWORD();
+	}
+
 	public boolean isCodeSection() {
 		return (Characteristics & (IMAGE_SCN_MEM_EXECUTE | IMAGE_SCN_CNT_CODE)) > 0;
 	}
@@ -148,5 +178,23 @@ public class SectionHeader {
 		logger.debug("  NumberOfLinenumbers = " + NumberOfLinenumbers);
 		logger.debug("  Characteristics = 0x" + Long.toHexString(Characteristics));
 		logger.debug("}");
+	}
+	
+	@Override
+	public String toString() {
+		String ret = "";
+		ret += "SectionHeader: {";
+		ret += "  Name = '" + getName() + "'";
+		ret += "  VirtualSize = " + "0x" + Long.toHexString(VirtualSize);
+		ret += "  VirtualAddress = 0x" + Long.toHexString(VirtualAddress);
+		ret += "  SizeOfRawData = 0x" + Long.toHexString(SizeOfRawData);
+		ret += "  PointerToRawData = " + "0x" + Long.toHexString(PointerToRawData);
+		ret += "  PointerToRelocations = " + "0x" + Long.toHexString(PointerToRelocations);
+		ret += "  PointerToLinenumbers = " + "0x" + Long.toHexString(PointerToLinenumbers);
+		ret += "  NumberOfRelocations = " + NumberOfRelocations;
+		ret += "  NumberOfLinenumbers = " + NumberOfLinenumbers;
+		ret += "  Characteristics = 0x" + Long.toHexString(Characteristics);
+		ret += "}";
+		return ret;
 	}
 }
