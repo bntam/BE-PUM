@@ -162,6 +162,7 @@ public final class Program {
 	final static String fullResultFileTXT = "data/data/fullResult.txt";
 	final static String packerResultFileTXT = "data/data/packerResult.txt";
 	final static String packerResultCountFileTXT = "data/data/packerResultCount.txt";
+	final static String stopAddFile = "data/data/stopFile.txt";
 	static final int MAX_BYTE_PER_INSTRUCTION = 15;
 	public static final String pathLibrary = "data/lib/win32/";
 
@@ -198,7 +199,7 @@ public final class Program {
 	private StubProvider stubLibrary;
 	private Harness harness;
 	Disassembler disassembler;
-	private FileProcess resultFile, fullResultFile, resultFile_Temp, logFile;
+	private FileProcess resultFile, fullResultFile, resultFile_Temp, logFile, stopFile;
 	private FileProcess packerResultFile, packerResultCountFile;
 	private TargetOS targetOS;
 
@@ -229,6 +230,7 @@ public final class Program {
 		bpCFG = new BPCFG();
 
 		setResultFile(new FileProcess(resultFileTXT));
+		setStopFile(new FileProcess(stopAddFile));
 		setFullResultFile(new FileProcess(fullResultFileTXT));
 		setResultFileTemp(new FileProcess(resultFileTempTXT));
 		
@@ -2241,4 +2243,13 @@ public final class Program {
 		
 		return false;
 	}
+
+	public FileProcess getStopFile() {
+		return stopFile;
+	}
+
+	public void setStopFile(FileProcess stopFile) {
+		this.stopFile = stopFile;
+	}
+
 }

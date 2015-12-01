@@ -67,6 +67,7 @@ public class OTFModelGeneration implements Algorithm {
 		//FileProcess fileState = new FileProcess("data/data/stateValue.txt");
 		//FileProcess bkFile = new FileProcess("data/data/restore.txt");
 		fileName = "out_" + Program.getProgram().getFileName() + "_";
+		int numAddStop = 0;
 		//fileName = "out_themida_";
 
 		//fileState.clearContentFile();
@@ -171,6 +172,17 @@ public class OTFModelGeneration implements Algorithm {
 						program.getDetection().packedByTechniquesFrequency();
 						program.getDetection().updateBackupDetectionState(program, this);
 						program.getDetection().setToLog(program);
+					}					
+					
+					if (inst != null && inst.getName().contains("addb")
+							&& inst.getOperand(0) != null && inst.getOperand(0).toString().contains("eax")
+							&& inst.getOperand(1) != null && inst.getOperand(1).toString().contains("al")) {
+						numAddStop ++;
+					}
+					
+					if (numAddStop > 1) {
+						program.getStopFile().appendFile(program.getFileName());
+						break;				
 					}
 					////////////////////////////////////////////////////
 				}
@@ -578,6 +590,5 @@ public class OTFModelGeneration implements Algorithm {
 	public boolean isSound() {
 		// TODO Auto-generated method stub
 		return true;
-	}
-
+	}	
 }
