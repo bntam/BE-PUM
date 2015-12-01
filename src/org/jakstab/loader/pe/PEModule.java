@@ -339,10 +339,10 @@ public class PEModule extends AbstractCOFFModule {
 				long expTableRVA = pe.getDataDirectory()[ImageDataDirectory.EXPORT_TABLE_INDEX].VirtualAddress;
 				if (expTableRVA > 0) { // We have an export table
 					logger.debug("-- Reading export table...");
-					buf.seek(getFilePointerFromRVA(expTableRVA));
+					buf.seek(getFilePointer(expTableRVA));
 					ImageExportDirectory imageExportDirectory = new ImageExportDirectory(buf);
 
-					buf.seek(getFilePointerFromRVA(imageExportDirectory.AddressOfFunctions));
+					buf.seek(getFilePointer(imageExportDirectory.AddressOfFunctions));
 					// Parse EAT
 					ExportEntry[] tmpEntries = new ExportEntry[(int) imageExportDirectory.NumberOfFunctions];
 					int eatEntries = 0;
@@ -355,15 +355,15 @@ public class PEModule extends AbstractCOFFModule {
 						}
 					}
 
-					long namePtr = getFilePointerFromRVA(imageExportDirectory.AddressOfNames);
-					long ordPtr = getFilePointerFromRVA(imageExportDirectory.AddressOfNameOrdinals);
+					long namePtr = getFilePointer(imageExportDirectory.AddressOfNames);
+					long ordPtr = getFilePointer(imageExportDirectory.AddressOfNameOrdinals);
 					for (int i = 0; i < imageExportDirectory.NumberOfNames; i++) {
 						// read next ENT entry
 						buf.seek(namePtr);
 						long rva = buf.readDWORD();
 						namePtr = buf.getCurrent();
 						// read export name
-						buf.seek(getFilePointerFromRVA(rva));
+						buf.seek(getFilePointer(rva));
 						String expName = buf.readASCII();
 						// read next EOT entry
 						buf.seek(ordPtr);
@@ -396,6 +396,29 @@ public class PEModule extends AbstractCOFFModule {
 		return null;
 	}
 	
+	private long getFilePointer(long rva) {
+		// TODO Auto-generated method stub
+		int sct = getSectionNumberByRVA(rva);
+
+		/*
+		 * if
+		 * (Program.getProgram().getFileName().equals("Flooder.Win32.AngryPing"
+		 * )) return (rva - getSectionHeader(sct).VirtualAddress) +
+		 * getSectionHeader(sct).PointerToRawData;
+		 */
+		if (sct < 0) {
+//			return -1;
+			return rva;
+		}
+
+		if (rva - getSectionHeader(sct).VirtualAddress > getSectionHeader(sct).SizeOfRawData) {
+//			return -1;
+			return rva;
+		}
+		return (rva - getSectionHeader(sct).VirtualAddress) + getSectionHeader(sct).PointerToRawData;
+
+	}
+
 	private long getPEHeaderAddress(BinaryFileInputBuffer inBuf) {
 		try {
 			inBuf.seek(60);
