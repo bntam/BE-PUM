@@ -1,18 +1,24 @@
 package v2.org.analysis.transition_rule;
 
+import java.util.List;
+
 import org.jakstab.asm.Immediate;
 import org.jakstab.asm.Operand;
 import org.jakstab.asm.x86.X86ArithmeticInstruction;
 import org.jakstab.asm.x86.X86MemoryOperand;
+
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
 import v2.org.analysis.environment.Environment;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.system.SEHHandle;
-import v2.org.analysis.value.*;
-
-import java.util.List;
+import v2.org.analysis.value.BooleanValue;
+import v2.org.analysis.value.HybridBooleanValue;
+import v2.org.analysis.value.HybridValue;
+import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.SymbolValue;
+import v2.org.analysis.value.Value;
 
 public class X86ArithmeticInterpreter {
 	public BPState execute(X86ArithmeticInstruction ins, BPPath path, List<BPPath> pathList, X86TransitionRule rule) {
@@ -71,14 +77,15 @@ public class X86ArithmeticInterpreter {
 						long vSRC = ((LongValue) src).getValue();
 						long temp = vAX / vSRC;
 
-						if (temp > 0xFF)
+						if (temp > 0xFF) {
 							return rule.processSEH(path.getCurrentState());
-						else {
+						} else {
 							env.getRegister().setRegisterValue("al", new LongValue(temp));
 							env.getRegister().setRegisterValue("ah", new LongValue(vAX % vSRC));
 						}
-					} else
+					} else {
 						env.getRegister().setRegisterValue("al", result);
+					}
 					break;
 				case 16:
 					ax = env.getRegister().getRegisterValue("ax");
@@ -92,9 +99,9 @@ public class X86ArithmeticInterpreter {
 						long rDX = ((LongValue) dx).getValue();
 						double t = vAX + rDX * Math.pow(2, 16);
 						double temp = t / vSRC;
-						if (temp > 0xFFFF)
+						if (temp > 0xFFFF) {
 							return rule.processSEH(path.getCurrentState());
-						else {
+						} else {
 							env.getRegister().setRegisterValue("ax", new LongValue(temp));
 							env.getRegister().setRegisterValue("dx", new LongValue(t % vSRC));
 						}
@@ -115,9 +122,9 @@ public class X86ArithmeticInterpreter {
 						double t = x1 + x2 * Math.pow(2, 32);
 						double temp = t / y;
 
-						if (temp > 4294967295l)
+						if (temp > 4294967295l) {
 							return rule.processSEH(path.getCurrentState());
-						else {
+						} else {
 							env.getRegister().setRegisterValue("eax", new LongValue(temp));
 							env.getRegister().setRegisterValue("edx", new LongValue(t % y));
 						}
@@ -135,9 +142,10 @@ public class X86ArithmeticInterpreter {
 					if (((LongValue) src).getValue() == 0
 					// &&
 					// curState.getEnvironement().getSystem().getSEHHandler().isSet()
-					)
+					) {
 						// SEH trong day
 						return rule.processSEH(path.getCurrentState());
+					}
 				}
 				switch (opSize) {
 				case 8:
@@ -145,18 +153,21 @@ public class X86ArithmeticInterpreter {
 					result = ax.signedDivFunction(src);
 					// env.getRegister().setRegisterValue("ax", result);
 					if (ax != null && ax instanceof LongValue && src != null && src instanceof LongValue) {
-						long vAX = Convert.convertSignedValue(((LongValue) ax).getValue(), opSize);
-						long vSRC = Convert.convertSignedValue(((LongValue) src).getValue(), opSize);
+//						long vAX = Convert.convertSignedValue(((LongValue) ax).getValue(), opSize);
+						long vAX = ((LongValue) ax).getValue();
+//						long vSRC = Convert.convertSignedValue(((LongValue) src).getValue(), opSize);
+						long vSRC = ((LongValue) src).getValue();
 						long temp = vAX / vSRC;
 
-						if (temp > 127 || temp < -128)
+						if (temp > 127 || temp < -128) {
 							return rule.processSEH(path.getCurrentState());
-						else {
+						} else {
 							env.getRegister().setRegisterValue("al", new LongValue(temp));
 							env.getRegister().setRegisterValue("ah", new LongValue(vAX % vSRC));
 						}
-					} else
+					} else {
 						env.getRegister().setRegisterValue("al", result);
+					}
 					break;
 				case 16:
 					ax = env.getRegister().getRegisterValue("ax");
@@ -166,13 +177,14 @@ public class X86ArithmeticInterpreter {
 					if (ax != null && ax instanceof LongValue && src != null && src instanceof LongValue && dx != null
 							&& dx instanceof LongValue) {
 						long vAX = ((LongValue) ax).getValue();
-						long vSRC = ((LongValue) src).getValue();
+//						long vSRC = ((LongValue) src).getValue();
+						long vSRC = Convert.convertSignedValue(((LongValue) src).getValue(), opSize);
 						long rDX = ((LongValue) dx).getValue();
 						double t = Convert.convertSignedValue((long) (vAX + rDX * Math.pow(2, 16)), 2 * opSize);
 						double temp = t / vSRC;
-						if (temp > 32767 || temp < -32768)
+						if (temp > 32767 || temp < -32768) {
 							return rule.processSEH(path.getCurrentState());
-						else {
+						} else {
 							env.getRegister().setRegisterValue("ax", new LongValue(temp));
 							env.getRegister().setRegisterValue("dx", new LongValue(t % vSRC));
 						}
@@ -187,15 +199,18 @@ public class X86ArithmeticInterpreter {
 
 					if (eax != null && eax instanceof LongValue && src != null && src instanceof LongValue
 							&& edx != null && edx instanceof LongValue) {
-						long x1 = Convert.convertSignedValue(((LongValue) eax).getValue(), opSize);
-						long x2 = Convert.convertSignedValue(((LongValue) edx).getValue(), opSize);
-						long y = ((LongValue) src).getValue();
+//						long x1 = Convert.convertSignedValue(((LongValue) eax).getValue(), opSize);
+						long x1 = ((LongValue) eax).getValue();
+//						long x2 = Convert.convertSignedValue(((LongValue) edx).getValue(), opSize);
+						long x2 = ((LongValue) edx).getValue();
+//						long y = ((LongValue) src).getValue();
+						long y = Convert.convertSignedValue(((LongValue) src).getValue(), opSize);
 						double t = x1 + x2 * Math.pow(2, 32);
 						double temp = t / y;
 
-						if (temp > 2147483647 || temp < -2147483648)
+						if (temp > 2147483647 || temp < -2147483648) {
 							return rule.processSEH(path.getCurrentState());
-						else {
+						} else {
 							env.getRegister().setRegisterValue("eax", new LongValue(temp));
 							env.getRegister().setRegisterValue("edx", new LongValue(t % y));
 						}
@@ -227,7 +242,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -237,9 +252,10 @@ public class X86ArithmeticInterpreter {
 						if (((LongValue) s).getValue() == 0
 						// &&
 						// curState.getEnvironement().getSystem().getSEHHandler().isSet()
-						)
+						) {
 							// SEH trong day
 							return rule.processSEH(path.getCurrentState());
+						}
 					}
 
 					if (d != null && s != null) {
@@ -272,7 +288,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -298,7 +314,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -347,8 +363,9 @@ public class X86ArithmeticInterpreter {
 				Operand dest = ins.getOperand1();
 				Operand src = ins.getOperand2();
 
-				if (dest == null || src == null)
+				if (dest == null || src == null) {
 					return curState;
+				}
 
 				if (dest.getClass().getSimpleName().equals("X86MemoryOperand")) {
 					// X86MemoryOperand t = env.getMemory().evaluateAddress(
@@ -397,7 +414,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -442,7 +459,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -518,7 +535,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -543,7 +560,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -592,7 +609,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -617,7 +634,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -649,10 +666,11 @@ public class X86ArithmeticInterpreter {
 				if (dest.toString().equals(src.toString())) {
 					if (dest.getClass().getSimpleName().equals("X86Register")
 							|| dest.getClass().getSimpleName().equals("X86RegisterPart")
-							|| dest.getClass().getSimpleName().equals("X86SegmentRegister"))
+							|| dest.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						env.getRegister().setRegisterValue(dest.toString(), new LongValue(0));
-					else if (src.getClass().getSimpleName().equals("X86MemoryOperand"))
+					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						env.getMemory().setMemoryValue((X86MemoryOperand) dest, new LongValue(0), ins);
+					}
 					
 					env.getFlag().changeFlagWithSUB(new LongValue(0), new LongValue(0), env, opSize);
 
@@ -665,7 +683,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -694,7 +712,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -749,7 +767,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -774,7 +792,7 @@ public class X86ArithmeticInterpreter {
 							|| src.getClass().getSimpleName().equals("X86SegmentRegister")) {
 						s = env.getRegister().getRegisterValue(src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						s = new LongValue((long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						s = new LongValue(Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins)));
 					} else if (src.getClass().getSimpleName().equals("X86MemoryOperand")) {
 						s = env.getMemory().getMemoryValue((X86MemoryOperand) src, ins);
@@ -802,8 +820,9 @@ public class X86ArithmeticInterpreter {
 				Value s = null;
 				// Error in disassembly by Jakstab when handling Aztec virus at
 				// 0x0040137c
-				if (dest == null)
+				if (dest == null) {
 					break;
+				}
 
 				s = rule.getValueOperand(src, env, ins);
 				d = rule.getValueOperand(dest, env, ins);
@@ -841,8 +860,9 @@ public class X86ArithmeticInterpreter {
 				Value s = null;
 				// Error in disassembly by Jakstab when handling Aztec virus at
 				// 0x0040137c
-				if (dest == null)
+				if (dest == null) {
 					break;
+				}
 
 				s = rule.getValueOperand(src, env, ins);
 				d = rule.getValueOperand(dest, env, ins);
@@ -865,7 +885,7 @@ public class X86ArithmeticInterpreter {
 					} else if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						long y = (long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						long y = Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins));
 						Value x = new LongValue((long) Math.pow(2, y));
 						env.getFlag().changeFlagWithRR(env.getRegister().getRegisterValue(dest.toString()), x, env,
@@ -887,8 +907,9 @@ public class X86ArithmeticInterpreter {
 				Value s = null;
 				// Error in disassembly by Jakstab when handling Aztec virus at
 				// 0x0040137c
-				if (dest == null)
+				if (dest == null) {
 					break;
+				}
 
 				s = rule.getValueOperand(src, env, ins);
 				d = rule.getValueOperand(dest, env, ins);
@@ -911,7 +932,7 @@ public class X86ArithmeticInterpreter {
 					} else if (src.getClass().getSimpleName().equals("X86Register")) {
 						// sv.sub(dest.toString(), src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						long y = (long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						long y = Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins));
 						Value x = new LongValue((long) Math.pow(2, y));
 						env.getFlag().changeFlagWithRR(env.getRegister().getRegisterValue(dest.toString()), x, env,
@@ -933,8 +954,9 @@ public class X86ArithmeticInterpreter {
 				Value s = null;
 				// Error in disassembly by Jakstab when handling Aztec virus at
 				// 0x0040137c
-				if (dest == null)
+				if (dest == null) {
 					break;
+				}
 
 				s = rule.getValueOperand(src, env, ins);
 				d = rule.getValueOperand(dest, env, ins);
@@ -962,7 +984,7 @@ public class X86ArithmeticInterpreter {
 						env.getFlag().changeFlagWithRL(d, s, env, rule.getBitCount(ins));
 						env.getRegister().rl(dest.toString(), src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						long y = (long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						long y = Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins));
 						Value x = new LongValue((long) Math.pow(2, y));
 						env.getFlag().changeFlagWithRL(env.getRegister().getRegisterValue(dest.toString()), x, env,
@@ -984,8 +1006,9 @@ public class X86ArithmeticInterpreter {
 				Value s = null;
 				// Error in disassembly by Jakstab when handling Aztec virus at
 				// 0x0040137c
-				if (dest == null)
+				if (dest == null) {
 					break;
+				}
 
 				s = rule.getValueOperand(src, env, ins);
 				d = rule.getValueOperand(dest, env, ins);
@@ -1013,7 +1036,7 @@ public class X86ArithmeticInterpreter {
 						env.getFlag().changeFlagWithRL(d, s, env, rule.getBitCount(ins));
 						env.getRegister().rl(dest.toString(), src.toString());
 					} else if (src.getClass().getSimpleName().equals("Immediate")) {
-						long y = (long) Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
+						long y = Convert.convetUnsignedValue(((Immediate) src).getNumber().intValue(),
 								rule.getBitCount(ins));
 						Value x = new LongValue((long) Math.pow(2, y));
 						env.getFlag().changeFlagWithRL(env.getRegister().getRegisterValue(dest.toString()), x, env,
@@ -1035,8 +1058,9 @@ public class X86ArithmeticInterpreter {
 				Value s = null;
 				// Error in disassembly by Jakstab when handling Aztec virus at
 				// 0x0040137c
-				if (dest == null)
+				if (dest == null) {
 					break;
+				}
 
 				s = rule.getValueOperand(src, env, ins);
 				d = rule.getValueOperand(dest, env, ins);
@@ -1131,8 +1155,9 @@ public class X86ArithmeticInterpreter {
 								long eaxVal = (long) (t % Math.pow(2, 32));
 								long edxVal = (long) (t / Math.pow(2, 32));
 
-								if (eaxVal < 0 && edxVal == 0)
+								if (eaxVal < 0 && edxVal == 0) {
 									edxVal = 4294967295l;
+								}
 								env.getRegister().setRegisterValue("eax", new LongValue(eaxVal));
 								env.getRegister().setRegisterValue("edx", new LongValue(edxVal));
 								if (edxVal == 0 || edxVal == 4294967295l) {
@@ -1359,8 +1384,9 @@ public class X86ArithmeticInterpreter {
 				Value s = null;
 				// Error in disassembly by Jakstab when handling Aztec virus at
 				// 0x0040137c
-				if (dest == null)
+				if (dest == null) {
 					break;
+				}
 
 				s = rule.getValueOperand(src, env, ins);
 				d = rule.getValueOperand(dest, env, ins);
@@ -1596,7 +1622,7 @@ public class X86ArithmeticInterpreter {
 
 		int size = rule.getBitCount(inst);
 		dest = Convert.convetUnsignedValue(dest, size);
-		long tempCount = (long) count & 0x1F;
+		long tempCount = count & 0x1F;
 		long tempDest = dest;
 		byte bits = (byte) rule.getBitCount(inst);
 		while (tempCount != 0) {
@@ -1631,10 +1657,11 @@ public class X86ArithmeticInterpreter {
 				Value cFlag = env.getFlag().getCFlag();
 				Value oFlag = new HybridBooleanValue(temp, "xor", cFlag);
 				env.getFlag().setOFlag(oFlag);
-			} else if (inst.getName().startsWith("sar"))
+			} else if (inst.getName().startsWith("sar")) {
 				env.getFlag().setOFlag(new BooleanValue(false));
-			else
+			} else {
 				env.getFlag().setOFlag(new BooleanValue(BitVector.getMSB(tempDest, bits)));
+			}
 
 		} else {
 			// OF undefined
