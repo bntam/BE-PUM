@@ -28,12 +28,16 @@
 		<API funcName="createcompatibledc" className="v2.org.analysis.apihandle.winapi.gdi32.functions.CreateCompatibleDC" />
 		<API funcName="createpalette" className="v2.org.analysis.apihandle.winapi.gdi32.functions.CreatePalette" />
 		<API funcName="deleteobject" className="v2.org.analysis.apihandle.winapi.gdi32.functions.DeleteObject" />
+		<API funcName="dptolp" className="v2.org.analysis.apihandle.winapi.gdi32.functions.DPtoLP" />
 		<API funcName="gdiflush" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GdiFlush" />
 		<API funcName="gdigetbatchlimit" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GdiGetBatchLimit" />
 		<API funcName="getbkcolor" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetBkColor" />
 		<API funcName="getdevicecaps" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetDeviceCaps" />
 		<API funcName="getstockobject" className="v2.org.analysis.apihandle.winapi.gdi32.functions.GetStockObject" />
 		<API funcName="setbkcolor" className="v2.org.analysis.apihandle.winapi.gdi32.functions.SetBkColor" />
+		<API funcName="settextalign" className="v2.org.analysis.apihandle.winapi.gdi32.functions.SetTextAlign" />
+		<API funcName="strokeandfillpath" className="v2.org.analysis.apihandle.winapi.gdi32.functions.StrokeAndFillPath" />
+		<API funcName="strokepath" className="v2.org.analysis.apihandle.winapi.gdi32.functions.StrokePath" />
 	</DLL>
 	<DLL name="kernel32">
 		<API funcName="arefileapisansi" className="v2.org.analysis.apihandle.winapi.kernel32.functions.AreFileApisANSI" />
@@ -345,6 +349,7 @@
 		<API funcName="getclassname" className="v2.org.analysis.apihandle.winapi.user32.functions.GetClassName" />
 		<API funcName="getcursorpos" className="v2.org.analysis.apihandle.winapi.user32.functions.GetCursorPos" />
 		<API funcName="getdc" className="v2.org.analysis.apihandle.winapi.user32.functions.GetDC" />
+		<API funcName="getdcex" className="v2.org.analysis.apihandle.winapi.user32.functions.GetDCEx" />
 		<API funcName="getfocus" className="v2.org.analysis.apihandle.winapi.user32.functions.GetFocus" />
 		<API funcName="getforegroundwindow" className="v2.org.analysis.apihandle.winapi.user32.functions.GetForegroundWindow" />
 		<API funcName="getguithreadinfo" className="v2.org.analysis.apihandle.winapi.user32.functions.GetGUIThreadInfo" />

@@ -15,6 +15,7 @@ import com.sun.jna.WString;
 import com.sun.jna.platform.win32.WinDef.BOOL;
 import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.HDC;
+import com.sun.jna.platform.win32.WinDef.POINT;
 import com.sun.jna.platform.win32.WinDef.UINT;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.win32.StdCallLibrary;
@@ -170,4 +171,82 @@ public interface Gdi32DLL extends StdCallLibrary {
 	 *         the return value is zero.
 	 */
 	BOOL DeleteObject(HANDLE hObject);
+
+	/**
+	 * The SetTextAlign function sets the text-alignment flags for the specified
+	 * device context.
+	 * 
+	 * @param hdc
+	 *            A handle to the device context.
+	 * 
+	 * @param fMode
+	 *            The text alignment by using a mask of the values in the
+	 *            following list. Only one flag can be chosen from those that
+	 *            affect horizontal and vertical alignment. In addition, only
+	 *            one of the two flags that alter the current position can be
+	 *            chosen.
+	 * 
+	 * @return If the function succeeds, the return value is the previous
+	 *         text-alignment setting. If the function fails, the return value
+	 *         is GDI_ERROR.
+	 */
+	UINT SetTextAlign(/* _In_ */HDC hdc,/* _In_ */UINT fMode);
+
+	/**
+	 * The StrokePath function renders the specified path by using the current
+	 * pen.
+	 * 
+	 * @param hdc
+	 *            Handle to a device context that contains the completed path.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero.
+	 */
+	BOOL StrokePath( /* _In_ */HDC hdc);
+
+	/**
+	 * The StrokeAndFillPath function closes any open figures in a path, strokes
+	 * the outline of the path by using the current pen, and fills its interior
+	 * by using the current brush.
+	 * 
+	 * @param hdc
+	 *            A handle to the device context.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero.
+	 */
+	BOOL StrokeAndFillPath(/* _In_ */HDC hdc);
+
+	/**
+	 * The DPtoLP function converts device coordinates into logical coordinates.
+	 * The conversion depends on the mapping mode of the device context, the
+	 * settings of the origins and extents for the window and viewport, and the
+	 * world transformation.
+	 * 
+	 * @param hdc
+	 *            A handle to the device context.
+	 * 
+	 * @param lpPoints
+	 *            A pointer to an array of POINT structures. The x- and
+	 *            y-coordinates contained in each POINT structure will be
+	 *            transformed.
+	 * 
+	 * @param nCount
+	 *            The number of points in the array.
+	 * 
+	 * @return If the function succeeds, the return value is nonzero. If the
+	 *         function fails, the return value is zero.
+	 */
+	BOOL DPtoLP(
+	/* _In_ */HDC hdc,
+	/* _Inout_ */POINT lpPoints,
+	/* _In_ */int nCount);
+
+	// int EnumFontFamiliesEx(
+	// /*_In_*/ HDC hdc,
+	// /*_In_*/ LOGFONT lpLogfont,
+	// /*_In_*/ FONTENUMPROC lpEnumFontFamExProc,
+	// /*_In_*/ LPARAM lParam,
+	// DWORD dwFlags
+	// );
 }
