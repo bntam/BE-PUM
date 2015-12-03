@@ -18,6 +18,7 @@ import org.jakstab.asm.Instruction;
  */
 import org.jakstab.asm.x86.X86CondJmpInstruction;
 
+import v2.org.analysis.algorithm.OTFThreadManager.OTFThreadBase;
 import v2.org.analysis.cfg.BPCFG;
 import v2.org.analysis.cfg.BPVertex;
 import v2.org.analysis.environment.Environment;
@@ -53,7 +54,8 @@ public class OTFModelGeneration implements Algorithm {
 
 	private final Program program;
 
-	private boolean detectPacker = true;
+	private static boolean detectPacker = false;
+	private long overallStartTime;
 //	private int countOEP = 0;
 	
 	public OTFModelGeneration(Program program) {
@@ -72,7 +74,7 @@ public class OTFModelGeneration implements Algorithm {
 
 		//fileState.clearContentFile();
 		//bkFile.clearContentFile();
-		long overallStartTime = System.currentTimeMillis();
+		overallStartTime = System.currentTimeMillis();
 		long overallStartTemp = overallStartTime;
 		// BE-PUM algorithm
 		System.out.println("Starting On-the-fly Model Generation algorithm.");
@@ -117,7 +119,7 @@ public class OTFModelGeneration implements Algorithm {
 		// PHONG - 20150801 /////////////////////////////
 		// Packer Detection via Header
 		System.out.println("================PACKER DETECTION VIA HEADER ======================");
-		if (this.detectPacker)
+		if (OTFModelGeneration.detectPacker)
 		{
 			program.getDetection().detectViaHeader(program);
 			program.getDetection().setToLogFirst(program);
@@ -125,113 +127,122 @@ public class OTFModelGeneration implements Algorithm {
 		System.out.println("==================================================================");
 		/////////////////////////////////////////////////
 		
-		while (!pathList.isEmpty()) {
-
-			path = pathList.remove(pathList.size() - 1);
-			curState = path.getCurrentState();
-			
-			// long overallStartTimePath = System.currentTimeMillis();
-			while (true) {
-				
-				/*
-				if (curState != null && curState.getLocation() != null)
-				{
-					if (curState.getLocation().toString().contains("401000"))
-					{
-						countOEP++;
-						//if (countOEP >= 2)
-						{
-							program.getDetection().packedBy();
-							this.detectPacker = false;
-						}
-					}
-				}
-				*/
-			
-				////////////////////////////////// VIA OTF ////////////////////////////////////////
-				if (this.detectPacker)
-				{
-					program.getDetection().getTechniques().updateChecking(curState, program);
-				}
-				///////////////////////////////////////////////////////////////////////////////////
-				 
-				long overallEndTimeTemp = System.currentTimeMillis();
-				// Output file each 60s
-				if (overallEndTimeTemp - overallStartTemp > outTime) {
-
-					backupState(curState);
-					overallStartTemp = overallEndTimeTemp;
-					
-					////////////////////////////////////////////////////
-					// Write to packer result file after each 60s
-					if (this.detectPacker)
-					{
-						program.SetAnalyzingTime(System.currentTimeMillis()
-						- overallStartTime); 
-						program.getDetection().packedByTechniques();
-						program.getDetection().packedByTechniquesFrequency();
-						program.getDetection().updateBackupDetectionState(program, this);
-						program.getDetection().setToLog(program);
-					}					
-					
-					if (inst != null && inst.getName().contains("addb")
-							&& inst.getOperand(0) != null && inst.getOperand(0).toString().contains("eax")
-							&& inst.getOperand(1) != null && inst.getOperand(1).toString().contains("al")) {
-						numAddStop ++;
-					}
-					
-					if (numAddStop > 1) {
-						program.getStopFile().appendFile(program.getFileName());
-						break;				
-					}
-					////////////////////////////////////////////////////
-				}
-
-				if (path.isStop()) {
-					break;
-				}
-
-				inst = curState.getInstruction();
-				location = curState.getLocation();	
-				
-//				compareOlly(curState);
-//				if (location != null && location.toString().contains("404091")) {
-//					System.out.println("Debug");
-//				}
-								
-				// PHONG: 20150506 - Update TIB
-				// --------------------------------------
-				TIB.updateTIB(curState);
-//				TIB.updateChecking(curState);
-				// --------------------------------------
-				
-				if (inst == null || location == null) {
-					break;
-				}
-				path.addTrace(curState.getLocation());
-
-				if (inst instanceof X86CondJmpInstruction) {
-					rule.getNewState((X86CondJmpInstruction) inst, path, pathList);
-					if (!curState.checkFeasiblePath()) {
-						path.destroy();
-						break;
-					}
-				} else {
-					rule.getNewState(path, pathList, true);
-				}
-				
-				if (this.detectPacker && isOEP(curState.getLocation(), program.getFileName())) {
-					program.SetAnalyzingTime(System.currentTimeMillis()
-							- overallStartTime); 
-					program.getDetection().packedByTechniques();
-					program.getDetection().packedByTechniquesFrequency();
-					program.getDetection().updateBackupDetectionState(program, this);
-					program.getDetection().setToLog(program);
-					
-					this.detectPacker = false;
-				}
+		synchronized (OTFThreadManager.getInstance()) {
+			try {
+				OTFThreadManager.getInstance().check(this, pathList);
+				OTFThreadManager.getInstance().wait();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
+		
+//		while (!pathList.isEmpty()) {
+//
+//			path = pathList.remove(pathList.size() - 1);
+//			curState = path.getCurrentState();
+//			
+//			// long overallStartTimePath = System.currentTimeMillis();
+//			while (true) {
+//				
+//				/*
+//				if (curState != null && curState.getLocation() != null)
+//				{
+//					if (curState.getLocation().toString().contains("401000"))
+//					{
+//						countOEP++;
+//						//if (countOEP >= 2)
+//						{
+//							program.getDetection().packedBy();
+//							this.detectPacker = false;
+//						}
+//					}
+//				}
+//				*/
+//			
+//				////////////////////////////////// VIA OTF ////////////////////////////////////////
+//				if (this.detectPacker)
+//				{
+//					program.getDetection().getTechniques().updateChecking(curState, program);
+//				}
+//				///////////////////////////////////////////////////////////////////////////////////
+//				 
+//				long overallEndTimeTemp = System.currentTimeMillis();
+//				// Output file each 60s
+//				if (overallEndTimeTemp - overallStartTemp > outTime) {
+//
+//					backupState(curState);
+//					overallStartTemp = overallEndTimeTemp;
+//					
+//					////////////////////////////////////////////////////
+//					// Write to packer result file after each 60s
+//					if (this.detectPacker)
+//					{
+//						program.SetAnalyzingTime(System.currentTimeMillis()
+//						- overallStartTime); 
+//						program.getDetection().packedByTechniques();
+//						program.getDetection().packedByTechniquesFrequency();
+//						program.getDetection().updateBackupDetectionState(program, this);
+//						program.getDetection().setToLog(program);
+//					}					
+//					
+//					if (inst != null && inst.getName().contains("addb")
+//							&& inst.getOperand(0) != null && inst.getOperand(0).toString().contains("eax")
+//							&& inst.getOperand(1) != null && inst.getOperand(1).toString().contains("al")) {
+//						numAddStop ++;
+//					}
+//					
+//					if (numAddStop > 1) {
+//						program.getStopFile().appendFile(program.getFileName());
+//						break;				
+//					}
+//					////////////////////////////////////////////////////
+//				}
+//
+//				if (path.isStop()) {
+//					break;
+//				}
+//
+//				inst = curState.getInstruction();
+//				location = curState.getLocation();	
+//				
+////				compareOlly(curState);
+////				if (location != null && location.toString().contains("404091")) {
+////					System.out.println("Debug");
+////				}
+//								
+//				// PHONG: 20150506 - Update TIB
+//				// --------------------------------------
+//				TIB.updateTIB(curState);
+////				TIB.updateChecking(curState);
+//				// --------------------------------------
+//				
+//				if (inst == null || location == null) {
+//					break;
+//				}
+//				path.addTrace(curState.getLocation());
+//
+//				if (inst instanceof X86CondJmpInstruction) {
+//					rule.getNewState((X86CondJmpInstruction) inst, path, pathList);
+//					if (!curState.checkFeasiblePath()) {
+//						path.destroy();
+//						break;
+//					}
+//				} else {
+//					rule.getNewState(path, pathList, true);
+//				}
+//				
+//				if (this.detectPacker && isOEP(curState.getLocation(), program.getFileName())) {
+//					program.SetAnalyzingTime(System.currentTimeMillis()
+//							- overallStartTime); 
+//					program.getDetection().packedByTechniques();
+//					program.getDetection().packedByTechniquesFrequency();
+//					program.getDetection().updateBackupDetectionState(program, this);
+//					program.getDetection().setToLog(program);
+//					
+//					this.detectPacker = false;
+//				}
+//			}
+//		}
 		// PHONG - 20150724
 		System.out.println("================PACKER DETECTION VIA OTF======================");
 		program.getDetection().packedByTechniques();
@@ -239,6 +250,139 @@ public class OTFModelGeneration implements Algorithm {
 		System.out.println("==============================================================");
 	}
 
+	public class OTFThread extends OTFThreadBase {
+		X86TransitionRule rule = new X86TransitionRule();
+		List<BPPath> pathList = new ArrayList<BPPath>();
+		BPPath path = null;
+		BPState curState = null;
+		Instruction inst = null;
+		AbsoluteAddress location = null;
+		int numAddStop = 0;
+
+		public OTFThread(BPPath bpPath) {
+			this.pathList.add(bpPath);
+			this.path = bpPath;
+			this.curState = path.getCurrentState();
+			this.inst = this.curState.getInstruction();
+			this.location = this.curState.getLocation();
+		}
+
+		@Override
+		public void execute() {
+			long overallStartTemp = overallStartTime;
+
+			while (!pathList.isEmpty()) {
+				path = pathList.remove(pathList.size() - 1);
+				curState = path.getCurrentState();
+				
+				// long overallStartTimePath = System.currentTimeMillis();
+				while (true) {
+					
+					/*
+					if (curState != null && curState.getLocation() != null)
+					{
+						if (curState.getLocation().toString().contains("401000"))
+						{
+							countOEP++;
+							//if (countOEP >= 2)
+							{
+								program.getDetection().packedBy();
+								this.detectPacker = false;
+							}
+						}
+					}
+					*/
+				
+					////////////////////////////////// VIA OTF ////////////////////////////////////////
+					if (detectPacker)
+					{
+						program.getDetection().getTechniques().updateChecking(curState, program);
+					}
+					///////////////////////////////////////////////////////////////////////////////////
+					 
+					long overallEndTimeTemp = System.currentTimeMillis();
+					// Output file each 60s
+					if (overallEndTimeTemp - overallStartTemp > outTime) {
+	
+						backupState(curState);
+						overallStartTemp = overallEndTimeTemp;
+						
+						////////////////////////////////////////////////////
+						// Write to packer result file after each 60s
+						if (detectPacker)
+						{
+							program.SetAnalyzingTime(System.currentTimeMillis()
+							- overallStartTime); 
+							program.getDetection().packedByTechniques();
+							program.getDetection().packedByTechniquesFrequency();
+							program.getDetection().updateBackupDetectionState(program, OTFModelGeneration.this);
+							program.getDetection().setToLog(program);
+						}					
+						
+						if (inst != null && inst.getName().contains("addb")
+								&& inst.getOperand(0) != null && inst.getOperand(0).toString().contains("eax")
+								&& inst.getOperand(1) != null && inst.getOperand(1).toString().contains("al")) {
+							numAddStop ++;
+						}
+						
+						if (numAddStop > 1) {
+							program.getStopFile().appendFile(program.getFileName());
+							break;				
+						}
+						////////////////////////////////////////////////////
+					}
+	
+					if (path.isStop()) {
+						break;
+					}
+	
+					inst = curState.getInstruction();
+					location = curState.getLocation();	
+					
+//							compareOlly(curState);
+//							if (location != null && location.toString().contains("404091")) {
+//								System.out.println("Debug");
+//							}
+									
+					// PHONG: 20150506 - Update TIB
+					// --------------------------------------
+					TIB.updateTIB(curState);
+//							TIB.updateChecking(curState);
+					// --------------------------------------
+					
+					if (inst == null || location == null) {
+						break;
+					}
+					path.addTrace(curState.getLocation());
+	
+					if (inst instanceof X86CondJmpInstruction) {
+						rule.getNewState((X86CondJmpInstruction) inst, path, pathList);
+						if (!curState.checkFeasiblePath()) {
+							path.destroy();
+							break;
+						}
+					} else {
+						rule.getNewState(path, pathList, true);
+					}
+					
+					if (OTFModelGeneration.detectPacker && isOEP(curState.getLocation(), program.getFileName())) {
+						program.SetAnalyzingTime(System.currentTimeMillis()
+								- overallStartTime); 
+						program.getDetection().packedByTechniques();
+						program.getDetection().packedByTechniquesFrequency();
+						program.getDetection().updateBackupDetectionState(program, OTFModelGeneration.this);
+						program.getDetection().setToLog(program);
+						
+						OTFModelGeneration.detectPacker = false;
+					}
+					
+					///////// AFTER LOOP ///////////
+					this.afterLoop(OTFModelGeneration.this, pathList);
+				}
+			}
+		}
+	}
+	
 	private boolean isOEP(AbsoluteAddress location, String fileName) {
 		// TODO Auto-generated method stub
 		return (location != null) && (fileName.contains("api_test") && location.toString().contains("401000")

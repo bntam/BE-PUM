@@ -6,6 +6,11 @@ import java.util.Map.Entry;
 
 import org.jakstab.Program;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.WinDef.DWORD;
+import com.sun.jna.platform.win32.WinDef.HMODULE;
+
 import v2.org.analysis.apihandle.winapi.APIHandle;
 import v2.org.analysis.apihandle.winapi.kernel32.Kernel32DLL;
 import v2.org.analysis.apihandle.winapi.kernel32.functions.LoadLibrary;
@@ -14,11 +19,6 @@ import v2.org.analysis.environment.ExternalMemory.ExternalMemoryReturnData;
 import v2.org.analysis.path.BPState;
 import v2.org.analysis.util.PairEntry;
 import v2.org.analysis.value.LongValue;
-
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinDef.DWORD;
-import com.sun.jna.platform.win32.WinDef.HMODULE;
 
 public class LDRData {
 

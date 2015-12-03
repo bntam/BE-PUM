@@ -8,11 +8,9 @@ package v2.org.analysis.apihandle.winapi;
 
 import org.apache.log4j.Logger;
 
-import v2.org.analysis.apihandle.winapi.msvcrt.MSVCRTDLL;
-import v2.org.analysis.apihandle.winapi.structures.Stdio.FILE;
+import v2.org.analysis.algorithm.OTFThreadManager;
 import v2.org.analysis.apihandle.winapi.structures.WinNTn.RTL_CRITICAL_SECTION;
 
-import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinDef.LONG;
 
@@ -29,6 +27,7 @@ public class Test {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 
 		// int x = Kernel32DLL.INSTANCE.WinExec("Cpp.exe", 1);
@@ -403,31 +402,77 @@ public class Test {
 		// }
 		// }
 
-//		long pointer = funcOpen();
-//		String argsm[] = new String[2];
-//		argsm[0] = "\n%s";
-//		argsm[1] = "test";
-//		FILE fff = new FILE(new Pointer(pointer));
-//		int ret = MSVCRTDLL.INSTANCE.fprintf(fff, argsm);
-//		System.out.println(ret);
-//		MSVCRTDLL.INSTANCE.fclose(new FILE(new Pointer(pointer)));
-		
-		char[] buf = new char[255];
-		MSVCRTDLL.INSTANCE.sprintf(buf, "%s:%d", "abc", "1");
-		System.out.println(new String(buf));
-		x = 1;
+		// long pointer = funcOpen();
+		// String argsm[] = new String[2];
+		// argsm[0] = "\n%s";
+		// argsm[1] = "test";
+		// FILE fff = new FILE(new Pointer(pointer));
+		// int ret = MSVCRTDLL.INSTANCE.fprintf(fff, argsm);
+		// System.out.println(ret);
+		// MSVCRTDLL.INSTANCE.fclose(new FILE(new Pointer(pointer)));
+
+		// char[] buf = new char[255];
+		// MSVCRTDLL.INSTANCE.sprintf(buf, "%s:%d", "abc", "1");
+		// System.out.println(new String(buf));
+		// x = 1;
+
+		ChildThread ttt = new ChildThread();
+		ttt.start();
+
+		synchronized (OTFThreadManager.getInstance()) {
+			try {
+				OTFThreadManager.getInstance().wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// try {
+		// countDownLatch.await();
+		// } catch (InterruptedException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
+		System.out.println("OUT");
 	}
-	
-	static long funcOpen() {
-		FILE f = MSVCRTDLL.INSTANCE.fopen("C:\\Workspace\\BE-PUMv2\\Storage\\C\\WINDOWS\\system32\\drivers\\etc\\hosts", "a");
-		System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
-		Kernel32.INSTANCE.SetLastError(0);
-		long pointer = Pointer.nativeValue(f.getPointer());
-		return pointer;
-	}
+
+	// static long funcOpen() {
+	// FILE f =
+	// MSVCRTDLL.INSTANCE.fopen("C:\\Workspace\\BE-PUMv2\\Storage\\C\\WINDOWS\\system32\\drivers\\etc\\hosts",
+	// "a");
+	// System.out.println("Error: " + Kernel32.INSTANCE.GetLastError());
+	// Kernel32.INSTANCE.SetLastError(0);
+	// long pointer = Pointer.nativeValue(f.getPointer());
+	// return pointer;
+	// }
 }
 
+interface Listener {
+	void run();
+}
 
+class ChildThread extends Thread {
+
+	public ChildThread() {
+	}
+
+	@Override
+	public void run() {
+		try {
+//		System.out.println(OTFThreadManager.getInstance().startNewThread());
+//		Thread.sleep(1000);
+//		System.out.println(OTFThreadManager.getInstance().startNewThread());
+//		Thread.sleep(1000);
+//		System.out.println(OTFThreadManager.getInstance().finishThread());
+//		Thread.sleep(1000);
+//		System.out.println(OTFThreadManager.getInstance().finishThread());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}
 
 class A {
 	public static int a = 2;
@@ -464,7 +509,7 @@ class NewThread1 extends Thread {
 
 	public NewThread1(RTL_CRITICAL_SECTION lpCriticalSection) {
 		this._lpCriticalSection = lpCriticalSection;
-		start(); // bắt đầu thread
+		start(); // báº¯t Ä‘áº§u thread
 	}
 
 	// This is the entry point for the Thread.
@@ -486,7 +531,7 @@ class NewThread2 extends Thread {
 
 	public NewThread2(RTL_CRITICAL_SECTION lpCriticalSection) {
 		this._lpCriticalSection = lpCriticalSection;
-		start(); // bắt đầu thread
+		start(); // báº¯t Ä‘áº§u thread
 	}
 
 	// This is the entry point for the Thread.
