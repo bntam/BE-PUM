@@ -29,6 +29,8 @@ import v2.org.analysis.value.Value;
  * @version 0.2
  */
 public abstract class API {
+//	private final static boolean IS_ALWAYS_RETURN_SYMBOLIC = true;
+
 	protected int NUM_OF_PARMS = 0;
 	protected boolean IS_POP_STACK_VALUE = true;
 
@@ -46,7 +48,12 @@ public abstract class API {
 		this.apiName = apiName;
 		this.curState = curState;
 		this.initAttributes();
-		this.execute();
+
+//		if (!IS_ALWAYS_RETURN_SYMBOLIC) {
+			this.execute();
+//		} else {
+//			register.setRegisterValue("eax", new SymbolValue("api_eax_" + apiName));
+//		}
 	}
 
 	public String getLibraryName() {
@@ -60,7 +67,7 @@ public abstract class API {
 	public String getFullName() {
 		return String.format("%s@%s.DLL", this.getAPIName(), this.getLibraryName());
 	}
-	
+
 	public boolean is64bit() {
 		if (this.apiName.charAt(this.apiName.length() - 1) == 'W') {
 			return true;
@@ -76,9 +83,9 @@ public abstract class API {
 
 		if (NUM_OF_PARMS > 0) {
 			this.params = new ArrayList<Long>();
-			
+
 			System.out.print("Argument:");
-			
+
 			for (int i = 0; i < NUM_OF_PARMS; i++) {
 				Value value = stack.pop();
 
@@ -87,11 +94,11 @@ public abstract class API {
 				} else {
 					throw new APIException(this);
 				}
-				
+
 				System.out.print(String.format("\tx%d: %s\t", i + 1, value.toString()));
 			}
 			System.out.println();
-			
+
 			if (!IS_POP_STACK_VALUE) {
 				for (int i = this.params.size(); i > 0; i--) {
 					stack.push(new LongValue(this.params.get(i - 1)));

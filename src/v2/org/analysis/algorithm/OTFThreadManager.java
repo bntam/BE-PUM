@@ -10,6 +10,7 @@ package v2.org.analysis.algorithm;
 import java.util.List;
 
 import v2.org.analysis.algorithm.OTFModelGeneration.OTFThread;
+import v2.org.analysis.log.BPLogger;
 //import v2.org.analysis.algorithm.OTFModelGeneration.OTFThread;
 import v2.org.analysis.path.BPPath;
 
@@ -19,7 +20,7 @@ import v2.org.analysis.path.BPPath;
  */
 public class OTFThreadManager {
 
-	private static final boolean IS_MULTI_THREAD = false;
+	private static final boolean IS_MULTI_THREAD = true;
 	private static final int DEFAULT_NUM_OF_CORES = 4;
 
 	/**
@@ -125,6 +126,7 @@ public class OTFThreadManager {
 				if (this.mNumberOfCurrentThreads == 0) {
 					synchronized (this) {
 						this.notifyAll();
+						BPLogger.debugLogger.info("************************ END ***************************");
 					}
 				}
 			} else {
@@ -135,7 +137,8 @@ public class OTFThreadManager {
 	}
 
 	public synchronized boolean isCanStart() {
-//		System.out.println(String.format("%d-%d", this.mNumberOfCurrentThreads, this.mNumberOfCore));
+		// System.out.println(String.format("%d-%d",
+		// this.mNumberOfCurrentThreads, this.mNumberOfCore));
 		if (this.mNumberOfCurrentThreads < (OTFThreadManager.mNumberOfCore + 1)) {
 			return true;
 		} else {
@@ -144,11 +147,20 @@ public class OTFThreadManager {
 	}
 
 	public synchronized void check(OTFModelGeneration otfModelGeneration, List<BPPath> pathList) throws Exception {
+		if (otfModelGeneration == null || pathList == null) {
+			BPLogger.debugLogger.error(String.format("[OTFThreadManager] NULL INPUT - otf:%s,pathList:%s",
+					otfModelGeneration, pathList));
+		}
+		if (pathList != null && pathList.size() > 0) {
+			BPLogger.debugLogger.info(String.format("[OTFThreadManager] check pathListSize:%d", pathList.size()));
+		}
 		if (this.isCanStart() && otfModelGeneration != null && pathList != null && pathList.size() > 0) {
 			BPPath path = pathList.remove(pathList.size() - 1);
 
 			OTFThread thread = otfModelGeneration.new OTFThread(path);
 			thread.start();
+			BPLogger.debugLogger.info(String.format("[OTFThreadManager] START location:%s,numOfCurrentThreads:%d/%d",
+					path.getCurrentState().getLocation().toString(), this.mNumberOfCurrentThreads, OTFThreadManager.mNumberOfCore));
 		}
 	}
 
@@ -166,8 +178,10 @@ public class OTFThreadManager {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			System.out.println("***************************************************************************");
+
+			System.out.println("_____________________________________________________________________________");
+			System.out.println("_________________________START NEW THREAD OTF________________________________");
+			System.out.println("_____________________________________________________________________________");
 		}
 
 		private void afterExecute() {
@@ -177,7 +191,7 @@ public class OTFThreadManager {
 				e.printStackTrace();
 			}
 		}
-		
+
 		public void afterLoop(OTFModelGeneration otfModelGeneration, List<BPPath> pathList) {
 			try {
 				OTFThreadManager.getInstance().check(otfModelGeneration, pathList);
