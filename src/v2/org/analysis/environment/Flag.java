@@ -4,11 +4,16 @@
 package v2.org.analysis.environment;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import v2.org.analysis.complement.BitVector;
 import v2.org.analysis.complement.Convert;
-import v2.org.analysis.value.*;
+import v2.org.analysis.value.AnyValue;
+import v2.org.analysis.value.BooleanValue;
+import v2.org.analysis.value.HybridBooleanValue;
+import v2.org.analysis.value.HybridValue;
+import v2.org.analysis.value.LongValue;
+import v2.org.analysis.value.SymbolValue;
+import v2.org.analysis.value.Value;
 
 /**
  * @author NMHai
@@ -41,8 +46,9 @@ public class Flag {
 	}
 
 	public void changeFlagWithADC(Value dest, Value source, int cf, Environment env, int numBits) {
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -159,8 +165,9 @@ public class Flag {
 	}
 
 	public void changeFlagWithADD(Value dest, Value source, Environment env, int numBits) {
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -279,8 +286,9 @@ public class Flag {
 		// AND, OR, and XOR clear OF and CF, leave AF undefined, and update SF,
 		// ZF, and PF.
 		// http://css.csail.mit.edu/6.858/2010/readings/i386/s03_04.htm
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -430,8 +438,9 @@ public class Flag {
 		// TODO Auto-generated method stub
 		// changeFlagWithSUB(true, d, new LongValue(1), env, numBits);
 		Value source = new LongValue(1);
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			// cFlag = new BooleanValue(false);
@@ -605,8 +614,9 @@ public class Flag {
 	public void changeFlagWithIMUL(Value dest, Value source, Environment env, int numBits) {
 		// TODO Auto-generated method stub
 		// The SF, ZF, AF, and PF flags are undefined
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -725,8 +735,9 @@ public class Flag {
 		// TODO Auto-generated method stub
 		// PHONG: change here
 		Value source = new LongValue(1);
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			// cFlag = new BooleanValue(false);
@@ -832,8 +843,9 @@ public class Flag {
 		// TODO Auto-generated method stub
 		// The SF, ZF, AF, and PF flags are undefined
 		// SF need to be checked again
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -950,8 +962,9 @@ public class Flag {
 
 	public void changeFlagWithNEG(Value temp, Environment env, int numBits) {
 		// changeFlagWithSUB(dest, source, env, numBits);
-		if (temp == null)
+		if (temp == null) {
 			return;
+		}
 
 		if (temp instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1003,16 +1016,18 @@ public class Flag {
 
 		if (((LongValue) temp).getValue() == 0x0) {
 			cFlag = new BooleanValue(false);
-		} else
+		} else {
 			cFlag = new BooleanValue(true);
+		}
 	}
 
 	public void changeFlagWithOR(Value dest, Value source, Environment env, int numBits) {
 		// AND, OR, and XOR clear OF and CF, leave AF undefined, and update SF,
 		// ZF, and PF.
 		// http://css.csail.mit.edu/6.858/2010/readings/i386/s03_04.htm
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1106,8 +1121,9 @@ public class Flag {
 		// The SF, ZF, and PF flags are set according to the result.
 		// If the count is 0, the flags are not affected. For a non-zero count,
 		// the AF flag is undefined.
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1123,8 +1139,9 @@ public class Flag {
 					// boolean b = getMSB(d * s, numBits);
 					// b = ((BooleanValue) cFlag).getValueOperand() ^ b;
 					oFlag = new BooleanValue(((BooleanValue) cFlag).getValue() ^ getMSB(d * s, numBits));
-				} else
+				} else {
 					oFlag = new BooleanValue(false);
+				}
 
 				d = Convert.convertSignedValue(d, numBits);
 				s = Convert.convertSignedValue(s, numBits);
@@ -1246,8 +1263,9 @@ public class Flag {
 		// The SF, ZF, and PF flags are set according to the result.
 		// If the count is 0, the flags are not affected. For a non-zero count,
 		// the AF flag is undefined.
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1256,10 +1274,11 @@ public class Flag {
 		} else if (dest instanceof LongValue && source instanceof LongValue) {
 			long d = ((LongValue) dest).getValue();
 
-			if (((LongValue) source).getValue() == 1)
+			if (((LongValue) source).getValue() == 1) {
 				oFlag = new BooleanValue(false);
-			else
+			} else {
 				oFlag = new BooleanValue(false);
+			}
 
 			long s = (long) Math.pow(2, ((LongValue) source).getValue());
 			long t = ((LongValue) result).getValue();
@@ -1371,8 +1390,9 @@ public class Flag {
 	}
 
 	public void changeFlagWithSBB(Value dest, Value source, int cf, Environment env, int numBits) {
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1503,8 +1523,9 @@ public class Flag {
 		// The SF, ZF, and PF flags are set according to the result.
 		// If the count is 0, the flags are not affected. For a non-zero count,
 		// the AF flag is undefined.
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1520,8 +1541,9 @@ public class Flag {
 					// boolean b = getMSB(d * s, numBits);
 					// b = ((BooleanValue) cFlag).getValueOperand() ^ b;
 					oFlag = new BooleanValue(((BooleanValue) cFlag).getValue() ^ getMSB(d * s, numBits));
-				} else
+				} else {
 					oFlag = new BooleanValue(false);
+				}
 
 				d = Convert.convertSignedValue(d, numBits);
 				s = Convert.convertSignedValue(s, numBits);
@@ -1643,8 +1665,9 @@ public class Flag {
 		// The SF, ZF, and PF flags are set according to the result.
 		// If the count is 0, the flags are not affected. For a non-zero count,
 		// the AF flag is undefined.
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1653,10 +1676,11 @@ public class Flag {
 		} else if (dest instanceof LongValue && source instanceof LongValue) {
 			long d = ((LongValue) dest).getValue();
 
-			if (((LongValue) source).getValue() == 1)
+			if (((LongValue) source).getValue() == 1) {
 				oFlag = new BooleanValue(getMSB(d, numBits));
-			else
+			} else {
 				oFlag = new BooleanValue(false);
+			}
 
 			long s = (long) Math.pow(2, ((LongValue) source).getValue());
 			long t = d / s;
@@ -1787,8 +1811,9 @@ public class Flag {
 	}
 
 	public void changeFlagWithSUB(Value dest, Value source, Environment env, int numBits) {
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1919,8 +1944,9 @@ public class Flag {
 		// AND, OR, and XOR clear OF and CF, leave AF undefined, and update SF,
 		// ZF, and PF.
 		// http://css.csail.mit.edu/6.858/2010/readings/i386/s03_04.htm
-		if (dest == null || source == null)
+		if (dest == null || source == null) {
 			return;
+		}
 
 		if (dest instanceof AnyValue || source instanceof AnyValue) {
 			cFlag = new BooleanValue(false);
@@ -1995,12 +2021,13 @@ public class Flag {
 
 	private boolean checkFit(long t, int numBits) {
 		// TODO Auto-generated method stub
-		if (numBits == 8)
+		if (numBits == 8) {
 			return t > Math.pow(2, 8);
-		else if (numBits == 16)
+		} else if (numBits == 16) {
 			return t > Math.pow(2, 16);
-		else if (numBits == 32)
+		} else if (numBits == 32) {
 			return t > Math.pow(2, 32);
+		}
 
 		return false;
 	}
@@ -2038,6 +2065,7 @@ public class Flag {
 		return false;
 	}
 
+	@Override
 	public Flag clone() {
 		Flag c = new Flag();
 		c.setAFlag(aFlag.clone());
@@ -2117,24 +2145,33 @@ public class Flag {
 
 	public Value getEFLAGS() {
 		int cf = 0, pf = 0, af = 0, zf = 0, sf = 0, tf = 0, ifl = 0, df = 0, of = 0;
-		if (cFlag != null && cFlag instanceof BooleanValue)
+		if (cFlag != null && cFlag instanceof BooleanValue) {
 			cf = (((BooleanValue) cFlag).getValue() ? 1 : 0);
-		if (pFlag != null && pFlag instanceof BooleanValue)
+		}
+		if (pFlag != null && pFlag instanceof BooleanValue) {
 			pf = (((BooleanValue) pFlag).getValue() ? 1 : 0);
-		if (aFlag != null && aFlag instanceof BooleanValue)
+		}
+		if (aFlag != null && aFlag instanceof BooleanValue) {
 			af = (((BooleanValue) aFlag).getValue() ? 1 : 0);
-		if (zFlag != null && zFlag instanceof BooleanValue)
+		}
+		if (zFlag != null && zFlag instanceof BooleanValue) {
 			zf = (((BooleanValue) zFlag).getValue() ? 1 : 0);
-		if (sFlag != null && sFlag instanceof BooleanValue)
+		}
+		if (sFlag != null && sFlag instanceof BooleanValue) {
 			sf = (((BooleanValue) sFlag).getValue() ? 1 : 0);
-		if (tFlag != null && tFlag instanceof BooleanValue)
+		}
+		if (tFlag != null && tFlag instanceof BooleanValue) {
 			tf = (((BooleanValue) tFlag).getValue() ? 1 : 0);
-		if (iFlag != null && iFlag instanceof BooleanValue)
+		}
+		if (iFlag != null && iFlag instanceof BooleanValue) {
 			ifl = (((BooleanValue) iFlag).getValue() ? 1 : 0);
-		if (dFlag != null && dFlag instanceof BooleanValue)
+		}
+		if (dFlag != null && dFlag instanceof BooleanValue) {
 			df = (((BooleanValue) dFlag).getValue() ? 1 : 0);
-		if (oFlag != null && oFlag instanceof BooleanValue)
+		}
+		if (oFlag != null && oFlag instanceof BooleanValue) {
 			of = (((BooleanValue) oFlag).getValue() ? 1 : 0);
+		}
 
 		long ret = cf + 2 + 4 * pf + 16 * af + 64 * zf + 128 * sf + 256 * tf + 512 * ifl + 1024 * df + 2048 * of;
 		return new LongValue(ret);
@@ -2217,7 +2254,7 @@ public class Flag {
 	}
 
 	public void setEFLAGS(long value) {
-
+		setflags(value);
 	}
 
 	// Set flags from eflags
@@ -2286,24 +2323,25 @@ public class Flag {
 		// TODO Auto-generated method stub
 		String temp = flag.toLowerCase();
 		
-		if (temp.contains("cf"))
-			cFlag = value; 
-		else if (temp.contains("pf"))
+		if (temp.contains("cf")) {
+			cFlag = value;
+		} else if (temp.contains("pf")) {
 			pFlag = value;
-		else if (temp.contains("af"))
+		} else if (temp.contains("af")) {
 			aFlag = value;
-		else if (temp.contains("zf"))
+		} else if (temp.contains("zf")) {
 			zFlag = value;
-		else if (temp.contains("sf"))
+		} else if (temp.contains("sf")) {
 			sFlag = value;
-		else if (temp.contains("tf"))
+		} else if (temp.contains("tf")) {
 			tFlag = value;
-		else if (temp.contains("df"))
+		} else if (temp.contains("df")) {
 			dFlag = value;
-		else if (temp.contains("of"))
+		} else if (temp.contains("of")) {
 			oFlag = value;
-		else if (temp.contains("if"))
+		} else if (temp.contains("if")) {
 			iFlag = value;
+		}
 	}
 
 	public void resetValue(Map<String, Long> z3Value) {
