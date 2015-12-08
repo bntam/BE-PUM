@@ -72,27 +72,37 @@ public class PackerDetection {
 		if (dataString == null) {
 			return false;
 		}
+		
 		int beginTracing = 0;
-		if (hPacker.isEntryPoint())
+		int endTracing = 0;
+		int pivot = 0;
+		if (EP != 0x0)
 		{
-			if (EP != 0x0)
+			for (int i = 0; i < dataString.length - 3; i++)
 			{
-				for (int i = 0; i < dataString.length - 3; i++)
+				String dword = dataString[i+3] + dataString[i+2] + dataString[i+1] + dataString[i];
+				long dwordL = Long.parseLong(dword, 16);
+				if (dwordL == EP)
 				{
-					String dword = dataString[i+3] + dataString[i+2] + dataString[i+1] + dataString[i];
-					long dwordL = Long.parseLong(dword, 16);
-					if (dwordL == EP)
-					{
-						beginTracing = i;
-						break;
-					}
+					pivot = i;
+					break;
 				}
 			}
+		}
+		if (hPacker.isEntryPoint())
+		{	
+			beginTracing = pivot;
+			endTracing = pivot + hPacker.getPackerSignature().length + 1;
+		}
+		else
+		{
+			beginTracing = 0;
+			endTracing = pivot;
 		}
 		
 		boolean trace = true;
 		String[] sArr = hPacker.getPackerSignature();
-		for (int i = beginTracing; i < dataString.length && trace; i++)
+		for (int i = beginTracing; i < endTracing && trace; i++)
 		{	
 			if (dataString[i].equals(sArr[0].toLowerCase()) 
 				&& (dataString[i+1].equals(sArr[1].toLowerCase())
@@ -121,7 +131,7 @@ public class PackerDetection {
 			else
 			{
 				if (hPacker.isEntryPoint() 
-						|| i == dataString.length - 2)
+						|| i == endTracing - 2)
 				{
 					return false;
 				}
