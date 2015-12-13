@@ -321,6 +321,24 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	WString _itow(int value, WString str, int radix);
 
 	/**
+	 * Converts an integer to a string. More secure versions of these functions
+	 * are available
+	 * 
+	 * @param value
+	 *            Number to be converted.
+	 * 
+	 * @param str
+	 *            String result.
+	 * 
+	 * @param radix
+	 *            Base of value; which must be in the range 2–36.
+	 * 
+	 * @return Each of these functions returns a pointer to str. There is no
+	 *         error return.
+	 */
+	String _itoa(int value, String str, int radix);
+
+	/**
 	 * Internal CRT function. Used by a framework to find the appropriate
 	 * exception handler to process the current exception..
 	 * 
@@ -755,7 +773,6 @@ public interface MSVCRTDLL extends StdCallLibrary {
 	 *         block of memory, a null pointer is returned.
 	 */
 	Pointer calloc(int num, int size);
-	
-	
-	int sprintf (char[] str, String... format);
+
+	int sprintf(char[] str, String... format);
 }

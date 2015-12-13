@@ -361,7 +361,7 @@ public class Main {
 		
 		pathVirus = "asm/testcase/";
 		in = "peb.exe";		
-		in = "jump.exe";		
+		in = "multiThread";		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export

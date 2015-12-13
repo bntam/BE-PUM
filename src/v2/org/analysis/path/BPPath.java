@@ -101,7 +101,7 @@ public class BPPath {
 	}
 
 	@Override
-	public BPPath clone() {
+	public synchronized BPPath clone() {
 		BPPath ret = new BPPath(curState.clone(), trace.clone(), pathCond.getCondition().clone());
 		ret.setLoopHandle(l.clone());
 

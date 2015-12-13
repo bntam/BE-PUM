@@ -21,12 +21,12 @@ import v2.org.analysis.path.BPPath;
 public class OTFThreadManager {
 
 	private static final boolean IS_MULTI_THREAD = true;
-	private static final int DEFAULT_NUM_OF_CORES = 4;
+	private static final int DEFAULT_NUM_OF_CORES = 1;
 
 	/**
 	 * Singleton instance of {@link OTFThreadManager} class
 	 */
-	private static OTFThreadManager mInstance = null;
+	private static volatile OTFThreadManager mInstance = null;
 	private static int mNumberOfCore = 0;
 
 	/**
@@ -139,7 +139,7 @@ public class OTFThreadManager {
 	public synchronized boolean isCanStart() {
 		// System.out.println(String.format("%d-%d",
 		// this.mNumberOfCurrentThreads, this.mNumberOfCore));
-		if (this.mNumberOfCurrentThreads < (OTFThreadManager.mNumberOfCore + 1)) {
+		if (this.mNumberOfCurrentThreads < OTFThreadManager.mNumberOfCore) {
 			return true;
 		} else {
 			return false;

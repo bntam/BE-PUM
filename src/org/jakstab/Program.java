@@ -171,7 +171,7 @@ public final class Program {
 	 * 
 	 * @return the singleton instance of the Program class
 	 */
-	public static Program getProgram() {
+	public synchronized static Program getProgram() {
 		return programInstance;
 	}
 
@@ -1207,7 +1207,7 @@ public final class Program {
 	}
 
 	// PHONG: get instruction here
-	public Instruction getInstruction(byte[] opcodes, Environment env) {
+	public synchronized Instruction getInstruction(byte[] opcodes, Environment env) {
 		Instruction instr = null;
 		BinaryFileInputBuffer binBuff = new BinaryFileInputBuffer(opcodes);
 		X86Disassembler dis = new X86Disassembler(binBuff);
@@ -1215,7 +1215,7 @@ public final class Program {
 		return instr;
 	}
 
-	public final Instruction getInstruction1(AbsoluteAddress address) {
+	public synchronized final Instruction getInstruction1(AbsoluteAddress address) {
 		Instruction instr = assemblyMap.get(address);
 		// Instruction instr = null;
 		if (instr != null) {

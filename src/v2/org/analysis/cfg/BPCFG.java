@@ -1,10 +1,10 @@
 package v2.org.analysis.cfg;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.jakstab.asm.AbsoluteAddress;
 import org.jakstab.asm.Instruction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BPCFG {
 	private List<BPVertex> verteces;
@@ -18,8 +18,8 @@ public class BPCFG {
 	 */
 	public BPCFG() {
 		super();
-		this.verteces = new ArrayList<BPVertex>();
-		this.edges = new ArrayList<BPEdge>();
+		this.verteces = new CopyOnWriteArrayList<BPVertex>();
+		this.edges = new CopyOnWriteArrayList<BPEdge>();
 	}
 
 	public List<BPVertex> getVertecesList() {
@@ -43,9 +43,11 @@ public class BPCFG {
 	 * @return
 	 */
 	public BPVertex insertVertex(BPVertex vertex) {
-		for (BPVertex v : verteces)
-			if (v.equal(vertex))
+		for (BPVertex v : verteces) {
+			if (v.equal(vertex)) {
 				return v;
+			}
+		}
 
 		this.verteces.add(vertex);
 		return vertex;
@@ -53,18 +55,22 @@ public class BPCFG {
 
 	public boolean containVertex(BPVertex vertex) {
 		// TODO Auto-generated method stub
-		for (BPVertex v : verteces)
-			if (v.equal(vertex))
+		for (BPVertex v : verteces) {
+			if (v.equal(vertex)) {
 				return true;
+			}
+		}
 
 		return false;
 	}
 
 	private boolean containEdge(BPEdge edge) {
 		// TODO Auto-generated method stub
-		for (BPEdge e : edges)
-			if (e.equal(edge))
+		for (BPEdge e : edges) {
+			if (e.equal(edge)) {
 				return true;
+			}
+		}
 
 		return false;
 	}
@@ -81,19 +87,23 @@ public class BPCFG {
 	 *            the edge to set
 	 */
 	public void insertEdge(BPEdge edge) {
-		if (!containEdge(edge))
+		if (!containEdge(edge)) {
 			this.edges.add(edge);
+		}
 	}
 
 	public BPVertex getVertex(AbsoluteAddress location, Instruction instruction) {
 		// TODO Auto-generated method stub
-		if (location == null && instruction == null)
+		if (location == null && instruction == null) {
 			return null;
+		}
 
-		for (BPVertex v : verteces)
+		for (BPVertex v : verteces) {
 			if (v.getAddress() != null && v.getAddress().getValue() == location.getValue()
-					&& v.getInstruction().compareInstruction(instruction))
+					&& v.getInstruction().compareInstruction(instruction)) {
 				return v;
+			}
+		}
 
 		return null;
 	}
@@ -101,9 +111,11 @@ public class BPCFG {
 	public Object getInstructionCount() {
 		// TODO Auto-generated method stub
 		int l = 0;
-		for (BPVertex v : verteces)
-			if (v.getType() != 3)
+		for (BPVertex v : verteces) {
+			if (v.getType() != 3) {
 				l++;
+			}
+		}
 
 		return l;
 	}
@@ -120,17 +132,20 @@ public class BPCFG {
 
 	public boolean isCompleted() {
 		// TODO Auto-generated method stub
-		for (BPVertex v : verteces)
-			if (v.getType() == BPVertex.UnknownNode)
+		for (BPVertex v : verteces) {
+			if (v.getType() == BPVertex.UnknownNode) {
 				return false;
+			}
+		}
 		return true;
 	}
 
 	public BPVertex getEntryPoint() {
 		// TODO Auto-generated method stub
 		for (BPVertex s : verteces) {
-			if (s.getType() == 0)
+			if (s.getType() == 0) {
 				return s;
+			}
 		}
 
 		return null;
