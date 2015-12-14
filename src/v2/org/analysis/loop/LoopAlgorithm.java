@@ -1,6 +1,10 @@
 package v2.org.analysis.loop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jakstab.Program;
+
 import v2.org.analysis.cfg.BPVertex;
 import v2.org.analysis.path.BPPath;
 import v2.org.analysis.path.BPState;
@@ -9,20 +13,18 @@ import v2.org.analysis.transition_rule.X86TransitionRule;
 import v2.org.analysis.value.LongValue;
 import v2.org.analysis.value.Value;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LoopAlgorithm {
 	private static LoopAlgorithm programInstance = null;
 	private int MAX_EP_LOOP = 50;
 	private int count_EP = 0;
-	private int MAX_LOOP = 1000000;
+	private int MAX_LOOP = 1000000000;
 	//private static int MAX_LOOP = 1000;
 	// private List<LoopHandle> paths;
 
 	public static LoopAlgorithm getInstance() {
-		if (programInstance == null)
+		if (programInstance == null) {
 			programInstance = new LoopAlgorithm();
+		}
 
 		return programInstance;
 	}
@@ -41,8 +43,9 @@ public class LoopAlgorithm {
 		// TODO Auto-generated method stub
 		PathList trace = path.getTrace();
 		BPState curState = path.getCurrentState();
-		if (curState.getLocation() == null)
+		if (curState.getLocation() == null) {
 			return false;
+		}
 
 		if (trace.contain(curState.getLocation().getValue())) {
 			// Heuristics: If this is entry point, stops
@@ -54,14 +57,16 @@ public class LoopAlgorithm {
 					count_EP = 0;
 					path.setStop(true);
 					return true;
-				} else 
+				} else {
 					count_EP ++;
+				}
 			}
 
 			LoopHandle temp = path.getLoopHandle();
 
-			if (temp == null)
+			if (temp == null) {
 				temp = new LoopHandle();
+			}
 
 			int loop_num = temp.getNumLoop();
 			BPVertex loopHead = temp.getLoopHead();
@@ -98,8 +103,9 @@ public class LoopAlgorithm {
 						return true;
 					}					
 								
-					if (loop_num == MAX_LOOP + 1)
+					if (loop_num == MAX_LOOP + 1) {
 						curState.getEnvironement().reset();
+					}
 					
 					temp.setNumLoop(++loop_num);
 					return false;
@@ -131,8 +137,9 @@ public class LoopAlgorithm {
 							if (ecx instanceof LongValue) {
 								long t = ((LongValue) ecx).getValue();
 
-								if (t > 10)
+								if (t > 10) {
 									curState.getEnvironement().getRegister().setRegisterValue("ecx", new LongValue(10));
+								}
 							} else {
 								curState.getEnvironement().getRegister().setRegisterValue("ecx", new LongValue(10));
 							}
@@ -177,9 +184,11 @@ public class LoopAlgorithm {
 						|| fileName.contains("count8.exe") || fileName.contains("count9.exe")
 						|| fileName.contains("smc.exe") || fileName.contains("ex.exe") || fileName
 							.contains("fib-reach-0.exe")))
+		 {
 			return 10;
 		//if (fileName.equals("Virus.Win32.Cabanas.2999"))
 		//	return 1000;
+		}
 
 		return this.MAX_LOOP;
 	}
@@ -188,8 +197,9 @@ public class LoopAlgorithm {
 		// TODO Auto-generated method stub
 		BPState curState = path.getCurrentState();
 		if (Program.getProgram().getFileName().equals("Packed_IczEdit.exe")
-				&& curState.getLocation().toString().contains("407a3d"))
+				&& curState.getLocation().toString().contains("407a3d")) {
 			return true;
+		}
 
 		return false;
 	}
@@ -201,8 +211,9 @@ public class LoopAlgorithm {
 
 	public long normalizeLoop(long t) {
 		// TODO Auto-generated method stub
-		if (t > 1000000000)
+		if (t > 1000000000) {
 			t = getMaxLoop();
+		}
 		
 		return t;
 	}
