@@ -1,9 +1,9 @@
 package v2.org.analysis.apihandle.winapi.kernel32;
 
 import com.sun.jna.Native;
+import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 import com.sun.jna.win32.StdCallLibrary;
-import com.sun.jna.win32.W32APIOptions;
 
 /**
  * Use this interface in case some of APIs do not work with Kernel32DLL
@@ -22,4 +22,5 @@ public interface Kernel32DLLwithoutOption extends StdCallLibrary {
 	Kernel32DLLwithoutOption SYNC_INSTANCE = (Kernel32DLLwithoutOption) Native.synchronizedLibrary(INSTANCE);
 
 	int GetProcAddress(HMODULE hM, String lpProcName);
+	int GetProcAddress(HMODULE hM, Pointer lpProcName);
 }
