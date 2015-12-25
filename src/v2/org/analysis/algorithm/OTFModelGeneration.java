@@ -54,7 +54,7 @@ public class OTFModelGeneration implements Algorithm {
 
 	private final Program program;
 
-	private static boolean detectPacker = false;
+	private static boolean detectPacker = true;
 	private long overallStartTime;
 //	private int countOEP = 0;
 	
@@ -84,7 +84,7 @@ public class OTFModelGeneration implements Algorithm {
 		X86TransitionRule rule = new X86TransitionRule();
 		BPCFG cfg = Program.getProgram().getBPCFG();
 		Environment env = new Environment();
-		env.getMemory().resetImportTable(program);
+		//env.getMemory().resetImportTable(program);
 		AbsoluteAddress location = Program.getProgram().getEntryPoint();
 		Instruction inst = Program.getProgram().getInstruction(location, env);
 		List<BPPath> pathList = new ArrayList<BPPath>();
@@ -135,118 +135,11 @@ public class OTFModelGeneration implements Algorithm {
 				e.printStackTrace();
 			}
 		}
-		
-//		while (!pathList.isEmpty()) {
-//
-//			path = pathList.remove(pathList.size() - 1);
-//			curState = path.getCurrentState();
-//			
-//			// long overallStartTimePath = System.currentTimeMillis();
-//			while (true) {
-//				
-//				/*
-//				if (curState != null && curState.getLocation() != null)
-//				{
-//					if (curState.getLocation().toString().contains("401000"))
-//					{
-//						countOEP++;
-//						//if (countOEP >= 2)
-//						{
-//							program.getDetection().packedBy();
-//							this.detectPacker = false;
-//						}
-//					}
-//				}
-//				*/
-//			
-//				////////////////////////////////// VIA OTF ////////////////////////////////////////
-//				if (this.detectPacker)
-//				{
-//					program.getDetection().getTechniques().updateChecking(curState, program);
-//				}
-//				///////////////////////////////////////////////////////////////////////////////////
-//				 
-//				long overallEndTimeTemp = System.currentTimeMillis();
-//				// Output file each 60s
-//				if (overallEndTimeTemp - overallStartTemp > outTime) {
-//
-//					backupState(curState);
-//					overallStartTemp = overallEndTimeTemp;
-//					
-//					////////////////////////////////////////////////////
-//					// Write to packer result file after each 60s
-//					if (this.detectPacker)
-//					{
-//						program.SetAnalyzingTime(System.currentTimeMillis()
-//						- overallStartTime); 
-//						program.getDetection().packedByTechniques();
-//						program.getDetection().packedByTechniquesFrequency();
-//						program.getDetection().updateBackupDetectionState(program, this);
-//						program.getDetection().setToLog(program);
-//					}					
-//					
-//					if (inst != null && inst.getName().contains("addb")
-//							&& inst.getOperand(0) != null && inst.getOperand(0).toString().contains("eax")
-//							&& inst.getOperand(1) != null && inst.getOperand(1).toString().contains("al")) {
-//						numAddStop ++;
-//					}
-//					
-//					if (numAddStop > 1) {
-//						program.getStopFile().appendFile(program.getFileName());
-//						break;				
-//					}
-//					////////////////////////////////////////////////////
-//				}
-//
-//				if (path.isStop()) {
-//					break;
-//				}
-//
-//				inst = curState.getInstruction();
-//				location = curState.getLocation();	
-//				
-////				compareOlly(curState);
-////				if (location != null && location.toString().contains("404091")) {
-////					System.out.println("Debug");
-////				}
-//								
-//				// PHONG: 20150506 - Update TIB
-//				// --------------------------------------
-//				TIB.updateTIB(curState);
-////				TIB.updateChecking(curState);
-//				// --------------------------------------
-//				
-//				if (inst == null || location == null) {
-//					break;
-//				}
-//				path.addTrace(curState.getLocation());
-//
-//				if (inst instanceof X86CondJmpInstruction) {
-//					rule.getNewState((X86CondJmpInstruction) inst, path, pathList);
-//					if (!curState.checkFeasiblePath()) {
-//						path.destroy();
-//						break;
-//					}
-//				} else {
-//					rule.getNewState(path, pathList, true);
-//				}
-//				
-//				if (this.detectPacker && isOEP(curState.getLocation(), program.getFileName())) {
-//					program.SetAnalyzingTime(System.currentTimeMillis()
-//							- overallStartTime); 
-//					program.getDetection().packedByTechniques();
-//					program.getDetection().packedByTechniquesFrequency();
-//					program.getDetection().updateBackupDetectionState(program, this);
-//					program.getDetection().setToLog(program);
-//					
-//					this.detectPacker = false;
-//				}
-//			}
-//		}
 		// PHONG - 20150724
 		System.out.println("================PACKER DETECTION VIA OTF======================");
 		program.getDetection().packedByTechniques();
 		program.getDetection().packedByTechniquesFrequency();
+		System.out.println("PACKER RECORD:" + program.getDetection().getTechniques().getTechniquesRecord());
 		System.out.println("==============================================================");
 	}
 
@@ -275,23 +168,7 @@ public class OTFModelGeneration implements Algorithm {
 				path = pathList.remove(pathList.size() - 1);
 				curState = path.getCurrentState();
 				
-				// long overallStartTimePath = System.currentTimeMillis();
 				while (true) {
-					
-					/*
-					if (curState != null && curState.getLocation() != null)
-					{
-						if (curState.getLocation().toString().contains("401000"))
-						{
-							countOEP++;
-							//if (countOEP >= 2)
-							{
-								program.getDetection().packedBy();
-								this.detectPacker = false;
-							}
-						}
-					}
-					*/
 				
 					////////////////////////////////// VIA OTF ////////////////////////////////////////
 					if (detectPacker)
@@ -338,16 +215,11 @@ public class OTFModelGeneration implements Algorithm {
 	
 					inst = curState.getInstruction();
 					location = curState.getLocation();	
-					
-//							compareOlly(curState);
-//							if (location != null && location.toString().contains("404091")) {
-//								System.out.println("Debug");
-//							}
-									
+
 					// PHONG: 20150506 - Update TIB
 					// --------------------------------------
 					TIB.updateTIB(curState);
-//							TIB.updateChecking(curState);
+					//TIB.updateChecking(curState);
 					// --------------------------------------
 					
 					if (inst == null || location == null) {
