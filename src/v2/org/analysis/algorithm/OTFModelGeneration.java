@@ -139,7 +139,6 @@ public class OTFModelGeneration implements Algorithm {
 		System.out.println("================PACKER DETECTION VIA OTF======================");
 		program.getDetection().packedByTechniques();
 		program.getDetection().packedByTechniquesFrequency();
-		System.out.println("PACKER RECORD:" + program.getDetection().getTechniques().getTechniquesRecord());
 		System.out.println("==============================================================");
 	}
 
