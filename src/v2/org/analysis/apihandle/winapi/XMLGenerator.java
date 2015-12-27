@@ -24,6 +24,7 @@ public class XMLGenerator {
 		String str = "\t\t<API funcName=\"" + funcName.toLowerCase() + "\" className=\"" + packageName + fileName
 				+ "\" />";
 		// System.out.println(str);
+		System.out.print(funcName + ", ");
 		bufferedWriter.write(str);
 		bufferedWriter.write("\r\n");
 	}
@@ -55,6 +56,10 @@ public class XMLGenerator {
 				if (file.isDirectory() && !file.getName().equals("structures")) {
 					bufferedWriter.write("\t<DLL name=\"" + file.getName() + "\">");
 					bufferedWriter.write("\r\n");
+					
+					System.out.println();
+					System.out.println();
+					System.out.println(file.getName() + ".dll");
 
 					File subDir = new File(file.getAbsolutePath() + "\\functions");
 					for (File api : subDir.listFiles()) {

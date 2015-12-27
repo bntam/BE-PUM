@@ -3,8 +3,11 @@
  */
 package v2.org.analysis.environment;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.jakstab.Program;
 import org.jakstab.asm.AbsoluteAddress;
@@ -86,6 +89,27 @@ public class Memory {
 		// fp.appendFile(ret);
 		// outputMemory(ret);
 		return ret;
+	}
+
+	/**
+	 * Sorting the memory pair values of this instance by address (key value of
+	 * {@link HashMap} attribute). Then, appending each pair value to
+	 * {@link StringBuilder} and get {@link String} content of it.
+	 * 
+	 * @return The string holding the ordered content of this memory.
+	 * 
+	 * @author Yen Nguyen
+	 */
+	public String getOrderedStringContent() {
+		SortedSet<Long> keys = new TreeSet<Long>(this.memory.keySet());
+
+		StringBuilder stringBuilder = new StringBuilder();
+		for (Long key : keys) {
+			stringBuilder.append(key);
+			stringBuilder.append(this.memory.get(key).toString());
+		}
+		
+		return stringBuilder.toString();
 	}
 
 	public void addMemoryValue(long address, Value v, Instruction inst) {
@@ -557,7 +581,7 @@ public class Memory {
 
 			if (t != null && t instanceof LongValue) {
 				char t1 = (charSize == 1) //
-						? (char) (byte) (((LongValue) t).getValue() & 0xFF) //
+				? (char) (byte) (((LongValue) t).getValue() & 0xFF) //
 						: (char) (((LongValue) t).getValue() & 0xFFFF);
 				if (t1 == 0 || t1 < 0) { // Over-size
 					break;

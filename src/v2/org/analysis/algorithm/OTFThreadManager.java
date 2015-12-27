@@ -7,12 +7,17 @@
  */
 package v2.org.analysis.algorithm;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import v2.org.analysis.algorithm.OTFModelGeneration.OTFThread;
 import v2.org.analysis.log.BPLogger;
 //import v2.org.analysis.algorithm.OTFModelGeneration.OTFThread;
 import v2.org.analysis.path.BPPath;
+import v2.org.analysis.path.BPState;
 
 /**
  * @author Yen Nguyen
@@ -21,13 +26,15 @@ import v2.org.analysis.path.BPPath;
 public class OTFThreadManager {
 
 	private static final boolean IS_MULTI_THREAD = true;
-	private static final int DEFAULT_NUM_OF_CORES = 1;
+	private static final boolean IS_CHECKSUM = true;
+	private static final int NUMBER_OF_CORE = (IS_MULTI_THREAD) ? (Runtime.getRuntime().availableProcessors()) : 1;
 
 	/**
 	 * Singleton instance of {@link OTFThreadManager} class
 	 */
 	private static volatile OTFThreadManager mInstance = null;
-	private static int mNumberOfCore = 0;
+
+	private Set<String> mProcessedStateSet = null;
 
 	/**
 	 * The constructor of {@link OTFThreadManager} class. This method just be
@@ -59,10 +66,8 @@ public class OTFThreadManager {
 					"Violate Singleton Design Pattern! Please call getInstance static method of this class to get the instance!");
 		}
 
-		if (IS_MULTI_THREAD) {
-			OTFThreadManager.mNumberOfCore = Runtime.getRuntime().availableProcessors();
-		} else {
-			OTFThreadManager.mNumberOfCore = DEFAULT_NUM_OF_CORES;
+		if (IS_CHECKSUM) {
+			mProcessedStateSet = new HashSet<String>();
 		}
 	}
 
@@ -139,7 +144,7 @@ public class OTFThreadManager {
 	public synchronized boolean isCanStart() {
 		// System.out.println(String.format("%d-%d",
 		// this.mNumberOfCurrentThreads, this.mNumberOfCore));
-		if (this.mNumberOfCurrentThreads < OTFThreadManager.mNumberOfCore) {
+		if (this.mNumberOfCurrentThreads < OTFThreadManager.NUMBER_OF_CORE) {
 			return true;
 		} else {
 			return false;
@@ -153,15 +158,40 @@ public class OTFThreadManager {
 		}
 		if (pathList != null && pathList.size() > 0) {
 			BPLogger.debugLogger.info(String.format("[OTFThreadManager] check pathListSize:%d", pathList.size()));
-		}
-		if (this.isCanStart() && otfModelGeneration != null && pathList != null && pathList.size() > 0) {
-			BPPath path = pathList.remove(pathList.size() - 1);
 
-			OTFThread thread = otfModelGeneration.new OTFThread(path);
-			thread.start();
-			BPLogger.debugLogger.info(String.format("[OTFThreadManager] START location:%s,numOfCurrentThreads:%d/%d",
-					path.getCurrentState().getLocation().toString(), this.mNumberOfCurrentThreads, OTFThreadManager.mNumberOfCore));
+			if (this.isCanStart()) {
+				BPPath path = pathList.remove(pathList.size() - 1);
+
+				OTFThread thread = otfModelGeneration.new OTFThread(path);
+				thread.start();
+				BPLogger.debugLogger.info(String
+						.format("[OTFThreadManager] START location:%s,numOfCurrentThreads:%d/%d", path
+								.getCurrentState().getLocation().toString(), this.mNumberOfCurrentThreads,
+								OTFThreadManager.NUMBER_OF_CORE));
+			}
 		}
+	}
+
+	/**
+	 * Add all checksum string elements in processed state buffer set of child
+	 * thread to this manager.
+	 * 
+	 * @param pProcessedSet
+	 *            The temporary set holding a part processed states of child
+	 *            thread.
+	 */
+	protected synchronized void addProcessedStates(Collection<? extends String> pProcessedSet) {
+		mProcessedStateSet.addAll(pProcessedSet);
+		pProcessedSet.clear();
+	}
+
+	protected synchronized boolean isProcessed(String pChecksum) {
+		if (mProcessedStateSet != null) {
+			if (mProcessedStateSet.contains(pChecksum)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -170,11 +200,46 @@ public class OTFThreadManager {
 	 *
 	 */
 	static public abstract class OTFThreadBase extends Thread {
+		private final static int MAX_SIZE_OF_BUFER = 4;
+
+		private OTFThreadManager mOtfThreadManager = OTFThreadManager.getInstance();
+		private List<String> mProcessedStateBuffer = null;
+
+		/**
+		 * Check if the state input was processed by another thread.
+		 * 
+		 * @param pBPState
+		 *            Processed stated of current thread
+		 * 
+		 * @return {@code TRUE} if processed, {@code FALSE} otherwise.
+		 */
+		public boolean isStopCurrentPath(BPState pBPState) {
+			if (IS_CHECKSUM) {
+				if (mProcessedStateBuffer == null) {
+					mProcessedStateBuffer = new ArrayList<String>(MAX_SIZE_OF_BUFER);
+				}
+
+				String location = pBPState.getLocation().toString();
+				String checksum = pBPState.getEnvironement().hash();
+				String combinedChecksum = String.format("%s%s", location, checksum);
+				mProcessedStateBuffer.add(combinedChecksum);
+
+				boolean isProcessed = mOtfThreadManager.isProcessed(combinedChecksum);
+
+				if (isProcessed || mProcessedStateBuffer.size() == MAX_SIZE_OF_BUFER) {
+					mOtfThreadManager.addProcessedStates(mProcessedStateBuffer);
+				}
+
+				return isProcessed;
+			}
+			return false;
+		}
+
 		public abstract void execute();
 
 		private void beforeExecute() {
 			try {
-				OTFThreadManager.getInstance().startNewThread();
+				mOtfThreadManager.startNewThread();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -186,7 +251,11 @@ public class OTFThreadManager {
 
 		private void afterExecute() {
 			try {
-				OTFThreadManager.getInstance().finishThread();
+				mOtfThreadManager.finishThread();
+				
+				if (mProcessedStateBuffer.size() > 0) {
+					mOtfThreadManager.addProcessedStates(mProcessedStateBuffer);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -194,7 +263,7 @@ public class OTFThreadManager {
 
 		public void afterLoop(OTFModelGeneration otfModelGeneration, List<BPPath> pathList) {
 			try {
-				OTFThreadManager.getInstance().check(otfModelGeneration, pathList);
+				mOtfThreadManager.check(otfModelGeneration, pathList);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -286,6 +286,7 @@
 		<API funcName="_except_handler3" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._except_handler3" />
 		<API funcName="_fpreset" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._fpreset" />
 		<API funcName="_initterm" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._initterm" />
+		<API funcName="_itoa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itoa" />
 		<API funcName="_itow" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._itow" />
 		<API funcName="_ltoa" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._ltoa" />
 		<API funcName="_mbsrchr" className="v2.org.analysis.apihandle.winapi.msvcrt.functions._mbsrchr" />

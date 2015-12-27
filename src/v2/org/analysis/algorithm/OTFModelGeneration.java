@@ -379,6 +379,9 @@ public class OTFModelGeneration implements Algorithm {
 					
 					///////// AFTER LOOP ///////////
 					this.afterLoop(OTFModelGeneration.this, pathList);
+					if (this.isStopCurrentPath(curState)) {
+						break;
+					}
 				}
 			}
 		}
