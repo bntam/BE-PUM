@@ -24,7 +24,9 @@ public class PackerTechniques {
 	private boolean hardware_bpx;
 	
 	private boolean USING_COUNT;
+	
 	private static PackerCounter pCounter;
+	private static PackerRecord pRecord;
 	
 	public PackerTechniques ()
 	{
@@ -48,6 +50,7 @@ public class PackerTechniques {
 		hardware_bpx		= false;
 
 		pCounter			= new PackerCounter();
+		pRecord				= PackerRecord.getInstance();
 	}
 	
 	public void updateChecking (BPState curState, Program program)
@@ -272,6 +275,11 @@ public class PackerTechniques {
 	public String getTechniquesStatiscial ()
 	{
 		return pCounter.getInfo();
+	}
+	
+	public String getTechniquesRecord ()
+	{
+		return pRecord.getPackerTechniqueRecord();
 	}
 	
 	public void setCount (boolean isCounting)
