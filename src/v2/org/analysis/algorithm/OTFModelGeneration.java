@@ -157,6 +157,7 @@ public class OTFModelGeneration implements Algorithm {
 			this.curState = path.getCurrentState();
 			this.inst = this.curState.getInstruction();
 			this.location = this.curState.getLocation();
+			mMessage = location.toString();
 		}
 
 		@Override

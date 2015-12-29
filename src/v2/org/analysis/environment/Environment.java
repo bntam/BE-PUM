@@ -140,7 +140,7 @@ public class Environment {
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.append(flag.toString());
 			stringBuilder.append(register.toString());
-			stringBuilder.append(stack.toString());
+			stringBuilder.append(String.format("%d%d", ((StackV2)stack).getBaseAddress(), ((StackV2)stack).getTopAddress()));
 			md5.Update(stringBuilder.toString(), null);
 			String hash2 = md5.asHex();
 

@@ -202,6 +202,7 @@ public class OTFThreadManager {
 	static public abstract class OTFThreadBase extends Thread {
 		private final static int MAX_SIZE_OF_BUFER = 4;
 
+		protected String mMessage = null;
 		private OTFThreadManager mOtfThreadManager = OTFThreadManager.getInstance();
 		private List<String> mProcessedStateBuffer = null;
 
@@ -229,6 +230,12 @@ public class OTFThreadManager {
 				if (isProcessed || mProcessedStateBuffer.size() == MAX_SIZE_OF_BUFER) {
 					mOtfThreadManager.addProcessedStates(mProcessedStateBuffer);
 				}
+				
+				if (isProcessed) {
+					System.out.println("_____________________________________________________________________________");
+					System.out.println(String.format("_____________________ INTERRUPT OTF THREAD %s _______________________", location));
+					System.out.println("_____________________________________________________________________________");
+				}
 
 				return isProcessed;
 			}
@@ -245,7 +252,7 @@ public class OTFThreadManager {
 			}
 
 			System.out.println("_____________________________________________________________________________");
-			System.out.println("_________________________START NEW THREAD OTF________________________________");
+			System.out.println(String.format("_____________________ START NEW OTF THREAD %s _______________________", mMessage));
 			System.out.println("_____________________________________________________________________________");
 		}
 
