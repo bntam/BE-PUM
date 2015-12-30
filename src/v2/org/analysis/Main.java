@@ -295,9 +295,9 @@ public class Main {
 //		in = "api_testv2.exe"; // 2064 2151 26s ?
 		in = "api_test.exe"; // 158 160 0.1s x
 //		in = "api_test_upx.exe"; // 323 353 6s x
-		in = "api_test_fsg.exe"; // 244 268 3s x
-		in = "api_test_pecompact.exe"; // 1127 1178 28s x
-		in = "api_test_npack.exe"; // 602 639 10s x 
+//		in = "api_test_fsg.exe"; // 244 268 3s x
+//		in = "api_test_pecompact.exe"; // 1127 1178 28s x
+//		in = "api_test_npack.exe"; // 602 639 10s x 
 //		in = "api_test_yoda.1.2.exe"; // 625 659 173s x
 //		in = "api_test_yoda.1.3.exe"; // 924 960 163s x
 //		in = "api_test_petite_2.3.exe"; // 1569 1637 86s x
@@ -359,9 +359,9 @@ public class Main {
 //		in = "Email-Worm.Win32.Mydoom.az"; // 641 651 
 //		in = "003ba46362d1c2643a690cd7e912441b0ee04ee0f8026789f677b873389c0361";
 		
-		pathVirus = "asm/testcase/";
-		in = "peb.exe";		
-		in = "multiThread2";		
+//		pathVirus = "asm/testcase/";
+//		in = "peb.exe";		
+//		in = "multiThread2";		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export

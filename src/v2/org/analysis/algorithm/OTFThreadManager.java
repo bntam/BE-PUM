@@ -215,7 +215,7 @@ public class OTFThreadManager {
 		 * @return {@code TRUE} if processed, {@code FALSE} otherwise.
 		 */
 		public boolean isStopCurrentPath(BPState pBPState) {
-			if (IS_CHECKSUM) {
+			if (IS_CHECKSUM && pBPState != null && pBPState.getLocation() != null) {
 				if (mProcessedStateBuffer == null) {
 					mProcessedStateBuffer = new ArrayList<String>(MAX_SIZE_OF_BUFER);
 				}
