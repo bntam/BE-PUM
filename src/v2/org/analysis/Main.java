@@ -359,9 +359,9 @@ public class Main {
 //		in = "Email-Worm.Win32.Mydoom.az"; // 641 651 
 //		in = "003ba46362d1c2643a690cd7e912441b0ee04ee0f8026789f677b873389c0361";
 		
-//		pathVirus = "asm/testcase/";
+		pathVirus = "asm/";
 //		in = "peb.exe";		
-//		in = "multiThread2";		
+		in = "api_test_pecompact.exe";		
 		String path = pathVirus + in;
 		isGui = false;
 		// YenNguyen: For jar file export

@@ -132,25 +132,29 @@ public class Environment {
 			MD5 md5 = new MD5();
 
 			// Hash memory
-			String memoryStr = memory.getOrderedStringContent();
-			md5.Update(memoryStr, null);
-			String hash1 = md5.asHex();
+//			String memoryStr = memory.getOrderedStringContent();
+//			md5.Update(memoryStr, null);
+//			String hash1 = md5.asHex();
 
 			// Hash Flag + Register + Stack
-			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.append(flag.toString());
-			stringBuilder.append(register.toString());
-			stringBuilder.append(String.format("%d%d", ((StackV2)stack).getBaseAddress(), ((StackV2)stack).getTopAddress()));
-			md5.Update(stringBuilder.toString(), null);
-			String hash2 = md5.asHex();
-
-			// Append 2 string of hashing
-			stringBuilder.setLength(0);
-			stringBuilder.append(hash1);
-			stringBuilder.append(hash2);
-
-			// Return the final hashing string
-			md5.Update(stringBuilder.toString(), null);
+//			StringBuilder stringBuilder = new StringBuilder();
+//			stringBuilder.append(flag.toString());
+//			stringBuilder.append(register.toString());
+//			stringBuilder.append(String.format("%d%d", ((StackV2)stack).getBaseAddress(), ((StackV2)stack).getTopAddress()));
+//			md5.Update(stringBuilder.toString(), null);
+			
+//			String hash2 = md5.asHex();
+//
+//			// Append 2 string of hashing
+//			stringBuilder.setLength(0);
+//			stringBuilder.append(hash1);
+//			stringBuilder.append(hash2);
+//
+//			// Return the final hashing string
+//			md5.Update(stringBuilder.toString(), null);
+//			return md5.asHex();
+			
+			md5.Update(register.toString(), null);
 			return md5.asHex();
 		} catch (Exception ex) {
 			ex.printStackTrace();

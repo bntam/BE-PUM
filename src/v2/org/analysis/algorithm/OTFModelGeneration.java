@@ -54,7 +54,7 @@ public class OTFModelGeneration implements Algorithm {
 
 	private final Program program;
 
-	private static boolean detectPacker = true;
+	private static boolean detectPacker = false;
 	private long overallStartTime;
 //	private int countOEP = 0;
 	

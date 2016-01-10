@@ -25,8 +25,8 @@ import v2.org.analysis.path.BPState;
  */
 public class OTFThreadManager {
 
-	private static final boolean IS_MULTI_THREAD = true;
-	private static final boolean IS_CHECKSUM = true;
+	private static final boolean IS_MULTI_THREAD = false;
+	private static final boolean IS_CHECKSUM = false;
 	private static final int NUMBER_OF_CORE = (IS_MULTI_THREAD) ? (Runtime.getRuntime().availableProcessors()) : 1;
 
 	/**
@@ -260,7 +260,7 @@ public class OTFThreadManager {
 			try {
 				mOtfThreadManager.finishThread();
 				
-				if (mProcessedStateBuffer.size() > 0) {
+				if (mProcessedStateBuffer != null && mProcessedStateBuffer.size() > 0) {
 					mOtfThreadManager.addProcessedStates(mProcessedStateBuffer);
 				}
 			} catch (Exception e) {
